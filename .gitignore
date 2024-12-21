@@ -1,0 +1,71 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+.vscode/
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+pubspec.lock
+coverage/
+*.lcov
+intl_translation.arb
+intl_messages.arb
+intl_en.arb
+
+# iOS related
+ios/Pods/
+xcuserdata/
+*.xcworkspace
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcdebugger/
+*.swp
+
+# Android related
+android/local.properties
+.gradle/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+
+# Firebase related
+google-services.json
+firebase-debug.log
+
+# Environment variables
+*.env
+*.env.local
+*.env.production
+*.env.development
+
+# Generated JSON files
+*.json
+*.lock.json
