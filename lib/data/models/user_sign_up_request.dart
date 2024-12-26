@@ -18,8 +18,7 @@ class UserSignUpRequest with _$UserSignUpRequest {
     required bool isReceivingAdvertisemenet,
     int? registrationPath,
     required bool isResign,
-    required int firstUserSeq,
-    @ConvertStringToDateTime() DateTime? firstDateTime,
+    @ConvertStringToDateTime() DateTime? createdAt,
   }) = _UserSignUpRequest;
 
   const UserSignUpRequest._();
