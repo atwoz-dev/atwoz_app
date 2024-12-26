@@ -1,0 +1,55 @@
+# Flutter Test for Lighty
+# 작동 내용: flutter test 빌드를 통한 코드 검증 수행
+name: Flutter_Test
+
+# 이벤트 정의
+on:
+  # prod, dev, main 브랜치로 Pull Request 발생 시 동작
+  pull_request:
+    branches:
+      - prod
+      - dev
+      - main
+
+# Job 영역
+jobs:
+  build:
+    name: Running Test and CI
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 소스 코드 체크아웃
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      
+      # Step 2: Flutter SDK 설치 (v3.13.0)
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+          channel: 'stable'
+
+      # Step 3: Flutter 의존성 가져오기
+      - name: Get Flutter Dependencies
+        run: flutter pub get
+
+      # Step 4: Flutter Clean
+      - name: Clean Flutter Project
+        run: flutter clean
+
+      # Step 5: 코드 자동 생성 (Freezed, GoRouter 등)
+      - name: Generate Source Code
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      # Step 6: Flutter 테스트 실행
+      - name: Run Flutter Tests
+        run: flutter test --coverage
+
+      # TODO: GitHub Secrets에 CODECOV_TOKEN 설정해야 함 (Settings > Secrets and variable > Actions)
+      # # Step 7:  테스트 결과와 함께 코드 커버리지 결과 출력 (선택적)
+      # - name: Upload Coverage Report
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: coverage/lcov.info
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }} # Codecov를 사용하면 필요
