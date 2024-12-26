@@ -24,8 +24,8 @@ abstract class Config {
   static const timeout = Duration(seconds: 10);
   static const maxRetries = 1;
 
-  /// bloc observer
-  /// BLoC 상태 관리 시 다양한 이벤트를 감지하고 로그를 출력할지 여부를 설정
+  /// notifier observer
+  /// riverpod 상태 관리 시 다양한 이벤트를 감지하고 로그를 출력할지 여부를 설정
   static const logOnNotifierChange = false; // 상태 변화 로그 (비활성화)
   static const logOnNotifierCreate = false;
   static const logOnNotifierClose = false;
