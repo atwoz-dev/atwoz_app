@@ -60,8 +60,8 @@ class AppColors {
   // Transparent blacks
   static const Color black50 = Color(0x80000000); // 50% transparent black
 
-  // 색상 조합별 색상 스키마 생성
-  static const ColorScheme blueLightScheme = ColorScheme.light(
+// 색상 스키마
+  static const ColorScheme lightScheme = ColorScheme.light(
     primary: AppColors.colorPrimary500,
     onPrimary: AppColors.colorWhite,
     surface: AppColors.colorWhite,
@@ -73,7 +73,7 @@ class AppColors {
     shadow: AppColors.colorGrey200,
   );
 
-  static const ColorScheme blueDarkScheme = ColorScheme.dark(
+  static const ColorScheme darkScheme = ColorScheme.dark(
     primary: AppColors.colorPrimary500,
     onPrimary: AppColors.colorWhite,
     surface: AppColors.colorBlack,
