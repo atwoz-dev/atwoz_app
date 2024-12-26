@@ -22,11 +22,11 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
       
-      # Step 2: Flutter SDK 설치 (v3.13.0)
+      # Step 2: Flutter SDK 설치 (v3.24.0)
       - name: Install Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'
+          flutter-version: '3.24.0'
           channel: 'stable'
 
       # Step 3: Flutter 의존성 가져오기
