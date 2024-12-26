@@ -91,16 +91,17 @@ gen:
   watch: dart run build_runner watch --delete-conflicting-outputs
 
 
-# TODO: 스플래시 화면 설정하기
-# flutter_native_splash:
-#   image: ""
-#   dark_image: ""
-#   background_image: ""
-#   android_12:
-#     image: ""
-#     image_dark: ""
-#   android: true
-#   ios: true   
+# dart run flutter_native_splash:create
+flutter_native_splash:
+  image: "assets/images/logo.png"
+  # dark_image: ""
+  # background_image: ""
+  color: "#FFFFFF" # 기본 배경 색상"#000000" # 다크 모드 배경 색상
+  android: true
+  ios: true   
+    # android_12:
+  #   image: ""
+  #   image_dark: ""
 
 # TODO: 앱 아이콘 설정하기
 # flutter_icons:
