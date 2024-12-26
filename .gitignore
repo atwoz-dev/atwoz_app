@@ -69,3 +69,7 @@ firebase-debug.log
 # Generated JSON files
 *.json
 *.lock.json
+
+#
+*.g.dart
+*.freezed.dart
