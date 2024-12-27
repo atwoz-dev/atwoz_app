@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:atwoz_app/core/base/notifier/app_notifier.dart';
+import 'package:atwoz_app/core/theme/app_colors.dart';
 import 'package:atwoz_app/core/widgets/error/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,8 +37,8 @@ class App extends ConsumerWidget {
               PointerDeviceKind.unknown,
             }),
             themeMode: ThemeMode.values[appState.themeModeIndex],
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
+            theme: createThemeData(AppColors.lightScheme),
+            darkTheme: createThemeData(AppColors.darkScheme),
             locale: Locale(appState.languageCode),
             routerConfig: router,
             localizationsDelegates: AppLocalizations.localizationsDelegates,

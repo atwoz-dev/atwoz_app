@@ -47,6 +47,7 @@ dependencies:
   in_app_update: ^4.2.3
   package_info_plus: ^8.1.2
   flutter_native_splash: ^2.4.3
+  flutter_launcher_icons: ^0.14.2
   
   
 
@@ -103,9 +104,17 @@ flutter_native_splash:
   #   image: ""
   #   image_dark: ""
 
-# TODO: 앱 아이콘 설정하기
-# flutter_icons:
-#   android: true
-#   ios: true
-#   image_path_android: ""
-#   image_path_ios: ""
+
+# flutter pub run flutter_launcher_icons:main
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path_android: "assets/images/logo.png"
+  image_path_ios: "assets/images/logo.png"
+  adaptive_icon:
+    android: true
+    foreground: "assets/images/logo.png"
+    background: "assets/images/app_icon_bg.png"  # 배경 이미지 (필요시)
+  # app_icon_bg
+  # background_color: "#FFFFFF" 
