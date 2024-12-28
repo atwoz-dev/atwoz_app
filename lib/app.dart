@@ -2,10 +2,10 @@ import 'dart:ui';
 import 'package:atwoz_app/core/base/notifier/app_notifier.dart';
 import 'package:atwoz_app/core/theme/app_colors.dart';
 import 'package:atwoz_app/core/widgets/error/error_page.dart';
+import 'package:atwoz_app/router/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:atwoz_app/router/routing.dart';
 
 import 'package:atwoz_app/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
