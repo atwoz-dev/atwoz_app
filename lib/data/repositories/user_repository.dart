@@ -3,7 +3,6 @@ import 'package:atwoz_app/data/models/user_sign_up_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/user_response.dart';
-import '../sources/remote/api_service.dart';
 import '../../core/base/repository/base_repository.dart';
 
 class UserRepository extends BaseRepository {

@@ -2,6 +2,7 @@ import 'package:atwoz_app/core/widgets/error/error_route_page.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
 import 'package:atwoz_app/features/home/presentation/home_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/onboard_page.dart';
 import 'package:atwoz_app/features/root/presentation/root_setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,17 +39,21 @@ GoRouter router(Ref ref) {
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/auth',
+    initialLocation: '/',
     debugLogDiagnostics: true,
     refreshListenable: ref.read(userNotifierProvider.notifier),
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => const OnBoardPage(),
       ),
       GoRoute(
         path: '/auth',
         builder: (context, state) => SignInPage(),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/root',
