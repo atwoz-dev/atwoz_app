@@ -87,6 +87,8 @@ class AppTextFormField extends StatefulWidget {
     this.scrollPhysics,
     this.enableInteractiveSelectionOption = true,
     this.onTap,
+    this.showCharacterCount = false, // 글자 수 카운터 기본값 false
+    this.characterCountStyle,
   });
 
   final InputBorder? border;
@@ -142,6 +144,8 @@ class AppTextFormField extends StatefulWidget {
   final bool expands;
   final ScrollController? scrollController;
   final ScrollPhysics? scrollPhysics;
+  final bool showCharacterCount; // 글자 수 카운터 표시 여부
+  final TextStyle? characterCountStyle; // 글자 수 카운터 스타일
 
   @override
   State<AppTextFormField> createState() => AppTextFormFieldState();
@@ -150,17 +154,39 @@ class AppTextFormField extends StatefulWidget {
 class AppTextFormFieldState extends State<AppTextFormField>
     with TextFieldHandler {
   @override
+  void initState() {
+    super.initState();
+    controller.addListener(_updateCharacterCount);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_updateCharacterCount);
+    super.dispose();
+  }
+
+  // 글자 수 카운터 실시간 업데이트를 위한 메서드
+  void _updateCharacterCount() {
+    if (widget.showCharacterCount) {
+      setState(() {}); // 글자 수 업데이트
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(disabledColor: context.appColors.shadow),
-      child: GestureDetector(
-        onTap: widget.enabled == false ? widget.onTap : null,
-        child: TextFormField(
+    return Stack(
+      children: [
+        TextFormField(
           key: fieldKey,
           focusNode: focusNode,
           controller: controller,
           obscureText: widget.obscureText,
-          onChanged: onFieldChange,
+          onChanged: (value) {
+            onFieldChange(value);
+            if (widget.showCharacterCount) {
+              _updateCharacterCount(); // 실시간 업데이트
+            }
+          },
           decoration: buildDecoration(context),
           cursorColor: context.appColors.primary,
           showCursor: widget.showCursor,
@@ -186,11 +212,22 @@ class AppTextFormFieldState extends State<AppTextFormField>
           scrollPhysics: widget.scrollPhysics,
           onSaved: widget.onSaved,
           validator: widget.validator,
-          // autovalidateMode: AutovalidateMode.disabled,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           enableInteractiveSelection: widget.enableInteractiveSelectionOption,
         ),
-      ),
+        if (widget.showCharacterCount)
+          Positioned(
+            bottom: 8,
+            right: 16,
+            child: Text(
+              '${controller.text.length}/${widget.maxLength}',
+              style: controller.text.length > 0
+                  ? widget.characterCountStyle ??
+                      AppStyles.body03Regular(AppColors.colorGrey800)
+                  : AppStyles.body03Regular(AppColors.colorGrey500),
+            ),
+          ),
+      ],
     );
   }
 
@@ -198,12 +235,12 @@ class AppTextFormFieldState extends State<AppTextFormField>
     // 기본 둥근 테두리
     final InputBorder roundedBorder = OutlineInputBorder(
       borderRadius: AppDimens.buttonRadius, // 기본 둥근 모서리 설정
-      borderSide: BorderSide.none, // 테두리 제거두리 색상
+      borderSide: BorderSide.none, // 테두리 제거
     );
 
     // Error 상태 테두리
     final InputBorder errorBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.0),
+      borderRadius: BorderRadius.circular(10.0),
       borderSide: BorderSide(
         color: widget.underlineColor ?? context.appColors.error,
         width: 2.0,
@@ -213,39 +250,42 @@ class AppTextFormFieldState extends State<AppTextFormField>
     return InputDecoration(
       enabled: widget.enabled ?? true,
       contentPadding: widget.contentPadding ??
-          const EdgeInsets.symmetric(vertical: 17.25, horizontal: 0),
-      counterText: '',
+          const EdgeInsets.fromLTRB(0, 17.25, 16, 33.25), // 하단 공간 확보
+      counterText: '', // 기본 counter 숨기기
       prefix:
           Padding(padding: EdgeInsets.only(left: 16.0), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
-      suffix: widget.suffix,
       suffixIcon: widget.suffixIcon,
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,
       isDense: widget.isDense,
       fillColor: widget.fillColor ?? context.appColors.surface,
       border: widget.border ?? roundedBorder, // 기본 테두리를 둥근 모서리로 설정
-      enabledBorder: widget.enabledBorder ?? roundedBorder, // 활성 상태 둥근 테두리
-      disabledBorder: widget.disabledBorder ?? roundedBorder, // 비활성 상태 둥근 테두리
+      enabledBorder: widget.border ??
+          widget.enabledBorder ??
+          roundedBorder, // 활성 상태 둥근 테두리
+      disabledBorder: widget.border ??
+          widget.disabledBorder ??
+          roundedBorder, // 비활성 상태 둥근 테두리
       errorBorder: widget.errorBorder ?? errorBorder, // 에러 상태 테두리
       focusedBorder: widget.errorText == null // 에러 메시지가 없을 때만 포커스 상태 테두리
-          ? roundedBorder.copyWith(
-              borderSide: BorderSide(
-                color: context.appColors.primary,
-                width: 2.0,
-              ),
-            )
+          ? widget.border ??
+              roundedBorder.copyWith(
+                borderSide: BorderSide(
+                  color: context.appColors.primary,
+                  width: 2.0,
+                ),
+              )
           : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
       alignLabelWithHint: true, // 레이블과 에러 위치 일치
       hintStyle:
-          widget.hintStyle ?? AppStyles.body01Medium(AppColors.colorGrey400),
+          widget.hintStyle ?? AppStyles.body01Medium(AppColors.colorGrey500),
       errorText: widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
       errorStyle: AppStyles.body03Regular(context.appColors.error)
           .copyWith(height: 1.5),
-
       label: widget.label,
     );
   }

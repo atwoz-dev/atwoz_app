@@ -2,12 +2,9 @@ import 'package:atwoz_app/core/widgets/image/app_icon.dart';
 import 'package:atwoz_app/core/widgets/view/default_divider.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-
 import '../../../../core/theme/theme.dart';
-import '../../../../core/widgets/widget.dart';
 import '../../../../core/base/notifier/app_notifier.dart';
 
 class RootProfileMenu extends ConsumerWidget {
@@ -23,11 +20,11 @@ class RootProfileMenu extends ConsumerWidget {
           GestureDetector(
             onTap: () =>
                 _changeThemeMode(context, ref, appState.themeModeIndex),
-            child: _buildItem(AppIcons.imgFill, "테마 변경", context),
+            child: _buildItem(AppIcons.circle, "테마 변경", context),
           ),
           GestureDetector(
             onTap: ref.read(authServiceProvider).signOut,
-            child: _buildItem(AppIcons.onOff, "로그아웃", context),
+            child: _buildItem(AppIcons.circle, "로그아웃", context),
           ),
         ];
 

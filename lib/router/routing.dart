@@ -15,7 +15,7 @@ class Routing {
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/onboard', // 초기 경로 설정
+    initialLocation: AppRoute.onboard.path, // 초기 경로 설정
     routes: [
       ...HomeBranch.routes,
       ...OnboardBranch.routes,
@@ -25,7 +25,7 @@ class Routing {
     redirect: (context, GoRouterState state) {
       final container = ProviderScope.containerOf(context);
       final isAuthenticated = container.read(authProvider);
-      final isAuthPath = state.uri.toString() == '/auth';
+      final isAuthPath = state.uri.toString() == AppRoute.auth.path;
 
       // 인증 상태에 따른 경로 리다이렉트
       // if (!isAuthenticated && !isAuthPath) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,11 +25,60 @@ enum AppRoute {
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
-  onboardCertification('/onboard/certification');
+  onboardCertification('/onboard/certification'),
+  report('/report');
 
   final String path;
 
   const AppRoute(this.path);
+}
+
+// GoRouter 설정
+final goRouter = GoRouter(
+  navigatorKey: rootNavigatorKey,
+  routes: [
+    ...HomeBranch.routes,
+    ...OnboardBranch.routes,
+  ],
+);
+
+// Home branch routes
+class HomeBranch {
+  static final routes = [
+    GoRoute(
+      path: AppRoute.home.path,
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: AppRoute.auth.path,
+      builder: (context, state) => const SignInPage(),
+    ),
+    // TODO: 나중에 report 경로 위치 바꾸기
+    GoRoute(
+      path: AppRoute.report.path,
+      builder: (context, state) => const ReportPage(),
+    ),
+  ];
+}
+
+// Onboard branch routes
+class OnboardBranch {
+  static final routes = [
+    GoRoute(
+      path: AppRoute.onboard.path,
+      builder: (context, state) => const OnBoardPage(),
+      routes: [
+        GoRoute(
+          path: AppRoute.onboardPhone.path.split('/onboard').last,
+          builder: (context, state) => const OnboardingPhoneInputPage(),
+        ),
+        GoRoute(
+          path: AppRoute.onboardCertification.path.split('/onboard').last,
+          builder: (context, state) => const OnboardingCertificationPage(),
+        ),
+      ],
+    ),
+  ];
 }
 
 // 네비게이션 헬퍼 메서드
@@ -66,50 +116,6 @@ Future<T?> navigate<T>({
 
   return result;
 }
-
-// GoRouter 설정
-final goRouter = GoRouter(
-  navigatorKey: rootNavigatorKey,
-  routes: [
-    ...HomeBranch.routes,
-    ...OnboardBranch.routes,
-  ],
-);
-
-// Home branch routes
-class HomeBranch {
-  static final routes = [
-    GoRoute(
-      path: AppRoute.home.path,
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: AppRoute.auth.path,
-      builder: (context, state) => const SignInPage(),
-    ),
-  ];
-}
-
-// Onboard branch routes
-class OnboardBranch {
-  static final routes = [
-    GoRoute(
-      path: AppRoute.onboard.path,
-      builder: (context, state) => const OnBoardPage(),
-      routes: [
-        GoRoute(
-          path: AppRoute.onboardPhone.path.split('/onboard').last,
-          builder: (context, state) => const OnboardingPhoneInputPage(),
-        ),
-        GoRoute(
-          path: AppRoute.onboardCertification.path.split('/onboard').last,
-          builder: (context, state) => const OnboardingCertificationPage(),
-        ),
-      ],
-    ),
-  ];
-}
-
 /*
 < navigate() 메서드 용례 >
 
