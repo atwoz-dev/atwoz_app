@@ -3,7 +3,6 @@ import 'package:atwoz_app/core/widgets/overlay/app_menu_float.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
 import 'package:atwoz_app/features/root/presentation/widgets/root_profile_menu.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -39,18 +38,12 @@ class RootAppbar extends ConsumerWidget implements PreferredSizeWidget {
         menuView: const RootProfileMenu(),
         child: AppIcon(
             // 테마 모드에 따라 아이콘 변경
-            context.isDarkTheme ? AppIcons.personDark : AppIcons.person,
+            context.isDarkTheme
+                ? AppIcons.person
+                : AppIcons.person, // TODO: 다크모드일 때 아이콘 바꿔야 함
             size: 30),
       ),
       const Gap(10),
-
-      SvgPicture.asset(
-        AppIcons.mail,
-        color: context.appColors.primary,
-        width: 24,
-        height: 24,
-      ),
-      const Gap(5),
     ]);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 Widget bubbleWidget({
@@ -8,7 +9,7 @@ Widget bubbleWidget({
   double height = 60, // 말풍선 높이
   double shadowBlur = 5, // 그림자 흐림 정도
   double shadowOffset = 5, // 그림자 아래 이동 정도
-  Color shadowColor = Colors.grey, // 그림자 색깔
+  Color shadowColor = AppColors.colorGrey100, // 그림자 색깔
   // double borderRadius = 50, // 말풍선 테두리 둥글기 정도
   TextStyle? textStyle, // 텍스트 스타일
 }) =>
