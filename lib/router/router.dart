@@ -1,11 +1,12 @@
 // Import statements
 import 'dart:async';
+import 'package:atwoz_app/features/onboarding/presentation/onboarding_certification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atwoz_app/features/home/presentation/home_page.dart';
 import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboard_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/onboarding_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/onboarding_phone_input_page.dart';
 
 // Navigator keys
@@ -25,16 +26,19 @@ Future<T?> navigate<T>({
 
   switch (code) {
     case 'home':
-      result = await goRouter.push<T>('/home', extra: extra);
+      result = await goRouter.replace<T>('/$code', extra: extra);
       break;
     case 'auth':
-      result = await goRouter.push<T>('/auth', extra: extra);
+      result = await goRouter.push<T>('/$code', extra: extra);
       break;
     case 'onboard':
-      result = await goRouter.push<T>('/onboard', extra: extra);
+      result = await goRouter.push<T>('/$code', extra: extra);
       break;
     case 'onboard-phone':
-      result = await goRouter.push<T>('/onboard-phone', extra: extra);
+      result = await goRouter.push<T>('/$code', extra: extra);
+      break;
+    case 'onboard-certification':
+      result = await goRouter.push<T>('/$code', extra: extra);
       break;
     default:
       break;
@@ -61,6 +65,10 @@ class HomeBranch {
     GoRoute(
       path: '/onboard-phone',
       builder: (context, state) => OnboardingPhoneInputPage(),
+    ),
+    GoRoute(
+      path: '/onboard-certification',
+      builder: (context, state) => OnboardingCertificationPage(),
     ),
     GoRoute(
       path: '/auth',

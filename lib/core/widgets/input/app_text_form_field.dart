@@ -17,8 +17,9 @@ Widget buildLabeledRow({
       SizedBox(
         child: Text(
           label,
-          style:
-              textStyle ?? AppStyles.body01Medium(context.appColors.onSurface),
+          style: textStyle ??
+              AppStyles.body02Regular(context.appColors.onSurface)
+                  .copyWith(fontWeight: FontWeight.w600),
         ),
       ),
       const SizedBox(height: 8), // 레이블과 필드 사이 간격 추가
@@ -212,9 +213,10 @@ class AppTextFormFieldState extends State<AppTextFormField>
     return InputDecoration(
       enabled: widget.enabled ?? true,
       contentPadding: widget.contentPadding ??
-          const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+          const EdgeInsets.symmetric(vertical: 17.25, horizontal: 0),
       counterText: '',
-      prefix: widget.prefix,
+      prefix:
+          Padding(padding: EdgeInsets.only(left: 16.0), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
       suffix: widget.suffix,
@@ -236,11 +238,14 @@ class AppTextFormFieldState extends State<AppTextFormField>
             )
           : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
+      alignLabelWithHint: true, // 레이블과 에러 위치 일치
       hintStyle:
           widget.hintStyle ?? AppStyles.body01Medium(AppColors.colorGrey400),
       errorText: widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
-      errorStyle: AppStyles.body01Medium(context.appColors.error),
+      errorStyle: AppStyles.body03Regular(context.appColors.error)
+          .copyWith(height: 1.5),
+
       label: widget.label,
     );
   }

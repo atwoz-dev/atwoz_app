@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 class ValidateUtils {
   const ValidateUtils._();
 
-  // 비밀번호가 숫자, 소문자, 댇문자, 특수문자를 포함해야 함.
+  // 비밀번호가 숫자, 소문자, 대문자, 특수문자를 포함해야 함.
   static final RegExp password =
       RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)');
   static final RegExp email = RegExp(r'^(([\w-\.]+@([\w-]+\.)+[\w-]{2,4}))$');
-// 휴대폰 번호는 000-0000-0000 형식이며 하이픈은 필수
+  // 휴대폰 번호는 000-0000-0000 형식이며 하이픈은 필수
   static final RegExp phoneMobile = RegExp(r'^\d{3}-\d{4}-\d{4}$');
   // dateDMY: DD-MM-YYYY 또는 DD/MM/YYYY 형태
   static final RegExp dateDMY = RegExp(
@@ -21,7 +21,10 @@ class ValidateUtils {
   static final RegExp date = RegExp('${dateDMY.pattern}|${dateYMD.pattern}');
   // prices: 숫자 및 화폐 기호 검증. e.g. ₩1,000, 1,000원
   static final RegExp prices = RegExp(
-      r'(^(\d{1,3}[.,])+(\d{1,3})$|[₩wW]\s?(\d{1,3}[.,])*(\d{1,3})|(\d{1,3}[.,])*(\d{1,3})\s?[원])');
+      r'(^((\d{1,3}[.,])+(\d{1,3})$|[₩wW]\s?(\d{1,3}[.,])*(\d{1,3})|(\d{1,3}[.,])*(\d{1,3})\s?[원]))');
+
+  // 6자리 숫자 검증
+  static final RegExp sixDigitNumber = RegExp(r'^\d{6}$');
 
   static String? validIdentity(String? value, bool? validId, String? message) {
     if (validId != null && !validId) {
@@ -106,6 +109,14 @@ class ValidateUtils {
   static String? validNotEmpty(String? value) {
     if (value?.trim().isEmpty ?? false) {
       return "이 필드를 입력해 주십시오.";
+    }
+    return null;
+  }
+
+  // 6자리 숫자인지 확인
+  static String? validSixDigitNumber(String? value) {
+    if (!sixDigitNumber.hasMatch(value ?? '')) {
+      return "6자리 숫자를 입력해 주십시오.";
     }
     return null;
   }

@@ -15,12 +15,13 @@ class AppElevatedButton extends ConsumerWidget {
     this.padding = AppDimens.buttonPadding,
     this.primary,
     this.onPrimary,
-    this.expandedWith = true,
+    this.expandedWidth = true,
     this.isLoading = false,
     this.alignment,
     this.height = AppDimens.buttonHeight,
     this.width = 150,
     this.borderRadius = AppDimens.buttonRadius,
+    this.border, // 추가된 속성
   });
 
   final Widget? child;
@@ -39,7 +40,7 @@ class AppElevatedButton extends ConsumerWidget {
 
   final ValueChanged<bool>? onFocusChange;
 
-  final bool expandedWith;
+  final bool expandedWidth;
 
   final AlignmentGeometry? alignment;
 
@@ -51,12 +52,14 @@ class AppElevatedButton extends ConsumerWidget {
 
   final BorderRadiusGeometry borderRadius;
 
+  final BorderSide? border; // 윤곽선 커스텀 속성
+
   bool get isDisable => onPressed == null;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Color foregroundColor = onPrimary ?? context.colorScheme.onPrimary;
-    final Color backgroundColor = primary ?? context.colorScheme.primary;
+    final Color foregroundColor = onPrimary ?? context.appColors.onPrimary;
+    final Color backgroundColor = primary ?? context.appColors.primary;
     final Color? disabledForegroundColor = onPrimary?.withOpacity(0.2);
     final Color? disabledBackgroundColor = primary?.withOpacity(0.2);
 
@@ -69,10 +72,13 @@ class AppElevatedButton extends ConsumerWidget {
         elevation: 0,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: padding,
-        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius,
+          side: border ?? BorderSide.none, // 커스텀 윤곽선 사용
+        ),
         textStyle: AppStyles.body01Medium(),
         minimumSize: Size(
-          expandedWith ? double.infinity : width,
+          expandedWidth ? double.infinity : width,
           height,
         ),
         alignment: alignment,
