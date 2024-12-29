@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class BalloonWidget extends StatelessWidget {
   final String text;
   final Color color;
+  final TextStyle? textStyle;
 
   const BalloonWidget({
     super.key,
     required this.text,
     required this.color,
+    this.textStyle,
   });
 
   @override
@@ -21,11 +23,12 @@ class BalloonWidget extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          fontWeight: FontWeight.w900,
-          color: Colors.black,
-          fontSize: 20,
-        ),
+        style: textStyle ??
+            const TextStyle(
+              fontWeight: FontWeight.w900,
+              color: Colors.black,
+              fontSize: 20,
+            ),
       ),
     );
   }

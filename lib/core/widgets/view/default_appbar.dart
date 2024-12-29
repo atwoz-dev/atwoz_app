@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/widgets/image/app_icon.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,12 +12,17 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.title,
+    this.isDivider = true,
+    this.leadingIcon,
+    this.leadingAction,
   });
 
   final String? title;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
-
+  final bool isDivider;
+  final Widget? leadingIcon;
+  final VoidCallback? leadingAction;
   @override
   Size get preferredSize =>
       Size.fromHeight(80 + (bottom?.preferredSize.height ?? 0));
@@ -34,9 +40,9 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           AppBar(
             backgroundColor: Theme.of(context).colorScheme.surface,
             leading: _buildLeadingAppBar(context),
-            leadingWidth: context.screenWidth * 0.5,
+            leadingWidth: 60.0, // 적절한 너비로 축소
             toolbarHeight: 80 - 1,
-            centerTitle: false,
+            centerTitle: true,
             titleSpacing: 0,
             title: title != null
                 ? Text(
@@ -57,7 +63,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
               textScaler: TextScaler.noScaling,
             ),
           ),
-        const DefaultDivider(),
+        if (isDivider) const DefaultDivider(),
         if (bottom != null) bottom!,
       ],
     );
@@ -67,16 +73,19 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final scaffold = Scaffold.maybeOf(context);
     if (scaffold?.hasDrawer ?? false) {
       return IconButton(
-        icon: const Icon(Icons.menu),
+        icon: const Icon(Icons.menu, size: 24.0), // 아이콘 크기 설정
         onPressed: scaffold?.openDrawer,
       );
     }
 
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed('/'),
-      child: Icon(
-        Icons.home,
+      child: IconButton(
+        icon: leadingIcon ?? Icon(Icons.arrow_back_ios_new),
         color: Theme.of(context).colorScheme.onSurface,
+        iconSize: 24.0, // 아이콘 크기 설정
+        onPressed:
+            leadingAction ?? () => Navigator.of(context).pop(), // 기본값으로 뒤로가기 설정
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 /// TextFormField 검증
@@ -10,8 +9,8 @@ class ValidateUtils {
   static final RegExp password =
       RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)');
   static final RegExp email = RegExp(r'^(([\w-\.]+@([\w-]+\.)+[\w-]{2,4}))$');
-  // 휴대폰은 000-0000-0000 형식인데 하이픈은 optional
-  static final RegExp phoneMobile = RegExp(r'^\d{3}-?\d{4}-?\d{4}$');
+// 휴대폰 번호는 000-0000-0000 형식이며 하이픈은 필수
+  static final RegExp phoneMobile = RegExp(r'^\d{3}-\d{4}-\d{4}$');
   // dateDMY: DD-MM-YYYY 또는 DD/MM/YYYY 형태
   static final RegExp dateDMY = RegExp(
       r'([0-2][0-9]|3[0-1])?(\\|\/|\-|\.|\,|\s)?(0[1-9]|1[0-2])(\\|\/|\-|\.|\,|\s)([0-9]{4}|[0-9]{2})');
@@ -23,8 +22,6 @@ class ValidateUtils {
   // prices: 숫자 및 화폐 기호 검증. e.g. ₩1,000, 1,000원
   static final RegExp prices = RegExp(
       r'(^(\d{1,3}[.,])+(\d{1,3})$|[₩wW]\s?(\d{1,3}[.,])*(\d{1,3})|(\d{1,3}[.,])*(\d{1,3})\s?[원])');
-
-  static late AppLocalizations l10n; // 다국어 문자열에 접근하기 위한 객체로, 외부에서 설정됨
 
   static String? validIdentity(String? value, bool? validId, String? message) {
     if (validId != null && !validId) {
@@ -43,7 +40,7 @@ class ValidateUtils {
   static String? validRePassword(String? value, String oldPass) {
     if (value != oldPass) {
       // 입력값이 기존 비밀번호와 일치하지 않으면 오류 메시지를 반환
-      return l10n.user_password_not_match;
+      return "비밀번호가 일치하지 않습니다.";
     }
     return null;
   }
@@ -54,9 +51,9 @@ class ValidateUtils {
   static String? validNickname(
       String? value, bool? validNickname, String? message) {
     if (value == null || value.trim().isEmpty) {
-      return l10n.user_nickname_duplicate;
+      return "중복된 닉네임입니다.";
     } else if (value.length < 3 || value.length > 20) {
-      return l10n.user_nickname_correct_format(3, 20);
+      return "닉네임은 3자에서 20자 사이여야 합니다.";
     } else if (validNickname != null && !validNickname) {
       return message;
     }
@@ -65,9 +62,9 @@ class ValidateUtils {
 
   static String? validEmail(String? value) {
     if (value == null) {
-      return l10n.validation_email_format;
+      return "이메일 형식에 맞게 입력해 주십시오.";
     } else if (!email.hasMatch(value)) {
-      return l10n.validation_email_format;
+      return "이메일 형식에 맞게 입력해 주십시오.";
     }
     return null;
   }
@@ -75,7 +72,7 @@ class ValidateUtils {
   static String? validPhoneNumber(
       String? value, bool? validPhone, String? message) {
     if (!phoneMobile.hasMatch(value ?? '')) {
-      return l10n.validation_format;
+      return "잘못된 형식입니다.";
     } else if (validPhone != null && !validPhone) {
       return message;
     }
@@ -84,23 +81,16 @@ class ValidateUtils {
 
   static String? validRegisterationPath(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return l10n.input_subscription_path;
+      return "가입 경로를 입력해 주십시오.";
     }
     return null;
   }
 
   static String? validOtp(String? value, bool? validOtp, String? message) {
     if (value == null || value.trim().isEmpty) {
-      return l10n.input_otp;
+      return "OTP(임시 비밀번호)를 입력해 주십시오.";
     } else if (validOtp != null && !validOtp) {
       return message;
-    }
-    return null;
-  }
-
-  static String? validSelectImage(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return l10n.validation_select_image;
     }
     return null;
   }
@@ -108,22 +98,14 @@ class ValidateUtils {
   static String? validName(String? value) {
     value = value?.trim() ?? '';
     if (value.isEmpty || value.length > 50) {
-      return l10n.validation_name_length(1, 50);
-    }
-    return null;
-  }
-
-  static String? validDescription(String? value) {
-    value = value?.trim() ?? '';
-    if (value.length > 500) {
-      return l10n.validation_description_length(1, 500);
+      return "이름은 {from}~{to}자 사이여야 합니다.";
     }
     return null;
   }
 
   static String? validNotEmpty(String? value) {
     if (value?.trim().isEmpty ?? false) {
-      return l10n.input_field;
+      return "이 필드를 입력해 주십시오.";
     }
     return null;
   }
