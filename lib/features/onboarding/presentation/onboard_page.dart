@@ -131,6 +131,8 @@ class _OnBoardPageState extends State<OnBoardPage>
                                 return BalloonWidget(
                                   text: balloons[balloonIndex]['text'],
                                   color: balloons[balloonIndex]['color'],
+                                  textStyle: AppStyles.header02()
+                                      .copyWith(fontWeight: FontWeight.w900),
                                 );
                               },
                             ),
@@ -177,9 +179,12 @@ class _OnBoardPageState extends State<OnBoardPage>
                       shadowColor: AppColors.colorGrey200),
                   AppElevatedButton(
                     primary: context.appColors.primary,
-                    onPressed: () {
-                      // TODO: 휴대폰 번호 입력 페이지로 넘어가기
-                      // context.go('/경로경로');
+                    onPressed: () async {
+                      GoRouter.of(context).push('/onboard-phone');
+                      // await navigate(
+                      //   context: context,
+                      //   code: 'onboard-phone',
+                      // );
                     },
                     child: Text(
                       '전화번호로 시작하기',
