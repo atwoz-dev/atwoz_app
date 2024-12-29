@@ -29,7 +29,7 @@ class AuthPrimaryButton extends StatelessWidget {
     return AppElevatedButton(
       borderRadius: BorderRadius.circular(20),
       height: context.screenHeight * 0.07,
-      expandedWith: true,
+      expandedWidth: true,
       isLoading: isLoading,
       onPressed: () {
         FocusScope.of(context).unfocus();

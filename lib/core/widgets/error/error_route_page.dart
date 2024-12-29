@@ -1,3 +1,4 @@
+import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ class ErrorRoutePage extends ConsumerWidget {
             Text(state.error?.toString() ?? state.uri.toString(),
                 textAlign: TextAlign.center),
             AppTextButton(
-              expandedWith: false,
+              expandedWidth: false,
               onPressed: () => goToHome(context), // goToHome 함수 호출
               child: Text("메인으로"),
             ),
@@ -33,6 +34,10 @@ class ErrorRoutePage extends ConsumerWidget {
 
   /// 홈 화면으로 이동
   void goToHome(BuildContext context) {
-    context.go('/'); // GoRouter를 사용하여 홈 화면으로 이동
+    navigate(
+      context: context,
+      route: AppRoute.home,
+      method: NavigationMethod.go,
+    );
   }
 }

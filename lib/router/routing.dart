@@ -11,11 +11,15 @@ final routerProvider = Provider<GoRouter>((ref) {
 /// Config routing for app
 class Routing {
   const Routing._();
+
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/onboard',
-    routes: HomeBranch.routes,
+    initialLocation: '/onboard', // 초기 경로 설정
+    routes: [
+      ...HomeBranch.routes,
+      ...OnboardBranch.routes,
+    ], // router.dart의 routes 가져오기
     refreshListenable: ValueNotifier(authProvider),
     errorBuilder: (context, GoRouterState state) => ErrorRoutePage(state),
     redirect: (context, GoRouterState state) {
@@ -23,7 +27,7 @@ class Routing {
       final isAuthenticated = container.read(authProvider);
       final isAuthPath = state.uri.toString() == '/auth';
 
-      // TODO: API 연결 후 각주 해제
+      // 인증 상태에 따른 경로 리다이렉트
       // if (!isAuthenticated && !isAuthPath) {
       //   return '/onboard';
       // }

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:atwoz_app/features/onboarding/widget/chat_bubble.dart';
+import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
@@ -180,11 +180,10 @@ class _OnBoardPageState extends State<OnBoardPage>
                   AppElevatedButton(
                     primary: context.appColors.primary,
                     onPressed: () async {
-                      GoRouter.of(context).push('/onboard-phone');
-                      // await navigate(
-                      //   context: context,
-                      //   code: 'onboard-phone',
-                      // );
+                      navigate(
+                        context: context,
+                        route: AppRoute.onboardPhone,
+                      );
                     },
                     child: Text(
                       '전화번호로 시작하기',

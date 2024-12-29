@@ -14,7 +14,7 @@ class AppTextButton extends ConsumerWidget {
     this.onFocusChange,
     this.padding = AppDimens.buttonPadding,
     this.primary,
-    this.expandedWith = true,
+    this.expandedWidth = true,
     this.isLoading = false,
     this.alignment,
     this.height = AppDimens.buttonHeight,
@@ -36,7 +36,7 @@ class AppTextButton extends ConsumerWidget {
 
   final ValueChanged<bool>? onFocusChange;
 
-  final bool expandedWith;
+  final bool expandedWidth;
 
   final AlignmentGeometry? alignment;
 
@@ -65,7 +65,7 @@ class AppTextButton extends ConsumerWidget {
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         textStyle: AppStyles.body01Medium(),
         minimumSize: Size(
-          expandedWith ? double.infinity : width,
+          expandedWidth ? double.infinity : width,
           height,
         ),
         alignment: alignment,

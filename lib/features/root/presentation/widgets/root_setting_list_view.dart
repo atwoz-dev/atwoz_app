@@ -1,10 +1,7 @@
-import 'package:atwoz_app/config/config.dart';
 import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:go_router/go_router.dart';
 
 class SettingListView extends ConsumerWidget {
   const SettingListView({
@@ -59,10 +56,8 @@ void fetchNotifierEvent(data, BuildContext context) {
     case 2:
       break;
     case 3:
-      launchUrl(Uri.parse(Config.kakaoContactUrl));
       break;
     case 4:
-      context.go('/app-information'); // 경로로 이동
       break;
     case 5:
       break;

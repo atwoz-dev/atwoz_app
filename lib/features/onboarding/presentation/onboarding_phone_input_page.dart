@@ -3,11 +3,11 @@ import 'package:atwoz_app/core/utils/validate_utils.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
+import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/core/base/notifier/common_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 // TODO: common_state_notifier 활용할지 말지
 
@@ -123,7 +123,10 @@ class OnboardingPhoneInputPageState
                       ? () {
                           // TODO: 나중에 api 연결하기
                           print("인증번호 요청"); // 성공 시 동작
-                          GoRouter.of(context).push('/onboard-certification');
+                          navigate(
+                            context: context,
+                            route: AppRoute.onboardCertification,
+                          );
                         }
                       : null,
                   child: Text(
