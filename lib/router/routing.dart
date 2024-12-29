@@ -23,6 +23,7 @@ class Routing {
       final isAuthenticated = container.read(authProvider);
       final isAuthPath = state.uri.toString() == '/auth';
 
+      // TODO: API 연결 후 각주 해제
       // if (!isAuthenticated && !isAuthPath) {
       //   return '/onboard';
       // }

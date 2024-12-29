@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// BuildContext에 다양한 유틸리티 메서드를 추가합니다.
 extension ContextExtension on BuildContext {
   /// 다국어 반환
-  AppLocalizations get l10n => AppLocalizations.of(this);
 
   /// 앱 테마 및 색 반환
   ThemeData get theme => Theme.of(this);

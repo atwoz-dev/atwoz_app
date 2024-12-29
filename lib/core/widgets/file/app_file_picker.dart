@@ -59,7 +59,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
         Row(
           children: [
             Text(
-              context.l10n.label_attachment,
+              "첨부파일",
               style: style,
             ),
             const Gap(20),
@@ -80,7 +80,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
-                        '${_pickedFiles?.length ?? 0}${context.l10n.label_each}',
+                        '${_pickedFiles?.length ?? 0}개',
                         style: style,
                       ),
                     ),

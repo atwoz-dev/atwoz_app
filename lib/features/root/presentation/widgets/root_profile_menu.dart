@@ -2,7 +2,7 @@ import 'package:atwoz_app/core/widgets/image/app_icon.dart';
 import 'package:atwoz_app/core/widgets/view/default_divider.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
@@ -15,8 +15,6 @@ class RootProfileMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AppLocalizations l10n = context.l10n;
-
     final appStateAsync = ref.watch(appNotifierProvider);
 
     return appStateAsync.when(
@@ -25,17 +23,11 @@ class RootProfileMenu extends ConsumerWidget {
           GestureDetector(
             onTap: () =>
                 _changeThemeMode(context, ref, appState.themeModeIndex),
-            child: _buildItem(
-                AppIcons.imgFill, l10n.settings_change_theme, context),
-          ),
-          GestureDetector(
-            onTap: () => _changeLanguage(context, ref, appState.languageCode),
-            child: _buildItem(
-                AppIcons.language, l10n.settings_change_language, context),
+            child: _buildItem(AppIcons.imgFill, "테마 변경", context),
           ),
           GestureDetector(
             onTap: ref.read(authServiceProvider).signOut,
-            child: _buildItem(AppIcons.onOff, l10n.user_logout, context),
+            child: _buildItem(AppIcons.onOff, "로그아웃", context),
           ),
         ];
 
@@ -88,38 +80,6 @@ class RootProfileMenu extends ConsumerWidget {
     ).then((selectedModeIndex) {
       if (selectedModeIndex != null) {
         appNotifier.changeThemeMode(ThemeMode.values[selectedModeIndex]);
-      }
-    });
-  }
-
-  Future<void> _changeLanguage(
-      BuildContext context, WidgetRef ref, String currentLanguage) async {
-    final appNotifier = ref.read(appNotifierProvider.notifier);
-    final supportedLocales = AppLocalizations.supportedLocales;
-
-    await showModalBottomSheet<Locale>(
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          children: supportedLocales.map((locale) {
-            final isSelected = locale.languageCode == currentLanguage;
-
-            return ListTile(
-              leading: Icon(
-                isSelected ? Icons.check : Icons.circle_outlined,
-                color: context.theme.colorScheme.primary,
-              ),
-              title: Text(_capitalize(locale.languageCode)),
-              onTap: () {
-                Navigator.pop(context, locale);
-              },
-            );
-          }).toList(),
-        );
-      },
-    ).then((selectedLocale) {
-      if (selectedLocale != null) {
-        appNotifier.changeLocale(selectedLocale);
       }
     });
   }

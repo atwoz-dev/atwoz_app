@@ -38,17 +38,17 @@ class DateTimeUtils {
     }
     // Less timeShowNow
     if (timeShowNow != null && difference < timeShowNow) {
-      return ValidateUtils.l10n.time_now;
+      return "지금";
     }
     // Defaut
     if (difference < const Duration(minutes: 1)) {
-      return ValidateUtils.l10n.time_just_now;
+      return "방금";
     } else if (difference < const Duration(hours: 1)) {
-      return ValidateUtils.l10n.time_minutes_ago(difference.inMinutes);
+      return "${difference.inMinutes}분 전";
     } else if (difference < const Duration(days: 1)) {
-      return ValidateUtils.l10n.time_hours_ago(difference.inHours);
+      return "{difference.inHours}시간 전";
     } else if (difference < const Duration(days: 30)) {
-      return ValidateUtils.l10n.time_days_ago(difference.inDays);
+      return "{difference.inDays}일 전";
     } else if (difference < const Duration(days: 90)) {
       return convertToDate(dateTime);
     } else {

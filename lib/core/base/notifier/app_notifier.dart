@@ -29,12 +29,6 @@ class AppNotifier extends AsyncNotifier<AppBaseState> {
     await _saveState(newState);
   }
 
-  Future<void> changeLocale(Locale locale) async {
-    final newState = state.value!.copyWith(languageCode: locale.languageCode);
-    state = AsyncData(newState);
-    await _saveState(newState);
-  }
-
   Future<void> _saveState(AppBaseState state) async {
     await _hiveBox.put(0, state);
   }
