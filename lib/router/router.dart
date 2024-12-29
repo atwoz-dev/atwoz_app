@@ -7,8 +7,6 @@ import 'package:atwoz_app/features/home/presentation/home_page.dart';
 import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/onboard_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/onboarding_phone_input_page.dart';
-import 'package:atwoz_app/features/root/presentation/root_setting_page.dart';
-import 'package:atwoz_app/core/widgets/error/error_route_page.dart';
 
 // Navigator keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -67,10 +65,6 @@ class HomeBranch {
     GoRoute(
       path: '/auth',
       builder: (context, state) => SignInPage(),
-    ),
-    GoRoute(
-      path: '/root-setting',
-      builder: (context, state) => const RootSettingPage(),
     ),
   ];
 }

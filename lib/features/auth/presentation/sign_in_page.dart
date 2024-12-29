@@ -3,11 +3,9 @@ import 'package:atwoz_app/core/theme/app_fonts.dart';
 import 'package:atwoz_app/core/theme/app_icons.dart';
 import 'package:atwoz_app/features/auth/widgets/auth_primary_button.dart';
 import 'package:atwoz_app/features/auth/widgets/auth_text_form_field.dart';
-import 'package:atwoz_app/router/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -108,7 +106,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
             // 로그인 버튼
             AuthPrimaryButton(
               isLoading: false, // Placeholder for loading state
-              text: context.l10n.user_login,
+              text: "로그인",
               primary: context.appColors.primary,
               onClick: () {
                 _validateAndSubmit();
