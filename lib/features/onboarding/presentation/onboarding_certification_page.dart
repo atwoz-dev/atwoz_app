@@ -73,9 +73,7 @@ class OnboardingCertificationPageState
         FocusScope.of(context).unfocus(); // 외부를 클릭했을 때 focus 해제
       },
       child: Scaffold(
-        appBar: DefaultAppBar(
-          isDivider: false,
-        ),
+        appBar: DefaultAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
           child: Column(
@@ -167,8 +165,7 @@ class OnboardingCertificationPageState
                   onPressed: isButtonEnabled
                       ? () {
                           print("인증번호 요청");
-                          // TODO: 아래 라우팅은 바뀌어야 함 실제로는 레포트로 가면 안됨
-                          navigate(context: context, route: AppRoute.report);
+                          // TODO: API 연결
                         }
                       : null,
                   child: Text(

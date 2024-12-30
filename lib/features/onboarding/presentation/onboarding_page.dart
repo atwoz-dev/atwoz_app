@@ -181,7 +181,7 @@ class _OnBoardPageState extends State<OnBoardPage>
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboardPhone,
                       );
                     },

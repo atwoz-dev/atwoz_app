@@ -73,9 +73,7 @@ class OnboardingPhoneInputPageState
         FocusScope.of(context).unfocus(); // 외부를 클릭했을 때 focus 해제
       },
       child: Scaffold(
-        appBar: DefaultAppBar(
-          isDivider: false,
-        ),
+        appBar: DefaultAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
           child: Column(
@@ -124,7 +122,7 @@ class OnboardingPhoneInputPageState
                           // TODO: 나중에 api 연결하기
                           print("인증번호 요청"); // 성공 시 동작
                           navigate(
-                            context: context,
+                            context,
                             route: AppRoute.onboardCertification,
                           );
                         }

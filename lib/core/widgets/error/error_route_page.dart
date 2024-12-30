@@ -35,7 +35,7 @@ class ErrorRoutePage extends ConsumerWidget {
   /// 홈 화면으로 이동
   void goToHome(BuildContext context) {
     navigate(
-      context: context,
+      context,
       route: AppRoute.home,
       method: NavigationMethod.go,
     );
