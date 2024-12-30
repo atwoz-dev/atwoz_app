@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:atwoz_app/features/auth/presentation/sign_up_three_page.dart';
+import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,8 @@ enum AppRoute {
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
   report('/report'),
-  signUpFirst('/sign-up/first'), // 회원가입 쪽 하시는 분 이름 원하는대로 바꿔주세요.
-  signUpThree('/sign-up/three');
+  signUp('/sign-up'),
+  signUpThree('/sign-up/profile');
 
   final String path;
 
@@ -91,12 +91,12 @@ class OnboardBranch {
 class SignBranch {
   static final routes = [
     GoRoute(
-      path: AppRoute.signUpFirst.path,
+      path: AppRoute.signUp.path,
       builder: (context, state) => const SignInPage(), // TODO: 바꾸기
       routes: [
         GoRoute(
           path: AppRoute.signUpThree.path.split('/sign-up').last,
-          builder: (context, state) => const SignUpThreePage(),
+          builder: (context, state) => const SignUpProfilePage(),
         ),
       ],
     ),
