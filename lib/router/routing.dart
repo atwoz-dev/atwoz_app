@@ -15,7 +15,7 @@ class Routing {
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
-    initialLocation: AppRoute.onboard.path, // 초기 경로 설정
+    initialLocation: AppRoute.navigation.path, // 초기 경로 설정
     routes: [
       ...HomeBranch.routes,
       ...OnboardBranch.routes,

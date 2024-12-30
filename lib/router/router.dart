@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ enum NavigationMethod { push, replace, go, pop, pushReplacement }
 
 // Route enum with path
 enum AppRoute {
+  navigation('/navigation'),
   home('/home'),
   auth('/auth'),
   onboard('/onboard'),
@@ -45,6 +47,11 @@ final goRouter = GoRouter(
 // Home branch routes
 class HomeBranch {
   static final routes = [
+    // TODO: 화면 전부 나오면 삭제하기
+    GoRoute(
+      path: AppRoute.navigation.path,
+      builder: (context, state) => const NavigationPage(),
+    ),
     GoRoute(
       path: AppRoute.home.path,
       builder: (context, state) => const HomePage(),
