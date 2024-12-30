@@ -1,4 +1,3 @@
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +11,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.title,
-    this.isDivider = true,
+    this.isDivider = false,
     this.leadingIcon,
     this.leadingAction,
   });

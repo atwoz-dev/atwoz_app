@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>();
 final authProvider = StateProvider<bool>((ref) => false);
 
 // Navigation methods enum
-enum NavigationMethod { push, replace, go, pop, pushReplacement }
+enum NavigationMethod { push, replace, go, pushReplacement }
 
 // Route enum with path
 enum AppRoute {
@@ -28,21 +29,20 @@ enum AppRoute {
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
-  report('/report');
+  report('/report'),
+  signUp('/sign-up'),
+  signUpThree('/sign-up/profile');
 
   final String path;
 
   const AppRoute(this.path);
 }
 
-// GoRouter 설정
-final goRouter = GoRouter(
-  navigatorKey: rootNavigatorKey,
-  routes: [
-    ...HomeBranch.routes,
-    ...OnboardBranch.routes,
-  ],
-);
+final allRoutes = [
+  ...HomeBranch.routes,
+  ...OnboardBranch.routes,
+  ...SignBranch.routes,
+];
 
 // Home branch routes
 class HomeBranch {
@@ -88,9 +88,28 @@ class OnboardBranch {
   ];
 }
 
+class SignBranch {
+  static final routes = [
+    GoRoute(
+      path: AppRoute.signUp.path,
+      builder: (context, state) => const SignInPage(), // TODO: 바꾸기
+      routes: [
+        GoRoute(
+          path: AppRoute.signUpThree.path.split('/sign-up').last,
+          builder: (context, state) => const SignUpProfilePage(),
+        ),
+      ],
+    ),
+  ];
+}
+
+// pop
+void pop(BuildContext context, [Object? extra]) =>
+    Navigator.of(context).pop(extra);
+
 // 네비게이션 헬퍼 메서드
-Future<T?> navigate<T>({
-  required BuildContext context,
+Future<T?> navigate<T>(
+  BuildContext context, {
   required AppRoute route,
   NavigationMethod method = NavigationMethod.push,
   Object? extra,
@@ -109,59 +128,56 @@ Future<T?> navigate<T>({
     case NavigationMethod.go:
       goRouter.go(route.path, extra: extra);
       break;
-    case NavigationMethod.pop:
-      Navigator.of(context).pop(extra);
-      break;
+
     case NavigationMethod.pushReplacement:
       result = await goRouter.pushReplacement<T>(route.path, extra: extra);
       break;
   }
 
-  if (callback != null && (method != NavigationMethod.pop || result != null)) {
+  if (callback != null && result != null) {
     callback();
   }
 
   return result;
 }
-/*
-< navigate() 메서드 용례 >
+
+/* < navigate() 메서드 용례 >
 
 // 1. 일반적인 push 동작
-navigate(context: context, route: AppRoute.home);
-
-// 2. replace 동작
 navigate(
-  context: context,
+  context,
+  route: AppRoute.home
+);
+
+//  2. replace 동작
+navigate(
+  context,
   route: AppRoute.auth,
-  method: NavigationMethod.replace,
+  method: NavigationMethod.replace
 );
 
 // 3. go 동작
 navigate(
-  context: context,
+  context,
   route: AppRoute.onboard,
-  method: NavigationMethod.go,
+  method: NavigationMethod.go
 );
 
 // 4. pop 동작
-navigate(
-  context: context,
-  route: AppRoute.home,
-  method: NavigationMethod.pop,
-);
+pop(context);
 
 // 5. pushReplacement 동작
 navigate(
-  context: context,
-  route: AppRoute.auth,
-  method: NavigationMethod.pushReplacement,
+  context,
+  route: AppRoute.report,
+    method: NavigationMethod.pushReplacement,
 );
 
 // 6. 결과와 콜백 처리
 navigate(
-  context: context,
+  context,
   route: AppRoute.onboardCertification,
-  method: NavigationMethod.push,
+  extra: {'exampleKey': 'exampleValue'},
   callback: () => print('Navigation completed!'),
 );
  */

@@ -28,7 +28,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -43,7 +43,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -58,7 +58,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -73,7 +73,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -88,7 +88,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -103,7 +103,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.report,
                       );
                     },
@@ -118,7 +118,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -133,8 +133,8 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
-                        route: AppRoute.onboard,
+                        context,
+                        route: AppRoute.signUpThree,
                       );
                     },
                     child: Text(
@@ -148,7 +148,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -163,7 +163,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -178,7 +178,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },
@@ -193,7 +193,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     primary: context.appColors.primary,
                     onPressed: () async {
                       navigate(
-                        context: context,
+                        context,
                         route: AppRoute.onboard,
                       );
                     },

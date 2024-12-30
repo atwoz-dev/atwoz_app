@@ -38,7 +38,6 @@ class ReportPageState extends ConsumerState<ReportPage> {
       child: Scaffold(
         appBar: DefaultAppBar(
           title: '신고하기',
-          isDivider: false,
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: context.screenWidth * 0.05),
@@ -46,91 +45,92 @@ class ReportPageState extends ConsumerState<ReportPage> {
             children: [
               Expanded(
                 flex: 9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '닉네임',
-                      style:
-                          AppStyles.body02Regular(context.appColors.onSurface)
-                              .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const Gap(10),
-                    Text(
-                      '미노민호',
-                      style: AppStyles.header03(context.appColors.onSurface)
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    const Gap(30),
-                    Text(
-                      '신고유형',
-                      style:
-                          AppStyles.body02Regular(context.appColors.onSurface)
-                              .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const Gap(10),
-                    OutlinedDropdown<String>(
-                      placeholder: '신고 유형을 선택해주세요.',
-                      items: reportTypes,
-                      selectedItem: selectedReportType,
-                      onItemSelected: (item) {
-                        setState(() {
-                          selectedReportType = item;
-                        });
-                      },
-                      valueBuilder: (item) => item,
-                    ),
-                    const Gap(30),
-                    Text(
-                      '신고내용',
-                      style:
-                          AppStyles.body02Regular(context.appColors.onSurface)
-                              .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const Gap(10),
-                    AppTextFormField(
-                      showCharacterCount: true, // 글자 수 카운터 표시
-                      contentPadding: EdgeInsets.fromLTRB(0, 17.25, 16, 33.25),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: AppColors.colorGrey100,
-                          width: 2.0,
-                        ),
+                child: SingleChildScrollView(
+                  // 키보드가 올라왔을 때 스크롤 가능
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '닉네임',
+                        style:
+                            AppStyles.body02Regular(context.appColors.onSurface)
+                                .copyWith(fontWeight: FontWeight.w600),
                       ),
-                      controller: reportContentController,
-                      hintText: '텍스트 입력',
-                      hintStyle:
-                          AppStyles.body02Regular(AppColors.colorGrey500),
-                      maxLines: 8,
-                      maxLength: 1000,
-                    ),
-                    const Gap(30),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top:
-                                  4.0), // Adjust padding to fine-tune alignment
-                          child: AppIcon(
-                            AppIcons.exclamationCircle,
-                            colorFilter:
-                                AppIcon.fillColor(AppColors.colorGrey500),
+                      const Gap(10),
+                      Text(
+                        '미노민호',
+                        style: AppStyles.header03(context.appColors.onSurface)
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
+                      const Gap(30),
+                      Text(
+                        '신고유형',
+                        style:
+                            AppStyles.body02Regular(context.appColors.onSurface)
+                                .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const Gap(10),
+                      OutlinedDropdown<String>(
+                        placeholder: '신고 유형을 선택해주세요.',
+                        items: reportTypes,
+                        selectedItem: selectedReportType,
+                        onItemSelected: (item) {
+                          setState(() {
+                            selectedReportType = item;
+                          });
+                        },
+                        valueBuilder: (item) => item,
+                      ),
+                      const Gap(30),
+                      Text(
+                        '신고내용',
+                        style:
+                            AppStyles.body02Regular(context.appColors.onSurface)
+                                .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const Gap(10),
+                      AppTextFormField(
+                        showCharacterCount: true, // 글자 수 카운터 표시
+                        contentPadding:
+                            EdgeInsets.fromLTRB(0, 17.25, 16, 33.25),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: AppColors.colorGrey100,
+                            width: 2.0,
                           ),
                         ),
-                        Gap(5),
-                        Expanded(
-                          flex: 9,
-                          child: Text(
-                            '운영정책 위반 여부를 확인하기 위해 신고한 내용을 접수하고 상대방을 잠시 차단합니다. 허위로 신고할 경우 서비스 이용이 제한될 수 있으니 유의해 주세요.',
-                            style:
-                                AppStyles.body03Regular(AppColors.colorGrey500),
+                        controller: reportContentController,
+                        hintText: '텍스트 입력',
+                        hintStyle:
+                            AppStyles.body02Regular(AppColors.colorGrey500),
+                        maxLines: 8,
+                        maxLength: 1000,
+                      ),
+                      const Gap(30),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: AppIcon(
+                              AppIcons.exclamationCircle,
+                              colorFilter:
+                                  AppIcon.fillColor(AppColors.colorGrey500),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Gap(5),
+                          Expanded(
+                            child: Text(
+                              '운영정책 위반 여부를 확인하기 위해 신고한 내용을 접수하고 상대방을 잠시 차단합니다. 허위로 신고할 경우 서비스 이용이 제한될 수 있으니 유의해 주세요.',
+                              style: AppStyles.body03Regular(
+                                  AppColors.colorGrey500),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
