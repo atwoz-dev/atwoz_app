@@ -250,7 +250,8 @@ class AppTextFormFieldState extends State<AppTextFormField>
     return InputDecoration(
       enabled: widget.enabled ?? true,
       contentPadding: widget.contentPadding ??
-          const EdgeInsets.fromLTRB(0, 17.25, 16, 33.25), // 하단 공간 확보
+          const EdgeInsets.symmetric(
+              vertical: 17.25, horizontal: 0), // 하단 공간 확보
       counterText: '', // 기본 counter 숨기기
       prefix:
           Padding(padding: EdgeInsets.only(left: 16.0), child: widget.prefix),

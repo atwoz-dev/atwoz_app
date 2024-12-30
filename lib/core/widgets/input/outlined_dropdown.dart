@@ -137,12 +137,9 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
                                 _focusNode.unfocus();
                               },
                               child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: isSelected
-                                      ? widget.selectedItemHighlightColor
-                                      : null,
-                                ),
+                                color: isSelected
+                                    ? widget.selectedItemHighlightColor
+                                    : null,
                                 padding: const EdgeInsets.all(10),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
