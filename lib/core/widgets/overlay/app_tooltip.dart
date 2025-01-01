@@ -1,5 +1,5 @@
 import 'package:atwoz_app/core/widgets/image/app_icon.dart';
-import 'package:atwoz_app/features/onboarding/widget/chat_bubble.dart';
+import 'package:atwoz_app/core/widgets/overlay/app_chat_bubble.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/theme.dart';
