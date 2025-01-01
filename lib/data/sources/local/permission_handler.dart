@@ -20,7 +20,7 @@ class PermissionHandler with WidgetsBindingObserver {
       // 설정에서 돌아온 경우 권한 상태 재확인
       checkPhotoPermissionStatus();
     } else if (state == AppLifecycleState.inactive) {
-      isReturningFromSettings = true; // 설정 앱으로 이동
+      isReturningFromSettings = true;
     }
   }
 
@@ -41,10 +41,8 @@ class PermissionHandler with WidgetsBindingObserver {
         print("권한 영구 거부됨. 설정 앱으로 이동.");
         openAppSettings();
         return false;
-      } else {
-        print("알 수 없는 권한 상태.");
-        return false;
       }
+      return false;
     } catch (e) {
       print("권한 상태 확인 중 오류 발생: $e");
       return false;
