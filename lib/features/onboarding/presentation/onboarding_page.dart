@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:atwoz_app/features/onboarding/widget/chat_bubble.dart';
+import 'package:atwoz_app/core/widgets/overlay/app_chat_bubble.dart';
 import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
 

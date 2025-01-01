@@ -10,5 +10,9 @@ class AppIcons {
   static const String icImage = '$iconsPath/ic_image.svg';
   static const String icLock = '$iconsPath/ic_lock.svg';
   static const String person = '$iconsPath/person.svg';
+  static const String personPlaceholder = '$iconsPath/person_placeholder.svg';
   static const String exclamationCircle = '$iconsPath/exclamation_circle.svg';
+  static const String help = '$iconsPath/help.svg';
+  static const String add = '$iconsPath/add.svg';
+  static const String close = '$iconsPath/close.svg';
 }

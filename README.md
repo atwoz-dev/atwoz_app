@@ -26,7 +26,7 @@ flutter pub get
 자동 생성 익스텐션을 사용해도 무관합니다.
 
 ```dart
-flutter packages pub run build_runner build
+dart run build_runner build
 ```
 
 ### APP 실행(로컬)
@@ -34,7 +34,7 @@ flutter packages pub run build_runner build
 추후 아래와 같은 명령어로 앱을 실행해야 합니다.
 ```dart
 flutter pub get
-flutter packages pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 flutter run --flavor="development" --dart-define-from-file="env-dev.json"
 ```
 
