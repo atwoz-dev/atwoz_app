@@ -13,4 +13,6 @@ class AppIcons {
   static const String personPlaceholder = '$iconsPath/person_placeholder.svg';
   static const String exclamationCircle = '$iconsPath/exclamation_circle.svg';
   static const String help = '$iconsPath/help.svg';
+  static const String add = '$iconsPath/add.svg';
+  static const String close = '$iconsPath/close.svg';
 }

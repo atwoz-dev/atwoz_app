@@ -10,12 +10,14 @@ import 'package:image_picker/image_picker.dart';
 class ProfileImageWidget extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback onPickImage;
-  final bool isRepresentative; // 대표 아이템 여부 추가
+  final VoidCallback? onRemoveImage;
+  final bool isRepresentative;
 
   const ProfileImageWidget({
     super.key,
     this.imageFile,
     required this.onPickImage,
+    this.onRemoveImage, // 콜백 초기화
     this.isRepresentative = false,
   });
 
@@ -64,16 +66,19 @@ class ProfileImageWidget extends StatelessWidget {
           bottom: 8,
           right: 8,
           child: GestureDetector(
-            onTap: onPickImage,
+            onTap: imageFile != null ? onRemoveImage : onPickImage,
             child: Container(
               width: 24,
               height: 24,
               decoration: BoxDecoration(
                 color: AppColors.colorWhite,
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.grey, width: 1.5),
+                border: Border.all(color: AppColors.colorGrey400, width: 1.5),
               ),
-              child: Icon(Icons.add, size: 20, color: Colors.grey),
+              child: AppIcon(
+                imageFile != null ? AppIcons.close : AppIcons.add,
+                colorFilter: AppIcon.fillColor(AppColors.colorGrey400),
+              ),
             ),
           ),
         ),

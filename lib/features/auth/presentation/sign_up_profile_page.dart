@@ -81,12 +81,16 @@ class SignUpProfilePage extends ConsumerWidget {
                                 final updatedPhotos = List<XFile?>.from(photos);
                                 updatedPhotos[index] = pickedPhoto;
 
-                                // 상태를 업데이트
+                                // 사진 업로드
                                 await ref
                                     .read(photoProvider.notifier)
                                     .updatePhoto(index, pickedPhoto);
                               }
                             },
+                            // 사진 삭제
+                            onRemoveImage: () async => await ref
+                                .read(photoProvider.notifier)
+                                .updatePhoto(index, null),
                             isRepresentative: index == 0, // 첫 번째 사진만 대표로 설정
                           );
                         },
@@ -164,9 +168,11 @@ class SignUpProfilePage extends ConsumerWidget {
                         ],
                       ),
                       AppElevatedButton(
-                        onPressed: photos.any((photo) => photo != null)
+                        onPressed: photos.any((photo) => photo != null) &&
+                                photos[0] != null
                             ? () {
                                 // TODO: 다음 페이지 라우팅
+                                print('클릭');
                               }
                             : null,
                         child: Text(
