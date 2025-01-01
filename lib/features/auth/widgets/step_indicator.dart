@@ -8,7 +8,6 @@ class StepIndicator extends StatelessWidget {
   final int currentStep; // 현재 단계 (1부터 시작)
   final Color? activeColor; // 활성화 색상 (현재 단계까지)
   final Color? inactiveColor; // 비활성 색상
-  final double size; // 원의 크기
   final double spacing; // 원 간 간격
 
   const StepIndicator({
@@ -17,7 +16,6 @@ class StepIndicator extends StatelessWidget {
     required this.currentStep,
     this.activeColor,
     this.inactiveColor,
-    this.size = 10.0,
     this.spacing = 8.0,
   });
 
@@ -33,21 +31,21 @@ class StepIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(totalSteps, (index) {
           final isActive = index < currentStep; // 현재 단계까지 활성화
+          final bool isCurrent = index + 1 == currentStep; // 현재 단계 여부
 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: spacing / 2),
             child: Container(
-              width: size * (isActive && index + 1 == currentStep ? 2 : 1),
-              height: size * (isActive && index + 1 == currentStep ? 2 : 1),
+              width: isCurrent ? 20.0 : 6.0, // 현재 단계는 20, 아닌 단계는 6
+              height: isCurrent ? 20.0 : 6.0, // 현재 단계는 20, 아닌 단계는 6
               decoration: BoxDecoration(
                 color: isActive ? resolvedActiveColor : resolvedInactiveColor,
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
-              child: (isActive && index + 1 == currentStep)
+              child: isCurrent
                   ? Text(
                       '${index + 1}', // 현재 단계 숫자
-
                       style:
                           AppStyles.body03Regular(context.appColors.onPrimary),
                     )

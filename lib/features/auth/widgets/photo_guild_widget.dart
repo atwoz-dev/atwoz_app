@@ -1,13 +1,16 @@
+import 'package:atwoz_app/core/theme/app_colors.dart';
+import 'package:atwoz_app/core/theme/app_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class PhotoGuideWidget extends StatelessWidget {
   final String title;
-  final List<String> imagePaths;
+  final List<Map<String, String>> imagePathsWithText;
 
   const PhotoGuideWidget({
     super.key,
     required this.title,
-    required this.imagePaths,
+    required this.imagePathsWithText,
   });
 
   @override
@@ -17,27 +20,57 @@ class PhotoGuideWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: AppStyles.header03().copyWith(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const Gap(16),
         GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
           ),
-          itemCount: imagePaths.length,
+          itemCount: imagePathsWithText.length,
           itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: AssetImage(imagePaths[index]),
-                  fit: BoxFit.cover,
+            final imagePath = imagePathsWithText[index]['image']!;
+            final imageText = imagePathsWithText[index]['text']!;
+            return Stack(
+              children: [
+                // 이미지
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: AssetImage(imagePath),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                // 텍스트가 포함된 반투명한 배경
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 40, // 텍스트 컨테이너 높이
+                    decoration: BoxDecoration(
+                      color: AppColors.colorBlack.withAlpha(180),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        imageText,
+                        style: AppStyles.body03Regular(Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         ),
