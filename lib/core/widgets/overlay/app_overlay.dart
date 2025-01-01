@@ -211,13 +211,10 @@ class AppOverlayPositionDelegate extends SingleChildLayoutDelegate {
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    return positionDependentBox(
-      size: size,
-      childSize: childSize,
-      target: target,
-      verticalOffset: verticalOffset,
-      preferBelow: preferBelow,
-      margin: 0,
+    final double yOffset = target.dy + verticalOffset; // 아래쪽으로 이동
+    return Offset(
+      target.dx - (childSize.width / 2), // X축 가운데 정렬
+      yOffset,
     );
   }
 
