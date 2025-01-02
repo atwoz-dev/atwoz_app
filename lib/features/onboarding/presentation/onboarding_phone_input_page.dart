@@ -2,6 +2,7 @@ import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/utils/validate_utils.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
+import 'package:atwoz_app/core/widgets/text/title_text.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
 import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
@@ -83,11 +84,7 @@ class OnboardingPhoneInputPageState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '휴대폰 번호를 입력해주세요',
-                      style: AppStyles.header01()
-                          .copyWith(fontWeight: FontWeight.w900),
-                    ),
+                    TitleText(title: '휴대폰 번호를 입력해주세요'),
                     const Gap(5),
                     Text(
                       '서비스 이용을 위해 본인확인이 필요해요',

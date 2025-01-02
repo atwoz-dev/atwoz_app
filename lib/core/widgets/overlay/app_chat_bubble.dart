@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/theme/app_colors.dart';
 import 'package:atwoz_app/core/theme/app_fonts.dart';
+import 'package:atwoz_app/core/widgets/text/mixed_bold_text.dart';
 import 'package:flutter/material.dart';
 
 enum BubblePosition { top, bottom }
@@ -18,29 +19,6 @@ Widget bubbleWidget({
   BubblePosition trianglePosition = BubblePosition.bottom, // 삼각형 위치
   bool isShadow = true, // 기본값 true, shadow 여부
 }) {
-  // 텍스트 스타일 기본값
-  final TextStyle defaultStyle = textStyle ?? AppStyles.body03Regular();
-  final TextStyle boldStyle =
-      defaultStyle.copyWith(fontWeight: FontWeight.bold);
-
-  // 텍스트 위젯 생성
-  Widget textWidget;
-  if (boldText != null && comment.contains(boldText)) {
-    final parts = comment.split(boldText);
-    textWidget = RichText(
-      text: TextSpan(
-        text: parts[0],
-        style: defaultStyle,
-        children: [
-          TextSpan(text: boldText, style: boldStyle),
-          if (parts.length > 1) TextSpan(text: parts[1], style: defaultStyle),
-        ],
-      ),
-    );
-  } else {
-    textWidget = Text(comment, style: defaultStyle);
-  }
-
   return Stack(
     clipBehavior: Clip.none,
     children: [
@@ -74,7 +52,12 @@ Widget bubbleWidget({
           ),
           width: width,
           height: height,
-          child: Center(child: textWidget),
+          child: Center(
+              child: MixedBoldText(
+            comment: comment,
+            textStyle: textStyle,
+            boldText: boldText,
+          )),
         ),
       ),
     ],
