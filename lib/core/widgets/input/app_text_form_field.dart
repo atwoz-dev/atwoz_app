@@ -221,9 +221,8 @@ class AppTextFormFieldState extends State<AppTextFormField>
             right: 16,
             child: Text(
               '${controller.text.length}/${widget.maxLength}',
-              style: controller.text.length > 0
-                  ? widget.characterCountStyle ??
-                      AppStyles.body03Regular(AppColors.colorGrey800)
+              style: controller.text.isNotEmpty
+                  ? widget.characterCountStyle ?? AppStyles.body03Regular()
                   : AppStyles.body03Regular(AppColors.colorGrey500),
             ),
           ),

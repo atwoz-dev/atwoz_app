@@ -2,6 +2,7 @@ import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/utils/validate_utils.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
+import 'package:atwoz_app/core/widgets/text/title_text.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
 import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
@@ -83,11 +84,7 @@ class OnboardingCertificationPageState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '인증번호를 입력해주세요',
-                      style: AppStyles.header01()
-                          .copyWith(fontWeight: FontWeight.w900),
-                    ),
+                    TitleText(title: '인증번호를 입력해주세요'),
                     const Gap(5),
                     Text(
                       '문자로 보내드린 인증번호를 입력해주세요',

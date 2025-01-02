@@ -55,8 +55,12 @@ class SignUpProfilePage extends ConsumerWidget {
                           ),
                           const Gap(6),
                           AppTooltip(
-                            message: '최대 6개의 사진을 등록할 수 있습니다.',
-                          ),
+                            message: '대표 사진은 하단과 같이\n정면사진을 등록해주세요',
+                            boldText: '정면사진',
+                            textStyle: AppStyles.body03Regular(
+                              AppColors.colorWhite,
+                            ),
+                          )
                         ],
                       ),
                       const Gap(24),

@@ -174,6 +174,7 @@ class _OnBoardPageState extends State<OnBoardPage>
                 children: [
                   bubbleWidget(
                       comment: '회원가입하고 포인트 선물받기',
+                      boldText: '포인트 선물',
                       width: MediaQuery.of(context).size.width * 0.5,
                       textStyle: AppStyles.body03Regular(),
                       shadowColor: AppColors.colorGrey200),

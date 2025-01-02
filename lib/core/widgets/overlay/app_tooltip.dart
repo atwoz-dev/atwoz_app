@@ -12,6 +12,8 @@ class AppTooltip extends AppOverlay {
     this.autoClose = true,
     super.controller,
     required this.message,
+    this.boldText,
+    this.textStyle,
     Widget? child,
   }) : super(
           child: child ??
@@ -24,6 +26,8 @@ class AppTooltip extends AppOverlay {
   final bool autoClose;
   final String message;
   final Color fillColor;
+  final String? boldText;
+  final TextStyle? textStyle;
 
   @override
   State<AppTooltip> createState() => _AppTooltipState();
@@ -39,10 +43,12 @@ class _AppTooltipState extends AppOverlayState<AppTooltip>
   Widget buildOverlay(BuildContext context, Offset target, Widget? overlay) {
     overlay = bubbleWidget(
         comment: widget.message,
+        boldText: widget.boldText,
         trianglePosition: BubblePosition.top, // 삼각형이 위로 향하도록 수정
         textColor: AppColors.colorWhite,
         bubbleColor: AppColors.colorBlack.withAlpha(180),
-        isShadow: false);
+        isShadow: false,
+        textStyle: widget.textStyle);
 
     return super.buildOverlay(context, target, overlay);
   }

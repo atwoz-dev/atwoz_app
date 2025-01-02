@@ -1,10 +1,13 @@
 import 'package:atwoz_app/core/theme/app_colors.dart';
+import 'package:atwoz_app/core/theme/app_fonts.dart';
+import 'package:atwoz_app/core/widgets/text/mixed_bold_text.dart';
 import 'package:flutter/material.dart';
 
 enum BubblePosition { top, bottom }
 
 Widget bubbleWidget({
   required String comment, // 말풍선 텍스트
+  String? boldText, // bold 처리할 텍스트
   Color bubbleColor = AppColors.colorWhite, // 말풍선 배경색
   Color textColor = AppColors.colorBlack, // 텍스트 색깔
   double width = 200, // 말풍선 너비
@@ -15,58 +18,51 @@ Widget bubbleWidget({
   TextStyle? textStyle, // 텍스트 스타일
   BubblePosition trianglePosition = BubblePosition.bottom, // 삼각형 위치
   bool isShadow = true, // 기본값 true, shadow 여부
-}) =>
-    Stack(
-      clipBehavior: Clip.none,
-      children: [
-        if (isShadow)
-          CustomPaint(
-            size: Size(width, height + 20), // 그림자의 크기
-            painter: ShadowPainter(
-              width: width,
-              height: height,
-              shadowBlur: shadowBlur,
-              shadowOffset: shadowOffset,
-              shadowColor: shadowColor,
-              borderRadius: 50,
-              trianglePosition: trianglePosition,
-            ),
-          ),
-        ClipPath(
-          clipper: BubbleClipper(
+}) {
+  return Stack(
+    clipBehavior: Clip.none,
+    children: [
+      if (isShadow)
+        CustomPaint(
+          size: Size(width, height + 20), // 그림자의 크기
+          painter: ShadowPainter(
+            width: width,
+            height: height,
+            shadowBlur: shadowBlur,
+            shadowOffset: shadowOffset,
+            shadowColor: shadowColor,
             borderRadius: 50,
             trianglePosition: trianglePosition,
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: bubbleColor,
-            ),
-            padding: EdgeInsets.only(
-              top: trianglePosition == BubblePosition.top ? 7 : 0,
-              left: 15,
-              right: 15,
-              bottom: trianglePosition == BubblePosition.bottom
-                  ? 7
-                  : 0, // 삼각형 부분을 위한 충분한 여백 추가
-            ),
-            width: width, // 말풍선 너비
-            height: height, // 말풍선 높이
-            child: Center(
-              child: Text(
-                comment,
-                style: textStyle ??
-                    TextStyle(
-                      color: textColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
         ),
-      ],
-    );
+      ClipPath(
+        clipper: BubbleClipper(
+          borderRadius: 50,
+          trianglePosition: trianglePosition,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: bubbleColor,
+          ),
+          padding: EdgeInsets.only(
+            top: trianglePosition == BubblePosition.top ? 7 : 0,
+            left: 15,
+            right: 15,
+            bottom: trianglePosition == BubblePosition.bottom ? 7 : 0,
+          ),
+          width: width,
+          height: height,
+          child: Center(
+              child: MixedBoldText(
+            comment: comment,
+            textStyle: textStyle,
+            boldText: boldText,
+          )),
+        ),
+      ),
+    ],
+  );
+}
 
 class ShadowPainter extends CustomPainter {
   final double width;
@@ -91,14 +87,13 @@ class ShadowPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint shadowPaint = Paint()
       ..color = shadowColor
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, shadowBlur); // 그림자 흐림 효과
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, shadowBlur);
 
     final Path bubblePath = BubbleClipper(
       borderRadius: borderRadius,
       trianglePosition: trianglePosition,
     ).getBubblePath(Size(width, height));
 
-    // 그림자 그리기
     canvas.drawPath(bubblePath.shift(Offset(0, shadowOffset)), shadowPaint);
   }
 
@@ -110,8 +105,10 @@ class BubbleClipper extends CustomClipper<Path> {
   final double borderRadius;
   final BubblePosition trianglePosition;
 
-  BubbleClipper(
-      {this.borderRadius = 10, this.trianglePosition = BubblePosition.bottom});
+  BubbleClipper({
+    this.borderRadius = 10,
+    this.trianglePosition = BubblePosition.bottom,
+  });
 
   @override
   Path getClip(Size size) => getBubblePath(size);
