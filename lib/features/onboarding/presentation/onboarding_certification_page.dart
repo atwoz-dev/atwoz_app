@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/utils/validate_utils.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
+import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
 import 'package:atwoz_app/core/widgets/text/title_text.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
@@ -119,24 +120,18 @@ class OnboardingCertificationPageState
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 2.5),
-                                    child: AppElevatedButton(
-                                      primary: context.appColors.surface,
-                                      expandedWidth: true,
-                                      // height: 48.0, // 텍스트 필드와 동일한 높이
-                                      border: BorderSide(
-                                        color: AppColors.colorGrey100,
-                                        width: 2.0,
-                                      ),
+                                    child: AppOutlinedButton(
+                                      primary: AppColors.colorGrey100,
+                                      textStyle: AppStyles.body02Regular()
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
+                                      textColor: context.appColors.onSurface,
                                       onPressed: () {
-                                        // TODO: 재발송 로직 추가하기
                                         print("인증번호 재발송");
+                                        // TODO: 재발송 로직 추가
                                       },
                                       child: Text(
                                         '재발송',
-                                        style: AppStyles.body02Regular(
-                                                context.appColors.onSurface)
-                                            .copyWith(
-                                                fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                   ),
