@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
+import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ enum AppRoute {
   onboardCertification('/onboard/certification'),
   report('/report'),
   signUp('/sign-up'),
-  signUpThree('/sign-up/profile');
+  signUpProfile('/sign-up/profile'),
+  interview('/interview');
 
   final String path;
 
@@ -60,10 +62,13 @@ class HomeBranch {
       path: AppRoute.auth.path,
       builder: (context, state) => const SignInPage(),
     ),
-    // TODO: 나중에 report 경로 위치 바꾸기
     GoRoute(
       path: AppRoute.report.path,
       builder: (context, state) => const ReportPage(),
+    ),
+    GoRoute(
+      path: AppRoute.interview.path,
+      builder: (context, state) => const InterviewPage(),
     ),
   ];
 }
@@ -95,7 +100,7 @@ class SignBranch {
       builder: (context, state) => const SignInPage(), // TODO: 바꾸기
       routes: [
         GoRoute(
-          path: AppRoute.signUpThree.path.split('/sign-up').last,
+          path: AppRoute.signUpProfile.path.split('/sign-up').last,
           builder: (context, state) => const SignUpProfilePage(),
         ),
       ],
