@@ -88,6 +88,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppIcon(
+                  size: 20.h,
                   isSelected ? item.iconFill : item.icon,
                   colorFilter: AppIcon.fillColor(
                       isSelected ? appColors.primary : AppColors.colorGrey400),

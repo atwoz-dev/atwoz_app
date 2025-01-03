@@ -37,7 +37,9 @@ class InterviewPageState extends ConsumerState<InterviewPage> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: context.screenHeight * 0.1),
+        padding: EdgeInsets.only(
+          top: context.screenHeight * 0.1,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

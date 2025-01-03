@@ -1,88 +1,135 @@
 import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
-import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
-import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/core/widgets/dialogue/default_dialogue.dart';
 
-class CustomDialog {
-  static Future<void> showAnswerFormDialog({
+class CustomDialogue extends StatelessWidget {
+  final String? title;
+  final TextStyle? titleStyle;
+  final String content;
+  final TextStyle? contentStyle;
+  final String outlineButtonText;
+  final Color? outlinedButtonTextColor;
+  final Color? outlinedButtonTextBorderColor;
+  final String? elevatedButtonText;
+  final Color? elevatedButtonTextColor;
+  final Color? elevatedButtonColor;
+  final VoidCallback? onOutlinedButtonPressed;
+  final VoidCallback onElevatedButtonPressed;
+
+  const CustomDialogue({
+    super.key,
+    this.title,
+    this.titleStyle,
+    required this.content,
+    this.contentStyle,
+    this.outlineButtonText = '취소',
+    this.outlinedButtonTextColor,
+    this.outlinedButtonTextBorderColor,
+    this.elevatedButtonText = '확인',
+    this.elevatedButtonTextColor,
+    this.elevatedButtonColor,
+    this.onOutlinedButtonPressed,
+    required this.onElevatedButtonPressed,
+  });
+
+  static Future<void> showTwoChoiceDialogue({
     required BuildContext context,
-    required String questionTitle,
-    required TextEditingController answerController,
-    required VoidCallback onSave,
     String? title,
-    String? hintText,
-    TextStyle? hintStyle,
+    TextStyle? titleStyle,
+    required String content,
+    TextStyle? contentStyle,
+    String outlineButtonText = '취소',
+    Color? outlinedButtonTextColor,
+    Color? outlinedButtonTextBorderColor,
+    String? elevatedButtonText = '확인',
+    Color? elevatedButtonTextColor,
+    Color? elevatedButtonColor,
+    VoidCallback? onOutlinedButtonPressed,
+    required VoidCallback onElevatedButtonPressed,
   }) {
-    return showDialog<void>(
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return DefaultDialog.common(
-          title: title != null
-              ? Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    title,
-                    style: AppStyles.body03Regular(),
-                  ),
-                )
-              : null,
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                questionTitle,
-                textAlign: TextAlign.center,
-                style: AppStyles.body01Regular()
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              const Gap(16),
-              AppTextFormField(
-                style: AppStyles.body03Regular(context.appColors.onSurface),
-                controller: answerController,
-                hintText: hintText,
-                hintStyle: hintStyle ??
-                    AppStyles.body02Regular(AppColors.colorGrey600),
-                maxLines: 5,
-                minLines: 5,
-                border: OutlineInputBorder(
-                  borderRadius: AppDimens.buttonRadius,
-                  borderSide: BorderSide(
-                    color: AppColors.colorGrey100,
-                    width: 2.0,
-                  ),
-                ),
-              )
-            ],
-          ),
-          action: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: AppOutlinedButton(
-                  primary: AppColors.colorGrey100,
-                  textColor: context.appColors.onSurface,
-                  height: 35,
-                  onPressed: () => pop(context),
-                  child: const Text('닫기'),
-                ),
-              ),
-              const Gap(8),
-              Expanded(
-                flex: 7,
-                child: AppElevatedButton(
-                  height: 35,
-                  onPressed: onSave,
-                  child: const Text('저장'),
-                ),
-              ),
-            ],
-          ),
+        return CustomDialogue(
+          title: title,
+          titleStyle: titleStyle,
+          content: content,
+          contentStyle: contentStyle,
+          outlineButtonText: outlineButtonText,
+          outlinedButtonTextColor: outlinedButtonTextColor,
+          outlinedButtonTextBorderColor: outlinedButtonTextBorderColor,
+          elevatedButtonText: elevatedButtonText,
+          elevatedButtonTextColor: elevatedButtonTextColor,
+          elevatedButtonColor: elevatedButtonColor,
+          onOutlinedButtonPressed:
+              onOutlinedButtonPressed ?? () => Navigator.of(context).pop(),
+          onElevatedButtonPressed: onElevatedButtonPressed,
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        width: context.screenWidth * 0.9,
+        padding: EdgeInsets.all(context.screenWidth * 0.05),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (title != null)
+              Text(
+                title!,
+                style: titleStyle ??
+                    AppStyles.header03().copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            if (title != null) const Gap(12),
+            Text(
+              content,
+              style: contentStyle ?? AppStyles.body01Regular(),
+              textAlign: TextAlign.center,
+            ),
+            const Gap(16),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: AppOutlinedButton(
+                    primary:
+                        outlinedButtonTextBorderColor ?? AppColors.colorGrey200,
+                    textColor:
+                        outlinedButtonTextColor ?? context.appColors.onSurface,
+                    height: 35,
+                    onPressed: onOutlinedButtonPressed,
+                    child: Text(outlineButtonText),
+                  ),
+                ),
+                const Gap(8),
+                Expanded(
+                  flex: 1,
+                  child: AppElevatedButton(
+                    height: 35,
+                    primary: elevatedButtonColor ?? context.appColors.primary,
+                    onPressed: onElevatedButtonPressed,
+                    child: Text(
+                      elevatedButtonText!,
+                      style: TextStyle(
+                        color: elevatedButtonTextColor ??
+                            context.appColors.onPrimary,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
