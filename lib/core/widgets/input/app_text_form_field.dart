@@ -190,7 +190,8 @@ class AppTextFormFieldState extends State<AppTextFormField>
           decoration: buildDecoration(context),
           cursorColor: context.appColors.primary,
           showCursor: widget.showCursor,
-          style: AppStyles.body01Medium(context.appColors.onSurface),
+          style: widget.style ??
+              AppStyles.body01Medium(context.appColors.onSurface),
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
           textCapitalization: widget.textCapitalization,
@@ -231,6 +232,11 @@ class AppTextFormFieldState extends State<AppTextFormField>
   }
 
   InputDecoration buildDecoration(BuildContext context) {
+    final double defaultPadding = 16;
+    final EdgeInsets defaultContentPadding = widget.showCharacterCount
+        ? EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 33.25)
+        : EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 17.25);
+
     // 기본 둥근 테두리
     final InputBorder roundedBorder = OutlineInputBorder(
       borderRadius: AppDimens.buttonRadius, // 기본 둥근 모서리 설정
@@ -248,12 +254,10 @@ class AppTextFormFieldState extends State<AppTextFormField>
 
     return InputDecoration(
       enabled: widget.enabled ?? true,
-      contentPadding: widget.contentPadding ??
-          const EdgeInsets.symmetric(
-              vertical: 17.25, horizontal: 0), // 하단 공간 확보
+      contentPadding: widget.contentPadding ?? defaultContentPadding,
       counterText: '', // 기본 counter 숨기기
-      prefix:
-          Padding(padding: EdgeInsets.only(left: 16.0), child: widget.prefix),
+      prefix: Padding(
+          padding: EdgeInsets.only(left: defaultPadding), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
       suffixIcon: widget.suffixIcon,
@@ -261,7 +265,7 @@ class AppTextFormFieldState extends State<AppTextFormField>
       filled: true,
       isDense: widget.isDense,
       fillColor: widget.fillColor ?? context.appColors.surface,
-      border: widget.border ?? roundedBorder, // 기본 테두리를 둥근 모서리로 설정
+      border: widget.border ?? roundedBorder,
       enabledBorder: widget.border ??
           widget.enabledBorder ??
           roundedBorder, // 활성 상태 둥근 테두리

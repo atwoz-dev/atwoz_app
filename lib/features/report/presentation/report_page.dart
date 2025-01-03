@@ -91,10 +91,8 @@ class ReportPageState extends ConsumerState<ReportPage> {
                       const Gap(10),
                       AppTextFormField(
                         showCharacterCount: true, // 글자 수 카운터 표시
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0, 17.25, 16, 33.25),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: AppDimens.buttonRadius,
                           borderSide: BorderSide(
                             color: AppColors.colorGrey100,
                             width: 2.0,
