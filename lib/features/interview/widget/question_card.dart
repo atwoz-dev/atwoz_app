@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/widgets/dialogue/custom_dialog.dart';
+import 'package:atwoz_app/core/widgets/dialogue/custom_dialogue.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:atwoz_app/features/interview/widget/answer_tag.dart';
@@ -46,7 +46,23 @@ class QuestionCard extends StatelessWidget {
           spacing: tagSpacing, // 카드들 간의 가로 간격
           runSpacing: tagSpacing - 4, // 카드들 간의 세로 간격
           children: _questions[currentTabIndex].map((question) {
-            return _buildQuestionCard(context, question);
+            return GestureDetector(
+              onTap: () {
+                CustomDialog.showAnswerFormDialog(
+                  title: '인터뷰 답변',
+                  hintText: '답변을 입력해주세요',
+                  context: context,
+                  questionTitle: question,
+                  answerController: answerController,
+                  onSave: () {
+                    final String answer = answerController.text;
+                    print('답변 저장됨: $answer'); // TODO: 실제 저장 로직 추가
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+              child: _buildQuestionCard(context, question),
+            );
           }).toList(),
         ),
       ),
