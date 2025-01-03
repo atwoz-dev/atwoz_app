@@ -15,6 +15,8 @@ class InterviewNotifier extends _$InterviewNotifier {
     state = state.copyWith(
       answers: Map.from(state.answers)..[question] = answer,
     );
+
+    // TODO: 저장 API 연결
   }
 
   // 특정 질문에 대한 답변을 가져오는 메서드

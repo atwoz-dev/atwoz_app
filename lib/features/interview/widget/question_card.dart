@@ -1,4 +1,3 @@
-import 'package:atwoz_app/core/widgets/dialogue/custom_dialogue.dart';
 import 'package:atwoz_app/features/interview/domain/interview_notifier.dart';
 import 'package:atwoz_app/features/interview/widget/answer_dialogue.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +116,7 @@ class _QuestionCardState extends ConsumerState<QuestionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AnswerTag(isAnswered), // 답변 여부 전달
+            AnswerTag(isAnswered),
             const Gap(8),
             Text(
               question,

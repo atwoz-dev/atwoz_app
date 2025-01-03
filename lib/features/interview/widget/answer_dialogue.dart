@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/theme/theme.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
+import 'package:atwoz_app/core/widgets/dialogue/custom_dialogue.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
 import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class AnswerDialogue extends StatefulWidget {
 
 class _AnswerDialogueState extends State<AnswerDialogue> {
   bool _isActive = false;
+  double opacity = 1;
 
   @override
   void initState() {
@@ -79,79 +81,115 @@ class _AnswerDialogueState extends State<AnswerDialogue> {
     });
   }
 
+  void _showConfirmationDialog(BuildContext context) {
+    setState(() {
+      opacity = 0; // Answer 다이얼로그 투명화
+    });
+
+    CustomDialogue.showTwoChoiceDialogue(
+      context: context,
+      content: '이 페이지를 벗어나면 작성된 내용은\n저장되지 않습니다.',
+      outlineButtonText: '머무르기',
+      onOutlinedButtonPressed: () {
+        pop(context); // CustomDialogue 닫기
+        setState(() {
+          opacity = 1; // Answer 다이얼로그를 다시 활성화
+        });
+      },
+      elevatedButtonText: '확인',
+      onElevatedButtonPressed: () {
+        if (widget.initialValue != null) {
+          widget.answerController.text = widget.initialValue!;
+        } else {
+          widget.answerController.clear(); // 작성된 내용 초기화
+        }
+        pop(context); // CustomDialogue 닫기
+        pop(context); //  AnswerDialogue 닫기
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultDialog.common(
-      title: widget.title != null
-          ? Align(
-              alignment: Alignment.center,
-              child: Text(
-                widget.title!,
-                style: AppStyles.body03Regular(),
-              ),
-            )
-          : null,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            widget.questionTitle,
-            textAlign: TextAlign.center,
-            style:
-                AppStyles.body01Regular().copyWith(fontWeight: FontWeight.bold),
-          ),
-          const Gap(16),
-          AppTextFormField(
-            initialValue: widget.initialValue,
-            style: AppStyles.body03Regular(context.appColors.onSurface),
-            controller: widget.answerController,
-            hintText: widget.hintText,
-            hintStyle: widget.hintStyle ??
-                AppStyles.body02Regular(AppColors.colorGrey600),
-            maxLines: 5,
-            minLines: 5,
-            border: OutlineInputBorder(
-              borderRadius: AppDimens.buttonRadius,
-              borderSide: BorderSide(
-                color: AppColors.colorGrey100,
-                width: 2.0,
-              ),
+    return Opacity(
+      opacity: opacity,
+      child: DefaultDialog.common(
+        title: widget.title != null
+            ? Align(
+                alignment: Alignment.center,
+                child: Text(
+                  widget.title!,
+                  style: AppStyles.body03Regular(),
+                ),
+              )
+            : null,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              widget.questionTitle,
+              textAlign: TextAlign.center,
+              style: AppStyles.body01Regular()
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
-      ),
-      action: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: AppOutlinedButton(
-              primary: AppColors.colorGrey200,
-              textColor: context.appColors.onSurface,
-              height: 35,
-              onPressed: () {
-                pop(context);
-                widget.answerController.clear();
-              },
-              child: const Text('닫기'),
-            ),
-          ),
-          const Gap(8),
-          Expanded(
-            flex: 7,
-            child: AppElevatedButton(
-              height: 35,
-              primary: _isActive
-                  ? context.appColors.primary
-                  : AppColors.colorGrey200,
-              onPressed: _isActive ? widget.onSave : null,
-              child: Text(
-                '저장',
-                // style: AppStyles.body03Regular(_isActive?context.appColors.onPrimary:
-                // ),
+            const Gap(16),
+            AppTextFormField(
+              initialValue: widget.initialValue,
+              style: AppStyles.body03Regular(context.appColors.onSurface),
+              controller: widget.answerController,
+              hintText: widget.hintText,
+              hintStyle: widget.hintStyle ??
+                  AppStyles.body02Regular(AppColors.colorGrey600),
+              maxLines: 5,
+              minLines: 5,
+              border: OutlineInputBorder(
+                borderRadius: AppDimens.buttonRadius,
+                borderSide: BorderSide(
+                  color: AppColors.colorGrey100,
+                  width: 2.0,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        action: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: AppOutlinedButton(
+                textStyle: AppStyles.body02Medium(),
+                primary: AppColors.colorGrey200,
+                textColor: context.appColors.onSurface,
+                height: 35,
+                onPressed: () {
+                  if (_isActive) {
+                    _showConfirmationDialog(context);
+                  } else {
+                    pop(context); // 단순히 다이얼로그 닫기
+                  }
+                },
+                child: const Text('닫기'),
+              ),
+            ),
+            const Gap(8),
+            Expanded(
+              flex: 7,
+              child: AppElevatedButton(
+                textStyle: AppStyles.body02Regular(),
+                height: 35,
+                primary: _isActive
+                    ? context.appColors.primary
+                    : AppColors.colorGrey200,
+                onPressed: _isActive ? widget.onSave : null,
+                child: Text(
+                  '저장',
+                  // style: AppStyles.body03Regular(_isActive?context.appColors.onPrimary:
+                  // ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

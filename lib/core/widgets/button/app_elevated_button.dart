@@ -21,37 +21,25 @@ class AppElevatedButton extends ConsumerWidget {
     this.height = AppDimens.buttonHeight,
     this.width = 150,
     this.borderRadius = AppDimens.buttonRadius,
-    this.border, // 추가된 속성
+    this.border,
+    this.textStyle,
   });
 
+  final TextStyle? textStyle;
   final Widget? child;
-
   final Color? primary;
-
   final Color? onPrimary;
-
   final EdgeInsetsGeometry padding;
-
   final VoidCallback? onPressed;
-
   final VoidCallback? onLongPress;
-
   final ValueChanged<bool>? onHover;
-
   final ValueChanged<bool>? onFocusChange;
-
   final bool expandedWidth;
-
   final AlignmentGeometry? alignment;
-
   final double height;
-
   final double width;
-
   final bool isLoading;
-
   final BorderRadiusGeometry borderRadius;
-
   final BorderSide? border; // 윤곽선 커스텀 속성
 
   bool get isDisable => onPressed == null;
@@ -76,7 +64,7 @@ class AppElevatedButton extends ConsumerWidget {
           borderRadius: borderRadius,
           side: border ?? BorderSide.none, // 커스텀 윤곽선 사용
         ),
-        textStyle: AppStyles.body01Medium(),
+        textStyle: textStyle ?? AppStyles.body01Medium(),
         minimumSize: Size(
           expandedWidth ? double.infinity : width,
           height,
