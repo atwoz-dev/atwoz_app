@@ -74,7 +74,6 @@ class InterviewPageState extends ConsumerState<InterviewPage> {
             if (!_isBannerVisible) const Gap(12),
             Expanded(
               child: QuestionCard(
-                ref: ref,
                 tagSpacing: tagSpacing,
                 contentPadding: contentPadding,
                 currentTabIndex: _currentTabIndex,

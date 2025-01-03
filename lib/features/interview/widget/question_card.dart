@@ -1,17 +1,17 @@
 import 'package:atwoz_app/core/widgets/dialogue/custom_dialogue.dart';
 import 'package:atwoz_app/features/interview/domain/interview_notifier.dart';
+import 'package:atwoz_app/features/interview/widget/answer_dialogue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:atwoz_app/features/interview/widget/answer_tag.dart';
 import 'package:atwoz_app/core/theme/theme.dart';
 
-class QuestionCard extends StatefulWidget {
+class QuestionCard extends ConsumerStatefulWidget {
   final double tagSpacing;
   final EdgeInsetsGeometry contentPadding;
   final int currentTabIndex;
   final double horizontalPadding;
-  final WidgetRef ref;
 
   const QuestionCard({
     super.key,
@@ -19,14 +19,13 @@ class QuestionCard extends StatefulWidget {
     required this.contentPadding,
     required this.currentTabIndex,
     required this.horizontalPadding,
-    required this.ref,
   });
 
   @override
-  State<QuestionCard> createState() => _QuestionCardState();
+  ConsumerState<QuestionCard> createState() => _QuestionCardState();
 }
 
-class _QuestionCardState extends State<QuestionCard> {
+class _QuestionCardState extends ConsumerState<QuestionCard> {
   final Map<String, TextEditingController> _controllers = {};
 
   @override
@@ -56,8 +55,6 @@ class _QuestionCardState extends State<QuestionCard> {
       List.generate(10, (index) => '관계 질문 ${index + 1}\n관계 질문 ${index + 1}'),
       List.generate(10, (index) => '연인 질문 ${index + 1}\n연인 질문 ${index + 1}'),
     ][widget.currentTabIndex];
-    final interviewNotifier =
-        widget.ref.watch(interviewNotifierProvider.notifier);
 
     return Padding(
       padding: widget.contentPadding,
@@ -65,14 +62,20 @@ class _QuestionCardState extends State<QuestionCard> {
         child: Wrap(
           spacing: widget.tagSpacing, // 카드 간 가로 간격
           runSpacing: widget.tagSpacing - 4, // 카드 간 세로 간격
+          // TODO: 콘트롤러 하나로 해도될 거 같기도 하고...
+          // 어차피 작성중인 내용을 저장해야 되는 건 아니라 콘트롤러 통일하고 메모리 아끼는 게 나을수도?
           children: questions.map((question) {
             _controllers.putIfAbsent(question, () => TextEditingController());
 
+            final isAnswered =
+                ref.watch(interviewNotifierProvider).answers[question] != null;
+
             return GestureDetector(
               onTap: () {
-                String? answer = interviewNotifier.getAnswer(question);
-                print('질문: $question // 답변: $answer');
-                CustomDialog.showAnswerFormDialog(
+                AnswerDialogue.showAnswerFormDialog(
+                  initialValue: ref
+                      .read(interviewNotifierProvider.notifier)
+                      .getAnswer(question),
                   title: '인터뷰 답변',
                   hintText: '답변을 입력해주세요',
                   context: context,
@@ -82,13 +85,15 @@ class _QuestionCardState extends State<QuestionCard> {
                     final answer = _controllers[question]!.text;
 
                     // Riverpod 상태 업데이트
-                    interviewNotifier.saveAnswer(question, answer);
+                    ref
+                        .read(interviewNotifierProvider.notifier)
+                        .saveAnswer(question, answer);
 
                     Navigator.of(context).pop();
                   },
                 );
               },
-              child: _buildQuestionCard(context, question),
+              child: _buildQuestionCard(context, question, isAnswered),
             );
           }).toList(),
         ),
@@ -96,7 +101,8 @@ class _QuestionCardState extends State<QuestionCard> {
     );
   }
 
-  Widget _buildQuestionCard(BuildContext context, String question) {
+  Widget _buildQuestionCard(
+      BuildContext context, String question, bool isAnswered) {
     return SizedBox(
       width: (context.screenWidth -
               widget.horizontalPadding * 2 -
@@ -111,7 +117,7 @@ class _QuestionCardState extends State<QuestionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AnswerTag(),
+            AnswerTag(isAnswered), // 답변 여부 전달
             const Gap(8),
             Text(
               question,

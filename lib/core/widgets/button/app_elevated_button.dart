@@ -60,8 +60,8 @@ class AppElevatedButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Color foregroundColor = onPrimary ?? context.appColors.onPrimary;
     final Color backgroundColor = primary ?? context.appColors.primary;
-    final Color? disabledForegroundColor = onPrimary?.withOpacity(0.2);
-    final Color? disabledBackgroundColor = primary?.withOpacity(0.2);
+    final Color? disabledForegroundColor = onPrimary;
+    final Color? disabledBackgroundColor = primary;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
