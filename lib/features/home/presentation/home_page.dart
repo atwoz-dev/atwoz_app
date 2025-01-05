@@ -1,9 +1,9 @@
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/core/widgets/button/app_text_button.dart';
 import 'package:atwoz_app/core/widgets/file/app_file_picker.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
 import 'package:atwoz_app/core/widgets/image/app_image.dart';
 import 'package:atwoz_app/core/widgets/image/app_rounded_image.dart';
+import 'package:atwoz_app/core/widgets/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/core/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +15,6 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: DefaultAppBar(title: 'Home Page'),
       body: DefaultScrollbar(
         child: SingleChildScrollView(
           child: Column(
@@ -64,6 +63,7 @@ class HomePage extends ConsumerWidget {
           ),
         ),
       ),
+      bottomNavigationBar: DefaultBottomNavigationBar(currentIndex: 0),
     );
   }
 }
