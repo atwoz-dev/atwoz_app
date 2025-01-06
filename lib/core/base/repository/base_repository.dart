@@ -3,14 +3,14 @@ import 'package:atwoz_app/data/sources/remote/api_service_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseRepository {
-  final Ref ref; // Add Ref to the constructor
-  final String path;
+  final Ref ref;
+  final String path; // 각 리소스에 맞는 경로
 
   const BaseRepository(this.ref, this.path);
 
   ApiService get apiService => ref.read(apiServiceProvider);
 
-  // 실행 시간 출력
+  // 실행 시간 출력 (선택적 구현 가능)
   void printFormattedDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = twoDigits(duration.inHours);
@@ -20,7 +20,7 @@ abstract class BaseRepository {
     print('Elapsed Time: $hours h $minutes m $seconds s');
   }
 
-  // API로 데이터 fetch 후 모델로 변환
+  // API로 데이터 fetch 후 모델로 변환 (선택적 구현 가능)
   Future<T> fetchData<T>({
     required String endpoint,
     required Converter<T>? converter,

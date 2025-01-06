@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:atwoz_app/core/base/mixin/toast_mixin.dart';
-import 'package:atwoz_app/data/models/user_sign_up_request.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/user_sign_in_request.dart';
+import '../../models/user_sign_up_request.dart';
 import '../../models/user_response.dart';
 import '../../repositories/user_repository.dart';
 import '../../../core/base/provider/base_provider.dart';

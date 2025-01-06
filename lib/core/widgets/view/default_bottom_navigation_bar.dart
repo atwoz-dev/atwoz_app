@@ -7,56 +7,49 @@ import 'package:gap/gap.dart';
 
 class DefaultBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
-  final Function(int) onTap;
+  final bool isHighlighted; // 강조 여부를 제어하는 파라미터
 
-  const DefaultBottomNavigationBar({
+  DefaultBottomNavigationBar({
     super.key,
     required this.currentIndex,
-    required this.onTap,
+    this.isHighlighted = true, // 기본값은 강조 활성화
   });
+
+  final List<_NavItem> _items = [
+    _NavItem(
+        icon: AppIcons.home,
+        iconFill: AppIcons.homeFill,
+        label: '홈',
+        route: AppRoute.home),
+    _NavItem(
+        icon: AppIcons.heart,
+        iconFill: AppIcons.heartFill,
+        label: '좋아요',
+        route: AppRoute.home // TODO: 좋아요 화면 네비게이션으로 바꾸기
+        ),
+    _NavItem(
+        icon: AppIcons.bolt,
+        iconFill: AppIcons.boltFill,
+        label: '셀프소개',
+        route: AppRoute.interview // TODO:셀프소개 화면 네비게이션으로 바꾸기
+        ),
+    _NavItem(
+        icon: AppIcons.exam,
+        iconFill: AppIcons.examFill,
+        label: '모의고사',
+        route: AppRoute.home // TODO: 모의고사 화면 네비게이션으로 바꾸기
+        ),
+    _NavItem(
+        icon: AppIcons.user,
+        iconFill: AppIcons.userFill,
+        label: 'MY',
+        route: AppRoute.home // TODO: 마이페이지 화면 네비게이션으로 바꾸기
+        ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final appColors = context.appColors;
-
-    // BottomNavigationBarItem 정보를 간결하게 표현
-    final items = [
-      _NavItem(
-        icon: AppIcons.home,
-        iconFill: AppIcons.homeFill,
-        label: '홈',
-        onPressed: () {},
-      ),
-      _NavItem(
-        icon: AppIcons.heart,
-        iconFill: AppIcons.heartFill,
-        label: '좋아요',
-        onPressed: () {},
-      ),
-      _NavItem(
-        icon: AppIcons.bolt,
-        iconFill: AppIcons.boltFill,
-        label: '셀프소개',
-        onPressed: () => navigate(
-          context,
-          route: AppRoute.interview,
-          method: NavigationMethod.go,
-        ),
-      ),
-      _NavItem(
-        icon: AppIcons.exam,
-        iconFill: AppIcons.examFill,
-        label: '모의고사',
-        onPressed: () {},
-      ),
-      _NavItem(
-        icon: AppIcons.user,
-        iconFill: AppIcons.userFill,
-        label: 'MY',
-        onPressed: () {},
-      ),
-    ];
-
     final defaultTextStyle = AppStyles.body03Regular(AppColors.colorGrey400)
         .copyWith(fontSize: 10.sp);
 
@@ -73,21 +66,29 @@ class DefaultBottomNavigationBar extends StatelessWidget {
       child: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
-          items[index].onPressed?.call();
-          onTap(index);
+          navigate(
+            context,
+            route: _items[index].route,
+            method: NavigationMethod.go,
+          );
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: appColors.primary,
+        selectedItemColor:
+            isHighlighted ? appColors.primary : AppColors.colorGrey400,
         unselectedItemColor: AppColors.colorGrey800,
-        selectedLabelStyle: defaultTextStyle.copyWith(color: appColors.primary),
+        selectedLabelStyle: isHighlighted
+            ? defaultTextStyle.copyWith(color: appColors.primary)
+            : defaultTextStyle,
         unselectedLabelStyle: defaultTextStyle,
-        items: items.map((item) {
-          final isSelected = items.indexOf(item) == currentIndex;
+        items: _items.map((item) {
+          final isSelected =
+              isHighlighted && _items.indexOf(item) == currentIndex;
           return BottomNavigationBarItem(
             icon: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppIcon(
+                  size: 20.h,
                   isSelected ? item.iconFill : item.icon,
                   colorFilter: AppIcon.fillColor(
                       isSelected ? appColors.primary : AppColors.colorGrey400),
@@ -108,12 +109,12 @@ class _NavItem {
   final String icon;
   final String iconFill;
   final String label;
-  final VoidCallback? onPressed;
+  final AppRoute route;
 
   const _NavItem({
     required this.icon,
     required this.iconFill,
     required this.label,
-    this.onPressed,
+    required this.route,
   });
 }

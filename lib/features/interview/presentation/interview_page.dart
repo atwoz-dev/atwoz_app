@@ -16,15 +16,10 @@ class InterviewPage extends ConsumerStatefulWidget {
 
 class InterviewPageState extends ConsumerState<InterviewPage> {
   int _currentTabIndex = 0;
-  int _currentBottomNavIndex = 2;
+
   bool _isBannerVisible = true;
 
   void _onTabTapped(int index) => setState(() => _currentTabIndex = index);
-
-  void _onBottomNavTapped(int index) {
-    setState(() => _currentBottomNavIndex = index);
-    print('BottomNav tapped: $index');
-  }
 
   void _closeBanner() => setState(() => _isBannerVisible = false);
 
@@ -37,7 +32,9 @@ class InterviewPageState extends ConsumerState<InterviewPage> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: context.screenHeight * 0.1),
+        padding: EdgeInsets.only(
+          top: context.screenHeight * 0.1,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -82,8 +79,7 @@ class InterviewPageState extends ConsumerState<InterviewPage> {
         ),
       ),
       bottomNavigationBar: DefaultBottomNavigationBar(
-        currentIndex: _currentBottomNavIndex,
-        onTap: _onBottomNavTapped,
+        currentIndex: 2,
       ),
     );
   }

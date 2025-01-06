@@ -40,10 +40,7 @@ class AuthNotifier extends _$AuthNotifier {
         user: _authService.user,
       );
     } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -53,10 +50,7 @@ class AuthNotifier extends _$AuthNotifier {
       await _authService.signOut();
       state = const AuthState();
     } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -70,20 +64,13 @@ AuthService authService(Ref ref) {
 
 /// 인증 서비스 인터페이스 정의
 abstract class AuthService {
-  factory AuthService.create(Ref ref) => AuthServiceImpl(ref);
-
   Future<void> signIn(UserSignInRequest user);
   Future<void> signOut();
-
   Future<String?> getAuthToken();
   DateTime? getTokenExpiration(String token);
   Future<Map<String, dynamic>?> refreshToken();
-
   User? get user;
-
   Listenable userRefresh();
-
   Future<UserSignUpRequest> inquiryUserAccountInfor(String phone);
-
   Map<String, dynamic>? getBaseRequestData();
 }
