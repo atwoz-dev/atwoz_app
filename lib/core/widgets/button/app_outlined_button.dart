@@ -14,7 +14,7 @@ class AppOutlinedButton extends StatelessWidget {
     this.padding = AppDimens.buttonPadding,
     this.primary,
     this.backgroundColor,
-    this.expandedWidth = true,
+    this.expandedWidth = false,
     this.isLoading = false,
     this.alignment,
     this.height = AppDimens.buttonHeight,

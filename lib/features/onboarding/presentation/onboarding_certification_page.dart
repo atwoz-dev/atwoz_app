@@ -5,7 +5,6 @@ import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
 import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
 import 'package:atwoz_app/core/widgets/text/title_text.dart';
 import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
-import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/core/base/notifier/common_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

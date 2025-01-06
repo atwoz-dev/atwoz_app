@@ -14,7 +14,7 @@ class AppTextButton extends ConsumerWidget {
     this.onFocusChange,
     this.padding = AppDimens.buttonPadding,
     this.primary,
-    this.expandedWidth = true,
+    this.expandedWidth = false,
     this.isLoading = false,
     this.alignment,
     this.height = AppDimens.buttonHeight,
