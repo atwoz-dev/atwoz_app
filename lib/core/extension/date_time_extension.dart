@@ -2,6 +2,9 @@ import 'package:atwoz_app/core/utils/date_time_utils.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeExtesion on DateTime {
+  /// Format: yyyy-MM-dd
+  String get toHyphenDateString => DateTimeUtils.convertToDateHyphen(this);
+
   /// Format: yyyy.MM.dd
   String get toDateString => DateTimeUtils.convertToDate(this);
 
@@ -24,10 +27,10 @@ extension DateTimeExtesion on DateTime {
 }
 
 extension DateTimeNullExtesion on DateTime? {
+  String get toHyphenDateString => this?.toHyphenDateString ?? '';
   String get toDateString => this?.toDateString ?? '';
   String get toTimeString => this?.toTimeString ?? '';
   String get toDateTimeString => this?.toDateTimeString ?? '';
-
   String get toTimeNoSecondString => this?.toTimeNoSecondString ?? '';
   String get toDateTimeNoSecondString => this?.toDateTimeNoSecondString ?? '';
 }

@@ -70,7 +70,7 @@ class AppColors {
     onError: AppColors.colorWhite,
     secondary: AppColors.colorSecondary500,
     onSecondary: AppColors.colorWhite,
-    shadow: AppColors.colorGrey200,
+    shadow: AppColors.colorGrey100,
   );
 
   static const ColorScheme darkScheme = ColorScheme.dark(
@@ -82,7 +82,7 @@ class AppColors {
     onError: AppColors.colorBlack,
     secondary: AppColors.colorSecondary500,
     onSecondary: AppColors.colorWhite,
-    shadow: AppColors.colorGrey200,
+    shadow: AppColors.colorGrey100,
   );
 }
 
