@@ -4,6 +4,7 @@ import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
+import 'package:atwoz_app/features/notification/presentation/pages/notification_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,9 +36,10 @@ enum AppRoute {
   report('/report'),
   signUp('/sign-up'),
   signUpProfile('/sign-up/profile'),
+  interview('/interview'),
   introduce('/introduce'),
   introduceNavigation('/introduceNavigation'),
-  interview('/interview');
+  notification('/notification');
 
   final String path;
 
@@ -82,6 +84,10 @@ class HomeBranch {
       path: AppRoute.interview.path,
       builder: (context, state) => const InterviewPage(),
     ),
+    GoRoute(
+      path: AppRoute.notification.path,
+      builder: (context, state) => const NotificationPage(),
+    ),
   ];
 }
 
@@ -98,6 +104,10 @@ class OnboardBranch {
         ),
         GoRoute(
           path: AppRoute.onboardCertification.path.split('/onboard').last,
+          builder: (context, state) => const OnboardingCertificationPage(),
+        ),
+        GoRoute(
+          path: AppRoute.notification.path,
           builder: (context, state) => const OnboardingCertificationPage(),
         ),
       ],
