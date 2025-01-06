@@ -13,6 +13,9 @@ class AppIcons {
   static const String help = '$iconsPath/help.svg';
   static const String add = '$iconsPath/add.svg';
   static const String close = '$iconsPath/close.svg';
+  static const String post = '$iconsPath/post.svg';
+  static const String notification = '$iconsPath/notification.svg';
+  static const String tune = '$iconsPath/tune.svg';
 
   // 바텀 네비게이션 바 TODO: 아이콘 피그마와 좀 다르게 생겨서 바꿔야 함
   static const String bolt = '$iconsPath/bolt.svg';

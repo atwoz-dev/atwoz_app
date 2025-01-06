@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
 import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,8 @@ enum AppRoute {
   report('/report'),
   signUp('/sign-up'),
   signUpProfile('/sign-up/profile'),
+  introduce('/introduce'),
+  introduceNavigation('/introduceNavigation'),
   interview('/interview');
 
   final String path;
@@ -65,6 +69,14 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.report.path,
       builder: (context, state) => const ReportPage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduce.path,
+      builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceNavigation.path,
+      builder: (context, state) => const IntroduceNavigationPage(),
     ),
     GoRoute(
       path: AppRoute.interview.path,
