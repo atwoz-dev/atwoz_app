@@ -9,6 +9,10 @@ class DateTimeUtils {
     return DateTimeFormatter.dateFormatDot.format(dateTime);
   }
 
+  static String convertToDateHyphen(DateTime dateTime) {
+    return DateTimeFormatter.dateFormatHyphen.format(dateTime);
+  }
+
   static String convertToTime(DateTime dateTime) {
     return DateTimeFormatter.timeFormat.format(dateTime);
   }

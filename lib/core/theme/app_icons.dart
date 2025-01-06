@@ -28,4 +28,7 @@ class AppIcons {
   static const String heartFill = '$iconsPath/heart_fill.svg';
   static const String user = '$iconsPath/user.svg';
   static const String userFill = '$iconsPath/user_fill.svg';
+
+  // 알림
+  static const String frowningFace = '$iconsPath/frowning_face.svg';
 }
