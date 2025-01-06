@@ -10,9 +10,7 @@ class FetchNotificationsUseCase {
 
   /// 데이터를 가져오는 메서드
   Future<List<NotificationModel>> execute() async {
-    // TODO: api 연결 후 교체 필요
-    // return repository.fetchNotifications();
-    return repository.fetchTestNotifications();
+    return repository.fetchNotifications();
   }
 }
 
