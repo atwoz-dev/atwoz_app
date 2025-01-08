@@ -19,8 +19,8 @@ class ProfileMainInformation extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            mainColor.withValues(alpha: 0), // 투명 흰색
-            mainColor.withValues(alpha: 0.8), // 투명 흰색
+            mainColor.withValues(alpha: 0),
+            mainColor.withValues(alpha: 0.8),
             mainColor, // 완전 흰색
           ],
         ),
