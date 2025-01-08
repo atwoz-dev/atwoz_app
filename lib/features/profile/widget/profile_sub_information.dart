@@ -1,14 +1,20 @@
 import 'package:atwoz_app/core/extension/context_extension.dart';
 import 'package:atwoz_app/core/theme/app_dimens.dart';
 import 'package:atwoz_app/core/theme/app_fonts.dart';
+import 'package:atwoz_app/features/profile/domain/profile_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/profile_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ProfileSubInformation extends StatelessWidget {
+class ProfileSubInformation extends ConsumerWidget {
   const ProfileSubInformation({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final subInformationItems =
+        ref.watch(profileNotifierProvider).userInforamtion.subInformationItems;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 20.0,
@@ -18,17 +24,16 @@ class ProfileSubInformation extends StatelessWidget {
         horizontal: 16.0,
       ),
       decoration: BoxDecoration(
-        borderRadius: AppDimens.cardRadius,
-        border: Border.all(
-          width: 1.0,
-          color: context.appColors.outline,
-        )
-      ),
+          borderRadius: AppDimens.cardRadius,
+          border: Border.all(
+            width: 1.0,
+            color: context.appColors.outline,
+          )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _Title(),
-          _SubInformationContainer(),
+          _SubInformationContainer(subInformationItems),
         ],
       ),
     );
@@ -45,7 +50,9 @@ class _Title extends StatelessWidget {
 }
 
 class _SubInformationContainer extends StatelessWidget {
-  const _SubInformationContainer();
+  const _SubInformationContainer(this.subInforamtionItems);
+
+  final List<SubInformationData> subInforamtionItems;
 
   @override
   Widget build(BuildContext context) {
@@ -59,32 +66,14 @@ class _SubInformationContainer extends StatelessWidget {
       ),
       padding: EdgeInsets.only(top: 16.0),
       physics: NeverScrollableScrollPhysics(),
-      children: [
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '고등학교 졸업',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '사회적 음주',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '취업 준비중',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '전자담배',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '170cm',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '기독교',
-        ),
-      ],
+      children: subInforamtionItems
+          .map(
+            (subInfo) => _SubInformationItem(
+              iconData: subInfo.iconData,
+              information: subInfo.information,
+            ),
+          )
+          .toList(),
     );
   }
 }

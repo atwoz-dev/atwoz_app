@@ -1,12 +1,24 @@
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/theme/app_fonts.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ProfileMainInformation extends StatelessWidget {
-  const ProfileMainInformation({super.key});
+  const ProfileMainInformation({
+    super.key,
+    required this.name,
+    required this.age,
+    required this.mbti,
+    required this.address,
+    required this.hobbies,
+  });
+
+  final String name;
+  final int age;
+  final String mbti;
+  final String address;
+  final List<String> hobbies;
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +44,13 @@ class ProfileMainInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text('장원영, 20', style: AppStyles.header02()),
+          Text('$name, $age', style: AppStyles.header02()),
           const Gap(6.0),
-          Text('ISTP · 서울특별시 동작구', style: AppStyles.body02Medium()),
+          Text('$mbti · $address', style: AppStyles.body02Medium()),
           const Gap(6.0),
           Wrap(
             spacing: 6.0,
-            children: [
-              _MainHobbyBadge('클라이밍'),
-              _MainHobbyBadge('공연 전시회 관람'),
-            ],
+            children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
           _InteractionButtons(),
