@@ -68,9 +68,11 @@ class AppColors {
     onSurface: AppColors.colorBlack,
     error: AppColors.red,
     onError: AppColors.colorWhite,
-    secondary: AppColors.colorSecondary500,
+    secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
     shadow: AppColors.colorGrey200,
+    tertiary: AppColors.colorGrey600,
+    outline: AppColors.colorGrey50,
   );
 
   static const ColorScheme darkScheme = ColorScheme.dark(
@@ -80,9 +82,11 @@ class AppColors {
     onSurface: AppColors.colorWhite,
     error: AppColors.red,
     onError: AppColors.colorBlack,
-    secondary: AppColors.colorSecondary500,
+    secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
     shadow: AppColors.colorGrey200,
+    tertiary: AppColors.colorGrey600,
+    outline: AppColors.colorGrey50,
   );
 }
 
