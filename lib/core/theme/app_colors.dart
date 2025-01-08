@@ -68,8 +68,10 @@ class AppColors {
     onSurface: AppColors.colorBlack,
     error: AppColors.red,
     onError: AppColors.colorWhite,
-    secondary: AppColors.colorSecondary500,
+    secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
+    tertiary: AppColors.colorGrey600,
+    outline: AppColors.colorGrey50,
     shadow: AppColors.colorGrey100,
   );
 
@@ -80,8 +82,10 @@ class AppColors {
     onSurface: AppColors.colorWhite,
     error: AppColors.red,
     onError: AppColors.colorBlack,
-    secondary: AppColors.colorSecondary500,
+    secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
+    tertiary: AppColors.colorGrey600,
+    outline: AppColors.colorGrey50,
     shadow: AppColors.colorGrey100,
   );
 }
