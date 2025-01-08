@@ -20,7 +20,7 @@ abstract class BaseProvider<T extends BaseRepository> {
 final repositoryProvider = Provider.family<BaseRepository, Type>((ref, type) {
   // 리포지토리 타입이 UserRepository인 경우 해당 인스턴스를 반환합니다.
   if (type == UserRepository) {
-    return UserRepository(ref); // UserRepository 인스턴스를 생성 및 반환합니다.
+    return UserRepository(ref); // UserRepository 인스턴스를 생성 및 반환
   }
   // 다른 리포지토리 타입에 대한 조건을 추가로 정의할 수 있습니다.
   throw UnimplementedError('No implementation found for repository: $type');
@@ -29,6 +29,6 @@ final repositoryProvider = Provider.family<BaseRepository, Type>((ref, type) {
 
 /// LocalStorage Provider
 final localStorageProvider = FutureProvider<LocalStorage>((ref) async {
-  // LocalStorage를 생성하여 반환합니다.
+  // LocalStorage를 생성하여 반환
   return LocalStorage.create();
 });

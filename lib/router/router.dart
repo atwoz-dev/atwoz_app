@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
 import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/profile/presentation/profile_page.dart';
+import 'package:atwoz_app/features/notification/presentation/pages/notification_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +38,10 @@ enum AppRoute {
   signUp('/sign-up'),
   signUpProfile('/sign-up/profile'),
   interview('/interview'),
-  profile('/profile');
+  profile('/profile'),
+  introduce('/introduce'),
+  introduceNavigation('/introduceNavigation'),
+  notification('/notification');
 
   final String path;
 
@@ -69,12 +75,24 @@ class HomeBranch {
       builder: (context, state) => const ReportPage(),
     ),
     GoRoute(
+      path: AppRoute.introduce.path,
+      builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceNavigation.path,
+      builder: (context, state) => const IntroduceNavigationPage(),
+    ),
+    GoRoute(
       path: AppRoute.interview.path,
       builder: (context, state) => const InterviewPage(),
     ),
     GoRoute(
       path: AppRoute.profile.path,
       builder: (context, state) => const ProfilePage(),
+    ),
+    GoRoute(
+      path: AppRoute.notification.path,
+      builder: (context, state) => const NotificationPage(),
     ),
   ];
 }
@@ -92,6 +110,10 @@ class OnboardBranch {
         ),
         GoRoute(
           path: AppRoute.onboardCertification.path.split('/onboard').last,
+          builder: (context, state) => const OnboardingCertificationPage(),
+        ),
+        GoRoute(
+          path: AppRoute.notification.path,
           builder: (context, state) => const OnboardingCertificationPage(),
         ),
       ],

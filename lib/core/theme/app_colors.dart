@@ -70,9 +70,9 @@ class AppColors {
     onError: AppColors.colorWhite,
     secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
-    shadow: AppColors.colorGrey200,
     tertiary: AppColors.colorGrey600,
     outline: AppColors.colorGrey50,
+    shadow: AppColors.colorGrey100,
   );
 
   static const ColorScheme darkScheme = ColorScheme.dark(
@@ -84,9 +84,9 @@ class AppColors {
     onError: AppColors.colorBlack,
     secondary: AppColors.colorGrey800,
     onSecondary: AppColors.colorWhite,
-    shadow: AppColors.colorGrey200,
     tertiary: AppColors.colorGrey600,
     outline: AppColors.colorGrey50,
+    shadow: AppColors.colorGrey100,
   );
 }
 

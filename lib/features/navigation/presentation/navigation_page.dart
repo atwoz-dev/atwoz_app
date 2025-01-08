@@ -74,7 +74,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.introduceNavigation,
                       );
                     },
                     child: Text(
@@ -134,7 +134,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.notification,
                       );
                     },
                     child: Text(
