@@ -1,19 +1,22 @@
 import 'dart:async';
+
+import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
 import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
+import 'package:atwoz_app/features/home/presentation/home_navigation_page.dart';
+import 'package:atwoz_app/features/home/presentation/home_screen.dart';
+import 'package:atwoz_app/features/home/presentation/ideal_type_setting_page.dart';
 import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/pages/notification_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/onboarding_certification_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/onboarding_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/onboarding_phone_input_page.dart';
 import 'package:atwoz_app/features/report/presentation/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:atwoz_app/features/home/presentation/home_page.dart';
-import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_phone_input_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_certification_page.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -29,6 +32,8 @@ enum NavigationMethod { push, replace, go, pushReplacement }
 enum AppRoute {
   navigation('/navigation'),
   home('/home'),
+  homeNavigation('/homeNavigation'),
+  idealTypeSetting('/idealTypeSetting'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -62,8 +67,17 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.home.path,
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const HomeScreen(),
     ),
+    GoRoute(
+      path: AppRoute.homeNavigation.path,
+      builder: (context, state) => const HomeNavigationPage(),
+    ),
+    GoRoute(
+      path: AppRoute.idealTypeSetting.path,
+      builder: (context, state) => const IdealTypeSettingPage(),
+    ),
+
     GoRoute(
       path: AppRoute.auth.path,
       builder: (context, state) => const SignInPage(),

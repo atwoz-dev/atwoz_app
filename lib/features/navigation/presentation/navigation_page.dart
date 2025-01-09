@@ -1,9 +1,7 @@
+import 'package:atwoz_app/core/theme/theme.dart';
+import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 import 'package:atwoz_app/router/router.dart';
 import 'package:flutter/material.dart';
-
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -59,7 +57,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.homeNavigation,
                       );
                     },
                     child: Text(
