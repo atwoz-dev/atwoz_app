@@ -29,7 +29,7 @@ jobs:
       # 프로젝트에 항목 추가
       - name: Assign Project
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.ORGANIZATION_PERSONAL_ACCESS_TOKEN }}
         run: |
           # Organization의 프로젝트도 포함하여 검색
           GRAPHQL_RESULT=$(gh api graphql -F query='
@@ -85,7 +85,7 @@ jobs:
       # 마일스톤에 항목 할당
       - name: Assign Milestone
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.ORGANIZATION_PERSONAL_ACCESS_TOKEN }}
         run: |
           # API 응답을 임시 파일에 저장
           MILESTONE_RESPONSE=$(gh api repos/${{ github.repository }}/milestones)
@@ -132,6 +132,6 @@ jobs:
       # Flutter_Test 워크플로우 실행
       - name: Trigger Next Workflow
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # GITHUB_TOKEN 대신 PAT 사용
+          GH_TOKEN: ${{ secrets.ORGANIZATION_PERSONAL_ACCESS_TOKEN }}  # GITHUB_TOKEN 대신 PAT 사용
         run: |
           gh workflow run "Flutter_Test" --ref "${{ github.ref_name }}"
