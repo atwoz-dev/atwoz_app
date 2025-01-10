@@ -6,10 +6,20 @@ on:
   issues:
     types: [opened]
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
 jobs:
   assign-project-and-milestone:
     runs-on: ubuntu-latest
     steps:
+      # 저장소 체크아웃 단계 추가
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       # 필수 도구 설치 (GitHub CLI와 jq)
       - name: Install Dependencies
         run: |
@@ -18,22 +28,47 @@ jobs:
 
       # 프로젝트에 항목 추가
       - name: Assign Project
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          PROJECT_ID=$(gh api graphql -F query='
-          query ($owner: String!, $repo: String!) {
-            repository(owner: $owner, name: $repo) {
+          # Organization의 프로젝트도 포함하여 검색
+          GRAPHQL_RESULT=$(gh api graphql -F query='
+          query {
+            viewer {
               projectsV2(first: 100) {
                 nodes {
                   id
                   title
                 }
               }
+              organizations(first: 100) {
+                nodes {
+                  projectsV2(first: 100) {
+                    nodes {
+                      id
+                      title
+                    }
+                  }
+                }
+              }
             }
-          }' -F owner="${{ github.repository_owner }}" -F repo="${{ github.event.repository.name }}" \
-          | jq -r '.data.repository.projectsV2.nodes[] | select(.title == "Heart Beat Flutter Project") | .id')
-
+          }')
+          
+          # 개인 프로젝트와 조직 프로젝트에서 검색
+          PROJECT_ID=$(echo "$GRAPHQL_RESULT" | jq -r '
+            (.data.viewer.projectsV2.nodes[] | select(.title == "@Heart Beat Flutter Project") | .id) //
+            (.data.viewer.organizations.nodes[].projectsV2.nodes[] | select(.title == "@Heart Beat Flutter Project") | .id)
+          ')
+          
           if [ -n "$PROJECT_ID" ]; then
-            ITEM_ID=$(jq -r ".${{ github.event_name }}.node_id" <<<"${{ toJson(github.event) }}")
+            # GitHub 이벤트 데이터를 임시 파일에 저장
+            echo '${{ toJSON(github.event) }}' > event.json
+            
+            # node_id 추출
+            ITEM_ID=$(jq -r '.issue.node_id // .pull_request.node_id' event.json)
+            rm event.json  # 임시 파일 삭제
+            
+            # 프로젝트에 항목 추가
             gh api graphql -F query='
             mutation ($projectId: ID!, $contentId: ID!) {
               addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
@@ -49,28 +84,54 @@ jobs:
 
       # 마일스톤에 항목 할당
       - name: Assign Milestone
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          MILESTONE_ID=$(gh api repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/milestones \
-            | jq -r '.[] | select(.title == "MVP") | .id')
+          # API 응답을 임시 파일에 저장
+          MILESTONE_RESPONSE=$(gh api repos/${{ github.repository }}/milestones)
+          echo "$MILESTONE_RESPONSE" > milestone_response.json
+          
+          # 디버깅을 위한 출력
+          echo "Available milestones:"
+          cat milestone_response.json | jq '.[].title'
+          
+          MILESTONE_ID=$(cat milestone_response.json | jq -r '.[] | select(.title == "MVP") | .number')
+          rm milestone_response.json  # 임시 파일 삭제
 
           if [ -n "$MILESTONE_ID" ]; then
+            echo "Found milestone ID: $MILESTONE_ID"
             if [ "${{ github.event_name }}" == "issues" ]; then
-            echo "Event detected: issues"
               ISSUE_NUMBER="${{ github.event.issue.number }}"
+              ENDPOINT="issues"
             elif [ "${{ github.event_name }}" == "pull_request" ]; then
-              echo "Event detected: pull_request"
               ISSUE_NUMBER="${{ github.event.pull_request.number }}"
+              ENDPOINT="pulls"
             else
               echo "Error: Unsupported event name - ${{ github.event_name }}"
               exit 1
             fi
-            gh issue edit "$ISSUE_NUMBER" --milestone "$MILESTONE_ID"
+            
+            echo "Attempting to assign milestone $MILESTONE_ID to $ENDPOINT #$ISSUE_NUMBER"
+            
+            # GitHub API를 직접 사용하여 마일스톤 할당
+            gh api \
+              --method PATCH \
+              repos/${{ github.repository }}/$ENDPOINT/$ISSUE_NUMBER \
+              -f milestone=$MILESTONE_ID || {
+                echo "Failed to assign milestone. Current state:"
+                gh api repos/${{ github.repository }}/$ENDPOINT/$ISSUE_NUMBER | jq '.milestone'
+                exit 1
+              }
           else
-            echo "Error: Milestone ID not found."
+            echo "Error: Milestone 'MVP' not found in repository"
+            echo "Available milestones:"
+            cat milestone_response.json | jq -r '.[].title'
             exit 1
           fi
 
       # Flutter_Test 워크플로우 실행
       - name: Trigger Next Workflow
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # GITHUB_TOKEN 대신 PAT 사용
         run: |
           gh workflow run "Flutter_Test" --ref "${{ github.ref_name }}"
