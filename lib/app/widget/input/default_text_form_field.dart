@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:atwoz_app/core/state/base_widget_state.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +20,7 @@ Widget buildLabeledRow({
         child: Text(
           label,
           style: textStyle ??
-              AppStyles.body02Regular(context.appColors.onSurface)
+              Fonts.body02Regular(context.palette.onSurface)
                   .copyWith(fontWeight: FontWeight.w600),
         ),
       ),
@@ -29,8 +31,8 @@ Widget buildLabeledRow({
 }
 
 /// 커스텀 TextField
-class AppTextFormField extends StatefulWidget {
-  const AppTextFormField({
+class DefaultTextFormField extends StatefulWidget {
+  const DefaultTextFormField({
     super.key,
     // Form
     this.fieldKey,
@@ -148,10 +150,10 @@ class AppTextFormField extends StatefulWidget {
   final TextStyle? characterCountStyle; // 글자 수 카운터 스타일
 
   @override
-  State<AppTextFormField> createState() => AppTextFormFieldState();
+  State<DefaultTextFormField> createState() => DefaultTextFormFieldState();
 }
 
-class AppTextFormFieldState extends State<AppTextFormField>
+class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
     with TextFieldHandler {
   @override
   void initState() {
@@ -168,7 +170,7 @@ class AppTextFormFieldState extends State<AppTextFormField>
   // 글자 수 카운터 실시간 업데이트를 위한 메서드
   void _updateCharacterCount() {
     if (widget.showCharacterCount) {
-      setState(() {}); // 글자 수 업데이트
+      safeSetState(() {}); // 글자 수 업데이트
     }
   }
 
@@ -188,10 +190,9 @@ class AppTextFormFieldState extends State<AppTextFormField>
             }
           },
           decoration: buildDecoration(context),
-          cursorColor: context.appColors.primary,
+          cursorColor: palette.primary,
           showCursor: widget.showCursor,
-          style: widget.style ??
-              AppStyles.body01Medium(context.appColors.onSurface),
+          style: widget.style ?? Fonts.body01Medium(palette.onSurface),
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
           textCapitalization: widget.textCapitalization,
@@ -223,8 +224,8 @@ class AppTextFormFieldState extends State<AppTextFormField>
             child: Text(
               '${controller.text.length}/${widget.maxLength}',
               style: controller.text.isNotEmpty
-                  ? widget.characterCountStyle ?? AppStyles.body03Regular()
-                  : AppStyles.body03Regular(AppColors.colorGrey500),
+                  ? widget.characterCountStyle ?? Fonts.body03Regular()
+                  : Fonts.body03Regular(Palette.colorGrey500),
             ),
           ),
       ],
@@ -239,7 +240,7 @@ class AppTextFormFieldState extends State<AppTextFormField>
 
     // 기본 둥근 테두리
     final InputBorder roundedBorder = OutlineInputBorder(
-      borderRadius: AppDimens.buttonRadius, // 기본 둥근 모서리 설정
+      borderRadius: Dimens.buttonRadius, // 기본 둥근 모서리 설정
       borderSide: BorderSide.none, // 테두리 제거
     );
 
@@ -247,7 +248,7 @@ class AppTextFormFieldState extends State<AppTextFormField>
     final InputBorder errorBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
       borderSide: BorderSide(
-        color: widget.underlineColor ?? context.appColors.error,
+        color: widget.underlineColor ?? palette.error,
         width: 2.0,
       ),
     );
@@ -264,7 +265,7 @@ class AppTextFormFieldState extends State<AppTextFormField>
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,
       isDense: widget.isDense,
-      fillColor: widget.fillColor ?? context.appColors.surface,
+      fillColor: widget.fillColor ?? palette.surface,
       border: widget.border ?? roundedBorder,
       enabledBorder: widget.border ??
           widget.enabledBorder ??
@@ -277,25 +278,23 @@ class AppTextFormFieldState extends State<AppTextFormField>
           ? widget.border ??
               roundedBorder.copyWith(
                 borderSide: BorderSide(
-                  color: context.appColors.primary,
+                  color: palette.primary,
                   width: 2.0,
                 ),
               )
           : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
       alignLabelWithHint: true, // 레이블과 에러 위치 일치
-      hintStyle:
-          widget.hintStyle ?? AppStyles.body01Medium(AppColors.colorGrey500),
+      hintStyle: widget.hintStyle ?? Fonts.body01Medium(Palette.colorGrey500),
       errorText: widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
-      errorStyle: AppStyles.body03Regular(context.appColors.error)
-          .copyWith(height: 1.5),
+      errorStyle: Fonts.body03Regular(palette.error).copyWith(height: 1.5),
       label: widget.label,
     );
   }
 }
 
-mixin TextFieldHandler on State<AppTextFormField> {
+mixin TextFieldHandler on State<DefaultTextFormField> {
   FocusNode? _focusNode;
   Timer? _debounce;
   GlobalKey<FormFieldState<String>>? fieldKey;

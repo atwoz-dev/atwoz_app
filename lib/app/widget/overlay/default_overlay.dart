@@ -2,32 +2,33 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../core/state/base_widget_state.dart';
 import '../../constants/params.dart';
 
-class AppOverlay extends StatefulWidget {
-  const AppOverlay({
+class DefaultOverlay extends StatefulWidget {
+  const DefaultOverlay({
     super.key,
     this.controller,
     this.overlay,
     required this.child,
   });
 
-  final AppOverlayController? controller;
+  final DefaultOverlayController? controller;
   final Widget? overlay;
   final Widget child;
 
   @override
-  State<AppOverlay> createState() => AppOverlayState();
+  State<DefaultOverlay> createState() => DefaultOverlayState();
 }
 
-class AppOverlayState<T extends AppOverlay> extends State<T>
-    with SingleTickerProviderStateMixin {
+class DefaultOverlayState<T extends DefaultOverlay>
+    extends AppBaseWidgetState<T> with SingleTickerProviderStateMixin {
   OverlayEntry? _entry;
-  AppOverlayController? _overlayController;
+  DefaultOverlayController? _overlayController;
   late AnimationController animationController;
 
-  AppOverlayController get overlayController =>
-      widget.controller ?? (_overlayController ??= AppOverlayController());
+  DefaultOverlayController get overlayController =>
+      widget.controller ?? (_overlayController ??= DefaultOverlayController());
   double get verticalOffset => 30.0;
   bool get preferBelow => false;
 
@@ -35,8 +36,8 @@ class AppOverlayState<T extends AppOverlay> extends State<T>
   void initState() {
     super.initState();
     animationController = AnimationController(
-      duration: AppParams.animationDuration,
-      reverseDuration: AppParams.animationDurationFast,
+      duration: Params.animationDuration,
+      reverseDuration: Params.animationDurationFast,
       vsync: this,
     );
     overlayController.addListener(handleStatusChanged);
@@ -63,26 +64,21 @@ class AppOverlayState<T extends AppOverlay> extends State<T>
   }
 
   void handleStatusChanged() {
-    setState(() {});
+    safeSetState(() {});
 
     switch (overlayController.value) {
-      case AppOverlayStatus.showing:
+      case DefaultOverlayStatus.showing:
         return _createEntry();
-      case AppOverlayStatus.hidden:
+      case DefaultOverlayStatus.hidden:
         return _removeEntry();
     }
   }
 
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
   Widget buildOverlay(BuildContext context, Offset target, Widget? overlay) {
-    return AppOverlayWidget(
+    return DefaultOverlayWidget(
       animation: CurvedAnimation(
         parent: animationController,
-        curve: AppParams.animationCurve,
+        curve: Params.animationCurve,
       ),
       target: target,
       verticalOffset: verticalOffset,
@@ -125,29 +121,29 @@ class AppOverlayState<T extends AppOverlay> extends State<T>
   }
 }
 
-/* ------------ Components ------------ */
+/* ------------ 컴포넌트 ------------ */
 
-enum AppOverlayStatus {
+enum DefaultOverlayStatus {
   showing,
   hidden;
 
-  bool get isShowing => this == AppOverlayStatus.showing;
-  bool get isHidden => this == AppOverlayStatus.hidden;
+  bool get isShowing => this == DefaultOverlayStatus.showing;
+  bool get isHidden => this == DefaultOverlayStatus.hidden;
 }
 
-class AppOverlayController extends ValueNotifier<AppOverlayStatus> {
-  AppOverlayController({AppOverlayStatus? status})
-      : super(status ?? AppOverlayStatus.hidden);
+class DefaultOverlayController extends ValueNotifier<DefaultOverlayStatus> {
+  DefaultOverlayController({DefaultOverlayStatus? status})
+      : super(status ?? DefaultOverlayStatus.hidden);
 
-  AppOverlayStatus get status => value;
+  DefaultOverlayStatus get status => value;
 
-  void showOverlay() => value = AppOverlayStatus.showing;
+  void showOverlay() => value = DefaultOverlayStatus.showing;
 
-  void hidenOverlay() => value = AppOverlayStatus.hidden;
+  void hidenOverlay() => value = DefaultOverlayStatus.hidden;
 }
 
-class AppOverlayWidget extends StatelessWidget {
-  const AppOverlayWidget({
+class DefaultOverlayWidget extends StatelessWidget {
+  const DefaultOverlayWidget({
     super.key,
     required this.animation,
     required this.target,
@@ -172,7 +168,7 @@ class AppOverlayWidget extends StatelessWidget {
     return Positioned.fill(
       bottom: MediaQuery.maybeViewInsetsOf(context)?.bottom ?? 0.0,
       child: CustomSingleChildLayout(
-        delegate: AppOverlayPositionDelegate(
+        delegate: DefaultOverlayPositionDelegate(
           target: target,
           verticalOffset: verticalOffset,
           preferBelow: preferBelow,
@@ -183,26 +179,24 @@ class AppOverlayWidget extends StatelessWidget {
   }
 }
 
-/// Coppy Material Tooltip [_TooltipPositionDelegate]
-class AppOverlayPositionDelegate extends SingleChildLayoutDelegate {
-  AppOverlayPositionDelegate({
+/// Material Tooltip [_TooltipPositionDelegate] 복사
+class DefaultOverlayPositionDelegate extends SingleChildLayoutDelegate {
+  DefaultOverlayPositionDelegate({
     required this.target,
     required this.verticalOffset,
     required this.preferBelow,
   });
 
-  /// The offset of the target the tooltip is positioned near in the global
-  /// coordinate system.
+  /// 전역 좌표계에서 툴팁이 위치한 대상의 오프셋
   final Offset target;
 
-  /// The amount of vertical distance between the target and the displayed
-  /// tooltip.
+  /// 대상과 표시된 툴팁 사이의 수직 거리
   final double verticalOffset;
 
-  /// Whether the tooltip is displayed below its widget by default.
+  /// 기본적으로 툴팁이 위젯 아래에 표시되는지 여부
   ///
-  /// If there is insufficient space to display the tooltip in the preferred
-  /// direction, the tooltip will be displayed in the opposite direction.
+  /// 선호하는 방향에 툴팁을 표시할 공간이 충분하지 않은 경우,
+  /// 툴팁은 반대 방향에 표시됩니다.
   final bool preferBelow;
 
   @override
@@ -219,16 +213,17 @@ class AppOverlayPositionDelegate extends SingleChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(AppOverlayPositionDelegate oldDelegate) {
+  bool shouldRelayout(DefaultOverlayPositionDelegate oldDelegate) {
     return target != oldDelegate.target ||
         verticalOffset != oldDelegate.verticalOffset ||
         preferBelow != oldDelegate.preferBelow;
   }
 }
 
-/* ------------ Extension Mixin ------------ */
+/* ------------ 확장 믹스인 ------------ */
 
-mixin AppOverlayUseFocusNode<T extends AppOverlay> on AppOverlayState<T> {
+mixin DefaultOverlayUseFocusNode<T extends DefaultOverlay>
+    on DefaultOverlayState<T> {
   FocusNode? _focusNode;
   FocusNode get effectiveFocusNode => _focusNode ??= FocusNode();
 
@@ -264,7 +259,8 @@ mixin AppOverlayUseFocusNode<T extends AppOverlay> on AppOverlayState<T> {
   }
 }
 
-mixin AppOverlayUseTimer<T extends AppOverlay> on AppOverlayState<T> {
+mixin DefaultOverlayUseTimer<T extends DefaultOverlay>
+    on DefaultOverlayState<T> {
   Timer? _dismissTimer;
 
   Duration get timerDuration => const Duration(seconds: 3);

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:atwoz_app/core/network/api_service.dart';
+import 'api_service.dart';
 import 'package:dio/dio.dart';
 
 import '../util/log.dart';
