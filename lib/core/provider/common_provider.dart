@@ -5,7 +5,7 @@ part 'common_provider.g.dart';
 
 /// CommonNotifier - 공통 상태 관리 클래스
 @riverpod
-class Common extends _$CommonNotifier {
+class CommonNotifier extends _$CommonNotifier {
   /// 초기 상태 설정
   @override
   CommonState build() {
