@@ -1,21 +1,21 @@
 import 'package:atwoz_app/core/util/date_time_util.dart';
 import 'package:intl/intl.dart';
 
-extension DateTimeExtesion on DateTime {
+extension ExtendedDateTime on DateTime {
   /// Format: yyyy-MM-dd
-  String get toHyphenDateString => DateTimeUtils.convertToDateHyphen(this);
+  String get toHyphenDateString => DateTimeUtil.convertToDateHyphen(this);
 
   /// Format: yyyy.MM.dd
-  String get toDateString => DateTimeUtils.convertToDate(this);
+  String get toDateString => DateTimeUtil.convertToDate(this);
 
   /// Format: HH:mm:ss
-  String get toTimeString => DateTimeUtils.convertToTime(this);
+  String get toTimeString => DateTimeUtil.convertToTime(this);
 
   /// Format: yyyy.MM.dd HH:mm:ss
-  String get toDateTimeString => DateTimeUtils.convertToDateTime(this);
+  String get toDateTimeString => DateTimeUtil.convertToDateTime(this);
 
   /// Format: HH:mm
-  String get toTimeNoSecondString => DateTimeUtils.convertToTimeNoSecond(this);
+  String get toTimeNoSecondString => DateTimeUtil.convertToTimeNoSecond(this);
 
   /// Format: yyyy.MM.dd HH:mm
   String get toDateTimeNoSecondString {
@@ -23,7 +23,7 @@ extension DateTimeExtesion on DateTime {
   }
 
   // Format: Now, few Seconds Ago, 1 minutes ago, 2 hours ago, 3 days ago,...
-  String get toRelativeString => DateTimeUtils.convertToDateRelative(this);
+  String get toRelativeString => DateTimeUtil.convertToDateRelative(this);
 }
 
 extension DateTimeNullExtesion on DateTime? {

@@ -1,26 +1,27 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/constants.dart';
 import '../view/default_progress_indicator.dart';
 
-class AppElevatedButton extends ConsumerWidget {
-  const AppElevatedButton({
+class DefaultElevatedButton extends ConsumerWidget {
+  const DefaultElevatedButton({
     super.key,
     required this.child,
     required this.onPressed,
     this.onLongPress,
     this.onHover,
     this.onFocusChange,
-    this.padding = AppDimens.buttonPadding,
+    this.padding = Dimens.buttonPadding,
     this.primary,
     this.onPrimary,
     this.expandedWidth = true,
     this.isLoading = false,
     this.alignment,
-    this.height = AppDimens.buttonHeight,
+    this.height = Dimens.buttonHeight,
     this.width = 150,
-    this.borderRadius = AppDimens.buttonRadius,
+    this.borderRadius = Dimens.buttonRadius,
     this.border,
     this.textStyle,
   });
@@ -46,8 +47,8 @@ class AppElevatedButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Color foregroundColor = onPrimary ?? context.appColors.onPrimary;
-    final Color backgroundColor = primary ?? context.appColors.primary;
+    final Color foregroundColor = onPrimary ?? context.palette.onPrimary;
+    final Color backgroundColor = primary ?? context.palette.primary;
     final Color? disabledForegroundColor = onPrimary;
     final Color? disabledBackgroundColor = primary;
 
@@ -64,7 +65,7 @@ class AppElevatedButton extends ConsumerWidget {
           borderRadius: borderRadius,
           side: border ?? BorderSide.none, // 커스텀 윤곽선 사용
         ),
-        textStyle: textStyle ?? AppStyles.body01Medium(),
+        textStyle: textStyle ?? Fonts.body01Medium(),
         minimumSize: Size(
           expandedWidth ? double.infinity : width,
           height,
@@ -76,14 +77,14 @@ class AppElevatedButton extends ConsumerWidget {
       onHover: onHover,
       onFocusChange: onFocusChange,
       child: AnimatedSize(
-        duration: AppParams.animationDurationFast,
+        duration: Params.animationDurationFast,
         curve: Curves.fastOutSlowIn,
         child: isLoading
             ? SizedBox(
                 height: height - padding.vertical,
                 child: FittedBox(
-                    child:
-                        AppCircularProgressIndicator(color: foregroundColor)),
+                    child: DefaultCircularProgressIndicator(
+                        color: foregroundColor)),
               )
             : child,
       ),

@@ -19,7 +19,7 @@ class TitleText extends StatelessWidget {
     return Text(
       title,
       style: textStyle ??
-          AppStyles.header01().copyWith(
+          Fonts.header01().copyWith(
               fontWeight: fontWeight ?? FontWeight.w900, color: textColor),
     );
   }

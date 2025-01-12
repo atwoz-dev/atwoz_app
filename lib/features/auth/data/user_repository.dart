@@ -1,9 +1,9 @@
-import 'package:atwoz_app/data/models/user_sign_in_request.dart';
-import 'package:atwoz_app/data/models/user_sign_up_request.dart';
+import 'package:atwoz_app/features/auth/data/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/user_sign_up_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/user_response.dart';
-import '../../core/network/base_repository.dart';
+import 'user_response.dart';
+import '../../../core/network/base_repository.dart';
 
 class UserRepository extends BaseRepository {
   const UserRepository(Ref ref) : super(ref, '/user');

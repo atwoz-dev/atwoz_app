@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'api_service_impl.dart';
 
 typedef Json = Map<String, dynamic>;

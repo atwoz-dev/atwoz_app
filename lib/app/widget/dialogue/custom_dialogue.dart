@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
@@ -85,13 +86,13 @@ class CustomDialogue extends StatelessWidget {
               Text(
                 title!,
                 style: titleStyle ??
-                    AppStyles.header03().copyWith(fontWeight: FontWeight.bold),
+                    Fonts.header03().copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             if (title != null) const Gap(12),
             Text(
               content,
-              style: contentStyle ?? AppStyles.body01Regular(),
+              style: contentStyle ?? Fonts.body01Regular(),
               textAlign: TextAlign.center,
             ),
             const Gap(16),
@@ -99,11 +100,11 @@ class CustomDialogue extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: AppOutlinedButton(
+                  child: DefaultOutlinedButton(
                     primary:
-                        outlinedButtonTextBorderColor ?? AppColors.colorGrey200,
+                        outlinedButtonTextBorderColor ?? Palette.colorGrey200,
                     textColor:
-                        outlinedButtonTextColor ?? context.appColors.onSurface,
+                        outlinedButtonTextColor ?? context.palette.onSurface,
                     height: 35,
                     onPressed: onOutlinedButtonPressed,
                     child: Text(outlineButtonText),
@@ -112,15 +113,15 @@ class CustomDialogue extends StatelessWidget {
                 const Gap(8),
                 Expanded(
                   flex: 1,
-                  child: AppElevatedButton(
+                  child: DefaultElevatedButton(
                     height: 35,
-                    primary: elevatedButtonColor ?? context.appColors.primary,
+                    primary: elevatedButtonColor ?? context.palette.primary,
                     onPressed: onElevatedButtonPressed,
                     child: Text(
                       elevatedButtonText!,
                       style: TextStyle(
                         color: elevatedButtonTextColor ??
-                            context.appColors.onPrimary,
+                            context.palette.onPrimary,
                       ),
                     ),
                   ),

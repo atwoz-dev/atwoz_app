@@ -1,7 +1,6 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../constants/constants.dart';
 
 class DefaultScaffold extends ConsumerWidget {
   const DefaultScaffold({
@@ -30,7 +29,7 @@ class DefaultScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffold = Scaffold(
-      backgroundColor: backgroundColor ?? context.appColors.surface,
+      backgroundColor: backgroundColor ?? context.palette.surface,
       body: body,
       appBar: appBar,
       drawer: drawer,

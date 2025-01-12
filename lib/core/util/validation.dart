@@ -2,8 +2,8 @@ import 'package:intl/intl.dart';
 
 /// TextFormField 검증
 // TODO: 나중에 백엔드랑 맞춰야 함 습습...
-class ValidateUtils {
-  const ValidateUtils._();
+class Validation {
+  const Validation._();
 
   // 비밀번호가 숫자, 소문자, 대문자, 특수문자를 포함해야 함.
   static final RegExp password =

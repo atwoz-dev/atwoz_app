@@ -19,7 +19,7 @@ class Routing {
     initialLocation: AppRoute.navigation.path, // 초기 경로 설정
     routes: allRoutes, // router.dart의 routes 가져오기
     refreshListenable: ValueNotifier(authProvider),
-    errorBuilder: (context, GoRouterState state) => ErrorRoutePage(state),
+    errorBuilder: (context, GoRouterState state) => RouteErrorPage(state),
     redirect: (context, GoRouterState state) {
       final container = ProviderScope.containerOf(context);
       final isAuthenticated = container.read(authProvider);

@@ -14,21 +14,13 @@ class DateTimeFormatter {
 
   // Format
   static final dateTimeFormatSlash = DateFormat('yyyy/MM/dd HH:mm:ss');
-
   static final dateFormatSlash = DateFormat('yyyy/MM/dd');
-
   static final dateTimeFormatHyphen = DateFormat('yyyy-MM-dd HH:mm:ss');
-
   static final dateFormatHyphen = DateFormat('yyyy-MM-dd');
-
   static final monthFormatHyphen = DateFormat('yyyy-MM');
-
   static final dateTimeFormatDot = DateFormat('yyyy.MM.dd HH:mm:ss');
-
   static final dateFormatDot = DateFormat('yyyy.MM.dd');
-
   static final timeFormat = DateFormat('HH:mm:ss');
-
   static final timeNoSecondFormat = DateFormat('HH:mm');
 }
 

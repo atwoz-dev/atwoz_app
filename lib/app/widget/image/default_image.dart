@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,23 +11,23 @@ import '../../../core/util/string_util.dart';
 import '../view/default_progress_indicator.dart';
 import 'error_image.dart';
 
-class AppImage extends ConsumerWidget {
-  const AppImage({
+class DefaultImage extends ConsumerWidget {
+  const DefaultImage({
     super.key,
     this.imageURL,
-    this.width = AppDimens.imageWidth,
-    this.height = AppDimens.imageHeight,
+    this.width = Dimens.imageWidth,
+    this.height = Dimens.imageHeight,
     this.fit = BoxFit.cover,
-    this.borderRadius = AppDimens.imageRadius,
+    this.borderRadius = Dimens.imageRadius,
     this.color,
   });
 
-  const AppImage.square({
+  const DefaultImage.square({
     super.key,
     this.imageURL,
-    double? size = AppDimens.imageSize,
+    double? size = Dimens.imageSize,
     this.fit = BoxFit.cover,
-    this.borderRadius = AppDimens.imageRadius,
+    this.borderRadius = Dimens.imageRadius,
     this.color,
   })  : width = size,
         height = size;
@@ -40,8 +41,8 @@ class AppImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (imageURL == null || !StringUtils.isURL(imageURL!)) {
-      return AppErrorImage(
+    if (imageURL == null || !StringUtil.isURL(imageURL!)) {
+      return ErrorImage(
         width: width,
         height: height,
         borderRadius: borderRadius,
@@ -51,17 +52,17 @@ class AppImage extends ConsumerWidget {
     return ClipRRect(
         borderRadius: borderRadius,
         child: ColoredBox(
-          color: context.appColors.shadow,
+          color: context.palette.shadow,
           child: CachedNetworkImage(
             imageUrl: imageURL!,
             width: width,
             height: height,
             fit: fit,
             progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
-                AppCircularProgressIndicator(
+                DefaultCircularProgressIndicator(
               progress: progress.progress,
             ),
-            errorWidget: (_, __, ___) => AppErrorImage(
+            errorWidget: (_, __, ___) => ErrorImage(
               width: width,
               height: height,
               borderRadius: borderRadius,
@@ -72,14 +73,14 @@ class AppImage extends ConsumerWidget {
 
   static Widget file(
     String? imagePath, {
-    double? width = AppDimens.imageWidth,
-    double? height = AppDimens.imageHeight,
+    double? width = Dimens.imageWidth,
+    double? height = Dimens.imageHeight,
     BoxFit? fit = BoxFit.cover,
     Color? color,
-    BorderRadiusGeometry borderRadius = AppDimens.imageRadius,
+    BorderRadiusGeometry borderRadius = Dimens.imageRadius,
   }) {
     if (imagePath == null || imagePath.isEmpty) {
-      return AppErrorImage(
+      return ErrorImage(
         width: width,
         height: height,
         borderRadius: borderRadius,
@@ -99,15 +100,15 @@ class AppImage extends ConsumerWidget {
 
   static Widget asset(
     String? imageName, {
-    double? width = AppDimens.imageWidth,
-    double? height = AppDimens.imageHeight,
+    double? width = Dimens.imageWidth,
+    double? height = Dimens.imageHeight,
     BoxFit? fit = BoxFit.cover,
-    BorderRadiusGeometry borderRadius = AppDimens.imageRadius,
+    BorderRadiusGeometry borderRadius = Dimens.imageRadius,
     Color? color,
   }) {
     const BorderRadius.all(Radius.circular(12));
     if (imageName == null || imageName.isEmpty) {
-      return AppErrorImage(
+      return ErrorImage(
         width: width,
         height: height,
         borderRadius: borderRadius,
@@ -128,15 +129,15 @@ class AppImage extends ConsumerWidget {
 
   static Widget memory(
     Uint8List? bytes, {
-    double? width = AppDimens.imageWidth,
-    double? height = AppDimens.imageHeight,
+    double? width = Dimens.imageWidth,
+    double? height = Dimens.imageHeight,
     BoxFit? fit = BoxFit.cover,
-    BorderRadiusGeometry borderRadius = AppDimens.imageRadius,
+    BorderRadiusGeometry borderRadius = Dimens.imageRadius,
     Color? color,
   }) {
     const BorderRadius.all(Radius.circular(12));
     if (bytes == null || bytes.isEmpty) {
-      return AppErrorImage(
+      return ErrorImage(
         width: width,
         height: height,
         borderRadius: borderRadius,

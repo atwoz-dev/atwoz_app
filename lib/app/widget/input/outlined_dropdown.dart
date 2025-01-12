@@ -1,4 +1,5 @@
-import 'package:atwoz_app/app/constants/paleette.dart';
+import 'package:atwoz_app/core/state/base_widget_state.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -25,10 +26,10 @@ class OutlinedDropdown<T> extends StatefulWidget {
     required this.onItemSelected,
     required this.valueBuilder,
     this.itemBuilder,
-    this.activeBorderColor = AppColors.colorGrey800,
-    this.inactiveBorderColor = AppColors.colorGrey100,
-    this.hintTextColor = AppColors.colorGrey500,
-    this.selectedItemHighlightColor = AppColors.colorGrey100,
+    this.activeBorderColor = Palette.colorGrey800,
+    this.inactiveBorderColor = Palette.colorGrey100,
+    this.hintTextColor = Palette.colorGrey500,
+    this.selectedItemHighlightColor = Palette.colorGrey100,
     this.placeholder,
   });
 
@@ -36,7 +37,7 @@ class OutlinedDropdown<T> extends StatefulWidget {
   OutlinedDropdownState<T> createState() => OutlinedDropdownState<T>();
 }
 
-class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
+class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
   OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
   final FocusNode _focusNode = FocusNode();
@@ -55,7 +56,7 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
   }
 
   void _toggleDropdown() {
-    setState(() {
+    safeSetState(() {
       if (_isDropdownOpened) {
         _closeDropdown();
       } else {
@@ -68,7 +69,7 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
     if (_overlayEntry == null) {
       _overlayEntry = _createOverlayEntry();
       Overlay.of(context).insert(_overlayEntry!);
-      setState(() {
+      safeSetState(() {
         _isDropdownOpened = true;
       });
     }
@@ -78,7 +79,7 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
     if (_overlayEntry != null) {
       _overlayEntry!.remove();
       _overlayEntry = null;
-      setState(() {
+      safeSetState(() {
         _isDropdownOpened = false;
       });
     }
@@ -124,7 +125,7 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
                           shrinkWrap: true,
                           itemCount: widget.items.length,
                           separatorBuilder: (context, index) => Divider(
-                            color: AppColors.colorGrey100,
+                            color: Palette.colorGrey100,
                             height: 2,
                           ),
                           itemBuilder: (context, index) {
@@ -148,8 +149,8 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     widget.valueBuilder(item),
-                                    style: AppStyles.body02Regular(
-                                        AppColors.colorGrey800),
+                                    style: Fonts.body02Regular(
+                                        Palette.colorGrey800),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -186,13 +187,13 @@ class OutlinedDropdownState<T> extends State<OutlinedDropdown<T>> {
               hintText: widget.selectedItem != null
                   ? null
                   : widget.placeholder ?? '옵션을 선택해주세요',
-              hintStyle: AppStyles.body02Regular(AppColors.colorGrey500),
+              hintStyle: Fonts.body02Regular(Palette.colorGrey500),
               suffixIcon: IconButton(
                 icon: Icon(
                   _isDropdownOpened
                       ? Icons.keyboard_arrow_up
                       : Icons.keyboard_arrow_down,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: theme.colorScheme.onSurface,
                 ),
                 onPressed: _toggleDropdown,
               ),

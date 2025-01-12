@@ -4,14 +4,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'global_state.freezed.dart';
 
 @freezed
-class AppBaseState with _$AppBaseState {
-  const factory AppBaseState({
+class AppGlobalState with _$AppGlobalState {
+  const factory AppGlobalState({
     @Default(1) int themeModeIndex,
-    @Default('ko') String languageCode,
-  }) = _AppBaseState;
+    // @Default('ko') String languageCode,
+  }) = _AppGlobalState;
 
-  const AppBaseState._();
+  const AppGlobalState._();
 
   ThemeMode get themeMode => ThemeMode.values[themeModeIndex];
-  Locale get locale => Locale(languageCode);
+  // Locale get locale => Locale(languageCode);
 }

@@ -7,10 +7,10 @@ import '../../../core/util/string_util.dart';
 import '../view/default_progress_indicator.dart';
 import 'error_image.dart';
 
-class AppRoundedImage extends ConsumerWidget {
-  const AppRoundedImage({
+class RoundedImage extends ConsumerWidget {
+  const RoundedImage({
     super.key,
-    this.size = AppDimens.imageSize,
+    this.size = Dimens.imageSize,
     this.imageURL,
     this.border,
     this.errorImage,
@@ -23,8 +23,8 @@ class AppRoundedImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (imageURL == null || !StringUtils.isURL(imageURL!)) {
-      return AppErrorImage(
+    if (imageURL == null || !StringUtil.isURL(imageURL!)) {
+      return ErrorImage(
           width: size, height: size, isRounded: true, image: errorImage);
     }
 
@@ -44,11 +44,11 @@ class AppRoundedImage extends ConsumerWidget {
         );
       },
       progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
-          AppCircularProgressIndicator(
+          DefaultCircularProgressIndicator(
         progress: progress.progress,
       ),
       errorWidget: (_, __, ___) =>
-          AppErrorImage(width: size, height: size, isRounded: true),
+          ErrorImage(width: size, height: size, isRounded: true),
     );
   }
 }

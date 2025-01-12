@@ -1,10 +1,10 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
 import 'default_overlay.dart';
 
-class AppMenuFloat extends AppOverlay {
-  const AppMenuFloat({
+class MenuFloat extends DefaultOverlay {
+  const MenuFloat({
     super.key,
     super.controller,
     this.width = 300,
@@ -25,11 +25,11 @@ class AppMenuFloat extends AppOverlay {
   final Widget menuView;
 
   @override
-  State<AppMenuFloat> createState() => _AppMenuFloatState();
+  State<MenuFloat> createState() => _MenuFloatState();
 }
 
-class _AppMenuFloatState extends AppOverlayState<AppMenuFloat>
-    with AppOverlayUseFocusNode {
+class _MenuFloatState extends DefaultOverlayState<MenuFloat>
+    with DefaultOverlayUseFocusNode {
   @override
   FocusNode get effectiveFocusNode =>
       widget.focusNode ?? super.effectiveFocusNode;
@@ -46,13 +46,13 @@ class _AppMenuFloatState extends AppOverlayState<AppMenuFloat>
       clipBehavior: widget.clipBehavior,
       decoration: widget.decoration ??
           BoxDecoration(
-              color: context.appColors.surface,
+              color: context.palette.surface,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
                   offset: const Offset(0, 3),
                   blurRadius: 20,
-                  color: context.appColors.onSurface.withOpacity(0.102),
+                  color: context.palette.onSurface.withOpacity(0.102),
                 )
               ]),
       child: widget.menuView,

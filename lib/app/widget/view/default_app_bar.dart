@@ -1,4 +1,6 @@
-import 'package:atwoz_app/data/sources/remote/auth_service.dart';
+import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
+
+import '../../../features/auth/domain/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,7 +48,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
             title: title != null
                 ? Text(
                     title!,
-                    style: AppStyles.body01Medium(),
+                    style: Fonts.body01Medium(),
                   )
                 : null,
             actions: actions,
@@ -58,7 +60,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               'Error: ${authState.error}',
-              style: AppStyles.body01Medium(),
+              style: Fonts.body01Medium(),
               textScaler: TextScaler.noScaling,
             ),
           ),

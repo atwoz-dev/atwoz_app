@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-extension ListExtension<T> on List<T> {
+extension ExtendedList<T> on List<T> {
   /// 존재하지 않으면 추가하고 존재하면 제거
   void addOrRemove(T data) {
     contains(data) ? remove(data) : add(data);

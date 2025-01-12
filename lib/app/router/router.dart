@@ -1,20 +1,20 @@
 import 'dart:async';
-import 'package:atwoz_app/features/auth/presentation/sign_up_profile_page.dart';
-import 'package:atwoz_app/features/interview/presentation/interview_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/introduce_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/navigation_page.dart';
-import 'package:atwoz_app/features/navigation/presentation/navigation_page.dart';
-import 'package:atwoz_app/features/profile/presentation/profile_page.dart';
-import 'package:atwoz_app/features/notification/presentation/pages/notification_page.dart';
-import 'package:atwoz_app/features/report/presentation/report_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
+import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
+import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
+import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:atwoz_app/features/home/presentation/home_page.dart';
-import 'package:atwoz_app/features/auth/presentation/sign_in_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_phone_input_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/onboarding_certification_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -68,7 +68,7 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.auth.path,
-      builder: (context, state) => const SignInPage(),
+      builder: (context, state) => const AuthSignInPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,
@@ -125,11 +125,11 @@ class SignBranch {
   static final routes = [
     GoRoute(
       path: AppRoute.signUp.path,
-      builder: (context, state) => const SignInPage(), // TODO: 바꾸기
+      builder: (context, state) => const AuthSignInPage(), // TODO: 바꾸기
       routes: [
         GoRoute(
           path: AppRoute.signUpProfile.path.split('/sign-up').last,
-          builder: (context, state) => const SignUpProfilePage(),
+          builder: (context, state) => const AuthSignUpProfilePage(),
         ),
       ],
     ),

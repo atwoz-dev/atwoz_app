@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 /// Provider의 생명주기 이벤트 및 상태 변화를 감지하고 디버그 로그를 출력하기 위한 클래스로,
 /// /// ProviderObserver를 확장하여 상태 변경 및 에러를 로깅
-class AppProviderObserver extends ProviderObserver {
+class DefaultProviderObserver extends ProviderObserver {
   @override
   void didAddProvider(
       ProviderBase provider, Object? value, ProviderContainer container) {

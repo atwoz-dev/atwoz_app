@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:zooper_flutter_encoding_utf16/utf16.dart';
 
-class HashUtils {
-  HashUtils._();
+class Hash {
+  Hash._();
 
   // utf16le + sha512
   static String convertSHA512Utf16LE(String plainText) {

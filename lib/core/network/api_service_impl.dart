@@ -1,5 +1,4 @@
-import 'package:atwoz_app/data/sources/remote/auth_service.dart';
-
+import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
 import 'package:atwoz_app/core/config/config.dart';
 
 import 'package:dio/dio.dart';

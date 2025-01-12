@@ -1,6 +1,6 @@
-/// [AppIcon] widget에서 쓰는 Svg 아이콘 경로
-class AppIcons {
-  const AppIcons._();
+/// [DefaultIcon] widget에서 쓰는 Svg 아이콘 경로
+class IconPath {
+  const IconPath._();
   static const String iconsPath = 'assets/icons';
   static const String circle = '$iconsPath/circle.svg';
   static const String logo = '$iconsPath/logo.svg';
@@ -17,7 +17,7 @@ class AppIcons {
   static const String notification = '$iconsPath/notification.svg';
   static const String tune = '$iconsPath/tune.svg';
 
-  // 바텀 네비게이션 바 TODO: 아이콘 피그마와 좀 다르게 생겨서 바꿔야 함
+  // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';
   static const String boltFill = '$iconsPath/bolt_fill.svg';
   static const String exam = '$iconsPath/exam.svg';

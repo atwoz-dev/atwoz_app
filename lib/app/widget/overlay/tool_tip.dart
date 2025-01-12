@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 import 'default_overlay.dart';
 
-class AppTooltip extends AppOverlay {
-  AppTooltip({
-    this.fillColor = AppColors.colorGrey400,
+class ToolTip extends DefaultOverlay {
+  ToolTip({
+    this.fillColor = Palette.colorGrey400,
     super.key,
     this.autoClose = true,
     super.controller,
@@ -17,8 +17,8 @@ class AppTooltip extends AppOverlay {
     Widget? child,
   }) : super(
           child: child ??
-              AppIcon(
-                AppIcons.help,
+              DefaultIcon(
+                IconPath.help,
                 colorFilter: ColorFilter.mode(fillColor, BlendMode.srcIn),
               ),
         );
@@ -30,11 +30,11 @@ class AppTooltip extends AppOverlay {
   final TextStyle? textStyle;
 
   @override
-  State<AppTooltip> createState() => _AppTooltipState();
+  State<ToolTip> createState() => _ToolTipState();
 }
 
-class _AppTooltipState extends AppOverlayState<AppTooltip>
-    with AppOverlayUseTimer {
+class _ToolTipState extends DefaultOverlayState<ToolTip>
+    with DefaultOverlayUseTimer {
   @override
   @override
   double get verticalOffset => 20; // 아래로 표시되도록 설정
@@ -45,8 +45,8 @@ class _AppTooltipState extends AppOverlayState<AppTooltip>
         comment: widget.message,
         boldText: widget.boldText,
         trianglePosition: BubblePosition.top, // 삼각형이 위로 향하도록 수정
-        textColor: AppColors.colorWhite,
-        bubbleColor: AppColors.colorBlack.withAlpha(180),
+        textColor: Palette.colorWhite,
+        bubbleColor: Palette.colorBlack.withAlpha(180),
         isShadow: false,
         textStyle: widget.textStyle);
 

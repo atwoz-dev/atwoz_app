@@ -2,8 +2,8 @@ import 'formatter.dart';
 import 'validation.dart';
 
 /// Common using [DateTime]
-class DateTimeUtils {
-  const DateTimeUtils._();
+class DateTimeUtil {
+  const DateTimeUtil._();
 
   static String convertToDate(DateTime dateTime) {
     return DateTimeFormatter.dateFormatDot.format(dateTime);
@@ -139,9 +139,9 @@ class DateTimeUtils {
     String? dateTimeString;
     List<String> dates = [];
 
-    if (ValidateUtils.dateYMD.hasMatch(input)) {
+    if (Validation.dateYMD.hasMatch(input)) {
       dates = input.split(RegExp(r'[^0-9]'));
-    } else if (ValidateUtils.dateDMY.hasMatch(input)) {
+    } else if (Validation.dateDMY.hasMatch(input)) {
       dates = input.split(RegExp(r'[^0-9]')).reversed.toList();
     }
 

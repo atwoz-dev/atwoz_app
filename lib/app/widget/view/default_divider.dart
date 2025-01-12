@@ -10,7 +10,7 @@ class DefaultDivider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Divider(height: 1, color: color ?? context.appColors.shadow);
+    return Divider(height: 1, color: color ?? context.palette.shadow);
   }
 }
 
@@ -24,7 +24,7 @@ class DefaultVerticalDivider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
         height: size,
-        child: VerticalDivider(
-            width: 1, color: color ?? context.appColors.shadow));
+        child:
+            VerticalDivider(width: 1, color: color ?? context.palette.shadow));
   }
 }

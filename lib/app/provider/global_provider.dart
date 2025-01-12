@@ -6,16 +6,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'global_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class AppNotifier extends AsyncNotifier<AppBaseState> {
-  late final Box<AppBaseState> _hiveBox;
+class Global extends AsyncNotifier<AppGlobalState> {
+  late final Box<AppGlobalState> _hiveBox;
 
   @override
-  Future<AppBaseState> build() async {
-    _hiveBox = await Hive.openBox<AppBaseState>('AppNotifier');
+  Future<AppGlobalState> build() async {
+    _hiveBox = await Hive.openBox<AppGlobalState>('AppGlobalNotifier');
 
     // 초기 상태 로드
     if (_hiveBox.isEmpty) {
-      final initialState = AppBaseState();
+      final initialState = AppGlobalState();
       _hiveBox.put(0, initialState);
       return initialState;
     }
@@ -29,7 +29,7 @@ class AppNotifier extends AsyncNotifier<AppBaseState> {
     await _saveState(newState);
   }
 
-  Future<void> _saveState(AppBaseState state) async {
+  Future<void> _saveState(AppGlobalState state) async {
     await _hiveBox.put(0, state);
   }
 }

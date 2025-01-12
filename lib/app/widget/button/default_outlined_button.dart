@@ -1,25 +1,26 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/constants.dart';
 import '../view/default_progress_indicator.dart';
 
-class AppOutlinedButton extends StatelessWidget {
-  const AppOutlinedButton({
+class DefaultOutlinedButton extends StatelessWidget {
+  const DefaultOutlinedButton({
     super.key,
     required this.child,
     required this.onPressed,
     this.onLongPress,
     this.onHover,
     this.onFocusChange,
-    this.padding = AppDimens.buttonPadding,
+    this.padding = Dimens.buttonPadding,
     this.primary,
     this.backgroundColor,
     this.expandedWidth = false,
     this.isLoading = false,
     this.alignment,
-    this.height = AppDimens.buttonHeight,
+    this.height = Dimens.buttonHeight,
     this.width = 0.0,
-    this.borderRadius = AppDimens.buttonRadius,
+    this.borderRadius = Dimens.buttonRadius,
     this.borderWidth = 2.0,
     this.textStyle,
     this.textColor,
@@ -46,7 +47,7 @@ class AppOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color foregroundColor = primary ?? context.appColors.primary;
+    final Color foregroundColor = primary ?? context.palette.primary;
     final Color disabledForegroundColor = foregroundColor.withOpacity(0.4);
 
     return OutlinedButton(
@@ -61,7 +62,7 @@ class AppOutlinedButton extends StatelessWidget {
           width: borderWidth,
         ),
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
-        textStyle: textStyle ?? AppStyles.body01Medium(),
+        textStyle: textStyle ?? Fonts.body01Medium(),
         minimumSize: Size(
           expandedWidth ? double.infinity : width,
           height,
@@ -73,13 +74,14 @@ class AppOutlinedButton extends StatelessWidget {
       onHover: onHover,
       onFocusChange: onFocusChange,
       child: AnimatedSize(
-        duration: AppParams.animationDurationFast,
+        duration: Params.animationDurationFast,
         curve: Curves.fastOutSlowIn,
         child: isLoading
             ? SizedBox(
                 height: height - padding.vertical,
                 child: FittedBox(
-                  child: AppCircularProgressIndicator(color: foregroundColor),
+                  child:
+                      DefaultCircularProgressIndicator(color: foregroundColor),
                 ),
               )
             : child,

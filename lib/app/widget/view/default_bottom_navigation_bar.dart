@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -17,31 +18,31 @@ class DefaultBottomNavigationBar extends StatelessWidget {
 
   final List<_NavItem> _items = [
     _NavItem(
-        icon: AppIcons.home,
-        iconFill: AppIcons.homeFill,
+        icon: IconPath.home,
+        iconFill: IconPath.homeFill,
         label: '홈',
         route: AppRoute.home),
     _NavItem(
-        icon: AppIcons.heart,
-        iconFill: AppIcons.heartFill,
+        icon: IconPath.heart,
+        iconFill: IconPath.heartFill,
         label: '좋아요',
         route: AppRoute.home // TODO: 좋아요 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: AppIcons.bolt,
-        iconFill: AppIcons.boltFill,
+        icon: IconPath.bolt,
+        iconFill: IconPath.boltFill,
         label: '셀프소개',
         route: AppRoute.interview // TODO:셀프소개 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: AppIcons.exam,
-        iconFill: AppIcons.examFill,
+        icon: IconPath.exam,
+        iconFill: IconPath.examFill,
         label: '모의고사',
         route: AppRoute.home // TODO: 모의고사 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: AppIcons.user,
-        iconFill: AppIcons.userFill,
+        icon: IconPath.user,
+        iconFill: IconPath.userFill,
         label: 'MY',
         route: AppRoute.home // TODO: 마이페이지 화면 네비게이션으로 바꾸기
         ),
@@ -49,16 +50,15 @@ class DefaultBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = context.appColors;
-    final defaultTextStyle = AppStyles.body03Regular(AppColors.colorGrey400)
-        .copyWith(fontSize: 10.sp);
+    final defaultTextStyle =
+        Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 10.sp);
 
     return Container(
       padding: const EdgeInsets.only(top: 20),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: AppColors.colorGrey100,
+            color: Palette.colorGrey100,
             width: 1.0,
           ),
         ),
@@ -74,10 +74,10 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         },
         type: BottomNavigationBarType.fixed,
         selectedItemColor:
-            isHighlighted ? appColors.primary : AppColors.colorGrey400,
-        unselectedItemColor: AppColors.colorGrey800,
+            isHighlighted ? context.palette.primary : Palette.colorGrey400,
+        unselectedItemColor: Palette.colorGrey800,
         selectedLabelStyle: isHighlighted
-            ? defaultTextStyle.copyWith(color: appColors.primary)
+            ? defaultTextStyle.copyWith(color: context.palette.primary)
             : defaultTextStyle,
         unselectedLabelStyle: defaultTextStyle,
         items: _items.map((item) {
@@ -87,11 +87,12 @@ class DefaultBottomNavigationBar extends StatelessWidget {
             icon: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AppIcon(
+                DefaultIcon(
                   size: 20.h,
                   isSelected ? item.iconFill : item.icon,
-                  colorFilter: AppIcon.fillColor(
-                      isSelected ? appColors.primary : AppColors.colorGrey400),
+                  colorFilter: DefaultIcon.fillColor(isSelected
+                      ? context.palette.primary
+                      : Palette.colorGrey400),
                 ),
                 Gap(8.h), // 아이콘과 레이블 사이 간격
               ],

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 /// 앱의 디폴트 설정(size, pading, border,...)
-class AppDimens {
-  AppDimens._();
+class Dimens {
+  Dimens._();
 
   static const double imageSize = 50.0;
   static const double imageHeight = 50.0;

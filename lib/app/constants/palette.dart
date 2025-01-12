@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 /// 다양한 색상 테마와 다크 / 라이트 모드 지원
-class AppColors {
+class Palette {
   static Color mixWithWhite({required Color color, required double opacity}) =>
-      Color.lerp(Colors.white.withOpacity(opacity), color, opacity)!;
+      Color.lerp(
+          Colors.white.withAlpha((opacity * 255).round()), color, opacity)!;
 
   static Color mixColors({
     required Color baseColor,
     required Color mixColor,
     required double baseOpacity,
   }) =>
-      Color.lerp(baseColor.withOpacity(baseOpacity), mixColor, 1 - baseOpacity)!
-          .withOpacity(0.5);
+      Color.lerp(baseColor.withAlpha((baseOpacity * 255).round()), mixColor,
+              1 - baseOpacity)!
+          .withAlpha(128);
 
   // 색상 정의
   static const colorPrimary50 = Color(0xffF7F6FD);
@@ -62,31 +64,31 @@ class AppColors {
 
 // 색상 스키마
   static const ColorScheme lightScheme = ColorScheme.light(
-    primary: AppColors.colorPrimary500,
-    onPrimary: AppColors.colorWhite,
-    surface: AppColors.colorWhite,
-    onSurface: AppColors.colorBlack,
-    error: AppColors.red,
-    onError: AppColors.colorWhite,
-    secondary: AppColors.colorGrey800,
-    onSecondary: AppColors.colorWhite,
-    tertiary: AppColors.colorGrey600,
-    outline: AppColors.colorGrey50,
-    shadow: AppColors.colorGrey100,
+    primary: Palette.colorPrimary500,
+    onPrimary: Palette.colorWhite,
+    surface: Palette.colorWhite,
+    onSurface: Palette.colorBlack,
+    error: Palette.red,
+    onError: Palette.colorWhite,
+    secondary: Palette.colorGrey800,
+    onSecondary: Palette.colorWhite,
+    tertiary: Palette.colorGrey600,
+    outline: Palette.colorGrey50,
+    shadow: Palette.colorGrey100,
   );
 
   static const ColorScheme darkScheme = ColorScheme.dark(
-    primary: AppColors.colorPrimary500,
-    onPrimary: AppColors.colorWhite,
-    surface: AppColors.colorBlack,
-    onSurface: AppColors.colorWhite,
-    error: AppColors.red,
-    onError: AppColors.colorBlack,
-    secondary: AppColors.colorGrey800,
-    onSecondary: AppColors.colorWhite,
-    tertiary: AppColors.colorGrey600,
-    outline: AppColors.colorGrey50,
-    shadow: AppColors.colorGrey100,
+    primary: Palette.colorPrimary500,
+    onPrimary: Palette.colorWhite,
+    surface: Palette.colorBlack,
+    onSurface: Palette.colorWhite,
+    error: Palette.red,
+    onError: Palette.colorBlack,
+    secondary: Palette.colorGrey800,
+    onSecondary: Palette.colorWhite,
+    tertiary: Palette.colorGrey600,
+    outline: Palette.colorGrey50,
+    shadow: Palette.colorGrey100,
   );
 }
 
@@ -101,7 +103,7 @@ ThemeData createThemeData(ColorScheme colorScheme) {
     useMaterial3: true, // Material 3 디자인 사용
     // TextTheme 커스터마이징
     textTheme: baseTextTheme.copyWith(
-      bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: AppColors.gray500),
+      bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: Palette.gray500),
     ),
   );
 }

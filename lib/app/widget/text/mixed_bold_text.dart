@@ -16,7 +16,7 @@ class MixedBoldText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 텍스트 스타일 기본값
-    final TextStyle defaultStyle = textStyle ?? AppStyles.body03Regular();
+    final TextStyle defaultStyle = textStyle ?? Fonts.body03Regular();
     final TextStyle boldStyle =
         defaultStyle.copyWith(fontWeight: FontWeight.bold);
 

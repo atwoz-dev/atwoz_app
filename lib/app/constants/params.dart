@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 /// 앱의 애니메이션, 호스트, 웹에 대한 설정 파라미터
-class AppParams {
-  const AppParams._();
+class Params {
+  const Params._();
 
   /// 애니메이션 곡선
   static const Curve animationCurve = Curves.fastOutSlowIn;

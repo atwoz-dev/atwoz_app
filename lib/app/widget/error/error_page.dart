@@ -1,13 +1,12 @@
+import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/extension/extended_context.dart';
-
-/// This [AppErrorPage] displays when App Navigator or Router fails
+/// This [ErrorPage] displays when App Navigator or Router fails
 ///
 /// Often this will be an [AssertionError], maybe specifically a [FlutterError]
-class AppErrorPage extends ConsumerWidget {
-  const AppErrorPage(this.errorDetails, {super.key});
+class ErrorPage extends ConsumerWidget {
+  const ErrorPage(this.errorDetails, {super.key});
 
   final FlutterErrorDetails errorDetails;
 

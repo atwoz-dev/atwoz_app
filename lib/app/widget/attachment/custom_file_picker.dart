@@ -1,16 +1,15 @@
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/core/state/base_widget_state.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'dart:io';
 
-//  TODO: 안 필요할 수도...?
-class AppFileAttachmentInput extends StatefulWidget {
+class CustomFilePicker extends StatefulWidget {
   final bool readOnly;
   final bool expandLook;
   final Function(List<File> pickedFiles) onFilesPicked;
 
-  const AppFileAttachmentInput({
+  const CustomFilePicker({
     super.key,
     this.readOnly = false,
     this.expandLook = true,
@@ -18,10 +17,10 @@ class AppFileAttachmentInput extends StatefulWidget {
   });
 
   @override
-  _AppFileAttachmentInputState createState() => _AppFileAttachmentInputState();
+  FilePickerState createState() => FilePickerState();
 }
 
-class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
+class FilePickerState extends AppBaseWidgetState<CustomFilePicker> {
   List<PlatformFile>? _pickedFiles;
   List<File> _fileList = []; // 파일 객체를 담아두기 위한 리스트
 
@@ -38,7 +37,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
     );
 
     if (result != null) {
-      setState(() {
+      safeSetState(() {
         _pickedFiles = result.files;
         // Convert PlatformFile to File and add to _fileList
         _fileList = _pickedFiles!.map((pf) => File(pf.path!)).toList();
@@ -49,9 +48,8 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
 
   @override
   Widget build(BuildContext context) {
-    // Style for disabled text
-    TextStyle style = TextStyle(
-        color: widget.readOnly ? Colors.grey : context.appColors.onSurface);
+    TextStyle style =
+        TextStyle(color: widget.readOnly ? Colors.grey : palette.onSurface);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,10 +64,10 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: context.appColors.surface,
+                  color: palette.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withAlpha((0.5 * 255).round()),
                       offset: const Offset(0, 2),
                     )
                   ],
@@ -107,7 +105,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
               return Chip(
                 label: Text(file.name),
                 onDeleted: () {
-                  setState(() {
+                  safeSetState(() {
                     _pickedFiles!.remove(file);
                   });
                 },
@@ -124,7 +122,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: context.appColors.shadow.withOpacity(0.8),
+                      color: palette.shadow.withAlpha((0.8 * 255).round()),
                       blurRadius: 3.0,
                       spreadRadius: 1.0,
                     )
@@ -137,7 +135,7 @@ class _AppFileAttachmentInputState extends State<AppFileAttachmentInput> {
                       : IconButton(
                           icon: const Icon(Icons.cancel),
                           onPressed: () {
-                            setState(() {
+                            safeSetState(() {
                               _pickedFiles!.remove(file);
                             });
                           },

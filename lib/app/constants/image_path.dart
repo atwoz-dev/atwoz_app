@@ -1,6 +1,6 @@
 /// [Image] 위젯에서 사용할 Svg 아이콘 경로
-class AppImages {
-  const AppImages._();
+class ImagePath {
+  const ImagePath._();
 
   // 기본 경로
   static const String imagesPath = 'assets/images';

@@ -1,5 +1,4 @@
-import 'package:atwoz_app/app/constants/paleette.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/text/mixed_bold_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,13 +7,13 @@ enum BubblePosition { top, bottom }
 Widget bubbleWidget({
   required String comment, // 말풍선 텍스트
   String? boldText, // bold 처리할 텍스트
-  Color bubbleColor = AppColors.colorWhite, // 말풍선 배경색
-  Color textColor = AppColors.colorBlack, // 텍스트 색깔
+  Color bubbleColor = Palette.colorWhite, // 말풍선 배경색
+  Color textColor = Palette.colorBlack, // 텍스트 색깔
   double width = 200, // 말풍선 너비
   double height = 60, // 말풍선 높이
   double shadowBlur = 5, // 그림자 흐림 정도
   double shadowOffset = 5, // 그림자 아래 이동 정도
-  Color shadowColor = AppColors.colorGrey100, // 그림자 색깔
+  Color shadowColor = Palette.colorGrey100, // 그림자 색깔
   TextStyle? textStyle, // 텍스트 스타일
   BubblePosition trianglePosition = BubblePosition.bottom, // 삼각형 위치
   bool isShadow = true, // 기본값 true, shadow 여부

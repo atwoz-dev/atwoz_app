@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -36,10 +37,10 @@ class DefaultTabBar extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 17.0),
                 child: Text(
                   label,
-                  style: AppStyles.body02Regular(
+                  style: Fonts.body02Regular(
                     index == currentIndex
-                        ? context.appColors.onSurface
-                        : AppColors.colorGrey400,
+                        ? context.palette.onSurface
+                        : Palette.colorGrey400,
                   ).copyWith(
                     fontWeight: index == currentIndex
                         ? FontWeight.bold
@@ -55,7 +56,7 @@ class DefaultTabBar extends StatelessWidget {
           children: [
             Container(
               height: 2,
-              color: AppColors.colorGrey100,
+              color: Palette.colorGrey100,
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
@@ -63,7 +64,7 @@ class DefaultTabBar extends StatelessWidget {
               child: Container(
                 width: tabWidth,
                 height: 2,
-                color: AppColors.colorBlack,
+                color: Palette.colorBlack,
               ),
             ),
           ],

@@ -1,11 +1,11 @@
 import 'package:atwoz_app/core/state/common_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'common_state_provider.g.dart';
+part 'common_provider.g.dart';
 
-/// CommonStateNotifier - 공통 상태 관리 클래스
+/// CommonNotifier - 공통 상태 관리 클래스
 @riverpod
-class CommonStateNotifier extends _$CommonStateNotifier {
+class Common extends _$CommonNotifier {
   /// 초기 상태 설정
   @override
   CommonState build() {

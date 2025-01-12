@@ -1,13 +1,12 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/button/default_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../button/default_text_button.dart';
-
 /// This page shows when [Navigation] router non-existent page
-class ErrorRoutePage extends ConsumerWidget {
-  const ErrorRoutePage(this.state, {super.key});
+class RouteErrorPage extends ConsumerWidget {
+  const RouteErrorPage(this.state, {super.key});
 
   final GoRouterState state;
 
@@ -21,7 +20,7 @@ class ErrorRoutePage extends ConsumerWidget {
           children: [
             Text(state.error?.toString() ?? state.uri.toString(),
                 textAlign: TextAlign.center),
-            AppTextButton(
+            DefaultTextButton(
               expandedWidth: false,
               onPressed: () => goToHome(context), // goToHome 함수 호출
               child: Text("메인으로"),

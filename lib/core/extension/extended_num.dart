@@ -1,23 +1,23 @@
 import 'package:atwoz_app/core/util/string_util.dart';
 
 /// 숫자 확장 함수
-extension NumExtension on num {
+extension ExtendedNum on num {
   /// 텍스트 형식으로 변환 '#,### 원'
-  String get toCurrencyFormat => StringUtils.toCurrencyFormat(this);
+  String get toCurrencyFormat => StringUtil.toCurrencyFormat(this);
 
   /// 텍스트 형식으로 변환 '#,###'
-  String get toThousands => StringUtils.formatThousands(this);
+  String get toThousands => StringUtil.formatThousands(this);
 
   /// 텍스트 형식으로 변환 '#,###'
   String toPercent([int surplus = 2]) =>
-      StringUtils.formatPercent(this, surplus);
+      StringUtil.formatPercent(this, surplus);
 
   /// 정수인지 여부 반환
   bool get isInt => (this % 1) == 0;
 }
 
 /// 숫자 연산 확장 함수
-extension NumExtensions on num {
+extension ExtendedNums on num {
   /// 숫자 더하기
   num plus(num other) {
     return this + other;

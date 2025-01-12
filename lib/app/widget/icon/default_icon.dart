@@ -5,22 +5,22 @@ import '../../constants/constants.dart';
 import '../../../core/util/string_util.dart';
 import '../view/default_progress_indicator.dart';
 
-class AppIcon extends ConsumerWidget {
-  const AppIcon(
+class DefaultIcon extends ConsumerWidget {
+  const DefaultIcon(
     this.icon, {
     this.padding = EdgeInsets.zero,
-    this.size = AppDimens.iconSize,
+    this.size = Dimens.iconSize,
     this.colorFilter,
     this.alignment = Alignment.center,
     this.fit = BoxFit.cover,
     super.key,
   }) : onPressed = null;
 
-  const AppIcon.button(
+  const DefaultIcon.button(
     this.icon, {
     required this.onPressed,
     this.padding = EdgeInsets.zero,
-    this.size = AppDimens.iconSize,
+    this.size = Dimens.iconSize,
     this.colorFilter,
     this.alignment = Alignment.center,
     this.fit = BoxFit.cover,
@@ -48,12 +48,12 @@ class AppIcon extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (icon?.isEmpty ?? true) {
       return SizedBox.square(
-          dimension: size, child: const AppCircularProgressIndicator());
+          dimension: size, child: const DefaultCircularProgressIndicator());
     }
 
     Widget? result;
 
-    if (StringUtils.isURL(icon!)) {
+    if (StringUtil.isURL(icon!)) {
       result = SvgPicture.network(
         icon!,
         width: size,

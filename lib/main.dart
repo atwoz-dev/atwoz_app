@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
 
-import 'package:atwoz_app/data/models/user_response.dart';
+import 'package:atwoz_app/features/auth/data/user_response.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +31,7 @@ void main() {
     /// 앱 실행
     runApp(
       ProviderScope(
-        observers: [AppProviderObserver()],
+        observers: [DefaultProviderObserver()],
         child: App(),
       ),
     );

@@ -1,9 +1,8 @@
 import 'dart:ui';
-import 'package:atwoz_app/app/constants/paleette.dart';
 import 'package:atwoz_app/app/provider/global_provider.dart';
-
-import 'package:atwoz_app/app/widget/error/error_page.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/router/routing.dart';
+import 'package:atwoz_app/app/widget/error/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +14,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appNotifierAsync = ref.watch(appNotifierProvider);
+    final appNotifierAsync = ref.watch(globalProvider);
     final router = ref.watch(routerProvider);
 
     return appNotifierAsync.when(
@@ -37,8 +36,8 @@ class App extends ConsumerWidget {
               PointerDeviceKind.unknown,
             }),
             themeMode: ThemeMode.values[appState.themeModeIndex],
-            theme: createThemeData(AppColors.lightScheme),
-            darkTheme: createThemeData(AppColors.darkScheme),
+            theme: createThemeData(Palette.lightScheme),
+            darkTheme: createThemeData(Palette.darkScheme),
             // locale: Locale(appState.languageCode),
             routerConfig: router,
           ),
@@ -53,7 +52,7 @@ class App extends ConsumerWidget {
         home: Config.enableErrorPage
 
             /// [AppErrorWidget] 존재
-            ? AppErrorPage(FlutterErrorDetails(
+            ? ErrorPage(FlutterErrorDetails(
                 exception: err,
                 stack: stack,
               ))

@@ -1,11 +1,12 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/constants.dart';
 import '../icon/default_icon.dart';
 
-class AppErrorImage extends ConsumerWidget {
-  const AppErrorImage({
+class ErrorImage extends ConsumerWidget {
+  const ErrorImage({
     super.key,
     this.width,
     this.height,
@@ -26,14 +27,14 @@ class AppErrorImage extends ConsumerWidget {
       width: width,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: context.appColors.shadow,
+        color: context.palette.shadow,
         shape: isRounded ? BoxShape.circle : BoxShape.rectangle,
         borderRadius: borderRadius,
       ),
-      child: AppIcon(
-        image ?? AppIcons.icImage,
-        size: height ?? width ?? AppDimens.iconSize,
-        colorFilter: AppIcon.fillColor(context.colorScheme.primary),
+      child: DefaultIcon(
+        image ?? IconPath.icImage,
+        size: height ?? width ?? Dimens.iconSize,
+        colorFilter: DefaultIcon.fillColor(context.colorScheme.primary),
       ),
     );
   }
