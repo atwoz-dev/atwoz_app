@@ -1,12 +1,12 @@
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
-import 'package:atwoz_app/core/widgets/dialogue/custom_dialogue.dart';
-import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
-import 'package:atwoz_app/router/router.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
+import 'package:atwoz_app/app/widget/dialogue/custom_dialogue.dart';
+import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/core/widgets/dialogue/default_dialogue.dart';
+import 'package:atwoz_app/app/widget/dialogue/default_dialogue.dart';
 
 class AnswerDialogue extends StatefulWidget {
   final String questionTitle;

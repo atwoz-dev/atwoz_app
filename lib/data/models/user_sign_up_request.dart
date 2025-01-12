@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../core/utils/converter_utils.dart';
+import '../../core/util/converter.dart';
 
 part 'user_sign_up_request.freezed.dart';
 part 'user_sign_up_request.g.dart';

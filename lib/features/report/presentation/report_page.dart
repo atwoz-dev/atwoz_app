@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
-import 'package:atwoz_app/core/widgets/input/app_text_form_field.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
-import 'package:atwoz_app/core/widgets/input/outlined_dropdown.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/app/widget/input/outlined_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

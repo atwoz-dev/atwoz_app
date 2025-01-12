@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:atwoz_app/core/widgets/overlay/app_chat_bubble.dart';
-import 'package:atwoz_app/router/router.dart';
+import 'package:atwoz_app/app/widget/overlay/bubble.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/features/onboarding/widget/balloon_widget.dart';
 // TODO: 반응형 고려해서 고정값 바꾸기
 // TODO: 위젯 분리하기

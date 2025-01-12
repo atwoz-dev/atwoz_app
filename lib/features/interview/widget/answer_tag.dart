@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/core/theme/theme.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
 
 class AnswerTag extends StatelessWidget {
   const AnswerTag(

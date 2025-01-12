@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/base/repository/base_repository.dart';
+import '../../../core/network/base_repository.dart';
 
 class FileRepository extends BaseRepository {
   FileRepository(Ref ref) : super(ref, '/com');

@@ -1,11 +1,11 @@
 import 'package:atwoz_app/features/introduce/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/theme/app_colors.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/constants/paleette.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
 
 class IntroducePage extends ConsumerStatefulWidget {

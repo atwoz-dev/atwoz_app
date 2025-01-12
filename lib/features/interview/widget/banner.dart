@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
-import 'package:atwoz_app/core/widgets/text/mixed_bold_text.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/text/mixed_bold_text.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/core/theme/theme.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
 
 class BannerWidget extends StatelessWidget {
   final VoidCallback onClose;

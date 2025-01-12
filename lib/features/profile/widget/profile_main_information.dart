@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/core/theme/app_fonts.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
+import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

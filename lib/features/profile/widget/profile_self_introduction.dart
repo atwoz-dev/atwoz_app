@@ -1,5 +1,5 @@
-import 'package:atwoz_app/core/extension/context_extension.dart';
-import 'package:atwoz_app/core/theme/app_fonts.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

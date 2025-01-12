@@ -1,8 +1,8 @@
-import 'package:atwoz_app/core/theme/app_icons.dart';
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:atwoz_app/core/theme/app_colors.dart';
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
+import 'package:atwoz_app/app/constants/paleette.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 
 class PostButton extends StatelessWidget {
   final VoidCallback? onTap;

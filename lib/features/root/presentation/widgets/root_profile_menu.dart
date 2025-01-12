@@ -1,11 +1,11 @@
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
-import 'package:atwoz_app/core/widgets/view/default_divider.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/data/sources/remote/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import '../../../../core/theme/theme.dart';
-import '../../../../core/base/notifier/app_notifier.dart';
+import '../../../../app/constants/constants.dart';
+import '../../../../app/provider/global_provider.dart';
 
 class RootProfileMenu extends ConsumerWidget {
   const RootProfileMenu({super.key});

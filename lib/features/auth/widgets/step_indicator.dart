@@ -1,6 +1,6 @@
 import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/core/theme/app_colors.dart';
-import 'package:atwoz_app/core/theme/app_fonts.dart';
+import 'package:atwoz_app/app/constants/paleette.dart';
+import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class StepIndicator extends StatelessWidget {

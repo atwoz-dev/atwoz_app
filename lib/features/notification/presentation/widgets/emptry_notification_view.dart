@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/widgets/image/app_icon.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_outlined_button.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:gap/gap.dart';
 
 class EmptyNotificationView extends StatelessWidget {

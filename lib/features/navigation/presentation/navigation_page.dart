@@ -1,9 +1,9 @@
-import 'package:atwoz_app/router/router.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});

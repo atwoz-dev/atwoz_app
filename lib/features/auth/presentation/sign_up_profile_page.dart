@@ -1,8 +1,8 @@
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/overlay/app_tooltip.dart';
-import 'package:atwoz_app/core/widgets/text/bullet_text.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
+import 'package:atwoz_app/app/widget/text/bullet_text.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/data/sources/local/photo_state.dart';
 import 'package:atwoz_app/features/auth/widgets/photo_guild_widget.dart';
 import 'package:atwoz_app/features/auth/widgets/profile_image.dart';

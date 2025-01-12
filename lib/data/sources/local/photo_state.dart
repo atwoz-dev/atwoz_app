@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'permission_handler.dart'; // 통합된 권한 로직 사용
+import '../../../core/util/permission_handler.dart'; // 통합된 권한 로직 사용
 
 part 'photo_state.g.dart';
 

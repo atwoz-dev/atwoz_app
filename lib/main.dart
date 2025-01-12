@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:atwoz_app/core/base/notifier/app_notifier_observer.dart';
-import 'package:atwoz_app/core/utils/log_utils.dart';
+import 'package:atwoz_app/core/provider/default_provider_observer.dart';
+import 'package:atwoz_app/core/util/log.dart';
 
 import 'package:atwoz_app/data/models/user_response.dart';
 
@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'app.dart';
+import 'app/app.dart';
 
 void main() {
   runZonedGuarded(() async {

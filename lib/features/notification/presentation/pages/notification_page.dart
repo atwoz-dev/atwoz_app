@@ -1,16 +1,16 @@
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/button/app_text_button.dart';
-import 'package:atwoz_app/core/widgets/view/default_appbar.dart';
-import 'package:atwoz_app/core/widgets/view/default_bottom_navigation_bar.dart';
-import 'package:atwoz_app/core/widgets/view/default_divider.dart';
-import 'package:atwoz_app/core/widgets/view/progress_indicator.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/default_text_button.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
+import 'package:atwoz_app/app/widget/view/default_divider.dart';
+import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
 import 'package:atwoz_app/features/notification/presentation/widgets/emptry_notification_view.dart';
 import 'package:atwoz_app/features/notification/presentation/widgets/notification_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/features/notification/domain/notification_provider.dart';
 import 'package:atwoz_app/features/notification/data/notification_model.dart';
-import 'package:atwoz_app/core/base/mixin/log_mixin.dart';
+import 'package:atwoz_app/core/mixin/log_mixin.dart';
 
 class NotificationPage extends ConsumerWidget with LogMixin {
   const NotificationPage({super.key});

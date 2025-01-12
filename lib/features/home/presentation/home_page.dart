@@ -1,10 +1,10 @@
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
-import 'package:atwoz_app/core/widgets/button/app_text_button.dart';
-import 'package:atwoz_app/core/widgets/file/app_file_picker.dart';
-import 'package:atwoz_app/core/widgets/image/app_image.dart';
-import 'package:atwoz_app/core/widgets/image/app_rounded_image.dart';
-import 'package:atwoz_app/core/widgets/view/default_bottom_navigation_bar.dart';
-import 'package:atwoz_app/core/widgets/widget.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/button/default_text_button.dart';
+import 'package:atwoz_app/app/widget/attachment/custom_file_picker.dart';
+import 'package:atwoz_app/app/widget/image/default_image.dart';
+import 'package:atwoz_app/app/widget/image/rounded_image.dart';
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';

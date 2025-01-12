@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/theme/theme.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:flutter/material.dart';
-import '../../../core/extension/context_extension.dart';
-import '../../../core/theme/app_fonts.dart';
+import '../../../core/extension/extended_context.dart';
+import '../../../app/constants/fonts.dart';
 
 class AuthPrimaryButton extends StatelessWidget {
   const AuthPrimaryButton({

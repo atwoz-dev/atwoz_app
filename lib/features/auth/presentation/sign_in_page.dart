@@ -1,6 +1,6 @@
-import 'package:atwoz_app/core/extension/context_extension.dart';
-import 'package:atwoz_app/core/theme/app_fonts.dart';
-import 'package:atwoz_app/core/theme/app_icons.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/features/auth/widgets/auth_primary_button.dart';
 import 'package:atwoz_app/features/auth/widgets/auth_text_form_field.dart';
 import 'package:flutter/material.dart';

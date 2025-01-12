@@ -1,10 +1,10 @@
-import 'package:atwoz_app/core/widgets/view/default_tap_bar.dart';
+import 'package:atwoz_app/app/widget/view/default_tap_bar.dart';
 import 'package:atwoz_app/features/interview/widget/question_card.dart';
 import 'package:atwoz_app/features/interview/widget/banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/core/theme/theme.dart';
-import 'package:atwoz_app/core/widgets/view/default_bottom_navigation_bar.dart';
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:gap/gap.dart';
 
 class InterviewPage extends ConsumerStatefulWidget {

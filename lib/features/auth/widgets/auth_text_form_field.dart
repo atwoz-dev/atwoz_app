@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/extension/context_extension.dart';
-import '../../../core/theme/app_fonts.dart';
+import '../../../core/extension/extended_context.dart';
+import '../../../app/constants/fonts.dart';
 
 class AuthTextFormField extends StatefulWidget {
   const AuthTextFormField({
