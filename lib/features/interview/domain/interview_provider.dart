@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'interview_state.dart';
 
-part 'interview_notifier.g.dart';
+part 'interview_provider.g.dart';
 
 @riverpod
 class InterviewNotifier extends _$InterviewNotifier {
