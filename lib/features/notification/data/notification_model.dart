@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/extension/date_time_extension.dart';
+import 'package:atwoz_app/core/extension/extended_date_time.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notification_model.freezed.dart';
