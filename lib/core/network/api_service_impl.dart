@@ -16,15 +16,15 @@ final apiServiceProvider = Provider<ApiServiceImpl>((ref) {
 
 /// HTTP 네트워킹 서비스를 구현한 ApiServiceImpl
 class ApiServiceImpl implements ApiService {
-  final Ref ref; // Ref를 통해 Provider 관리
-
+  // 생성자에서 baseUrl 기본값을 처리하도록 수정
   ApiServiceImpl({
     required this.ref,
     this.enableAuth = false,
-    this.baseUrl = Config.baseUrl,
+    String? baseUrl,
     this.timeout = Config.timeout,
-  });
+  }) : baseUrl = baseUrl ?? Config.baseUrl;
 
+  final Ref ref; // Ref를 통해 Provider 관리
   final bool enableAuth;
   final String? baseUrl;
   final Duration timeout;
@@ -33,7 +33,7 @@ class ApiServiceImpl implements ApiService {
 
   DioService get dioService => _dioService ??= DioService(
         BaseOptions(
-          baseUrl: baseUrl ?? '',
+          baseUrl: baseUrl ?? '', // baseUrl null 처리
           sendTimeout: timeout,
           connectTimeout: timeout,
           receiveTimeout: timeout,

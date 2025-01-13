@@ -30,6 +30,7 @@ make init
 따라서 실행을 위해 하단 명령어를 통해 코드를 생성해야 합니다.
 자동 생성 익스텐션을 사용해도 무관합니다.
 이는 `make init` 명령어에 포함되어 있습니다.
+단독실행 시 `make generate`로 대체 가능합니다.
 
 ```dart
 dart run build_runner build
