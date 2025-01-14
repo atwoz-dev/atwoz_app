@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -29,7 +29,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         route: AppRoute.home // TODO: 좋아요 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: IconPath.bolt,
+        icon: IconPath.boltFill,
         iconFill: IconPath.boltFill,
         label: '셀프소개',
         route: AppRoute.interview // TODO:셀프소개 화면 네비게이션으로 바꾸기

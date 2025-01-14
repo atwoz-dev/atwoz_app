@@ -1,20 +1,22 @@
 import 'dart:async';
+
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/home_screen.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
-import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
+import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
-import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -30,6 +32,7 @@ enum NavigationMethod { push, replace, go, pushReplacement }
 enum AppRoute {
   navigation('/navigation'),
   home('/home'),
+  homeNavigation('/homeNavigation'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -64,7 +67,11 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.home.path,
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: AppRoute.homeNavigation.path,
+      builder: (context, state) => const HomeNavigationPage(),
     ),
     GoRoute(
       path: AppRoute.auth.path,
