@@ -5,13 +5,9 @@ part 'user_sign_in_request.g.dart';
 
 @freezed
 class UserSignInRequest with _$UserSignInRequest {
-  @JsonSerializable(fieldRename: FieldRename.pascal, explicitToJson: true)
   const factory UserSignInRequest({
-    required String userId,
-    required String userPassword,
+    required String phoneNumber,
   }) = _UserSignInRequest;
-
-  const UserSignInRequest._();
 
   factory UserSignInRequest.fromJson(Map<String, dynamic> json) =>
       _$UserSignInRequestFromJson(json);
