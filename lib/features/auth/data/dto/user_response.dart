@@ -1,6 +1,6 @@
+import 'package:atwoz_app/features/auth/data/model/member_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'member_model.dart';
 
 part 'user_response.freezed.dart';
 part 'user_response.g.dart';

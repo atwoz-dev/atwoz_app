@@ -1,5 +1,5 @@
-import 'package:atwoz_app/features/auth/data/user_response.dart';
-import 'package:atwoz_app/features/auth/data/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:flutter/material.dart';
 
 abstract class AuthService {

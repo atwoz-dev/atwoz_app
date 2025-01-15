@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_screen.dart';
@@ -31,15 +32,15 @@ enum NavigationMethod { push, replace, go, pushReplacement }
 // Route enum with path
 enum AppRoute {
   navigation('/navigation'),
+  authNavigation('/auth'),
   home('/home'),
   homeNavigation('/homeNavigation'),
-  auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
   report('/report'),
-  signUp('/sign-up'),
-  signUpProfile('/sign-up/profile'),
+  signUp('/auth/sign-up'),
+  signUpProfile('/auth/sign-up/profile'),
   interview('/interview'),
   profile('/profile'),
   introduce('/introduce'),
@@ -72,10 +73,6 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.homeNavigation.path,
       builder: (context, state) => const HomeNavigationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.auth.path,
-      builder: (context, state) => const AuthSignInPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,
@@ -131,11 +128,15 @@ class OnboardBranch {
 class SignBranch {
   static final routes = [
     GoRoute(
-      path: AppRoute.signUp.path,
-      builder: (context, state) => const AuthSignInPage(), // TODO: 바꾸기
+      path: AppRoute.authNavigation.path,
+      builder: (context, state) => const AuthNavigationPage(),
       routes: [
         GoRoute(
-          path: AppRoute.signUpProfile.path.split('/sign-up').last,
+          path: 'sign-up', // 상위 경로로부터 상대 경로 사용
+          builder: (context, state) => const SignUpPage(),
+        ),
+        GoRoute(
+          path: 'sign-up/profile', // 경로를 명시적으로 정의
           builder: (context, state) => const AuthSignUpProfilePage(),
         ),
       ],
@@ -168,7 +169,6 @@ Future<T?> navigate<T>(
     case NavigationMethod.go:
       goRouter.go(route.path, extra: extra);
       break;
-
     case NavigationMethod.pushReplacement:
       result = await goRouter.pushReplacement<T>(route.path, extra: extra);
       break;

@@ -1,11 +1,11 @@
 // import 'dart:convert';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/auth_service.dart';
 import 'package:flutter/material.dart';
-import '../data/user_sign_in_request.dart';
-import '../data/user_response.dart';
-import '../data/user_repository.dart';
 import '../../../core/provider/base_repository_provider.dart';
 
 class AuthServiceImpl extends BaseRepositoryProvider<UserRepository>
