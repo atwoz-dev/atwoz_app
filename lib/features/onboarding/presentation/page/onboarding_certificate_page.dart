@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/validation.dart';
@@ -143,7 +144,7 @@ class OnboardingCertificationPageState
               onPressed: isButtonEnabled
                   ? () {
                       print("인증번호 요청");
-                      // TODO: API 연결
+                      navigate(context, route: AppRoute.signUp);
                     }
                   : null,
               child: Text(

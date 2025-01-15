@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../domain/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_profile_image_widget.dart';
@@ -47,6 +48,7 @@ class AuthSignUpProfilePage extends ConsumerWidget {
                         totalSteps: 4,
                         currentStep: 3,
                       ),
+                      Gap(12.h),
                       Row(
                         children: [
                           Text(

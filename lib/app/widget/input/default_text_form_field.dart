@@ -4,6 +4,7 @@ import 'package:atwoz_app/core/state/base_widget_state.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 
 import '../../constants/constants.dart';
 
@@ -24,7 +25,7 @@ Widget buildLabeledRow({
                   .copyWith(fontWeight: FontWeight.w600),
         ),
       ),
-      const SizedBox(height: 8), // 레이블과 필드 사이 간격 추가
+      const Gap(8), // 레이블과 필드 사이 간격 추가
       child,
     ],
   );
@@ -192,7 +193,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           decoration: buildDecoration(context),
           cursorColor: palette.primary,
           showCursor: widget.showCursor,
-          style: widget.style ?? Fonts.body01Medium(palette.onSurface),
+          style: widget.style ?? Fonts.body02Medium(palette.onSurface),
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
           textCapitalization: widget.textCapitalization,
@@ -285,7 +286,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
       alignLabelWithHint: true, // 레이블과 에러 위치 일치
-      hintStyle: widget.hintStyle ?? Fonts.body01Medium(Palette.colorGrey500),
+      hintStyle: widget.hintStyle ?? Fonts.body02Medium(Palette.colorGrey500),
       errorText: widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
       errorStyle: Fonts.body03Regular(palette.error).copyWith(height: 1.5),

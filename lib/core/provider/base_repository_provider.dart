@@ -1,5 +1,5 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/auth/data/user_repository.dart';
+import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
