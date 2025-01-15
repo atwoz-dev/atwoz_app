@@ -27,7 +27,7 @@ void main() {
 
     /// Hive - 로컬 데이터베이스 초기화
     await Hive.initFlutter();
-    Hive.registerAdapter<User>(UserAdapter());
+    Hive.registerAdapter<UserResponse>(UserResponseAdapter());
 
     /// 앱 실행
     runApp(

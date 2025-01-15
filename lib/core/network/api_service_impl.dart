@@ -70,7 +70,7 @@ class ApiServiceImpl implements ApiService {
 
       if (requiresAuthToken) {
         final String? token =
-            await ref.read(authServiceProvider).getAuthToken();
+            await ref.read(authServiceProvider).getAccessToken();
         if (token != null) {
           finalHeaders.addAll({"Authorization": token});
         }

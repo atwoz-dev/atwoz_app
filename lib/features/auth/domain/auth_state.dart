@@ -9,7 +9,7 @@ class AuthState with _$AuthState {
     @Default(false) bool isLoading,
     String? error,
     @Default(false) bool isSignedIn,
-    User? user,
+    @Default(null) UserResponse? user,
   }) = _AuthState;
 
   const AuthState._();
