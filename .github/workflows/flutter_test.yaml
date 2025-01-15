@@ -83,24 +83,30 @@ jobs:
           flutter-version: '3.27.1'
           channel: 'stable'
 
-      # Step 3: Flutter 의존성 가져오기
+      # Step 3: GitHub Secrets를 사용하여 .env 파일 생성
+      - name: Create .env file
+        run: |
+          echo "API_KEY=${{ secrets.FLAVOR }}" >> dev.env
+          echo "DB_URL=${{ secrets.BASE_URL }}" >> dev.env
+
+      # Step 4: Flutter 의존성 가져오기
       - name: Get Flutter Dependencies
         run: flutter pub get
 
-      # Step 4: Flutter Clean
+      # Step 5: Flutter Clean
       - name: Clean Flutter Project
         run: flutter clean
 
-      # Step 5: 코드 자동 생성 (Freezed, GoRouter 등)
+      # Step 6: 코드 자동 생성 (Freezed, GoRouter 등)
       - name: Generate Source Code
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      # Step 6: Flutter 테스트 실행
+      # Step 7: Flutter 테스트 실행
       - name: Run Flutter Tests
         run: |
           flutter test --coverage || { echo "Tests failed"; exit 1; }
           
-      # Step 7: Flutter 의존성 캐싱
+      # Step 8: Flutter 의존성 캐싱
       - name: Cache Flutter dependencies
         uses: actions/cache@v3
         with:
