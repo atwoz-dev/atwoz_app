@@ -1,7 +1,7 @@
+import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'user_sign_in_request.dart';
-import 'user_response.dart';
-import '../../../core/network/base_repository.dart';
 
 class UserRepository extends BaseRepository {
   const UserRepository(Ref ref) : super(ref, '/member/auth');
