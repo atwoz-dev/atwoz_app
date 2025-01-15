@@ -1,13 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 /// Common service call API support cancel api
 class DioService extends DioForNative {
   DioService([super.baseOptions, Iterable<Interceptor>? interceptors])
       : _cancelToken = CancelToken() {
-    if (interceptors != null) {
-      this.interceptors.addAll(interceptors);
-    }
+    // 쿠키 관리를 포함한 인터셉터 추가
+    interceptors ??= [];
+    interceptors = [
+      ...interceptors,
+      CookieManager(CookieJar()), // 쿠키 관리자 추가
+    ];
+    this.interceptors.addAll(interceptors);
   }
 
   final CancelToken _cancelToken;
