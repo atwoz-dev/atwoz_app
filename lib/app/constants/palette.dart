@@ -100,6 +100,7 @@ ThemeData createThemeData(ColorScheme colorScheme) {
 
   return ThemeData(
     colorScheme: colorScheme,
+    scaffoldBackgroundColor: colorScheme.surface,
     useMaterial3: true, // Material 3 디자인 사용
     // TextTheme 커스터마이징
     textTheme: baseTextTheme.copyWith(

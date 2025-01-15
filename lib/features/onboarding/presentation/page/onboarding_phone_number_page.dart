@@ -1,11 +1,9 @@
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/validation.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +19,7 @@ class OnboardingPhoneInputPage extends ConsumerStatefulWidget {
 }
 
 class OnboardingPhoneInputPageState
-    extends AppBaseConsumerStatefulPageState<OnboardingPhoneInputPage> {
+    extends BaseConsumerStatefulPageState<OnboardingPhoneInputPage> {
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   String? validationError; // 유효성 검사 결과를 저장
@@ -63,72 +61,67 @@ class OnboardingPhoneInputPageState
         _phoneController.text.isNotEmpty && validationError == null;
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
       onTap: () {
         FocusScope.of(context).unfocus(); // 외부를 클릭했을 때 focus 해제
       },
-      child: Scaffold(
-        appBar: DefaultAppBar(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleText(title: '휴대폰 번호를 입력해주세요'),
-                    const Gap(5),
-                    Text(
-                      '서비스 이용을 위해 본인확인이 필요해요',
-                      style: Fonts.body02Regular(Palette.colorGrey400),
-                    ),
-                    const Gap(40),
-                    buildLabeledRow(
-                      context: context,
-                      label: '휴대폰 번호',
-                      child: DefaultTextFormField(
-                        focusNode: focusNode,
-                        autofocus: false,
-                        controller: _phoneController,
-                        keyboardType: TextInputType.phone,
-                        hintText: '010-0000-0000',
-                        fillColor: Palette.colorGrey100,
-                        // validator: (_) => validationError, // 에러 메시지 표시
-                        errorText: validationError,
-                        onFieldSubmitted: (value) {
-                          _validateInput(value); // 엔터를 눌렀을 때 유효성 검사
-                        },
-                      ),
-                    ),
-                  ],
+      child: Column(
+        children: [
+          Expanded(
+            flex: 9,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TitleText(title: '휴대폰 번호를 입력해주세요'),
+                const Gap(5),
+                Text(
+                  '서비스 이용을 위해 본인확인이 필요해요',
+                  style: Fonts.body02Regular(Palette.colorGrey400),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-                child: DefaultElevatedButton(
-                  onPressed: isButtonEnabled
-                      ? () {
-                          // TODO: 나중에 api 연결하기
-                          print("인증번호 요청"); // 성공 시 동작
-                          navigate(
-                            context,
-                            route: AppRoute.onboardCertification,
-                          );
-                        }
-                      : null,
-                  child: Text(
-                    '인증번호 요청하기',
-                    style: Fonts.body01Medium(isButtonEnabled
-                            ? palette.onPrimary
-                            : Palette.colorGrey400)
-                        .copyWith(fontWeight: FontWeight.w900),
+                const Gap(40),
+                buildLabeledRow(
+                  context: context,
+                  label: '휴대폰 번호',
+                  child: DefaultTextFormField(
+                    focusNode: focusNode,
+                    autofocus: false,
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    hintText: '010-0000-0000',
+                    fillColor: Palette.colorGrey100,
+                    // validator: (_) => validationError, // 에러 메시지 표시
+                    errorText: validationError,
+                    onFieldSubmitted: (value) {
+                      _validateInput(value); // 엔터를 눌렀을 때 유효성 검사
+                    },
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+            child: DefaultElevatedButton(
+              onPressed: isButtonEnabled
+                  ? () {
+                      // TODO: 나중에 api 연결하기
+                      print("인증번호 요청"); // 성공 시 동작
+                      navigate(
+                        context,
+                        route: AppRoute.onboardCertification,
+                      );
+                    }
+                  : null,
+              child: Text(
+                '인증번호 요청하기',
+                style: Fonts.body01Medium(isButtonEnabled
+                        ? palette.onPrimary
+                        : Palette.colorGrey400)
+                    .copyWith(fontWeight: FontWeight.w900),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
