@@ -16,8 +16,9 @@ class AuthSignInPage extends ConsumerStatefulWidget {
   AuthSignInPageState createState() => AuthSignInPageState();
 }
 
-class AuthSignInPageState
-    extends AppBaseConsumerStatefulPageState<AuthSignInPage> with LogMixin {
+class AuthSignInPageState extends BaseConsumerStatefulPageState<AuthSignInPage>
+    with LogMixin {
+  AuthSignInPageState() : super(defaultAppBarTitle: '로그인');
   final TextEditingController _identity = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
@@ -56,62 +57,55 @@ class AuthSignInPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Sign In")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ValueListenableBuilder<String?>(
-              valueListenable: errorId,
-              builder: (context, error, child) {
-                return AuthTextFormFieldWidget(
-                  textStyle: Fonts.body01Medium(),
-                  iconColor: Colors.black,
-                  hintText: 'Enter your ID',
-                  icon: IconPath.person,
-                  validator: (value) =>
-                      value!.isEmpty ? 'ID is required' : null,
-                  onChanged: (value) {
-                    errorId.value = null;
-                  },
-                  textEditingController: _identity,
-                  errorNotify: errorId,
-                );
+    return Column(
+      children: [
+        ValueListenableBuilder<String?>(
+          valueListenable: errorId,
+          builder: (context, error, child) {
+            return AuthTextFormFieldWidget(
+              textStyle: Fonts.body01Medium(),
+              iconColor: Colors.black,
+              hintText: 'Enter your ID',
+              icon: IconPath.person,
+              validator: (value) => value!.isEmpty ? 'ID is required' : null,
+              onChanged: (value) {
+                errorId.value = null;
               },
-            ),
-            const Gap(25),
-            ValueListenableBuilder<String?>(
-              valueListenable: errorPassword,
-              builder: (context, error, child) {
-                return AuthTextFormFieldWidget(
-                  textStyle: Fonts.body01Medium(),
-                  iconColor: Colors.black,
-                  hintText: 'Enter your password',
-                  icon: IconPath.icLock,
-                  obscureText: true,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Password is required' : null,
-                  onChanged: (value) {
-                    errorPassword.value = null;
-                  },
-                  textEditingController: _password,
-                  errorNotify: errorPassword,
-                );
-              },
-            ),
-            const Gap(45),
-            AuthPrimaryButtonWidget(
-              isLoading: false,
-              text: "로그인",
-              primary: context.palette.primary,
-              onClick: () {
-                _validateAndSubmit();
-              },
-            ),
-          ],
+              textEditingController: _identity,
+              errorNotify: errorId,
+            );
+          },
         ),
-      ),
+        const Gap(25),
+        ValueListenableBuilder<String?>(
+          valueListenable: errorPassword,
+          builder: (context, error, child) {
+            return AuthTextFormFieldWidget(
+              textStyle: Fonts.body01Medium(),
+              iconColor: Colors.black,
+              hintText: 'Enter your password',
+              icon: IconPath.icLock,
+              obscureText: true,
+              validator: (value) =>
+                  value!.isEmpty ? 'Password is required' : null,
+              onChanged: (value) {
+                errorPassword.value = null;
+              },
+              textEditingController: _password,
+              errorNotify: errorPassword,
+            );
+          },
+        ),
+        const Gap(45),
+        AuthPrimaryButtonWidget(
+          isLoading: false,
+          text: "로그인",
+          primary: context.palette.primary,
+          onClick: () {
+            _validateAndSubmit();
+          },
+        ),
+      ],
     );
   }
 }
