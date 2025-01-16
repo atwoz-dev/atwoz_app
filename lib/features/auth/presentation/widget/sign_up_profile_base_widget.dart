@@ -1,20 +1,20 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/auth/data/model/sign_up_state.dart';
-import 'package:atwoz_app/features/auth/domain/sign_up_provider.dart';
+import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 
-class SignUpProfileBasePage extends ConsumerStatefulWidget {
+class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
   final Widget body;
   final int step; // 현재 단계 (1 ~ 10)
   final VoidCallback? onNextPressed;
   final String question;
 
-  const SignUpProfileBasePage({
+  const SignUpProfileBaseWidget({
     super.key,
     required this.question,
     required this.body,
@@ -23,17 +23,17 @@ class SignUpProfileBasePage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<SignUpProfileBasePage> createState() =>
-      _SignUpProfileBasePageState();
+  ConsumerState<SignUpProfileBaseWidget> createState() =>
+      _SignUpProfileBaseWidgetState();
 }
 
-class _SignUpProfileBasePageState
-    extends BaseConsumerStatefulPageState<SignUpProfileBasePage> {
-  _SignUpProfileBasePageState() : super(defaultAppBarTitle: '프로필 정보');
+class _SignUpProfileBaseWidgetState
+    extends BaseConsumerStatefulPageState<SignUpProfileBaseWidget> {
+  _SignUpProfileBaseWidgetState() : super(defaultAppBarTitle: '프로필 정보');
 
   @override
   Widget buildPage(BuildContext context) {
-    final signUpState = ref.watch(signUpNotifierProvider);
+    final signUpState = ref.watch(signUpProcessProvider);
     final isButtonEnabled = _isButtonEnabled(signUpState, widget.step);
 
     return GestureDetector(
@@ -86,7 +86,7 @@ class _SignUpProfileBasePageState
     );
   }
 
-  bool _isButtonEnabled(SignUpState state, int step) {
+  bool _isButtonEnabled(SignUpProcessState state, int step) {
     switch (step) {
       case 1: // 1단계 (나이 선택)
         return state.selectedYear != null;

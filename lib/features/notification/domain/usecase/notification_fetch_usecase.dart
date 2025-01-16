@@ -1,5 +1,5 @@
-import 'package:atwoz_app/features/notification/data/notification_model.dart';
-import 'package:atwoz_app/features/notification/domain/notification_repository.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
+import 'package:atwoz_app/features/notification/data/repository/notification_repository.dart';
 
 /// 데이터를 가져오는 역할을 담당
 /// NotificationRepository를 호출해 데이터를 가져오며, 비즈니스 로직을 캡슐화

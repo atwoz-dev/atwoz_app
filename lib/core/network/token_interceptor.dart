@@ -1,10 +1,9 @@
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
-import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
-import '../../features/auth/domain/auth_service.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Add token in header call API
@@ -19,7 +18,7 @@ class TokenInterceptor extends Interceptor with LogMixin, ToastMixin {
     if (options.headers.containsKey('requiresAuthToken')) {
       if (options.headers['requiresAuthToken'] == true) {
         final String? token =
-            await ref.read(authServiceProvider).getAccessToken();
+            await ref.read(authUsecaseProvider).getAccessToken();
         options.headers.addAll(<String, Object?>{'Authorization': token});
       }
 
@@ -31,7 +30,7 @@ class TokenInterceptor extends Interceptor with LogMixin, ToastMixin {
   @override
   Future<void> onError(
       DioException err, ErrorInterceptorHandler handler) async {
-    final AuthService authService = ref.read(authServiceProvider);
+    final AuthUseCase authService = ref.read(authUsecaseProvider);
     final router = ref.read(routerProvider);
 
     // 403 에러 발생 시 처리 로직

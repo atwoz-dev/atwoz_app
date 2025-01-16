@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/auth/domain/sign_up_provider.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_base_page.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,9 +11,9 @@ class SignUpHeightPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    final signUpNotifier = ref.read(signUpProcessProvider.notifier);
 
-    return SignUpProfileBasePage(
+    return SignUpProfileBaseWidget(
       question: '키가 어떻게 되세요?',
       step: 2,
       onNextPressed: () => navigate(context, route: AppRoute.signUpProfileJob),
@@ -22,7 +22,7 @@ class SignUpHeightPage extends ConsumerWidget {
         itemBuilder: (context, index) {
           final height = 160 + index;
           final selectedHeight = ref.watch(
-            signUpNotifierProvider.select((state) => state.selectedHeight),
+            signUpProcessProvider.select((state) => state.selectedHeight),
           );
 
           return ListTile(

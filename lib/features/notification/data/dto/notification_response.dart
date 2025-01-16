@@ -1,8 +1,8 @@
 import 'package:atwoz_app/core/extension/extended_date_time.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'notification_model.freezed.dart';
-part 'notification_model.g.dart';
+part 'notification_response.freezed.dart';
+part 'notification_response.g.dart';
 
 // NotificationType을 union으로 변경
 @freezed

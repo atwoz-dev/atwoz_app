@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/auth/domain/sign_up_provider.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_base_page.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,10 +9,10 @@ class SignUpMbtiPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
-    final state = ref.watch(signUpNotifierProvider);
+    final signUpNotifier = ref.read(signUpProcessProvider.notifier);
+    final state = ref.watch(signUpProcessProvider);
 
-    return SignUpProfileBasePage(
+    return SignUpProfileBaseWidget(
       question: 'MBTI가 어떻게 되세요?',
       step: 6,
       onNextPressed: () {

@@ -1,3 +1,2 @@
-export 'notification_fetch_usecase.dart';
-export 'notification_provider.dart';
-export 'notification_repository.dart';
+export 'provider/notification_provider.dart';
+export 'usecase/notification_fetch_usecase.dart';

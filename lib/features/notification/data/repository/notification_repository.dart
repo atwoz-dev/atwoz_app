@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/notification/data/notification_model.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

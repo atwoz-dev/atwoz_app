@@ -5,7 +5,7 @@ import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../domain/photo_provider.dart';
+import '../../../../core/provider/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_profile_image_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
@@ -14,8 +14,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AuthSignUpProfilePicturePage extends ConsumerWidget {
-  const AuthSignUpProfilePicturePage({super.key});
+class SignUpProfilePicturePage extends ConsumerWidget {
+  const SignUpProfilePicturePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

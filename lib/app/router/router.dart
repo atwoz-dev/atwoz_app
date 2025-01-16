@@ -3,13 +3,13 @@ import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.d
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_birth.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_drinking_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_education_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_height.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_height_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_hobbies_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_job.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_location.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_job_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_location_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_mbti_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_picture_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_religion_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_smoking_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
@@ -193,7 +193,7 @@ class SignBranch {
         ),
         GoRoute(
           path: 'sign-up-profile-picture',
-          builder: (context, state) => const AuthSignUpProfilePicturePage(),
+          builder: (context, state) => const SignUpProfilePicturePage(),
         ),
       ],
     ),
