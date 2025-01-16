@@ -14,8 +14,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AuthSignUpProfilePage extends ConsumerWidget {
-  const AuthSignUpProfilePage({super.key});
+class AuthSignUpProfilePicturePage extends ConsumerWidget {
+  const AuthSignUpProfilePicturePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

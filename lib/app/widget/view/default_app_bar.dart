@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +38,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           const LinearProgressIndicator()
         else
           AppBar(
-            backgroundColor: Theme.of(context).colorScheme.surface,
+            backgroundColor: context.palette.surface,
             leading: _buildLeadingAppBar(context),
             leadingWidth: 60.0, // 적절한 너비로 축소
             toolbarHeight: 80 - 1,
@@ -54,7 +55,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         if (authState.error != null)
           Container(
-            color: Theme.of(context).colorScheme.error,
+            color: context.palette.error,
             padding: const EdgeInsets.all(8.0),
             child: Text(
               'Error: ${authState.error}',
@@ -81,7 +82,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
       onTap: () => Navigator.of(context).pushNamed('/'),
       child: IconButton(
         icon: leadingIcon ?? Icon(Icons.arrow_back_ios_new),
-        color: Theme.of(context).colorScheme.onSurface,
+        color: context.palette.onSurface,
         iconSize: 24.0, // 아이콘 크기 설정
         onPressed:
             leadingAction ?? () => Navigator.of(context).pop(), // 기본값으로 뒤로가기 설정

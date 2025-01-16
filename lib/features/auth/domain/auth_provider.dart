@@ -1,7 +1,7 @@
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/domain/auth_service.dart';
 import 'package:atwoz_app/features/auth/domain/auth_service_impl.dart';
-import 'package:atwoz_app/features/auth/domain/auth_state.dart';
+import 'package:atwoz_app/features/auth/data/model/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_provider.g.dart';
