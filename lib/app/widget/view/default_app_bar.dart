@@ -1,5 +1,5 @@
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/auth_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,13 +23,14 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final bool isDivider;
   final Widget? leadingIcon;
   final VoidCallback? leadingAction;
+
   @override
   Size get preferredSize =>
       Size.fromHeight(80 + (bottom?.preferredSize.height ?? 0));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authNotifierProvider);
+    final authState = ref.watch(authStateProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +41,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           AppBar(
             backgroundColor: context.palette.surface,
             leading: _buildLeadingAppBar(context),
-            leadingWidth: 60.0, // 적절한 너비로 축소
+            leadingWidth: 60.0,
             toolbarHeight: 80 - 1,
             centerTitle: true,
             titleSpacing: 0,
@@ -73,7 +74,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final scaffold = Scaffold.maybeOf(context);
     if (scaffold?.hasDrawer ?? false) {
       return IconButton(
-        icon: const Icon(Icons.menu, size: 24.0), // 아이콘 크기 설정
+        icon: const Icon(Icons.menu, size: 24.0),
         onPressed: scaffold?.openDrawer,
       );
     }
@@ -83,9 +84,8 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
       child: IconButton(
         icon: leadingIcon ?? Icon(Icons.arrow_back_ios_new),
         color: context.palette.onSurface,
-        iconSize: 24.0, // 아이콘 크기 설정
-        onPressed:
-            leadingAction ?? () => Navigator.of(context).pop(), // 기본값으로 뒤로가기 설정
+        iconSize: 24.0,
+        onPressed: leadingAction ?? () => Navigator.of(context).pop(),
       ),
     );
   }

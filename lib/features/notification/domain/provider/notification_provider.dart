@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/notification/data/notification_model.dart';
-import 'package:atwoz_app/features/notification/domain/notification_repository.dart';
-import 'package:atwoz_app/features/notification/domain/notification_fetch_usecase.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
+import 'package:atwoz_app/features/notification/data/repository/notification_repository.dart';
+import 'package:atwoz_app/features/notification/domain/usecase/notification_fetch_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

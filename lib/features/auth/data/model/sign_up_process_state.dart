@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'sign_up_state.freezed.dart';
+part 'sign_up_process_state.freezed.dart';
 
 @freezed
-class SignUpState with _$SignUpState {
-  const factory SignUpState({
+class SignUpProcessState with _$SignUpProcessState {
+  const factory SignUpProcessState({
     @Default(false) bool isLoading, // 로딩 여부
     String? error, // 에러 메시지
     @Default(null) int? selectedYear, // 선택된 나이
@@ -19,9 +19,9 @@ class SignUpState with _$SignUpState {
     @Default(null) String? selectedDrinking, // 선택된 음주 여부
     @Default(null) String? selectedReligion, // 선택된 종교
     @Default(null) List<String>? selectedHobbies, // 선택된 취미
-  }) = _SignUpState;
+  }) = _SignUpProcessState;
 
-  const SignUpState._();
+  const SignUpProcessState._();
 
   // 모든 필드가 채워졌는지 확인하는 메서드
   bool get isComplete =>

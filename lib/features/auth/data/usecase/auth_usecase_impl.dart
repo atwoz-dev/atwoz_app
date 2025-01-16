@@ -1,17 +1,20 @@
-// import 'dart:convert';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
-import 'package:atwoz_app/features/auth/domain/auth_service.dart';
-import 'package:flutter/material.dart';
-import '../../../core/provider/base_repository_provider.dart';
+import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/provider/base_repository_provider.dart';
 
-class AuthServiceImpl extends BaseRepositoryProvider<UserRepository>
+final authUsecaseProvider =
+    Provider<AuthUseCase>((ref) => AuthUseCaseImpl(ref));
+
+class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
     with ToastMixin, LogMixin
-    implements AuthService {
-  AuthServiceImpl(super.ref);
+    implements AuthUseCase {
+  AuthUseCaseImpl(super.ref);
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';
@@ -71,49 +74,4 @@ class AuthServiceImpl extends BaseRepositoryProvider<UserRepository>
     final localStorage = ref.read(localStorageProvider).value;
     return localStorage!.listenable(keys: [_user]);
   }
-
-  // @override
-  // Future<Map<String, dynamic>?> refreshToken() async {
-  //   try {
-  //     final localStorage = await storage;
-  //     final refreshToken = await localStorage.getEncrypted(_refreshToken);
-  //     final accessToken = await localStorage.getEncrypted(_accessToken);
-  //     final response =
-  //         await repository.refreshToken(refreshToken!, accessToken!);
-
-  //     final newAccessToken = response['AccessToken'];
-  //     final newRefreshToken = response['RefreshToken'];
-
-  //     if (newAccessToken != null) {
-  //       await localStorage.saveEncrypted(_refreshToken, newRefreshToken);
-  //       await localStorage.saveEncrypted(_accessToken, 'Bearer $newAccessToken');
-  //       return {
-  //         'accessToken': 'Bearer $newAccessToken',
-  //         "refreshToken": newRefreshToken
-  //       };
-  //     }
-  //   } catch (e) {
-  //     logD("Error refreshing token: $e");
-  //   }
-  //   return null;
-  // }
-
-  /// Decode and get token expiration
-  // @override
-  // DateTime? getTokenExpiration(String token) {
-  //   final parts = token.split('.');
-  //   if (parts.length != 3) return null;
-
-  //   final payload = parts[1];
-  //   final normalized = base64Url.normalize(payload);
-  //   final resp = base64Url.decode(normalized);
-  //   final payloadMap = json.decode(utf8.decode(resp));
-
-  //   if (payloadMap is! Map<String, dynamic>) return null;
-
-  //   final exp = payloadMap['exp'];
-  //   return exp is int
-  //       ? DateTime.fromMillisecondsSinceEpoch(exp * 1000, isUtc: true)
-  //       : null;
-  // }
 }

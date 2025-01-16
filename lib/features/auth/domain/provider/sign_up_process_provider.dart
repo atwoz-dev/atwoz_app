@@ -1,12 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:atwoz_app/features/auth/data/model/sign_up_state.dart';
+import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 
-part 'sign_up_provider.g.dart';
+part 'sign_up_process_provider.g.dart';
 
 @Riverpod(keepAlive: false)
-class SignUpNotifier extends _$SignUpNotifier {
+class SignUpProcess extends _$SignUpProcess {
   @override
-  SignUpState build() => const SignUpState();
+  SignUpProcessState build() => const SignUpProcessState();
 
   void updateSelectedYear(int year) {
     state = state.copyWith(selectedYear: year);
@@ -61,7 +61,7 @@ class SignUpNotifier extends _$SignUpNotifier {
   }
 
   void reset() {
-    state = const SignUpState();
+    state = const SignUpProcessState();
   }
 
   String? get selectedLocation => state.selectedLocation;
