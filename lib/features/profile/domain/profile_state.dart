@@ -5,12 +5,15 @@ part 'profile_state.freezed.dart';
 
 @freezed
 class ProfileState with _$ProfileState {
+  const ProfileState._();
+
   const factory ProfileState({
-    required UserProfileInfo userInforamtion,
+    required UserProfileInfo userInformation,
+    required MatchStatus matchStatus,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
-        userInforamtion: UserProfileInfo(
+        userInformation: UserProfileInfo(
           name: '장원영',
           profileUri: 'https://picsum.photos/200/300',
           age: 20,
@@ -20,7 +23,11 @@ class ProfileState with _$ProfileState {
           selfIntroductionItems: _selfIntroductionList,
           subInformationItems: _profileSubInforamtionList,
         ),
+        matchStatus: UnMatched(sentMessage: ''),
       );
+
+  UnMatched? get maybeUnMatched =>
+      matchStatus is UnMatched ? matchStatus as UnMatched : null;
 }
 
 class UserProfileInfo {
@@ -94,4 +101,34 @@ class SelfIntroductionData {
 
   final String about;
   final String introduction;
+}
+
+sealed class MatchStatus {
+  const MatchStatus();
+}
+
+class Matched extends MatchStatus {
+  const Matched();
+  // TODO(Han): matching 되었을 때, 볼 수 있는 정보
+}
+
+class UnMatched extends MatchStatus {
+  const UnMatched({
+    required this.sentMessage,
+  });
+
+  final String sentMessage;
+}
+
+class Matching extends UnMatched {
+  const Matching({
+    required super.sentMessage,
+    required this.receivedMessage,
+  });
+
+  final String receivedMessage;
+}
+
+class MatchRejected extends UnMatched {
+  const MatchRejected({required super.sentMessage});
 }

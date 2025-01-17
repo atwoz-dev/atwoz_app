@@ -9,4 +9,13 @@ class ProfileNotifier extends _$ProfileNotifier {
   ProfileState build() {
     return ProfileState.initial();
   }
+
+  set message(String message) {
+    final matchedStatus = state.matchStatus;
+    assert(
+      matchedStatus is UnMatched,
+      'message cound\'t be edited after trying match',
+    );
+    state = state.copyWith(matchStatus: UnMatched(sentMessage: message));
+  }
 }

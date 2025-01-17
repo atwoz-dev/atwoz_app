@@ -12,24 +12,24 @@ class ProfileSelfIntroduction extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selfIntroductionItems = ref
         .watch(profileNotifierProvider)
-        .userInforamtion
+        .userInformation
         .selfIntroductionItems;
 
     return ColoredBox(
       color: context.appColors.outline,
       child: GridView(
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
           mainAxisExtent: 99 + 16.0,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: 12.0,
           horizontal: 16.0,
         ),
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: selfIntroductionItems
             .map((introduction) => _SelfIntroductionItem(
                   about: introduction.about,

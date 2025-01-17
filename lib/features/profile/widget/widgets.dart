@@ -3,3 +3,8 @@ export 'profile_appbar.dart';
 export 'profile_main_information.dart';
 export 'profile_sub_information.dart';
 export 'profile_self_introduction.dart';
+export 'common_button_group.dart';
+export 'matached_profile.dart';
+export 'matched_user_profile.dart';
+export 'message_send_bottomsheet.dart';
+export 'un_matached_profile.dart';

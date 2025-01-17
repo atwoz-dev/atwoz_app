@@ -13,7 +13,7 @@ class ProfileSubInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final subInformationItems =
-        ref.watch(profileNotifierProvider).userInforamtion.subInformationItems;
+        ref.watch(profileNotifierProvider).userInformation.subInformationItems;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -32,7 +32,7 @@ class ProfileSubInformation extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Title(),
+          const _Title(),
           _SubInformationContainer(subInformationItems),
         ],
       ),
@@ -50,23 +50,23 @@ class _Title extends StatelessWidget {
 }
 
 class _SubInformationContainer extends StatelessWidget {
-  const _SubInformationContainer(this.subInforamtionItems);
+  const _SubInformationContainer(this.subInformationItems);
 
-  final List<SubInformationData> subInforamtionItems;
+  final List<SubInformationData> subInformationItems;
 
   @override
   Widget build(BuildContext context) {
     return GridView(
       shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 4.0,
         mainAxisExtent: 25.0,
       ),
-      padding: EdgeInsets.only(top: 16.0),
-      physics: NeverScrollableScrollPhysics(),
-      children: subInforamtionItems
+      padding: const EdgeInsets.only(top: 16.0),
+      physics: const NeverScrollableScrollPhysics(),
+      children: subInformationItems
           .map(
             (subInfo) => _SubInformationItem(
               iconData: subInfo.iconData,

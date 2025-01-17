@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/theme/app_fonts.dart';
 import 'package:atwoz_app/core/widgets/button/app_elevated_button.dart';
+import 'package:atwoz_app/features/profile/widget/message_send_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -53,7 +54,7 @@ class ProfileMainInformation extends StatelessWidget {
             children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
-          _InteractionButtons(),
+          const _InteractionButtons(),
         ],
       ),
     );
@@ -68,7 +69,7 @@ class _MainHobbyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 2.0,
         horizontal: 4.0,
       ),
@@ -96,7 +97,7 @@ class _InteractionButtons extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
+                const Icon(
                   Icons.question_mark_rounded,
                   size: 20.0,
                   color: Colors.white,
@@ -108,7 +109,7 @@ class _InteractionButtons extends StatelessWidget {
                 ),
               ],
             ),
-            onPressed: () {},
+            onPressed: () => MessageSendBottomSheet.open(context),
           ),
         ),
         const Gap(8.0),
@@ -118,7 +119,19 @@ class _InteractionButtons extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             primary: context.appColors.shadow,
             onPressed: () {},
-            child: Icon(
+            // TODO(Han): debug code (must be remove before PR)
+            // AnnouncementBottomSheet.open(
+            //   context,
+            //   title: '메시지를 받았어요.',
+            //   subTitle: '상대방의 메시지를 수락하면 서로의 연락처가 공개됩니다.',
+            //   content: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
+            //       '괜찮으시다면 저희 연락 한번 해봐요!',
+            //   submitLabel: '수락',
+            //   onSubmit: () {},
+            //   cancelLabel: '거절',
+            //   onCancel: () {},
+            // ),
+            child: const Icon(
               Icons.question_mark_rounded,
               size: 20.0,
               color: Colors.white,
