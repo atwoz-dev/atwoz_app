@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class CommonPrimaryButton extends StatelessWidget {
         backgroundColor: context.colorScheme.primary,
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         foregroundColor: context.colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
       ),
       onPressed: onSubmit,
       child: submit,
@@ -97,7 +98,7 @@ class CommonSecondaryButton extends StatelessWidget {
         foregroundColor: context.colorScheme.secondary,
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         side: BorderSide(color: context.colorScheme.outline),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
       ),
       onPressed: onCancel,
       child: cancel,
