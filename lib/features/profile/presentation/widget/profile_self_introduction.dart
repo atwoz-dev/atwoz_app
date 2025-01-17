@@ -1,29 +1,36 @@
+import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ProfileSelfIntroduction extends StatelessWidget {
+class ProfileSelfIntroduction extends ConsumerWidget {
   const ProfileSelfIntroduction({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selfIntroductionItems = ref
+        .watch(profileNotifierProvider)
+        .userInformation
+        .selfIntroductionItems;
+
     return ColoredBox(
       color: context.palette.outline,
       child: GridView(
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
           mainAxisExtent: 99 + 16.0,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: 12.0,
           horizontal: 16.0,
         ),
-        physics: NeverScrollableScrollPhysics(),
-        children: _selfIntroduction
+        physics: const NeverScrollableScrollPhysics(),
+        children: selfIntroductionItems
             .map((introduction) => _SelfIntroductionItem(
                   about: introduction.about,
                   introduction: introduction.introduction,
@@ -65,21 +72,4 @@ class _SelfIntroductionItem extends StatelessWidget {
       ),
     );
   }
-}
-
-// TODO(Han): remove below code after checking how to get this information
-const _selfIntroduction = [
-  _SelfIntroductionItem(about: '나', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-  _SelfIntroductionItem(about: '관계', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-  _SelfIntroductionItem(about: '연인', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-  _SelfIntroductionItem(about: '연인', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-  _SelfIntroductionItem(about: '연인', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-  _SelfIntroductionItem(about: '연인', introduction: '내가 생각하는 나의 반전 매력은 이거야.'),
-];
-
-class _SelfIntroductionData {
-  _SelfIntroductionData(this.about, this.introduction);
-
-  final String about;
-  final String introduction;
 }

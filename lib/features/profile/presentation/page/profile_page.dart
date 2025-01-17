@@ -1,45 +1,25 @@
+import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../widget/widget.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final matchStatus = ref.watch(profileNotifierProvider).matchStatus;
+
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _ProfileHeadInformation(),
-          ProfileSubInformation(),
-          const Gap(13.0),
-          ProfileSelfIntroduction(),
-        ],
-      )),
-    );
-  }
-}
-
-class _ProfileHeadInformation extends StatelessWidget {
-  const _ProfileHeadInformation();
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 480.0),
-      child: Stack(children: [
-        Positioned.fill(child: ProfileMainImage()),
-        ProfileAppbar(),
-        Positioned(
-          left: 0,
-          bottom: 0,
-          right: 0,
-          child: ProfileMainInformation(),
-        ),
-      ]),
+      resizeToAvoidBottomInset: true,
+      body: switch (matchStatus) {
+        final UnMatched unMatched => UnMatchedProfile(
+            unMatchedStatus: unMatched,
+          ),
+        final Matched _ => MatchedProfile(matchedStatus: matchStatus),
+      },
     );
   }
 }
