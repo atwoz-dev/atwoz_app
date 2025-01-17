@@ -2,9 +2,9 @@ import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 import 'widget.dart';
 
+// TODO(han): 세부 UI 미구현
 class MatchedProfile extends StatelessWidget {
   const MatchedProfile({
     super.key,
@@ -21,9 +21,6 @@ class MatchedProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _ProfileHeadInformation(),
-            ProfileSubInformation(),
-            Gap(13.0),
-            ProfileSelfIntroduction(),
           ],
         ),
       ),
