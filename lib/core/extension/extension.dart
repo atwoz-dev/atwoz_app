@@ -1,5 +1,5 @@
-export 'context_extension.dart';
-export 'date_time_extension.dart';
-export 'list_extension.dart';
-export 'num_extension.dart';
-export 'text_extension.dart';
+export 'extended_context.dart';
+export 'extended_date_time.dart';
+export 'extended_list.dart';
+export 'extended_num.dart';
+export 'extended_text.dart';
