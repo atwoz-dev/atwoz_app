@@ -17,6 +17,8 @@ class IconPath {
   static const String notification = '$iconsPath/notification.svg';
   static const String tune = '$iconsPath/tune.svg';
   static const String home_heart = '$iconsPath/home_heart.png';
+  static const String check = '$iconsPath/check.svg';
+  static const String checkFill = '$iconsPath/check_fill.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

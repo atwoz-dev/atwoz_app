@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
@@ -41,6 +42,7 @@ enum AppRoute {
   report('/report'),
   signUp('/auth/sign-up'),
   signUpProfile('/auth/sign-up/profile'),
+  signUpTerms('/auth/sign-up/terms'),
   interview('/interview'),
   profile('/profile'),
   introduce('/introduce'),
@@ -138,6 +140,10 @@ class SignBranch {
         GoRoute(
           path: 'sign-up/profile', // 경로를 명시적으로 정의
           builder: (context, state) => const AuthSignUpProfilePage(),
+        ),
+        GoRoute(
+          path: 'sign-up/terms', // 경로를 명시적으로 정의
+          builder: (context, state) => const AuthSignUpTermsPage(),
         ),
       ],
     ),
