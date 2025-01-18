@@ -10,16 +10,16 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 
 class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
   final Widget body;
-  final int step; // 현재 단계 (1 ~ 10)
-  final VoidCallback? onNextPressed;
+  // final int step; // 현재 단계 (1 ~ 10)
+  // final VoidCallback? onNextPressed;
   final String question;
 
   const SignUpProfileBaseWidget({
     super.key,
     required this.question,
     required this.body,
-    required this.step,
-    this.onNextPressed,
+    // required this.step,
+    // this.onNextPressed,
   });
 
   @override
@@ -34,7 +34,8 @@ class _SignUpProfileBaseWidgetState
   @override
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
-    final isButtonEnabled = _isButtonEnabled(signUpState, widget.step);
+    final signUpProcess = ref.read(signUpProcessProvider.notifier);
+    // final isButtonEnabled = _isButtonEnabled(signUpState, widget.step);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -43,7 +44,7 @@ class _SignUpProfileBaseWidgetState
         children: [
           // 진행 게이지 바 (단계에 따라 진행률 계산)
           LinearProgressIndicator(
-            value: widget.step / 10.0,
+            value: signUpState.currentStep / 10.0,
             minHeight: 4.h,
             backgroundColor: Palette.colorGrey100,
             color: palette.primary,
@@ -71,49 +72,21 @@ class _SignUpProfileBaseWidgetState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed: isButtonEnabled ? widget.onNextPressed : null,
+              onPressed: signUpProcess.isButtonEnabled()
+                  ? () => signUpProcess.nextStep(context)
+                  : null,
               child: Text(
-                widget.step == 10 ? '완료' : '다음',
-                style: Fonts.body01Medium(isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.bold),
+                signUpState.currentStep == 10 ? '완료' : '다음',
+                style: Fonts.body01Medium(
+                  signUpProcess.isButtonEnabled()
+                      ? palette.onPrimary
+                      : Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.bold),
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  bool _isButtonEnabled(SignUpProcessState state, int step) {
-    switch (step) {
-      case 1: // 1단계 (나이 선택)
-        return state.selectedYear != null;
-      case 2: // 2단계 (키 선택)
-        return state.selectedHeight != null;
-      case 3: // 3단계 (직업 선택)
-        return state.selectedJob != null;
-      case 4: // 4단계 (지역 선택)
-        return state.selectedLocation != null;
-      case 5: // 5단계 (학력 선택)
-        return state.selectedEducation != null;
-      case 6: // 6단계 (Mbti 선택)
-        return state.selectedFirstMbtiLetter != null &&
-            state.selectedSecondMbtiLetter != null &&
-            state.selectedThirdMbtiLetter != null &&
-            state.selectedFourthMbtiLetter != null;
-      case 7: // 7단계 (흡연 여부 선택)
-        return state.selectedSmoking != null;
-      case 8: // 8단계 (음주 여부 선택)
-        return state.selectedDrinking != null;
-      case 9: // 9단계 (종교 선택)
-        return state.selectedReligion != null;
-      case 10: // 10단계 (취미 선택)
-        return state.selectedHobbies != null &&
-            state.selectedHobbies!.isNotEmpty;
-      default:
-        return false;
-    }
   }
 }
