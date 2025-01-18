@@ -1,2 +1,12 @@
 export 'sign_up_page.dart';
-export 'auth_sign_up_profile_page.dart';
+export 'sign_up_profile_picture_page.dart';
+export 'sign_up_birth.dart';
+export 'sign_up_drinking_page.dart';
+export 'sign_up_education_page.dart';
+export 'sign_up_height_page.dart';
+export 'sign_up_hobbies_page.dart';
+export 'sign_up_job_page.dart';
+export 'sign_up_location_page.dart';
+export 'sign_up_mbti_page.dart';
+export 'sign_up_smoking_page.dart';
+export 'sign_up_religion_page.dart';

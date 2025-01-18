@@ -41,10 +41,10 @@ class _AuthNavigationPageState
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
-                      // navigate(
-                      //   context,
-                      //   route: AppRoute.signUp,
-                      // );
+                      navigate(
+                        context,
+                        route: AppRoute.signUpProfileBirth,
+                      );
                     },
                     child: Text(
                       '회원가입 2단계',
@@ -57,7 +57,7 @@ class _AuthNavigationPageState
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.signUpProfile,
+                        route: AppRoute.signUpProfilePicture,
                       );
                     },
                     child: Text(

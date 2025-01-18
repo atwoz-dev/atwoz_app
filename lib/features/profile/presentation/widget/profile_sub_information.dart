@@ -1,14 +1,20 @@
+import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ProfileSubInformation extends StatelessWidget {
+class ProfileSubInformation extends ConsumerWidget {
   const ProfileSubInformation({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final subInformationItems =
+        ref.watch(profileNotifierProvider).userInformation.subInformationItems;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 20.0,
@@ -26,8 +32,8 @@ class ProfileSubInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Title(),
-          _SubInformationContainer(),
+          const _Title(),
+          _SubInformationContainer(subInformationItems),
         ],
       ),
     );
@@ -44,46 +50,30 @@ class _Title extends StatelessWidget {
 }
 
 class _SubInformationContainer extends StatelessWidget {
-  const _SubInformationContainer();
+  const _SubInformationContainer(this.subInformationItems);
+
+  final List<SubInformationData> subInformationItems;
 
   @override
   Widget build(BuildContext context) {
     return GridView(
       shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 4.0,
         mainAxisExtent: 25.0,
       ),
-      padding: EdgeInsets.only(top: 16.0),
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '고등학교 졸업',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '사회적 음주',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '취업 준비중',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '전자담배',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '170cm',
-        ),
-        _SubInformationItem(
-          iconData: Icons.question_mark_rounded,
-          information: '기독교',
-        ),
-      ],
+      padding: const EdgeInsets.only(top: 16.0),
+      physics: const NeverScrollableScrollPhysics(),
+      children: subInformationItems
+          .map(
+            (subInfo) => _SubInformationItem(
+              iconData: subInfo.iconData,
+              information: subInfo.information,
+            ),
+          )
+          .toList(),
     );
   }
 }

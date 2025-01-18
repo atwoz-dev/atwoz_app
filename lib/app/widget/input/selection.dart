@@ -8,12 +8,14 @@ class SelectionWidget extends StatefulWidget {
   final List<String> options; // 선택지 리스트
   final Color? activeColor;
   final Color? inactiveColor;
+  final ValueChanged<String>? onChange; // 선택값 변경 콜백 추가
 
   const SelectionWidget({
     super.key,
     required this.options,
     this.activeColor,
     this.inactiveColor,
+    this.onChange,
   });
 
   @override
@@ -49,6 +51,10 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
                 safeSetState(() {
                   selectedValue = option;
                 });
+                // onChange 콜백 호출
+                if (widget.onChange != null) {
+                  widget.onChange!(option);
+                }
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300), // 부드러운 애니메이션

@@ -7,7 +7,6 @@ import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -25,6 +24,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
   final TextEditingController _nicknameController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   String? validationError; // 유효성 검사 결과를 저장
+  String? selectedGender; // 선택된 성별 상태 추가
 
   @override
   void initState() {
@@ -61,8 +61,10 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    final bool isButtonEnabled =
-        _nicknameController.text.isNotEmpty && validationError == null;
+    // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료
+    final bool isButtonEnabled = _nicknameController.text.isNotEmpty &&
+        validationError == null &&
+        selectedGender != null;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
@@ -98,7 +100,6 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                     keyboardType: TextInputType.text,
                     hintText: '10글자 이내로 입력해주세요.',
                     fillColor: Palette.colorGrey100,
-                    // validator: (_) => validationError, // 에러 메시지 표시
                     errorText: validationError,
                     onFieldSubmitted: (value) {
                       _validateInput(value); // 엔터를 눌렀을 때 유효성 검사
@@ -107,11 +108,17 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                 ),
                 Gap(24.h),
                 buildLabeledRow(
-                    context: context,
-                    label: '성별',
-                    child: SelectionWidget(
-                      options: ["여자", "남자"],
-                    ))
+                  context: context,
+                  label: '성별',
+                  child: SelectionWidget(
+                    options: ["여자", "남자"],
+                    onChange: (value) {
+                      safeSetState(() {
+                        selectedGender = value; // 성별 선택 상태 업데이트
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -124,7 +131,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                       print("인증번호 요청"); // 성공 시 동작
                       navigate(
                         context,
-                        route: AppRoute.onboardCertification,
+                        route: AppRoute.signUpProfileBirth,
                       );
                     }
                   : null,
