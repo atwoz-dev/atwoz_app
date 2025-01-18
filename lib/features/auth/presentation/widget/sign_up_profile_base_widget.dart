@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
+
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,16 +10,12 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 
 class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
   final Widget body;
-  // final int step; // 현재 단계 (1 ~ 10)
-  // final VoidCallback? onNextPressed;
   final String question;
 
   const SignUpProfileBaseWidget({
     super.key,
     required this.question,
     required this.body,
-    // required this.step,
-    // this.onNextPressed,
   });
 
   @override
@@ -35,7 +31,6 @@ class _SignUpProfileBaseWidgetState
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
-    // final isButtonEnabled = _isButtonEnabled(signUpState, widget.step);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -43,11 +38,21 @@ class _SignUpProfileBaseWidgetState
       child: Column(
         children: [
           // 진행 게이지 바 (단계에 따라 진행률 계산)
-          LinearProgressIndicator(
-            value: signUpState.currentStep / 10.0,
-            minHeight: 4.h,
-            backgroundColor: Palette.colorGrey100,
-            color: palette.primary,
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(
+              begin: (signUpState.currentStep - 1) / 10.0,
+              end: signUpState.currentStep / 10.0,
+            ),
+            duration: const Duration(milliseconds: 300), // 애니메이션 지속 시간
+            curve: Curves.easeInOut, // 부드러운 애니메이션을 위한 커브
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 4.h,
+                backgroundColor: Palette.colorGrey100,
+                color: palette.primary,
+              );
+            },
           ),
           Gap(16.h),
           Expanded(
