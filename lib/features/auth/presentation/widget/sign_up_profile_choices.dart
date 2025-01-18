@@ -3,6 +3,7 @@ import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
