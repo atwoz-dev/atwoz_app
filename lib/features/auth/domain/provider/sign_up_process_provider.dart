@@ -8,6 +8,19 @@ class SignUpProcess extends _$SignUpProcess {
   @override
   SignUpProcessState build() => const SignUpProcessState();
 
+  void updateNickname(String nickname) {
+    state = state.copyWith(
+      nickname: nickname,
+      error: nickname.isEmpty
+          ? null
+          : (nickname.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
+    );
+  }
+
+  void updateGender(String gender) {
+    state = state.copyWith(selectedGender: gender);
+  }
+
   void updateSelectedYear(int year) {
     state = state.copyWith(selectedYear: year);
   }

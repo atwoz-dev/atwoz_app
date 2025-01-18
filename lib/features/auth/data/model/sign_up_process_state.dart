@@ -4,8 +4,10 @@ part 'sign_up_process_state.freezed.dart';
 @freezed
 class SignUpProcessState with _$SignUpProcessState {
   const factory SignUpProcessState({
+    @Default(null) String? nickname, // 닉네임
+    @Default(null) String? selectedGender, // 선택된 성별
     @Default(false) bool isLoading, // 로딩 여부
-    String? error, // 에러 메시지
+    @Default(null) String? error, // 에러 메시지
     @Default(null) int? selectedYear, // 선택된 나이
     @Default(null) int? selectedHeight, // 선택된 키
     @Default(null) String? selectedJob, // 선택된 직업
@@ -25,6 +27,9 @@ class SignUpProcessState with _$SignUpProcessState {
 
   // 모든 필드가 채워졌는지 확인하는 메서드
   bool get isComplete =>
+      error == null &&
+      nickname != null &&
+      selectedGender != null &&
       selectedYear != null &&
       selectedHeight != null &&
       selectedJob != null &&

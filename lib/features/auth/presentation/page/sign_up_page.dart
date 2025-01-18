@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,16 +24,15 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
 
   final TextEditingController _nicknameController = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  String? validationError; // 유효성 검사 결과를 저장
-  String? selectedGender; // 선택된 성별 상태 추가
 
   @override
   void initState() {
     super.initState();
-    // 포커스 변경 리스너 추가
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
-        _validateInput(_nicknameController.text); // 포커스 아웃 시 유효성 검사
+        final signUpProcess = ref.read(signUpProcessProvider.notifier);
+        signUpProcess
+            .updateNickname(_nicknameController.text); // 포커스 아웃 시 닉네임 유효성 검사
       }
     });
   }
@@ -40,31 +40,19 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
   @override
   void dispose() {
     _nicknameController.dispose();
-    focusNode.dispose(); // FocusNode도 해제
+    focusNode.dispose(); // FocusNode 해제
     super.dispose();
-  }
-
-  void _validateInput(String input) {
-    // 중복 닉네임 검사 물어보기
-    if (input.isEmpty) {
-      safeSetState(() {
-        validationError = null; // 빈 값일 경우 에러 메시지 제거
-      });
-      return;
-    }
-    final isValid = input.isNotEmpty && input.length <= 10;
-
-    safeSetState(() {
-      validationError = isValid ? null : '닉네임은 10자 이하여야 합니다.';
-    });
   }
 
   @override
   Widget buildPage(BuildContext context) {
+    final signUpState = ref.watch(signUpProcessProvider);
+    final signUpProcess = ref.read(signUpProcessProvider.notifier);
+
     // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료
-    final bool isButtonEnabled = _nicknameController.text.isNotEmpty &&
-        validationError == null &&
-        selectedGender != null;
+    final bool isButtonEnabled = signUpState.nickname != null &&
+        // signUpState.error == null &&
+        signUpState.selectedGender != null;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
@@ -94,16 +82,16 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                   context: context,
                   label: '닉네임',
                   child: DefaultTextFormField(
+                    initialValue: signUpState.nickname,
                     focusNode: focusNode,
                     autofocus: false,
                     controller: _nicknameController,
                     keyboardType: TextInputType.text,
                     hintText: '10글자 이내로 입력해주세요.',
                     fillColor: Palette.colorGrey100,
-                    errorText: validationError,
-                    onFieldSubmitted: (value) {
-                      _validateInput(value); // 엔터를 눌렀을 때 유효성 검사
-                    },
+                    errorText: signUpState.error, // 상태 기반 에러 메시지
+                    onFieldSubmitted: (value) =>
+                        signUpProcess.updateNickname(value), // 엔터를 눌렀을 때 유효성 검사
                   ),
                 ),
                 Gap(24.h),
@@ -113,9 +101,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                   child: SelectionWidget(
                     options: ["여자", "남자"],
                     onChange: (value) {
-                      safeSetState(() {
-                        selectedGender = value; // 성별 선택 상태 업데이트
-                      });
+                      signUpProcess.updateGender(value);
                     },
                   ),
                 ),
@@ -127,7 +113,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: DefaultElevatedButton(
               onPressed: isButtonEnabled
                   ? () {
-                      // TODO: 나중에 api 연결하기
+                      // TODO: 나중에 API 연결하기
                       print("인증번호 요청"); // 성공 시 동작
                       navigate(
                         context,
