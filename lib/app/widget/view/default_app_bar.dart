@@ -39,7 +39,6 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           const LinearProgressIndicator()
         else
           AppBar(
-            backgroundColor: context.palette.surface,
             leading: _buildLeadingAppBar(context),
             leadingWidth: 60.0,
             toolbarHeight: 80 - 1,

@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
+import 'package:atwoz_app/app/router/router.dart';
+import 'package:flutter/material.dart';
 
 part 'sign_up_process_provider.g.dart';
 
@@ -7,6 +9,35 @@ part 'sign_up_process_provider.g.dart';
 class SignUpProcess extends _$SignUpProcess {
   @override
   SignUpProcessState build() => const SignUpProcessState();
+  void nextStep(BuildContext context) {
+    if (state.currentStep == 10) {
+      navigate(context, route: AppRoute.signUpProfilePicture);
+    }
+    if (state.currentStep < 10) {
+      state = state.copyWith(currentStep: state.currentStep + 1);
+    }
+  }
+
+  void previousStep(BuildContext context) {
+    if (state.currentStep > 1) {
+      state = state.copyWith(currentStep: state.currentStep - 1);
+    }
+  }
+
+  bool isButtonEnabled() => state.isButtonEnabled();
+
+  void updateNickname(String nickname) {
+    state = state.copyWith(
+      nickname: nickname,
+      error: nickname.isEmpty
+          ? null
+          : (nickname.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
+    );
+  }
+
+  void updateGender(String gender) {
+    state = state.copyWith(selectedGender: gender);
+  }
 
   void updateSelectedYear(int year) {
     state = state.copyWith(selectedYear: year);
@@ -63,18 +94,4 @@ class SignUpProcess extends _$SignUpProcess {
   void reset() {
     state = const SignUpProcessState();
   }
-
-  String? get selectedLocation => state.selectedLocation;
-  int? get selectedYear => state.selectedYear;
-  int? get selectedHeight => state.selectedHeight;
-  String? get selectedJob => state.selectedJob;
-  String? get selectedEducation => state.selectedEducation;
-  String? get selectedFirstMbtiLetter => state.selectedFirstMbtiLetter;
-  String? get selectedSecondMbtiLetter => state.selectedSecondMbtiLetter;
-  String? get selectedThirdMbtiLetter => state.selectedThirdMbtiLetter;
-  String? get selectedFourthMbtiLetter => state.selectedFourthMbtiLetter;
-  String? get selectedSmoking => state.selectedSmoking;
-  String? get selectedDrinking => state.selectedDrinking;
-  String? get selectedReligion => state.selectedReligion;
-  List<String>? get selectedHobbies => state.selectedHobbies;
 }

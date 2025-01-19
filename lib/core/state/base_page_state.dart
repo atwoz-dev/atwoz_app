@@ -93,6 +93,7 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
       alignment: Alignment.center,
       children: [
         Scaffold(
+          extendBodyBehindAppBar: false, // AppBar와 Body를 명확히 분리
           resizeToAvoidBottomInset:
               isResizeToAvoidBottomInset, // 키보드로 인한 레이아웃 변경 허용
           appBar: isAppBar

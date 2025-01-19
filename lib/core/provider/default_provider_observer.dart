@@ -1,3 +1,4 @@
+import 'dart:convert'; // JSON 포맷팅을 위한 패키지
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,8 +15,11 @@ class DefaultProviderObserver extends ProviderObserver {
   @override
   void didUpdateProvider(ProviderBase provider, Object? previousValue,
       Object? newValue, ProviderContainer container) {
-    debugPrint(
-        "🔨프로바이더 업데이트🔨: ${provider.name ?? provider.runtimeType}, New value: $newValue");
+    // JSON 형식으로 변환
+    String formattedNewValue = _formatState(newValue);
+
+    debugPrint("🔨프로바이더 업데이트🔨: ${provider.name ?? provider.runtimeType}\n"
+        "📄 New Value:\n$formattedNewValue");
     super.didUpdateProvider(provider, previousValue, newValue, container);
   }
 
@@ -26,10 +30,18 @@ class DefaultProviderObserver extends ProviderObserver {
     super.didDisposeProvider(provider, container);
   }
 
-  // Provider에서 발생한 에러를 감지하여 로그 출력
   void logError(ProviderBase provider, Object error, StackTrace stackTrace) {
-    debugPrint(
-        "🐛프로바이더 에러🐛: ${provider.name ?? provider.runtimeType}, Error: $error");
-    debugPrint("StackTrace: $stackTrace");
+    debugPrint("🐛 프로바이더 에러 🐛: ${provider.name ?? provider.runtimeType}\n"
+        "Error: $error\nStackTrace: $stackTrace");
+  }
+
+  // JSON 형식으로 변환하는 헬퍼 함수
+  String _formatState(Object? state) {
+    try {
+      return const JsonEncoder.withIndent('  ').convert(state);
+    } catch (e) {
+      // JSON 변환에 실패하면 기본 toString 사용
+      return state.toString();
+    }
   }
 }

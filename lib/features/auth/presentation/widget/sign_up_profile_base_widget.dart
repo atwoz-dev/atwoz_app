@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
+
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,16 +11,12 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 
 class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
   final Widget body;
-  final int step; // 현재 단계 (1 ~ 10)
-  final VoidCallback? onNextPressed;
   final String question;
 
   const SignUpProfileBaseWidget({
     super.key,
     required this.question,
     required this.body,
-    required this.step,
-    this.onNextPressed,
   });
 
   @override
@@ -28,92 +25,85 @@ class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
 }
 
 class _SignUpProfileBaseWidgetState
-    extends BaseConsumerStatefulPageState<SignUpProfileBaseWidget> {
-  _SignUpProfileBaseWidgetState() : super(defaultAppBarTitle: '프로필 정보');
+    extends AppBaseConsumerStatefulPageState<SignUpProfileBaseWidget> {
+  _SignUpProfileBaseWidgetState();
 
   @override
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
-    final isButtonEnabled = _isButtonEnabled(signUpState, widget.step);
+    final signUpProcess = ref.read(signUpProcessProvider.notifier);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Column(
-        children: [
-          // 진행 게이지 바 (단계에 따라 진행률 계산)
-          LinearProgressIndicator(
-            value: widget.step / 10.0,
-            minHeight: 4.h,
-            backgroundColor: Palette.colorGrey100,
-            color: palette.primary,
+    return Scaffold(
+      appBar: DefaultAppBar(
+        title: '프로필 정보',
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
+          child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(
+              begin: (signUpState.currentStep - 1) / 10.0,
+              end: signUpState.currentStep / 10.0,
+            ),
+            duration: const Duration(milliseconds: 300), // 애니메이션 지속 시간
+            curve: Curves.easeInOut, // 부드러운 애니메이션을 위한 커브
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 4.h,
+                backgroundColor: Palette.colorGrey100,
+                color: palette.primary,
+              );
+            },
           ),
-          Gap(16.h),
-          Expanded(
-            flex: 9,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
-              children: [
-                Gap(32.h),
-                Text(
-                  widget.question,
-                  style: Fonts.header03(palette.onSurface).copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left, // 왼쪽 정렬 설정
+        ),
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          child: Column(
+            children: [
+              // 진행 게이지 바 (단계에 따라 진행률 계산)
+              Gap(16.h),
+              Expanded(
+                flex: 9,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+                  children: [
+                    Gap(32.h),
+                    Text(
+                      widget.question,
+                      style: Fonts.header03(palette.onSurface).copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left, // 왼쪽 정렬 설정
+                    ),
+                    Gap(16.h),
+                    widget.body,
+                  ],
                 ),
-                Gap(16.h),
-                widget.body,
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-            child: DefaultElevatedButton(
-              onPressed: isButtonEnabled ? widget.onNextPressed : null,
-              child: Text(
-                widget.step == 10 ? '완료' : '다음',
-                style: Fonts.body01Medium(isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.bold),
               ),
-            ),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+                child: DefaultElevatedButton(
+                  onPressed: signUpProcess.isButtonEnabled()
+                      ? () => signUpProcess.nextStep(context)
+                      : null,
+                  child: Text(
+                    signUpState.currentStep == 10 ? '완료' : '다음',
+                    style: Fonts.body01Medium(
+                      signUpProcess.isButtonEnabled()
+                          ? palette.onPrimary
+                          : Palette.colorGrey400,
+                    ).copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
-  }
-
-  bool _isButtonEnabled(SignUpProcessState state, int step) {
-    switch (step) {
-      case 1: // 1단계 (나이 선택)
-        return state.selectedYear != null;
-      case 2: // 2단계 (키 선택)
-        return state.selectedHeight != null;
-      case 3: // 3단계 (직업 선택)
-        return state.selectedJob != null;
-      case 4: // 4단계 (지역 선택)
-        return state.selectedLocation != null;
-      case 5: // 5단계 (학력 선택)
-        return state.selectedEducation != null;
-      case 6: // 6단계 (Mbti 선택)
-        return state.selectedFirstMbtiLetter != null &&
-            state.selectedSecondMbtiLetter != null &&
-            state.selectedThirdMbtiLetter != null &&
-            state.selectedFourthMbtiLetter != null;
-      case 7: // 7단계 (흡연 여부 선택)
-        return state.selectedSmoking != null;
-      case 8: // 8단계 (음주 여부 선택)
-        return state.selectedDrinking != null;
-      case 9: // 9단계 (종교 선택)
-        return state.selectedReligion != null;
-      case 10: // 10단계 (취미 선택)
-        return state.selectedHobbies != null &&
-            state.selectedHobbies!.isNotEmpty;
-      default:
-        return false;
-    }
   }
 }
