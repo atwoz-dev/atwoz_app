@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 
@@ -36,6 +37,10 @@ class _SignUpProfileBaseWidgetState
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
+        leadingAction: () => navigate(
+          context,
+          route: AppRoute.signUpProfileUpdate,
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(

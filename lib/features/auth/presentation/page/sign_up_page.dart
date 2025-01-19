@@ -122,7 +122,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                       print("인증번호 요청"); // 성공 시 동작
                       navigate(
                         context,
-                        route: AppRoute.signUpProfileBirth,
+                        route: AppRoute.signUpProfileChoice,
                       );
                     }
                   : null,

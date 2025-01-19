@@ -43,7 +43,7 @@ class _AuthNavigationPageState
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.signUpProfileBirth,
+                        route: AppRoute.signUpProfileChoice,
                       );
                     },
                     child: Text(

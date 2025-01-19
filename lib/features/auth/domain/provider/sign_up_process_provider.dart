@@ -35,6 +35,10 @@ class SignUpProcess extends _$SignUpProcess {
     );
   }
 
+  void updateCurrentStep(int step) {
+    state = state.copyWith(currentStep: step);
+  }
+
   void updateGender(String gender) {
     state = state.copyWith(selectedGender: gender);
   }
