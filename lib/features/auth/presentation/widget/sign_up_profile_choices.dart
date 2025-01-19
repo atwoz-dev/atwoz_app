@@ -1,4 +1,7 @@
+import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
@@ -109,56 +112,82 @@ Widget buildMbtiInput({
   required SignUpProcessState signUpState,
   required SignUpProcess signUpNotifier,
 }) {
-  Widget buildMbtiPair({
-    required List<String> options,
-    required String? selected,
-    required void Function(String selection) onSelected,
+  final mbtiOptions = [
+    ['E', 'N', 'F', 'P'],
+    ['I', 'S', 'T', 'J']
+  ];
+
+  Widget buildMbtiButton({
+    required String letter,
+    required bool isSelected,
+    required void Function() onTap,
+    required BuildContext context,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: options.map((option) {
-        return ChoiceChip(
-          label: Text(option),
-          selected: selected == option,
-          onSelected: (isSelected) {
-            if (isSelected) onSelected(option);
-          },
-        );
-      }).toList(),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? Palette.colorPrimary100 : Palette.colorGrey200,
+          ),
+          color: isSelected ? Palette.colorPrimary100 : context.palette.surface,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        width: double.infinity, // 카드의 가로 길이를 GridView에 맞춤
+        child: Text(
+          letter,
+          style: Fonts.title(
+            isSelected ? context.palette.primary : Palette.colorGrey200,
+          ).copyWith(fontWeight: FontWeight.bold, fontSize: 30.sp),
+        ),
+      ),
     );
   }
 
-  return GridView.count(
-    shrinkWrap: true,
-    crossAxisCount: 2,
-    mainAxisSpacing: 16.0,
-    crossAxisSpacing: 16.0,
-    children: [
-      buildMbtiPair(
-        options: ['E', 'I'],
-        selected: signUpState.selectedFirstMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateFirstMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['N', 'S'],
-        selected: signUpState.selectedSecondMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateSecondMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['T', 'F'],
-        selected: signUpState.selectedThirdMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateThirdMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['J', 'P'],
-        selected: signUpState.selectedFourthMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateFourthMbtiLetter(selection),
-      ),
-    ],
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    child: Column(
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, // 각 행에 4개의 카드
+            mainAxisSpacing: 8.0, // 카드 간 세로 간격
+            crossAxisSpacing: 8.0, // 카드 간 가로 간격
+            childAspectRatio: 68.0 / 76.0, // 직사각형 비율
+          ),
+          itemCount: mbtiOptions.expand((e) => e).length,
+          itemBuilder: (context, index) {
+            final row = index ~/ 4;
+            final col = index % 4;
+            final letter = mbtiOptions[row][col];
+            final isSelected = (letter == signUpState.selectedFirstMbtiLetter ||
+                letter == signUpState.selectedSecondMbtiLetter ||
+                letter == signUpState.selectedThirdMbtiLetter ||
+                letter == signUpState.selectedFourthMbtiLetter);
+
+            return buildMbtiButton(
+              context: context,
+              letter: letter,
+              isSelected: isSelected,
+              onTap: () {
+                if (['E', 'I'].contains(letter)) {
+                  signUpNotifier.updateFirstMbtiLetter(letter);
+                } else if (['N', 'S'].contains(letter)) {
+                  signUpNotifier.updateSecondMbtiLetter(letter);
+                } else if (['T', 'F'].contains(letter)) {
+                  signUpNotifier.updateThirdMbtiLetter(letter);
+                } else if (['J', 'P'].contains(letter)) {
+                  signUpNotifier.updateFourthMbtiLetter(letter);
+                }
+              },
+            );
+          },
+        ),
+      ],
+    ),
   );
 }
 
