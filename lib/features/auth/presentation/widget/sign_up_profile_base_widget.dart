@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
@@ -24,21 +25,20 @@ class SignUpProfileBaseWidget extends ConsumerStatefulWidget {
 }
 
 class _SignUpProfileBaseWidgetState
-    extends BaseConsumerStatefulPageState<SignUpProfileBaseWidget> {
-  _SignUpProfileBaseWidgetState() : super(defaultAppBarTitle: '프로필 정보');
+    extends AppBaseConsumerStatefulPageState<SignUpProfileBaseWidget> {
+  _SignUpProfileBaseWidgetState();
 
   @override
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Column(
-        children: [
-          // 진행 게이지 바 (단계에 따라 진행률 계산)
-          TweenAnimationBuilder<double>(
+    return Scaffold(
+      appBar: DefaultAppBar(
+        title: '프로필 정보',
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
+          child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
               begin: (signUpState.currentStep - 1) / 10.0,
               end: signUpState.currentStep / 10.0,
@@ -54,43 +54,55 @@ class _SignUpProfileBaseWidgetState
               );
             },
           ),
-          Gap(16.h),
-          Expanded(
-            flex: 9,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
-              children: [
-                Gap(32.h),
-                Text(
-                  widget.question,
-                  style: Fonts.header03(palette.onSurface).copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left, // 왼쪽 정렬 설정
+        ),
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          child: Column(
+            children: [
+              // 진행 게이지 바 (단계에 따라 진행률 계산)
+              Gap(16.h),
+              Expanded(
+                flex: 9,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+                  children: [
+                    Gap(32.h),
+                    Text(
+                      widget.question,
+                      style: Fonts.header03(palette.onSurface).copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left, // 왼쪽 정렬 설정
+                    ),
+                    Gap(16.h),
+                    widget.body,
+                  ],
                 ),
-                Gap(16.h),
-                widget.body,
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-            child: DefaultElevatedButton(
-              onPressed: signUpProcess.isButtonEnabled()
-                  ? () => signUpProcess.nextStep(context)
-                  : null,
-              child: Text(
-                signUpState.currentStep == 10 ? '완료' : '다음',
-                style: Fonts.body01Medium(
-                  signUpProcess.isButtonEnabled()
-                      ? palette.onPrimary
-                      : Palette.colorGrey400,
-                ).copyWith(fontWeight: FontWeight.bold),
               ),
-            ),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+                child: DefaultElevatedButton(
+                  onPressed: signUpProcess.isButtonEnabled()
+                      ? () => signUpProcess.nextStep(context)
+                      : null,
+                  child: Text(
+                    signUpState.currentStep == 10 ? '완료' : '다음',
+                    style: Fonts.body01Medium(
+                      signUpProcess.isButtonEnabled()
+                          ? palette.onPrimary
+                          : Palette.colorGrey400,
+                    ).copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

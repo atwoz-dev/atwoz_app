@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +9,13 @@ Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
 }) {
-  return Expanded(
-    child: ListView.builder(
-      itemCount: 30,
-      itemBuilder: (context, index) {
-        final year = 1993 + index;
-        return ListTile(
-          title: Text('$year년'),
-          selected: selectedYear == year,
-          onTap: () => signUpNotifier.updateSelectedYear(year),
-        );
-      },
-    ),
+  return buildListWheelInput(
+    selectedValue: selectedYear,
+    minValue: 1960,
+    maxValue: 2022,
+    defaultValue: 1997,
+    unit: '년',
+    onValueChanged: (year) => signUpNotifier.updateSelectedYear(year),
   );
 }
 
@@ -27,18 +23,13 @@ Widget buildHeightInput({
   required int? selectedHeight,
   required SignUpProcess signUpNotifier,
 }) {
-  return Expanded(
-    child: ListView.builder(
-      itemCount: 20, // 키 범위: 160 ~ 180
-      itemBuilder: (context, index) {
-        final height = 160 + index;
-        return ListTile(
-          title: Text('$height cm'),
-          selected: selectedHeight == height,
-          onTap: () => signUpNotifier.updateSelectedHeight(height),
-        );
-      },
-    ),
+  return buildListWheelInput(
+    selectedValue: selectedHeight,
+    minValue: 130,
+    maxValue: 200,
+    defaultValue: 170,
+    unit: 'cm',
+    onValueChanged: (height) => signUpNotifier.updateSelectedHeight(height),
   );
 }
 
