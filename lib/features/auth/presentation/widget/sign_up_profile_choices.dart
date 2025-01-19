@@ -1,6 +1,8 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
+import 'package:atwoz_app/app/widget/list/list_chip.dart';
+import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
@@ -40,16 +42,35 @@ Widget buildJobInput({
   required String? selectedJob,
   required SignUpProcess signUpNotifier,
 }) {
-  return Wrap(
-    spacing: 8.w,
-    runSpacing: 8.h,
-    children: ['개발자', '디자이너', '마케팅', '교육', '의료', '기타'].map((job) {
-      return ChoiceChip(
-        label: Text(job),
-        selected: selectedJob == job,
-        onSelected: (_) => signUpNotifier.updateSelectedJob(job),
-      );
-    }).toList(),
+  final jobOptions = [
+    '연구개발/엔지니어',
+    '개인사업/자영업',
+    '영업/판매',
+    '경영/기획',
+    '미래를 위한 공부중',
+    '취업 준비중',
+    '교육',
+    '예술/체육',
+    '요식업',
+    '의료/보건',
+    '기계/건설',
+    '디자인',
+    '마케팅/광고',
+    '무역/유통',
+    '방송언론/연애',
+    '법률/공공',
+    '생산/제조',
+    '서비스',
+    '여행/운송',
+    '기타'
+  ];
+
+  return SingleSelectListChip(
+    options: jobOptions,
+    selectedOption: selectedJob,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateSelectedJob(updatedSelection);
+    },
   );
 }
 
@@ -95,16 +116,12 @@ Widget buildEducationInput({
     '고등학교 졸업',
     '기타',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedEducation == option,
-        onSelected: (_) => signUpNotifier.updateEducation(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedEducation,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateEducation(updatedSelection);
+    },
   );
 }
 
@@ -196,16 +213,12 @@ Widget buildSmokingInput({
   required SignUpProcess signUpNotifier,
 }) {
   final options = ['비흡연', '금연 중', '전자담배', '가끔 피움', '매일 피움'];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedSmoking == option,
-        onSelected: (_) => signUpNotifier.updateSmoking(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedSmoking,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateSmoking(updatedSelection);
+    },
   );
 }
 
@@ -217,19 +230,15 @@ Widget buildDrinkingInput({
     '전혀 마시지 않음',
     '사회적 음주',
     '가끔 마심',
-    '4술자리를 즐김',
+    '술자리를 즐김',
     '금주 중',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedDrinking == option,
-        onSelected: (_) => signUpNotifier.updateDrinking(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedDrinking,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateDrinking(updatedSelection);
+    },
   );
 }
 
@@ -238,16 +247,12 @@ Widget buildReligionInput({
   required SignUpProcess signUpNotifier,
 }) {
   final options = ['무교', '기독교', '천주교', '불교', '기타'];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedReligion == option,
-        onSelected: (_) => signUpNotifier.updateReligion(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedReligion,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateReligion(updatedSelection);
+    },
   );
 }
 
@@ -286,23 +291,12 @@ Widget buildHobbiesInput({
     '캠핑',
     '기타',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return FilterChip(
-        label: Text(option),
-        selected: selectedHobbies.contains(option),
-        onSelected: (selected) {
-          final updatedHobbies = List<String>.from(selectedHobbies);
-          if (selected) {
-            updatedHobbies.add(option);
-          } else {
-            updatedHobbies.remove(option);
-          }
-          signUpNotifier.updateHobbies(updatedHobbies);
-        },
-      );
-    }).toList(),
+
+  return ListChip(
+    options: options,
+    selectedOptions: selectedHobbies,
+    onSelectionChanged: (updatedSelections) {
+      signUpNotifier.updateHobbies(updatedSelections);
+    },
   );
 }

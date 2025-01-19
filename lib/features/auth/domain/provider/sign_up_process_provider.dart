@@ -51,7 +51,7 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedHeight: height);
   }
 
-  void updateSelectedJob(String job) {
+  void updateSelectedJob(String? job) {
     state = state.copyWith(selectedJob: job);
   }
 
@@ -59,7 +59,7 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedLocation: location);
   }
 
-  void updateEducation(String education) {
+  void updateEducation(String? education) {
     state = state.copyWith(selectedEducation: education);
   }
 
@@ -79,15 +79,15 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedFourthMbtiLetter: letter);
   }
 
-  void updateSmoking(String smoking) {
+  void updateSmoking(String? smoking) {
     state = state.copyWith(selectedSmoking: smoking);
   }
 
-  void updateDrinking(String drinking) {
+  void updateDrinking(String? drinking) {
     state = state.copyWith(selectedDrinking: drinking);
   }
 
-  void updateReligion(String religion) {
+  void updateReligion(String? religion) {
     state = state.copyWith(selectedReligion: religion);
   }
 
