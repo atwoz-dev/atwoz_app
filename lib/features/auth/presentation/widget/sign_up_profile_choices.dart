@@ -1,5 +1,9 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/input/auto_complete.dart';
 import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
 import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
@@ -8,6 +12,7 @@ import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
@@ -77,27 +82,69 @@ Widget buildJobInput({
 Widget buildLocationInput({
   required String? selectedLocation,
   required SignUpProcess signUpNotifier,
+  required List<String> locationOptions,
+  required FocusNode locationFocusNode,
+  required TextEditingController locationController,
 }) {
-  final locationController = TextEditingController(text: selectedLocation);
-  return Column(
-    children: [
-      TextField(
-        controller: locationController,
-        decoration: const InputDecoration(
-          labelText: '지역 입력',
-        ),
-        onChanged: (value) => signUpNotifier.updateSelectedLocation(value),
-      ),
-      ElevatedButton(
-        onPressed: () {
-          // 현재 위치 가져오기 로직 추가
-          const currentLocation = '현재 위치로 설정하기';
-          signUpNotifier.updateSelectedLocation(currentLocation);
-          locationController.text = currentLocation;
-        },
-        child: const Text('현재 위치로 설정하기'),
-      ),
-    ],
+  return StatefulBuilder(
+    builder: (context, setState) {
+      locationController.addListener(() {
+        setState(() {});
+      });
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // AutoComplete 위젯
+          AutoComplete<String>(
+            suffix: DefaultIcon.button(
+              colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
+              IconPath.closeCircle,
+              onPressed: () {
+                locationController.clear();
+                signUpNotifier.updateSelectedLocation(null);
+              },
+            ),
+            textEditingController: locationController,
+            focusNode: locationFocusNode,
+            optionsBuilder: (String query) {
+              if (query.isEmpty) {
+                return locationOptions; // 전체 옵션 표시
+              }
+              return locationOptions.where((String option) {
+                return option.contains(query); // 입력값으로 필터링
+              });
+            },
+            onSubmitted: (String value) {
+              // 사용자가 submit할 때 호출
+              // signUpNotifier.updateSelectedLocation(value);
+              if (value.isEmpty) {
+                signUpNotifier.updateSelectedLocation(null);
+              }
+            },
+            hintText: '마포구, 서울특별시',
+          ),
+          if (locationController.text.isEmpty || locationController.text == "")
+            Padding(
+              padding: EdgeInsets.only(top: 8.h), // 버튼 간격 추가
+              child: DefaultOutlinedButton(
+                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
+                primary: Palette.colorGrey100,
+                textColor: Palette.colorGrey800,
+                expandedWidth: true,
+                onPressed: () {
+                  // TODO: API 연결 후 하드 코딩 없애기
+                  const currentLocation = '현재 위치';
+                  signUpNotifier
+                      .updateSelectedLocation(currentLocation); // 선택값 업데이트
+                  locationController.text = currentLocation; // 입력 필드 업데이트
+                },
+                child: const Text('현재 위치로 설정하기'),
+              ),
+            ),
+        ],
+      );
+    },
   );
 }
 

@@ -55,7 +55,7 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedJob: job);
   }
 
-  void updateSelectedLocation(String location) {
+  void updateSelectedLocation(String? location) {
     state = state.copyWith(selectedLocation: location);
   }
 

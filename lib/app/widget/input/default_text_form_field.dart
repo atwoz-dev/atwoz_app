@@ -32,7 +32,7 @@ Widget buildLabeledRow({
 }
 
 /// 커스텀 TextField
-class DefaultTextFormField extends StatefulWidget {
+class DefaultTextFormField extends TextField {
   const DefaultTextFormField({
     super.key,
     // Form
@@ -42,6 +42,7 @@ class DefaultTextFormField extends StatefulWidget {
     this.onSaved,
     this.onFieldSubmitted,
     this.onEditingEnd,
+    super.onEditingComplete,
     this.onFocusChange,
     // Text field
     this.controller,
@@ -139,7 +140,7 @@ class DefaultTextFormField extends StatefulWidget {
   final bool enableSuggestions;
   final bool? enabled;
   final int? minLines;
-  final int? maxLines;
+  final int maxLines;
   final int maxLength;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
@@ -210,6 +211,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               textCapitalization: widget.textCapitalization,
+              onEditingComplete: widget.onEditingComplete,
               textAlign: widget.textAlign,
               textAlignVertical: widget.textAlignVertical,
               textDirection: widget.textDirection,
@@ -276,6 +278,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           padding: EdgeInsets.only(left: defaultPadding), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
+      suffix: widget.suffix, // 여기에서 suffix를 명시적으로 설정
       suffixIcon: widget.suffixIcon,
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,
