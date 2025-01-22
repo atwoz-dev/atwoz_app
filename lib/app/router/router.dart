@@ -86,10 +86,6 @@ class HomeBranch {
       builder: (context, state) => const IdealTypeSettingPage(),
     ),
     GoRoute(
-      path: AppRoute.auth.path,
-      builder: (context, state) => const AuthSignInPage(),
-    ),
-    GoRoute(
       path: AppRoute.report.path,
       builder: (context, state) => const ReportPage(),
     ),
