@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_screen.dart';
+import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
@@ -33,6 +34,7 @@ enum AppRoute {
   navigation('/navigation'),
   home('/home'),
   homeNavigation('/homeNavigation'),
+  ideal('/ideal'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -67,11 +69,15 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.home.path,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: AppRoute.homeNavigation.path,
       builder: (context, state) => const HomeNavigationPage(),
+    ),
+    GoRoute(
+      path: AppRoute.ideal.path,
+      builder: (context, state) => const IdealTypeSettingPage(),
     ),
     GoRoute(
       path: AppRoute.auth.path,

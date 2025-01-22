@@ -2,16 +2,16 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 
-class AgeSettingArea extends StatefulWidget {
-  const AgeSettingArea({
+class IdealAgeSettingArea extends StatefulWidget {
+  const IdealAgeSettingArea({
     super.key,
   });
 
   @override
-  State<AgeSettingArea> createState() => _AgeSettingAreaState();
+  State<IdealAgeSettingArea> createState() => _IdealAgeSettingAreaState();
 }
 
-class _AgeSettingAreaState extends State<AgeSettingArea> {
+class _IdealAgeSettingAreaState extends State<IdealAgeSettingArea> {
   double _startAge = 25;
   double _endAge = 30;
 
