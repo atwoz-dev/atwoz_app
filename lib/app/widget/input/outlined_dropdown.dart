@@ -139,7 +139,6 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
                                   color: isSelected
                                       ? widget.selectedItemHighlightColor
                                       : null,

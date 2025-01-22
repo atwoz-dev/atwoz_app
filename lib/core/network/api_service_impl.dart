@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/auth/domain/auth_provider.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/core/config/config.dart';
 
 import 'package:dio/dio.dart';
@@ -70,7 +70,7 @@ class ApiServiceImpl implements ApiService {
 
       if (requiresAuthToken) {
         final String? token =
-            await ref.read(authServiceProvider).getAuthToken();
+            await ref.read(authUsecaseProvider).getAccessToken();
         if (token != null) {
           finalHeaders.addAll({"Authorization": token});
         }

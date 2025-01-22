@@ -1,7 +1,9 @@
 import 'dart:async';
-
-import 'package:atwoz_app/features/auth/presentation/page/auth_sign_in_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_profile_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
@@ -32,6 +34,7 @@ enum NavigationMethod { push, replace, go, pushReplacement }
 // Route enum with path
 enum AppRoute {
   navigation('/navigation'),
+  authNavigation('/auth'),
   home('/home'),
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
@@ -40,8 +43,11 @@ enum AppRoute {
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
   report('/report'),
-  signUp('/sign-up'),
-  signUpProfile('/sign-up/profile'),
+  signUp('/auth/sign-up'),
+  signUpProfile('/auth/sign-up/profile'),
+  signUpTerms('/auth/sign-up/terms'),
+  signUpProfileBirth('/auth/sign-up-profile-choice'),
+  signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
   profile('/profile'),
   introduce('/introduce'),
@@ -125,35 +131,43 @@ class OnboardBranch {
           path: AppRoute.onboardCertification.path.split('/onboard').last,
           builder: (context, state) => const OnboardingCertificationPage(),
         ),
-        GoRoute(
-          path: AppRoute.notification.path,
-          builder: (context, state) => const OnboardingCertificationPage(),
-        ),
       ],
     ),
   ];
 }
 
+// Sign branch routes
 class SignBranch {
   static final routes = [
     GoRoute(
-      path: AppRoute.signUp.path,
-      builder: (context, state) => const AuthSignInPage(), // TODO: 바꾸기
+      path: AppRoute.authNavigation.path,
+      builder: (context, state) => const AuthNavigationPage(),
       routes: [
         GoRoute(
-          path: AppRoute.signUpProfile.path.split('/sign-up').last,
-          builder: (context, state) => const AuthSignUpProfilePage(),
+          path: 'sign-up',
+          builder: (context, state) => const SignUpPage(),
+        ),
+        GoRoute(
+          path: 'sign-up-profile-choice',
+          builder: (context, state) => const SignUpProfileChoicePage(),
+        ),
+        GoRoute(
+          path: 'sign-up-profile-picture',
+          builder: (context, state) => const SignUpProfilePicturePage(),
+        ),
+        GoRoute(
+          path: 'sign-up/terms', // 경로를 명시적으로 정의
+          builder: (context, state) => const AuthSignUpTermsPage(),
         ),
       ],
     ),
   ];
 }
 
-// pop
+// Navigation helper methods
 void pop(BuildContext context, [Object? extra]) =>
     Navigator.of(context).pop(extra);
 
-// 네비게이션 헬퍼 메서드
 Future<T?> navigate<T>(
   BuildContext context, {
   required AppRoute route,
@@ -174,7 +188,6 @@ Future<T?> navigate<T>(
     case NavigationMethod.go:
       goRouter.go(route.path, extra: extra);
       break;
-
     case NavigationMethod.pushReplacement:
       result = await goRouter.pushReplacement<T>(route.path, extra: extra);
       break;
@@ -186,6 +199,7 @@ Future<T?> navigate<T>(
 
   return result;
 }
+
 
 /* < navigate() 메서드 용례 >
 
@@ -227,3 +241,4 @@ navigate(
   callback: () => print('Navigation completed!'),
 );
  */
+

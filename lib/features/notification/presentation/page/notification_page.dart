@@ -9,8 +9,8 @@ import 'package:atwoz_app/features/notification/presentation/widget/notification
 import 'package:atwoz_app/features/notification/presentation/widget/notification_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/features/notification/domain/notification_provider.dart';
-import 'package:atwoz_app/features/notification/data/notification_model.dart';
+import 'package:atwoz_app/features/notification/domain/provider/notification_provider.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 
 class NotificationPage extends ConsumerWidget with LogMixin {

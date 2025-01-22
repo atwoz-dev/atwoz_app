@@ -99,7 +99,13 @@ ThemeData createThemeData(ColorScheme colorScheme) {
           displayColor: colorScheme.onSurface);
 
   return ThemeData(
+    appBarTheme: AppBarTheme(
+      // backgroundColor: colorScheme.surface,
+      // elevation: 0,
+      scrolledUnderElevation: 0,
+    ),
     colorScheme: colorScheme,
+    scaffoldBackgroundColor: colorScheme.surface,
     useMaterial3: true, // Material 3 디자인 사용
     // TextTheme 커스터마이징
     textTheme: baseTextTheme.copyWith(

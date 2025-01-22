@@ -1,6 +1,6 @@
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
-import 'package:atwoz_app/features/notification/data/notification_model.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 

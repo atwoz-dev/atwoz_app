@@ -23,7 +23,7 @@ class Routing {
     redirect: (context, GoRouterState state) {
       final container = ProviderScope.containerOf(context);
       final isAuthenticated = container.read(authProvider);
-      final isAuthPath = state.uri.toString() == AppRoute.auth.path;
+      final isAuthPath = state.uri.toString() == AppRoute.onboard.path;
 
       // 인증 상태에 따른 경로 리다이렉트
       // if (!isAuthenticated && !isAuthPath) {

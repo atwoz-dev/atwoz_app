@@ -1,3 +1,6 @@
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/provider/common_provider.dart';
 import 'package:atwoz_app/core/mixin/theme_mixin.dart';
 import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
@@ -17,6 +20,111 @@ abstract class AppBaseConsumerStatefulPageState<
       alignment: Alignment.center,
       children: [
         buildPage(context),
+        if (state.isLoading) const DefaultCircularProgressIndicator(),
+      ],
+    );
+  }
+
+  /// 하위 클래스에서 구현해야 하는 페이지의 주요 UI 구성 메서드
+  Widget buildPage(BuildContext context);
+}
+
+/// 자식 위젯에서 Scaffold를 사용하지 않아도 되는 버전
+/// 일관성을 위해 화면 너비에 디폴트 패딩을 추가하는 버전
+abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
+    extends ConsumerState<T> with AppThemeConsumerStatefulMixin {
+  // 화면 너비 여백
+  final bool isHorizontalMargin;
+  final double? horizontalMargin;
+
+  // 앱바
+  final PreferredSizeWidget? appBar;
+  final bool isAppBar;
+  final String? defaultAppBarTitle;
+  final Key? defaultAppBarKey;
+  final List<Widget>? defaultAppBarActions;
+  final PreferredSizeWidget? defaultAppBarBottom;
+  final bool isDefaultAppBarDivider;
+  final Widget? defaultAppBarLeadingIcon;
+  final VoidCallback? defaultAppBarLeadingAction;
+
+  // 바텀 네비게이션 바
+  final Widget? bottomNavigationBar;
+  final bool isDefaultBottomNavigationBar;
+  final Key? defaultBottomNavigationBarKey;
+  final int? defaultBottomNavigationBarIndex;
+  final bool isHighlightedDefaultBottomNavigationBar;
+
+  // 기타
+  final bool isResizeToAvoidBottomInset;
+
+  BaseConsumerStatefulPageState({
+    // 화면 너비 여백
+    this.isHorizontalMargin = true,
+    this.horizontalMargin,
+
+    // 앱바
+    this.appBar,
+    this.isAppBar = true,
+    this.defaultAppBarTitle,
+    this.defaultAppBarActions,
+    this.defaultAppBarBottom,
+    this.defaultAppBarKey,
+    this.isDefaultAppBarDivider = false,
+    this.defaultAppBarLeadingIcon,
+    this.defaultAppBarLeadingAction,
+
+    // 바텀 네비게이션 바
+    this.bottomNavigationBar,
+    this.isDefaultBottomNavigationBar = false,
+    this.defaultBottomNavigationBarKey,
+    this.defaultBottomNavigationBarIndex,
+    this.isHighlightedDefaultBottomNavigationBar = true,
+
+    // 기타
+    this.isResizeToAvoidBottomInset = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(commonNotifierProvider);
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Scaffold(
+          extendBodyBehindAppBar: false, // AppBar와 Body를 명확히 분리
+          resizeToAvoidBottomInset:
+              isResizeToAvoidBottomInset, // 키보드로 인한 레이아웃 변경 허용
+          appBar: isAppBar
+              ? (appBar ??
+                  DefaultAppBar(
+                    key: defaultAppBarKey,
+                    title: defaultAppBarTitle,
+                    actions: defaultAppBarActions,
+                    bottom: defaultAppBarBottom,
+                    isDivider: isDefaultAppBarDivider,
+                    leadingIcon: defaultAppBarLeadingIcon,
+                    leadingAction: defaultAppBarLeadingAction,
+                  ))
+              : null,
+          body: Padding(
+            padding: isHorizontalMargin
+                ? EdgeInsets.symmetric(
+                    horizontal: horizontalMargin ?? context.screenWidth * 0.05,
+                  )
+                : EdgeInsets.zero,
+            child: buildPage(context),
+          ),
+          bottomNavigationBar: bottomNavigationBar ??
+              (isDefaultBottomNavigationBar
+                  ? DefaultBottomNavigationBar(
+                      key: defaultBottomNavigationBarKey,
+                      currentIndex: defaultBottomNavigationBarIndex ?? 2,
+                      isHighlighted: isHighlightedDefaultBottomNavigationBar,
+                    )
+                  : null),
+        ),
         if (state.isLoading) const DefaultCircularProgressIndicator(),
       ],
     );
