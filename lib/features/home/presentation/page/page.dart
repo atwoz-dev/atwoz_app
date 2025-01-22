@@ -1,3 +1,3 @@
 export 'home_navigation_page.dart';
 export 'home_page.dart';
-export 'home_screen.dart';
+export 'ideal_type_setting_page.dart';

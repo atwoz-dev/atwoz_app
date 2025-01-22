@@ -37,7 +37,7 @@ class HomeNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.home,
+                        route: AppRoute.ideal,
                       );
                     },
                     child: Text(
