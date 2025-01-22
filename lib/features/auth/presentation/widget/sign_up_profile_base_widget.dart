@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 
@@ -36,6 +37,10 @@ class _SignUpProfileBaseWidgetState
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
+        leadingAction: () => navigate(
+          context,
+          route: AppRoute.signUpProfileUpdate,
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(
@@ -43,8 +48,8 @@ class _SignUpProfileBaseWidgetState
               begin: (signUpState.currentStep - 1) / 10.0,
               end: signUpState.currentStep / 10.0,
             ),
-            duration: const Duration(milliseconds: 300), // 애니메이션 지속 시간
-            curve: Curves.easeInOut, // 부드러운 애니메이션을 위한 커브
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
             builder: (context, value, child) {
               return LinearProgressIndicator(
                 value: value,
@@ -63,27 +68,22 @@ class _SignUpProfileBaseWidgetState
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
           child: Column(
             children: [
-              // 진행 게이지 바 (단계에 따라 진행률 계산)
-              Gap(16.h),
-              Expanded(
-                flex: 9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
-                  children: [
-                    Gap(32.h),
-                    Text(
-                      widget.question,
-                      style: Fonts.header03(palette.onSurface).copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left, // 왼쪽 정렬 설정
-                    ),
-                    Gap(16.h),
-                    widget.body,
-                  ],
+              Gap(32.h),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.question,
+                  style: Fonts.header03(palette.onSurface).copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-
+              Gap(16.h),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: widget.body,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.05),
                 child: DefaultElevatedButton(

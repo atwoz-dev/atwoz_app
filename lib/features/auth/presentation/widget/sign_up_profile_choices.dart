@@ -1,8 +1,18 @@
+import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/icon_path.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/input/auto_complete.dart';
 import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
+import 'package:atwoz_app/app/widget/list/list_chip.dart';
+import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
@@ -37,43 +47,104 @@ Widget buildJobInput({
   required String? selectedJob,
   required SignUpProcess signUpNotifier,
 }) {
-  return Wrap(
-    spacing: 8.w,
-    runSpacing: 8.h,
-    children: ['개발자', '디자이너', '마케팅', '교육', '의료', '기타'].map((job) {
-      return ChoiceChip(
-        label: Text(job),
-        selected: selectedJob == job,
-        onSelected: (_) => signUpNotifier.updateSelectedJob(job),
-      );
-    }).toList(),
+  final jobOptions = [
+    '연구개발/엔지니어',
+    '개인사업/자영업',
+    '영업/판매',
+    '경영/기획',
+    '미래를 위한 공부중',
+    '취업 준비중',
+    '교육',
+    '예술/체육',
+    '요식업',
+    '의료/보건',
+    '기계/건설',
+    '디자인',
+    '마케팅/광고',
+    '무역/유통',
+    '방송언론/연애',
+    '법률/공공',
+    '생산/제조',
+    '서비스',
+    '여행/운송',
+    '기타'
+  ];
+
+  return SingleSelectListChip(
+    options: jobOptions,
+    selectedOption: selectedJob,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateSelectedJob(updatedSelection);
+    },
   );
 }
 
 Widget buildLocationInput({
   required String? selectedLocation,
   required SignUpProcess signUpNotifier,
+  required List<String> locationOptions,
+  required FocusNode locationFocusNode,
+  required TextEditingController locationController,
 }) {
-  final locationController = TextEditingController(text: selectedLocation);
-  return Column(
-    children: [
-      TextField(
-        controller: locationController,
-        decoration: const InputDecoration(
-          labelText: '지역 입력',
-        ),
-        onChanged: (value) => signUpNotifier.updateSelectedLocation(value),
-      ),
-      ElevatedButton(
-        onPressed: () {
-          // 현재 위치 가져오기 로직 추가
-          const currentLocation = '현재 위치로 설정하기';
-          signUpNotifier.updateSelectedLocation(currentLocation);
-          locationController.text = currentLocation;
-        },
-        child: const Text('현재 위치로 설정하기'),
-      ),
-    ],
+  return StatefulBuilder(
+    builder: (context, setState) {
+      locationController.addListener(() {
+        setState(() {});
+      });
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // AutoComplete 위젯
+          AutoComplete<String>(
+            suffix: DefaultIcon.button(
+              colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
+              IconPath.closeCircle,
+              onPressed: () {
+                locationController.clear();
+                signUpNotifier.updateSelectedLocation(null);
+              },
+            ),
+            textEditingController: locationController,
+            focusNode: locationFocusNode,
+            optionsBuilder: (String query) {
+              if (query.isEmpty) {
+                return locationOptions; // 전체 옵션 표시
+              }
+              return locationOptions.where((String option) {
+                return option.contains(query); // 입력값으로 필터링
+              });
+            },
+            onSubmitted: (String value) {
+              // 사용자가 submit할 때 호출
+              // signUpNotifier.updateSelectedLocation(value);
+              if (value.isEmpty) {
+                signUpNotifier.updateSelectedLocation(null);
+              }
+            },
+            hintText: '마포구, 서울특별시',
+          ),
+          if (locationController.text.isEmpty || locationController.text == "")
+            Padding(
+              padding: EdgeInsets.only(top: 8.h), // 버튼 간격 추가
+              child: DefaultOutlinedButton(
+                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
+                primary: Palette.colorGrey100,
+                textColor: Palette.colorGrey800,
+                expandedWidth: true,
+                onPressed: () {
+                  // TODO: API 연결 후 하드 코딩 없애기
+                  const currentLocation = '현재 위치';
+                  signUpNotifier
+                      .updateSelectedLocation(currentLocation); // 선택값 업데이트
+                  locationController.text = currentLocation; // 입력 필드 업데이트
+                },
+                child: const Text('현재 위치로 설정하기'),
+              ),
+            ),
+        ],
+      );
+    },
   );
 }
 
@@ -92,16 +163,12 @@ Widget buildEducationInput({
     '고등학교 졸업',
     '기타',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedEducation == option,
-        onSelected: (_) => signUpNotifier.updateEducation(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedEducation,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateEducation(updatedSelection);
+    },
   );
 }
 
@@ -109,56 +176,82 @@ Widget buildMbtiInput({
   required SignUpProcessState signUpState,
   required SignUpProcess signUpNotifier,
 }) {
-  Widget buildMbtiPair({
-    required List<String> options,
-    required String? selected,
-    required void Function(String selection) onSelected,
+  final mbtiOptions = [
+    ['E', 'N', 'F', 'P'],
+    ['I', 'S', 'T', 'J']
+  ];
+
+  Widget buildMbtiButton({
+    required String letter,
+    required bool isSelected,
+    required void Function() onTap,
+    required BuildContext context,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: options.map((option) {
-        return ChoiceChip(
-          label: Text(option),
-          selected: selected == option,
-          onSelected: (isSelected) {
-            if (isSelected) onSelected(option);
-          },
-        );
-      }).toList(),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? Palette.colorPrimary100 : Palette.colorGrey200,
+          ),
+          color: isSelected ? Palette.colorPrimary100 : context.palette.surface,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        width: double.infinity, // 카드의 가로 길이를 GridView에 맞춤
+        child: Text(
+          letter,
+          style: Fonts.title(
+            isSelected ? context.palette.primary : Palette.colorGrey200,
+          ).copyWith(fontWeight: FontWeight.bold, fontSize: 30.sp),
+        ),
+      ),
     );
   }
 
-  return GridView.count(
-    shrinkWrap: true,
-    crossAxisCount: 2,
-    mainAxisSpacing: 16.0,
-    crossAxisSpacing: 16.0,
-    children: [
-      buildMbtiPair(
-        options: ['E', 'I'],
-        selected: signUpState.selectedFirstMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateFirstMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['N', 'S'],
-        selected: signUpState.selectedSecondMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateSecondMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['T', 'F'],
-        selected: signUpState.selectedThirdMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateThirdMbtiLetter(selection),
-      ),
-      buildMbtiPair(
-        options: ['J', 'P'],
-        selected: signUpState.selectedFourthMbtiLetter,
-        onSelected: (selection) =>
-            signUpNotifier.updateFourthMbtiLetter(selection),
-      ),
-    ],
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    child: Column(
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, // 각 행에 4개의 카드
+            mainAxisSpacing: 8.0, // 카드 간 세로 간격
+            crossAxisSpacing: 8.0, // 카드 간 가로 간격
+            childAspectRatio: 68.0 / 76.0, // 직사각형 비율
+          ),
+          itemCount: mbtiOptions.expand((e) => e).length,
+          itemBuilder: (context, index) {
+            final row = index ~/ 4;
+            final col = index % 4;
+            final letter = mbtiOptions[row][col];
+            final isSelected = (letter == signUpState.selectedFirstMbtiLetter ||
+                letter == signUpState.selectedSecondMbtiLetter ||
+                letter == signUpState.selectedThirdMbtiLetter ||
+                letter == signUpState.selectedFourthMbtiLetter);
+
+            return buildMbtiButton(
+              context: context,
+              letter: letter,
+              isSelected: isSelected,
+              onTap: () {
+                if (['E', 'I'].contains(letter)) {
+                  signUpNotifier.updateFirstMbtiLetter(letter);
+                } else if (['N', 'S'].contains(letter)) {
+                  signUpNotifier.updateSecondMbtiLetter(letter);
+                } else if (['T', 'F'].contains(letter)) {
+                  signUpNotifier.updateThirdMbtiLetter(letter);
+                } else if (['J', 'P'].contains(letter)) {
+                  signUpNotifier.updateFourthMbtiLetter(letter);
+                }
+              },
+            );
+          },
+        ),
+      ],
+    ),
   );
 }
 
@@ -167,16 +260,12 @@ Widget buildSmokingInput({
   required SignUpProcess signUpNotifier,
 }) {
   final options = ['비흡연', '금연 중', '전자담배', '가끔 피움', '매일 피움'];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedSmoking == option,
-        onSelected: (_) => signUpNotifier.updateSmoking(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedSmoking,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateSmoking(updatedSelection);
+    },
   );
 }
 
@@ -188,19 +277,15 @@ Widget buildDrinkingInput({
     '전혀 마시지 않음',
     '사회적 음주',
     '가끔 마심',
-    '4술자리를 즐김',
+    '술자리를 즐김',
     '금주 중',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedDrinking == option,
-        onSelected: (_) => signUpNotifier.updateDrinking(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedDrinking,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateDrinking(updatedSelection);
+    },
   );
 }
 
@@ -209,16 +294,12 @@ Widget buildReligionInput({
   required SignUpProcess signUpNotifier,
 }) {
   final options = ['무교', '기독교', '천주교', '불교', '기타'];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return ChoiceChip(
-        label: Text(option),
-        selected: selectedReligion == option,
-        onSelected: (_) => signUpNotifier.updateReligion(option),
-      );
-    }).toList(),
+  return SingleSelectListChip(
+    options: options,
+    selectedOption: selectedReligion,
+    onSelectionChanged: (updatedSelection) {
+      signUpNotifier.updateReligion(updatedSelection);
+    },
   );
 }
 
@@ -257,23 +338,12 @@ Widget buildHobbiesInput({
     '캠핑',
     '기타',
   ];
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: options.map((option) {
-      return FilterChip(
-        label: Text(option),
-        selected: selectedHobbies.contains(option),
-        onSelected: (selected) {
-          final updatedHobbies = List<String>.from(selectedHobbies);
-          if (selected) {
-            updatedHobbies.add(option);
-          } else {
-            updatedHobbies.remove(option);
-          }
-          signUpNotifier.updateHobbies(updatedHobbies);
-        },
-      );
-    }).toList(),
+
+  return ListChip(
+    options: options,
+    selectedOptions: selectedHobbies,
+    onSelectionChanged: (updatedSelections) {
+      signUpNotifier.updateHobbies(updatedSelections);
+    },
   );
 }

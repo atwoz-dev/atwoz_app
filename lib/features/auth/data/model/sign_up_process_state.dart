@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/util/date_time_util.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'sign_up_process_state.freezed.dart';
 part 'sign_up_process_state.g.dart';
@@ -27,6 +28,29 @@ class SignUpProcessState with _$SignUpProcessState {
 
   const SignUpProcessState._();
 
+  get age => selectedYear != null
+      ? DateTimeUtil.calculateAge(yearOfBirth: selectedYear!)
+      : null;
+
+  get mbti => selectedFirstMbtiLetter != null &&
+          selectedSecondMbtiLetter != null &&
+          selectedThirdMbtiLetter != null &&
+          selectedFourthMbtiLetter != null
+      ? '$selectedFirstMbtiLetter$selectedSecondMbtiLetter$selectedThirdMbtiLetter$selectedFourthMbtiLetter'
+      : null;
+
+  get isSecondStepCompleted =>
+      selectedYear != null &&
+      selectedHeight != null &&
+      selectedJob != null &&
+      selectedLocation != null &&
+      selectedEducation != null &&
+      selectedFirstMbtiLetter != null &&
+      selectedSecondMbtiLetter != null &&
+      selectedThirdMbtiLetter != null &&
+      selectedFourthMbtiLetter != null &&
+      selectedSmoking != null &&
+      selectedDrinking != null;
   // 현재 단계에서 버튼 활성화 여부를 계산
   bool isButtonEnabled() {
     switch (currentStep) {
@@ -54,7 +78,7 @@ class SignUpProcessState with _$SignUpProcessState {
       case 9: // 종교 선택
         return selectedReligion != null;
       case 10: // 취미 선택
-        return selectedHobbies != null && selectedHobbies!.isNotEmpty;
+        return selectedHobbies.isNotEmpty;
       default:
         return false;
     }

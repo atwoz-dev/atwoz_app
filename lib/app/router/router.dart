@@ -4,6 +4,7 @@ import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_pag
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
@@ -46,7 +47,8 @@ enum AppRoute {
   signUp('/auth/sign-up'),
   signUpProfile('/auth/sign-up/profile'),
   signUpTerms('/auth/sign-up/terms'),
-  signUpProfileBirth('/auth/sign-up-profile-choice'),
+  signUpProfileChoice('/auth/sign-up-profile-choice'),
+  signUpProfileUpdate('/auth/sign-up/profile-update'),
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
   profile('/profile'),
@@ -154,6 +156,10 @@ class SignBranch {
         GoRoute(
           path: 'sign-up/terms', // 경로를 명시적으로 정의
           builder: (context, state) => const AuthSignUpTermsPage(),
+        ),
+        GoRoute(
+          path: 'sign-up/profile-update',
+          builder: (context, state) => const SignUpProfileUpdatePage(),
         ),
       ],
     ),

@@ -13,6 +13,7 @@ class IconPath {
   static const String help = '$iconsPath/help.svg';
   static const String add = '$iconsPath/add.svg';
   static const String close = '$iconsPath/close.svg';
+  static const String closeCircle = '$iconsPath/close_circle.svg';
   static const String post = '$iconsPath/post.svg';
   static const String notification = '$iconsPath/notification.svg';
   static const String tune = '$iconsPath/tune.svg';

@@ -32,7 +32,7 @@ Widget buildLabeledRow({
 }
 
 /// 커스텀 TextField
-class DefaultTextFormField extends StatefulWidget {
+class DefaultTextFormField extends TextField {
   const DefaultTextFormField({
     super.key,
     // Form
@@ -42,6 +42,7 @@ class DefaultTextFormField extends StatefulWidget {
     this.onSaved,
     this.onFieldSubmitted,
     this.onEditingEnd,
+    super.onEditingComplete,
     this.onFocusChange,
     // Text field
     this.controller,
@@ -139,7 +140,7 @@ class DefaultTextFormField extends StatefulWidget {
   final bool enableSuggestions;
   final bool? enabled;
   final int? minLines;
-  final int? maxLines;
+  final int maxLines;
   final int maxLength;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
@@ -179,44 +180,60 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TextFormField(
-          key: fieldKey,
-          focusNode: focusNode,
-          controller: controller,
-          obscureText: widget.obscureText,
-          onChanged: (value) {
-            onFieldChange(value);
-            if (widget.showCharacterCount) {
-              _updateCharacterCount(); // 실시간 업데이트
-            }
-          },
-          decoration: buildDecoration(context),
-          cursorColor: palette.primary,
-          showCursor: widget.showCursor,
-          style: widget.style ?? Fonts.body02Medium(palette.onSurface),
-          keyboardType: widget.keyboardType,
-          textInputAction: widget.textInputAction,
-          textCapitalization: widget.textCapitalization,
-          textAlign: widget.textAlign,
-          textAlignVertical: widget.textAlignVertical,
-          textDirection: widget.textDirection,
-          readOnly: widget.readOnly,
-          autofocus: widget.autofocus,
-          autocorrect: widget.autocorrect,
-          enableSuggestions: widget.enableSuggestions,
-          enabled: widget.enabled,
-          minLines: widget.minLines,
-          maxLength: widget.maxLength,
-          onFieldSubmitted: widget.onFieldSubmitted,
-          inputFormatters: widget.inputFormatters,
-          expands: widget.expands,
-          maxLines: widget.maxLines,
-          scrollController: widget.scrollController,
-          scrollPhysics: widget.scrollPhysics,
-          onSaved: widget.onSaved,
-          validator: widget.validator,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          enableInteractiveSelection: widget.enableInteractiveSelectionOption,
+        GestureDetector(
+          onTap:
+              widget.readOnly && widget.enabled == true ? widget.onTap : null,
+          // onTap: () {
+          //   if (widget.readOnly) {
+          //     FocusScope.of(context).unfocus();
+          //   }
+          // },
+          child: AbsorbPointer(
+            // readOnly일 때 텍스트 필드의 기본 입력 동작을 차단
+            absorbing: widget.readOnly,
+            child: TextFormField(
+              key: fieldKey,
+              focusNode: focusNode
+                ..canRequestFocus = !widget.readOnly, // 포커스 차단
+              controller: controller,
+              obscureText: widget.obscureText,
+              readOnly: widget.readOnly,
+              showCursor: !widget.readOnly, // readOnly일 때 커서 비활성화
+              onChanged: (value) {
+                onFieldChange(value);
+                if (widget.showCharacterCount) {
+                  _updateCharacterCount(); // 실시간 업데이트
+                }
+              },
+              decoration: buildDecoration(context),
+              cursorColor: palette.primary,
+              style: widget.style ?? Fonts.body02Medium(palette.onSurface),
+              keyboardType: widget.keyboardType,
+              textInputAction: widget.textInputAction,
+              textCapitalization: widget.textCapitalization,
+              onEditingComplete: widget.onEditingComplete,
+              textAlign: widget.textAlign,
+              textAlignVertical: widget.textAlignVertical,
+              textDirection: widget.textDirection,
+              autofocus: widget.autofocus,
+              autocorrect: widget.autocorrect,
+              enableSuggestions: widget.enableSuggestions,
+              enabled: widget.enabled,
+              minLines: widget.minLines,
+              maxLength: widget.maxLength,
+              onFieldSubmitted: widget.onFieldSubmitted,
+              inputFormatters: widget.inputFormatters,
+              expands: widget.expands,
+              maxLines: widget.maxLines,
+              scrollController: widget.scrollController,
+              scrollPhysics: widget.scrollPhysics,
+              onSaved: widget.onSaved,
+              validator: widget.validator,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              enableInteractiveSelection:
+                  widget.enableInteractiveSelectionOption,
+            ),
+          ),
         ),
         if (widget.showCharacterCount)
           Positioned(
@@ -253,7 +270,6 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
         width: 2.0,
       ),
     );
-
     return InputDecoration(
       enabled: widget.enabled ?? true,
       contentPadding: widget.contentPadding ?? defaultContentPadding,
@@ -262,6 +278,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           padding: EdgeInsets.only(left: defaultPadding), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
+      suffix: widget.suffix, // 여기에서 suffix를 명시적으로 설정
       suffixIcon: widget.suffixIcon,
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,
@@ -275,15 +292,20 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           widget.disabledBorder ??
           roundedBorder, // 비활성 상태 둥근 테두리
       errorBorder: widget.errorBorder ?? errorBorder, // 에러 상태 테두리
-      focusedBorder: widget.errorText == null // 에러 메시지가 없을 때만 포커스 상태 테두리
+      focusedBorder: widget.readOnly // readOnly일 때 포커스 상태 테두리 변경
           ? widget.border ??
               roundedBorder.copyWith(
-                borderSide: BorderSide(
-                  color: palette.primary,
-                  width: 2.0,
-                ),
+                borderSide: BorderSide.none, // 테두리 없음
               )
-          : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
+          : widget.errorText == null // 일반 포커스 상태 테두리
+              ? widget.border ??
+                  roundedBorder.copyWith(
+                    borderSide: BorderSide(
+                      color: palette.primary,
+                      width: 2.0,
+                    ),
+                  )
+              : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
       alignLabelWithHint: true, // 레이블과 에러 위치 일치
       hintStyle: widget.hintStyle ?? Fonts.body02Medium(Palette.colorGrey500),

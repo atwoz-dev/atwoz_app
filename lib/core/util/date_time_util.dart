@@ -44,15 +44,15 @@ class DateTimeUtil {
     if (timeShowNow != null && difference < timeShowNow) {
       return "지금";
     }
-    // Defaut
+    // Default
     if (difference < const Duration(minutes: 1)) {
       return "방금";
     } else if (difference < const Duration(hours: 1)) {
       return "${difference.inMinutes}분 전";
     } else if (difference < const Duration(days: 1)) {
-      return "{difference.inHours}시간 전";
+      return "${difference.inHours}시간 전";
     } else if (difference < const Duration(days: 30)) {
-      return "{difference.inDays}일 전";
+      return "${difference.inDays}일 전";
     } else if (difference < const Duration(days: 90)) {
       return convertToDate(dateTime);
     } else {
@@ -152,5 +152,26 @@ class DateTimeUtil {
     dateTimeString = dates.take(3).join();
 
     return DateTime.tryParse(dateTimeString);
+  }
+
+  /// 태어난 년도를 받아서 나이를 계산하는 메서드
+  /// [yearOfBirth] : 태어난 년도
+  /// [monthOfBirth] : 태어난 월
+  /// [dayOfBirth] : 태어난 일
+  static int calculateAge(
+      {required int yearOfBirth, int? monthOfBirth, int? dayOfBirth}) {
+    final now = DateTime.now();
+    int age = now.year - yearOfBirth;
+
+    // Check if birthday has passed this year
+    if ((monthOfBirth != null && now.month < monthOfBirth) ||
+        (monthOfBirth != null &&
+            now.month == monthOfBirth &&
+            dayOfBirth != null &&
+            now.day < dayOfBirth)) {
+      age--;
+    }
+
+    return age;
   }
 }
