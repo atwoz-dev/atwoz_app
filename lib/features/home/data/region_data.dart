@@ -85,7 +85,10 @@ List<Map<String, dynamic>> cityRegionMap = [
     "city": "제주특별자치도",
     "regions": ["서귀포시", "제주시"]
   },
-  {"city": "세종특별자치시", "regions": []},
+  {
+    "city": "세종특별자치시",
+    "regions": [""]
+  },
   {
     "city": "강원도",
     "regions": [
