@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/features/home/data/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -66,7 +67,7 @@ class IdealSettingArea extends StatelessWidget {
                             label: label,
                             options: ["무교", "기독교", "천주교", "불교", "기타"]);
                       } else {
-                        return Container();
+                        return HobbyIdealSettingDialog();
                       }
                     },
                   );
@@ -183,6 +184,7 @@ class _BaseIdealSettingDialogState extends State<BaseIdealSettingDialog> {
                       ),
                     ),
                     DefaultElevatedButton(
+                      padding: EdgeInsets.symmetric(vertical: 8),
                       onPressed: null,
                       onPrimary: context.palette.onPrimary,
                       primary: context.palette.primary,
@@ -199,8 +201,26 @@ class _BaseIdealSettingDialogState extends State<BaseIdealSettingDialog> {
   }
 }
 
-class RegionIdealSettingDialog extends StatelessWidget {
+class RegionIdealSettingDialog extends StatefulWidget {
   const RegionIdealSettingDialog({super.key});
+
+  @override
+  State<RegionIdealSettingDialog> createState() =>
+      _RegionIdealSettingDialogState();
+}
+
+class _RegionIdealSettingDialogState extends State<RegionIdealSettingDialog> {
+  List<String> citys = cityRegionMap.map((e) => e['city'].toString()).toList();
+  int selectedCityIndex = 0;
+  int selectedRegionIndex = 0;
+  List<String> regions = cityRegionMap[0]['regions'];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    regions = cityRegionMap[selectedCityIndex]['regions'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,6 +258,86 @@ class RegionIdealSettingDialog extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            height: context.screenHeight * 0.2,
+                            child: ListWheelScrollView(
+                                itemExtent: 44,
+                                onSelectedItemChanged: (value) {
+                                  setState(() {
+                                    selectedCityIndex = value;
+                                    regions = cityRegionMap[selectedCityIndex]
+                                        ['regions'];
+                                  });
+                                },
+                                children: citys.map((element) {
+                                  return Container(
+                                    width: context.screenWidth,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            citys[selectedCityIndex] == element
+                                                ? Palette.colorGrey50
+                                                : Colors.white,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Center(
+                                      child: Text(
+                                        element,
+                                        style: citys[selectedCityIndex] ==
+                                                element
+                                            ? Fonts.body01Regular().copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: Palette.colorBlack)
+                                            : Fonts.body01Regular().copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: Palette.colorGrey600),
+                                      ),
+                                    ),
+                                  );
+                                }).toList()),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            height: context.screenHeight * 0.2,
+                            child: ListWheelScrollView(
+                                itemExtent: 44,
+                                onSelectedItemChanged: (value) {
+                                  setState(() {
+                                    selectedRegionIndex = value;
+                                  });
+                                },
+                                children: regions.map((element) {
+                                  return Container(
+                                    width: context.screenWidth,
+                                    decoration: BoxDecoration(
+                                        color: selectedRegionIndex ==
+                                                regions.indexOf(element)
+                                            ? Palette.colorGrey50
+                                            : Colors.white,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Center(
+                                      child: Text(
+                                        element,
+                                        style: selectedRegionIndex ==
+                                                regions.indexOf(element)
+                                            ? Fonts.body01Regular().copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: Palette.colorBlack)
+                                            : Fonts.body01Regular().copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: Palette.colorGrey600),
+                                      ),
+                                    ),
+                                  );
+                                }).toList()),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
                           child: DefaultElevatedButton(
                             padding: EdgeInsets.symmetric(vertical: 8),
                             border: BorderSide(color: Palette.colorGrey200),
@@ -264,6 +364,132 @@ class RegionIdealSettingDialog extends StatelessWidget {
                           ),
                         ),
                       ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class HobbyIdealSettingDialog extends StatefulWidget {
+  const HobbyIdealSettingDialog({super.key});
+
+  @override
+  State<HobbyIdealSettingDialog> createState() =>
+      _HobbyIdealSettingDialogState();
+}
+
+class _HobbyIdealSettingDialogState extends State<HobbyIdealSettingDialog> {
+  final List<String> tags = [
+    '국내여행/해외여행',
+    '공연/전시회관람',
+    '웹툰/만화',
+    '드라마/예능보기',
+    'PC/모바일게임',
+    '애니메이션',
+    '골프',
+    '연극/영화',
+    '글쓰기',
+    '보드게임',
+    '사진촬영',
+    '노래',
+    '배드민턴/테니스',
+    '댄스',
+    '드라이브',
+    '등산/클라이밍',
+    '산책',
+    '맛집탐방',
+    '쇼핑',
+    '스키/스노우보드',
+    '악기연주',
+    '와인',
+    '운동/헬스',
+    '요가/필라테스',
+    '요리',
+    '인테리어',
+    '자전거',
+    '캠핑',
+    '기타'
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 25),
+          padding: EdgeInsets.only(top: 16, bottom: 24),
+          width: context.screenWidth,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: DefaultIcon(IconPath.close)),
+                      ],
+                    ),
+                    Text(
+                      '취미',
+                      style: Fonts.header03().copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Palette.colorBlack,
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      '3개까지 중복 선택이 가능해요',
+                      style: Fonts.body02Medium().copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Palette.colorBlack,
+                      ),
+                    ),
+                    Container(
+                      height: context.screenHeight * 0.26,
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 8.0, // 가로 간격
+                          runSpacing: 8.0, // 세로 간격
+                          children: tags.map((tag) {
+                            return Container(
+                              margin: EdgeInsets.all(4),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 9),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Color(0xffEDEEF0)),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(tag,
+                                  style:
+                                      TextStyle(color: Palette.colorGrey800)),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    DefaultElevatedButton(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      onPressed: null,
+                      onPrimary: context.palette.onPrimary,
+                      primary: context.palette.primary,
+                      child: Text("확인"),
                     )
                   ],
                 ),

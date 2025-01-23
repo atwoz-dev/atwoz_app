@@ -23,7 +23,7 @@ class _HomeProfileCardAreaState extends State<HomeProfileCardArea> {
         SizedBox(
           // 소개받은 프로필 페이지 뷰
           width: context.screenWidth,
-          height: context.screenHeight * 0.4,
+          height: context.screenHeight * 0.41,
           child: PageView.builder(
             itemCount: 3,
             onPageChanged: (value) => setState(() => _currentPage = value),
@@ -113,6 +113,7 @@ class ProfileCardWidget extends StatelessWidget {
                 "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
                 style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400, color: Palette.colorGrey600),
+                maxLines: 2,
               ),
               SizedBox(height: 24),
               GestureDetector(
@@ -130,7 +131,7 @@ class ProfileCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DefaultIcon(IconPath.home_heart, size: 24),
+                      DefaultIcon(IconPath.homeHeart, size: 24),
                       SizedBox(width: 8),
                       Text(
                         "좋아요",
