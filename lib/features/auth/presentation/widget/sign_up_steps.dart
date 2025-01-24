@@ -16,24 +16,6 @@ class SignUpProfileChoices {
 
 final locationController = TextEditingController();
 final locationFocusNode = FocusNode();
-// TODO: api 연결하면서 하드코딩 없애기
-final List<String> locationOptions = [
-  'exp1',
-  'exp2',
-  'exp3',
-  'exp4',
-  'exp5',
-  'exp6',
-  'exp7',
-  'exp8',
-  'exp9',
-  'exp10',
-  'exp11',
-  'exp12',
-  'exp13',
-  'exp14',
-  'exp15',
-];
 
 // 단계별 질문과 위젯 정의
 final List<SignUpProfileChoices> signUpSteps = [
@@ -61,7 +43,6 @@ final List<SignUpProfileChoices> signUpSteps = [
   SignUpProfileChoices(
     question: '지역이 어떻게 되세요?',
     buildWidget: (signUpNotifier, signUpState) => buildLocationInput(
-      locationOptions: locationOptions,
       selectedLocation: signUpState.selectedLocation,
       signUpNotifier: signUpNotifier,
       locationFocusNode: locationFocusNode,

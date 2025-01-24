@@ -10,9 +10,9 @@ import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
@@ -47,6 +47,7 @@ Widget buildJobInput({
   required String? selectedJob,
   required SignUpProcess signUpNotifier,
 }) {
+  // TODO: 백엔드 API 연결 후 삭제
   final jobOptions = [
     '연구개발/엔지니어',
     '개인사업/자영업',
@@ -82,15 +83,66 @@ Widget buildJobInput({
 Widget buildLocationInput({
   required String? selectedLocation,
   required SignUpProcess signUpNotifier,
-  required List<String> locationOptions,
   required FocusNode locationFocusNode,
   required TextEditingController locationController,
 }) {
+  String extractInitialConsonant(String input) {
+    const int baseCode = 0xAC00; // "가"의 유니코드
+    const List<String> initialConsonants = [
+      "ㄱ",
+      "ㄲ",
+      "ㄴ",
+      "ㄷ",
+      "ㄸ",
+      "ㄹ",
+      "ㅁ",
+      "ㅂ",
+      "ㅃ",
+      "ㅅ",
+      "ㅆ",
+      "ㅇ",
+      "ㅈ",
+      "ㅉ",
+      "ㅊ",
+      "ㅋ",
+      "ㅌ",
+      "ㅍ",
+      "ㅎ"
+    ];
+
+    final buffer = StringBuffer();
+
+    for (final char in input.runes) {
+      if (char >= baseCode && char <= 0xD7A3) {
+        final index = ((char - baseCode) / (21 * 28)).floor();
+        buffer.write(initialConsonants[index]);
+      } else {
+        buffer.write(String.fromCharCode(char)); // 한글이 아닌 경우 그대로 추가
+      }
+    }
+
+    return buffer.toString();
+  }
+
   return StatefulBuilder(
     builder: (context, setState) {
       locationController.addListener(() {
         setState(() {});
       });
+
+      // 시도와 지역 데이터 처리
+      final List<String> cityOptions =
+          cityRegionMap.map((e) => e['city'] as String).toList();
+
+      // 사용자가 city를 입력했을 때 지역까지 보여주기 위한 함수
+      List<String> getCityAndRegions(String city) {
+        final cityData = cityRegionMap.firstWhere(
+          (e) => e['city'] == city,
+          orElse: () => {'regions': []},
+        );
+        return List<String>.from(
+            cityData['regions'].map((region) => '$city $region'));
+      }
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +152,7 @@ Widget buildLocationInput({
             suffix: DefaultIcon.button(
               colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
               IconPath.closeCircle,
+              size: 20,
               onPressed: () {
                 locationController.clear();
                 signUpNotifier.updateSelectedLocation(null);
@@ -109,20 +162,36 @@ Widget buildLocationInput({
             focusNode: locationFocusNode,
             optionsBuilder: (String query) {
               if (query.isEmpty) {
-                return locationOptions; // 전체 옵션 표시
+                // 입력값이 없으면 모든 city 반환
+                return cityOptions;
               }
-              return locationOptions.where((String option) {
-                return option.contains(query); // 입력값으로 필터링
-              });
+
+              final List<String> matchingCities = [];
+              final queryInitial = extractInitialConsonant(query); // 입력값의 초성 추출
+
+              for (final city in cityOptions) {
+                final cityInitial =
+                    extractInitialConsonant(city); // city의 초성 추출
+                if (city.contains(query) ||
+                    cityInitial.startsWith(queryInitial)) {
+                  matchingCities.add(city); // 입력값 또는 초성이 매칭되면 추가
+                }
+              }
+
+              // 정확히 city가 선택되었다면 해당 city의 지역 목록 추가
+              if (matchingCities.contains(query)) {
+                final cityAndRegions = getCityAndRegions(query);
+                return cityAndRegions;
+              }
+
+              return matchingCities; // 매칭된 city만 반환
             },
             onSubmitted: (String value) {
-              // 사용자가 submit할 때 호출
-              // signUpNotifier.updateSelectedLocation(value);
-              if (value.isEmpty) {
-                signUpNotifier.updateSelectedLocation(null);
-              }
+              // 선택된 값을 업데이트
+              signUpNotifier.updateSelectedLocation(value);
+              locationController.text = value;
             },
-            hintText: '마포구, 서울특별시',
+            hintText: '예: 서울특별시, 서울특별시 강남구',
           ),
           if (locationController.text.isEmpty || locationController.text == "")
             Padding(
@@ -133,7 +202,6 @@ Widget buildLocationInput({
                 textColor: Palette.colorGrey800,
                 expandedWidth: true,
                 onPressed: () {
-                  // TODO: API 연결 후 하드 코딩 없애기
                   const currentLocation = '현재 위치';
                   signUpNotifier
                       .updateSelectedLocation(currentLocation); // 선택값 업데이트
@@ -307,6 +375,7 @@ Widget buildHobbiesInput({
   required List<String> selectedHobbies,
   required SignUpProcess signUpNotifier,
 }) {
+  // TODO: 백엔드 API 연결 후 삭제
   final options = [
     '국내여행/해외여행',
     '공연/전시회관람',

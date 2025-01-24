@@ -136,10 +136,9 @@ class _AutoCompleteState<T extends Object> extends State<AutoComplete<T>> {
                 onTap: () {
                   _controller.text = option.toString(); // 선택된 텍스트 입력 필드에 반영
                   widget.onSubmitted(option); // 선택된 옵션 전달
-                  // TODO(gb): 상태 관리로 바꾸기
-                  setState(() {
-                    _options = []; // 선택 후 옵션 리스트 초기화
-                  });
+
+                  // 강제로 옵션 업데이트
+                  _updateOptions();
                 },
               );
             },
