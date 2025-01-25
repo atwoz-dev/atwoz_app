@@ -4,7 +4,7 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/auto_complete.dart';
-import 'package:atwoz_app/app/widget/input/build_list_wheel_input.dart';
+import 'package:atwoz_app/app/widget/input/list_wheel_input.dart';
 import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -19,7 +19,8 @@ Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
 }) {
-  return buildListWheelInput(
+  return ListWheelInput(
+    key: const Key('birthInput'),
     selectedValue: selectedYear,
     minValue: 1960,
     maxValue: 2022,
@@ -33,7 +34,8 @@ Widget buildHeightInput({
   required int? selectedHeight,
   required SignUpProcess signUpNotifier,
 }) {
-  return buildListWheelInput(
+  return ListWheelInput(
+    key: const Key('heightInput'),
     selectedValue: selectedHeight,
     minValue: 130,
     maxValue: 200,
