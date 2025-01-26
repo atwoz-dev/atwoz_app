@@ -10,11 +10,46 @@ class SignUpProcess extends _$SignUpProcess {
   @override
   SignUpProcessState build() => const SignUpProcessState();
   void nextStep(BuildContext context) {
-    if (state.currentStep == 10) {
+    // 순서대로 처리할 필드 정의
+    final requiredFieldsOrder = [
+      'selectedYear',
+      'selectedHeight',
+      'selectedJob',
+      'selectedLocation',
+      'selectedEducation',
+      'mbti',
+      'selectedSmoking',
+      'selectedDrinking',
+      'selectedReligion',
+      'selectedHobbies',
+    ];
+
+    // 현재 상태에서 입력되지 않은 필드 필터링
+    final unwrittenFields = state.unwritten
+        .where((field) => requiredFieldsOrder.contains(field))
+        .toList();
+
+    if (unwrittenFields.isEmpty) {
+      // 모든 필드가 입력되었으면 완료 페이지로 이동
       navigate(context, route: AppRoute.signUpProfilePicture);
+      return;
     }
-    if (state.currentStep < 10) {
+
+    // 입력되지 않은 필드 중 가장 먼저 나오는 필드로 이동
+    for (int i = 0; i < requiredFieldsOrder.length; i++) {
+      final fieldForStep = requiredFieldsOrder[i];
+      if (unwrittenFields.contains(fieldForStep)) {
+        state = state.copyWith(currentStep: i + 1); // 단계는 1부터 시작
+        return;
+      }
+    }
+
+    // 현재 단계가 마지막 단계가 아니라면 기본적으로 다음 단계로 이동
+    if (state.currentStep < requiredFieldsOrder.length) {
       state = state.copyWith(currentStep: state.currentStep + 1);
+    } else {
+      // 마지막 단계에서 완료 페이지로 이동
+      navigate(context, route: AppRoute.signUpProfilePicture);
     }
   }
 

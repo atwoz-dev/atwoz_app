@@ -84,14 +84,17 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '나이',
                   hintText: '나이를 선택해주세요.',
-                  initialValue: '${signUpState.age}살',
+                  initialValue:
+                      signUpState.age != null ? '${signUpState.age}살' : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 1,
                 ),
                 buildDefaultTextFormFieldRow(
                   label: '키',
                   hintText: '키를 선택해주세요.',
-                  initialValue: '${signUpState.selectedHeight}cm',
+                  initialValue: signUpState.selectedHeight != null
+                      ? '${signUpState.selectedHeight}cm'
+                      : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 2,
                 ),
