@@ -33,7 +33,7 @@ class _SignUpProfileBaseWidgetState
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
-
+    print(signUpState.unwritten.length);
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
@@ -45,8 +45,8 @@ class _SignUpProfileBaseWidgetState
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
-              begin: (signUpState.currentStep - 1) / 10.0,
-              end: signUpState.currentStep / 10.0,
+              begin: (10 - signUpState.unwritten.length - 1) / 10.0,
+              end: (10 - signUpState.unwritten.length) / 10.0,
             ),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -91,7 +91,7 @@ class _SignUpProfileBaseWidgetState
                       ? () => signUpProcess.nextStep(context)
                       : null,
                   child: Text(
-                    signUpState.currentStep == 10 ? '완료' : '다음',
+                    signUpState.unwritten.isEmpty ? '완료' : '다음',
                     style: Fonts.body01Medium(
                       signUpProcess.isButtonEnabled()
                           ? palette.onPrimary
