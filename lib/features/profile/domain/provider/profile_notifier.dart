@@ -12,10 +12,14 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   set message(String message) {
     final matchedStatus = state.matchStatus;
-    assert(
-      matchedStatus is UnMatched,
-      'message cound\'t be edited after trying match',
-    );
-    state = state.copyWith(matchStatus: UnMatched(sentMessage: message));
+    if (matchedStatus case UnMatched _ || MatchingReceived _) {
+      assert(
+        false,
+        'message couldn\'t be edited after trying match',
+      );
+
+      return;
+    }
+    state = state.copyWith(message: message);
   }
 }

@@ -14,6 +14,7 @@ class ProfileMainInformation extends StatelessWidget {
     required this.mbti,
     required this.address,
     required this.hobbies,
+    required this.chatEnabled,
   });
 
   final String name;
@@ -21,6 +22,7 @@ class ProfileMainInformation extends StatelessWidget {
   final String mbti;
   final String address;
   final List<String> hobbies;
+  final bool chatEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class ProfileMainInformation extends StatelessWidget {
             children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
-          const _InteractionButtons(),
+          _InteractionButtons(chatEnabled: chatEnabled),
         ],
       ),
     );
@@ -85,7 +87,9 @@ class _MainHobbyBadge extends StatelessWidget {
 }
 
 class _InteractionButtons extends StatelessWidget {
-  const _InteractionButtons();
+  const _InteractionButtons({required this.chatEnabled});
+
+  final bool chatEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +98,8 @@ class _InteractionButtons extends StatelessWidget {
         Expanded(
           child: DefaultElevatedButton(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
+            onPressed:
+                chatEnabled ? () => MessageSendBottomSheet.open(context) : null,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -110,7 +116,6 @@ class _InteractionButtons extends StatelessWidget {
                 ),
               ],
             ),
-            onPressed: () => MessageSendBottomSheet.open(context),
           ),
         ),
         const Gap(8.0),

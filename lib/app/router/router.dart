@@ -111,7 +111,12 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.profile.path,
-      builder: (context, state) => const ProfilePage(),
+      builder: (context, state) {
+        final args = state.extra;
+        return args is bool
+            ? ProfilePage(fromMatchedProfile: args)
+            : const ProfilePage();
+      },
     ),
     GoRoute(
       path: AppRoute.notification.path,
@@ -236,7 +241,6 @@ Future<T?> navigate<T>(
   return result;
 }
 
-
 /* < navigate() 메서드 용례 >
 
 // 1. 일반적인 push 동작
@@ -277,4 +281,3 @@ navigate(
   callback: () => print('Navigation completed!'),
 );
  */
-

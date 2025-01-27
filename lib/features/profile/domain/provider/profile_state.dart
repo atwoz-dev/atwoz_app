@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,12 +9,14 @@ class ProfileState with _$ProfileState {
   const ProfileState._();
 
   const factory ProfileState({
-    required UserProfileInfo userInformation,
+    required UserProfile profile,
     required MatchStatus matchStatus,
+    required int hartPoint,
+    required String message,
   }) = _ProfileState;
 
-  factory ProfileState.initial() => const ProfileState(
-        userInformation: UserProfileInfo(
+  factory ProfileState.initial() => ProfileState(
+        profile: const UserProfile(
           name: '장원영',
           profileUri: 'https://picsum.photos/200/300',
           age: 20,
@@ -23,15 +26,30 @@ class ProfileState with _$ProfileState {
           selfIntroductionItems: _selfIntroductionList,
           subInformationItems: _profileSubInforamtionList,
         ),
-        matchStatus: UnMatched(sentMessage: ''),
+        matchStatus: MatchingRequested(
+          sentMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요'
+              '괜찮으시다면 저희 연락 한번 해봐요!',
+          requestedDateTime: DateTime.now().subtract(const Duration(days: 4)),
+        ),
+        // matchStatus: MatchingReceived(
+        //   receivedMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요'
+        //       '괜찮으시다면 저희 연락 한번 해봐요!',
+        //   receivedDateTime: DateTime.now(),
+        // ),
+        // matchStatus: UnMatched(),
+        // matchStatus: Matched(
+        //   sentMessage: 'sentMessage',
+        //   receivedMessage: 'receivedMessage',
+        //   contactMethod: ContactMethod.kakao,
+        //   contactInfo: 'contactInfo',
+        // ),
+        hartPoint: 30,
+        message: '',
       );
-
-  UnMatched? get maybeUnMatched =>
-      matchStatus is UnMatched ? matchStatus as UnMatched : null;
 }
 
-class UserProfileInfo {
-  const UserProfileInfo({
+class UserProfile {
+  const UserProfile({
     required this.name,
     required this.profileUri,
     required this.age,
@@ -50,6 +68,103 @@ class UserProfileInfo {
   final List<String> hobbies;
   final List<SelfIntroductionData> selfIntroductionItems;
   final List<SubInformationData> subInformationItems;
+}
+
+class SubInformationData {
+  const SubInformationData(this.iconData, this.information);
+
+  final IconData iconData;
+  final String information;
+}
+
+class SelfIntroductionData {
+  const SelfIntroductionData(this.about, this.introduction);
+
+  final String about;
+  final String introduction;
+}
+
+sealed class MatchStatus extends Equatable {
+  const MatchStatus();
+}
+
+class Matched extends MatchStatus {
+  const Matched({
+    required this.sentMessage,
+    required this.receivedMessage,
+    required this.contactMethod,
+    required this.contactInfo,
+  });
+
+  final String sentMessage;
+  final String receivedMessage;
+  final ContactMethod contactMethod;
+  final String contactInfo;
+
+  @override
+  List<Object> get props => [
+        sentMessage,
+        receivedMessage,
+        contactMethod,
+        contactInfo,
+      ];
+}
+
+class UnMatched extends MatchStatus {
+  const UnMatched();
+
+  @override
+  List<Object> get props => [];
+}
+
+abstract class Matching extends MatchStatus {
+  const Matching();
+
+  bool get isExpired;
+}
+
+class MatchingRequested extends Matching {
+  const MatchingRequested({
+    required this.sentMessage,
+    required this.requestedDateTime,
+  });
+
+  final String sentMessage;
+  final DateTime requestedDateTime;
+
+  @override
+  List<Object> get props => [sentMessage, requestedDateTime];
+
+  @override
+  bool get isExpired =>
+      requestedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+}
+
+class MatchingReceived extends Matching {
+  const MatchingReceived({
+    required this.receivedMessage,
+    required this.receivedDateTime,
+  });
+
+  final String receivedMessage;
+  final DateTime receivedDateTime;
+
+  @override
+  List<Object> get props => [receivedMessage, receivedDateTime];
+
+  @override
+  bool get isExpired =>
+      receivedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+}
+
+const _expiredDuration = Duration(days: 3);
+
+enum ContactMethod {
+  phone('휴대폰 번호'),
+  kakao('카카오톡 ID');
+
+  final String label;
+  const ContactMethod(this.label);
 }
 
 // TODO(Han): remove below code after checking how to get this information
@@ -88,47 +203,3 @@ const _profileSubInforamtionList = [
     '기독교',
   ),
 ];
-
-class SubInformationData {
-  const SubInformationData(this.iconData, this.information);
-
-  final IconData iconData;
-  final String information;
-}
-
-class SelfIntroductionData {
-  const SelfIntroductionData(this.about, this.introduction);
-
-  final String about;
-  final String introduction;
-}
-
-sealed class MatchStatus {
-  const MatchStatus();
-}
-
-class Matched extends MatchStatus {
-  const Matched();
-  // TODO(Han): matching 되었을 때, 볼 수 있는 정보
-}
-
-class UnMatched extends MatchStatus {
-  const UnMatched({
-    required this.sentMessage,
-  });
-
-  final String sentMessage;
-}
-
-class Matching extends UnMatched {
-  const Matching({
-    required super.sentMessage,
-    required this.receivedMessage,
-  });
-
-  final String receivedMessage;
-}
-
-class MatchRejected extends UnMatched {
-  const MatchRejected({required super.sentMessage});
-}
