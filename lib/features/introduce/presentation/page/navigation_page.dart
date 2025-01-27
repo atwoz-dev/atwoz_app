@@ -67,7 +67,7 @@ class IntroduceNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.introduce,
+                        route: AppRoute.introduceDetail,
                       );
                     },
                     child: Text(

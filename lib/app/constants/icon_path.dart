@@ -20,6 +20,8 @@ class IconPath {
   static const String homeHeart = '$iconsPath/home_heart.svg';
   static const String check = '$iconsPath/check.svg';
   static const String checkFill = '$iconsPath/check_fill.svg';
+  static const String letter = '$iconsPath/letter.svg';
+  static const String like = '$iconsPath/like.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';
