@@ -52,7 +52,7 @@ enum AppRoute {
   interview('/interview'),
   profile('/profile'),
   introduce('/introduce'),
-  introduceDetail('introduceDetail'),
+  introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification');
 
@@ -92,12 +92,12 @@ class HomeBranch {
       builder: (context, state) => const ReportPage(),
     ),
     GoRoute(
-      path: AppRoute.introduceDetail.path,
-      builder: (context, state) => const IntroduceDetailPage(),
-    ),
-    GoRoute(
       path: AppRoute.introduce.path,
       builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceDetail.path,
+      builder: (context, state) => const IntroduceDetailPage(),
     ),
     GoRoute(
       path: AppRoute.introduceNavigation.path,
