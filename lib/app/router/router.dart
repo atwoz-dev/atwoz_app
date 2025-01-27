@@ -1,21 +1,16 @@
 import 'dart:async';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_birth.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_drinking_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_education_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_height_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_hobbies_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_job_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_location_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_mbti_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_religion_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_smoking_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_screen.dart';
+import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
@@ -44,25 +39,22 @@ enum AppRoute {
   authNavigation('/auth'),
   home('/home'),
   homeNavigation('/homeNavigation'),
+  ideal('/ideal'),
+  auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
   report('/report'),
   signUp('/auth/sign-up'),
-  signUpProfileBirth('/auth/sign-up-profile-birth'),
-  signUpProfileHeight('/auth/sign-up-profile-height'),
-  signUpProfileJob('/auth/sign-up-profile-job'),
-  signUpProfileLocation('/auth/sign-up-profile-location'),
-  signUpProfileReligion('/auth/sign-up-profile-religion'),
-  signUpProfileSmoking('/auth/sign-up-profile-smoking'),
-  signUpProfileHobbies('/auth/sign-up-profile-hobbies'),
-  signUpProfileDrinking('/auth/sign-up-profile-drinking'),
-  signUpProfileEducation('/auth/sign-up-profile-education'),
-  signUpProfileMbti('/auth/sign-up-profile-mbti'),
+  signUpProfile('/auth/sign-up/profile'),
+  signUpTerms('/auth/sign-up/terms'),
+  signUpProfileChoice('/auth/sign-up-profile-choice'),
+  signUpProfileUpdate('/auth/sign-up/profile-update'),
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
   profile('/profile'),
   introduce('/introduce'),
+  introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification');
 
@@ -87,11 +79,15 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.home.path,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: AppRoute.homeNavigation.path,
       builder: (context, state) => const HomeNavigationPage(),
+    ),
+    GoRoute(
+      path: AppRoute.ideal.path,
+      builder: (context, state) => const IdealTypeSettingPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,
@@ -100,6 +96,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.introduce.path,
       builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceDetail.path,
+      builder: (context, state) => const IntroduceDetailPage(),
     ),
     GoRoute(
       path: AppRoute.introduceNavigation.path,
@@ -157,48 +157,20 @@ class SignBranch {
           builder: (context, state) => const SignUpPage(),
         ),
         GoRoute(
-          path: 'sign-up-profile-birth',
-          builder: (context, state) => const SignUpBirthPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-height',
-          builder: (context, state) => const SignUpHeightPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-job',
-          builder: (context, state) => const SignUpJobPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-location',
-          builder: (context, state) => const SignUpLocationPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-religion',
-          builder: (context, state) => const SignUpReligionPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-smoking',
-          builder: (context, state) => const SignUpSmokingPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-hobbies',
-          builder: (context, state) => const SignUpHobbiesPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-drinking',
-          builder: (context, state) => const SignUpDrinkingPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-education',
-          builder: (context, state) => const SignUpEducationPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-mbti',
-          builder: (context, state) => const SignUpMbtiPage(),
+          path: 'sign-up-profile-choice',
+          builder: (context, state) => const SignUpProfileChoicePage(),
         ),
         GoRoute(
           path: 'sign-up-profile-picture',
           builder: (context, state) => const SignUpProfilePicturePage(),
+        ),
+        GoRoute(
+          path: 'sign-up/terms', // 경로를 명시적으로 정의
+          builder: (context, state) => const AuthSignUpTermsPage(),
+        ),
+        GoRoute(
+          path: 'sign-up/profile-update',
+          builder: (context, state) => const SignUpProfileUpdatePage(),
         ),
       ],
     ),

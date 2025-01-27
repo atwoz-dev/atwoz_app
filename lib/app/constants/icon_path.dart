@@ -13,10 +13,15 @@ class IconPath {
   static const String help = '$iconsPath/help.svg';
   static const String add = '$iconsPath/add.svg';
   static const String close = '$iconsPath/close.svg';
+  static const String closeCircle = '$iconsPath/close_circle.svg';
   static const String post = '$iconsPath/post.svg';
   static const String notification = '$iconsPath/notification.svg';
   static const String tune = '$iconsPath/tune.svg';
-  static const String home_heart = '$iconsPath/home_heart.png';
+  static const String homeHeart = '$iconsPath/home_heart.svg';
+  static const String check = '$iconsPath/check.svg';
+  static const String checkFill = '$iconsPath/check_fill.svg';
+  static const String letter = '$iconsPath/letter.svg';
+  static const String like = '$iconsPath/like.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

@@ -28,17 +28,11 @@ class DefaultIcon extends ConsumerWidget {
   });
 
   final String? icon;
-
   final double? size;
-
   final BoxFit fit;
-
   final ColorFilter? colorFilter;
-
   final AlignmentGeometry alignment;
-
   final VoidCallback? onPressed;
-
   final EdgeInsetsGeometry padding;
 
   static ColorFilter fillColor(Color color) =>

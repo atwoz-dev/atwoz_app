@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
@@ -179,7 +180,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                                 photos[0] != null
                             ? () {
                                 // TODO: 다음 페이지 라우팅
-                                print('클릭');
+                                navigate(context, route: AppRoute.signUpTerms);
                               }
                             : null,
                         child: Text(
