@@ -39,6 +39,26 @@ class SignUpProcessState with _$SignUpProcessState {
       ? '$selectedFirstMbtiLetter$selectedSecondMbtiLetter$selectedThirdMbtiLetter$selectedFourthMbtiLetter'
       : null;
 
+  get unwritten {
+    final fields = {
+      'selectedYear': selectedYear,
+      'selectedHeight': selectedHeight,
+      'selectedJob': selectedJob,
+      'selectedLocation': selectedLocation,
+      'selectedEducation': selectedEducation,
+      'mbti': mbti,
+      'selectedSmoking': selectedSmoking,
+      'selectedDrinking': selectedDrinking,
+      'selectedReligion': selectedReligion,
+      'selectedHobbies': selectedHobbies.isEmpty ? null : selectedHobbies,
+    };
+
+    return fields.entries
+        .where((entry) => entry.value == null)
+        .map((entry) => entry.key)
+        .toList();
+  }
+
   get isSecondStepCompleted =>
       selectedYear != null &&
       selectedHeight != null &&

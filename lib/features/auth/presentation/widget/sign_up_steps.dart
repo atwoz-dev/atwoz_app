@@ -42,11 +42,11 @@ final List<SignUpProfileChoices> signUpSteps = [
   ),
   SignUpProfileChoices(
     question: '지역이 어떻게 되세요?',
-    buildWidget: (signUpNotifier, signUpState) => buildLocationInput(
+    buildWidget: (signUpNotifier, signUpState) => LocationInputWidget(
       selectedLocation: signUpState.selectedLocation,
-      signUpNotifier: signUpNotifier,
-      locationFocusNode: locationFocusNode,
-      locationController: locationController,
+      onLocationUpdated: (location) {
+        signUpNotifier.updateSelectedLocation(location);
+      },
     ),
   ),
   SignUpProfileChoices(

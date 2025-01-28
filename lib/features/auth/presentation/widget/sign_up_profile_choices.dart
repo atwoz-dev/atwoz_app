@@ -82,12 +82,46 @@ Widget buildJobInput({
   );
 }
 
-Widget buildLocationInput({
-  required String? selectedLocation,
-  required SignUpProcess signUpNotifier,
-  required FocusNode locationFocusNode,
-  required TextEditingController locationController,
-}) {
+class LocationInputWidget extends StatefulWidget {
+  final String? selectedLocation;
+  final Function(String?) onLocationUpdated;
+
+  const LocationInputWidget({
+    super.key,
+    required this.selectedLocation,
+    required this.onLocationUpdated,
+  });
+
+  @override
+  State<LocationInputWidget> createState() => _LocationInputWidgetState();
+}
+
+class _LocationInputWidgetState extends State<LocationInputWidget> {
+  late TextEditingController locationController;
+  late FocusNode locationFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    locationController = TextEditingController(text: widget.selectedLocation);
+    locationFocusNode = FocusNode();
+
+    // Listener 추가
+    locationController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // 리스너 제거 및 리소스 정리
+    locationController.dispose();
+    locationFocusNode.dispose();
+    super.dispose();
+  }
+
   String extractInitialConsonant(String input) {
     const int baseCode = 0xAC00; // "가"의 유니코드
     const List<String> initialConsonants = [
@@ -126,96 +160,89 @@ Widget buildLocationInput({
     return buffer.toString();
   }
 
-  return StatefulBuilder(
-    builder: (context, setState) {
-      locationController.addListener(() {
-        setState(() {});
-      });
+  List<String> getCityAndRegions(String city) {
+    final cityData = cityRegionMap.firstWhere(
+      (e) => e['city'] == city,
+      orElse: () => {'regions': []},
+    );
+    return List<String>.from(
+        cityData['regions'].map((region) => '$city $region'));
+  }
 
-      // 시도와 지역 데이터 처리
-      final List<String> cityOptions =
-          cityRegionMap.map((e) => e['city'] as String).toList();
+  @override
+  Widget build(BuildContext context) {
+    final List<String> cityOptions =
+        cityRegionMap.map((e) => e['city'] as String).toList();
 
-      // 사용자가 city를 입력했을 때 지역까지 보여주기 위한 함수
-      List<String> getCityAndRegions(String city) {
-        final cityData = cityRegionMap.firstWhere(
-          (e) => e['city'] == city,
-          orElse: () => {'regions': []},
-        );
-        return List<String>.from(
-            cityData['regions'].map((region) => '$city $region'));
-      }
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // AutoComplete 위젯
-          AutoComplete<String>(
-            suffix: DefaultIcon.button(
-              colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
-              IconPath.closeCircle,
-              size: 20,
-              onPressed: () {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AutoComplete<String>(
+          suffix: DefaultIcon.button(
+            colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
+            IconPath.closeCircle,
+            size: 20,
+            onPressed: () {
+              if (mounted) {
                 locationController.clear();
-                signUpNotifier.updateSelectedLocation(null);
-              },
-            ),
-            textEditingController: locationController,
-            focusNode: locationFocusNode,
-            optionsBuilder: (String query) {
-              if (query.isEmpty) {
-                // 입력값이 없으면 모든 city 반환
-                return cityOptions;
+                widget.onLocationUpdated(null);
               }
-
-              final List<String> matchingCities = [];
-              final queryInitial = extractInitialConsonant(query); // 입력값의 초성 추출
-
-              for (final city in cityOptions) {
-                final cityInitial =
-                    extractInitialConsonant(city); // city의 초성 추출
-                if (city.contains(query) ||
-                    cityInitial.startsWith(queryInitial)) {
-                  matchingCities.add(city); // 입력값 또는 초성이 매칭되면 추가
-                }
-              }
-
-              // 정확히 city가 선택되었다면 해당 city의 지역 목록 추가
-              if (matchingCities.contains(query)) {
-                final cityAndRegions = getCityAndRegions(query);
-                return cityAndRegions;
-              }
-
-              return matchingCities; // 매칭된 city만 반환
             },
-            onSubmitted: (String value) {
-              // 선택된 값을 업데이트
-              signUpNotifier.updateSelectedLocation(value);
-              locationController.text = value;
-            },
-            hintText: '예: 서울특별시, 서울특별시 강남구',
           ),
-          if (locationController.text.isEmpty || locationController.text == "")
-            Padding(
-              padding: EdgeInsets.only(top: 8.h), // 버튼 간격 추가
-              child: DefaultOutlinedButton(
-                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
-                primary: Palette.colorGrey100,
-                textColor: Palette.colorGrey800,
-                expandedWidth: true,
-                onPressed: () {
+          textEditingController: locationController,
+          focusNode: locationFocusNode,
+          optionsBuilder: (String query) {
+            if (query.isEmpty) {
+              return cityOptions; // 입력값이 없으면 모든 city 반환
+            }
+
+            final List<String> matchingCities = [];
+            final queryInitial = extractInitialConsonant(query);
+
+            for (final city in cityOptions) {
+              final cityInitial = extractInitialConsonant(city);
+              if (city.contains(query) ||
+                  cityInitial.startsWith(queryInitial)) {
+                matchingCities.add(city);
+              }
+            }
+
+            if (matchingCities.contains(query)) {
+              final cityAndRegions = getCityAndRegions(query);
+              return cityAndRegions;
+            }
+
+            return matchingCities;
+          },
+          onSubmitted: (String value) {
+            if (mounted) {
+              widget.onLocationUpdated(value);
+              locationController.text = value;
+            }
+          },
+          hintText: '예: 서울특별시, 서울특별시 강남구',
+        ),
+        if (locationController.text.isEmpty)
+          Padding(
+            padding: EdgeInsets.only(top: 8.h),
+            child: DefaultOutlinedButton(
+              padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
+              primary: Palette.colorGrey100,
+              textColor: Palette.colorGrey800,
+              expandedWidth: true,
+              onPressed: () {
+                if (mounted) {
                   const currentLocation = '현재 위치';
-                  signUpNotifier
-                      .updateSelectedLocation(currentLocation); // 선택값 업데이트
-                  locationController.text = currentLocation; // 입력 필드 업데이트
-                },
-                child: const Text('현재 위치로 설정하기'),
-              ),
+                  widget.onLocationUpdated(currentLocation);
+                  locationController.text = currentLocation;
+                }
+              },
+              child: const Text('현재 위치로 설정하기'),
             ),
-        ],
-      );
-    },
-  );
+          ),
+      ],
+    );
+  }
 }
 
 Widget buildEducationInput({
