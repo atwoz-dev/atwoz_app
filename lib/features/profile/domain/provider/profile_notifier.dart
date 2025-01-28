@@ -12,7 +12,7 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   set message(String message) {
     final matchedStatus = state.matchStatus;
-    if (matchedStatus case UnMatched _ || MatchingReceived _) {
+    if (matchedStatus is! UnMatched && matchedStatus is! MatchingReceived) {
       assert(
         false,
         'message couldn\'t be edited after trying match',
