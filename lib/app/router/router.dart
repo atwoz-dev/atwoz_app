@@ -13,6 +13,7 @@ import 'package:atwoz_app/features/home/presentation/page/user_by_category_page.
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/my_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
@@ -42,6 +43,7 @@ enum AppRoute {
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
   userByCategory('/userByCategory'),
+  my('/my'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -93,6 +95,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.userByCategory.path,
       builder: (context, state) => const UserByCategoryPage(),
+    ),
+    GoRoute(
+      path: AppRoute.my.path,
+      builder: (context, state) => const MyPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,
@@ -171,6 +177,11 @@ class SignBranch {
       ],
     ),
   ];
+}
+
+//My branch routes
+class MyBranch {
+  static final routes = [];
 }
 
 // Navigation helper methods
