@@ -26,22 +26,19 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
   }
 
   @override
-  Future<void> signIn(UserSignInRequest user) async {
+  Future<UserResponse> signIn(UserSignInRequest user) async {
     final userResponse = await repository.signIn(user);
-
     try {
-      if (userResponse.accessToken.isNotEmpty &&
-          userResponse.refreshToken.isNotEmpty) {
-        final localStorage = await storage;
-        await localStorage.saveEncrypted(
-            _accessToken, userResponse.accessToken);
-        await localStorage.saveEncrypted(
-            _refreshToken, userResponse.refreshToken);
-        await localStorage.saveItem<UserResponse>(_user, userResponse);
-      }
+      final localStorage = await storage;
+      await localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
+
+      await localStorage.saveItem<UserResponse>(_user, userResponse);
+
+      return userResponse;
     } catch (e) {
-      logD('Error saving user data: $e');
+      logD('유저 데이터 저장 실패: $e');
       addToastMessage('로그인 실패');
+      rethrow;
     }
   }
 

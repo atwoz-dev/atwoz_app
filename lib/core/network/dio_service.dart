@@ -18,11 +18,11 @@ class DioService extends DioForNative {
 
   final CancelToken _cancelToken;
 
-  void cancelRequests({CancelToken? cancelToken}) {
+  void cancelRequests({CancelToken? cancelToken, String reason = '요청 취소됨'}) {
     if (cancelToken == null) {
-      _cancelToken.cancel('Cancelled');
+      _cancelToken.cancel(reason);
     } else {
-      cancelToken.cancel();
+      cancelToken.cancel(reason);
     }
   }
 

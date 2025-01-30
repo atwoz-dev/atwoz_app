@@ -1,10 +1,11 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserRepository extends BaseRepository {
-  const UserRepository(Ref ref) : super(ref, '/member/auth');
+  const UserRepository(Ref ref) : super(ref, '/member');
 
   // 회원가입
   Future<void> signUp(Map<String, dynamic> data) =>
@@ -12,12 +13,14 @@ class UserRepository extends BaseRepository {
 
   // 로그인
   Future<UserResponse> signIn(UserSignInRequest data) async {
+    print('111: $path/login');
     final response = await apiService.postJson(
       '$path/login',
-      data: data.toJson(),
+      data: data.phoneNumber,
       requiresAuthToken: false,
     );
-    return UserResponse.fromJson(response);
+    final userResponse = UserResponse.fromJson(response['data']);
+    return userResponse;
   }
 
   // 로그아웃

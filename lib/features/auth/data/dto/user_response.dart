@@ -10,8 +10,9 @@ class UserResponse with _$UserResponse {
   @HiveType(typeId: 2, adapterName: 'UserResponseAdapter')
   const factory UserResponse({
     @HiveField(0) required String accessToken,
-    @HiveField(1) required String refreshToken,
-    @HiveField(2) required Member member,
+    // @HiveField(1) String? refreshToken,
+    // @HiveField(2) Member? member,
+    @HiveField(1) required bool isProfileSettingNeeded,
   }) = _UserResponse;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>

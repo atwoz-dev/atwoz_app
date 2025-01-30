@@ -96,17 +96,9 @@ class ApiServiceImpl implements ApiService {
 
       return response.data as T;
     } on DioException catch (e) {
-      String errorMessage = '';
-      if (e.response?.data?['message'] != null) {
-        errorMessage = e.response!.data['message'];
-      }
-      throw DioException(
-        message: errorMessage,
-        response: e.response,
-        requestOptions: e.requestOptions,
-      );
+      throw NetworkException.getException(e);
     } catch (error) {
-      throw NetworkException.getException(error);
+      throw NetworkException.otherException(error.runtimeType);
     }
   }
 

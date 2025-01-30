@@ -5,8 +5,9 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
@@ -55,6 +56,31 @@ class OnboardingPhoneInputPageState
     });
   }
 
+  Future<void> _handleLogin(WidgetRef ref) async {
+    final authUseCase = ref.read(authUsecaseProvider);
+    final phoneNumber = _phoneController.text;
+
+    if (phoneNumber.isEmpty || validationError != null) {
+      return;
+    }
+
+    try {
+      print("로그인 요청: $phoneNumber");
+      final userResponse =
+          await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
+
+      print("로그인 성공: ${userResponse.accessToken}");
+      print("프로필 설정 필요 여부: ${userResponse.isProfileSettingNeeded}");
+
+      navigate(
+        context,
+        route: AppRoute.onboardCertification,
+      );
+    } catch (e) {
+      print("로그인 실패: $e");
+    }
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     final bool isButtonEnabled =
@@ -101,24 +127,19 @@ class OnboardingPhoneInputPageState
           ),
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-            child: DefaultElevatedButton(
-              onPressed: isButtonEnabled
-                  ? () {
-                      // TODO: 나중에 api 연결하기
-                      print("인증번호 요청"); // 성공 시 동작
-                      navigate(
-                        context,
-                        route: AppRoute.onboardCertification,
-                      );
-                    }
-                  : null,
-              child: Text(
-                '인증번호 요청하기',
-                style: Fonts.body01Medium(isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.w900),
-              ),
+            child: Consumer(
+              builder: (context, ref, child) {
+                return DefaultElevatedButton(
+                  onPressed: isButtonEnabled ? () => _handleLogin(ref) : null,
+                  child: Text(
+                    '인증번호 요청하기',
+                    style: Fonts.body01Medium(isButtonEnabled
+                            ? palette.onPrimary
+                            : Palette.colorGrey400)
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                );
+              },
             ),
           ),
         ],
