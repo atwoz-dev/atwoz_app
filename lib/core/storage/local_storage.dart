@@ -1,38 +1,44 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-final localStorageProvider = FutureProvider<LocalStorage>((ref) async {
-  return LocalStorage.create();
+class LocalStorageNotifier extends StateNotifier<LocalStorage> {
+  LocalStorageNotifier() : super(LocalStorage._());
+
+  Future<void> initialize() async {
+    await state.initialize();
+  }
+}
+
+final localStorageProvider =
+    StateNotifierProvider<LocalStorageNotifier, LocalStorage>((ref) {
+  final notifier = LocalStorageNotifier();
+  notifier.initialize(); // 초기화 실행
+  return notifier;
 });
 
-/// 키 밸류 형태의 로컬 데이터 베이스
 class LocalStorage {
-  const LocalStorage._();
+  LocalStorage._();
 
-  static Future<LocalStorage> create() async {
-    // Hive 초기화(initialize)
+  static Box? _hiveStorage;
+  static FlutterSecureStorage? _secureStorage;
+
+  /// `Hive` 및 `FlutterSecureStorage` 초기화
+  Future<void> initialize() async {
     _hiveStorage ??= await Hive.openBox('LocalStorage');
-
-    // FlutterSecureStorage 초기화(initialize)
     _secureStorage ??= const FlutterSecureStorage();
-
-    return const LocalStorage._();
   }
 
   /* ------------------ SECURE STORAGE ----------------------- */
 
-  static FlutterSecureStorage? _secureStorage;
-
-  Future<String?> getEncrypted(String key) {
+  Future<String?> getEncrypted(String key) async {
     try {
-      return _secureStorage!.read(key: key);
+      return _secureStorage?.read(key: key);
     } on PlatformException {
-      return Future<String?>.value();
+      return null;
     }
   }
 
@@ -48,8 +54,6 @@ class LocalStorage {
   Future<void> clearEncrypted() => _secureStorage!.deleteAll();
 
   /* ------------------ HIVE STORAGE ----------------------- */
-
-  static Box? _hiveStorage;
 
   String generateSecureKey() => base64UrlEncode(Hive.generateSecureKey());
 
