@@ -1,6 +1,6 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -10,10 +10,8 @@ class ProfileSelfIntroduction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selfIntroductionItems = ref
-        .watch(profileNotifierProvider)
-        .userInformation
-        .selfIntroductionItems;
+    final selfIntroductionItems =
+        ref.watch(profileNotifierProvider).profile.selfIntroductionItems;
 
     return ColoredBox(
       color: context.palette.outline,
@@ -52,8 +50,12 @@ class _SelfIntroductionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(16.0),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: Dimens.cardRadius,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

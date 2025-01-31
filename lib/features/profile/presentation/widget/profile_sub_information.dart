@@ -13,7 +13,7 @@ class ProfileSubInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final subInformationItems =
-        ref.watch(profileNotifierProvider).userInformation.subInformationItems;
+        ref.watch(profileNotifierProvider).profile.subInformationItems;
 
     return Container(
       padding: const EdgeInsets.symmetric(

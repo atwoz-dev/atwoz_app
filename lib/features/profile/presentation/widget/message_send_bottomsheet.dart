@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -9,13 +10,23 @@ import 'package:go_router/go_router.dart';
 
 import 'common_button_group.dart';
 
-const _myUserName = '은우';
-
-class MessageSendBottomSheet extends StatelessWidget {
+class MessageSendBottomSheet extends ConsumerWidget {
   const MessageSendBottomSheet({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final messageReceived =
+        ref.watch(profileNotifierProvider).matchStatus is MatchingReceived;
+
+    final (
+      :sendMessageGuide,
+      :sendMessageSubGuide,
+      :expactResultAfterSend,
+    ) = _generateLanguageResource(
+      messageReceived: messageReceived,
+      myUserName: _myUserName,
+    );
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -29,8 +40,8 @@ class MessageSendBottomSheet extends StatelessWidget {
             ),
             type: MaterialType.canvas,
             color: context.colorScheme.surface,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
                 vertical: 32.0,
                 horizontal: 16.0,
               ),
@@ -38,13 +49,18 @@ class MessageSendBottomSheet extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _BottomSheetHeader(myUserName: _myUserName),
-                  Gap(8.0),
-                  _MessageSendGuide(),
-                  Gap(32.0),
-                  _MessageSendForm(),
-                  Gap(32.0),
-                  _MessageButtonGroup(),
+                  _BottomSheetHeader(sendMessageGuide),
+                  const Gap(8.0),
+                  _MessageSendGuide(sendMessageSubGuide),
+                  const Gap(32.0),
+                  _MessageSendForm(expactResultAfterSend),
+                  const Gap(32.0),
+                  _MessageButtonGroup(
+                    onMessageSend: () => _onSubmit(
+                      context: context,
+                      messageReceived: messageReceived,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -64,6 +80,50 @@ class MessageSendBottomSheet extends StatelessWidget {
           child: const MessageSendBottomSheet(),
         ),
       );
+
+  ({
+    String sendMessageGuide,
+    String sendMessageSubGuide,
+    String expactResultAfterSend,
+  }) _generateLanguageResource({
+    required bool messageReceived,
+    required String myUserName,
+  }) {
+    return (
+      sendMessageGuide:
+          '$myUserName님, \n${messageReceived ? '메시지로 관심에 답해주세요' : '메시지로 관심을 표현하세요'}',
+      sendMessageSubGuide: messageReceived
+          ? '등록한 연락처 상대에게 공개됩니다'
+          : '상대방도 관심을 표현했어요! 매칭 확률이 매우 높습니다.',
+      expactResultAfterSend: messageReceived
+          ? '빠른 응답은 상대에게 좋은 이미지를 줄 수 있어요!'
+          : '상대방이 수락하면 서로의 연락처가 공개됩니다.',
+    );
+  }
+
+  void _onSubmit({
+    required BuildContext context,
+    required bool messageReceived,
+  }) async {
+    if (messageReceived) {
+      _messageSendAndDetuctPoint(0);
+      context.pop();
+      return;
+    }
+    await showDialog(
+      context: context,
+      builder: (context) => _MessageSendConfirm(
+        needPoint: 20,
+        onMessageSend: _messageSendAndDetuctPoint,
+      ),
+    );
+    if (!context.mounted) return;
+    context.pop();
+  }
+
+  void _messageSendAndDetuctPoint(int point) {
+    // TDOO(Han): message 전송 로직 (usecase 로 추후 구현)
+  }
 }
 
 class _ScrollHandler extends StatelessWidget {
@@ -83,9 +143,9 @@ class _ScrollHandler extends StatelessWidget {
 }
 
 class _BottomSheetHeader extends StatelessWidget {
-  const _BottomSheetHeader({required this.myUserName});
+  const _BottomSheetHeader(this.sendMessageGuide);
 
-  final String myUserName;
+  final String sendMessageGuide;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +154,7 @@ class _BottomSheetHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            '$myUserName님,\n메시지로 관심을 표현하세요.',
+            sendMessageGuide,
             style: Fonts.header03(),
           ),
         ),
@@ -111,7 +171,9 @@ class _BottomSheetHeader extends StatelessWidget {
 }
 
 class _MessageSendGuide extends StatelessWidget {
-  const _MessageSendGuide();
+  const _MessageSendGuide(this.sendMessageSubGuide);
+
+  final String sendMessageSubGuide;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +181,7 @@ class _MessageSendGuide extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          '상대방도 관심을 표현했어요! 매칭 확률이 매우 높습니다.',
+          sendMessageSubGuide,
           style: Fonts.body02Medium(const Color(0xFF7462E8)),
         ),
         const Gap(24.0),
@@ -140,15 +202,16 @@ class _MessageExampleBox extends StatelessWidget {
         color: context.colorScheme.outline,
         borderRadius: const BorderRadius.all(Radius.circular(16.0)),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 8.0,
         children: [
-          Text('예시'),
-          Gap(8.0),
+          const Text('예시'),
           Text(
             '프로필을 보고 저와 결이 같다고 생각했어요\n'
             '조금 더 알아가고 싶습니다😄\n'
             '괜찮으시다면 아이스티 마시면서 같이 얘기나눠봐요:)',
+            style: Fonts.body02Medium(),
           ),
         ],
       ),
@@ -157,7 +220,9 @@ class _MessageExampleBox extends StatelessWidget {
 }
 
 class _MessageSendForm extends ConsumerStatefulWidget {
-  const _MessageSendForm();
+  const _MessageSendForm(this.expactResultAfterSend);
+
+  final String expactResultAfterSend;
 
   @override
   ConsumerState<_MessageSendForm> createState() => _MessageSendFormState();
@@ -168,8 +233,7 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
 
   @override
   void initState() {
-    final message =
-        ref.read(profileNotifierProvider).maybeUnMatched?.sentMessage;
+    final message = ref.read(profileNotifierProvider).message;
 
     _controller = TextEditingController(text: message)
       ..addListener(() {
@@ -191,7 +255,7 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
       children: [
         Text('메시지 입력하기', style: Fonts.header03()),
         const Gap(8.0),
-        const Text('상대방이 수락하면 서로의 연락처가 공개됩니다.'),
+        Text(widget.expactResultAfterSend),
         const Gap(24.0),
         DefaultTextFormField(
           controller: _controller,
@@ -216,16 +280,15 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
 }
 
 class _MessageButtonGroup extends StatelessWidget {
-  const _MessageButtonGroup();
+  const _MessageButtonGroup({required this.onMessageSend});
+
+  final VoidCallback onMessageSend;
 
   @override
   Widget build(BuildContext context) {
     return CommonButtonGroup(
       onCancel: context.pop,
-      onSubmit: () => showDialog(
-        context: context,
-        builder: (context) => const _MessageSendConfirm(hartPoint: 30),
-      ),
+      onSubmit: onMessageSend,
       cancelLabel: '취소',
       submitLabel: '확인',
     );
@@ -233,9 +296,13 @@ class _MessageButtonGroup extends StatelessWidget {
 }
 
 class _MessageSendConfirm extends StatelessWidget {
-  const _MessageSendConfirm({required this.hartPoint});
+  const _MessageSendConfirm({
+    required this.needPoint,
+    required this.onMessageSend,
+  });
 
-  final int hartPoint;
+  final int needPoint;
+  final ValueChanged<int> onMessageSend;
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +324,7 @@ class _MessageSendConfirm extends StatelessWidget {
             const Gap(8.0),
             Text('메시지 보내기', style: Fonts.header02()),
             const Gap(12.0),
-            Text('보유한 하트: $hartPoint'),
+            Text('보유한 하트: $needPoint'),
             const Gap(8.0),
             const Text(
               '3일 동안 상대방으로부터 응답이 없으면\n사용하신 하트를 100% 돌려드려요',
@@ -266,7 +333,10 @@ class _MessageSendConfirm extends StatelessWidget {
             const Gap(17.0),
             CommonButtonGroup.custom(
               onCancel: context.pop,
-              onSubmit: () {},
+              onSubmit: () {
+                onMessageSend(needPoint);
+                context.pop();
+              },
               cancel: const Text('취소'),
               submit: const Text('? 20'),
             ),
@@ -276,3 +346,6 @@ class _MessageSendConfirm extends StatelessWidget {
     );
   }
 }
+
+// TODO(Han): 추후 GlobalState에서 받아올 수 있는 지 확인 (dummy data)
+const _myUserName = '은우';
