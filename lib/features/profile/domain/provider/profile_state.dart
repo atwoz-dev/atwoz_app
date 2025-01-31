@@ -11,6 +11,8 @@ class ProfileState with _$ProfileState {
   const factory ProfileState({
     required UserProfile profile,
     required MatchStatus matchStatus,
+    required String myUserName,
+    required bool registeredContact,
     required int hartPoint,
     required String message,
   }) = _ProfileState;
@@ -43,6 +45,9 @@ class ProfileState with _$ProfileState {
         //   contactMethod: ContactMethod.kakao,
         //   contactInfo: 'contactInfo',
         // ),
+        // TODO(Han): 추후 Global State에서 얻어오는 방식으로 변경 (내 정보)
+        myUserName: '은우',
+        registeredContact: false,
         hartPoint: 30,
         message: '',
       );
@@ -164,6 +169,7 @@ enum ContactMethod {
   kakao('카카오톡 ID');
 
   final String label;
+
   const ContactMethod(this.label);
 }
 

@@ -10,12 +10,14 @@ class CommonButtonGroup extends StatelessWidget {
     required VoidCallback onSubmit,
     required String cancelLabel,
     required String submitLabel,
+    List<int> weights = const [1, 1],
   }) =>
       CommonButtonGroup.custom(
         onCancel: onCancel,
         onSubmit: onSubmit,
         cancel: Text(cancelLabel),
         submit: Text(submitLabel),
+        weights: weights,
       );
 
   const CommonButtonGroup.custom({
@@ -24,12 +26,14 @@ class CommonButtonGroup extends StatelessWidget {
     required this.onSubmit,
     required this.cancel,
     required this.submit,
-  });
+    this.weights = const [1, 1],
+  }) : assert(weights.length == 2, '[weights] must be provided in two.');
 
   final VoidCallback onSubmit;
   final Widget submit;
   final VoidCallback onCancel;
   final Widget cancel;
+  final List<int> weights;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class CommonButtonGroup extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: weights.first,
             child: CommonSecondaryButton(
               onCancel: onCancel,
               cancel: cancel,
@@ -45,6 +50,7 @@ class CommonButtonGroup extends StatelessWidget {
           ),
           const Gap(8.0),
           Expanded(
+            flex: weights.last,
             child: CommonPrimaryButton(
               onSubmit: onSubmit,
               submit: submit,
@@ -73,7 +79,7 @@ class CommonPrimaryButton extends StatelessWidget {
         backgroundColor: context.colorScheme.primary,
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         foregroundColor: context.colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
       ),
       onPressed: onSubmit,
       child: submit,
@@ -98,7 +104,7 @@ class CommonSecondaryButton extends StatelessWidget {
         foregroundColor: context.colorScheme.secondary,
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         side: BorderSide(color: context.colorScheme.outline),
-        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
       ),
       onPressed: onCancel,
       child: cancel,

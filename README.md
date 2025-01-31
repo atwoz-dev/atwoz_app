@@ -9,7 +9,7 @@ FrontEnd: Dart Flutter
 BackEnd: Java Spring Boot
 
 ## 주의할 점
-아직 flavor는 적용되지 않은 상태입니다.
+아직 flavor는 적용되지git  않은 상태입니다.
 따라서 flavor가 쓰인 부분은 문서화는 되어 있지만, 추후 사용 가능합니다.
 
 

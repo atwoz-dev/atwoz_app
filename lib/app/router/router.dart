@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_birth.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_drinking_page.dart';
@@ -12,6 +13,7 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_religion_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_smoking_page.dart';
+import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_screen.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
@@ -62,6 +64,7 @@ enum AppRoute {
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
   profile('/profile'),
+  contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification');
@@ -117,6 +120,10 @@ class HomeBranch {
             ? ProfilePage(fromMatchedProfile: args)
             : const ProfilePage();
       },
+    ),
+    GoRoute(
+      path: AppRoute.contactSetting.path,
+      builder: (context, state) => const ContactSettingPage(),
     ),
     GoRoute(
       path: AppRoute.notification.path,
