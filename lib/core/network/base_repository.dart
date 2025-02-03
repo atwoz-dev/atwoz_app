@@ -41,7 +41,6 @@ abstract class BaseRepository {
         contentType: contentType,
         requiresAuthToken: requiresAuthToken,
         queryParameters: queryParameters,
-        business: business,
         converter: converter,
       );
       return response;

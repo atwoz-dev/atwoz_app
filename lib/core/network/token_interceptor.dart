@@ -38,15 +38,17 @@ class TokenInterceptor extends Interceptor with LogMixin, ToastMixin {
       router.go('/'); // 홈 경로로 이동
     }
 
-    // 401 에러 발생 시 처리 로직
+    // 401 에러 발생 시 액세스 토큰 재발급 시도
     if (err.response?.statusCode == 401) {
-      final RequestOptions options = err.requestOptions;
+      final authService = ref.read(authUsecaseProvider);
+      final newToken = await authService.getAccessToken();
 
-      // 리스폰스에서 에러 코드 또는 메시지 확인
-      final dynamic responseBody = err.response?.data;
-
-      logD('401 에러 발생 responseBody: $responseBody');
-
+      if (newToken != null) {
+        // 기존 요청의 Authorization 헤더를 갱신하고 다시 요청 시도
+        err.requestOptions.headers['Authorization'] = newToken;
+        final clonedRequest = await Dio().fetch(err.requestOptions);
+        return handler.resolve(clonedRequest);
+      }
       // // 401 중에서도 토큰 만료인 경우에만 토큰 재발급 시도
       // // TODO: 토큰 만료 아닐때는 어케 함?
       // try {
