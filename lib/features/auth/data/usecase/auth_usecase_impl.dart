@@ -1,11 +1,13 @@
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/provider/base_repository_provider.dart';
 
 final authUsecaseProvider =
@@ -31,7 +33,6 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
     try {
       final localStorage = await storage;
       await localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
-
       await localStorage.saveItem<UserResponse>(_user, userResponse);
 
       return userResponse;
@@ -54,21 +55,34 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
   }
 
   @override
+  // 프로필 사진 업로드
+  Future<void> uploadProfilePhotos(List<XFile?> photos) async {
+    await repository.uploadProfilePhotos(photos);
+  }
+
+  @override
   Future<String?> getAccessToken() async {
-    final localStorage = await storage;
+    final localStorage = storage;
     return localStorage.getEncrypted(_accessToken);
   }
 
   @override
+  Future<String?> getRefreshToken() async {
+    final localStorage = storage;
+    final storedToken = await localStorage.getEncrypted(_refreshToken);
+    return storedToken;
+  }
+
+  @override
   UserResponse? get user {
-    final localStorage = ref.read(localStorageProvider).value;
-    return localStorage?.readem<UserResponse>(_user);
+    final localStorage = ref.read(localStorageProvider);
+    return localStorage.readem<UserResponse>(_user);
   }
 
   /// 로컬 스토리지 변경사항 감지
   @override
   Listenable userRefresh() {
-    final localStorage = ref.read(localStorageProvider).value;
-    return localStorage!.listenable(keys: [_user]);
+    final localStorage = ref.read(localStorageProvider);
+    return localStorage.listenable(keys: [_user]);
   }
 }

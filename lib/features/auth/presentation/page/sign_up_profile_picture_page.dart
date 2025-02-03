@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/provider/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
@@ -178,9 +179,17 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                       DefaultElevatedButton(
                         onPressed: photos.any((photo) => photo != null) &&
                                 photos[0] != null
-                            ? () {
-                                // TODO: 다음 페이지 라우팅
-                                navigate(context, route: AppRoute.signUpTerms);
+                            ? () async {
+                                final List<XFile?> photos =
+                                    ref.read(photoProvider);
+
+                                await ref
+                                    .read(authUsecaseProvider)
+                                    .uploadProfilePhotos(photos)
+                                    .then((_) => {
+                                          navigate(context,
+                                              route: AppRoute.signUpTerms)
+                                        });
                               }
                             : null,
                         child: Text(

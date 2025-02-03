@@ -1,25 +1,36 @@
+import 'dart:io';
+
 import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/util.dart';
+
+import 'package:atwoz_app/core/storage/secure_storage.dart';
+
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as img;
 
 class UserRepository extends BaseRepository {
-  const UserRepository(Ref ref) : super(ref, '/member');
+  UserRepository(Ref ref) : super(ref, '/member');
+
+  final SecureStorage _secureStorage = SecureStorage(); // 기존 SecureStorage 활용
 
   // 회원가입
   Future<void> signUp(Map<String, dynamic> data) =>
       apiService.postJson('$path/signup', data: data, requiresAuthToken: false);
 
-  // 로그인
   Future<UserResponse> signIn(UserSignInRequest data) async {
-    print('111: $path/login');
     final response = await apiService.postJson(
       '$path/login',
       data: data.phoneNumber,
       requiresAuthToken: false,
     );
+
     final userResponse = UserResponse.fromJson(response['data']);
+    print('로그인 성공: ${userResponse.accessToken}');
     return userResponse;
   }
 
@@ -30,20 +41,55 @@ class UserRepository extends BaseRepository {
         data: {},
         requiresAuthToken: false,
       );
+  Future<File> resizeImage(File file) async {
+    final bytes = await file.readAsBytes();
+    final image = img.decodeImage(bytes);
+    final resized = img.copyResize(image!, width: 800); // 너비 800px로 줄이기
 
-  // 401, 402 에러 발생 시 리프레시 토큰 가지고 액세스 토큰 재발급
-  // Future<Map<String, dynamic>> refreshToken(
-  //     String refreshToken, String accessToken) {
-  //   print('2. 리포 진입 \n액세스토큰 : $accessToken\n리프레시 토큰: $refreshToken');
+    final tempDir = await getTemporaryDirectory();
+    final resizedFile =
+        File('${tempDir.path}/resized_${file.path.split('/').last}')
+          ..writeAsBytesSync(img.encodeJpg(resized, quality: 85));
 
-  //   return apiService.postJson(
-  //     '$path/refresh',
-  //     data: {},
-  //     requiresAuthToken: false,
-  //     headers: {
-  //       'Refresh-Token': refreshToken,
-  //       "Authorization": accessToken
-  //     }, // 헤더에 리프레쉬 토큰 추가
-  //   );
-  // }
+    return resizedFile;
+  }
+
+// 프로필 사진 업로드
+  Future<void> uploadProfilePhotos(List<XFile?> photos) async {
+    final List<Map<String, dynamic>> requests = [];
+
+    for (int i = 0; i < photos.length; i++) {
+      final photo = photos[i];
+      if (photo == null) continue; // null 값 건너뛰기
+
+      final resizedFile = await resizeImage(File(photo.path));
+      final file = await MultipartFile.fromFile(resizedFile.path);
+
+      requests.add({
+        'image': file,
+        'isPrimary': i == 0, // Boolean 값 유지
+        'order': i,
+      });
+    }
+
+    final formData = FormData();
+    for (var request in requests) {
+      formData.files.add(MapEntry("requests", request['image']));
+      formData.fields
+          .add(MapEntry("isPrimary", request['isPrimary'].toString()));
+      formData.fields.add(MapEntry("order", request['order'].toString()));
+    }
+
+    try {
+      final response = await apiService.postFormData(
+        '/profileimage',
+        data: formData,
+        requiresAuthToken: true,
+      );
+
+      print("✅ 사진 업로드 성공: $response");
+    } catch (e) {
+      print("❌ 사진 업로드 중 오류 발생: $e");
+    }
+  }
 }

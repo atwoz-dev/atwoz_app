@@ -1,6 +1,6 @@
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/util/validation.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
@@ -63,21 +63,17 @@ class OnboardingPhoneInputPageState
     if (phoneNumber.isEmpty || validationError != null) {
       return;
     }
-
     try {
-      print("로그인 요청: $phoneNumber");
-      final userResponse =
-          await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
+      await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
 
-      print("로그인 성공: ${userResponse.accessToken}");
-      print("프로필 설정 필요 여부: ${userResponse.isProfileSettingNeeded}");
-
-      navigate(
-        context,
-        route: AppRoute.onboardCertification,
-      );
+      String? accessToken = await authUseCase.getAccessToken();
+      Log.d('액세스토큰: $accessToken');
+      Log.d('refresh 토큰: ${await authUseCase.getRefreshToken()}');
+      if (mounted) {
+        navigate(context, route: AppRoute.onboardCertification);
+      }
     } catch (e) {
-      print("로그인 실패: $e");
+      Log.d("로그인 실패: $e");
     }
   }
 
