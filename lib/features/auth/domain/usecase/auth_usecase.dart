@@ -12,6 +12,4 @@ abstract class AuthUseCase {
   UserResponse? get user;
   Listenable userRefresh();
   Future<void> uploadProfilePhotos(List<XFile?> photos);
-  // Future<Map<String, dynamic>?> refreshToken();
-  // DateTime? getTokenExpiration(String token);
 }

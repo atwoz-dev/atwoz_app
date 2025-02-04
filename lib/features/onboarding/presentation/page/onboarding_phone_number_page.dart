@@ -65,7 +65,6 @@ class OnboardingPhoneInputPageState
     }
     try {
       await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
-
       String? accessToken = await authUseCase.getAccessToken();
       Log.d('액세스토큰: $accessToken');
       Log.d('refresh 토큰: ${await authUseCase.getRefreshToken()}');

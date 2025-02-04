@@ -1,9 +1,6 @@
-import 'dart:io';
-
-import 'package:atwoz_app/core/provider/base_repository_provider.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
 import 'package:dio/dio.dart';
@@ -67,7 +64,8 @@ class ApiServiceImpl implements ApiService {
   }) async {
     try {
       final Map<String, dynamic> finalHeaders = {
-        'Accept': 'application/json',
+        "Content-Type": "application/json",
+        "Accept": "*/*",
         ...?headers,
       };
 
