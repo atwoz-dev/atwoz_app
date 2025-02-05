@@ -51,11 +51,11 @@ class HomeNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.home,
+                        route: AppRoute.userByCategory,
                       );
                     },
                     child: Text(
-                      '소개바고 싶은 이성',
+                      '소개받고 싶은 이성',
                       style: Fonts.body01Regular(context.palette.onPrimary),
                     ),
                   ),

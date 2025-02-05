@@ -68,18 +68,22 @@ class NetworkException with _$NetworkException implements Exception {
         /// 상태 코드 및 메시지 처리
         case DioExceptionType.badResponse:
           String? message;
+          final statusCode = error.response?.statusCode;
 
           try {
             final json = error.response?.data as Map;
-
             message ??= json['Message'] as String?;
             message ??= json['message'] as String?;
           } catch (_) {}
 
           message ??= error.message;
 
+          if (statusCode == 401) {
+            return const NetworkException.unauthorizedException();
+          }
+
           return NetworkException.apiException(
-              statusCode: error.response?.statusCode, message: message);
+              statusCode: statusCode, message: message);
 
         case DioExceptionType.badCertificate:
         case DioExceptionType.cancel:

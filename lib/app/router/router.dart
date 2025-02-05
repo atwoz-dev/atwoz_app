@@ -1,14 +1,16 @@
 import 'dart:async';
+
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
-import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/user_by_category_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
@@ -41,6 +43,7 @@ enum AppRoute {
   home('/home'),
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
+  userByCategory('/userByCategory'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -90,6 +93,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.ideal.path,
       builder: (context, state) => const IdealTypeSettingPage(),
+    ),
+    GoRoute(
+      path: AppRoute.userByCategory.path,
+      builder: (context, state) => const UserByCategoryPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,

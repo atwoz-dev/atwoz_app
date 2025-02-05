@@ -5,7 +5,7 @@ import '../common/model.dart';
 // TODO(Han): 추후 repository 를 받고 DI 로 주입 하도록 수정
 class ProfileFetchUseCase {
   static Future<UserProfile?> call() async {
-    await Future.delayed(const Duration(milliseconds: 5000));
+    await Future.delayed(const Duration(milliseconds: 2000));
     return UserProfile(
       name: '장원영',
       profileUri: 'https://picsum.photos/200/300',
