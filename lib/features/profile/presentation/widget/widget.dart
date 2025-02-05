@@ -8,3 +8,4 @@ export 'matched_profile.dart';
 export 'message_send_bottomsheet.dart';
 export 'un_matched_profile.dart';
 export 'announcement_bottomsheet.dart';
+export 'skeleton_profile.dart';

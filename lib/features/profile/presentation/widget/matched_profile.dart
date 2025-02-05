@@ -2,10 +2,12 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
+
 import 'widget.dart';
 
 class MatchedProfile extends ConsumerWidget {
@@ -13,8 +15,10 @@ class MatchedProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(profileNotifierProvider);
-    final matchStatus = state.matchStatus;
+    final profile = ref.watch(profileNotifierProvider).profile;
+    if(profile == null) return Container();
+
+    final matchStatus = profile.matchStatus;
 
     return Scaffold(
       appBar: const ProfileAppbar.matched(),
@@ -27,10 +31,10 @@ class MatchedProfile extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 16.0,
           children: [
-            _GuideMessage(otherUserName: state.profile.name),
+            _GuideMessage(otherUserName: profile.name),
             SizedBox(
               height: 420.0,
-              child: ProfileMainImage(profileUri: state.profile.profileUri),
+              child: ProfileMainImage(profileUri: profile.profileUri),
             ),
             const _ProfilePageMoveButton(),
             if (matchStatus is Matched)

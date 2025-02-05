@@ -5,6 +5,7 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
+import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
@@ -53,6 +54,7 @@ enum AppRoute {
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
   profile('/profile'),
+  contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
   introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
@@ -119,6 +121,10 @@ class HomeBranch {
       },
     ),
     GoRoute(
+      path: AppRoute.contactSetting.path,
+      builder: (context, state) => const ContactSettingPage(),
+    ),
+    GoRoute(
       path: AppRoute.notification.path,
       builder: (context, state) => const NotificationPage(),
     ),
@@ -182,12 +188,12 @@ void pop(BuildContext context, [Object? extra]) =>
     Navigator.of(context).pop(extra);
 
 Future<T?> navigate<T>(
-  BuildContext context, {
-  required AppRoute route,
-  NavigationMethod method = NavigationMethod.push,
-  Object? extra,
-  VoidCallback? callback,
-}) async {
+    BuildContext context, {
+      required AppRoute route,
+      NavigationMethod method = NavigationMethod.push,
+      Object? extra,
+      VoidCallback? callback,
+    }) async {
   final goRouter = GoRouter.of(context);
   T? result;
 

@@ -38,6 +38,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userInfo = ref.watch(profileNotifierProvider).profile;
+    if(userInfo == null) return Container();
 
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 480.0),
@@ -58,6 +59,10 @@ class _ProfileHeadInformation extends ConsumerWidget {
               address: userInfo.address,
               hobbies: userInfo.hobbies,
               chatEnabled: chatEnabled,
+              favoriteUser: userInfo.favoriteUser,
+              onFavoriteChanged: (favorite) => ref
+                  .read(profileNotifierProvider.notifier)
+                  .favorite = favorite,
             ),
           ),
         ],

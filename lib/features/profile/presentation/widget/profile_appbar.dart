@@ -22,10 +22,7 @@ class ProfileAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {},
-          icon: Icon(
-            Icons.info_outline,
-            size: 24.0,
-          ),
+          icon: const Icon(Icons.info_outline, size: 24.0),
         ),
       ],
     );

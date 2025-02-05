@@ -11,7 +11,7 @@ class ProfileSelfIntroduction extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selfIntroductionItems =
-        ref.watch(profileNotifierProvider).profile.selfIntroductionItems;
+        ref.watch(profileNotifierProvider).profile?.selfIntroductionItems ?? [];
 
     return ColoredBox(
       color: context.palette.outline,

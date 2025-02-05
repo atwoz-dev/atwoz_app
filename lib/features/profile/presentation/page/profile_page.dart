@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/common/model.dart';
 import '../widget/widget.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
@@ -20,34 +21,32 @@ class ProfilePage extends ConsumerStatefulWidget {
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
-  void initState() {
-    final initStatus = ref.read(profileNotifierProvider).matchStatus;
-    _handleStatusChanged(initStatus);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ref.listen(profileNotifierProvider, _listener);
-    final matchStatus = ref.watch(profileNotifierProvider).matchStatus;
+    final state = ref.watch(profileNotifierProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: widget.fromMatchedProfile
-          ? const UnMatchedProfile(chatEnabled: false)
-          : switch (matchStatus) {
-              final UnMatched _ || final Matching _ => const UnMatchedProfile(),
-              final Matched _ => const MatchedProfile(),
-            },
+      body: state.isLoaded
+          ? widget.fromMatchedProfile
+              ? const UnMatchedProfile(chatEnabled: false)
+              : switch (state.matchStatus) {
+                  final UnMatched _ ||
+                  final Matching _ =>
+                    const UnMatchedProfile(),
+                  final Matched _ => const MatchedProfile(),
+                  null => Container(),
+                }
+          : const SkeletonProfile(),
     );
   }
 
   void _listener(ProfileState? prev, ProfileState curr) {
-    if (prev?.matchStatus == curr.matchStatus) {
+    if (prev?.matchStatus == curr.matchStatus || curr.matchStatus == null) {
       return;
     }
 
-    _handleStatusChanged(curr.matchStatus);
+    _handleStatusChanged(curr.matchStatus!);
   }
 
   void _handleStatusChanged(MatchStatus status) async {
