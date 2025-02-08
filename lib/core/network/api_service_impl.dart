@@ -115,8 +115,6 @@ class ApiServiceImpl implements ApiService {
                 uri, [Cookie("_refreshToken", refreshToken)]);
             print("✅ Refresh Token 쿠키 저장소에 저장 완료");
 
-            // ✅ 로컬 스토리지에도 저장
-
             // ✅ `await`을 사용하여 `initialize()` 실행 후 저장
             await ref.read(localStorageProvider.notifier).initialize();
             await ref

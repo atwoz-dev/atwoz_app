@@ -111,11 +111,6 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              // onPressed: signUpProcess.isButtonEnabled()
-              //     ? () {
-              //         signUpProcess.nextStep(context);
-              //       }
-              //     : null,
               onPressed: isButtonEnabled
                   ? () {
                       // TODO: 나중에 API 연결하기

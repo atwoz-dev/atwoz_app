@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
@@ -31,7 +32,7 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
   Future<UserResponse> signIn(UserSignInRequest user) async {
     final userResponse = await repository.signIn(user);
     try {
-      final localStorage = await storage;
+      final localStorage = storage;
       await localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
       await localStorage.saveItem<UserResponse>(_user, userResponse);
 
@@ -45,7 +46,7 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
 
   @override
   Future<void> signOut() async {
-    final localStorage = await storage;
+    final localStorage = storage;
     final refreshToken = await localStorage.getEncrypted(_refreshToken);
     if (refreshToken != null) {
       await repository.signOut(refreshToken);
@@ -84,5 +85,17 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
   Listenable userRefresh() {
     final localStorage = ref.read(localStorageProvider);
     return localStorage.listenable(keys: [_user]);
+  }
+
+  // 프로필(회원 정보) 업로드
+  @override
+  Future<void> uploadProfile(ProfileUploadRequest profileData) async {
+    try {
+      await repository.updateProfile(profileData);
+      print("✅ 프로필 업로드 성공");
+    } catch (e) {
+      print("❌ 프로필 업로드 실패: $e");
+      rethrow;
+    }
   }
 }

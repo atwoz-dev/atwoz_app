@@ -1,5 +1,8 @@
+import 'package:atwoz_app/app/constants/temp.dart';
 import 'package:atwoz_app/core/util/date_time_util.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'sign_up_process_state.freezed.dart';
 part 'sign_up_process_state.g.dart';
 
@@ -102,6 +105,27 @@ class SignUpProcessState with _$SignUpProcessState {
       default:
         return false;
     }
+  }
+
+  // ProfileUploadRequest로 변환할 때 인덱스로 변환
+  ProfileUploadRequest toProfileUploadRequest() {
+    return ProfileUploadRequest(
+      nickname: nickname ?? "",
+      selectedGender: selectedGender ?? "",
+      age: selectedYear ?? 0,
+      selectedHeight: selectedHeight ?? 0,
+      jobId: jobOptions.indexOf(selectedJob!) + 1, // TODO: 상수값 삭제 후 수정
+      region: selectedLocation ?? "",
+      selectedEducation: selectedEducation ?? "",
+      mbti: mbti ?? "",
+      selectedSmoking: selectedSmoking ?? "",
+      selectedDrinking: selectedDrinking ?? "",
+      selectedReligion: selectedReligion ?? "",
+      selectedHobbies: selectedHobbies
+          .map((hobby) => hobbies.indexOf(hobby) + 1) // TODO: 상수값 삭제 후 수정
+          .where((index) => index != -1) // 유효한 값만 필터링
+          .toList(),
+    );
   }
 
   // JSON 변환 메서드 추가

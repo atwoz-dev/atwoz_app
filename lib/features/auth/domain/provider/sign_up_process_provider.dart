@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -9,7 +10,7 @@ part 'sign_up_process_provider.g.dart';
 class SignUpProcess extends _$SignUpProcess {
   @override
   SignUpProcessState build() => const SignUpProcessState();
-  void nextStep(BuildContext context) {
+  Future<void> nextStep(BuildContext context) async {
     // 순서대로 처리할 필드 정의
     final requiredFieldsOrder = [
       'selectedYear',
@@ -31,6 +32,8 @@ class SignUpProcess extends _$SignUpProcess {
 
     if (unwrittenFields.isEmpty) {
       // 모든 필드가 입력되었으면 완료 페이지로 이동
+      await _uploadProfile();
+      if (!context.mounted) return;
       navigate(context, route: AppRoute.signUpProfilePicture);
       return;
     }
@@ -48,8 +51,22 @@ class SignUpProcess extends _$SignUpProcess {
     if (state.currentStep < requiredFieldsOrder.length) {
       state = state.copyWith(currentStep: state.currentStep + 1);
     } else {
+      await _uploadProfile(); // 회원 정보 업로드
+      if (!context.mounted) return;
       // 마지막 단계에서 완료 페이지로 이동
       navigate(context, route: AppRoute.signUpProfilePicture);
+    }
+  }
+
+  Future<void> _uploadProfile() async {
+    final authUseCase = ref.read(authUsecaseProvider);
+
+    try {
+      final profileData = state.toProfileUploadRequest(); // DTO 변환
+      await authUseCase.uploadProfile(profileData);
+      print("✅ 프로필 업로드 성공");
+    } catch (e) {
+      print("❌ 프로필 업로드 실패: $e");
     }
   }
 

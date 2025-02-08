@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_photo_upload_request.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +23,11 @@ class UserRepository extends BaseRepository {
       requiresAuthToken: false,
     );
 
+    final String? accessToken =
+        await ref.read(authUsecaseProvider).getAccessToken();
+
+    print('엑세스: $accessToken');
+
     final userResponse = UserResponse.fromJson(response['data']);
     return userResponse;
   }
@@ -32,23 +39,8 @@ class UserRepository extends BaseRepository {
         data: {},
         requiresAuthToken: false,
       );
-  // Future<File> resizeImage(File file) async {
-  //   final fileSize = await file.length();
-  //   print("📂 파일 크기: ${fileSize / (1024 * 1024)} MB");
-  //   final bytes = await file.readAsBytes();
-  //   final image = img.decodeImage(bytes);
-  //   final resized = img.copyResize(image!, width: 800); // 너비 800px로 줄이기
 
-  //   final tempDir = await getTemporaryDirectory();
-  //   final resizedFile =
-  //       File('${tempDir.path}/resized_${file.path.split('/').last}')
-  //         ..writeAsBytesSync(img.encodeJpg(resized, quality: 85));
-  //   final resizedFileSize = await resizedFile.length();
-  //   print("📂 리사이즈된 파일 크기: ${resizedFileSize / (1024 * 1024)} MB");
-  //   return resizedFile;
-  // }
-
-// 프로필 사진 업로드
+  // 프로필 사진 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
     final formData = FormData();
     final List<Map<String, dynamic>> requestList = [];
@@ -57,8 +49,6 @@ class UserRepository extends BaseRepository {
       final photo = photos[i];
 
       if (photo == null) continue;
-      // final resizedFile = await resizeImage(File(photo.path));
-      // final file = await MultipartFile.fromFile(resizedFile.path);
       final file = await MultipartFile.fromFile(photo.path);
       formData.files.add(MapEntry("files", file));
 
@@ -89,6 +79,23 @@ class UserRepository extends BaseRepository {
       print("✅ 사진 업로드 성공: $response");
     } catch (e) {
       print("❌ 사진 업로드 중 오류 발생: $e");
+    }
+  }
+
+  // 프로필 업데이트
+  Future<UserResponse> updateProfile(ProfileUploadRequest requestData) async {
+    try {
+      final response = await apiService.putJson(
+        '$path/profile',
+        data: requestData.toJson(),
+        requiresAuthToken: true,
+      );
+
+      final userResponse = UserResponse.fromJson(response['data']);
+      return userResponse;
+    } catch (e) {
+      print("❌ 프로필 업데이트 실패: $e");
+      rethrow;
     }
   }
 }

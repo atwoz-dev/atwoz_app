@@ -33,7 +33,7 @@ class _SignUpProfileBaseWidgetState
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
-    print(signUpState.unwritten.length);
+
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
@@ -87,17 +87,23 @@ class _SignUpProfileBaseWidgetState
               Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.05),
                 child: DefaultElevatedButton(
-                  onPressed: signUpProcess.isButtonEnabled()
-                      ? () => signUpProcess.nextStep(context)
-                      : null,
-                  child: Text(
-                    signUpState.unwritten.isEmpty ? '완료' : '다음',
-                    style: Fonts.body01Medium(
-                      signUpProcess.isButtonEnabled()
-                          ? palette.onPrimary
-                          : Palette.colorGrey400,
-                    ).copyWith(fontWeight: FontWeight.bold),
-                  ),
+                  onPressed:
+                      signUpProcess.isButtonEnabled() && !signUpState.isLoading
+                          ? () async {
+                              await signUpProcess.nextStep(context);
+                            }
+                          : null,
+                  child: signUpState.isLoading
+                      ? const CircularProgressIndicator(
+                          color: Palette.colorPrimary500)
+                      : Text(
+                          signUpState.unwritten.isEmpty ? '완료' : '다음',
+                          style: Fonts.body01Medium(
+                            signUpProcess.isButtonEnabled()
+                                ? palette.onPrimary
+                                : Palette.colorGrey400,
+                          ).copyWith(fontWeight: FontWeight.bold),
+                        ),
                 ),
               ),
             ],
