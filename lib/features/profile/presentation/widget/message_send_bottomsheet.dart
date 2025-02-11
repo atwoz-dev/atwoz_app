@@ -1,13 +1,17 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/contact_registration_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/common/model.dart';
 import 'common_button_group.dart';
 
 class MessageSendBottomSheet extends ConsumerWidget {
@@ -15,16 +19,16 @@ class MessageSendBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final messageReceived =
-        ref.watch(profileNotifierProvider).matchStatus is MatchingReceived;
+    final status = ref.watch(profileNotifierProvider);
+    final messageReceived = status.matchStatus is MatchingReceived;
 
     final (
       :sendMessageGuide,
       :sendMessageSubGuide,
-      :expactResultAfterSend,
+      :expectedResultAfterSend,
     ) = _generateLanguageResource(
       messageReceived: messageReceived,
-      myUserName: _myUserName,
+      myUserName: status.myUserName,
     );
 
     return SingleChildScrollView(
@@ -53,12 +57,13 @@ class MessageSendBottomSheet extends ConsumerWidget {
                   const Gap(8.0),
                   _MessageSendGuide(sendMessageSubGuide),
                   const Gap(32.0),
-                  _MessageSendForm(expactResultAfterSend),
+                  _MessageSendForm(expectedResultAfterSend),
                   const Gap(32.0),
                   _MessageButtonGroup(
                     onMessageSend: () => _onSubmit(
                       context: context,
                       messageReceived: messageReceived,
+                      registeredContact: status.registeredContact,
                     ),
                   ),
                 ],
@@ -84,7 +89,7 @@ class MessageSendBottomSheet extends ConsumerWidget {
   ({
     String sendMessageGuide,
     String sendMessageSubGuide,
-    String expactResultAfterSend,
+    String expectedResultAfterSend,
   }) _generateLanguageResource({
     required bool messageReceived,
     required String myUserName,
@@ -95,7 +100,7 @@ class MessageSendBottomSheet extends ConsumerWidget {
       sendMessageSubGuide: messageReceived
           ? '등록한 연락처 상대에게 공개됩니다'
           : '상대방도 관심을 표현했어요! 매칭 확률이 매우 높습니다.',
-      expactResultAfterSend: messageReceived
+      expectedResultAfterSend: messageReceived
           ? '빠른 응답은 상대에게 좋은 이미지를 줄 수 있어요!'
           : '상대방이 수락하면 서로의 연락처가 공개됩니다.',
     );
@@ -104,6 +109,7 @@ class MessageSendBottomSheet extends ConsumerWidget {
   void _onSubmit({
     required BuildContext context,
     required bool messageReceived,
+    required bool registeredContact,
   }) async {
     if (messageReceived) {
       _messageSendAndDetuctPoint(0);
@@ -115,6 +121,7 @@ class MessageSendBottomSheet extends ConsumerWidget {
       builder: (context) => _MessageSendConfirm(
         needPoint: 20,
         onMessageSend: _messageSendAndDetuctPoint,
+        hasContactMethod: registeredContact,
       ),
     );
     if (!context.mounted) return;
@@ -220,9 +227,9 @@ class _MessageExampleBox extends StatelessWidget {
 }
 
 class _MessageSendForm extends ConsumerStatefulWidget {
-  const _MessageSendForm(this.expactResultAfterSend);
+  const _MessageSendForm(this.expectedResultAfterSend);
 
-  final String expactResultAfterSend;
+  final String expectedResultAfterSend;
 
   @override
   ConsumerState<_MessageSendForm> createState() => _MessageSendFormState();
@@ -255,7 +262,7 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
       children: [
         Text('메시지 입력하기', style: Fonts.header03()),
         const Gap(8.0),
-        Text(widget.expactResultAfterSend),
+        Text(widget.expectedResultAfterSend),
         const Gap(24.0),
         DefaultTextFormField(
           controller: _controller,
@@ -299,10 +306,12 @@ class _MessageSendConfirm extends StatelessWidget {
   const _MessageSendConfirm({
     required this.needPoint,
     required this.onMessageSend,
+    required this.hasContactMethod,
   });
 
   final int needPoint;
   final ValueChanged<int> onMessageSend;
+  final bool hasContactMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -333,19 +342,43 @@ class _MessageSendConfirm extends StatelessWidget {
             const Gap(17.0),
             CommonButtonGroup.custom(
               onCancel: context.pop,
-              onSubmit: () {
+              onSubmit: () async {
+                final validContact =
+                    await _checkContactMethodAndRegisterIfInvalid(context);
+
+                if (!validContact || !context.mounted) {
+                  return;
+                }
                 onMessageSend(needPoint);
                 context.pop();
               },
               cancel: const Text('취소'),
-              submit: const Text('? 20'),
+              submit:  Text.rich(
+                TextSpan(
+                  children: [
+                    const WidgetSpan(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 4.0),
+                        child: DefaultIcon(
+                          IconPath.heartLine,
+                          size: 16.0,
+                        ),
+                      ),
+                    ),
+                    TextSpan(text: needPoint.toString()),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-// TODO(Han): 추후 GlobalState에서 받아올 수 있는 지 확인 (dummy data)
-const _myUserName = '은우';
+  Future<bool> _checkContactMethodAndRegisterIfInvalid(
+      BuildContext context) async {
+    return hasContactMethod ||
+        (await ContactRegistrationDialog.open(context) ?? false);
+  }
+}

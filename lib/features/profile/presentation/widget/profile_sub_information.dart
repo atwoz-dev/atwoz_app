@@ -1,5 +1,5 @@
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+import '../../domain/common/model.dart';
+
 class ProfileSubInformation extends ConsumerWidget {
   const ProfileSubInformation({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final subInformationItems =
-        ref.watch(profileNotifierProvider).profile.subInformationItems;
+        ref.watch(profileNotifierProvider).profile?.subInformationItems ?? [];
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -69,7 +71,7 @@ class _SubInformationContainer extends StatelessWidget {
       children: subInformationItems
           .map(
             (subInfo) => _SubInformationItem(
-              iconData: subInfo.iconData,
+              iconPath: subInfo.iconPath,
               information: subInfo.information,
             ),
           )
@@ -80,21 +82,24 @@ class _SubInformationContainer extends StatelessWidget {
 
 class _SubInformationItem extends StatelessWidget {
   const _SubInformationItem({
-    required this.iconData,
+    required this.iconPath,
     required this.information,
   });
 
-  final IconData iconData;
+  final String iconPath;
   final String information;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          iconData,
+        DefaultIcon(
+          iconPath,
           size: 16.0,
-          color: context.palette.secondary,
+          colorFilter: DefaultIcon.fillColor(
+            context.palette.secondary,
+          ),
         ),
         const Gap(10.0),
         Text(

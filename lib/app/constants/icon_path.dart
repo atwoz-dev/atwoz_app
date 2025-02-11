@@ -22,6 +22,13 @@ class IconPath {
   static const String checkFill = '$iconsPath/check_fill.svg';
   static const String letter = '$iconsPath/letter.svg';
   static const String like = '$iconsPath/like.svg';
+  static const String heartLine = '$iconsPath/heart_line.svg';
+  static const String bless = '$iconsPath/bless.svg';
+  static const String business = '$iconsPath/business.svg';
+  static const String ruler = '$iconsPath/ruler.svg';
+  static const String school = '$iconsPath/school.svg';
+  static const String smoking = '$iconsPath/smoking.svg';
+  static const String wineglass = '$iconsPath/wineglass.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';
