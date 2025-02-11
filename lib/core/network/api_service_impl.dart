@@ -99,23 +99,22 @@ class ApiServiceImpl implements ApiService {
         cancelToken: cancelToken,
       );
 
-      // ✅ 로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 추출
+      // 🍪n로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 추출
       if (path.contains("/login")) {
         final List<String>? setCookieHeaders =
             response.headers.map['set-cookie'];
         if (setCookieHeaders != null && setCookieHeaders.isNotEmpty) {
           final refreshToken = _extractRefreshToken(setCookieHeaders);
           if (refreshToken != null) {
-            print("✅ Refresh Token 가져오기 성공: $refreshToken");
+            print("Refresh Token 가져오기 성공: $refreshToken");
 
-            // ✅ 쿠키 저장소에 저장
+            // 🍪 쿠키 저장소에 저장
             await _initializeCookieJar();
             final Uri uri = Uri.parse(baseUrl.toString());
             _cookieJar?.saveFromResponse(
                 uri, [Cookie("_refreshToken", refreshToken)]);
-            print("✅ Refresh Token 쿠키 저장소에 저장 완료");
 
-            // ✅ `await`을 사용하여 `initialize()` 실행 후 저장
+            //  `await`을 사용하여 `initialize()` 실행 후 저장
             await ref.read(localStorageProvider.notifier).initialize();
             await ref
                 .read(localStorageProvider)

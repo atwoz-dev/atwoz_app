@@ -61,6 +61,11 @@ class StringUtil {
     return phoneNumber;
   }
 
+  /// 전화번호 형식에서 하이픈을 제거하는 메서드
+  static String removePhoneFormat(String phoneNumber) {
+    return phoneNumber.replaceAll(RegExp(r'[^0-9]'), '');
+  }
+
   /// HTML 태그를 제거한 문자열 반환
   static String customStripHtmlIfNeeded(String text) {
     return text.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');

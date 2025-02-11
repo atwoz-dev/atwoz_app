@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_photo_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
@@ -19,7 +20,9 @@ class UserRepository extends BaseRepository {
   Future<UserResponse> signIn(UserSignInRequest data) async {
     final response = await apiService.postJson(
       '$path/login',
-      data: data.phoneNumber,
+      data: {
+        "phoneNumber": data.phoneNumber.removePhoneFormat,
+      },
       requiresAuthToken: false,
     );
 
