@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
@@ -223,23 +224,15 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
 }
 
 Widget buildEducationInput({
-  required String? selectedEducation,
+  required HighestEducationEnum? selectedEducation,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = [
-    '서울 4년제',
-    '지방 4년제',
-    '전문대',
-    '해외대',
-    '석사',
-    '박사',
-    '로스쿨',
-    '고등학교 졸업',
-    '기타',
-  ];
+  final options = educationMap.values.toList();
+
   return SingleSelectListChip(
     options: options,
-    selectedOption: selectedEducation,
+    selectedOption:
+        selectedEducation != null ? educationMap[selectedEducation] : null,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateEducation(updatedSelection);
     },
@@ -330,13 +323,14 @@ Widget buildMbtiInput({
 }
 
 Widget buildSmokingInput({
-  required String? selectedSmoking,
+  required SmokingStatusEnum? selectedSmoking,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = ['비흡연', '금연 중', '전자담배', '가끔 피움', '매일 피움'];
+  final options = smokingMap.values.toList();
   return SingleSelectListChip(
     options: options,
-    selectedOption: selectedSmoking,
+    selectedOption:
+        selectedSmoking != null ? smokingMap[selectedSmoking] : null,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateSmoking(updatedSelection);
     },
@@ -344,19 +338,14 @@ Widget buildSmokingInput({
 }
 
 Widget buildDrinkingInput({
-  required String? selectedDrinking,
+  required DrinkingStatusEnum? selectedDrinking,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = [
-    '전혀 마시지 않음',
-    '사회적 음주',
-    '가끔 마심',
-    '술자리를 즐김',
-    '금주 중',
-  ];
+  final options = drinkingMap.values.toList();
   return SingleSelectListChip(
     options: options,
-    selectedOption: selectedDrinking,
+    selectedOption:
+        selectedDrinking != null ? drinkingMap[selectedDrinking] : null,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateDrinking(updatedSelection);
     },
@@ -364,13 +353,14 @@ Widget buildDrinkingInput({
 }
 
 Widget buildReligionInput({
-  required String? selectedReligion,
+  required ReligionEnum? selectedReligion,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = ['무교', '기독교', '천주교', '불교', '기타'];
+  final options = religionMap.values.toList(); // 한글 리스트로 변환
   return SingleSelectListChip(
     options: options,
-    selectedOption: selectedReligion,
+    selectedOption:
+        selectedReligion != null ? religionMap[selectedReligion] : null,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateReligion(updatedSelection);
     },

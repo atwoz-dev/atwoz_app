@@ -28,8 +28,11 @@ class UserRepository extends BaseRepository {
 
     final String? accessToken =
         await ref.read(authUsecaseProvider).getAccessToken();
-
-    print('엑세스: $accessToken');
+    final String? refreshToken =
+        await ref.read(authUsecaseProvider).getRefreshToken();
+    print('🔐 액세스: $accessToken');
+    print('🔐 리프레시: $refreshToken');
+    await ref.read(authUsecaseProvider).getRefreshToken();
 
     final userResponse = UserResponse.fromJson(response['data']);
     return userResponse;
@@ -46,32 +49,45 @@ class UserRepository extends BaseRepository {
   // 프로필 사진 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
     final formData = FormData();
-    final List<Map<String, dynamic>> requestList = [];
+    final List<ProfilePhotoUploadRequest> requestList = [];
+    final List<int> usedOrders = [];
+
+    bool hasPrimary = false;
 
     for (int i = 0; i < photos.length; i++) {
       final photo = photos[i];
+      if (photo == null) continue; // 빈 항목이면 스킵
 
-      if (photo == null) continue;
+      // order 중복 방지
+      int order = i; // 기본적으로 리스트 인덱스를 order로 사용
+      while (usedOrders.contains(order)) {
+        order++;
+      }
+      usedOrders.add(order);
+
+      // 첫 번째 이미지를 대표 이미지로 설정
+      final isPrimary = (i == 0);
+      if (isPrimary) hasPrimary = true;
+
+      final request = ProfilePhotoUploadRequest(
+        id: null, // 새 프로필 업로드라 항상 null
+        isPrimary: isPrimary,
+        order: order,
+      );
+
+      requestList.add(request);
+
       final file = await MultipartFile.fromFile(photo.path);
       formData.files.add(MapEntry("files", file));
-
-      // DTO 객체를 JSON으로 변환하여 리스트에 추가
-      final request = ProfilePhotoUploadRequest(
-        id: null, // 새 이미지면 null
-        isPrimary: i == 0, // 첫 번째 이미지만 대표 이미지
-        order: i,
-      ).toJson();
-      requestList.add(request);
     }
 
-    if (formData.files.isEmpty) {
-      print("❌ 업로드할 이미지가 없습니다.");
-      return;
+    if (!hasPrimary) {
+      throw Exception("대표 이미지를 하나 이상 설정해야 합니다.");
     }
 
-    // JSON 데이터 추가
-    formData.fields.add(MapEntry("requests", jsonEncode(requestList)));
-    print('폼데이터: ${formData.fields}');
+    formData.fields.add(MapEntry(
+        "requests", jsonEncode(requestList.map((r) => r.toJson()).toList())));
+
     try {
       final response = await apiService.postFormData(
         '/profileimage',

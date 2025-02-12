@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -99,7 +100,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                   context: context,
                   label: '성별',
                   child: SelectionWidget(
-                    options: ["여자", "남자"],
+                    options: genderMap.values.toList(),
                     onChange: (value) {
                       signUpProcess.updateGender(value);
                     },

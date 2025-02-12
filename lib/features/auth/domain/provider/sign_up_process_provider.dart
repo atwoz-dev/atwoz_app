@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
@@ -92,7 +93,13 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateGender(String gender) {
-    state = state.copyWith(selectedGender: gender);
+    final selectedEnum = genderMap.entries
+        .firstWhere(
+          (entry) => entry.value == gender,
+        )
+        .key;
+
+    state = state.copyWith(selectedGender: selectedEnum);
   }
 
   void updateSelectedYear(int year) {
@@ -112,7 +119,15 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateEducation(String? education) {
-    state = state.copyWith(selectedEducation: education);
+    // String(한글) 값을 Enum으로 변환
+    final selectedEnum = educationMap.entries
+        .firstWhere(
+          (entry) => entry.value == education,
+          orElse: () => MapEntry(HighestEducationEnum.other, "기타"), // 기본값 설정
+        )
+        .key; // 키값(Enum) 가져오기
+
+    state = state.copyWith(selectedEducation: selectedEnum);
   }
 
   void updateFirstMbtiLetter(String letter) {
@@ -132,15 +147,33 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateSmoking(String? smoking) {
-    state = state.copyWith(selectedSmoking: smoking);
+    final selectedEnum = smokingMap.entries
+        .firstWhere(
+          (entry) => entry.value == smoking,
+        )
+        .key;
+
+    state = state.copyWith(selectedSmoking: selectedEnum);
   }
 
   void updateDrinking(String? drinking) {
-    state = state.copyWith(selectedDrinking: drinking);
+    final selectedEnum = drinkingMap.entries
+        .firstWhere(
+          (entry) => entry.value == drinking,
+        )
+        .key;
+
+    state = state.copyWith(selectedDrinking: selectedEnum);
   }
 
   void updateReligion(String? religion) {
-    state = state.copyWith(selectedReligion: religion);
+    final selectedEnum = religionMap.entries
+        .firstWhere(
+          (entry) => entry.value == religion,
+        )
+        .key; // 키값(Enum) 가져오기
+
+    state = state.copyWith(selectedReligion: selectedEnum);
   }
 
   void updateHobbies(List<String> hobbies) {

@@ -1,0 +1,86 @@
+// Enum → 백엔드 대문자 스네이크_CASE 변환
+extension EnumToJson on Enum {
+  String toJson() {
+    return name
+        .replaceAllMapped(RegExp(r'[A-Z]'), (match) => "_${match[0]}")
+        .toUpperCase();
+  }
+}
+
+// 백엔드 응답을 Enum으로 변환
+extension StringToEnum on String {
+  T toEnum<T extends Enum>(List<T> values
+      //  ,{required T defaultValue}
+      ) {
+    return values.firstWhere(
+      (e) => e.toJson() == this, // 백엔드 값과 매칭
+      // orElse: () => defaultValue, // 기본값 설정
+    );
+  }
+}
+
+// 성별
+enum GenderEnum { female, male }
+
+const Map<GenderEnum, String> genderMap = {
+  GenderEnum.female: "여자",
+  GenderEnum.male: "남자",
+};
+
+// 학력
+enum HighestEducationEnum {
+  highSchool,
+  associate,
+  bachelorsLocal,
+  bachelorsSeoul,
+  bachelorsOverseas,
+  lawSchool,
+  masters,
+  doctorate,
+  other
+}
+
+const Map<HighestEducationEnum, String> educationMap = {
+  HighestEducationEnum.highSchool: "고등학교 졸업",
+  HighestEducationEnum.associate: "전문대",
+  HighestEducationEnum.bachelorsLocal: "지방 4년제",
+  HighestEducationEnum.bachelorsSeoul: "서울 4년제",
+  HighestEducationEnum.bachelorsOverseas: "해외대",
+  HighestEducationEnum.lawSchool: "로스쿨",
+  HighestEducationEnum.masters: "석사",
+  HighestEducationEnum.doctorate: "박사",
+  HighestEducationEnum.other: "기타",
+};
+
+// 흡연
+enum SmokingStatusEnum { none, quit, occasional, daily, vape }
+
+const Map<SmokingStatusEnum, String> smokingMap = {
+  SmokingStatusEnum.none: "비흡연",
+  SmokingStatusEnum.quit: "금연 중",
+  SmokingStatusEnum.occasional: "가끔 피움",
+  SmokingStatusEnum.daily: "매일 피움",
+  SmokingStatusEnum.vape: "전자담배",
+};
+
+// 음주
+enum DrinkingStatusEnum { none, quit, social, occasional, frequent }
+
+const Map<DrinkingStatusEnum, String> drinkingMap = {
+  DrinkingStatusEnum.none: "전혀 마시지 않음",
+  DrinkingStatusEnum.quit: "금주 중",
+  DrinkingStatusEnum.social: "사교적 음주",
+  DrinkingStatusEnum.occasional: "가끔 마심",
+  DrinkingStatusEnum.frequent: "술자리를 즐김",
+};
+
+// 종교
+enum ReligionEnum { none, christian, catholic, buddhist, other }
+
+const Map<ReligionEnum, String> religionMap = {
+  ReligionEnum.none: "무교",
+  ReligionEnum.christian: "기독교",
+  ReligionEnum.catholic: "천주교",
+  ReligionEnum.buddhist: "불교",
+  ReligionEnum.other: "기타",
+};
