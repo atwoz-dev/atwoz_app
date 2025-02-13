@@ -5,8 +5,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -57,20 +55,17 @@ class OnboardingPhoneInputPageState
   }
 
   Future<void> _handleLogin(WidgetRef ref) async {
-    final authUseCase = ref.read(authUsecaseProvider);
     final phoneNumber = _phoneController.text;
 
     if (phoneNumber.isEmpty || validationError != null) {
       return;
     }
     try {
-      await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
-
-      String? accessToken = await authUseCase.getAccessToken();
-      Log.d('액세스토큰: $accessToken');
-      Log.d('refresh 토큰: ${await authUseCase.getRefreshToken()}');
       if (mounted) {
-        navigate(context, route: AppRoute.onboardCertification);
+        navigate(
+          context, route: AppRoute.onboardCertification,
+          extra: {'phoneNumber': phoneNumber}, // 전화번호 전달
+        );
       }
     } catch (e) {
       Log.d("로그인 실패: $e");

@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,5 @@ abstract class AuthUseCase {
   UserResponse? get user;
   Listenable userRefresh();
   Future<void> uploadProfilePhotos(List<XFile?> photos);
-  // Future<Map<String, dynamic>?> refreshToken();
-  // DateTime? getTokenExpiration(String token);
+  Future<void> uploadProfile(ProfileUploadRequest profileData);
 }

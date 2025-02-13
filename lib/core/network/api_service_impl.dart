@@ -1,9 +1,6 @@
-import 'dart:io';
-
-import 'package:atwoz_app/core/provider/base_repository_provider.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
 import 'package:dio/dio.dart';
@@ -67,7 +64,8 @@ class ApiServiceImpl implements ApiService {
   }) async {
     try {
       final Map<String, dynamic> finalHeaders = {
-        'Accept': 'application/json',
+        "Content-Type": "application/json",
+        "Accept": "*/*",
         ...?headers,
       };
 
@@ -101,25 +99,22 @@ class ApiServiceImpl implements ApiService {
         cancelToken: cancelToken,
       );
 
-      // ✅ 로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 추출
+      // 🍪n로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 추출
       if (path.contains("/login")) {
         final List<String>? setCookieHeaders =
             response.headers.map['set-cookie'];
         if (setCookieHeaders != null && setCookieHeaders.isNotEmpty) {
           final refreshToken = _extractRefreshToken(setCookieHeaders);
           if (refreshToken != null) {
-            print("✅ Refresh Token 가져오기 성공: $refreshToken");
+            print("Refresh Token 가져오기 성공: $refreshToken");
 
-            // ✅ 쿠키 저장소에 저장
+            // 🍪 쿠키 저장소에 저장
             await _initializeCookieJar();
             final Uri uri = Uri.parse(baseUrl.toString());
             _cookieJar?.saveFromResponse(
                 uri, [Cookie("_refreshToken", refreshToken)]);
-            print("✅ Refresh Token 쿠키 저장소에 저장 완료");
 
-            // ✅ 로컬 스토리지에도 저장
-
-            // ✅ `await`을 사용하여 `initialize()` 실행 후 저장
+            //  `await`을 사용하여 `initialize()` 실행 후 저장
             await ref.read(localStorageProvider.notifier).initialize();
             await ref
                 .read(localStorageProvider)

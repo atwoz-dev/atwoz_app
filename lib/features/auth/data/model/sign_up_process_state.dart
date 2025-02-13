@@ -1,29 +1,33 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/constants/temp.dart';
 import 'package:atwoz_app/core/util/date_time_util.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'sign_up_process_state.freezed.dart';
 part 'sign_up_process_state.g.dart';
 
 @freezed
 class SignUpProcessState with _$SignUpProcessState {
   const factory SignUpProcessState({
-    @Default(1) int currentStep, // 현재 단계 (초기값: 1)
-    @Default(null) String? nickname, // 닉네임
-    @Default(null) String? selectedGender, // 선택된 성별
-    @Default(false) bool isLoading, // 로딩 여부
-    @Default(null) String? error, // 에러 메시지
-    @Default(null) int? selectedYear, // 선택된 나이
-    @Default(null) int? selectedHeight, // 선택된 키
-    @Default(null) String? selectedJob, // 선택된 직업
-    @Default(null) String? selectedLocation, // 선택된 지역
-    @Default(null) String? selectedEducation, // 선택된 학력
-    @Default(null) String? selectedFirstMbtiLetter, // Mbti 첫 번째 글자
-    @Default(null) String? selectedSecondMbtiLetter, // Mbti 두 번째 글자
-    @Default(null) String? selectedThirdMbtiLetter, // Mbti 세 번째 글자
-    @Default(null) String? selectedFourthMbtiLetter, // Mbti 네 번째 글자
-    @Default(null) String? selectedSmoking, // 선택된 흡연 여부
-    @Default(null) String? selectedDrinking, // 선택된 음주 여부
-    @Default(null) String? selectedReligion, // 선택된 종교
-    @Default(<String>[]) List<String> selectedHobbies, // 선택된 취미
+    @Default(1) int currentStep,
+    @Default(null) String? nickname,
+    @Default(null) GenderEnum? selectedGender, // 변경: Enum 타입 적용
+    @Default(false) bool isLoading,
+    @Default(null) String? error,
+    @Default(null) int? selectedYear,
+    @Default(null) int? selectedHeight,
+    @Default(null) String? selectedJob,
+    @Default(null) String? selectedLocation,
+    @Default(null) HighestEducationEnum? selectedEducation, // 변경: Enum 타입 적용
+    @Default(null) String? selectedFirstMbtiLetter,
+    @Default(null) String? selectedSecondMbtiLetter,
+    @Default(null) String? selectedThirdMbtiLetter,
+    @Default(null) String? selectedFourthMbtiLetter,
+    @Default(null) SmokingStatusEnum? selectedSmoking, // 변경: Enum 타입 적용
+    @Default(null) DrinkingStatusEnum? selectedDrinking, // 변경: Enum 타입 적용
+    @Default(null) ReligionEnum? selectedReligion, // 변경: Enum 타입 적용
+    @Default(<String>[]) List<String> selectedHobbies,
   }) = _SignUpProcessState;
 
   const SignUpProcessState._();
@@ -102,6 +106,29 @@ class SignUpProcessState with _$SignUpProcessState {
       default:
         return false;
     }
+  }
+
+  // TODO: 추후 백엔드 api 나오면 연동 후 수정해야 할 값들이 존재함
+  // ProfileUploadRequest로 변환할 때 인덱스로 변환
+  ProfileUploadRequest toProfileUploadRequest() {
+    return ProfileUploadRequest(
+      nickname: nickname ?? "",
+      selectedGender: selectedGender?.toJson() ?? "", // Enum → 백엔드 변환
+      age: selectedYear ?? 0,
+      selectedHeight: selectedHeight ?? 0,
+      jobId: jobOptions.indexOf(selectedJob!) + 1,
+      // region: selectedLocation ?? "",
+      region: "SEOUL", // TODO: 교체교체
+      selectedEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
+      mbti: mbti ?? "",
+      selectedSmoking: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedDrinking: selectedDrinking?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedReligion: selectedReligion?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedHobbies: selectedHobbies
+          .map((hobby) => hobbies.indexOf(hobby) + 1)
+          .where((index) => index != -1)
+          .toList(),
+    );
   }
 
   // JSON 변환 메서드 추가

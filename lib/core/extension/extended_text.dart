@@ -39,4 +39,9 @@ extension ExtendedString on String? {
   /// - 내부적으로 [StringUtil.phoneFormatString] 메서드를 사용
   /// - 예: '1234567890'.toPhoneString → '123-456-7890'
   String get toPhoneString => StringUtil.phoneFormatString(this ?? '');
+
+  /// 전화번호 형식에서 하이픈을 제거
+  /// - 내부적으로 [StringUtil.removePhoneFormat] 메서드를 사용
+  /// - 예: '123-456-7890'.removePhoneFormat → '1234567890'
+  String get removePhoneFormat => StringUtil.removePhoneFormat(this ?? '');
 }
