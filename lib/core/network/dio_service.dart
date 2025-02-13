@@ -8,6 +8,9 @@ import 'package:path_provider/path_provider.dart';
 /// Common service call API support cancel api
 class DioService extends DioForNative {
   static late PersistCookieJar _cookieJar; // 쿠키 저장소 초기화
+  PersistCookieJar getCookieJar() {
+    return _cookieJar;
+  }
 
   DioService([super.baseOptions, Iterable<Interceptor>? interceptors])
       : _cancelToken = CancelToken() {

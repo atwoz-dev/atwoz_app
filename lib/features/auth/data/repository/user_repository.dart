@@ -39,11 +39,9 @@ class UserRepository extends BaseRepository {
   }
 
   // 로그아웃
-  Future<void> signOut(String refreshToken) => apiService.postJson(
+  Future<void> signOut() => apiService.getJson(
         '$path/logout',
-        headers: {}, // refresh token은 쿠키로 관리
-        data: {},
-        requiresAuthToken: false,
+        requiresAuthToken: true,
       );
 
   // 프로필 사진 업로드
