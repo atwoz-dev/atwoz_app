@@ -26,6 +26,20 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
   String? selectedValue; // 현재 선택된 값
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.options.isNotEmpty) {
+      selectedValue = widget.options.first;
+      // 기본 선택값을 부모 위젯에 반영
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (widget.onChange != null) {
+          widget.onChange!(selectedValue!);
+        }
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final activeColor = widget.activeColor ?? palette.primary;
     final inactiveColor = widget.inactiveColor ?? Palette.colorGrey100;
@@ -57,7 +71,7 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
                 }
               },
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300), // 부드러운 애니메이션
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: isSelected ? activeColor : inactiveColor,
