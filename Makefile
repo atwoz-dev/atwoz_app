@@ -1,7 +1,6 @@
 # Flutter 관련 기본 설정
 FLUTTER ?= flutter
 DART ?= dart
-FLAVOR ?= dev
 ENV_FILE ?= dev.env
 
 # 기본 타겟
@@ -21,9 +20,9 @@ help:
 	@echo "  make ios-build            - IPA 빌드 (macOS 환경에서 실행 가능)";
 	@echo "";
 	@echo "=== 실행 ===";
-	@echo "  make run FLAVOR=<flavor> ENV_FILE=<env_file>";
+	@echo "  make run ENV_FILE=<env_file>";
 	@echo "                           - 지정된 환경으로 앱 실행";
-	@echo "                           - 예: make run FLAVOR=dev ENV_FILE=dev.env";
+	@echo "                           - 예: make run ENV_FILE=dev.env";
 	@echo "";
 	@echo "=== 테스트 및 품질 관리 ===";
 	@echo "  make test                 - 테스트 실행";
@@ -37,7 +36,7 @@ help:
 	@echo "";
 	@echo "명령어 뒤에 추가적인 변수 설정으로 빌드와 실행을 세분화할 수 있습니다.";
 	@echo "예시:";
-	@echo "  make run FLAVOR=dev ENV_FILE=dev.env  # 환경 파일 지정 필요";
+	@echo "  make run ENV_FILE=dev.env  # 환경 파일 지정 필요";
 	@echo "  make android-dev-build";
 	@echo "  make ios-prod-build";
 
@@ -64,19 +63,19 @@ generate:
 	$(DART) run build_runner build --delete-conflicting-outputs
 
 # --dart-define-from-file: 플러터 버전에 따라 사용이 불가할 수 있음
-# 명령어 예시: make run FLAVOR=dev ENV_FILE=dev.env
-# 명령어 예시: make run FLAVOR=prod ENV_FILE=prod.env
+# 명령어 예시: make run ENV_FILE=dev.env
+# 명령어 예시: make run ENV_FILE=prod.env
 run:
 	$(FLUTTER) pub get
 	$(DART) run build_runner build --delete-conflicting-outputs
-	$(FLUTTER) run --flavor=$(FLAVOR) --dart-define-from-file=$(ENV_FILE)
+	$(FLUTTER) run --dart-define-from-file=$(ENV_FILE)
 
 android-build:
-	$(FLUTTER) build apk --release --flavor=$(FLAVOR) --dart-define-from-file=$(ENV_FILE)
+	$(FLUTTER) build apk --release --dart-define-from-file=$(ENV_FILE)
 
 ios-build:
 	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
-		$(FLUTTER) build ipa --release --flavor=$(FLAVOR) --dart-define-from-file=$(ENV_FILE); \
+		$(FLUTTER) build ipa --release --dart-define-from-file=$(ENV_FILE); \
 	else \
 		echo "iOS 빌드는 macOS 환경에서만 실행 가능합니다."; \
 	fi

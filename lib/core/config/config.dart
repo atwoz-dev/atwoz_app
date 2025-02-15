@@ -13,12 +13,6 @@ abstract class Config {
   static const enableGeneralLog = kDebugMode;
   static const isPrettyJson = kDebugMode;
 
-  /// 환경 변수 로드 (dotenv)
-  // flavor: 환경 변수에서 FLAVOR를 로드
-  // fallback: 환경 변수가 없을 경우 기본값 'dev' 사용
-  static String get flavor => dotenv.get('FLAVOR', fallback: 'dev');
-  static bool get isDevFlavor => flavor.toLowerCase().contains('dev');
-
   /// network 설정
   // baseUrl: 네트워크의 기본 URL 설정
   // timeout: 네트워크 요청의 타임아웃 시간(기본 10초)
