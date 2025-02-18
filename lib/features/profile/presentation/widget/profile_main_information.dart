@@ -140,17 +140,15 @@ class _InteractionButtons extends StatelessWidget {
         const Gap(8.0),
         GestureDetector(
           onTap: () async {
-            if(favoriteUser) {
+            if (favoriteUser) {
               onFavoriteTypeChanged(FavoriteType.none);
               return;
             }
             final favoriteType = await FavoriteTypeSelectDialog.open(context);
-            if(favoriteType == null) return;
+            if (favoriteType == null) return;
             onFavoriteTypeChanged(favoriteType);
           },
           child: Container(
-            // width: 40.0,
-            // height: 40.0,
             decoration: const BoxDecoration(
               color: Color(0xFFDCDEE3),
               borderRadius: Dimens.buttonRadius,

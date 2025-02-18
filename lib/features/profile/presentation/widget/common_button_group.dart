@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -81,16 +82,9 @@ class CommonPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final background = enabled ? context.colorScheme.surface : context.colorScheme.primary;
-    // final foreground = enabled ? context.colorScheme.secondary : context.colorScheme.secondary;
-
-    return ElevatedButton(
-      style: enabled ? ElevatedButton.styleFrom(
-        backgroundColor: context.colorScheme.primary,
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        foregroundColor: context.colorScheme.onPrimary,
-        shape: const RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
-      ) : null,
+    return DefaultElevatedButton(
+      borderRadius: Dimens.buttonRadius,
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       onPressed: enabled ? onSubmit : null,
       child: submit,
     );
@@ -109,13 +103,11 @@ class CommonSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: context.colorScheme.secondary,
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        side: BorderSide(color: context.colorScheme.outline),
-        shape: const RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
-      ),
+    return DefaultOutlinedButton(
+      primary: context.colorScheme.outline,
+      textColor: context.colorScheme.secondary,
+      borderRadius: Dimens.buttonRadius,
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       onPressed: onCancel,
       child: cancel,
     );
