@@ -29,6 +29,8 @@ class IconPath {
   static const String school = '$iconsPath/school.svg';
   static const String smoking = '$iconsPath/smoking.svg';
   static const String wineglass = '$iconsPath/wineglass.svg';
+  static const String generalFavorite = '$iconsPath/general_favorite.svg';
+  static const String strongFavorite = '$iconsPath/strong_favorite.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

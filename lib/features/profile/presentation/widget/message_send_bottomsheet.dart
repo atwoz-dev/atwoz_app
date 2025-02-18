@@ -65,6 +65,7 @@ class MessageSendBottomSheet extends ConsumerWidget {
                       messageReceived: messageReceived,
                       registeredContact: status.registeredContact,
                     ),
+                    enabledSubmit: true,
                   ),
                 ],
               ),
@@ -287,9 +288,13 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
 }
 
 class _MessageButtonGroup extends StatelessWidget {
-  const _MessageButtonGroup({required this.onMessageSend});
+  const _MessageButtonGroup({
+    required this.onMessageSend,
+    required this.enabledSubmit,
+  });
 
   final VoidCallback onMessageSend;
+  final bool enabledSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -298,6 +303,7 @@ class _MessageButtonGroup extends StatelessWidget {
       onSubmit: onMessageSend,
       cancelLabel: '취소',
       submitLabel: '확인',
+      enabledSubmit: enabledSubmit,
     );
   }
 }
@@ -353,7 +359,7 @@ class _MessageSendConfirm extends StatelessWidget {
                 context.pop();
               },
               cancel: const Text('취소'),
-              submit:  Text.rich(
+              submit: Text.rich(
                 TextSpan(
                   children: [
                     const WidgetSpan(

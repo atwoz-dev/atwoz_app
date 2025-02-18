@@ -20,7 +20,7 @@ class ProfileFetchUseCase {
             '괜찮으시다면 저희 연락 한번 해봐요!',
         requestedDateTime: DateTime.now().subtract(const Duration(days: 4)),
       ),
-      favoriteUser: false,
+      favoriteType: FavoriteType.none,
       // TODO(Han): UI test용 데이터 API 연동 후 제거 필요
       // matchStatus: MatchingReceived(
       //   receivedMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요'
