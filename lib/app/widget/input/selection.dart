@@ -23,20 +23,18 @@ class SelectionWidget extends StatefulWidget {
 }
 
 class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
-  String? selectedValue; // 현재 선택된 값
+  String? _selectedValue; // 현재 선택된 값
 
   @override
   void initState() {
     super.initState();
-    if (widget.options.isNotEmpty) {
-      selectedValue = widget.options.first;
-      // 기본 선택값을 부모 위젯에 반영
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (widget.onChange != null) {
-          widget.onChange!(selectedValue!);
-        }
-      });
+
+    // 예외 처리: options가 비어있으면 리턴
+    if (widget.options.isEmpty) {
+      return;
     }
+
+    _selectedValue = widget.options.first;
   }
 
   @override
@@ -57,18 +55,19 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
         children: widget.options.asMap().entries.map((entry) {
           final index = entry.key;
           final option = entry.value;
-          final isSelected = selectedValue == option;
+          final isSelected = _selectedValue == option;
 
           return Expanded(
             child: GestureDetector(
               onTap: () {
+                if (_selectedValue == option)
+                  return; // 동일한 값이면 불필요한 State 변경 방지
+
                 safeSetState(() {
-                  selectedValue = option;
+                  _selectedValue = option;
                 });
-                // onChange 콜백 호출
-                if (widget.onChange != null) {
-                  widget.onChange!(option);
-                }
+
+                widget.onChange?.call(option);
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
