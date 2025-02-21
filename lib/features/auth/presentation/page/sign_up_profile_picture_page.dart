@@ -5,7 +5,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/provider/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
@@ -93,13 +92,17 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                                 // 사진 업로드
                                 await ref
                                     .read(photoProvider.notifier)
-                                    .updatePhoto(index, pickedPhoto);
+                                    .updatePhoto(index, pickedPhoto,
+                                        PhotoUpdateAction.upload);
                               }
                             },
                             // 사진 삭제
-                            onRemoveImage: () async => await ref
-                                .read(photoProvider.notifier)
-                                .updatePhoto(index, null),
+                            onRemoveImage: () async {
+                              await ref
+                                  .read(photoProvider.notifier)
+                                  .updatePhoto(
+                                      index, null, PhotoUpdateAction.delete);
+                            },
                             isRepresentative: index == 0, // 첫 번째 사진만 대표로 설정
                           );
                         },
@@ -180,16 +183,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                         onPressed: photos.any((photo) => photo != null) &&
                                 photos[0] != null
                             ? () async {
-                                final List<XFile?> photos =
-                                    ref.read(photoProvider);
-
-                                await ref
-                                    .read(authUsecaseProvider)
-                                    .uploadProfilePhotos(photos)
-                                    .then((_) => {
-                                          navigate(context,
-                                              route: AppRoute.signUpTerms)
-                                        });
+                                navigate(context, route: AppRoute.signUpTerms);
                               }
                             : null,
                         child: Text(

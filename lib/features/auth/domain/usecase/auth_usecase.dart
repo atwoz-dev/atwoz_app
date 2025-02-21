@@ -13,5 +13,6 @@ abstract class AuthUseCase {
   UserResponse? get user;
   Listenable userRefresh();
   Future<void> uploadProfilePhotos(List<XFile?> photos);
+  Future<void> deleteProfilePhoto(int index);
   Future<void> uploadProfile(ProfileUploadRequest profileData);
 }

@@ -124,4 +124,17 @@ class UserRepository extends BaseRepository {
       rethrow;
     }
   }
+
+  Future<void> deleteProfilePhoto(int id) async {
+    try {
+      final response = await apiService.deleteJson(
+        '/profileimage/$id',
+        requiresAuthToken: true,
+      );
+
+      Log.d("✅ 프로필 이미지 삭제 성공: ${response.toString()}");
+    } catch (e) {
+      Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
+    }
+  }
 }

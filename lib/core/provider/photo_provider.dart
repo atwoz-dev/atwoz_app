@@ -1,9 +1,13 @@
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../util/permission_handler.dart'; // 통합된 권한 로직 사용
 
 part 'photo_provider.g.dart';
+
+enum PhotoUpdateAction { upload, delete }
 
 @riverpod
 class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
@@ -45,10 +49,27 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   }
 
   // 특정 인덱스의 사진을 업데이트하는 메서드.
-  Future<void> updatePhoto(int index, XFile? photo) async {
+  Future<void> updatePhoto(
+      int index, XFile? photo, PhotoUpdateAction action) async {
     final updatedPhotos = List<XFile?>.from(state);
     updatedPhotos[index] = photo;
-    state = updatedPhotos; // 올바르게 상태 업데이트
+    state = updatedPhotos;
+    // TODO: 없애기
+    // final authUseCase = ref.read(authUsecaseProvider);
+    // await authUseCase.signIn(UserSignInRequest(phoneNumber: '010-1111-1111'));
+    // print('===============================');
+
+    if (action == PhotoUpdateAction.upload) {
+      await ref.read(authUsecaseProvider).uploadProfilePhotos(state);
+      return;
+    }
+
+    if (action == PhotoUpdateAction.delete) {
+      await ref
+          .read(authUsecaseProvider)
+          .deleteProfilePhoto(17); // TODO: 하드코딩 지우기
+      // dlet
+    }
   }
 
 // 사용자가 사진을 선택할 수 있도록 트리거하는 메서드

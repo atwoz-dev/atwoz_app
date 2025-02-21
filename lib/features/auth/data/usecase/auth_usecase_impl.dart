@@ -72,6 +72,11 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
   }
 
   @override
+  Future<void> deleteProfilePhoto(int index) async {
+    await repository.deleteProfilePhoto(index);
+  }
+
+  @override
   Future<String?> getAccessToken() async {
     final localStorage = storage;
     return localStorage.getEncrypted(_accessToken);
