@@ -113,7 +113,7 @@ class SignUpProcessState with _$SignUpProcessState {
   ProfileUploadRequest toProfileUploadRequest() {
     return ProfileUploadRequest(
       nickname: nickname ?? "",
-      selectedGender: selectedGender?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedGender: selectedGender.toJson(), // Enum → 백엔드 변환
       age: selectedYear ?? 0,
       selectedHeight: selectedHeight ?? 0,
       jobId: jobOptions.indexOf(selectedJob!) + 1,

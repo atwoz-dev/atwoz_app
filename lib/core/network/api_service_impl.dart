@@ -64,7 +64,6 @@ class ApiServiceImpl implements ApiService {
   }) async {
     try {
       final Map<String, dynamic> finalHeaders = {
-        "Content-Type": "application/json",
         "Accept": "*/*",
         ...?headers,
       };
@@ -72,11 +71,9 @@ class ApiServiceImpl implements ApiService {
       if (requiresAuthToken) {
         final String? accessToken =
             await ref.read(authUsecaseProvider).getAccessToken();
-
         await ref.read(localStorageProvider.notifier).initialize(); // 초기화
         final String? refreshToken =
             await ref.read(localStorageProvider).getEncrypted('_refreshToken');
-
         if (accessToken != null) {
           finalHeaders['Authorization'] = "Bearer $accessToken";
         }
@@ -106,8 +103,6 @@ class ApiServiceImpl implements ApiService {
         if (setCookieHeaders != null && setCookieHeaders.isNotEmpty) {
           final refreshToken = _extractRefreshToken(setCookieHeaders);
           if (refreshToken != null) {
-            print("Refresh Token 가져오기 성공: $refreshToken");
-
             // 🍪 쿠키 저장소에 저장
             await _initializeCookieJar();
             final Uri uri = Uri.parse(baseUrl.toString());
