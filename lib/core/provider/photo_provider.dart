@@ -1,9 +1,9 @@
+import 'package:atwoz_app/core/util/permission_handler.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../util/permission_handler.dart'; // 통합된 권한 로직 사용
 
 part 'photo_provider.g.dart';
 
@@ -52,25 +52,28 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   // 특정 인덱스의 사진을 업데이트하는 메서드.
   Future<void> updatePhoto(
       int index, XFile? photo, PhotoUpdateAction action) async {
-    final updatedPhotos = List<XFile?>.from(state);
-    updatedPhotos[index] = photo;
-    state = updatedPhotos;
-    // TODO: 없애기
-    // final authUseCase = ref.read(authUsecaseProvider);
-    // await authUseCase.signIn(UserSignInRequest(phoneNumber: '010-1111-1111'));
-    // print('===============================');
-
     if (action == PhotoUpdateAction.upload) {
       await ref.read(authUsecaseProvider).uploadProfilePhotos(state);
       return;
     }
-
     if (action == PhotoUpdateAction.delete) {
-      await ref
-          .read(authUsecaseProvider)
-          .deleteProfilePhoto(17); // TODO: 하드코딩 지우기
-      // dlet
+      final profileImages =
+          await ref.read(authUsecaseProvider).fetchProfileImages();
+      if (profileImages == null || profileImages.data.isEmpty) {
+        print("❌ 삭제할 사진의 ID를 찾을 수 없음 (등록된 사진 없음)");
+        return;
+      }
+
+      // 삭제할 사진의 ID 찾기 (state[index]의 path가 S3 URL과 일치하는 데이터)
+      final imageToDelete = profileImages.data.firstWhere(
+        (image) => image.url == state[index]?.path,
+      );
+
+      await ref.read(authUsecaseProvider).deleteProfilePhoto(imageToDelete.id);
     }
+    final updatedPhotos = List<XFile?>.from(state);
+    updatedPhotos[index] = photo;
+    state = updatedPhotos;
   }
 
 // 사용자가 사진을 선택할 수 있도록 트리거하는 메서드
