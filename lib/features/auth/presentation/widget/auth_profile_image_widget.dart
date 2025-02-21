@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/image/default_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,27 +24,35 @@ class AuthProfileImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isNetworkImage = imageFile?.path.startsWith('http') ?? false;
+
     return Stack(
       children: [
         GestureDetector(
           onTap: onPickImage,
           child: Container(
+            width: double.infinity,
+            height: double.infinity,
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(8),
-              image: imageFile != null
-                  ? DecorationImage(
-                      image: FileImage(File(imageFile!.path)),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
             ),
-            child: imageFile == null && isRepresentative
-                ? DefaultIcon(
-                    IconPath.personPlaceholder,
-                    size: 150,
-                  )
-                : null,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: imageFile != null
+                  ? isNetworkImage
+                      ? DefaultImage(
+                          imageURL: imageFile!.path, // S3 URL 표시
+                          fit: BoxFit.cover)
+                      : Image.file(
+                          File(imageFile!.path),
+                          fit: BoxFit.cover,
+                        )
+                  : DefaultIcon(
+                      IconPath.personPlaceholder,
+                      size: 100,
+                    ),
+            ),
           ),
         ),
         if (isRepresentative)

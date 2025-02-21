@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_photo_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
@@ -125,6 +126,7 @@ class UserRepository extends BaseRepository {
     }
   }
 
+  // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
       final response = await apiService.deleteJson(
@@ -135,6 +137,23 @@ class UserRepository extends BaseRepository {
       Log.d("✅ 프로필 이미지 삭제 성공: ${response.toString()}");
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
+    }
+  }
+
+  // 프로필 이미지 조회
+  Future<ProfileImageResponse?> fetchProfileImages() async {
+    try {
+      final response =
+          await apiService.getJson('/profileimage', requiresAuthToken: true);
+
+      final jsonResponse = response;
+      final profileImageResponse = ProfileImageResponse.fromJson(jsonResponse);
+
+      Log.d("✅ 프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
+      return profileImageResponse;
+    } catch (e) {
+      Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
+      return null;
     }
   }
 }

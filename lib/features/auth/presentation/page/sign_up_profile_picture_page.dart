@@ -15,16 +15,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SignUpProfilePicturePage extends ConsumerWidget {
+class SignUpProfilePicturePage extends ConsumerStatefulWidget {
   const SignUpProfilePicturePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final List<XFile?> photos = ref.watch(photoProvider);
+  ConsumerState<SignUpProfilePicturePage> createState() =>
+      _SignUpProfilePicturePageState();
+}
 
-    // 초기 상태에서 photos 리스트를 6개로 고정
-    final List<XFile?> paddedPhotos = List<XFile?>.from(photos)
-      ..addAll(List<XFile?>.filled(6 - photos.length, null));
+class _SignUpProfilePicturePageState
+    extends ConsumerState<SignUpProfilePicturePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(
+        () => ref.read(photoProvider.notifier).fetchProfileImages());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<XFile?> photos = ref.watch(photoProvider);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -77,18 +88,15 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
                         ),
-                        itemCount: paddedPhotos.length,
+                        itemCount: photos.length,
                         itemBuilder: (context, index) {
                           return AuthProfileImageWidget(
-                            imageFile: paddedPhotos[index],
+                            imageFile: photos[index],
                             onPickImage: () async {
                               final pickedPhoto = await ref
                                   .read(photoProvider.notifier)
                                   .pickPhoto(ImageSource.gallery);
                               if (pickedPhoto != null) {
-                                final updatedPhotos = List<XFile?>.from(photos);
-                                updatedPhotos[index] = pickedPhoto;
-
                                 // 사진 업로드
                                 await ref
                                     .read(photoProvider.notifier)
@@ -103,7 +111,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                                   .updatePhoto(
                                       index, null, PhotoUpdateAction.delete);
                             },
-                            isRepresentative: index == 0, // 첫 번째 사진만 대표로 설정
+                            isRepresentative: index == 0,
                           );
                         },
                       ),

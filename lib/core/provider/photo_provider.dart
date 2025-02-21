@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +20,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
+    fetchProfileImages(); // 앱 시작 시 프로필 사진 불러오기
     return List.filled(6, null); // 초기화 상태: 6개의 null 값
   }
 
@@ -88,5 +89,27 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
       print("사진 선택 중 오류 발생: $e");
       return null;
     }
+  }
+
+  // 앱이 실행될 때 프로필 사진 불러오는 메서드
+  Future<void> fetchProfileImages() async {
+    final response = await ref.read(authUsecaseProvider).fetchProfileImages();
+
+    if (response == null) {
+      return;
+    }
+
+    // `response.data`가 리스트인지 확인
+    // order 기준 정렬
+    final List<ProfileImageData> sortedPhotos = List.from(response.data)
+      ..sort((a, b) => a.order.compareTo(b.order));
+
+    // S3 이미지 URL 사용
+    final updatedPhotos = List<XFile?>.filled(6, null);
+    for (int i = 0; i < sortedPhotos.length; i++) {
+      updatedPhotos[i] = XFile(sortedPhotos[i].url);
+    }
+
+    state = updatedPhotos;
   }
 }

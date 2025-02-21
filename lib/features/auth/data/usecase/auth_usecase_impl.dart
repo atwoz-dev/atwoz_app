@@ -3,6 +3,7 @@ import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/features/auth/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
@@ -65,15 +66,28 @@ class AuthUseCaseImpl extends BaseRepositoryProvider<UserRepository>
     print("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
   }
 
-  @override
   // 프로필 사진 업로드
+  @override
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
     await repository.uploadProfilePhotos(photos);
   }
 
+  // 프로필 사진 삭제
   @override
   Future<void> deleteProfilePhoto(int index) async {
     await repository.deleteProfilePhoto(index);
+  }
+
+  // 프로필 사진 조회
+  @override
+  Future<ProfileImageResponse?> fetchProfileImages() async {
+    try {
+      final response = await repository.fetchProfileImages();
+      return response;
+    } catch (e) {
+      print("❌ 프로필 사진 조회 실패: $e");
+      rethrow;
+    }
   }
 
   @override
