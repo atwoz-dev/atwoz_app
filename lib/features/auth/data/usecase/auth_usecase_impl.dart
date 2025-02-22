@@ -3,7 +3,7 @@ import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/features/auth/data/dto/profile_image_response.dart';
+import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';

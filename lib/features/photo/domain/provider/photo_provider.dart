@@ -54,26 +54,21 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     updatedPhotos[index] = photo;
     state = updatedPhotos;
 
-    await ref.read(uploadPhotoUsecaseProvider).call(state);
+    await ref.read(uploadPhotoUsecaseProvider).execute(state);
   }
 
   // 사진 삭제
   Future<void> deletePhoto(int index) async {
+    // 삭제할 사진이 없으면 바로 종료
     final imageToDelete = state[index];
-    if (imageToDelete != null && imageToDelete.path.startsWith('http')) {
-      final profileData = await ref.read(fetchPhotoUsecaseProvider).call();
-      final profileImage = profileData?.data.firstWhere(
-        (image) => image.url == imageToDelete.path,
-      );
+    if (imageToDelete == null) return;
 
-      if (profileImage != null) {
-        await ref.read(deletePhotoUsecaseProvider).call(profileImage.id);
-      }
-    }
-
+    // UI부터 즉시 업데이트
     final updatedPhotos = List<XFile?>.from(state);
     updatedPhotos[index] = null;
     state = updatedPhotos;
+
+    await ref.read(deletePhotoUsecaseProvider).execute(imageToDelete);
   }
 
   // 사진 선택
@@ -94,15 +89,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
 
   // 프로필 사진 불러오기 (화면 진입 시 한 번 실행)
   Future<void> fetchProfileImages() async {
-    final response = await ref.read(fetchPhotoUsecaseProvider).call();
-    if (response == null) return;
-
-    final sortedPhotos = List.from(response.data)
-      ..sort((a, b) => a.order.compareTo(b.order));
-    final updatedPhotos = List<XFile?>.filled(6, null);
-    for (int i = 0; i < sortedPhotos.length; i++) {
-      updatedPhotos[i] = XFile(sortedPhotos[i].url);
-    }
-    state = updatedPhotos;
+    state = await ref.read(fetchPhotoUsecaseProvider).execute();
   }
 }
