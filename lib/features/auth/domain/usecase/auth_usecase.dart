@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class AuthUseCase {
-  Future<void> signUp(Map<String, dynamic> data);
   Future<UserResponse> signIn(UserSignInRequest user);
   Future<void> signOut();
   Future<String?> getAccessToken();

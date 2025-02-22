@@ -5,10 +5,12 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/provider/photo_provider.dart';
+import '../../../photo/domain/provider/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/auth_profile_image_widget.dart';
+import 'package:atwoz_app/app/widget/image/profile_image_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +30,10 @@ class _SignUpProfilePicturePageState
   @override
   Widget build(BuildContext context) {
     final List<XFile?> photos = ref.watch(photoProvider);
+    // 로그인하기 귀찮을 때 사용
+    // ref
+    //     .read(authUsecaseProvider)
+    //     .signIn(UserSignInRequest(phoneNumber: '010-1111-1111'));
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -82,7 +88,7 @@ class _SignUpProfilePicturePageState
                         ),
                         itemCount: photos.length,
                         itemBuilder: (context, index) {
-                          return AuthProfileImageWidget(
+                          return ProfileImageWidget(
                             imageFile: photos[index],
                             onPickImage: () async {
                               final pickedPhoto = await ref

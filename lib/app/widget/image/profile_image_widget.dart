@@ -8,13 +8,13 @@ import 'package:atwoz_app/app/widget/image/default_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AuthProfileImageWidget extends StatelessWidget {
+class ProfileImageWidget extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback onPickImage;
   final VoidCallback? onRemoveImage;
   final bool isRepresentative;
 
-  const AuthProfileImageWidget({
+  const ProfileImageWidget({
     super.key,
     this.imageFile,
     required this.onPickImage,

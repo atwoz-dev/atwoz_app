@@ -1,5 +1,5 @@
 import 'package:atwoz_app/core/util/permission_handler.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,7 +19,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
-    fetchProfileImages(); // 앱 시작 시 프로필 사진 불러오기
+    Future.microtask(fetchProfileImages); // 화면 진입 시 한 번 실행
     return List.filled(6, null); // 초기화 상태: 6개의 null 값
   }
 
@@ -53,30 +53,30 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     final updatedPhotos = List<XFile?>.from(state);
     updatedPhotos[index] = photo;
     state = updatedPhotos;
-    await ref.read(authUsecaseProvider).uploadProfilePhotos(state);
+
+    await ref.read(uploadPhotoUsecaseProvider).call(state);
   }
 
   // 사진 삭제
   Future<void> deletePhoto(int index) async {
-    final profileImages =
-        await ref.read(authUsecaseProvider).fetchProfileImages();
-    if (profileImages == null || profileImages.data.isEmpty) {
-      print("❌ 삭제할 사진의 ID를 찾을 수 없음 (등록된 사진 없음)");
-      return;
+    final imageToDelete = state[index];
+    if (imageToDelete != null && imageToDelete.path.startsWith('http')) {
+      final profileData = await ref.read(fetchPhotoUsecaseProvider).call();
+      final profileImage = profileData?.data.firstWhere(
+        (image) => image.url == imageToDelete.path,
+      );
+
+      if (profileImage != null) {
+        await ref.read(deletePhotoUsecaseProvider).call(profileImage.id);
+      }
     }
-
-    // 삭제할 사진의 ID 찾기 (state[index]의 path가 S3 URL과 일치하는 데이터)
-    final imageToDelete = profileImages.data.firstWhere(
-      (image) => image.url == state[index]?.path,
-    );
-
-    await ref.read(authUsecaseProvider).deleteProfilePhoto(imageToDelete.id);
 
     final updatedPhotos = List<XFile?>.from(state);
     updatedPhotos[index] = null;
     state = updatedPhotos;
   }
 
+  // 사진 선택
   Future<XFile?> pickPhoto(ImageSource source) async {
     try {
       final permissionStatus =
@@ -92,8 +92,9 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
+  // 프로필 사진 불러오기 (화면 진입 시 한 번 실행)
   Future<void> fetchProfileImages() async {
-    final response = await ref.read(authUsecaseProvider).fetchProfileImages();
+    final response = await ref.read(fetchPhotoUsecaseProvider).call();
     if (response == null) return;
 
     final sortedPhotos = List.from(response.data)
