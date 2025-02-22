@@ -26,14 +26,6 @@ class SignUpProfilePicturePage extends ConsumerStatefulWidget {
 class _SignUpProfilePicturePageState
     extends ConsumerState<SignUpProfilePicturePage> {
   @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(
-        () => ref.read(photoProvider.notifier).fetchProfileImages());
-  }
-
-  @override
   Widget build(BuildContext context) {
     final List<XFile?> photos = ref.watch(photoProvider);
 
@@ -100,16 +92,14 @@ class _SignUpProfilePicturePageState
                                 // 사진 업로드
                                 await ref
                                     .read(photoProvider.notifier)
-                                    .updatePhoto(index, pickedPhoto,
-                                        PhotoUpdateAction.upload);
+                                    .uploadPhoto(index, pickedPhoto);
                               }
                             },
                             // 사진 삭제
                             onRemoveImage: () async {
                               await ref
                                   .read(photoProvider.notifier)
-                                  .updatePhoto(
-                                      index, null, PhotoUpdateAction.delete);
+                                  .deletePhoto(index);
                             },
                             isRepresentative: index == 0,
                           );
