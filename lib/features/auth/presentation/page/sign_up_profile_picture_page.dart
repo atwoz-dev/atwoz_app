@@ -87,18 +87,18 @@ class _SignUpProfilePicturePageState
                               final pickedPhoto = await ref
                                   .read(photoProvider.notifier)
                                   .pickPhoto(ImageSource.gallery);
+
                               if (pickedPhoto != null) {
-                                // 사진 업로드
-                                await ref
+                                ref
                                     .read(photoProvider.notifier)
-                                    .uploadPhoto(index, pickedPhoto);
+                                    .updateState(index, pickedPhoto);
                               }
                             },
                             // 사진 삭제
                             onRemoveImage: () async {
-                              await ref
+                              ref
                                   .read(photoProvider.notifier)
-                                  .deletePhoto(index);
+                                  .updateState(index, null);
                             },
                             isRepresentative: index == 0,
                           );

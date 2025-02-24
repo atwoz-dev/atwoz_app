@@ -44,7 +44,7 @@ class SignUpProcessState with _$SignUpProcessState {
       : null;
 
   get unwritten {
-    final fields = {
+    final Map<String, dynamic> fields = {
       'selectedYear': selectedYear,
       'selectedHeight': selectedHeight,
       'selectedJob': selectedJob,

@@ -3,9 +3,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/base_usecase.dart';
 
-class UploadPhotoUseCase extends BaseUseCase<List<XFile?>, List<XFile?>> {
+class UploadPhotosUseCase extends BaseUseCase<List<XFile?>, List<XFile?>> {
   final Ref ref;
-  UploadPhotoUseCase(this.ref);
+  UploadPhotosUseCase(this.ref);
 
   @override
   Future<List<XFile?>> execute(List<XFile?> params) async {
@@ -14,4 +14,4 @@ class UploadPhotoUseCase extends BaseUseCase<List<XFile?>, List<XFile?>> {
   }
 }
 
-final uploadPhotoUsecaseProvider = Provider((ref) => UploadPhotoUseCase(ref));
+final uploadPhotosUsecaseProvider = Provider((ref) => UploadPhotosUseCase(ref));

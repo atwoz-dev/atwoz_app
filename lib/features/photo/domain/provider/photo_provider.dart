@@ -19,6 +19,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
+    // TODO: 회원가입 떄는 필요 없음
     Future.microtask(fetchProfileImages); // 화면 진입 시 한 번 실행
     return List.filled(6, null); // 초기화 상태: 6개의 null 값
   }
@@ -48,16 +49,24 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 사진 업로드
-  Future<void> uploadPhoto(int index, XFile? photo) async {
+  // 사진 다건 업로드
+  Future<void> uploadPhotos(int index, List<XFile?> photos) async {
+    state = photos;
+
+    await ref.read(uploadPhotosUsecaseProvider).execute(state);
+  }
+
+// 사진 단건 업로드
+  Future<void> uploadSinglePhoto(int index, XFile photo) async {
     final updatedPhotos = List<XFile?>.from(state);
     updatedPhotos[index] = photo;
     state = updatedPhotos;
 
-    await ref.read(uploadPhotoUsecaseProvider).execute(state);
+    await ref.read(uploadSinglePhotoUseCaseProvider).execute((index, photo));
   }
 
-  // 사진 삭제
+  // TODO: id 조회 안 돌리고 백엔드에서 받아오기
+  // 사진 단건 삭제
   Future<void> deletePhoto(int index) async {
     // 삭제할 사진이 없으면 바로 종료
     final imageToDelete = state[index];
@@ -90,5 +99,12 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   // 프로필 사진 불러오기 (화면 진입 시 한 번 실행)
   Future<void> fetchProfileImages() async {
     state = await ref.read(fetchPhotoUsecaseProvider).execute();
+  }
+
+  // UI만 업데이트
+  void updateState(int index, XFile? photo) {
+    final updatedPhotos = List<XFile?>.from(state);
+    updatedPhotos[index] = photo;
+    state = updatedPhotos;
   }
 }

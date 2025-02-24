@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
@@ -17,7 +18,45 @@ final photoRepositoryProvider = Provider<PhotoRepository>((ref) {
 class PhotoRepository extends BaseRepository {
   PhotoRepository(Ref ref) : super(ref, '/profileimage');
 
-  // 프로필 사진 업로드
+  // 프로필 사진 단건 업로드
+  Future<void> uploadSinglePhoto(int index, XFile photo) async {
+    final fileExists = await File(photo.path).exists();
+    if (!fileExists) {
+      Log.d("❌ 파일이 존재하지 않음: ${photo.path}");
+      return;
+    }
+
+    final mimeType = lookupMimeType(photo.path) ?? 'application/octet-stream';
+    final multipartFile = await MultipartFile.fromFile(
+      photo.path,
+      filename: basename(photo.path),
+      contentType: MediaType.parse(mimeType),
+    );
+
+    final FormData formData = FormData();
+
+    // 파일 추가 (배열 형식 유지)
+    formData.files.add(MapEntry("requests[0].image", multipartFile));
+
+    // JSON 데이터 개별 필드로 추가
+    formData.fields
+        .add(MapEntry("requests[0].isPrimary", index == 0 ? "true" : "false"));
+    formData.fields.add(MapEntry("requests[0].order", index.toString()));
+
+    try {
+      Log.d("단건 업로드 요청 데이터: ${formData.fields}");
+
+      await apiService.postFormData(
+        path,
+        data: formData,
+        requiresAuthToken: true,
+      );
+    } catch (e) {
+      Log.d("단건 사진 업로드 중 오류 발생: $e");
+    }
+  }
+
+  // 프로필 사진 다건 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
     final List<MultipartFile> files = [];
     final Map<String, String> fields = {};
@@ -72,27 +111,24 @@ class PhotoRepository extends BaseRepository {
     });
 
     try {
-      final response = await apiService.postFormData(
+      await apiService.postFormData(
         path,
         data: formData,
         requiresAuthToken: true,
       );
-
-      Log.d("✅ 사진 업로드 성공: ${response.toString()}");
     } catch (e) {
-      Log.d("❌ 사진 업로드 중 오류 발생: $e");
+      Log.d("사진 업로드 중 오류 발생: $e");
     }
   }
 
+  // TODO: 백엔등세ㅓ
   // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
-      final response = await apiService.deleteJson(
+      await apiService.deleteJson(
         '$path/$id',
         requiresAuthToken: true,
       );
-
-      Log.d("✅ 프로필 이미지 삭제 성공: ${response.toString()}");
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
     }
