@@ -59,10 +59,10 @@ class _ProfileHeadInformation extends ConsumerWidget {
               address: userInfo.address,
               hobbies: userInfo.hobbies,
               chatEnabled: chatEnabled,
-              favoriteUser: userInfo.favoriteUser,
-              onFavoriteChanged: (favorite) => ref
+              favoriteType: userInfo.favoriteType,
+              onFavoriteTypeChanged: (type) => ref
                   .read(profileNotifierProvider.notifier)
-                  .favorite = favorite,
+                  .favoriteType = type,
             ),
           ),
         ],

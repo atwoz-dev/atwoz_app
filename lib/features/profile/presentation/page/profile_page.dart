@@ -50,7 +50,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   void _handleStatusChanged(MatchStatus status) async {
-    await Future.microtask(() {});
     if (!mounted) return;
 
     switch (status) {

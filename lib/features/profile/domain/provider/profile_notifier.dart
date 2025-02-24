@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'profile_state.dart';
@@ -38,9 +39,9 @@ class ProfileNotifier extends _$ProfileNotifier {
     state = state.copyWith(message: message);
   }
 
-  set favorite(bool favorite) {
+  set favoriteType(FavoriteType type) {
     state = state.copyWith(
-      profile: state.profile?.copyWith(favoriteUser: favorite),
+      profile: state.profile?.copyWith(favoriteType: type),
     );
   }
 }
