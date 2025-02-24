@@ -5,10 +5,10 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/core/state/base_widget_state.dart';
 
 class SelectionWidget extends StatefulWidget {
-  final List<String> options; // 선택지 리스트
+  final List<String> options;
   final Color? activeColor;
   final Color? inactiveColor;
-  final ValueChanged<String>? onChange; // 선택값 변경 콜백 추가
+  final ValueChanged<String>? onChange;
 
   const SelectionWidget({
     super.key,
@@ -23,18 +23,13 @@ class SelectionWidget extends StatefulWidget {
 }
 
 class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
-  String? _selectedValue; // 현재 선택된 값
+  String? _selectedValue;
 
   @override
   void initState() {
     super.initState();
 
-    // 예외 처리: options가 비어있으면 리턴
-    if (widget.options.isEmpty) {
-      return;
-    }
-
-    _selectedValue = widget.options.first;
+    _selectedValue = widget.options.firstOrNull;
   }
 
   @override
@@ -45,9 +40,9 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
     final textColorUnselected = Palette.colorGrey500;
 
     return Container(
-      height: 50, // 전체 높이 설정
+      height: 50,
       decoration: BoxDecoration(
-        color: inactiveColor, // 배경색 설정
+        color: inactiveColor,
         borderRadius: Dimens.buttonRadius,
       ),
       child: Row(
