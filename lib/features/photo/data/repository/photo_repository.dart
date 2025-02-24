@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
@@ -121,7 +120,6 @@ class PhotoRepository extends BaseRepository {
     }
   }
 
-  // TODO: 백엔등세ㅓ
   // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
@@ -138,10 +136,8 @@ class PhotoRepository extends BaseRepository {
   Future<ProfileImageResponse?> fetchProfileImages() async {
     try {
       final response = await apiService.getJson(path, requiresAuthToken: true);
-
       final jsonResponse = response;
       final profileImageResponse = ProfileImageResponse.fromJson(jsonResponse);
-
       Log.d("✅ 프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
       return profileImageResponse;
     } catch (e) {

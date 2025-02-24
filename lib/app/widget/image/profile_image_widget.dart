@@ -13,6 +13,7 @@ class ProfileImageWidget extends StatelessWidget {
   final VoidCallback onPickImage;
   final VoidCallback? onRemoveImage;
   final bool isRepresentative;
+  final bool isUpdated;
 
   const ProfileImageWidget({
     super.key,
@@ -20,6 +21,7 @@ class ProfileImageWidget extends StatelessWidget {
     required this.onPickImage,
     this.onRemoveImage, // 콜백 초기화
     this.isRepresentative = false,
+    this.isUpdated = false,
   });
 
   @override
@@ -42,6 +44,7 @@ class ProfileImageWidget extends StatelessWidget {
               child: imageFile != null
                   ? isNetworkImage
                       ? DefaultImage(
+                          isUpdated: isUpdated,
                           imageURL: imageFile!.path, // S3 URL 표시
                           fit: BoxFit.cover)
                       : Image.file(
