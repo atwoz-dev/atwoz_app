@@ -1,9 +1,12 @@
+import 'package:atwoz_app/core/util/permission_handler.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../util/permission_handler.dart'; // 통합된 권한 로직 사용
 
 part 'photo_provider.g.dart';
+
+enum PhotoUpdateAction { upload, delete }
 
 @riverpod
 class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
@@ -44,14 +47,38 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 특정 인덱스의 사진을 업데이트하는 메서드.
-  Future<void> updatePhoto(int index, XFile? photo) async {
-    final updatedPhotos = List<XFile?>.from(state);
-    updatedPhotos[index] = photo;
-    state = updatedPhotos; // 올바르게 상태 업데이트
+  // 사진 다건 업로드
+  Future<void> uploadPhotos(int index, List<XFile?> photos) async {
+    state = photos;
+
+    await ref.read(uploadPhotosUsecaseProvider).execute(state);
   }
 
-// 사용자가 사진을 선택할 수 있도록 트리거하는 메서드
+// 사진 단건 업로드
+  Future<void> uploadSinglePhoto(int index, XFile photo) async {
+    final updatedPhotos = List<XFile?>.from(state);
+    updatedPhotos[index] = photo;
+    state = updatedPhotos;
+
+    await ref.read(uploadSinglePhotoUseCaseProvider).execute((index, photo));
+  }
+
+  // TODO: id 조회 안 돌리고 백엔드에서 받아오기
+  // 사진 단건 삭제
+  Future<void> deletePhoto(int index) async {
+    // 삭제할 사진이 없으면 바로 종료
+    final imageToDelete = state[index];
+    if (imageToDelete == null) return;
+
+    // UI부터 즉시 업데이트
+    final updatedPhotos = List<XFile?>.from(state);
+    updatedPhotos[index] = null;
+    state = updatedPhotos;
+
+    await ref.read(deletePhotoUsecaseProvider).execute(imageToDelete);
+  }
+
+  // 사진 선택
   Future<XFile?> pickPhoto(ImageSource source) async {
     try {
       final permissionStatus =
@@ -60,12 +87,22 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
         print("권한이 허용되지 않았습니다.");
         return null;
       }
-
-      final photo = await _imagePicker.pickImage(source: source);
-      return photo;
+      return await _imagePicker.pickImage(source: source);
     } catch (e) {
       print("사진 선택 중 오류 발생: $e");
       return null;
     }
+  }
+
+  // 프로필 사진 불러오기
+  Future<void> fetchProfileImages() async {
+    state = await ref.read(fetchPhotoUsecaseProvider).execute();
+  }
+
+  // UI만 업데이트
+  void updateState(int index, XFile? photo) {
+    final updatedPhotos = List<XFile?>.from(state);
+    updatedPhotos[index] = photo;
+    state = updatedPhotos;
   }
 }

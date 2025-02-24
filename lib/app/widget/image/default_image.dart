@@ -20,6 +20,7 @@ class DefaultImage extends ConsumerWidget {
     this.fit = BoxFit.cover,
     this.borderRadius = Dimens.imageRadius,
     this.color,
+    this.isUpdated = false, // 변경된 이미지인지 체크하는 플래그
   });
 
   const DefaultImage.square({
@@ -29,6 +30,7 @@ class DefaultImage extends ConsumerWidget {
     this.fit = BoxFit.cover,
     this.borderRadius = Dimens.imageRadius,
     this.color,
+    this.isUpdated = false,
   })  : width = size,
         height = size;
 
@@ -38,6 +40,7 @@ class DefaultImage extends ConsumerWidget {
   final BoxFit fit;
   final BorderRadiusGeometry borderRadius;
   final Color? color;
+  final bool isUpdated;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,12 +52,19 @@ class DefaultImage extends ConsumerWidget {
       );
     }
 
+    // 이미지 변경 시 timestamp를 추가해 캐싱 무효화
+    // 변경된 이미지에만 timestamp 추가됨
+    final updatedImageUrl = isUpdated
+        ? "$imageURL?timestamp=${DateTime.now().millisecondsSinceEpoch}"
+        : imageURL;
+
+    print('일치 여부: ${imageURL == updatedImageUrl}');
     return ClipRRect(
         borderRadius: borderRadius,
         child: ColoredBox(
           color: context.palette.shadow,
           child: CachedNetworkImage(
-            imageUrl: imageURL!,
+            imageUrl: updatedImageUrl!, // 변경된 URL 적용
             width: width,
             height: height,
             fit: fit,
