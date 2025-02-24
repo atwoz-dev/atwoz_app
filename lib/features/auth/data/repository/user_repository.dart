@@ -1,4 +1,5 @@
 import 'dart:convert';
+// import 'dart:io';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_photo_upload_request.dart';
@@ -9,6 +10,8 @@ import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:image/image.dart' as img;
+// import 'package:path_provider/path_provider.dart';
 
 class UserRepository extends BaseRepository {
   UserRepository(Ref ref) : super(ref, '/member');
@@ -26,12 +29,6 @@ class UserRepository extends BaseRepository {
       requiresAuthToken: false,
     );
 
-    final String? accessToken =
-        await ref.read(authUsecaseProvider).getAccessToken();
-    final String? refreshToken =
-        await ref.read(authUsecaseProvider).getRefreshToken();
-    print('🔐 액세스: $accessToken');
-    print('🔐 리프레시: $refreshToken');
     await ref.read(authUsecaseProvider).getRefreshToken();
 
     final userResponse = UserResponse.fromJson(response['data']);
@@ -43,6 +40,21 @@ class UserRepository extends BaseRepository {
         '$path/logout',
         requiresAuthToken: true,
       );
+  // TODO: 백엔드에서 허용 용량 증가 후 완전히 삭제
+  // Future<File> resizeImage(File file) async {
+  //   final fileSize = await file.length();
+  //   print("📂 파일 크기: ${fileSize / (1024 * 1024)} MB");
+  //   final bytes = await file.readAsBytes();
+  //   final image = img.decodeImage(bytes);
+  //   final resized = img.copyResize(image!, width: 800); // 너비 800px로 줄이기
+  //   final tempDir = await getTemporaryDirectory();
+  //   final resizedFile =
+  //       File('${tempDir.path}/resized_${file.path.split('/').last}')
+  //         ..writeAsBytesSync(img.encodeJpg(resized, quality: 85));
+  //   final resizedFileSize = await resizedFile.length();
+  //   print("📂 리사이즈된 파일 크기: ${resizedFileSize / (1024 * 1024)} MB");
+  //   return resizedFile;
+  // }
 
   // 프로필 사진 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
@@ -74,7 +86,8 @@ class UserRepository extends BaseRepository {
       );
 
       requestList.add(request);
-
+      // final resizedFile = await resizeImage(File(photo.path));
+      // final file = await MultipartFile.fromFile(resizedFile.path);
       final file = await MultipartFile.fromFile(photo.path);
       formData.files.add(MapEntry("files", file));
     }

@@ -16,16 +16,6 @@ class AuthState extends _$AuthState {
     return const AuthProcessState();
   }
 
-  Future<void> signIn(String phoneNumber) async {
-    state = state.copyWith(isLoading: true);
-    try {
-      await authUseCase.signIn(UserSignInRequest(phoneNumber: phoneNumber));
-      state = state.copyWith(isSignedIn: true, isLoading: false);
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
-    }
-  }
-
   void reset() {
     state = const AuthProcessState();
   }

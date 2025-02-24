@@ -12,7 +12,7 @@ class SignUpProcessState with _$SignUpProcessState {
   const factory SignUpProcessState({
     @Default(1) int currentStep,
     @Default(null) String? nickname,
-    @Default(null) GenderEnum? selectedGender, // 변경: Enum 타입 적용
+    @Default(GenderEnum.female) GenderEnum selectedGender, // 변경: Enum 타입 적용
     @Default(false) bool isLoading,
     @Default(null) String? error,
     @Default(null) int? selectedYear,
