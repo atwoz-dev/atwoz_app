@@ -19,8 +19,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
-    // TODO: 회원가입 떄는 필요 없음
-    Future.microtask(fetchProfileImages); // 화면 진입 시 한 번 실행
     return List.filled(6, null); // 초기화 상태: 6개의 null 값
   }
 
@@ -96,7 +94,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 프로필 사진 불러오기 (화면 진입 시 한 번 실행)
+  // 프로필 사진 불러오기
   Future<void> fetchProfileImages() async {
     state = await ref.read(fetchPhotoUsecaseProvider).execute();
   }
