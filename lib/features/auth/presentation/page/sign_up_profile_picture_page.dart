@@ -15,18 +15,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SignUpProfilePicturePage extends ConsumerStatefulWidget {
+class SignUpProfilePicturePage extends ConsumerWidget {
   const SignUpProfilePicturePage({super.key});
 
   @override
-  ConsumerState<SignUpProfilePicturePage> createState() =>
-      _SignUpProfilePicturePageState();
-}
-
-class _SignUpProfilePicturePageState
-    extends ConsumerState<SignUpProfilePicturePage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<XFile?> photos = ref.watch(photoProvider);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -95,7 +88,7 @@ class _SignUpProfilePicturePageState
                               }
                             },
                             // 사진 삭제
-                            onRemoveImage: () async {
+                            onRemoveImage: () {
                               ref
                                   .read(photoProvider.notifier)
                                   .updateState(index, null);

@@ -56,9 +56,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
 
 // 사진 단건 업로드
   Future<void> uploadSinglePhoto(int index, XFile photo) async {
-    final updatedPhotos = List<XFile?>.from(state);
-    updatedPhotos[index] = photo;
-    state = updatedPhotos;
+    state = [...state]..[index] = photo;
 
     await ref.read(uploadSinglePhotoUseCaseProvider).execute((index, photo));
   }
@@ -67,13 +65,11 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   // 사진 단건 삭제
   Future<void> deletePhoto(int index) async {
     // 삭제할 사진이 없으면 바로 종료
-    final imageToDelete = state[index];
+    final imageToDelete = state.elementAtOrNull(index);
     if (imageToDelete == null) return;
 
     // UI부터 즉시 업데이트
-    final updatedPhotos = List<XFile?>.from(state);
-    updatedPhotos[index] = null;
-    state = updatedPhotos;
+    state = [...state]..[index] = null;
 
     await ref.read(deletePhotoUsecaseProvider).execute(imageToDelete);
   }
@@ -101,8 +97,8 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
 
   // UI만 업데이트
   void updateState(int index, XFile? photo) {
-    final updatedPhotos = List<XFile?>.from(state);
-    updatedPhotos[index] = photo;
+    final updatedPhotos = [...state]..[index] = photo;
+
     state = updatedPhotos;
   }
 }

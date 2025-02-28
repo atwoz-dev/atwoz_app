@@ -7,21 +7,22 @@ class FetchPhotoUseCase extends BaseUseCase<List<XFile?>, void> {
   final Ref ref;
   FetchPhotoUseCase(this.ref);
 
+  static const int _maxPhotos = 6;
+
   @override
   Future<List<XFile?>> execute([void params]) async {
     final response =
         await ref.read(photoRepositoryProvider).fetchProfileImages();
-    if (response == null) return List.filled(6, null);
+    if (response == null) return List.filled(_maxPhotos, null);
 
     // order 순으로 정렬
-    final sortedPhotos = List.from(response.data)
+    final sortedPhotos = response.data.toList()
       ..sort((a, b) => a.order.compareTo(b.order));
 
-    final updatedPhotos = List<XFile?>.filled(6, null);
-    for (int i = 0; i < sortedPhotos.length; i++) {
-      updatedPhotos[i] = XFile(sortedPhotos[i].url);
-    }
-    return updatedPhotos;
+    return [
+      ...sortedPhotos.take(_maxPhotos).map((photo) => XFile(photo.url)),
+      ...List.filled(_maxPhotos - sortedPhotos.length, null)
+    ];
   }
 }
 

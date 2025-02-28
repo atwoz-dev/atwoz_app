@@ -15,6 +15,7 @@ import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:collection/collection.dart';
 
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
@@ -28,7 +29,7 @@ Widget buildBirthInput({
     maxValue: 2022,
     defaultValue: 1997,
     unit: '년',
-    onValueChanged: (year) => signUpNotifier.updateSelectedYear(year),
+    onValueChanged: signUpNotifier.updateSelectedYear,
   );
 }
 
@@ -43,7 +44,7 @@ Widget buildHeightInput({
     maxValue: 200,
     defaultValue: 170,
     unit: 'cm',
-    onValueChanged: (height) => signUpNotifier.updateSelectedHeight(height),
+    onValueChanged: signUpNotifier.updateSelectedHeight,
   );
 }
 
@@ -54,9 +55,7 @@ Widget buildJobInput({
   return SingleSelectListChip(
     options: jobOptions,
     selectedOption: selectedJob,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateSelectedJob(updatedSelection);
-    },
+    onSelectionChanged: signUpNotifier.updateSelectedJob,
   );
 }
 
@@ -75,8 +74,8 @@ class LocationInputWidget extends StatefulWidget {
 }
 
 class _LocationInputWidgetState extends State<LocationInputWidget> {
-  late TextEditingController locationController;
-  late FocusNode locationFocusNode;
+  late final TextEditingController locationController;
+  late final FocusNode locationFocusNode;
 
   @override
   void initState() {
@@ -84,17 +83,13 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
     locationController = TextEditingController(text: widget.selectedLocation);
     locationFocusNode = FocusNode();
 
-    // Listener 추가
     locationController.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
+      if (mounted) setState(() {});
     });
   }
 
   @override
   void dispose() {
-    // 리스너 제거 및 리소스 정리
     locationController.dispose();
     locationFocusNode.dispose();
     super.dispose();
@@ -143,8 +138,7 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
       (e) => e['city'] == city,
       orElse: () => {'regions': []},
     );
-    return List<String>.from(
-        cityData['regions'].map((region) => '$city $region'));
+    return [...cityData['regions'].map((region) => '$city $region')];
   }
 
   @override
@@ -227,7 +221,7 @@ Widget buildEducationInput({
   required HighestEducationEnum? selectedEducation,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = educationMap.values.toList();
+  final options = [...educationMap.values];
 
   return SingleSelectListChip(
     options: options,
@@ -326,7 +320,8 @@ Widget buildSmokingInput({
   required SmokingStatusEnum? selectedSmoking,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = smokingMap.values.toList();
+  final options = [...smokingMap.values];
+
   return SingleSelectListChip(
     options: options,
     selectedOption:
@@ -341,7 +336,8 @@ Widget buildDrinkingInput({
   required DrinkingStatusEnum? selectedDrinking,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = drinkingMap.values.toList();
+  final options = [...drinkingMap.values];
+
   return SingleSelectListChip(
     options: options,
     selectedOption:
@@ -356,7 +352,7 @@ Widget buildReligionInput({
   required ReligionEnum? selectedReligion,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = religionMap.values.toList(); // 한글 리스트로 변환
+  final options = [...religionMap.values]; // 한글 리스트로 변환
   return SingleSelectListChip(
     options: options,
     selectedOption:
@@ -374,8 +370,6 @@ Widget buildHobbiesInput({
   return ListChip(
     options: hobbies,
     selectedOptions: selectedHobbies,
-    onSelectionChanged: (updatedSelections) {
-      signUpNotifier.updateHobbies(updatedSelections);
-    },
+    onSelectionChanged: signUpNotifier.updateHobbies,
   );
 }
