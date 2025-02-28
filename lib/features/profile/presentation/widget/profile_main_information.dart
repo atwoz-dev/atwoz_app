@@ -64,11 +64,11 @@ class ProfileMainInformation extends StatelessWidget {
             children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
-          _InteractionButtons(
-            chatEnabled: chatEnabled,
-            favoriteUser: favoriteType.isFavorite,
-            onFavoriteTypeChanged: onFavoriteTypeChanged,
-          ),
+          if (chatEnabled)
+            _InteractionButtons(
+              favoriteUser: favoriteType.isFavorite,
+              onFavoriteTypeChanged: onFavoriteTypeChanged,
+            ),
         ],
       ),
     );
@@ -99,12 +99,10 @@ class _MainHobbyBadge extends StatelessWidget {
 
 class _InteractionButtons extends StatelessWidget {
   const _InteractionButtons({
-    required this.chatEnabled,
     required this.favoriteUser,
     required this.onFavoriteTypeChanged,
   });
 
-  final bool chatEnabled;
   final bool favoriteUser;
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
@@ -115,8 +113,7 @@ class _InteractionButtons extends StatelessWidget {
         Expanded(
           child: DefaultElevatedButton(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            onPressed:
-                chatEnabled ? () => MessageSendBottomSheet.open(context) : null,
+            onPressed: () => MessageSendBottomSheet.open(context),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,

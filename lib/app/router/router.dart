@@ -21,6 +21,7 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certi
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
+import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,6 +57,8 @@ enum AppRoute {
   signUpProfileUpdate('/auth/sign-up/profile-update'),
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
+  @Deprecated('This variable will be removed after design check')
+  profileDesignInspection('/profile-design-inspection'),
   profile('/profile'),
   contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
@@ -117,6 +120,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.interview.path,
       builder: (context, state) => const InterviewPage(),
+    ),
+    GoRoute(
+      path: AppRoute.profileDesignInspection.path,
+      builder: (context, state) => const ProfileDesignInspection(),
     ),
     GoRoute(
       path: AppRoute.profile.path,
@@ -195,12 +202,12 @@ void pop(BuildContext context, [Object? extra]) =>
     Navigator.of(context).pop(extra);
 
 Future<T?> navigate<T>(
-    BuildContext context, {
-      required AppRoute route,
-      NavigationMethod method = NavigationMethod.push,
-      Object? extra,
-      VoidCallback? callback,
-    }) async {
+  BuildContext context, {
+  required AppRoute route,
+  NavigationMethod method = NavigationMethod.push,
+  Object? extra,
+  VoidCallback? callback,
+}) async {
   final goRouter = GoRouter.of(context);
   T? result;
 
