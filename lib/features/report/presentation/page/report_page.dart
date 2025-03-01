@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/outlined_dropdown.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -126,8 +127,8 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
             child: DefaultElevatedButton(
               onPressed: () {
                 // TODO: 신고 로직
-                print('신고 유형: $selectedReportType');
-                print('신고 내용: ${reportContentController.text}');
+                Log.d('신고 유형: $selectedReportType');
+                Log.d('신고 내용: ${reportContentController.text}');
               },
               child: Text(
                 '신고하기',

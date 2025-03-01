@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
@@ -24,8 +25,9 @@ class ApiServiceImpl implements ApiService {
     required this.ref,
     this.enableAuth = false,
     String? baseUrl,
-    this.timeout = Config.timeout,
-  }) : baseUrl = baseUrl ?? Config.baseUrl;
+    Duration? timeout,
+  })  : baseUrl = baseUrl ?? Config.baseUrl,
+        timeout = timeout ?? Config.timeout;
 
   final Ref ref; // Ref를 통해 Provider 관리
   final bool enableAuth;
@@ -115,7 +117,7 @@ class ApiServiceImpl implements ApiService {
                 .read(localStorageProvider)
                 .saveEncrypted('AuthProvider.reToken', refreshToken);
 
-            print("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
+            Log.d("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
           }
         }
       }

@@ -3,6 +3,7 @@ import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
@@ -64,7 +65,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
     await _localStorage.clear();
     await _localStorage.clearEncrypted();
 
-    print("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
+    Log.d("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
   }
 
   // 프로필 사진 업로드
@@ -84,7 +85,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
     try {
       return await _photoRepository.fetchProfileImages();
     } catch (e) {
-      print("❌ 프로필 사진 조회 실패: $e");
+      Log.e("❌ 프로필 사진 조회 실패: $e");
       rethrow;
     }
   }
@@ -113,9 +114,9 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   Future<void> uploadProfile(ProfileUploadRequest profileData) async {
     try {
       await _userRepository.updateProfile(profileData);
-      print("✅ 프로필 업로드 성공");
+      Log.d("✅ 프로필 업로드 성공");
     } catch (e) {
-      print("❌ 프로필 업로드 실패: $e");
+      Log.e("❌ 프로필 업로드 실패: $e");
       rethrow;
     }
   }

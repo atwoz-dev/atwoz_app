@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
@@ -47,7 +48,7 @@ class UserRepository extends BaseRepository {
       final userResponse = UserResponse.fromJson(response['data']);
       return userResponse;
     } catch (e) {
-      print("❌ 프로필 업데이트 실패: $e");
+      Log.e("❌ 프로필 업데이트 실패: $e");
       rethrow;
     }
   }
