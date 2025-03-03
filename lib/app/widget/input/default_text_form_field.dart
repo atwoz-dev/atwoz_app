@@ -45,26 +45,26 @@ class DefaultTextFormField extends TextField {
     super.onEditingComplete,
     this.onFocusChange,
     // Text field
-    this.controller,
-    this.focusNode,
-    this.keyboardType = TextInputType.text,
-    this.textInputAction = TextInputAction.done,
-    this.textCapitalization = TextCapitalization.sentences,
-    this.style,
-    this.textAlign = TextAlign.start,
-    this.textAlignVertical = TextAlignVertical.center,
-    this.textDirection,
-    this.readOnly = false,
-    this.showCursor = true,
-    this.autofocus = false,
-    this.autocorrect = true,
-    this.obscureText = false,
-    this.enableSuggestions = true,
-    this.enabled,
-    this.minLines,
-    this.maxLength = 200,
-    this.onChanged,
-    this.inputFormatters,
+    super.controller,
+    super.focusNode,
+    super.keyboardType = TextInputType.text,
+    super.textInputAction = TextInputAction.done,
+    super.textCapitalization = TextCapitalization.sentences,
+    super.style,
+    super.textAlign = TextAlign.start,
+    super.textAlignVertical = TextAlignVertical.center,
+    super.textDirection,
+    super.readOnly = false,
+    super.showCursor = true,
+    super.autofocus = false,
+    super.autocorrect = true,
+    super.obscureText = false,
+    super.enableSuggestions = true,
+    super.enabled,
+    super.minLines,
+    super.maxLength = 200,
+    super.onChanged,
+    super.inputFormatters,
     // Decoration
     this.fillColor,
     this.prefix,
@@ -85,12 +85,12 @@ class DefaultTextFormField extends TextField {
     this.disabledBorder,
     this.errorBorder,
     // Scroll
-    this.expands = false,
-    this.maxLines = 1,
-    this.scrollController,
-    this.scrollPhysics,
+    super.expands = false,
+    super.maxLines = 1,
+    super.scrollController,
+    super.scrollPhysics,
     this.enableInteractiveSelectionOption = true,
-    this.onTap,
+    super.onTap,
     this.showCharacterCount = false, // 글자 수 카운터 기본값 false
     this.characterCountStyle,
   });
@@ -123,31 +123,6 @@ class DefaultTextFormField extends TextField {
   final bool? isDense;
   final bool enableInteractiveSelectionOption;
   // TextField
-  final TextEditingController? controller;
-  final FocusNode? focusNode;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-  final TextCapitalization textCapitalization;
-  final TextStyle? style;
-  final TextAlign textAlign;
-  final TextAlignVertical? textAlignVertical;
-  final TextDirection? textDirection;
-  final bool readOnly;
-  final bool showCursor;
-  final bool autofocus;
-  final bool autocorrect;
-  final bool obscureText;
-  final bool enableSuggestions;
-  final bool? enabled;
-  final int? minLines;
-  final int maxLines;
-  final int maxLength;
-  final ValueChanged<String>? onChanged;
-  final List<TextInputFormatter>? inputFormatters;
-  final GestureTapCallback? onTap;
-  final bool expands;
-  final ScrollController? scrollController;
-  final ScrollPhysics? scrollPhysics;
   final bool showCharacterCount; // 글자 수 카운터 표시 여부
   final TextStyle? characterCountStyle; // 글자 수 카운터 스타일
 
@@ -278,7 +253,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           padding: EdgeInsets.only(left: defaultPadding), child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
-      suffix: widget.suffix, // 여기에서 suffix를 명시적으로 설정
+      suffix: widget.suffix,
       suffixIcon: widget.suffixIcon,
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,
@@ -311,7 +286,8 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
       hintStyle: widget.hintStyle ?? Fonts.body02Medium(Palette.colorGrey500),
       errorText: widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
-      errorStyle: Fonts.body03Regular(palette.error).copyWith(height: 1.5),
+      errorStyle:
+          Fonts.body03Regular(palette.error).copyWith(height: 1.5), // 유효성 검증 결과
       label: widget.label,
     );
   }

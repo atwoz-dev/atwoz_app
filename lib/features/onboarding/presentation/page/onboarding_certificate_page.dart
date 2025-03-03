@@ -6,10 +6,13 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key});
@@ -30,6 +33,7 @@ class OnboardingCertificationPageState
   @override
   void initState() {
     super.initState();
+
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         _validateInput(_phoneController.text); // 포커스 아웃 시 유효성 검사
@@ -59,6 +63,8 @@ class OnboardingCertificationPageState
 
   @override
   Widget buildPage(BuildContext context) {
+    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
+    final phoneNumber = args?['phoneNumber'] ?? '';
     final bool isButtonEnabled =
         _phoneController.text.isNotEmpty && validationError == null;
 
@@ -142,8 +148,10 @@ class OnboardingCertificationPageState
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
               onPressed: isButtonEnabled
-                  ? () {
-                      print("인증번호 요청");
+                  ? () async {
+                      final authUseCase = ref.read(authUsecaseProvider);
+                      await authUseCase
+                          .signIn(UserSignInRequest(phoneNumber: phoneNumber));
                       navigate(context, route: AppRoute.signUp);
                     }
                   : null,

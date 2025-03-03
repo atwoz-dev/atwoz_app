@@ -47,7 +47,10 @@ dependencies:
   flutter_dotenv: ^5.2.1
   dio_cookie_manager: ^3.1.1
   cookie_jar: ^4.0.8
+  equatable: ^2.0.7
   intl: ^0.20.1
+  shimmer: ^3.0.0
+  image: ^4.5.2
 
 dev_dependencies:
   flutter_test:
@@ -87,7 +90,7 @@ flutter_native_splash:
   image: "assets/images/logo.png"
   # dark_image: ""
   # background_image: ""
-  color: "#FFFFFF" # 기본 배경 색상"#000000" # 다크 모드 배경 색상
+  color: "#FFFFFF"
   android: true
   ios:
     true
@@ -99,12 +102,13 @@ flutter_native_splash:
 flutter_launcher_icons:
   android: true
   ios: true
+  color: "#00000000"
   remove_alpha_ios: true
   image_path_android: "assets/images/logo.png"
   image_path_ios: "assets/images/logo.png"
   adaptive_icon:
     android: true
     foreground: "assets/images/logo.png"
-    background: "assets/images/app_icon_bg.png" # 배경 이미지 (필요시)
-  # app_icon_bg
-  # background_color: "#FFFFFF"
+    # background: "assets/images/app_icon_bg.png" # 배경 이미지 (필요시)
+    background_color: "#00000000"
+  

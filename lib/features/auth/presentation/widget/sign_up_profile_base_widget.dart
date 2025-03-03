@@ -45,8 +45,8 @@ class _SignUpProfileBaseWidgetState
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
-              begin: (signUpState.currentStep - 1) / 10.0,
-              end: signUpState.currentStep / 10.0,
+              begin: (10 - signUpState.unwritten.length - 1) / 10.0,
+              end: (10 - signUpState.unwritten.length) / 10.0,
             ),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -87,17 +87,23 @@ class _SignUpProfileBaseWidgetState
               Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.05),
                 child: DefaultElevatedButton(
-                  onPressed: signUpProcess.isButtonEnabled()
-                      ? () => signUpProcess.nextStep(context)
-                      : null,
-                  child: Text(
-                    signUpState.currentStep == 10 ? '완료' : '다음',
-                    style: Fonts.body01Medium(
-                      signUpProcess.isButtonEnabled()
-                          ? palette.onPrimary
-                          : Palette.colorGrey400,
-                    ).copyWith(fontWeight: FontWeight.bold),
-                  ),
+                  onPressed:
+                      signUpProcess.isButtonEnabled() && !signUpState.isLoading
+                          ? () async {
+                              await signUpProcess.nextStep(context);
+                            }
+                          : null,
+                  child: signUpState.isLoading
+                      ? const CircularProgressIndicator(
+                          color: Palette.colorPrimary500)
+                      : Text(
+                          signUpState.unwritten.isEmpty ? '완료' : '다음',
+                          style: Fonts.body01Medium(
+                            signUpProcess.isButtonEnabled()
+                                ? palette.onPrimary
+                                : Palette.colorGrey400,
+                          ).copyWith(fontWeight: FontWeight.bold),
+                        ),
                 ),
               ),
             ],

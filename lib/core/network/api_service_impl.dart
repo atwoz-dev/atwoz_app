@@ -1,7 +1,10 @@
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 import 'api_service.dart';
 import 'dio_service.dart';
 import 'logging_interceptor.dart';
@@ -30,6 +33,7 @@ class ApiServiceImpl implements ApiService {
   final Duration timeout;
 
   DioService? _dioService;
+  PersistCookieJar? _cookieJar;
 
   DioService get dioService => _dioService ??= DioService(
         BaseOptions(
@@ -52,27 +56,32 @@ class ApiServiceImpl implements ApiService {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
-
-    // 커스텀
     required String method,
     required String contentType,
     bool requiresAuthToken = true,
     Converter<T>? converter,
-    String? business,
     Map<String, dynamic>? headers,
   }) async {
     try {
       final Map<String, dynamic> finalHeaders = {
-        'accept': 'application/json; charset=utf-8; text/plain; */*',
-        if (business != null) 'Business-Context': business,
+        "Content-Type": "application/json",
+        "Accept": "*/*",
         ...?headers,
       };
 
       if (requiresAuthToken) {
-        final String? token =
+        final String? accessToken =
             await ref.read(authUsecaseProvider).getAccessToken();
-        if (token != null) {
-          finalHeaders.addAll({"Authorization": token});
+
+        await ref.read(localStorageProvider.notifier).initialize(); // 초기화
+        final String? refreshToken =
+            await ref.read(localStorageProvider).getEncrypted('_refreshToken');
+
+        if (accessToken != null) {
+          finalHeaders['Authorization'] = "Bearer $accessToken";
+        }
+        if (refreshToken != null) {
+          finalHeaders['x-refresh-token'] = refreshToken;
         }
       }
 
@@ -90,23 +99,55 @@ class ApiServiceImpl implements ApiService {
         cancelToken: cancelToken,
       );
 
-      if (converter != null) {
-        return converter(response.data);
+      // 🍪n로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 추출
+      if (path.contains("/login")) {
+        final List<String>? setCookieHeaders =
+            response.headers.map['set-cookie'];
+        if (setCookieHeaders != null && setCookieHeaders.isNotEmpty) {
+          final refreshToken = _extractRefreshToken(setCookieHeaders);
+          if (refreshToken != null) {
+            print("Refresh Token 가져오기 성공: $refreshToken");
+
+            // 🍪 쿠키 저장소에 저장
+            await _initializeCookieJar();
+            final Uri uri = Uri.parse(baseUrl.toString());
+            _cookieJar?.saveFromResponse(
+                uri, [Cookie("_refreshToken", refreshToken)]);
+
+            //  `await`을 사용하여 `initialize()` 실행 후 저장
+            await ref.read(localStorageProvider.notifier).initialize();
+            await ref
+                .read(localStorageProvider)
+                .saveEncrypted('AuthProvider.reToken', refreshToken);
+
+            print("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
+          }
+        }
       }
 
       return response.data as T;
     } on DioException catch (e) {
-      String errorMessage = '';
-      if (e.response?.data?['message'] != null) {
-        errorMessage = e.response!.data['message'];
-      }
-      throw DioException(
-        message: errorMessage,
-        response: e.response,
-        requestOptions: e.requestOptions,
-      );
+      throw NetworkException.getException(e);
     } catch (error) {
-      throw NetworkException.getException(error);
+      throw NetworkException.otherException(error.runtimeType);
+    }
+  }
+
+  /// `Set-Cookie`에서 `_refreshToken`을 추출하는 함수
+  String? _extractRefreshToken(List<String> cookies) {
+    for (var cookie in cookies) {
+      final regex = RegExp(r'refresh_token=([^;]+)');
+      final match = regex.firstMatch(cookie);
+      if (match != null) return match.group(1);
+    }
+    return null;
+  }
+
+  /// 쿠키 저장소 초기화
+  Future<void> _initializeCookieJar() async {
+    if (_cookieJar == null) {
+      final appDocDir = await getApplicationDocumentsDirectory();
+      _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
     }
   }
 
@@ -138,7 +179,6 @@ class ApiServiceImpl implements ApiService {
     Converter<T>? converter,
     String? contentType,
     Map<String, String>? headers,
-    String? business,
   }) =>
       request(
         path,
@@ -148,7 +188,6 @@ class ApiServiceImpl implements ApiService {
         requiresAuthToken: requiresAuthToken,
         converter: converter,
         headers: headers,
-        business: business,
       );
 
   @override
@@ -176,7 +215,6 @@ class ApiServiceImpl implements ApiService {
     Json? queryParameters,
     bool requiresAuthToken = true,
     Converter<T>? converter,
-    String? business,
     Map<String, dynamic>? headers,
   }) =>
       request(
@@ -187,7 +225,6 @@ class ApiServiceImpl implements ApiService {
         queryParameters: queryParameters,
         requiresAuthToken: requiresAuthToken,
         converter: converter,
-        business: business,
         headers: headers,
       );
 

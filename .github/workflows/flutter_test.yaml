@@ -86,8 +86,10 @@ jobs:
       # Step 3: GitHub Secrets를 사용하여 .env 파일 생성
       - name: Create .env file
         run: |
-          echo "API_KEY=${{ secrets.FLAVOR }}" >> dev.env
-          echo "DB_URL=${{ secrets.BASE_URL }}" >> dev.env
+      - name: Create .env file
+        run: |
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> dev.env
+          echo "DEEP_LINK_URL=${{ secrets.DEEP_LINK_URL }}" >> dev.env
 
       # Step 4: Flutter 의존성 가져오기
       - name: Get Flutter Dependencies

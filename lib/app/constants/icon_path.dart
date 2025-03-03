@@ -29,6 +29,17 @@ class IconPath {
   static const String store = '$iconsPath/my_store.svg';
   static const String customerCenter = '$iconsPath/my_customer_center.svg';
   static const String setting = '$iconsPath/my_setting.svg';
+  static const String letter = '$iconsPath/letter.svg';
+  static const String like = '$iconsPath/like.svg';
+  static const String heartLine = '$iconsPath/heart_line.svg';
+  static const String bless = '$iconsPath/bless.svg';
+  static const String business = '$iconsPath/business.svg';
+  static const String ruler = '$iconsPath/ruler.svg';
+  static const String school = '$iconsPath/school.svg';
+  static const String smoking = '$iconsPath/smoking.svg';
+  static const String wineglass = '$iconsPath/wineglass.svg';
+  static const String generalFavorite = '$iconsPath/general_favorite.svg';
+  static const String strongFavorite = '$iconsPath/strong_favorite.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

@@ -7,8 +7,10 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
+import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
@@ -21,6 +23,7 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certi
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
+import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,8 +72,12 @@ enum AppRoute {
   signUpProfileUpdate('/auth/sign-up/profile-update'),
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
+  @Deprecated('This variable will be removed after design check')
+  profileDesignInspection('/profile-design-inspection'),
   profile('/profile'),
+  contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
+  introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification');
 
@@ -123,6 +130,10 @@ class HomeBranch {
       builder: (context, state) => const IntroducePage(),
     ),
     GoRoute(
+      path: AppRoute.introduceDetail.path,
+      builder: (context, state) => const IntroduceDetailPage(),
+    ),
+    GoRoute(
       path: AppRoute.introduceNavigation.path,
       builder: (context, state) => const IntroduceNavigationPage(),
     ),
@@ -131,8 +142,21 @@ class HomeBranch {
       builder: (context, state) => const InterviewPage(),
     ),
     GoRoute(
+      path: AppRoute.profileDesignInspection.path,
+      builder: (context, state) => const ProfileDesignInspection(),
+    ),
+    GoRoute(
       path: AppRoute.profile.path,
-      builder: (context, state) => const ProfilePage(),
+      builder: (context, state) {
+        final args = state.extra;
+        return args is bool
+            ? ProfilePage(fromMatchedProfile: args)
+            : const ProfilePage();
+      },
+    ),
+    GoRoute(
+      path: AppRoute.contactSetting.path,
+      builder: (context, state) => const ContactSettingPage(),
     ),
     GoRoute(
       path: AppRoute.notification.path,
@@ -293,7 +317,6 @@ Future<T?> navigate<T>(
   return result;
 }
 
-
 /* < navigate() 메서드 용례 >
 
 // 1. 일반적인 push 동작
@@ -334,4 +357,3 @@ navigate(
   callback: () => print('Navigation completed!'),
 );
  */
-

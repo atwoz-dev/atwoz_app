@@ -1,6 +1,9 @@
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -14,6 +17,9 @@ class ProfileMainInformation extends StatelessWidget {
     required this.mbti,
     required this.address,
     required this.hobbies,
+    required this.chatEnabled,
+    required this.favoriteType,
+    required this.onFavoriteTypeChanged,
   });
 
   final String name;
@@ -21,6 +27,9 @@ class ProfileMainInformation extends StatelessWidget {
   final String mbti;
   final String address;
   final List<String> hobbies;
+  final bool chatEnabled;
+  final FavoriteType favoriteType;
+  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +64,11 @@ class ProfileMainInformation extends StatelessWidget {
             children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
-          const _InteractionButtons(),
+          if (chatEnabled)
+            _InteractionButtons(
+              favoriteUser: favoriteType.isFavorite,
+              onFavoriteTypeChanged: onFavoriteTypeChanged,
+            ),
         ],
       ),
     );
@@ -85,7 +98,13 @@ class _MainHobbyBadge extends StatelessWidget {
 }
 
 class _InteractionButtons extends StatelessWidget {
-  const _InteractionButtons();
+  const _InteractionButtons({
+    required this.favoriteUser,
+    required this.onFavoriteTypeChanged,
+  });
+
+  final bool favoriteUser;
+  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +113,17 @@ class _InteractionButtons extends StatelessWidget {
         Expanded(
           child: DefaultElevatedButton(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
+            onPressed: () => MessageSendBottomSheet.open(context),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.question_mark_rounded,
+                DefaultIcon(
+                  IconPath.letter,
                   size: 20.0,
-                  color: Colors.white,
+                  colorFilter: DefaultIcon.fillColor(
+                    Colors.white,
+                  ),
                 ),
                 const Gap(8.0),
                 Text(
@@ -110,32 +132,46 @@ class _InteractionButtons extends StatelessWidget {
                 ),
               ],
             ),
-            onPressed: () => MessageSendBottomSheet.open(context),
           ),
         ),
         const Gap(8.0),
-        SizedBox(
-          width: 40.0,
-          child: DefaultElevatedButton(
-            padding: const EdgeInsets.all(10.0),
-            primary: context.palette.shadow,
-            onPressed: () {},
-            // TODO(Han): debug code (must be remove before PR)
-            // AnnouncementBottomSheet.open(
-            //   context,
-            //   title: '메시지를 받았어요.',
-            //   subTitle: '상대방의 메시지를 수락하면 서로의 연락처가 공개됩니다.',
-            //   content: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
-            //       '괜찮으시다면 저희 연락 한번 해봐요!',
-            //   submitLabel: '수락',
-            //   onSubmit: () {},
-            //   cancelLabel: '거절',
-            //   onCancel: () {},
-            // ),
-            child: const Icon(
-              Icons.question_mark_rounded,
-              size: 20.0,
-              color: Colors.white,
+        GestureDetector(
+          onTap: () async {
+            if (favoriteUser) {
+              onFavoriteTypeChanged(FavoriteType.none);
+              return;
+            }
+            final favoriteType = await FavoriteTypeSelectDialog.open(context);
+            if (favoriteType == null) return;
+            onFavoriteTypeChanged(favoriteType);
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFFDCDEE3),
+              borderRadius: Dimens.buttonRadius,
+            ),
+            padding: const EdgeInsets.all(12.0),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                DefaultIcon(
+                  IconPath.heart,
+                  size: 20.0,
+                  colorFilter: DefaultIcon.fillColor(Colors.white),
+                ),
+                AnimatedScale(
+                  scale: favoriteUser ? 1 : 0,
+                  duration: Params.animationDurationLow,
+                  curve: Curves.elasticInOut,
+                  child: DefaultIcon(
+                    IconPath.heartFill,
+                    size: null,
+                    colorFilter: DefaultIcon.fillColor(
+                      context.colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

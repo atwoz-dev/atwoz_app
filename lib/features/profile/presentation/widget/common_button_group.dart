@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -10,12 +11,16 @@ class CommonButtonGroup extends StatelessWidget {
     required VoidCallback onSubmit,
     required String cancelLabel,
     required String submitLabel,
+    bool enabledSubmit = true,
+    List<int> weights = const [1, 1],
   }) =>
       CommonButtonGroup.custom(
         onCancel: onCancel,
         onSubmit: onSubmit,
         cancel: Text(cancelLabel),
         submit: Text(submitLabel),
+        enabledSubmit: enabledSubmit,
+        weights: weights,
       );
 
   const CommonButtonGroup.custom({
@@ -24,12 +29,16 @@ class CommonButtonGroup extends StatelessWidget {
     required this.onSubmit,
     required this.cancel,
     required this.submit,
-  });
+    this.enabledSubmit = true,
+    this.weights = const [1, 1],
+  }) : assert(weights.length == 2, '[weights] must be provided in two.');
 
   final VoidCallback onSubmit;
   final Widget submit;
   final VoidCallback onCancel;
   final Widget cancel;
+  final bool enabledSubmit;
+  final List<int> weights;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +47,7 @@ class CommonButtonGroup extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: weights.first,
             child: CommonSecondaryButton(
               onCancel: onCancel,
               cancel: cancel,
@@ -45,8 +55,10 @@ class CommonButtonGroup extends StatelessWidget {
           ),
           const Gap(8.0),
           Expanded(
+            flex: weights.last,
             child: CommonPrimaryButton(
               onSubmit: onSubmit,
+              enabled: enabledSubmit,
               submit: submit,
             ),
           )
@@ -61,21 +73,19 @@ class CommonPrimaryButton extends StatelessWidget {
     super.key,
     required this.onSubmit,
     required this.submit,
+    this.enabled = true,
   });
 
   final VoidCallback onSubmit;
   final Widget submit;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: context.colorScheme.primary,
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        foregroundColor: context.colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
-      ),
-      onPressed: onSubmit,
+    return DefaultElevatedButton(
+      borderRadius: Dimens.buttonRadius,
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      onPressed: enabled ? onSubmit : null,
       child: submit,
     );
   }
@@ -93,13 +103,11 @@ class CommonSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: context.colorScheme.secondary,
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        side: BorderSide(color: context.colorScheme.outline),
-        shape: RoundedRectangleBorder(borderRadius: Dimens.buttonRadius),
-      ),
+    return DefaultOutlinedButton(
+      primary: context.colorScheme.outline,
+      textColor: context.colorScheme.secondary,
+      borderRadius: Dimens.buttonRadius,
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       onPressed: onCancel,
       child: cancel,
     );

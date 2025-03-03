@@ -5,10 +5,10 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/core/state/base_widget_state.dart';
 
 class SelectionWidget extends StatefulWidget {
-  final List<String> options; // 선택지 리스트
+  final List<String> options;
   final Color? activeColor;
   final Color? inactiveColor;
-  final ValueChanged<String>? onChange; // 선택값 변경 콜백 추가
+  final ValueChanged<String>? onChange;
 
   const SelectionWidget({
     super.key,
@@ -23,7 +23,14 @@ class SelectionWidget extends StatefulWidget {
 }
 
 class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
-  String? selectedValue; // 현재 선택된 값
+  String? _selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedValue = widget.options.firstOrNull;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +40,9 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
     final textColorUnselected = Palette.colorGrey500;
 
     return Container(
-      height: 50, // 전체 높이 설정
+      height: 50,
       decoration: BoxDecoration(
-        color: inactiveColor, // 배경색 설정
+        color: inactiveColor,
         borderRadius: Dimens.buttonRadius,
       ),
       child: Row(
@@ -43,21 +50,22 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
         children: widget.options.asMap().entries.map((entry) {
           final index = entry.key;
           final option = entry.value;
-          final isSelected = selectedValue == option;
+          final isSelected = _selectedValue == option;
 
           return Expanded(
             child: GestureDetector(
               onTap: () {
+                if (_selectedValue == option)
+                  return; // 동일한 값이면 불필요한 State 변경 방지
+
                 safeSetState(() {
-                  selectedValue = option;
+                  _selectedValue = option;
                 });
-                // onChange 콜백 호출
-                if (widget.onChange != null) {
-                  widget.onChange!(option);
-                }
+
+                widget.onChange?.call(option);
               },
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300), // 부드러운 애니메이션
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: isSelected ? activeColor : inactiveColor,

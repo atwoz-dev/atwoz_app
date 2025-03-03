@@ -33,7 +33,6 @@ abstract class ApiService {
     required String contentType,
     bool requiresAuthToken = true,
     T Function(dynamic)? converter,
-    String? business,
     Map<String, dynamic>? headers,
   });
 
@@ -50,7 +49,6 @@ abstract class ApiService {
     bool requiresAuthToken = true,
     Converter<T>? converter,
     String? contentType,
-    String? business,
     Map<String, String>? headers,
   });
 
@@ -68,7 +66,6 @@ abstract class ApiService {
     Json? queryParameters,
     bool requiresAuthToken = true,
     Converter<T>? converter,
-    String? business,
     Map<String, dynamic>? headers,
   });
 
