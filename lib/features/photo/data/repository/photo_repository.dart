@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
@@ -18,39 +17,36 @@ final photoRepositoryProvider = Provider<PhotoRepository>((ref) {
 class PhotoRepository extends BaseRepository {
   PhotoRepository(Ref ref) : super(ref, '/profileimage');
 
-  // 프로필 사진 단건 업로드
-  Future<void> uploadSinglePhoto(int index, XFile photo) async {
-    final fileExists = await File(photo.path).exists();
-    if (!fileExists) {
+  // XFile → MultipartFile 변환 함수 (공통 처리)
+  Future<MultipartFile?> _convertToMultipartFile(XFile photo) async {
+    if (!await File(photo.path).exists()) {
       Log.d("❌ 파일이 존재하지 않음: ${photo.path}");
-      return;
+      return null;
     }
 
     final mimeType = lookupMimeType(photo.path) ?? 'application/octet-stream';
-    final multipartFile = await MultipartFile.fromFile(
+    return MultipartFile.fromFile(
       photo.path,
       filename: basename(photo.path),
       contentType: MediaType.parse(mimeType),
     );
+  }
 
-    final FormData formData = FormData();
+  // 프로필 사진 단건 업로드
+  Future<void> uploadSinglePhoto(int index, XFile photo) async {
+    final multipartFile = await _convertToMultipartFile(photo);
+    if (multipartFile == null) return;
 
-    // 파일 추가 (배열 형식 유지)
-    formData.files.add(MapEntry("requests[0].image", multipartFile));
-
-    // JSON 데이터 개별 필드로 추가
-    formData.fields
-        .add(MapEntry("requests[0].isPrimary", index == 0 ? "true" : "false"));
-    formData.fields.add(MapEntry("requests[0].order", index.toString()));
+    final formData = FormData.fromMap({
+      "requests[0].image": multipartFile,
+      "requests[0].isPrimary": index == 0 ? "true" : "false",
+      "requests[0].order": index.toString(),
+    });
 
     try {
       Log.d("단건 업로드 요청 데이터: ${formData.fields}");
-
-      await apiService.postFormData(
-        path,
-        data: formData,
-        requiresAuthToken: true,
-      );
+      await apiService.postFormData(path,
+          data: formData, requiresAuthToken: true);
     } catch (e) {
       Log.d("단건 사진 업로드 중 오류 발생: $e");
     }
@@ -58,70 +54,36 @@ class PhotoRepository extends BaseRepository {
 
   // 프로필 사진 다건 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
-    final List<MultipartFile> files = [];
-    final Map<String, String> fields = {};
-
-    for (int i = 0; i < photos.length; i++) {
-      final photo = photos[i];
-      if (photo == null) continue;
-      final fileExists = await File(photo.path).exists();
-      if (!fileExists) {
-        Log.d("파일이 존재하지 않음: ${photo.path}");
-        continue;
-      }
-
-      final mimeType = lookupMimeType(photo.path) ?? 'application/octet-stream';
-
-      final multipartFile = await MultipartFile.fromFile(
-        photo.path,
-        filename: basename(photo.path),
-        contentType: MediaType.parse(mimeType),
-      );
-
-      files.add(multipartFile);
-
-      // ProfilePhotoUploadRequest 객체 생성 후 id가 null인 경우 제외
-      final request = ProfilePhotoUploadRequest(
-        isPrimary: (i == 0),
-        order: i,
-      ).toJson()
-        ..removeWhere((key, value) => value == null); // null 값 제거
-
-      // fields 맵에 개별적으로 추가
-      request.forEach((key, value) {
-        fields["requests[$i].$key"] = value.toString();
-      });
-    }
+    final validPhotos = photos.whereType<XFile>().toList(); // null 제거
+    final convertedFiles =
+        await Future.wait(validPhotos.map(_convertToMultipartFile));
+    final files = convertedFiles.whereType<MultipartFile>().toList(); // null 제거
 
     if (files.isEmpty) {
       Log.d("업로드할 파일이 없습니다.");
       return;
     }
 
-    final FormData formData = FormData();
-
-    // `requests[i].image` 형식으로 파일 추가
-    for (int i = 0; i < files.length; i++) {
+    final formData = FormData();
+    for (var i = 0; i < files.length; i++) {
       formData.files.add(MapEntry("requests[$i].image", files[i]));
     }
 
-    // JSON 데이터를 `fields` 맵을 통해 추가
-    fields.forEach((key, value) {
-      formData.fields.add(MapEntry(key, value));
-    });
+    final fields = {
+      for (var i = 0; i < files.length; i++)
+        ...ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson().map(
+            (key, value) => MapEntry("requests[$i].$key", value.toString()))
+    };
+    formData.fields.addAll(fields.entries);
 
     try {
-      await apiService.postFormData(
-        path,
-        data: formData,
-        requiresAuthToken: true,
-      );
+      await apiService.postFormData(path,
+          data: formData, requiresAuthToken: true);
     } catch (e) {
       Log.d("사진 업로드 중 오류 발생: $e");
     }
   }
 
-  // TODO: 백엔등세ㅓ
   // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
@@ -138,11 +100,9 @@ class PhotoRepository extends BaseRepository {
   Future<ProfileImageResponse?> fetchProfileImages() async {
     try {
       final response = await apiService.getJson(path, requiresAuthToken: true);
+      final profileImageResponse = ProfileImageResponse.fromJson(response);
 
-      final jsonResponse = response;
-      final profileImageResponse = ProfileImageResponse.fromJson(jsonResponse);
-
-      Log.d("✅ 프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
+      Log.d("프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
       return profileImageResponse;
     } catch (e) {
       Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
