@@ -6,14 +6,15 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_navigation_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/user_by_category_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/my_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/page.dart';
+import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/service_withdraw_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/service_withdraw_reason_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/terms_of_use_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
@@ -43,8 +44,20 @@ enum AppRoute {
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
   userByCategory('/userByCategory'),
-  my('/my'),
-  auth('/auth'),
+  myNavigation('/my'),
+  myPage('/my/main'),
+  profileManage('/my/manage-profile'),
+  idealSetting('/my/ideal-setting'),
+  blockFriend('/my/block-friend'),
+  store('/my/store'),
+  customerCenter('/my/customer-center'),
+  setting('/my/setting'),
+  pushNotificationSetting('/my/setting/push'),
+  accountSetting('/my/setting/account-setting'),
+  serviceWithdraw('/my/setting/account-setting/service-withdraw'),
+  withdrawReason('/my/setting/account-setting/withdraw-reason'),
+  privacyPolicy('/my/setting/privacy-policy'),
+  termsOfUse('/my/setting/terms-of-use'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
   onboardCertification('/onboard/certification'),
@@ -70,6 +83,7 @@ final allRoutes = [
   ...HomeBranch.routes,
   ...OnboardBranch.routes,
   ...SignBranch.routes,
+  ...MyBranch.routes,
 ];
 
 // Home branch routes
@@ -97,8 +111,8 @@ class HomeBranch {
       builder: (context, state) => const UserByCategoryPage(),
     ),
     GoRoute(
-      path: AppRoute.my.path,
-      builder: (context, state) => const MyPage(),
+      path: AppRoute.myNavigation.path,
+      builder: (context, state) => const MyNavigationPage(),
     ),
     GoRoute(
       path: AppRoute.report.path,
@@ -181,7 +195,66 @@ class SignBranch {
 
 //My branch routes
 class MyBranch {
-  static final routes = [];
+  static final routes = [
+    GoRoute(
+      path: AppRoute.myNavigation.path,
+      builder: (context, state) => const MyNavigationPage(),
+      routes: [
+        GoRoute(
+          path: 'main',
+          builder: (context, state) => const MyPage(),
+        ),
+        GoRoute(
+          path: 'manage-profile',
+          builder: (context, state) => const ProfileManagePage(),
+        ),
+        GoRoute(
+          path: 'ideal-setting',
+          builder: (context, state) => const IdealTypeSettingPage(),
+        ),
+        GoRoute(
+          path: 'block-friend',
+          builder: (context, state) => const MyBlockFriendPage(),
+        ),
+        GoRoute(
+          path: 'store', // 경로를 명시적으로 정의
+          builder: (context, state) => const AuthSignUpTermsPage(),
+        ),
+        GoRoute(
+          path: 'customer-center',
+          builder: (context, state) => const SignUpProfileUpdatePage(),
+        ),
+        GoRoute(
+          path: 'setting',
+          builder: (context, state) => const MySettingPage(),
+        ),
+        GoRoute(
+          path: '/setting/push',
+          builder: (context, state) => const PushNotificationSettingPage(),
+        ),
+        GoRoute(
+          path: '/setting/account-setting',
+          builder: (context, state) => const MyAccountSettingPage(),
+        ),
+        GoRoute(
+          path: '/setting/account-setting/service-withdraw',
+          builder: (context, state) => const ServiceWithdrawPage(),
+        ),
+        GoRoute(
+          path: '/setting/account-setting/withdraw-reason',
+          builder: (context, state) => const ServiceWithdrawReasonPage(),
+        ),
+        GoRoute(
+          path: '/setting/privacy-policy',
+          builder: (context, state) => const PrivacyPolicyPage(),
+        ),
+        GoRoute(
+          path: '/setting/terms-of-use',
+          builder: (context, state) => const TermsOfUsePage(),
+        ),
+      ],
+    ),
+  ];
 }
 
 // Navigation helper methods
