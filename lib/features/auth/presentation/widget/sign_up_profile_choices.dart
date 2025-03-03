@@ -15,7 +15,18 @@ import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:collection/collection.dart';
+
+Widget buildSelectInput<T>({
+  required T? selectedValue,
+  required Map<T, String> valueMap,
+  required void Function(String?) onValueChanged,
+}) {
+  return SingleSelectListChip(
+    options: valueMap.values.toList(),
+    selectedOption: selectedValue != null ? valueMap[selectedValue] : null,
+    onSelectionChanged: onValueChanged,
+  );
+}
 
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
@@ -319,49 +330,32 @@ Widget buildMbtiInput({
 Widget buildSmokingInput({
   required SmokingStatusEnum? selectedSmoking,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = [...smokingMap.values];
-
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedSmoking != null ? smokingMap[selectedSmoking] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateSmoking(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedSmoking,
+      valueMap: smokingMap,
+      onValueChanged: signUpNotifier.updateSmoking,
+    );
 
 Widget buildDrinkingInput({
   required DrinkingStatusEnum? selectedDrinking,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = [...drinkingMap.values];
-
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedDrinking != null ? drinkingMap[selectedDrinking] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateDrinking(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedDrinking,
+      valueMap: drinkingMap,
+      onValueChanged: signUpNotifier.updateDrinking,
+    );
 
 Widget buildReligionInput({
   required ReligionEnum? selectedReligion,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = [...religionMap.values]; // 한글 리스트로 변환
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedReligion != null ? religionMap[selectedReligion] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateReligion(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedReligion,
+      valueMap: religionMap,
+      onValueChanged: signUpNotifier.updateReligion,
+    );
 
 Widget buildHobbiesInput({
   required List<String> selectedHobbies,

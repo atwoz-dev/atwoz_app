@@ -132,12 +132,10 @@ class ApiServiceImpl implements ApiService {
 
   /// `Set-Cookie`에서 `_refreshToken`을 추출하는 함수
   String? _extractRefreshToken(List<String> cookies) {
-    for (var cookie in cookies) {
-      final regex = RegExp(r'refresh_token=([^;]+)');
-      final match = regex.firstMatch(cookie);
-      if (match != null) return match.group(1);
-    }
-    return null;
+    return cookies
+        .map((cookie) => RegExp(r'refresh_token=([^;]+)').firstMatch(cookie))
+        .firstWhere((match) => match != null, orElse: () => null)
+        ?.group(1);
   }
 
   /// 쿠키 저장소 초기화

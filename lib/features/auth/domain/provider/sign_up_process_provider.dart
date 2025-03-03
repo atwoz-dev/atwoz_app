@@ -11,8 +11,8 @@ part 'sign_up_process_provider.g.dart';
 class SignUpProcess extends _$SignUpProcess {
   @override
   SignUpProcessState build() => const SignUpProcessState();
+
   Future<void> nextStep(BuildContext context) async {
-    // 순서대로 처리할 필드 정의
     final requiredFieldsOrder = [
       'selectedYear',
       'selectedHeight',
@@ -27,24 +27,22 @@ class SignUpProcess extends _$SignUpProcess {
     ];
 
     // 현재 상태에서 입력되지 않은 필드 필터링
-    final unwrittenFields = state.unwritten
-        .where((field) => requiredFieldsOrder.contains(field))
-        .toList();
+    final unwrittenFields =
+        state.unwritten.where(requiredFieldsOrder.contains).toList();
 
+    // 모든 필드가 입력되었으면 완료 페이지로 이동
     if (unwrittenFields.isEmpty) {
-      // 모든 필드가 입력되었으면 완료 페이지로 이동
       if (!context.mounted) return;
       navigate(context, route: AppRoute.signUpProfilePicture);
       return;
     }
 
     // 입력되지 않은 필드 중 가장 먼저 나오는 필드로 이동
-    for (int i = 0; i < requiredFieldsOrder.length; i++) {
-      final fieldForStep = requiredFieldsOrder[i];
-      if (unwrittenFields.contains(fieldForStep)) {
-        state = state.copyWith(currentStep: i + 1); // 단계는 1부터 시작
-        return;
-      }
+    final nextStepIndex =
+        requiredFieldsOrder.indexWhere(unwrittenFields.contains);
+    if (nextStepIndex != -1) {
+      state = state.copyWith(currentStep: nextStepIndex + 1);
+      return;
     }
 
     // 현재 단계가 마지막 단계가 아니라면 기본적으로 다음 단계로 이동
@@ -64,15 +62,30 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   bool isButtonEnabled() => state.isButtonEnabled();
-
-  void updateNickname(String nickname) {
-    state = state.copyWith(
-      nickname: nickname,
-      error: nickname.isEmpty
-          ? null
-          : (nickname.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
-    );
+  void updateField<T>(T value,
+      {required Function(SignUpProcessState, T) copy}) {
+    state = copy(state, value);
   }
+
+  void updateNickname(String nickname) => updateField(
+        nickname,
+        copy: (s, v) => s.copyWith(
+          nickname: v,
+          error:
+              v.isEmpty ? null : (v.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
+        ),
+      );
+  void updateSelectedYear(int year) =>
+      updateField(year, copy: (s, v) => s.copyWith(selectedYear: v));
+
+  void updateSelectedHeight(int height) =>
+      updateField(height, copy: (s, v) => s.copyWith(selectedHeight: v));
+
+  void updateSelectedJob(String? job) =>
+      updateField(job, copy: (s, v) => s.copyWith(selectedJob: v));
+
+  void updateSelectedLocation(String? location) =>
+      updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
 
   void updateCurrentStep(int step) {
     state = state.copyWith(currentStep: step);
@@ -86,22 +99,6 @@ class SignUpProcess extends _$SignUpProcess {
         .key;
 
     state = state.copyWith(selectedGender: selectedEnum);
-  }
-
-  void updateSelectedYear(int year) {
-    state = state.copyWith(selectedYear: year);
-  }
-
-  void updateSelectedHeight(int height) {
-    state = state.copyWith(selectedHeight: height);
-  }
-
-  void updateSelectedJob(String? job) {
-    state = state.copyWith(selectedJob: job);
-  }
-
-  void updateSelectedLocation(String? location) {
-    state = state.copyWith(selectedLocation: location);
   }
 
   void updateEducation(String? education) {
@@ -166,7 +163,5 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedHobbies: hobbies);
   }
 
-  void reset() {
-    state = const SignUpProcessState();
-  }
+  void reset() => state = const SignUpProcessState();
 }

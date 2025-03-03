@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/base_usecase.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:collection/collection.dart'; // elementAtOrNull 사용을 위해 추가
 
 class FetchPhotoUseCase extends BaseUseCase<List<XFile?>, void> {
   final Ref ref;
@@ -19,10 +20,14 @@ class FetchPhotoUseCase extends BaseUseCase<List<XFile?>, void> {
     final sortedPhotos = response.data.toList()
       ..sort((a, b) => a.order.compareTo(b.order));
 
-    return [
-      ...sortedPhotos.take(_maxPhotos).map((photo) => XFile(photo.url)),
-      ...List.filled(_maxPhotos - sortedPhotos.length, null)
-    ];
+    // 안전하게 리스트 생성
+    final updatedPhotos =
+        List<XFile?>.filled(_maxPhotos, null).mapIndexed((index, _) {
+      final photo = sortedPhotos.elementAtOrNull(index);
+      return photo != null ? XFile(photo.url) : null;
+    }).toList();
+
+    return updatedPhotos;
   }
 }
 
