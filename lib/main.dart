@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
@@ -12,6 +13,9 @@ import 'app/app.dart';
 
 void main() {
   runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Config.initialize();
+
     /// Splash 화면
     App.preserveSplash(
         widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
@@ -29,12 +33,19 @@ void main() {
     await Hive.initFlutter();
     Hive.registerAdapter<UserResponse>(UserResponseAdapter());
 
-    /// 앱 실행
+    final container = ProviderContainer();
+
     runApp(
       ProviderScope(
         observers: [DefaultProviderObserver()],
         child: App(),
       ),
     );
+
+    // 앱 실행 후 dioService 초기화 (비동기 실행)
+    Future.microtask(() async {
+      final apiService = container.read(apiServiceProvider);
+      await apiService.dioService.initializeCookieJar(); // 🚀 쿠키 저장소 초기화
+    });
   }, (error, stack) => Log.e('MAIN', errorObject: error, stackTrace: stack));
 }

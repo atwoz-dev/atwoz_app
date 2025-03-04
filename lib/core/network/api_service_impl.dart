@@ -37,9 +37,18 @@ class ApiServiceImpl implements ApiService {
   DioService? _dioService;
   PersistCookieJar? _cookieJar;
 
-  DioService get dioService => _dioService ??= DioService(
+  DioService get dioService {
+    if (_dioService == null) {
+      Log.d("dioService가 초기화되지 않아 새로 생성함");
+
+      // baseUrl이 null일 경우 대비
+      if (baseUrl == null || baseUrl!.isEmpty) {
+        throw Exception("API 요청 전에 baseUrl이 초기화되지 않음");
+      }
+
+      _dioService = DioService(
         BaseOptions(
-          baseUrl: baseUrl ?? '', // baseUrl null 처리
+          baseUrl: baseUrl!,
           sendTimeout: timeout,
           connectTimeout: timeout,
           receiveTimeout: timeout,
@@ -49,6 +58,9 @@ class ApiServiceImpl implements ApiService {
           if (Config.enableLogRequestInfo) LoggingInterceptor(),
         ],
       );
+    }
+    return _dioService!;
+  }
 
   @override
   Future<T> request<T>(
