@@ -12,8 +12,8 @@ import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/ideal_type_setting_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/user_by_category_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
@@ -44,7 +44,7 @@ enum AppRoute {
   home('/home'),
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
-  userByCategory('/userByCategory'),
+  userByCategory('/home/userByCategory/:category'),
   auth('/auth'),
   onboard('/onboard'),
   onboardPhone('/onboard/phone'),
@@ -98,8 +98,11 @@ class HomeBranch {
       builder: (context, state) => const IdealTypeSettingPage(),
     ),
     GoRoute(
-      path: AppRoute.userByCategory.path,
-      builder: (context, state) => const UserByCategoryPage(),
+      path: "/home/userByCategory/:category",
+      builder: (context, state) {
+        final category = state.pathParameters['category'] ?? "상위 5%";
+        return UserByCategoryPage(category: category);
+      },
     ),
     GoRoute(
       path: AppRoute.report.path,

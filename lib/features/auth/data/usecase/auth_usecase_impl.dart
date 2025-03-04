@@ -11,6 +11,7 @@ import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../../../core/provider/base_repository_provider.dart';
 
 final authUsecaseProvider =

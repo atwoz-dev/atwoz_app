@@ -1,14 +1,17 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/features/home/presentation/provider/home_action.dart';
+import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeCategoryButtonsArea extends StatelessWidget {
+class HomeCategoryButtonsArea extends ConsumerWidget {
   const HomeCategoryButtonsArea({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<String> buttonLabels = [
       "상위 5%",
       "새로 가입했어요",
@@ -45,7 +48,9 @@ class HomeCategoryButtonsArea extends StatelessWidget {
                       backgroundColor:
                           WidgetStateProperty.all(Palette.colorBlack),
                     ),
-                    onPressed: null,
+                    onPressed: () => ref
+                        .read(homeNotifierProvider.notifier)
+                        .onAction(HomeAction.onTapCategory(label), context),
                     child: Text(
                       label,
                       style: Fonts.body02Regular().copyWith(
