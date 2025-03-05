@@ -37,18 +37,20 @@ class DateTextFormatter extends TextInputFormatter {
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
 
-  String _format(String value, String seperator) {
-    value = value.replaceAll(seperator, '');
-    String newString = '';
-
-    for (int i = 0; i < math.min(value.length, 8); i++) {
-      newString += value[i];
-      if ((i == 3 || i == 5) && i != value.length - 1) {
-        newString += seperator;
-      }
-    }
-
-    return newString;
+  String _format(String value, String separator) {
+    final cleanValue = value.replaceAll(separator, '');
+    return cleanValue
+        .split('')
+        .asMap()
+        .entries
+        .take(8) // 8자리까지만 유지
+        .map((entry) {
+      final index = entry.key;
+      final char = entry.value;
+      return (index == 3 || index == 5) && index != cleanValue.length - 1
+          ? '$char$separator'
+          : char;
+    }).join();
   }
 
   TextSelection updateCursorPosition(String text) {
@@ -68,17 +70,14 @@ class TimeTextFormatter extends TextInputFormatter {
   }
 
   String _format(String value, String seperator) {
-    value = value.replaceAll(seperator, '');
-    String newString = '';
-
-    for (int i = 0; i < math.min(value.length, 4); i++) {
-      newString += value[i];
-      if ((i == 1) && i != value.length - 1) {
-        newString += seperator;
-      }
-    }
-
-    return newString;
+    final cleanValue = value.replaceAll(seperator, '');
+    return cleanValue.split('').asMap().entries.map((entry) {
+      final index = entry.key;
+      final char = entry.value;
+      return (index == 1) && index != cleanValue.length - 1
+          ? '$char$seperator'
+          : char;
+    }).join();
   }
 
   TextSelection updateCursorPosition(String text) {
@@ -97,21 +96,22 @@ class PhoneNumberTextFormatter extends TextInputFormatter {
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
 
-  String _format(String value, String seperator) {
-    value = value.replaceAll(seperator, '');
-    String newString = '';
-
-    for (int i = 0; i < math.min(value.length, 13); i++) {
-      newString += value[i];
-      if ((i == 2 || i == 6) && i != value.length - 1) {
-        newString += seperator;
-      }
-    }
-
-    return newString;
+  String _format(String value, String separator) {
+    final cleanValue = value.replaceAll(separator, '');
+    return cleanValue
+        .split('')
+        .asMap()
+        .entries
+        .take(13) // 최대 13자리까지만 유지
+        .map((entry) {
+      final index = entry.key;
+      final char = entry.value;
+      return (index == 2 || index == 6) && index != cleanValue.length - 1
+          ? '$char$separator'
+          : char;
+    }).join();
   }
 
-  TextSelection updateCursorPosition(String text) {
-    return TextSelection.fromPosition(TextPosition(offset: text.length));
-  }
+  TextSelection updateCursorPosition(String text) =>
+      TextSelection.collapsed(offset: text.length);
 }

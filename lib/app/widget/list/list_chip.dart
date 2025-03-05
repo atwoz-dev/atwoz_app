@@ -35,12 +35,10 @@ class ListChip extends StatelessWidget {
         final isSelected = selectedOptions.contains(option);
         return GestureDetector(
           onTap: () {
-            final updatedSelections = List<String>.from(selectedOptions);
-            if (isSelected) {
-              updatedSelections.remove(option);
-            } else {
-              updatedSelections.add(option);
-            }
+            final updatedSelections = [
+              ...selectedOptions,
+              if (!isSelected) option
+            ]..removeWhere((e) => isSelected && e == option);
             onSelectionChanged(updatedSelections);
           },
           child: Container(

@@ -13,7 +13,8 @@ class InterviewNotifier extends _$InterviewNotifier {
   // 특정 질문에 답변을 저장하는 메서드
   void saveAnswer(String question, String answer) {
     state = state.copyWith(
-      answers: Map.from(state.answers)..[question] = answer,
+      answers: {...state.answers, question: answer},
+      // answers: Map.of(state.answers)..[question] = answer,
     );
 
     // TODO: 저장 API 연결

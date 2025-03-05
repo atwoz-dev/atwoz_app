@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'sign_up_process_state.freezed.dart';
 part 'sign_up_process_state.g.dart';
 
+// TODO(gb): 리팩토링 필요
 @freezed
 class SignUpProcessState with _$SignUpProcessState {
   const factory SignUpProcessState({
@@ -32,19 +33,19 @@ class SignUpProcessState with _$SignUpProcessState {
 
   const SignUpProcessState._();
 
-  get age => selectedYear != null
+  int? get age => selectedYear != null
       ? DateTimeUtil.calculateAge(yearOfBirth: selectedYear!)
       : null;
 
-  get mbti => selectedFirstMbtiLetter != null &&
+  String? get mbti => selectedFirstMbtiLetter != null &&
           selectedSecondMbtiLetter != null &&
           selectedThirdMbtiLetter != null &&
           selectedFourthMbtiLetter != null
       ? '$selectedFirstMbtiLetter$selectedSecondMbtiLetter$selectedThirdMbtiLetter$selectedFourthMbtiLetter'
       : null;
 
-  get unwritten {
-    final fields = {
+  List<String> get unwritten {
+    final Map<String, dynamic> fields = {
       'selectedYear': selectedYear,
       'selectedHeight': selectedHeight,
       'selectedJob': selectedJob,
@@ -63,7 +64,7 @@ class SignUpProcessState with _$SignUpProcessState {
         .toList();
   }
 
-  get isSecondStepCompleted =>
+  bool get isSecondStepCompleted =>
       selectedYear != null &&
       selectedHeight != null &&
       selectedJob != null &&
@@ -75,11 +76,10 @@ class SignUpProcessState with _$SignUpProcessState {
       selectedFourthMbtiLetter != null &&
       selectedSmoking != null &&
       selectedDrinking != null;
+
   // 현재 단계에서 버튼 활성화 여부를 계산
   bool isButtonEnabled() {
     switch (currentStep) {
-      // case 1: // 닉네임, 성별 입력
-      //   return nickname != null && error == null && selectedGender != null;
       case 1: // 나이 선택
         return selectedYear != null;
       case 2: // 키 선택
@@ -108,17 +108,17 @@ class SignUpProcessState with _$SignUpProcessState {
     }
   }
 
-  // TODO: 추후 백엔드 api 나오면 연동 후 수정해야 할 값들이 존재함
+  // TODO(gb): 추후 백엔드 api 나오면 연동 후 수정해야 할 값들이 존재함
   // ProfileUploadRequest로 변환할 때 인덱스로 변환
   ProfileUploadRequest toProfileUploadRequest() {
     return ProfileUploadRequest(
       nickname: nickname ?? "",
-      selectedGender: selectedGender?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedGender: selectedGender.toJson(), // Enum → 백엔드 변환
       age: selectedYear ?? 0,
       selectedHeight: selectedHeight ?? 0,
       jobId: jobOptions.indexOf(selectedJob!) + 1,
       // region: selectedLocation ?? "",
-      region: "SEOUL", // TODO: 교체교체
+      region: "SEOUL", // TODO(gb): 교체 필요
       selectedEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
       mbti: mbti ?? "",
       selectedSmoking: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환

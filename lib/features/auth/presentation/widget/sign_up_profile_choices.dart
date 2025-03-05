@@ -16,6 +16,18 @@ import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+Widget buildSelectInput<T>({
+  required T? selectedValue,
+  required Map<T, String> valueMap,
+  required void Function(String?) onValueChanged,
+}) {
+  return SingleSelectListChip(
+    options: valueMap.values.toList(),
+    selectedOption: selectedValue != null ? valueMap[selectedValue] : null,
+    onSelectionChanged: onValueChanged,
+  );
+}
+
 // TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
   required int? selectedYear,
@@ -28,7 +40,7 @@ Widget buildBirthInput({
     maxValue: 2022,
     defaultValue: 1997,
     unit: '년',
-    onValueChanged: (year) => signUpNotifier.updateSelectedYear(year),
+    onValueChanged: signUpNotifier.updateSelectedYear,
   );
 }
 
@@ -43,7 +55,7 @@ Widget buildHeightInput({
     maxValue: 200,
     defaultValue: 170,
     unit: 'cm',
-    onValueChanged: (height) => signUpNotifier.updateSelectedHeight(height),
+    onValueChanged: signUpNotifier.updateSelectedHeight,
   );
 }
 
@@ -54,9 +66,7 @@ Widget buildJobInput({
   return SingleSelectListChip(
     options: jobOptions,
     selectedOption: selectedJob,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateSelectedJob(updatedSelection);
-    },
+    onSelectionChanged: signUpNotifier.updateSelectedJob,
   );
 }
 
@@ -75,8 +85,8 @@ class LocationInputWidget extends StatefulWidget {
 }
 
 class _LocationInputWidgetState extends State<LocationInputWidget> {
-  late TextEditingController locationController;
-  late FocusNode locationFocusNode;
+  late final TextEditingController locationController;
+  late final FocusNode locationFocusNode;
 
   @override
   void initState() {
@@ -84,17 +94,13 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
     locationController = TextEditingController(text: widget.selectedLocation);
     locationFocusNode = FocusNode();
 
-    // Listener 추가
     locationController.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
+      if (mounted) setState(() {});
     });
   }
 
   @override
   void dispose() {
-    // 리스너 제거 및 리소스 정리
     locationController.dispose();
     locationFocusNode.dispose();
     super.dispose();
@@ -143,8 +149,7 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
       (e) => e['city'] == city,
       orElse: () => {'regions': []},
     );
-    return List<String>.from(
-        cityData['regions'].map((region) => '$city $region'));
+    return [...cityData['regions'].map((region) => '$city $region')];
   }
 
   @override
@@ -227,7 +232,7 @@ Widget buildEducationInput({
   required HighestEducationEnum? selectedEducation,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = educationMap.values.toList();
+  final options = [...educationMap.values];
 
   return SingleSelectListChip(
     options: options,
@@ -325,47 +330,32 @@ Widget buildMbtiInput({
 Widget buildSmokingInput({
   required SmokingStatusEnum? selectedSmoking,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = smokingMap.values.toList();
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedSmoking != null ? smokingMap[selectedSmoking] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateSmoking(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedSmoking,
+      valueMap: smokingMap,
+      onValueChanged: signUpNotifier.updateSmoking,
+    );
 
 Widget buildDrinkingInput({
   required DrinkingStatusEnum? selectedDrinking,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = drinkingMap.values.toList();
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedDrinking != null ? drinkingMap[selectedDrinking] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateDrinking(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedDrinking,
+      valueMap: drinkingMap,
+      onValueChanged: signUpNotifier.updateDrinking,
+    );
 
 Widget buildReligionInput({
   required ReligionEnum? selectedReligion,
   required SignUpProcess signUpNotifier,
-}) {
-  final options = religionMap.values.toList(); // 한글 리스트로 변환
-  return SingleSelectListChip(
-    options: options,
-    selectedOption:
-        selectedReligion != null ? religionMap[selectedReligion] : null,
-    onSelectionChanged: (updatedSelection) {
-      signUpNotifier.updateReligion(updatedSelection);
-    },
-  );
-}
+}) =>
+    buildSelectInput(
+      selectedValue: selectedReligion,
+      valueMap: religionMap,
+      onValueChanged: signUpNotifier.updateReligion,
+    );
 
 Widget buildHobbiesInput({
   required List<String> selectedHobbies,
@@ -374,8 +364,6 @@ Widget buildHobbiesInput({
   return ListChip(
     options: hobbies,
     selectedOptions: selectedHobbies,
-    onSelectionChanged: (updatedSelections) {
-      signUpNotifier.updateHobbies(updatedSelections);
-    },
+    onSelectionChanged: signUpNotifier.updateHobbies,
   );
 }
