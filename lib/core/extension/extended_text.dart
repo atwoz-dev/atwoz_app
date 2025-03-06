@@ -44,4 +44,10 @@ extension ExtendedString on String? {
   /// - 내부적으로 [StringUtil.removePhoneFormat] 메서드를 사용
   /// - 예: '123-456-7890'.removePhoneFormat → '1234567890'
   String get removePhoneFormat => StringUtil.removePhoneFormat(this ?? '');
+
+  /// 숫자를 천 단위 형식으로 변환
+  /// - 내부적으로 [StringUtil.formatThousands] 메서드를 사용
+  /// - 예: '1000000'.formatThousands → '1,000,000'
+  String get formatThousands =>
+      StringUtil.formatThousands(int.parse(this ?? ''));
 }
