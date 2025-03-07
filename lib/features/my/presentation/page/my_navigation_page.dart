@@ -24,7 +24,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
             children: [
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.myPage,
@@ -38,7 +38,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.profileManage,
@@ -52,7 +52,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.idealSetting,
@@ -66,7 +66,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.blockFriend,
@@ -80,7 +80,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.store,
@@ -94,7 +94,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.customerCenter,
@@ -108,7 +108,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.setting,
@@ -122,7 +122,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.pushNotificationSetting,
@@ -136,7 +136,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.accountSetting,
@@ -150,7 +150,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.serviceWithdraw,
@@ -164,7 +164,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.withdrawReason,
@@ -178,7 +178,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.privacyPolicy,
@@ -192,7 +192,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: () async {
+                onPressed: (){
                   navigate(
                     context,
                     route: AppRoute.termsOfUse,
