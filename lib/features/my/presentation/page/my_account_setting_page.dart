@@ -13,7 +13,7 @@ class MyAccountSettingPage extends StatefulWidget {
 }
 
 class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
-  private bool isSwitched = false;
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,101 +21,97 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
       appBar: DefaultAppBar(title: "계정 설정"),
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xffE1E1E1), 
-                    width: 1,
+          AccountSettingItem(
+            children: [
+              Text(
+                "닉네임",
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Palette.colorBlack,
                 ),
-            ),
-        ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "닉네임",
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Palette.colorBlack,
-                  ),
-                ),
-                Text("마카롱조아")
-              ],
-            ),
+              ),
+              Spacer(),
+              Text("마카롱조아")
+            ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xffE1E1E1), width: 1))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "휴먼 회원 전환",
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Palette.colorBlack,
-                  ),
+          AccountSettingItem(
+            children: [
+              Text(
+                "휴먼 회원 전환",
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Palette.colorBlack,
                 ),
-                Switch(
-                  value: isSwitched,
-                  inactiveThumbImage:
-                      AssetImage("assets/images/inactive_thumb.png"),
-                  inactiveTrackColor: Color(0xffDEDEDE),
-                  onChanged: (value) {
-                    // setState(() {
-                    //   isSwitched = !isSwitched;
-                    // });
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return HumanUserChangeDialog();
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
+              ),
+              Spacer(),
+              Switch(
+                value: isSwitched,
+                inactiveThumbImage:
+                    AssetImage("assets/images/inactive_thumb.png"),
+                inactiveTrackColor: Color(0xffDEDEDE),
+                onChanged: (value) {
+                  // setState(() {
+                  //   isSwitched = !isSwitched;
+                  // });
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return HumanUserChangeDialog();
+                    },
+                  );
+                },
+              )
+            ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xffE1E1E1), width: 1))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "로그아웃",
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Palette.colorBlack,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xffE1E1E1), width: 1))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "서비스 탈퇴",
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xffbdbdbd),
-                  ),
+          AccountSettingItem(
+            children: [
+              Text(
+                "로그아웃",
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Palette.colorBlack,
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          AccountSettingItem(
+            children: [
+              Text(
+                "서비스 탈퇴",
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xffbdbdbd),
+                ),
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AccountSettingItem extends StatelessWidget {
+  final List<Widget> children;
+  const AccountSettingItem({
+    super.key,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xffE1E1E1),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Row(
+        children: children,
       ),
     );
   }
