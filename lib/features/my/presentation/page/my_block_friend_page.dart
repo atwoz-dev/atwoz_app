@@ -60,46 +60,48 @@ class MyBlockFriendPage extends StatelessWidget {
                 ],
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Palette.colorGrey50, width: 1),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "김민지",
-                            style: Fonts.body02Medium().copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: Palette.colorBlack),
-                          ),
-                          Gap(4),
-                          Text(
-                            "010-0000-0000",
-                            style: Fonts.body02Medium().copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff9F9F9F)),
-                          )
-                        ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom:
+                            BorderSide(color: Palette.colorGrey50, width: 1),
                       ),
-                      DefaultIcon(
-                        IconPath.checkFillGray,
-                        size: 24,
-                      )
-                    ],
-                  ),
-                );
-              },
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "김민지",
+                              style: Fonts.body02Medium().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: Palette.colorBlack),
+                            ),
+                            Gap(4),
+                            Text(
+                              "010-0000-0000",
+                              style: Fonts.body02Medium().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff9F9F9F)),
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        DefaultIcon(
+                          IconPath.checkFillGray,
+                          size: 24,
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
