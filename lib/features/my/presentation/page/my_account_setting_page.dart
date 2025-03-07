@@ -13,7 +13,7 @@ class MyAccountSettingPage extends StatefulWidget {
 }
 
 class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
-  bool isSwitched = false;
+  private bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
