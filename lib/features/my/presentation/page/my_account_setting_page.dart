@@ -25,7 +25,11 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
             decoration: BoxDecoration(
                 border: Border(
-                    bottom: BorderSide(color: Color(0xffE1E1E1), width: 1))),
+                    bottom: BorderSide(color: Color(0xffE1E1E1), 
+                    width: 1,
+                ),
+            ),
+        ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
