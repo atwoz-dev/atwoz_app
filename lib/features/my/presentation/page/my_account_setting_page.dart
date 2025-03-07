@@ -172,9 +172,7 @@ class _HumanUserChangeDialog extends StatelessWidget {
                       Gap(8),
                       Expanded(
                         child: DefaultElevatedButton(
-                          onPressed: () {
-                            pop(context, true);
-                          },
+                          onPressed: context.pop,
                           primary: Palette.colorPrimary500,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
