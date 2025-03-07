@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository {
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
       },
-      requiresAuthToken: false,
+      requiresAccessToken: false,
     );
 
     await ref.read(authUsecaseProvider).getRefreshToken();
@@ -33,7 +33,7 @@ class UserRepository extends BaseRepository {
   // 로그아웃
   Future<void> signOut() => apiService.getJson(
         '$path/logout',
-        requiresAuthToken: true,
+        requiresRefreshCookie: true,
       );
 
   // 프로필 업데이트
@@ -42,7 +42,7 @@ class UserRepository extends BaseRepository {
       final response = await apiService.putJson(
         '$path/profile',
         data: requestData.toJson(),
-        requiresAuthToken: true,
+        requiresAccessToken: true,
       );
 
       final userResponse = UserResponse.fromJson(response['data']);
