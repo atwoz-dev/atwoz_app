@@ -21,7 +21,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
       appBar: DefaultAppBar(title: "계정 설정"),
       body: Column(
         children: [
-          AccountSettingItem(
+          _AccountSettingItem(
             children: [
               Text(
                 "닉네임",
@@ -34,7 +34,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
               Text("마카롱조아")
             ],
           ),
-          AccountSettingItem(
+          _AccountSettingItem(
             children: [
               Text(
                 "휴먼 회원 전환",
@@ -56,14 +56,14 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return HumanUserChangeDialog();
+                      return _HumanUserChangeDialog();
                     },
                   );
                 },
               )
             ],
           ),
-          AccountSettingItem(
+          _AccountSettingItem(
             children: [
               Text(
                 "로그아웃",
@@ -74,7 +74,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
               ),
             ],
           ),
-          AccountSettingItem(
+          _AccountSettingItem(
             children: [
               Text(
                 "서비스 탈퇴",
@@ -91,10 +91,9 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
   }
 }
 
-class AccountSettingItem extends StatelessWidget {
+class _AccountSettingItem extends StatelessWidget {
   final List<Widget> children;
-  const AccountSettingItem({
-    super.key,
+  const _AccountSettingItem({
     required this.children,
   });
 
@@ -117,10 +116,8 @@ class AccountSettingItem extends StatelessWidget {
   }
 }
 
-class HumanUserChangeDialog extends StatelessWidget {
-  const HumanUserChangeDialog({
-    super.key,
-  });
+class _HumanUserChangeDialog extends StatelessWidget {
+  const _HumanUserChangeDialog();
 
   @override
   Widget build(BuildContext context) {
