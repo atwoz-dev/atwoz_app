@@ -14,16 +14,14 @@ class TermsOfUsePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: RichText(
-              text: TextSpan(
-                style: Fonts.body02Medium().copyWith(
-                  color: Color(0xff7E7E7E),
-                  fontWeight: FontWeight.w400,
-                ),
-                children: parseTermsOfuse(termsOfUseText),
+          padding: EdgeInsets.all(16),
+          child: RichText(
+            text: TextSpan(
+              style: Fonts.body02Medium().copyWith(
+                color: Color(0xff7E7E7E),
+                fontWeight: FontWeight.w400,
               ),
+              children: _parseTermsOfuse(termsOfUseText),
             ),
           ),
         ),
@@ -32,31 +30,26 @@ class TermsOfUsePage extends StatelessWidget {
   }
 }
 
-List<TextSpan> parseTermsOfuse(String text) {
-  List<TextSpan> spans = [];
-  List<String> lines = text.split('\n');
-  for (var line in lines) {
-    if (line.contains('총칙')) {
-      spans.add(TextSpan(
-        text: '${line.replaceAll("*", "")}\n',
-        style: Fonts.body02Medium().copyWith(
-          color: Palette.colorGrey800,
-          fontWeight: FontWeight.w600,
-        ),
-      ));
-    } else if (line.contains("*")) {
-      spans.add(TextSpan(
-        text: '${line.replaceAll("*", "")}\n',
-        style: Fonts.body02Medium().copyWith(
-          color: Palette.colorGrey800,
-          fontWeight: FontWeight.w400,
-        ),
-      ));
-    } else {
-      spans.add(TextSpan(
-        text: '$line\n',
-      ));
-    }
-  }
-  return spans;
-}
+List<TextSpan> _parseTermsOfuse(String text) =>
+    text.split('\n').map((lineContent) {
+      if (lineContent.contains('총칙')) {
+        return TextSpan(
+          text: '${lineContent.replaceAll("*", "")}\n',
+          style: Fonts.body02Medium().copyWith(
+            color: Palette.colorGrey800,
+            fontWeight: FontWeight.w600,
+          ),
+        );
+      } else if (lineContent.contains("*")) {
+        return TextSpan(
+          text: '${lineContent.replaceAll("*", "")}\n',
+          style: Fonts.body02Medium().copyWith(
+            color: Palette.colorGrey800,
+            fontWeight: FontWeight.w400,
+          ),
+        );
+      }
+      return TextSpan(
+        text: '$lineContent\n',
+      );
+    }).toList();
