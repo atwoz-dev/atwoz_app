@@ -1,9 +1,9 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class MyAccountSettingPage extends StatefulWidget {
   const MyAccountSettingPage({super.key});
@@ -13,7 +13,7 @@ class MyAccountSettingPage extends StatefulWidget {
 }
 
 class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
-  private bool isSwitched = false;
+  final bool _isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
               ),
               Spacer(),
               Switch(
-                value: isSwitched,
+                value: _isSwitched,
                 inactiveThumbImage:
                     AssetImage("assets/images/inactive_thumb.png"),
                 inactiveTrackColor: Color(0xffDEDEDE),
