@@ -32,14 +32,14 @@ class MyPage extends StatelessWidget {
         title: "마이페이지",
       ),
       body: ListView.builder(
-          shrinkWrap: true,
           itemBuilder: (context, index) {
             return MyPageListItem(
               title: _featureNames[index],
               iconPath: _iconPaths[index],
             );
           },
-          itemCount: _featureNames.length),
+          itemCount: _featureNames.length,
+      ),
     );
   }
 }
