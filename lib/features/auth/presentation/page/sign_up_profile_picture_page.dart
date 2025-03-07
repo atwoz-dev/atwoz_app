@@ -5,11 +5,10 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/photo/domain/%08provider/photo_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/provider/photo_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/auth_profile_image_widget.dart';
+import 'package:atwoz_app/app/widget/image/profile_image_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,11 +21,6 @@ class SignUpProfilePicturePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<XFile?> photos = ref.watch(photoProvider);
-
-    // 초기 상태에서 photos 리스트를 6개로 고정
-    final List<XFile?> paddedPhotos = List<XFile?>.from(photos)
-      ..addAll(List<XFile?>.filled(6 - photos.length, null));
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -78,29 +72,28 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
                         ),
-                        itemCount: paddedPhotos.length,
+                        itemCount: photos.length,
                         itemBuilder: (context, index) {
-                          return AuthProfileImageWidget(
-                            imageFile: paddedPhotos[index],
+                          return ProfileImageWidget(
+                            imageFile: photos[index],
                             onPickImage: () async {
                               final pickedPhoto = await ref
                                   .read(photoProvider.notifier)
                                   .pickPhoto(ImageSource.gallery);
-                              if (pickedPhoto != null) {
-                                final updatedPhotos = List<XFile?>.from(photos);
-                                updatedPhotos[index] = pickedPhoto;
 
-                                // 사진 업로드
-                                await ref
+                              if (pickedPhoto != null) {
+                                ref
                                     .read(photoProvider.notifier)
-                                    .updatePhoto(index, pickedPhoto);
+                                    .updateState(index, pickedPhoto);
                               }
                             },
                             // 사진 삭제
-                            onRemoveImage: () async => await ref
-                                .read(photoProvider.notifier)
-                                .updatePhoto(index, null),
-                            isRepresentative: index == 0, // 첫 번째 사진만 대표로 설정
+                            onRemoveImage: () {
+                              ref
+                                  .read(photoProvider.notifier)
+                                  .updateState(index, null);
+                            },
+                            isRepresentative: index == 0,
                           );
                         },
                       ),
@@ -180,16 +173,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                         onPressed: photos.any((photo) => photo != null) &&
                                 photos[0] != null
                             ? () async {
-                                final List<XFile?> photos =
-                                    ref.read(photoProvider);
-
-                                await ref
-                                    .read(authUsecaseProvider)
-                                    .uploadProfilePhotos(photos)
-                                    .then((_) => {
-                                          navigate(context,
-                                              route: AppRoute.signUpTerms)
-                                        });
+                                navigate(context, route: AppRoute.signUpTerms);
                               }
                             : null,
                         child: Text(

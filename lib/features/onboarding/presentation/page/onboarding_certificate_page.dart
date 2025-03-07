@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/validation.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
@@ -121,7 +122,7 @@ class OnboardingCertificationPageState
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
                                   onPressed: () {
-                                    print("인증번호 재발송");
+                                    Log.d("인증번호 재발송");
                                     // TODO: 재발송 로직 추가
                                   },
                                   child: Text(

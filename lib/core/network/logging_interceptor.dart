@@ -12,23 +12,23 @@ class LoggingInterceptor extends Interceptor {
     final String httpMethod = options.method;
 
     _printHeader(title: httpMethod, text: options.uri.toString());
-    _printBody('Headers:');
-    options.headers.forEach((String k, Object? v) => _printBody('\t$k: $v'));
+
+    if (options.headers.isNotEmpty) {
+      _printBody(
+          'Headers:\n${options.headers.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}');
+    }
 
     if (options.queryParameters.isNotEmpty) {
-      _printBody('QueryParameters:');
-      options.queryParameters
-          .forEach((String k, dynamic v) => _printBody('\t$k: $v'));
+      _printBody(
+          'QueryParameters:\n${options.queryParameters.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}');
     }
 
     if (options.data is Json) {
-      _printBody('Body:');
-      _printBody('\t${_getBody(options.data)}');
+      _printBody('Body:\n\t${_getBody(options.data)}');
     }
 
     _printFooter(title: httpMethod);
-
-    return super.onRequest(options, handler);
+    super.onRequest(options, handler);
   }
 
   @override
@@ -113,46 +113,34 @@ class LoggingInterceptor extends Interceptor {
     _logPrint('╚═ END $title', type: type);
   }
 
-  String? _getBody(dynamic data, {int maxLength = 200}) {
-    try {
-      String body = const JsonEncoder.withIndent('  ').convert(data);
-      if (body.length > maxLength) {
-        body = '${body.substring(0, maxLength)}... (truncated)';
-      }
-      return body;
-    } catch (_) {
-      return data.toString();
-    }
+  String _getBody(dynamic data, {int maxLength = 200}) {
+    final body = jsonEncode(data);
+    return body.length > maxLength
+        ? '${body.substring(0, maxLength)}... (truncated)'
+        : body;
   }
 
   String cURLRepresentation(RequestOptions request) {
-    final List<String> components = <String>[];
-    components
-        .add("curl --request ${request.method.toUpperCase()} '${request.uri}'");
-    // Header
-    request.headers.forEach((String k, dynamic v) {
-      if (!k.contains('content-length')) {
-        components.add("--header '$k: $v'");
-      }
-    });
+    final List<String> components = [
+      "curl --request ${request.method.toUpperCase()} '${request.uri}'",
+      ...request.headers.entries
+          .where((e) => !e.key.contains('content-length'))
+          .map((e) => "--header '${e.key}: ${e.value}'"),
+    ];
 
-// Body
     if (request.contentType?.contains(Headers.formUrlEncodedContentType) ??
         false) {
-      final Json json = request.data as Json;
-      for (final MapEntry<String, dynamic> value in json.entries) {
-        components.add("--data-urlencode '${value.key}=${value.value}'");
-      }
+      components.addAll((request.data as Json)
+          .entries
+          .map((e) => "--data-urlencode '${e.key}=${e.value}'"));
     } else if (request.contentType
             ?.contains(Headers.multipartFormDataContentType) ??
         false) {
       final FormData formData = request.data as FormData;
-      for (final MapEntry<String, String> value in formData.fields) {
-        components.add("--form '${value.key}=\"${value.value}\"'");
-      }
-      for (final MapEntry<String, MultipartFile> e in formData.files) {
-        components.add("--form '${e.key}=\"@mock-path/${e.value.filename}\"'");
-      }
+      components.addAll(
+          formData.fields.map((e) => "--form '${e.key}=\"${e.value}\"'"));
+      components.addAll(formData.files
+          .map((e) => "--form '${e.key}=\"@mock-path/${e.value.filename}\"'"));
     } else if (request.data != null) {
       components.add("--data '${_getBody(request.data)}'");
     }
