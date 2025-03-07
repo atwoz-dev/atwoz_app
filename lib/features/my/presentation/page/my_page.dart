@@ -33,22 +33,20 @@ class MyPage extends StatelessWidget {
       ),
       body: ListView.builder(
           itemBuilder: (context, index) {
-            return MyPageListItem(
+            return _MyPageListItem(
               title: _featureNames[index],
               iconPath: _iconPaths[index],
             );
           },
-          itemCount: _featureNames.length,
-      ),
+          itemCount: _featureNames.length),
     );
   }
 }
 
-class MyPageListItem extends StatelessWidget {
+class _MyPageListItem extends StatelessWidget {
   final String title;
   final String iconPath;
-  const MyPageListItem({
-    super.key,
+  const _MyPageListItem({
     required this.title,
     required this.iconPath,
   });
@@ -58,23 +56,25 @@ class MyPageListItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              DefaultIcon(
-                iconPath,
-                size: 24,
-              ),
-              Gap(8),
-              Text(
-                title,
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Palette.colorBlack,
+          Expanded(
+            child: Row(
+              children: [
+                DefaultIcon(
+                  iconPath,
+                  size: 24,
                 ),
-              ),
-            ],
+                Gap(8),
+                Text(
+                  title,
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Palette.colorBlack,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
           DefaultIcon(
             IconPath.chevronRight,
