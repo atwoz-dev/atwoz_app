@@ -1,9 +1,5 @@
-import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
 
 class AutoComplete<T extends Object> extends StatefulWidget {
