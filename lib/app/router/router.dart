@@ -25,6 +25,8 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
+import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
+import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -79,7 +81,8 @@ enum AppRoute {
   introduce('/introduce'),
   introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
-  notification('/notification');
+  notification('/notification'),
+  storeNavigation('/storeNavigation');
 
   final String path;
 
@@ -161,6 +164,14 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.notification.path,
       builder: (context, state) => const NotificationPage(),
+    ),
+    GoRoute(
+      path: AppRoute.store.path,
+      builder: (context, state) => const StorePage(),
+    ),
+    GoRoute(
+      path: AppRoute.storeNavigation.path,
+      builder: (context, state) => const StoreNavigationPage(),
     ),
   ];
 }
