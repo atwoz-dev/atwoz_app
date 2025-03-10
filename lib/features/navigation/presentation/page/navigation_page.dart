@@ -181,7 +181,7 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.myNavigation,
                       );
                     },
                     child: Text(
