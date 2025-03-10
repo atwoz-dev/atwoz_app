@@ -82,7 +82,6 @@ enum AppRoute {
   introduceDetail('/introduceDetail'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification'),
-  store('/store'),
   storeNavigation('/storeNavigation');
 
   final String path;
