@@ -29,10 +29,15 @@ class SubInformationData {
 }
 
 class SelfIntroductionData {
-  const SelfIntroductionData(this.about, this.introduction);
+  const SelfIntroductionData({
+    required this.about,
+    required this.title,
+    required this.content,
+  });
 
   final String about;
-  final String introduction;
+  final String title;
+  final String content;
 }
 
 sealed class MatchStatus extends Equatable {
@@ -54,11 +59,11 @@ class Matched extends MatchStatus {
 
   @override
   List<Object> get props => [
-    sentMessage,
-    receivedMessage,
-    contactMethod,
-    contactInfo,
-  ];
+        sentMessage,
+        receivedMessage,
+        contactMethod,
+        contactInfo,
+      ];
 }
 
 class UnMatched extends MatchStatus {

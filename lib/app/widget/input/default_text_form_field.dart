@@ -136,6 +136,9 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
   void initState() {
     super.initState();
     controller.addListener(_updateCharacterCount);
+    if (widget.initialValue != null) {
+      controller.text = widget.initialValue ?? '';
+    }
   }
 
   @override
