@@ -8,7 +8,8 @@ final introducedProfileRepositoryProvider =
 
 class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
   final List<Map<String, dynamic>> sampleData = [
-    // 샘플 데이터 제작. 추후 api 생성 시 변경
+    // 샘플 데이터 제작
+    // TODO: 추후 api 연동 시 제거
     {
       'image': "assets/images/home_pic.png",
       'hashTags': ["#클라이밍", "#불교", "#무계획 여행", "+2"],
@@ -30,7 +31,6 @@ class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
 
   @override
   Future<List<IntroducedProfile>> getProfiles() async {
-    await Future.delayed(Duration(milliseconds: 300)); // 지연시간 설정
     return sampleData.map((e) => IntroducedProfile.fromJson(e)).toList();
   }
 }
