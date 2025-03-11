@@ -1,3 +1,5 @@
+import 'package:atwoz_app/core/util/log.dart';
+
 import 'api_service.dart';
 import 'api_service_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +19,7 @@ abstract class BaseRepository {
     String minutes = twoDigits(duration.inMinutes.remainder(60));
     String seconds = twoDigits(duration.inSeconds.remainder(60));
 
-    print('Elapsed Time: $hours h $minutes m $seconds s');
+    Log.i('Elapsed Time: $hours h $minutes m $seconds s');
   }
 
   // API로 데이터 fetch 후 모델로 변환 (선택적 구현 가능)

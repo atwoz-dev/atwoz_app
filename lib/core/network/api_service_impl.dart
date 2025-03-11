@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
@@ -24,8 +25,9 @@ class ApiServiceImpl implements ApiService {
     required this.ref,
     this.enableAuth = false,
     String? baseUrl,
-    this.timeout = Config.timeout,
-  }) : baseUrl = baseUrl ?? Config.baseUrl;
+    Duration? timeout,
+  })  : baseUrl = baseUrl ?? Config.baseUrl,
+        timeout = timeout ?? Config.timeout;
 
   final Ref ref; // Ref를 통해 Provider 관리
   final bool enableAuth;
@@ -64,7 +66,6 @@ class ApiServiceImpl implements ApiService {
   }) async {
     try {
       final Map<String, dynamic> finalHeaders = {
-        "Content-Type": "application/json",
         "Accept": "*/*",
         ...?headers,
       };
@@ -72,11 +73,9 @@ class ApiServiceImpl implements ApiService {
       if (requiresAuthToken) {
         final String? accessToken =
             await ref.read(authUsecaseProvider).getAccessToken();
-
         await ref.read(localStorageProvider.notifier).initialize(); // 초기화
         final String? refreshToken =
             await ref.read(localStorageProvider).getEncrypted('_refreshToken');
-
         if (accessToken != null) {
           finalHeaders['Authorization'] = "Bearer $accessToken";
         }
@@ -106,8 +105,6 @@ class ApiServiceImpl implements ApiService {
         if (setCookieHeaders != null && setCookieHeaders.isNotEmpty) {
           final refreshToken = _extractRefreshToken(setCookieHeaders);
           if (refreshToken != null) {
-            print("Refresh Token 가져오기 성공: $refreshToken");
-
             // 🍪 쿠키 저장소에 저장
             await _initializeCookieJar();
             final Uri uri = Uri.parse(baseUrl.toString());
@@ -120,7 +117,7 @@ class ApiServiceImpl implements ApiService {
                 .read(localStorageProvider)
                 .saveEncrypted('AuthProvider.reToken', refreshToken);
 
-            print("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
+            Log.d("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
           }
         }
       }
@@ -135,12 +132,10 @@ class ApiServiceImpl implements ApiService {
 
   /// `Set-Cookie`에서 `_refreshToken`을 추출하는 함수
   String? _extractRefreshToken(List<String> cookies) {
-    for (var cookie in cookies) {
-      final regex = RegExp(r'refresh_token=([^;]+)');
-      final match = regex.firstMatch(cookie);
-      if (match != null) return match.group(1);
-    }
-    return null;
+    return cookies
+        .map((cookie) => RegExp(r'refresh_token=([^;]+)').firstMatch(cookie))
+        .firstWhere((match) => match != null, orElse: () => null)
+        ?.group(1);
   }
 
   /// 쿠키 저장소 초기화
