@@ -2,7 +2,7 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
-import 'package:atwoz_app/features/photo/domain/%08provider/photo_provider.dart';
+import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';

@@ -32,24 +32,27 @@ class PhotoRepository extends BaseRepository {
     );
   }
 
-  // 프로필 사진 단건 업로드
-  Future<void> uploadSinglePhoto(int index, XFile photo) async {
+  // 프로필 사진 단건 업로드 (업로드 후 ID 반환)
+  Future<int?> uploadSinglePhoto(int index, XFile photo) async {
     final multipartFile = await _convertToMultipartFile(photo);
-    if (multipartFile == null) return;
+    if (multipartFile == null) return null;
 
     final formData = FormData.fromMap({
-      // "requests[0].id": null, // TODO: 로직상 id가 아예 불필요한 거 같기도...
       "requests[0].image": multipartFile,
       "requests[0].isPrimary": index == 0 ? "true" : "false",
       "requests[0].order": index.toString(),
     });
 
     try {
-      Log.d("단건 업로드 요청 데이터: ${formData.fields}");
-      await apiService.postFormData(path,
+      final response = await apiService.postFormData(path,
           data: formData, requiresAccessToken: true);
+
+      final uploadedId = response['data'][0]['id'] as int?;
+
+      return uploadedId;
     } catch (e) {
       Log.d("단건 사진 업로드 중 오류 발생: $e");
+      return null;
     }
   }
 
