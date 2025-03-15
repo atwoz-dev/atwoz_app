@@ -1,10 +1,5 @@
-import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/domain/repository/introduced_profile_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final introducedProfileRepositoryProvider =
-    Provider<IntroducedProfileRepository>(
-        (ref) => IntroducedProfileRepositoryImpl(ref));
 
 class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
   final List<Map<String, dynamic>> sampleData = [
@@ -26,8 +21,6 @@ class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
       'interview': "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
     }
   ];
-
-  IntroducedProfileRepositoryImpl(Ref ref);
 
   @override
   Future<List<IntroducedProfile>> getProfiles() async {

@@ -118,7 +118,8 @@ class HomeBranch {
       builder: (context, state) => const IdealTypeSettingPage(),
     ),
     GoRoute(
-      path: "/home/userByCategory/:category",
+      path: AppRoute.userByCategory.path,
+      name: 'userByCategory',
       builder: (context, state) {
         final category = state.pathParameters['category'] ?? "상위 5%";
         return UserByCategoryPage(category: category);

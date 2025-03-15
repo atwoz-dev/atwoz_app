@@ -1,8 +1,7 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/icon_path.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/home/presentation/provider/home_action.dart';
-import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,9 +25,7 @@ class HomeNavbarArea extends ConsumerWidget {
         Row(
           children: [
             GestureDetector(
-              onTap: () => ref
-                  .read(homeNotifierProvider.notifier)
-                  .onAction(HomeAction.onTapNotification(), context),
+              onTap: () => navigate(context, route: AppRoute.notification),
               child: Container(
                 padding: EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
                 child: DefaultIcon(
@@ -39,9 +36,7 @@ class HomeNavbarArea extends ConsumerWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => ref
-                  .read(homeNotifierProvider.notifier)
-                  .onAction(HomeAction.onTapFilter(), context),
+              onTap: () => navigate(context, route: AppRoute.ideal),
               child: Container(
                 // 이상형 설정
                 padding: EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),

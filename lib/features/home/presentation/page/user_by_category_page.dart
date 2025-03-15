@@ -18,7 +18,8 @@ class UserByCategoryPage extends StatefulWidget {
 }
 
 class _UserByCategoryPageState extends State<UserByCategoryPage> {
-  List<bool> isBlurredList = List<bool>.filled(10, true);
+  final List<bool> _isBlurredList =
+      List<bool>.filled(10, true); //TODO: 추후 API 연동 시 불러온 리스트 크기로 변경
   // 10개의 아이템 모두 블러 처리 상태로 초기화
   @override
   Widget build(BuildContext context) {
@@ -27,14 +28,14 @@ class _UserByCategoryPageState extends State<UserByCategoryPage> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 18),
         child: ListView.separated(
-          itemCount: isBlurredList.length,
+          itemCount: _isBlurredList.length,
           separatorBuilder: (context, index) => SizedBox(height: 8),
           itemBuilder: (context, index) {
             return UserByCategoryListItem(
-              isBlurred: isBlurredList[index],
+              isBlurred: _isBlurredList[index],
               onTap: () async {
                 // Make onTap async
-                if (isBlurredList[index]) {
+                if (_isBlurredList[index]) {
                   // Only show dialog if item is blurred
                   final result = await showDialog<bool>(
                     context: context,
@@ -43,7 +44,7 @@ class _UserByCategoryPageState extends State<UserByCategoryPage> {
 
                   if (result == true) {
                     setState(() {
-                      isBlurredList[index] =
+                      _isBlurredList[index] =
                           false; // Update state based on dialog result
                     });
                   }
