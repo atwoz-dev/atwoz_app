@@ -1,22 +1,24 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeCategoryButtonsArea extends StatelessWidget {
+const List<String> _buttonLabels = [
+  "상위 5%",
+  "새로 가입했어요",
+  "지금 근처인 사람!",
+  "종교가 같아요",
+  "취미가 같아요",
+];
+
+class HomeCategoryButtonsArea extends ConsumerWidget {
   const HomeCategoryButtonsArea({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final List<String> buttonLabels = [
-      "상위 5%",
-      "새로 가입했어요",
-      "지금 근처인 사람!",
-      "종교가 같아요",
-      "취미가 같아요",
-    ];
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,15 +28,16 @@ class HomeCategoryButtonsArea extends StatelessWidget {
         ),
         SizedBox(height: 16),
         Container(
-            padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
-            decoration: BoxDecoration(
-                color: Palette.colorGrey50,
-                borderRadius: BorderRadius.circular(16)),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              alignment: WrapAlignment.center,
-              children: buttonLabels.map((label) {
+          padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
+          decoration: BoxDecoration(
+              color: Palette.colorGrey50,
+              borderRadius: BorderRadius.circular(16)),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.center,
+            children: _buttonLabels.map(
+              (label) {
                 return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                             backgroundColor: Palette.colorBlack,
@@ -45,14 +48,17 @@ class HomeCategoryButtonsArea extends StatelessWidget {
                       backgroundColor:
                           WidgetStateProperty.all(Palette.colorBlack),
                     ),
-                    onPressed: null,
+                    onPressed: () => context.pushNamed('userByCategory',
+                        pathParameters: {'category': label}),
                     child: Text(
                       label,
                       style: Fonts.body02Regular().copyWith(
                           fontWeight: FontWeight.w400, color: Colors.white),
                     ));
-              }).toList(),
-            )),
+              },
+            ).toList(),
+          ),
+        ),
       ],
     );
   }

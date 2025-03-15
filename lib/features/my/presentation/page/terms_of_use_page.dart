@@ -10,7 +10,7 @@ class TermsOfUsePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(
-        title: "개인정보 취급방침",
+        title: "이용약관",
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home_profile_card_area.dart';
 import 'package:flutter/material.dart';
@@ -11,71 +10,32 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 class UserByCategoryPage extends StatefulWidget {
-  const UserByCategoryPage({super.key});
+  final String category;
+  const UserByCategoryPage({super.key, required this.category});
 
   @override
   State<UserByCategoryPage> createState() => _UserByCategoryPageState();
 }
 
 class _UserByCategoryPageState extends State<UserByCategoryPage> {
-  List<String> appBarTitle = [
-    "상위 5%",
-    "새로 가입했어요",
-    "지금 근처인 사람!",
-    "종교가 같아요",
-    "취미가 같아요"
-  ];
-  int currentCategoryIndex = 0;
-  List<bool> isBlurredList =
-      List<bool>.filled(10, true); // 10개의 아이템 모두 블러 처리 상태로 초기화
-
+  final List<bool> _isBlurredList =
+      List<bool>.filled(10, true); //TODO: 추후 API 연동 시 불러온 리스트 크기로 변경
+  // 10개의 아이템 모두 블러 처리 상태로 초기화
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          appBarTitle[currentCategoryIndex],
-          style: Fonts.header03()
-              .copyWith(fontWeight: FontWeight.w600, color: Palette.colorBlack),
-        ),
-        leading: GestureDetector(
-            onTap: () {
-              if (currentCategoryIndex > 0) {
-                currentCategoryIndex--;
-              } else {
-                currentCategoryIndex = 4;
-              }
-              setState(() {});
-            },
-            child: Icon(Icons.arrow_back_ios_new)),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              if (currentCategoryIndex < 4) {
-                currentCategoryIndex++;
-              } else {
-                currentCategoryIndex = 0;
-              }
-              setState(() {});
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(Icons.arrow_forward_ios),
-            ),
-          )
-        ],
-      ),
+      appBar: DefaultAppBar(title: widget.category),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 18),
         child: ListView.separated(
-          itemCount: isBlurredList.length,
+          itemCount: _isBlurredList.length,
           separatorBuilder: (context, index) => SizedBox(height: 8),
           itemBuilder: (context, index) {
             return UserByCategoryListItem(
-              isBlurred: isBlurredList[index],
+              isBlurred: _isBlurredList[index],
               onTap: () async {
                 // Make onTap async
-                if (isBlurredList[index]) {
+                if (_isBlurredList[index]) {
                   // Only show dialog if item is blurred
                   final result = await showDialog<bool>(
                     context: context,
@@ -84,7 +44,7 @@ class _UserByCategoryPageState extends State<UserByCategoryPage> {
 
                   if (result == true) {
                     setState(() {
-                      isBlurredList[index] =
+                      _isBlurredList[index] =
                           false; // Update state based on dialog result
                     });
                   }
