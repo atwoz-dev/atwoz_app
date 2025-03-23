@@ -12,8 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> hashTagList = ["#클라이밍", "#불교", "#무계획 여행", "+2"];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +23,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               HomeNavbarArea(), // 홈 상단 네비게이션바
               SizedBox(height: 16),
-              HomeProfileCardArea(hashTagList: hashTagList), // 소개받은 프로필 페이지
+              HomeProfileCardArea(), // 소개받은 프로필 부분
               SizedBox(height: 16),
               Image.asset(
                 "assets/images/home_test.png",
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
                 height: 89,
               ),
               SizedBox(height: 24),
-              HomeCategoryButtonsArea()
+              HomeCategoryButtonsArea() // 카테고리 버튼 영역
             ],
           ),
         ),
