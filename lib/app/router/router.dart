@@ -14,6 +14,7 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.da
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/profile_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/service_withdraw_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/service_withdraw_reason_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/terms_of_use_page.dart';
@@ -53,6 +54,7 @@ enum AppRoute {
   myNavigation('/my'),
   myPage('/my/main'),
   profileManage('/my/manage-profile'),
+  profileUpdate('/my/manage-profile/update-profile'),
   idealSetting('/my/ideal-setting'),
   blockFriend('/my/block-friend'),
   store('/my/store'),
@@ -247,6 +249,10 @@ class MyBranch {
         GoRoute(
           path: 'manage-profile',
           builder: (context, state) => const ProfileManagePage(),
+        ),
+        GoRoute(
+          path: 'manage-profile/update-profile',
+          builder: (context, state) => const ProfileUpdatePage(),
         ),
         GoRoute(
           path: 'ideal-setting',
