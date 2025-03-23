@@ -49,7 +49,8 @@ enum AppRoute {
   home('/home'),
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
-  userByCategory('/userByCategory'),
+  userByCategory('/home/userByCategory/:category'),
+  auth('/auth'),
   myNavigation('/my'),
   myPage('/my/main'),
   profileManage('/my/manage-profile'),
@@ -120,7 +121,11 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.userByCategory.path,
-      builder: (context, state) => const UserByCategoryPage(),
+      name: 'userByCategory',
+      builder: (context, state) {
+        final category = state.pathParameters['category'] ?? "상위 5%";
+        return UserByCategoryPage(category: category);
+      },
     ),
     GoRoute(
       path: AppRoute.myNavigation.path,

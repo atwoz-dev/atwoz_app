@@ -11,7 +11,10 @@ class IdealTypeSettingPage extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(title: "이상형 설정"),
       body: Column(
-        children: [IdealAgeSettingArea(), IdealSettingArea()],
+        children: [
+          IdealAgeSettingArea(),
+          IdealSettingArea(),
+        ],
       ),
     );
   }
