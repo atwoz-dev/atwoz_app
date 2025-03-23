@@ -6,6 +6,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
               onPressed: isButtonEnabled
                   ? () {
                       // TODO: 나중에 API 연결하기
-                      print("인증번호 요청"); // 성공 시 동작
+                      Log.d("인증번호 요청"); // 성공 시 동작
                       navigate(
                         context,
                         route: AppRoute.signUpProfileChoice,

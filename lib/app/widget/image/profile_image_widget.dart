@@ -1,19 +1,23 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
+
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/icon_path.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/image/default_image.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/core/extension/extended_xfile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AuthProfileImageWidget extends StatelessWidget {
+class ProfileImageWidget extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback onPickImage;
   final VoidCallback? onRemoveImage;
   final bool isRepresentative;
 
-  const AuthProfileImageWidget({
+  const ProfileImageWidget({
     super.key,
     this.imageFile,
     required this.onPickImage,
@@ -24,26 +28,34 @@ class AuthProfileImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         GestureDetector(
           onTap: onPickImage,
           child: Container(
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(8),
-              image: imageFile != null
-                  ? DecorationImage(
-                      image: FileImage(File(imageFile!.path)),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
             ),
-            child: imageFile == null && isRepresentative
-                ? DefaultIcon(
-                    IconPath.personPlaceholder,
-                    size: 150,
-                  )
-                : null,
+            child: switch (imageFile?.sourceType) {
+              ImageSourceType.network => DefaultImage(
+                  imageURL: imageFile!.path, // 네트워크 이미지 URL 표시
+                  fit: BoxFit.cover,
+                ),
+              ImageSourceType.file => Image.file(
+                  File(imageFile!.path), // 로컬 파일 이미지
+                  fit: BoxFit.cover,
+                ),
+              ImageSourceType.memory => Image.memory(
+                  base64Decode(imageFile!.path), // Base64 디코딩
+                  fit: BoxFit.cover,
+                ),
+              _ => DefaultIcon(
+                  IconPath.personPlaceholder,
+                  size: 100,
+                ),
+            },
           ),
         ),
         if (isRepresentative)

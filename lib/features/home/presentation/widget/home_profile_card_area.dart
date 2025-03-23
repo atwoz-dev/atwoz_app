@@ -3,21 +3,28 @@ import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 페이지뷰 + 페이지 번호 상태 바
-class HomeProfileCardArea extends StatefulWidget {
-  final List<String> hashTagList;
-  const HomeProfileCardArea({super.key, required this.hashTagList});
+class HomeProfileCardArea extends ConsumerStatefulWidget {
+  const HomeProfileCardArea({super.key});
 
   @override
-  State<HomeProfileCardArea> createState() => _HomeProfileCardAreaState();
+  ConsumerState<HomeProfileCardArea> createState() =>
+      _HomeProfileCardAreaState();
 }
 
-class _HomeProfileCardAreaState extends State<HomeProfileCardArea> {
-  int _currentPage = 0;
+class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
+  int _currentPage = 0; // 현재 페이지 0으로 설정
+
   @override
   Widget build(BuildContext context) {
+    final profiles =
+        ref.watch(homeNotifierProvider).introducedProfiles; // 소개받은 프로필 정보들
+
     return Column(
       children: [
         SizedBox(
@@ -25,10 +32,10 @@ class _HomeProfileCardAreaState extends State<HomeProfileCardArea> {
           width: context.screenWidth,
           height: context.screenHeight * 0.41,
           child: PageView.builder(
-            itemCount: 3,
+            itemCount: profiles.length,
             onPageChanged: (value) => setState(() => _currentPage = value),
             itemBuilder: (context, index) {
-              return ProfileCardWidget(hashTagList: widget.hashTagList);
+              return ProfileCardWidget(profile: profiles[index]);
             },
           ),
         ),
@@ -36,7 +43,7 @@ class _HomeProfileCardAreaState extends State<HomeProfileCardArea> {
         Row(
           // 페이지 번호 상태 바
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(3, (index) {
+          children: List.generate(profiles.length, (index) {
             return AnimatedContainer(
               duration: Duration(milliseconds: 300),
               margin: EdgeInsets.symmetric(horizontal: 4),
@@ -60,10 +67,10 @@ class _HomeProfileCardAreaState extends State<HomeProfileCardArea> {
 class ProfileCardWidget extends StatelessWidget {
   const ProfileCardWidget({
     super.key,
-    required this.hashTagList,
+    required this.profile,
   });
 
-  final List<String> hashTagList;
+  final IntroducedProfile profile;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +91,8 @@ class ProfileCardWidget extends StatelessWidget {
             height: 100,
             child: CircleAvatar(
               radius: 100,
-              backgroundImage: AssetImage("assets/images/home_pic.png"),
+              backgroundImage:
+                  AssetImage(profile.image), // 추후 api 연동 시 NetworkImage로 변경
             ),
           ),
           SizedBox(height: 16),
@@ -98,9 +106,9 @@ class ProfileCardWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: hashTagList.length,
+                  itemCount: profile.hashTags.length,
                   itemBuilder: (context, index) {
-                    return HomeHashtagWidget(tagName: hashTagList[index]);
+                    return HomeHashtagWidget(tagName: profile.hashTags[index]);
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox(width: 8);

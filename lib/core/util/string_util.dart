@@ -23,16 +23,16 @@ class StringUtil {
     });
   }
 
-  /// 숫자를 통화 형식으로 변환
-  static String toCurrencyFormat(num money) {
-    final oCcy = NumberFormat('#,###');
-    return '${oCcy.format(money)}원';
-  }
-
   /// 숫자를 천 단위 형식으로 변환
   static String formatThousands(num number) {
     final formatter = NumberFormat('#,###', 'en_US');
     return formatter.format(number);
+  }
+
+  /// 숫자를 통화 형식으로 변환
+  static String toCurrencyFormat(num money) {
+    final oCcy = NumberFormat('#,###');
+    return '${oCcy.format(money)}원';
   }
 
   /// 숫자를 퍼센트 형식으로 변환 (소수점 자릿수 지정 가능)

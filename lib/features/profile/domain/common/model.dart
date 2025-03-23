@@ -113,8 +113,6 @@ class MatchingReceived extends Matching {
       receivedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
 }
 
-const _expiredDuration = Duration(days: 3);
-
 enum FavoriteType {
   none(''),
   general(IconPath.generalFavorite),
@@ -125,3 +123,5 @@ enum FavoriteType {
 
   bool get isFavorite => this != none;
 }
+
+const _expiredDuration = Duration(days: 3);
