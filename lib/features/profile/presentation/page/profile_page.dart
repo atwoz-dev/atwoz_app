@@ -10,9 +10,11 @@ import '../widget/widget.dart';
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({
     super.key,
-    this.fromMatchedProfile = false,
+    required this.userId,
+    required this.fromMatchedProfile,
   });
 
+  final int userId;
   final bool fromMatchedProfile;
 
   @override
@@ -22,19 +24,19 @@ class ProfilePage extends ConsumerStatefulWidget {
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    ref.listen(profileNotifierProvider, _listener);
-    final state = ref.watch(profileNotifierProvider);
+    ref.listen(profileNotifierProvider(widget.userId), _listener);
+    final state = ref.watch(profileNotifierProvider(widget.userId));
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: state.isLoaded
           ? widget.fromMatchedProfile
-              ? const UnMatchedProfile(chatEnabled: false)
+              ? UnMatchedProfile(userId: widget.userId, chatEnabled: false)
               : switch (state.matchStatus) {
                   final UnMatched _ ||
                   final Matching _ =>
-                    const UnMatchedProfile(),
-                  final Matched _ => const MatchedProfile(),
+                    UnMatchedProfile(userId: widget.userId),
+                  final Matched _ => MatchedProfile(widget.userId),
                   null => Container(),
                 }
           : const SkeletonProfile(),
@@ -62,7 +64,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           submitLabel: '수락',
           onSubmit: () {
             context.pop();
-            MessageSendBottomSheet.open(context);
+            MessageSendBottomSheet.open(
+              context,
+              userId: widget.userId,
+            );
           },
           cancelLabel: '거절',
           onCancel: () {

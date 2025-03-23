@@ -13,11 +13,16 @@ class ProfileDesignInspection extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               spacing: 16.0,
               children: [
+                _generateProfileNavigateButton(
+                  context,
+                  null,
+                  '일반',
+                ),
                 _generateProfileNavigateButton(
                   context,
                   ProfileDesignInspectionType.main,
@@ -80,7 +85,7 @@ class ProfileDesignInspection extends StatelessWidget {
 
   Widget _generateProfileNavigateButton(
     BuildContext context,
-    ProfileDesignInspectionType type,
+    ProfileDesignInspectionType? type,
     String title,
   ) =>
       DefaultElevatedButton(
@@ -107,4 +112,4 @@ enum ProfileDesignInspectionType {
   matched,
 }
 
-ProfileDesignInspectionType kDebugPageType = ProfileDesignInspectionType.main;
+ProfileDesignInspectionType? kDebugPageType = ProfileDesignInspectionType.main;

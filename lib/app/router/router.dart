@@ -31,6 +31,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'route_arguments.dart';
+
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>();
@@ -157,9 +159,12 @@ class HomeBranch {
       path: AppRoute.profile.path,
       builder: (context, state) {
         final args = state.extra;
-        return args is bool
-            ? ProfilePage(fromMatchedProfile: args)
-            : const ProfilePage();
+        // TODO(Han): this will be removed after implement ErrorPage
+        if (args is! ProfileDetailArguments) return const SizedBox.shrink();
+        return ProfilePage(
+          userId: args.userId,
+          fromMatchedProfile: args.fromMatchedProfile,
+        );
       },
     ),
     GoRoute(

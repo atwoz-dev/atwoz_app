@@ -11,12 +11,14 @@ import 'package:atwoz_app/app/enum/enum.dart';
 import 'widget.dart';
 
 class MatchedProfile extends ConsumerWidget {
-  const MatchedProfile({super.key});
+  const MatchedProfile(this.userId, {super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileNotifierProvider).profile;
-    if(profile == null) return Container();
+    final profile = ref.watch(profileNotifierProvider(userId)).profile;
+    if (profile == null) return const SizedBox.shrink();
 
     final matchStatus = profile.matchStatus;
 
@@ -28,8 +30,8 @@ class MatchedProfile extends ConsumerWidget {
           horizontal: 16.0,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 16.0,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _GuideMessage(otherUserName: profile.name),
             SizedBox(
@@ -146,8 +148,8 @@ class _InformationBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 8.0,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8.0,
       children: [
         Text(title, style: Fonts.body02Medium()),
         Container(

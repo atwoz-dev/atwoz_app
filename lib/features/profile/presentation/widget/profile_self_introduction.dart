@@ -9,12 +9,17 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileSelfIntroduction extends ConsumerWidget {
-  const ProfileSelfIntroduction({super.key});
+  const ProfileSelfIntroduction(this.userId, {super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selfIntroductionItems =
-        ref.watch(profileNotifierProvider).profile?.selfIntroductionItems ?? [];
+    final selfIntroductionItems = ref
+            .watch(profileNotifierProvider(userId))
+            .profile
+            ?.selfIntroductionItems ??
+        [];
 
     return ColoredBox(
       color: context.palette.outline,

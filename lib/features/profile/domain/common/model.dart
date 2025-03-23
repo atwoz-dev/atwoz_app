@@ -22,9 +22,9 @@ class UserProfile with _$UserProfile {
 }
 
 class SubInformationData {
-  const SubInformationData(this.iconPath, this.information);
+  const SubInformationData(this.type, this.information);
 
-  final String iconPath;
+  final ProfileSubInfoType type;
   final String information;
 }
 
@@ -74,43 +74,46 @@ class UnMatched extends MatchStatus {
 }
 
 abstract class Matching extends MatchStatus {
-  const Matching();
+  const Matching({required this.isExpired});
 
-  bool get isExpired;
+  final bool isExpired;
 }
 
 class MatchingRequested extends Matching {
   const MatchingRequested({
     required this.sentMessage,
-    required this.requestedDateTime,
+    super.isExpired = false,
   });
 
   final String sentMessage;
-  final DateTime requestedDateTime;
 
   @override
-  List<Object> get props => [sentMessage, requestedDateTime];
-
-  @override
-  bool get isExpired =>
-      requestedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+  List<Object> get props => [sentMessage, isExpired];
 }
 
 class MatchingReceived extends Matching {
   const MatchingReceived({
     required this.receivedMessage,
-    required this.receivedDateTime,
+    super.isExpired = false,
   });
 
   final String receivedMessage;
-  final DateTime receivedDateTime;
 
   @override
-  List<Object> get props => [receivedMessage, receivedDateTime];
+  List<Object> get props => [receivedMessage, isExpired];
+}
 
-  @override
-  bool get isExpired =>
-      receivedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+enum ProfileSubInfoType {
+  smoking(IconPath.smoking),
+  drinking(IconPath.wineglass),
+  education(IconPath.school),
+  religion(IconPath.bless),
+  height(IconPath.ruler),
+  job(IconPath.business);
+
+  final String iconPath;
+
+  const ProfileSubInfoType(this.iconPath);
 }
 
 enum FavoriteType {
@@ -123,5 +126,3 @@ enum FavoriteType {
 
   bool get isFavorite => this != none;
 }
-
-const _expiredDuration = Duration(days: 3);
