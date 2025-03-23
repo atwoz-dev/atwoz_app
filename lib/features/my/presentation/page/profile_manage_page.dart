@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -53,8 +54,14 @@ class _ProfileInfoArea extends StatelessWidget {
               Gap(16),
               buildLabeledRow(
                 label: "직업",
-                child: DefaultTextFormField(
-                  fillColor: Palette.colorGrey100,
+                child: GestureDetector(
+                  onTap: () {
+                    navigate(context, route: AppRoute.profileUpdate);
+                  },
+                  child: DefaultTextFormField(
+                    fillColor: Palette.colorGrey100,
+                    readOnly: true,
+                  ),
                 ),
                 context: context,
               ),

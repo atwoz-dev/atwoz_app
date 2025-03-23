@@ -26,33 +26,37 @@ class HomeCategoryButtonsArea extends StatelessWidget {
         ),
         SizedBox(height: 16),
         Container(
-            padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
-            decoration: BoxDecoration(
-                color: Palette.colorGrey50,
-                borderRadius: BorderRadius.circular(16)),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              alignment: WrapAlignment.center,
-              children: buttonLabels.map((label) {
+          padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
+          decoration: BoxDecoration(
+              color: Palette.colorGrey50,
+              borderRadius: BorderRadius.circular(16)),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.center,
+            children: buttonLabels.map(
+              (label) {
                 return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette.colorBlack,
-                            padding: EdgeInsets.all(10),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)))
-                        .copyWith(
-                      backgroundColor:
-                          WidgetStateProperty.all(Palette.colorBlack),
-                    ),
-                    onPressed: null,
-                    child: Text(
-                      label,
-                      style: Fonts.body02Regular().copyWith(
-                          fontWeight: FontWeight.w400, color: Colors.white),
-                    ));
-              }).toList(),
-            )),
+                  style: ElevatedButton.styleFrom(
+                          backgroundColor: Palette.colorBlack,
+                          padding: EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)))
+                      .copyWith(
+                    backgroundColor:
+                        WidgetStateProperty.all(Palette.colorBlack),
+                  ),
+                  onPressed: null,
+                  child: Text(
+                    label,
+                    style: Fonts.body02Regular().copyWith(
+                        fontWeight: FontWeight.w400, color: Colors.white),
+                  ),
+                );
+              },
+            ).toList(),
+          ),
+        ),
       ],
     );
   }
