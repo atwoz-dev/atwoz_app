@@ -199,7 +199,13 @@ class OnboardBranch {
         ),
         GoRoute(
           path: AppRoute.onboardCertification.path.split('/onboard').last,
-          builder: (context, state) => const OnboardingCertificationPage(),
+          builder: (context, state) {
+            final args = state.extra;
+            // TODO(Geumbin): this will be removed after implement ErrorPage
+            if (args is! OnboardCertificationArguments)
+              return const SizedBox.shrink();
+            return OnboardingCertificationPage(phoneNumber: args.phoneNumber);
+          },
         ),
       ],
     ),
@@ -310,7 +316,7 @@ Future<T?> navigate<T>(
   BuildContext context, {
   required AppRoute route,
   NavigationMethod method = NavigationMethod.push,
-  Object? extra,
+  RouteArguments? extra,
   VoidCallback? callback,
 }) async {
   final goRouter = GoRouter.of(context);

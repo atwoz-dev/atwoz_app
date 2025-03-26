@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -54,7 +55,8 @@ class ProfileDesignInspection extends StatelessWidget {
                     navigate(
                       context,
                       route: AppRoute.profile,
-                      extra: true,
+                      // TODO(Han): remove user id hard coding after login/match implement
+                      extra: const ProfileDetailArguments(userId: 4),
                     );
                   },
                   child: Text(

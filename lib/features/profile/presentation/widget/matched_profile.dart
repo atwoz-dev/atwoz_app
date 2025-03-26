@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -38,7 +39,7 @@ class MatchedProfile extends ConsumerWidget {
               height: 420.0,
               child: ProfileMainImage(profileUri: profile.profileUri),
             ),
-            const _ProfilePageMoveButton(),
+            _ProfilePageMoveButton(userId),
             if (matchStatus is Matched)
               _MatchedInformation(
                 contactMethod: matchStatus.contactMethod,
@@ -80,7 +81,9 @@ class _GuideMessage extends StatelessWidget {
 }
 
 class _ProfilePageMoveButton extends StatelessWidget {
-  const _ProfilePageMoveButton();
+  const _ProfilePageMoveButton(this.userId);
+
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +92,10 @@ class _ProfilePageMoveButton extends StatelessWidget {
         context,
         route: AppRoute.profile,
         method: NavigationMethod.pushReplacement,
-        extra: true,
+        extra: ProfileDetailArguments(
+          userId: userId,
+          fromMatchedProfile: true,
+        ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 11.5),
       child: const Text('프로필 보러가기'),

@@ -11,3 +11,11 @@ class ProfileDetailArguments extends RouteArguments {
   final int userId;
   final bool fromMatchedProfile;
 }
+
+class OnboardCertificationArguments extends RouteArguments {
+  const OnboardCertificationArguments({
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
+}
