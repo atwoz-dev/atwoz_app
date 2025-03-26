@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/util.dart';
@@ -57,16 +58,15 @@ class OnboardingPhoneInputPageState
   Future<void> _handleLogin(WidgetRef ref) async {
     final phoneNumber = _phoneController.text;
 
-    if (phoneNumber.isEmpty || validationError != null) {
+    if (phoneNumber.isEmpty || validationError != null || !mounted) {
       return;
     }
     try {
-      if (mounted) {
-        navigate(
-          context, route: AppRoute.onboardCertification,
-          extra: {'phoneNumber': phoneNumber}, // 전화번호 전달
-        );
-      }
+      navigate(
+        context,
+        route: AppRoute.onboardCertification,
+        extra: OnboardCertificationArguments(phoneNumber: phoneNumber),
+      );
     } catch (e) {
       Log.d("로그인 실패: $e");
     }
@@ -89,7 +89,7 @@ class OnboardingPhoneInputPageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(title: '휴대폰 번호를 입력해주세요'),
+                const TitleText(title: '휴대폰 번호를 입력해주세요'),
                 const Gap(5),
                 Text(
                   '서비스 이용을 위해 본인확인이 필요해요',

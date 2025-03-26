@@ -7,9 +7,11 @@ import 'widget.dart';
 class UnMatchedProfile extends StatelessWidget {
   const UnMatchedProfile({
     super.key,
+    required this.userId,
     this.chatEnabled = true,
   });
 
+  final int userId;
   final bool chatEnabled;
 
   @override
@@ -19,11 +21,12 @@ class UnMatchedProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ProfileHeadInformation(
+            userId: userId,
             chatEnabled: chatEnabled,
           ),
-          const ProfileSubInformation(),
+          ProfileSubInformation(userId),
           const Gap(13.0),
-          const ProfileSelfIntroduction(),
+          ProfileSelfIntroduction(userId),
         ],
       ),
     );
@@ -31,14 +34,18 @@ class UnMatchedProfile extends StatelessWidget {
 }
 
 class _ProfileHeadInformation extends ConsumerWidget {
-  const _ProfileHeadInformation({required this.chatEnabled});
+  const _ProfileHeadInformation({
+    required this.userId,
+    required this.chatEnabled,
+  });
 
+  final int userId;
   final bool chatEnabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userInfo = ref.watch(profileNotifierProvider).profile;
-    if(userInfo == null) return Container();
+    final userInfo = ref.watch(profileNotifierProvider(userId)).profile;
+    if (userInfo == null) return Container();
 
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 480.0),
@@ -53,6 +60,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
             bottom: 0,
             right: 0,
             child: ProfileMainInformation(
+              userId: userId,
               name: userInfo.name,
               age: userInfo.age,
               mbti: userInfo.mbti,
@@ -61,7 +69,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
               chatEnabled: chatEnabled,
               favoriteType: userInfo.favoriteType,
               onFavoriteTypeChanged: (type) => ref
-                  .read(profileNotifierProvider.notifier)
+                  .read(profileNotifierProvider(userId).notifier)
                   .favoriteType = type,
             ),
           ),
