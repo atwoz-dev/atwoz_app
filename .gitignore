@@ -82,3 +82,7 @@ android/app/src/main/res/drawable/background.png
 # Web 관련
 web/splash/img/*.png
 web/splash/img/index.html
+
+# Firebase
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
