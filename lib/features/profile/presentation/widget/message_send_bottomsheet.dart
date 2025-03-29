@@ -1,10 +1,8 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/contact_registration_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,11 +12,48 @@ import 'package:go_router/go_router.dart';
 import '../../domain/common/model.dart';
 import 'common_button_group.dart';
 
-class MessageSendBottomSheet extends ConsumerWidget {
+class MessageSendBottomSheet extends ConsumerStatefulWidget {
   const MessageSendBottomSheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MessageSendBottomSheet> createState() =>
+      _MessageSendBottomSheetState();
+
+  static Future<void> open(BuildContext context) => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        useSafeArea: true,
+        builder: (context) => Padding(
+          padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
+          child: const MessageSendBottomSheet(),
+        ),
+      );
+}
+
+class _MessageSendBottomSheetState
+    extends ConsumerState<MessageSendBottomSheet> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    final message = ref.read(profileNotifierProvider).message;
+
+    _controller = TextEditingController(text: message)
+      ..addListener(() {
+        ref.read(profileNotifierProvider.notifier).message = _controller.text;
+      });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final status = ref.watch(profileNotifierProvider);
     final messageReceived = status.matchStatus is MatchingReceived;
 
@@ -57,14 +92,17 @@ class MessageSendBottomSheet extends ConsumerWidget {
                   const Gap(8.0),
                   _MessageSendGuide(sendMessageSubGuide),
                   const Gap(32.0),
-                  _MessageSendForm(expectedResultAfterSend),
+                  _MessageSendForm(
+                    expectedResultAfterSend: expectedResultAfterSend,
+                    controller: _controller,
+                  ),
                   const Gap(32.0),
                   _MessageButtonGroup(
                     onMessageSend: () => _onSubmit(
-                      context: context,
                       messageReceived: messageReceived,
                       registeredContact: status.registeredContact,
                     ),
+                    enabledSubmit: _controller.text.isNotEmpty,
                   ),
                 ],
               ),
@@ -74,17 +112,6 @@ class MessageSendBottomSheet extends ConsumerWidget {
       ),
     );
   }
-
-  static Future<void> open(BuildContext context) => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        builder: (context) => Padding(
-          padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
-          child: const MessageSendBottomSheet(),
-        ),
-      );
 
   ({
     String sendMessageGuide,
@@ -107,7 +134,6 @@ class MessageSendBottomSheet extends ConsumerWidget {
   }
 
   void _onSubmit({
-    required BuildContext context,
     required bool messageReceived,
     required bool registeredContact,
   }) async {
@@ -226,34 +252,14 @@ class _MessageExampleBox extends StatelessWidget {
   }
 }
 
-class _MessageSendForm extends ConsumerStatefulWidget {
-  const _MessageSendForm(this.expectedResultAfterSend);
+class _MessageSendForm extends StatelessWidget {
+  const _MessageSendForm({
+    required this.expectedResultAfterSend,
+    required this.controller,
+  });
 
   final String expectedResultAfterSend;
-
-  @override
-  ConsumerState<_MessageSendForm> createState() => _MessageSendFormState();
-}
-
-class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    final message = ref.read(profileNotifierProvider).message;
-
-    _controller = TextEditingController(text: message)
-      ..addListener(() {
-        ref.read(profileNotifierProvider.notifier).message = _controller.text;
-      });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -262,10 +268,10 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
       children: [
         Text('메시지 입력하기', style: Fonts.header03()),
         const Gap(8.0),
-        Text(widget.expectedResultAfterSend),
+        Text(expectedResultAfterSend),
         const Gap(24.0),
         DefaultTextFormField(
-          controller: _controller,
+          controller: controller,
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(
               Radius.circular(8.0),
@@ -287,9 +293,13 @@ class _MessageSendFormState extends ConsumerState<_MessageSendForm> {
 }
 
 class _MessageButtonGroup extends StatelessWidget {
-  const _MessageButtonGroup({required this.onMessageSend});
+  const _MessageButtonGroup({
+    required this.onMessageSend,
+    required this.enabledSubmit,
+  });
 
   final VoidCallback onMessageSend;
+  final bool enabledSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -298,6 +308,7 @@ class _MessageButtonGroup extends StatelessWidget {
       onSubmit: onMessageSend,
       cancelLabel: '취소',
       submitLabel: '확인',
+      enabledSubmit: enabledSubmit,
     );
   }
 }
@@ -353,7 +364,7 @@ class _MessageSendConfirm extends StatelessWidget {
                 context.pop();
               },
               cancel: const Text('취소'),
-              submit:  Text.rich(
+              submit: Text.rich(
                 TextSpan(
                   children: [
                     const WidgetSpan(

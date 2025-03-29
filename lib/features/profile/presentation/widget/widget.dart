@@ -9,3 +9,4 @@ export 'message_send_bottomsheet.dart';
 export 'un_matched_profile.dart';
 export 'announcement_bottomsheet.dart';
 export 'skeleton_profile.dart';
+export 'favorite_type_select_dialog.dart';

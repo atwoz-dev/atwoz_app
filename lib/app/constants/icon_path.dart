@@ -20,6 +20,15 @@ class IconPath {
   static const String homeHeart = '$iconsPath/home_heart.svg';
   static const String check = '$iconsPath/check.svg';
   static const String checkFill = '$iconsPath/check_fill.svg';
+  static const String checkFillGray = '$iconsPath/check_fill_gray.svg';
+  static const String chevronRight = '$iconsPath/chevron_right.svg';
+  static const String chevronRight2 = '$iconsPath/chevron_right2.svg';
+  static const String myProfile = '$iconsPath/my_profile.svg';
+  static const String idealSetting = '$iconsPath/my_ideal_setting.svg';
+  static const String blockFriend = '$iconsPath/my_block_friend.svg';
+  static const String store = '$iconsPath/my_store.svg';
+  static const String customerCenter = '$iconsPath/my_customer_center.svg';
+  static const String setting = '$iconsPath/my_setting.svg';
   static const String letter = '$iconsPath/letter.svg';
   static const String like = '$iconsPath/like.svg';
   static const String heartLine = '$iconsPath/heart_line.svg';
@@ -29,6 +38,10 @@ class IconPath {
   static const String school = '$iconsPath/school.svg';
   static const String smoking = '$iconsPath/smoking.svg';
   static const String wineglass = '$iconsPath/wineglass.svg';
+  static const String generalFavorite = '$iconsPath/general_favorite.svg';
+  static const String strongFavorite = '$iconsPath/strong_favorite.svg';
+  static const String storeHeart = '$iconsPath/store_heart.svg';
+  static const String celebrate = '$iconsPath/celebrate.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

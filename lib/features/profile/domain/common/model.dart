@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,7 +17,7 @@ class UserProfile with _$UserProfile {
     required List<SelfIntroductionData> selfIntroductionItems,
     required List<SubInformationData> subInformationItems,
     required MatchStatus matchStatus,
-    required bool favoriteUser,
+    required FavoriteType favoriteType,
   }) = _UserProfile;
 }
 
@@ -53,11 +54,11 @@ class Matched extends MatchStatus {
 
   @override
   List<Object> get props => [
-    sentMessage,
-    receivedMessage,
-    contactMethod,
-    contactInfo,
-  ];
+        sentMessage,
+        receivedMessage,
+        contactMethod,
+        contactInfo,
+      ];
 }
 
 class UnMatched extends MatchStatus {
@@ -107,5 +108,15 @@ class MatchingReceived extends Matching {
       receivedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
 }
 
+enum FavoriteType {
+  none(''),
+  general(IconPath.generalFavorite),
+  strong(IconPath.strongFavorite);
+
+  final String path;
+  const FavoriteType(this.path);
+
+  bool get isFavorite => this != none;
+}
 
 const _expiredDuration = Duration(days: 3);
