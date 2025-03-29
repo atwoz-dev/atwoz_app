@@ -1,5 +1,5 @@
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'profile_state.dart';

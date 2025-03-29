@@ -1,10 +1,10 @@
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod/riverpod.dart';
-
-import '../common/model.dart';
 
 // TODO(Han): 추후 repository 를 받고 DI 로 주입 하도록 수정
 class ProfileFetchUseCase {
@@ -24,7 +24,13 @@ class ProfileFetchUseCase {
         address: '서울특별시 동작구',
         hobbies: ['클라이밍', '공연 전시회 관람'],
         selfIntroductionItems: [],
-        subInformationItems: [],
+        smokingStatus: SmokingStatus.none,
+        drinkingStatus: DrinkingStatus.none,
+        educationLevel: EducationLevel.other,
+        religion: Religion.none,
+        region: Region.seoul,
+        height: 165.0,
+        job: '직장인',
         matchStatus: designInspectionPresetData,
         favoriteType: FavoriteType.none,
       );
@@ -39,29 +45,24 @@ class ProfileFetchUseCase {
 extension ProfileDetailResponseX on ProfileDetailResponse {
   UserProfile toModel(int myUserId) {
     final basic = basicMemberInfo;
-    final currentYear = DateTime.now().year;
     return UserProfile(
       name: basic.nickname,
       profileUri: basic.profileImageUrl,
-      age: currentYear - basic.year,
+      age: basic.age,
       mbti: basic.mbti,
       address: basic.region,
-      hobbies: basicMemberInfo.hobbies,
+      hobbies: basic.hobbies,
       selfIntroductionItems:
           interviews.map((intro) => intro.toModel()).toList(),
-      subInformationItems: [
-        SubInformationData(ProfileSubInfoType.smoking, basic.smokingStatus),
-        SubInformationData(ProfileSubInfoType.drinking, basic.drinkingStatus),
-        SubInformationData(
-          ProfileSubInfoType.education,
-          basic.highestEducation,
-        ),
-        SubInformationData(ProfileSubInfoType.religion, basic.religion),
-        SubInformationData(ProfileSubInfoType.height, '${basic.height}cm'),
-        SubInformationData(ProfileSubInfoType.job, basic.job),
-      ],
+      smokingStatus: SmokingStatus.parse(basic.smokingStatus),
+      drinkingStatus: DrinkingStatus.parse(basic.drinkingStatus),
+      educationLevel: EducationLevel.parse(basic.highestEducation),
+      religion: Religion.parse(basic.religion),
+      region: Region.parse(basic.region),
+      height: basic.height.toDouble(),
+      job: basic.job,
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
-      favoriteType: FavoriteType.none, // TODO(Han): server 구현 후 적용
+      favoriteType: FavoriteType.parse(basic.like),
     );
   }
 }

@@ -21,7 +21,8 @@ class BasicMemberInformation with _$BasicMemberInformation {
   const factory BasicMemberInformation({
     required String nickname,
     required String profileImageUrl,
-    @JsonKey(name: 'age') required int year,
+    // TODO(Han): server non-nullable requirement check
+    @Default(0) int age,
     required String gender,
     required int height,
     required String job,
@@ -32,6 +33,7 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required String drinkingStatus,
     required String highestEducation,
     required String religion,
+    required String? like,
   }) = _BasicMemberInformation;
 
   factory BasicMemberInformation.fromJson(Map<String, dynamic> json) =>

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +15,7 @@ class ProfileRepository extends BaseRepository {
   Future<ProfileDetailResponse> getProfileDetail(int id) async {
     final res = await apiService.getJson('$path/$id');
     if (res is! Map<String, dynamic> || res['data'] is! Map<String, Object?>) {
+      Log.e('data type is not Map<String, dynamic> $res');
       throw Exception();
     }
 

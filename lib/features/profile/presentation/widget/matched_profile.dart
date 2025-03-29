@@ -19,7 +19,7 @@ class MatchedProfile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileNotifierProvider(userId)).profile;
-    if (profile == null) return const SizedBox.shrink();
+    if (profile == null) return Container();
 
     final matchStatus = profile.matchStatus;
 
@@ -31,15 +31,15 @@ class MatchedProfile extends ConsumerWidget {
           horizontal: 16.0,
         ),
         child: Column(
-          spacing: 16.0,
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 16.0,
           children: [
             _GuideMessage(otherUserName: profile.name),
             SizedBox(
               height: 420.0,
               child: ProfileMainImage(profileUri: profile.profileUri),
             ),
-            _ProfilePageMoveButton(userId),
+            _ProfilePageMoveButton(userId: userId),
             if (matchStatus is Matched)
               _MatchedInformation(
                 contactMethod: matchStatus.contactMethod,
@@ -81,7 +81,7 @@ class _GuideMessage extends StatelessWidget {
 }
 
 class _ProfilePageMoveButton extends StatelessWidget {
-  const _ProfilePageMoveButton(this.userId);
+  const _ProfilePageMoveButton({required this.userId});
 
   final int userId;
 
@@ -154,8 +154,8 @@ class _InformationBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8.0,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(title, style: Fonts.body02Medium()),
         Container(

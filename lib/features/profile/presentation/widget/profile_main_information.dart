@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
