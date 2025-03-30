@@ -28,52 +28,48 @@ class ProfileManageInfoArea extends StatelessWidget {
         color: Palette.colorGrey50,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "프로필 정보",
+            style: Fonts.header03().copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Gap(16),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "프로필 정보",
-                style: Fonts.header03().copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            children: _profiles.map((profile) {
+              return Column(
+                children: [
+                  buildLabeledRow(
+                      label: profile,
+                      child: GestureDetector(
+                        onTap: () =>
+                            navigate(context, route: AppRoute.profileUpdate),
+                        child: DefaultTextFormField(
+                          hintText: profile, //TODO: 추후 프로필 정보로 수정
+                          hintStyle: Fonts.body02Medium()
+                              .copyWith(color: Palette.colorBlack),
+                          fillColor: Palette.colorGrey100,
+                          readOnly: true,
+                        ),
+                      ),
+                      context: context),
+                  Gap(16),
+                ],
+              );
+            }).toList(),
+          ),
+          Gap(32),
+          DefaultElevatedButton(
+            child: Text(
+              "프로필 미리보기",
+              style: Fonts.body01Regular().copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
               ),
-              Gap(16),
-              Column(
-                children: _profiles.map((profile) {
-                  return Column(
-                    children: [
-                      buildLabeledRow(
-                          label: profile,
-                          child: GestureDetector(
-                            onTap: () => navigate(context,
-                                route: AppRoute.profileUpdate),
-                            child: DefaultTextFormField(
-                              hintText: profile, //TODO: 추후 프로필 정보로 수정
-                              hintStyle: Fonts.body02Medium()
-                                  .copyWith(color: Palette.colorBlack),
-                              fillColor: Palette.colorGrey100,
-                              readOnly: true,
-                            ),
-                          ),
-                          context: context),
-                      Gap(16),
-                    ],
-                  );
-                }).toList(),
-              ),
-              Gap(32),
-              DefaultElevatedButton(
-                child: Text(
-                  "프로필 미리보기",
-                  style: Fonts.body01Regular().copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                onPressed: () {},
-              )
-            ],
+            ),
+            onPressed: () {},
           ),
           ProfileManageBasicInfoArea()
         ],

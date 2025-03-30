@@ -37,7 +37,7 @@ class ProfileUpdateInfoSelector extends StatelessWidget {
           style: Fonts.header03().copyWith(fontWeight: FontWeight.w700),
         ),
         Gap(24),
-        infoValues['닉네임']!, // TODO: UI 확인용 하드코딩. 추후 변경
+        infoValues['MBTI']!, // TODO: UI 확인용 하드코딩. 추후 변경
       ],
     );
   }
@@ -95,7 +95,6 @@ class _GroupTypeSelector extends StatefulWidget {
 }
 
 class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
-  bool isSelected = false;
   final List<String> _mbtiLetters = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
   List<String> _selectedMbti = [];
 

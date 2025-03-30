@@ -27,7 +27,10 @@ class ProfileManagePhotoArea extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, crossAxisSpacing: 8, mainAxisSpacing: 8),
+              crossAxisCount: 3,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
             itemCount: 6,
             itemBuilder: (context, index) {
               return Stack(
@@ -59,14 +62,13 @@ class ProfileManagePhotoArea extends StatelessWidget {
                             color: Palette.colorPrimary600,
                             borderRadius: BorderRadius.circular(2),
                           ),
-                          child: Center(
-                            child: Text(
-                              "대표",
-                              style: Fonts.body03Regular().copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          child: Text(
+                            "대표",
+                            style: Fonts.body03Regular().copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         )),
                   Positioned(
