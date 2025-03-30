@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';

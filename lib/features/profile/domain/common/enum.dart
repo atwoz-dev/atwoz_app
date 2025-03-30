@@ -96,7 +96,6 @@ enum Region {
 }
 
 enum FavoriteType {
-  none,
   interest(IconPath.generalFavorite, '관심있어요'),
   veryInterest(IconPath.strongFavorite, '매우 관심있어요');
 
@@ -104,13 +103,11 @@ enum FavoriteType {
   final String label;
   const FavoriteType([this.iconPath = '', this.label = '']);
 
-  bool get isFavorite => this != none;
-
   static final Map<String, FavoriteType> _byValue = {
     for (final type in FavoriteType.values)
       type.name.toUpperCase().replaceAll('_', ''): type,
   };
 
-  static FavoriteType parse(String? value) =>
-      _byValue[value?.toUpperCase()] ?? FavoriteType.none;
+  static FavoriteType? tryParse(String? value) =>
+      _byValue[value?.toUpperCase()];
 }

@@ -155,6 +155,7 @@ class _MessageSendBottomSheetState
       ),
     );
     if (!mounted) return;
+    ref.read(profileNotifierProvider(widget.userId).notifier).requestMatch();
     context.pop();
   }
 
@@ -392,8 +393,7 @@ class _MessageSendConfirm extends StatelessWidget {
   }
 
   Future<bool> _checkContactMethodAndRegisterIfInvalid(
-      BuildContext context) async {
-    return hasContactMethod ||
-        (await ContactRegistrationDialog.open(context) ?? false);
-  }
+          BuildContext context) async =>
+      hasContactMethod ||
+      (await ContactRegistrationDialog.open(context) ?? false);
 }

@@ -30,8 +30,8 @@ class ProfileMainInformation extends StatelessWidget {
   final String address;
   final List<String> hobbies;
   final bool chatEnabled;
-  final FavoriteType favoriteType;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final FavoriteType? favoriteType;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class ProfileMainInformation extends StatelessWidget {
           if (chatEnabled)
             _InteractionButtons(
               userId: userId,
-              favoriteUser: favoriteType.isFavorite,
+              favoriteUser: favoriteType != null,
               onFavoriteTypeChanged: onFavoriteTypeChanged,
             ),
         ],
@@ -109,7 +109,7 @@ class _InteractionButtons extends StatelessWidget {
 
   final int userId;
   final bool favoriteUser;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class _InteractionButtons extends StatelessWidget {
         GestureDetector(
           onTap: () async {
             if (favoriteUser) {
-              onFavoriteTypeChanged(FavoriteType.none);
+              onFavoriteTypeChanged(null);
               return;
             }
             final favoriteType = await FavoriteTypeSelectDialog.open(

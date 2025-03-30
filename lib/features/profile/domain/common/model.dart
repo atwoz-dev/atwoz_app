@@ -9,6 +9,7 @@ part 'model.freezed.dart';
 @freezed
 class UserProfile with _$UserProfile {
   const factory UserProfile({
+    required int id,
     required String name,
     required String profileUri,
     required int age,
@@ -24,7 +25,7 @@ class UserProfile with _$UserProfile {
     required double height,
     required String job,
     required MatchStatus matchStatus,
-    required FavoriteType favoriteType,
+    required FavoriteType? favoriteType,
   }) = _UserProfile;
 }
 
@@ -42,6 +43,9 @@ class SelfIntroductionData {
 
 sealed class MatchStatus extends Equatable {
   const MatchStatus();
+
+  @override
+  List<Object> get props => [];
 }
 
 class Matched extends MatchStatus {
@@ -68,9 +72,6 @@ class Matched extends MatchStatus {
 
 class UnMatched extends MatchStatus {
   const UnMatched();
-
-  @override
-  List<Object> get props => [];
 }
 
 abstract class Matching extends MatchStatus {
@@ -91,6 +92,12 @@ class MatchingRequested extends Matching {
   List<Object> get props => [sentMessage, isExpired];
 }
 
+class MatchRejected extends MatchingRequested {
+  const MatchRejected({
+    required super.sentMessage,
+  }) : super(isExpired: true);
+}
+
 class MatchingReceived extends Matching {
   const MatchingReceived({
     required this.receivedMessage,
@@ -101,4 +108,12 @@ class MatchingReceived extends Matching {
 
   @override
   List<Object> get props => [receivedMessage, isExpired];
+}
+
+enum ProfileErrorType {
+  network('네트워크 연결에 실패했습니다.'),
+  unknown('알 수 없는 오류가 발생했습니다.');
+
+  const ProfileErrorType(this.label);
+  final String label;
 }

@@ -4,37 +4,36 @@ import 'package:atwoz_app/features/profile/data/repository/profile_repository.da
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO(Han): 추후 repository 를 받고 DI 로 주입 하도록 수정
 class ProfileFetchUseCase {
   final Ref ref;
 
   const ProfileFetchUseCase(this.ref);
 
   Future<UserProfile> call(int id) async {
-    final designInspectionPresetData = _designInspectionStatus;
+    // final designInspectionPresetData = _designInspectionStatus;
 
-    if (designInspectionPresetData != null) {
-      return UserProfile(
-        name: '장원영',
-        profileUri: 'https://picsum.photos/200/300',
-        age: 20,
-        mbti: 'ISTP',
-        address: '서울특별시 동작구',
-        hobbies: ['클라이밍', '공연 전시회 관람'],
-        selfIntroductionItems: [],
-        smokingStatus: SmokingStatus.none,
-        drinkingStatus: DrinkingStatus.none,
-        educationLevel: EducationLevel.other,
-        religion: Religion.none,
-        region: Region.seoul,
-        height: 165.0,
-        job: '직장인',
-        matchStatus: designInspectionPresetData,
-        favoriteType: FavoriteType.none,
-      );
-    }
+    // if (designInspectionPresetData != null) {
+    //   return UserProfile(
+    //     name: '장원영',
+    //     profileUri: 'https://picsum.photos/200/300',
+    //     age: 20,
+    //     mbti: 'ISTP',
+    //     address: '서울특별시 동작구',
+    //     hobbies: ['클라이밍', '공연 전시회 관람'],
+    //     selfIntroductionItems: [],
+    //     smokingStatus: SmokingStatus.none,
+    //     drinkingStatus: DrinkingStatus.none,
+    //     educationLevel: EducationLevel.other,
+    //     religion: Religion.none,
+    //     region: Region.seoul,
+    //     height: 165.0,
+    //     job: '직장인',
+    //     matchStatus: designInspectionPresetData,
+    //     favoriteType: FavoriteType.none,
+    //   );
+    // }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
     // TODO(Han): 실패 처리 필요 + my user id 받아오기
@@ -46,6 +45,7 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
   UserProfile toModel(int myUserId) {
     final basic = basicMemberInfo;
     return UserProfile(
+      id: basic.id,
       name: basic.nickname,
       profileUri: basic.profileImageUrl,
       age: basic.age,
@@ -62,7 +62,7 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       height: basic.height.toDouble(),
       job: basic.job,
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
-      favoriteType: FavoriteType.parse(basic.like),
+      favoriteType: FavoriteType.tryParse(basic.like),
     );
   }
 }
@@ -89,7 +89,7 @@ extension MatchInformationX on MatchInformation {
             },
             contactInfo: contact ?? '',
           ),
-        'REJECTED' || _ => const UnMatched(),
+        'REJECTED' || _ => MatchRejected(sentMessage: requestMessage ?? ''),
       };
 }
 

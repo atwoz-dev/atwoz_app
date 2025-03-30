@@ -6,7 +6,6 @@ part 'profile_detail_response.g.dart';
 @freezed
 class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
-    required int? id,
     required BasicMemberInformation basicMemberInfo,
     MatchInformation? matchInfo,
     @Default([]) List<ProfileInterview> interviews,
@@ -19,6 +18,7 @@ class ProfileDetailResponse with _$ProfileDetailResponse {
 @freezed
 class BasicMemberInformation with _$BasicMemberInformation {
   const factory BasicMemberInformation({
+    required int id,
     required String nickname,
     required String profileImageUrl,
     // TODO(Han): server non-nullable requirement check
