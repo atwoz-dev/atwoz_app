@@ -1,0 +1,20 @@
+import 'package:atwoz_app/features/home/domain/entity/ideal_type.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'ideal_type_state.freezed.dart';
+
+@freezed
+class IdealTypeState with _$IdealTypeState {
+  const factory IdealTypeState({
+    @Default(IdealType(
+        minAge: 20,
+        maxAge: 46,
+        hobbies: [],
+        region: '',
+        religion: '',
+        smokingStatus: '',
+        drinkingStatus: ''))
+    IdealType idealType,
+    @Default(false) bool isLoading,
+  }) = _IdealTypeState;
+}

@@ -1,22 +1,30 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/features/home/presentation/controller/ideal_type_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IdealAgeSettingArea extends StatefulWidget {
+class IdealAgeSettingArea extends ConsumerStatefulWidget {
   const IdealAgeSettingArea({
     super.key,
   });
 
   @override
-  State<IdealAgeSettingArea> createState() => _IdealAgeSettingAreaState();
+  ConsumerState<IdealAgeSettingArea> createState() =>
+      _IdealAgeSettingAreaState();
 }
 
-class _IdealAgeSettingAreaState extends State<IdealAgeSettingArea> {
-  double _startAge = 25;
-  double _endAge = 30;
+class _IdealAgeSettingAreaState extends ConsumerState<IdealAgeSettingArea> {
+  late int _minAge;
+  late int _maxAge;
 
   @override
   Widget build(BuildContext context) {
+    final idealType = ref.watch(idealTypeNotifierProvider).idealType;
+    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
+    _minAge = idealType.minAge;
+    _maxAge = idealType.maxAge;
+
     return Column(
       children: [
         Padding(
@@ -30,7 +38,7 @@ class _IdealAgeSettingAreaState extends State<IdealAgeSettingArea> {
                     Fonts.body02Regular().copyWith(fontWeight: FontWeight.w500),
               ),
               Text(
-                "${_startAge.toString().split(".")[0]}세~${_endAge.toString().split(".")[0]}세",
+                "${_minAge.toString()}세~${_maxAge.toString()}세",
                 style: Fonts.body02Regular().copyWith(
                     fontWeight: FontWeight.w500, color: Color(0xff3B3B3B)),
               )
@@ -42,14 +50,19 @@ class _IdealAgeSettingAreaState extends State<IdealAgeSettingArea> {
           children: [
             Expanded(
               child: RangeSlider(
-                values: RangeValues(_startAge, _endAge),
+                values: RangeValues(_minAge.toDouble(), _maxAge.toDouble()),
                 min: 20,
                 max: 46,
                 onChanged: (RangeValues values) {
-                  setState(() {
-                    _startAge = values.start;
-                    _endAge = values.end;
-                  });
+                  // setState(() {
+                  //   print(values);
+                  //   _minAge = values.start.toInt();
+                  //   print(_minAge);
+                  //   _maxAge = values.end.toInt();
+                  //   print(_maxAge);
+                  // });
+                  idealTypeNotifier.updateAgeRange(
+                      values.start.toInt(), values.end.toInt());
                 },
                 activeColor: Palette.colorPrimary500,
                 inactiveColor: Color(0xffEEEEEE),

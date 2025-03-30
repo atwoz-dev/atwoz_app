@@ -1,0 +1,28 @@
+import 'package:atwoz_app/features/home/domain/entity/ideal_type.dart';
+import 'package:atwoz_app/features/home/domain/repository/ideal_type_repository.dart';
+
+class IdealTypeRepositoryImpl implements IdealTypeRepository {
+  Map<String, dynamic> sampleIdealType = {
+    // TODO: api 연동 시 제거
+    "minAge": 20,
+    "maxAge": 30,
+    "hobbies": ['등산', '맛집탐방', '쇼핑'],
+    "region": "서울특별시 은평구",
+    "religion": "무교",
+    "smokingStatus": "비흡연",
+    "drinkingStatus": "사회적 음주"
+  };
+
+  @override
+  Future<IdealType> getIdealType() async {
+    // TODO: 테스트용 코드. api 연동 시 변경
+    return IdealType.fromJson(sampleIdealType);
+  }
+
+  @override
+  Future<void> setIdealType(IdealType idealType) async {
+    // TODO: 테스트용 코드. api 연동 시 변경
+    sampleIdealType = idealType.toJson();
+    print(sampleIdealType);
+  }
+}
