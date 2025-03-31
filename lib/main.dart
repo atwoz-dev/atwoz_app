@@ -4,7 +4,7 @@ import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
-import 'package:atwoz_app/features/notification/data/fcm_service.dart';
+import 'package:atwoz_app/features/notification/data/notification_fcm_callbacks.dart';
 import 'package:atwoz_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

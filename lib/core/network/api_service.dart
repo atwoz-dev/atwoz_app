@@ -105,6 +105,15 @@ abstract class ApiService {
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
+  Future<T> patchJson<T>(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
+    Converter<T>? converter,
+  });
 
   initialize();
 }

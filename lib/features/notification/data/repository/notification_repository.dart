@@ -1,22 +1,72 @@
-import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
+import 'package:atwoz_app/features/notification/data/repository/notification_fcm_initializer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {
+  return NotificationRepository(ref: ref);
+});
 
 class NotificationRepository extends BaseRepository {
   NotificationRepository({required Ref ref}) : super(ref, '/notifications');
 
-  /// 실제 데이터를 서버에서 가져오는 메서드 (fetchData 활용)
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final _fcmInitializer = NotificationFCMInitializer();
+
+  /// 전체 초기화
+  Future<void> initializeFCM() async {
+    await Firebase.initializeApp();
+    await _fcmInitializer.initialize();
+
+    final initialMessage = await _messaging.getInitialMessage();
+    if (initialMessage != null) {
+      print("Terminated 상태에서 메시지 수신됨: \${initialMessage.data}");
+    }
+
+    final token = await getDeviceToken();
+    if (token != null) {
+      await registerDeviceToken(token);
+      print("디바이스 토큰 서버에 등록됨: \$token");
+    }
+  }
+
+  /// 디바이스 토큰 반환
+  Future<String?> getDeviceToken() async {
+    return await _messaging.getToken();
+  }
+
+  /// 1. 디바이스 토큰 서버에 전송
+  Future<void> registerDeviceToken(String token) async {
+    await apiService.patchJson(
+      '\$path/settings/device-token',
+      data: {'deviceToken': token},
+      requiresAccessToken: true,
+      requiresRefreshToken: false,
+    );
+  }
+
+  /// 2. 알림 수신 동의 (opt-in)
+  Future<void> optInNotification() async {
+    await apiService.patchJson(
+      '\$path/settings/opt-in',
+      requiresAccessToken: true,
+      requiresRefreshToken: false,
+    );
+  }
+
+  /// 3. 알림 수신 거부 (opt-out)
+  Future<void> optOutNotification() async {
+    await apiService.patchJson(
+      '\$path/settings/opt-out',
+      requiresAccessToken: true,
+      requiresRefreshToken: false,
+    );
+  }
+
+  /// 4. 알림 목록 가져오기 (현재는 mock 데이터 사용)
   Future<List<NotificationModel>> fetchNotifications() async {
-    // TODO: api 연결 후 교체
-    // return await fetchData<List<NotificationModel>>(
-    //   endpoint: path,
-    //   converter: (data) {
-    //     // JSON 데이터를 `NotificationModel` 리스트로 변환
-    //     return List<Map<String, dynamic>>.from(data!)
-    //         .map((json) => NotificationModel.fromJson(json))
-    //         .toList();
-    //   },
-    // );
     return Future.value([
       NotificationModel.create(
         notificationId: 1,

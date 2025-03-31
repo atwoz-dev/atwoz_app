@@ -48,6 +48,11 @@ class NotificationDataNotifier extends _$NotificationDataNotifier {
         ref.watch(fetchNotificationsUseCaseProvider);
     return await fetchNotificationsUseCase.execute(unreadOnly: true);
   }
+
+  void addNotification(NotificationModel model) {
+    _notifications.insert(0, model); // 가장 앞에 추가
+    state = AsyncData(_notifications);
+  }
 }
 
 /*

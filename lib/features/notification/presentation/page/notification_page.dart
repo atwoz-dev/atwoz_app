@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
+import 'package:atwoz_app/features/notification/data/repository/notification_fcm_initializer.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_empty_view_widget.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,39 @@ import 'package:atwoz_app/features/notification/domain/provider/notification_pro
 import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 
-class NotificationPage extends ConsumerWidget with LogMixin {
+class NotificationPage extends ConsumerStatefulWidget with LogMixin {
   const NotificationPage({super.key});
 
+  @override
+  ConsumerState<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends ConsumerState<NotificationPage>
+    with LogMixin {
   static const double horizontalPaddingFactor = 0.05;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+
+    Future.microtask(() async {
+      final repo = ref.read(notificationRepositoryProvider);
+      await repo.initializeFCM();
+
+      final token = await repo.getDeviceToken();
+      logD("FCM 디바이스 토큰: $token");
+
+      // 콜백 주입
+      notificationStateAddCallback = (model) {
+        ref
+            .read(notificationDataNotifierProvider.notifier)
+            .addNotification(model);
+      };
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final double horizontalPadding =
         context.screenWidth * horizontalPaddingFactor;
 
@@ -27,7 +54,7 @@ class NotificationPage extends ConsumerWidget with LogMixin {
     final notificationDataAsync = ref.watch(notificationDataNotifierProvider);
 
     return Scaffold(
-      appBar: DefaultAppBar(title: '알림'),
+      appBar: const DefaultAppBar(title: '알림'),
       body: notificationDataAsync.when(
         data: (notifications) => _buildNotificationList(
           context,
@@ -35,8 +62,8 @@ class NotificationPage extends ConsumerWidget with LogMixin {
           notifications,
           horizontalPadding,
         ),
-        loading: () => _buildLoadingView(),
-        error: (e, stackTrace) => _buildErrorView(e, stackTrace),
+        loading: _buildLoadingView,
+        error: _buildErrorView,
       ),
       bottomNavigationBar: DefaultBottomNavigationBar(
         currentIndex: 0,
@@ -103,7 +130,7 @@ class NotificationPage extends ConsumerWidget with LogMixin {
   /// '전체 읽음' 버튼을 빌드
   Widget _buildMarkAllAsReadButton(WidgetRef ref) {
     return DefaultTextButton(
-      padding: EdgeInsets.symmetric(vertical: 8), // 왼쪽 패딩 제거
+      padding: const EdgeInsets.symmetric(vertical: 8), // 왼쪽 패딩 제거
       alignment: Alignment.centerLeft,
       primary: Palette.colorGrey800,
       child: Text(

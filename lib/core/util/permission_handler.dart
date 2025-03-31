@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -48,5 +49,19 @@ class PermissionHandler with WidgetsBindingObserver {
       Log.e("권한 상태 확인 중 오류 발생: $e");
       return false;
     }
+  }
+
+  Future<void> requestPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    Log.d('사용자 권한 부여: ${settings.authorizationStatus}');
   }
 }

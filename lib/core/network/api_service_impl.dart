@@ -338,4 +338,26 @@ class ApiServiceImpl implements ApiService {
         requiresRefreshCookie: requiresRefreshCookie,
         converter: converter,
       );
+
+  @override
+  Future<T> patchJson<T>(
+    String path, {
+    Object? data,
+    Json? queryParameters,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
+    Converter<T>? converter,
+  }) =>
+      request(
+        path,
+        method: 'PATCH',
+        contentType: Headers.jsonContentType,
+        data: data,
+        queryParameters: queryParameters,
+        requiresAccessToken: requiresAccessToken,
+        requiresRefreshToken: requiresRefreshToken,
+        requiresRefreshCookie: requiresRefreshCookie,
+        converter: converter,
+      );
 }
