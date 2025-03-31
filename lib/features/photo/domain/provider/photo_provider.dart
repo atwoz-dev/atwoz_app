@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
+import 'package:atwoz_app/features/photo/data/dto/profile_image_wrapper.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,16 +18,24 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   bool _isReturningFromSettings =
       false; // 사용자가 앱 설정 화면에서 돌아왔는지 여부를 추적하는 플래그. 권한이 변경되었는지 확인하는 데 사용.
 
+  /// `state`를 `List<ProfileImageWrapper?>`로 유지하고, `build()`는 `List<XFile?>`을 반환하도록 변환.
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
     return List.filled(6, null); // 초기화 상태: 6개의 null 값
   }
 
+  /// 내부적으로 ProfileImageWrapper 리스트를 유지하지만 UI에는 XFile? 형태로 변환하여 제공
+  List<ProfileImageWrapper?> _profileImages = List.filled(6, null);
+
+  /// UI에서 사용할 `List<XFile?>` 반환
+  List<XFile?> get uiState =>
+      _profileImages.map((image) => image?.file).toList();
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this); // 라이프사이클 관찰 중지
-    _permissionHandler.dispose(); // PermissionHandler도 정리
+    _permissionHandler.dispose();
     super.dispose();
   }
 
@@ -55,27 +64,29 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     await ref.read(uploadPhotosUsecaseProvider).execute(state);
   }
 
-// 사진 단건 업로드
+  /// 사진 단건 업로드
   Future<void> uploadSinglePhoto(int index, XFile photo) async {
-    state = [...state]..[index] = photo;
+    final uploadedId = await ref
+        .read(uploadSinglePhotoUseCaseProvider)
+        .execute((index, photo));
+    if (uploadedId == null) return;
 
-    await ref.read(uploadSinglePhotoUseCaseProvider).execute((index, photo));
+    _profileImages = [..._profileImages]..[index] =
+        ProfileImageWrapper(id: uploadedId, file: photo);
+    state = uiState; // UI 업데이트
   }
 
-  // TODO: id 조회 안 돌리고 백엔드에서 받아오기
-  // 사진 단건 삭제
+  /// 사진 삭제
   Future<void> deletePhoto(int index) async {
-    // 삭제할 사진이 없으면 바로 종료
-    final imageToDelete = state.elementAtOrNull(index);
-    if (imageToDelete == null) return;
+    final imageWrapper = _profileImages[index];
+    if (imageWrapper == null) return;
+    await ref.read(deletePhotoUsecaseProvider).execute(imageWrapper.id);
 
-    // UI부터 즉시 업데이트
-    state = [...state]..[index] = null;
-
-    await ref.read(deletePhotoUsecaseProvider).execute(imageToDelete);
+    _profileImages = [..._profileImages]..[index] = null;
+    state = uiState;
   }
 
-  // 사진 선택
+  /// 사진 선택
   Future<XFile?> pickPhoto(ImageSource source) async {
     try {
       final permissionStatus =
@@ -91,9 +102,19 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 프로필 사진 불러오기
+  /// 프로필 사진 불러오기
   Future<void> fetchProfileImages() async {
-    state = await ref.read(fetchPhotoUsecaseProvider).execute();
+    final profileImages = await ref.read(fetchPhotoUsecaseProvider).execute();
+    if (profileImages.isEmpty) return;
+
+    // `imageData`가 `null`인지 체크 후 안전하게 매핑
+    _profileImages = profileImages
+        .map((imageData) => imageData != null
+            ? ProfileImageWrapper(id: imageData.id, file: XFile(imageData.url))
+            : null)
+        .toList();
+
+    state = uiState;
   }
 
   // UI만 업데이트
