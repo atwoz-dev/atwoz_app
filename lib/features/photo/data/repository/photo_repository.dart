@@ -68,12 +68,17 @@ class PhotoRepository extends BaseRepository {
     for (var i = 0; i < files.length; i++) {
       formData.files.add(MapEntry("requests[$i].image", files[i]));
     }
+    final fields = <String, String>{};
 
-    final fields = {
-      for (var i = 0; i < files.length; i++)
-        ...ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson().map(
-            (key, value) => MapEntry("requests[$i].$key", value.toString()))
-    };
+    for (var i = 0; i < files.length; i++) {
+      final json =
+          ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson();
+
+      json.entries.where((entry) => entry.value != null).forEach((entry) {
+        fields["requests[$i].${entry.key}"] = entry.value.toString();
+      });
+    }
+
     formData.fields.addAll(fields.entries);
 
     try {
