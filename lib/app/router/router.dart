@@ -11,6 +11,7 @@ import 'package:atwoz_app/features/contact_setting/presentation/page/contact_set
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
@@ -80,6 +81,7 @@ enum AppRoute {
   contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
   introduceDetail('/introduceDetail'),
+  introduceFilter('/introduceFilter'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification'),
   storeNavigation('/storeNavigation');
@@ -135,6 +137,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.introduceDetail.path,
       builder: (context, state) => const IntroduceDetailPage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceFilter.path,
+      builder: (context, state) => const IntroduceFilterPage(),
     ),
     GoRoute(
       path: AppRoute.introduceNavigation.path,
