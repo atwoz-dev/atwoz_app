@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/filter_state_provider.dart';
+import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/age_range_slider.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/region_select_dialog.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ageRange = ref.watch(ageRangeProvider);
+    final ageRange = ref.watch(filterProvider).rangeValues;
 
     return Scaffold(
       appBar: const DefaultAppBar(
