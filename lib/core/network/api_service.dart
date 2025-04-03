@@ -92,4 +92,12 @@ abstract class ApiService {
     bool requiresAuthToken = true,
     Converter<T>? converter,
   });
+
+  Future<T> patchJson<T>(
+    String path, {
+    Object? data,
+    Json? queryParameters,
+    bool requiresAuthToken = true,
+    Converter<T>? converter,
+  });
 }
