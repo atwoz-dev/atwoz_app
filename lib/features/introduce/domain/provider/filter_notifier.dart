@@ -8,7 +8,9 @@ class FilterNotifier extends StateNotifier<FilterState> {
   // TODO: 서버로부터 받은 선호나이를 반영해야함
   FilterNotifier()
       : super(const FilterState(
-            rangeValues: RangeValues(27, 32), selectedCitys: []));
+            rangeValues: RangeValues(27, 32),
+            selectedCitys: [],
+            selectedGenders: ["전체 보기", "이성만 보기"]));
 
   void updateRange(RangeValues values) {
     state = state.copyWith(rangeValues: values);
@@ -16,6 +18,10 @@ class FilterNotifier extends StateNotifier<FilterState> {
 
   void updateHobbies(List<String> citys) {
     state = state.copyWith(selectedCitys: citys);
+  }
+
+  void updateGenders(List<String> genders) {
+    state = state.copyWith(selectedGenders: genders);
   }
 }
 

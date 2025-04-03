@@ -50,6 +50,7 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
   Widget build(BuildContext context) {
     final ageRange = ref.watch(filterProvider).rangeValues;
     final selectedCityList = ref.watch(filterProvider).selectedCitys;
+    final selectedGenderList = ref.watch(filterProvider).selectedGenders;
 
     return Scaffold(
       appBar: const DefaultAppBar(
