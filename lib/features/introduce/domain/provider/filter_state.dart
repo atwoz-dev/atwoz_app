@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 @immutable
 class FilterState {
   final RangeValues rangeValues;
-  final List<String> selectedHobbies;
+  final List<String> selectedCitys;
 
   const FilterState({
     required this.rangeValues,
-    required this.selectedHobbies,
+    required this.selectedCitys,
   });
 
   FilterState copyWith({
     RangeValues? rangeValues,
-    List<String>? selectedHobbies,
+    List<String>? selectedCitys,
   }) {
     return FilterState(
       rangeValues: rangeValues ?? this.rangeValues,
-      selectedHobbies: selectedHobbies ?? this.selectedHobbies,
+      selectedCitys: selectedCitys ?? this.selectedCitys,
     );
   }
 }

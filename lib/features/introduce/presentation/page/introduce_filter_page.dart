@@ -49,6 +49,7 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
   @override
   Widget build(BuildContext context) {
     final ageRange = ref.watch(filterProvider).rangeValues;
+    final selectedCityList = ref.watch(filterProvider).selectedCitys;
 
     return Scaffold(
       appBar: const DefaultAppBar(
@@ -78,7 +79,9 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
               buildDefaultTextFormFieldRow(
                 label: '선호 지역',
                 hintText: '선호 지역을 선택해주세요',
-                initialValue: null,
+                initialValue: selectedCityList.isNotEmpty
+                    ? selectedCityList.join(', ')
+                    : null,
               ),
               Gap(24.h),
               buildLabeledRow(

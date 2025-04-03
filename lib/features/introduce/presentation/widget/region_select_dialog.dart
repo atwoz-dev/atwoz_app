@@ -24,7 +24,7 @@ class _RegionselectdialogState extends ConsumerState<Regionselectdialog> {
   Widget build(BuildContext context) {
     final List<String> cityList =
         cityRegionMap.map((e) => e['city'] as String).toList();
-    final selectedCityList = ref.watch(filterProvider).selectedHobbies;
+    final selectedCityList = ref.watch(filterProvider).selectedCitys;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
