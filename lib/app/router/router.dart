@@ -6,15 +6,16 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
+import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/profile_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/service_withdraw_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/service_withdraw_reason_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/terms_of_use_page.dart';
@@ -26,8 +27,8 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
-import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,10 +50,12 @@ enum AppRoute {
   home('/home'),
   homeNavigation('/homeNavigation'),
   ideal('/ideal'),
-  userByCategory('/userByCategory'),
+  userByCategory('/home/userByCategory/:category'),
+  auth('/auth'),
   myNavigation('/my'),
   myPage('/my/main'),
   profileManage('/my/manage-profile'),
+  profileUpdate('/my/manage-profile/update-profile'),
   idealSetting('/my/ideal-setting'),
   blockFriend('/my/block-friend'),
   store('/my/store'),
@@ -120,7 +123,11 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.userByCategory.path,
-      builder: (context, state) => const UserByCategoryPage(),
+      name: 'userByCategory',
+      builder: (context, state) {
+        final category = state.pathParameters['category'] ?? "상위 5%";
+        return UserByCategoryPage(category: category);
+      },
     ),
     GoRoute(
       path: AppRoute.myNavigation.path,
@@ -248,6 +255,10 @@ class MyBranch {
         GoRoute(
           path: 'manage-profile',
           builder: (context, state) => const ProfileManagePage(),
+        ),
+        GoRoute(
+          path: 'manage-profile/update-profile',
+          builder: (context, state) => const ProfileUpdatePage(),
         ),
         GoRoute(
           path: 'ideal-setting',
