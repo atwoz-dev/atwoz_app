@@ -8,6 +8,7 @@ part 'model.freezed.dart';
 @freezed
 class UserProfile with _$UserProfile {
   const factory UserProfile({
+    required int id,
     required String name,
     required String profileUri,
     required int age,

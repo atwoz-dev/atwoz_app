@@ -17,6 +17,7 @@ class ProfileFetchUseCase {
 
     if (designInspectionPresetData != null) {
       return UserProfile(
+        id: 0,
         name: '장원영',
         profileUri: 'https://picsum.photos/200/300',
         age: 20,
@@ -41,6 +42,7 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
     final basic = basicMemberInfo;
     final currentYear = DateTime.now().year;
     return UserProfile(
+      id: id,
       name: basic.nickname,
       profileUri: basic.profileImageUrl,
       age: currentYear - basic.year,
