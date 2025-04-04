@@ -3,28 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
 
-class Regionselectdialog extends ConsumerStatefulWidget {
+class Regionselectdialog extends ConsumerWidget {
   const Regionselectdialog({super.key});
 
-  @override
-  ConsumerState<Regionselectdialog> createState() => _RegionselectdialogState();
+  static const List<String> _cityList = [
+    '서울',
+    '인천',
+    '부산',
+    '대전',
+    '대구',
+    '광주',
+    '울산',
+    '제주',
+    '세종',
+    '강원도',
+    '경기도',
+    '경상남도',
+    '경상북도',
+    '충청남도',
+    '충청북도',
+    '전라남도',
+    '전라북도',
+  ];
 
   static Future open(BuildContext context) => showDialog(
         context: context,
         builder: (context) => const Regionselectdialog(),
       );
-}
 
-class _RegionselectdialogState extends ConsumerState<Regionselectdialog> {
   @override
-  Widget build(BuildContext context) {
-    final List<String> cityList =
-        cityRegionMap.map((e) => e['city'] as String).toList();
-    final selectedCityList = ref.watch(filterProvider).selectedCitys;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCityList = ref.watch(filterNotifierProvider).selectedCitys;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -51,19 +62,19 @@ class _RegionselectdialogState extends ConsumerState<Regionselectdialog> {
                       .copyWith(color: Palette.colorGrey500),
                 ),
                 ListChip(
-                  options: cityList,
+                  options: _cityList,
                   selectedOptions: selectedCityList,
                   onSelectionChanged: (updatedSelections) {
                     if (updatedSelections.length > 2) return;
                     ref
-                        .read(filterProvider.notifier)
+                        .read(filterNotifierProvider.notifier)
                         .updateHobbies(updatedSelections);
                   },
                 ),
               ],
             ),
             DefaultElevatedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: Navigator.of(context).pop,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: const Text('확인'),
             ),
