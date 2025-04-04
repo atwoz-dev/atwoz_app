@@ -10,16 +10,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class IntroduceFilterPage extends ConsumerStatefulWidget {
+class IntroduceFilterPage extends ConsumerWidget {
   const IntroduceFilterPage({super.key});
 
-  @override
-  ConsumerState<IntroduceFilterPage> createState() =>
-      _IntroduceFilterPageState();
-}
-
-class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
   Widget buildDefaultTextFormFieldRow({
+    required BuildContext context,
     required String label,
     required String hintText,
     required String? initialValue,
@@ -47,10 +42,11 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final ageRange = ref.watch(filterProvider).rangeValues;
-    final selectedCityList = ref.watch(filterProvider).selectedCitys;
-    final selectedGenderList = ref.watch(filterProvider).selectedGenders;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ageRange = ref.watch(filterNotifierProvider).rangeValues;
+    final selectedCityList = ref.watch(filterNotifierProvider).selectedCitys;
+    final selectedGenderList =
+        ref.watch(filterNotifierProvider).selectedGenders;
 
     return Scaffold(
       appBar: const DefaultAppBar(
@@ -78,6 +74,7 @@ class _IntroduceFilterPageState extends ConsumerState<IntroduceFilterPage> {
           child: Column(
             children: [
               buildDefaultTextFormFieldRow(
+                context: context,
                 label: '선호 지역',
                 hintText: '선호 지역을 선택해주세요',
                 initialValue: selectedCityList.isNotEmpty
