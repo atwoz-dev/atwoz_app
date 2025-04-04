@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-class FilterState {
-  final RangeValues rangeValues;
-  final List<String> selectedCitys;
-  final List<String> selectedGenders;
+part 'filter_state.freezed.dart';
 
-  const FilterState({
-    required this.rangeValues,
-    required this.selectedCitys,
-    required this.selectedGenders,
-  });
+@freezed
+class FilterState with _$FilterState {
+  const FilterState._();
 
-  FilterState copyWith({
-    RangeValues? rangeValues,
-    List<String>? selectedCitys,
-    List<String>? selectedGenders,
-  }) {
-    return FilterState(
-      rangeValues: rangeValues ?? this.rangeValues,
-      selectedCitys: selectedCitys ?? this.selectedCitys,
-      selectedGenders: selectedGenders ?? this.selectedGenders,
-    );
-  }
+  const factory FilterState({
+    required RangeValues rangeValues,
+    required List<String> selectedCitys,
+    required List<String> selectedGenders,
+  }) = _FilterState;
+
+  // 초기 상태
+  factory FilterState.initial() => const FilterState(
+        rangeValues: RangeValues(27, 32),
+        selectedCitys: [],
+        selectedGenders: ["전체 보기", "이성만 보기"],
+      );
 }
