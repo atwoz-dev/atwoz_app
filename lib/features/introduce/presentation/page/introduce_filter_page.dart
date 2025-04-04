@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/input/selection.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/age_range_slider.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/region_select_dialog.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/row_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,34 +13,6 @@ import 'package:gap/gap.dart';
 
 class IntroduceFilterPage extends ConsumerWidget {
   const IntroduceFilterPage({super.key});
-
-  Widget buildDefaultTextFormFieldRow({
-    required BuildContext context,
-    required String label,
-    required String hintText,
-    required String? initialValue,
-  }) {
-    return Column(
-      children: [
-        buildLabeledRow(
-          context: context,
-          label: label,
-          child: DefaultTextFormField(
-            controller: TextEditingController(text: initialValue),
-            onTap: () {
-              Regionselectdialog.open(context);
-            },
-            enabled: true,
-            readOnly: true,
-            autofocus: false,
-            keyboardType: TextInputType.text,
-            hintText: hintText,
-            fillColor: Palette.colorGrey100,
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,8 +46,7 @@ class IntroduceFilterPage extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              buildDefaultTextFormFieldRow(
-                context: context,
+              RowTextFormField(
                 label: '선호 지역',
                 hintText: '선호 지역을 선택해주세요',
                 initialValue: selectedCityList.isNotEmpty
