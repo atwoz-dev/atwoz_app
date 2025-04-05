@@ -33,7 +33,7 @@ void main() {
     runApp(
       ProviderScope(
         observers: [DefaultProviderObserver()],
-        child: App(),
+        child: const App(),
       ),
     );
   }, (error, stack) => Log.e('MAIN', errorObject: error, stackTrace: stack));
