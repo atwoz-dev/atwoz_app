@@ -3,8 +3,8 @@ import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
-import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
+import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

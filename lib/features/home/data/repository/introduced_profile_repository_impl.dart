@@ -1,5 +1,4 @@
-import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
-import 'package:atwoz_app/features/home/domain/repository/introduced_profile_repository.dart';
+import 'package:atwoz_app/features/home/domain/domain.dart';
 
 class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
   final List<Map<String, dynamic>> sampleData = [
