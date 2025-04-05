@@ -1,13 +1,12 @@
-import 'package:atwoz_app/features/home/domain/entity/ideal_type.dart';
-import 'package:atwoz_app/features/home/domain/repository/ideal_type_repository.dart';
+import 'package:atwoz_app/features/home/domain/domain.dart';
 
 class IdealTypeRepositoryImpl implements IdealTypeRepository {
   Map<String, dynamic> sampleIdealType = {
     // TODO: api 연동 시 제거
     "minAge": 20,
     "maxAge": 30,
-    "hobbies": ['등산', '맛집탐방', '쇼핑'],
-    "region": "서울특별시 은평구",
+    "hobbies": ['등산/클라이밍', '맛집탐방', '쇼핑'],
+    "regions": ['서울', '대구'],
     "religion": "무교",
     "smokingStatus": "비흡연",
     "drinkingStatus": "사회적 음주"

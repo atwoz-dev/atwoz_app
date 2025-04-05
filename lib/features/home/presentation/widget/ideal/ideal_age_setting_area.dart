@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/features/home/presentation/controller/ideal_type_notifier.dart';
+import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,13 +54,6 @@ class _IdealAgeSettingAreaState extends ConsumerState<IdealAgeSettingArea> {
                 min: 20,
                 max: 46,
                 onChanged: (RangeValues values) {
-                  // setState(() {
-                  //   print(values);
-                  //   _minAge = values.start.toInt();
-                  //   print(_minAge);
-                  //   _maxAge = values.end.toInt();
-                  //   print(_maxAge);
-                  // });
                   idealTypeNotifier.updateAgeRange(
                       values.start.toInt(), values.end.toInt());
                 },

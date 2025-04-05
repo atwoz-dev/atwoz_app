@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/home/domain/entity/ideal_type.dart';
+import 'package:atwoz_app/features/home/domain/domain.dart';
 
 abstract interface class IdealTypeRepository {
   Future<IdealType> getIdealType();
