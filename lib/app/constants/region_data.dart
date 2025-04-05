@@ -1,6 +1,6 @@
 List<Map<String, dynamic>> cityRegionMap = [
   {
-    "city": "서울특별시",
+    "city": "서울",
     "regions": [
       "강남구",
       "강동구",
@@ -30,7 +30,7 @@ List<Map<String, dynamic>> cityRegionMap = [
     ]
   },
   {
-    "city": "인천광역시",
+    "city": "인천",
     "regions": [
       "강화군",
       "계양구",
@@ -45,7 +45,7 @@ List<Map<String, dynamic>> cityRegionMap = [
     ]
   },
   {
-    "city": "부산광역시",
+    "city": "부산",
     "regions": [
       "강서구",
       "금정구",
@@ -66,27 +66,27 @@ List<Map<String, dynamic>> cityRegionMap = [
     ]
   },
   {
-    "city": "대전광역시",
+    "city": "대전",
     "regions": ["대덕구", "동구", "서구", "유성구", "중구"]
   },
   {
-    "city": "대구광역시",
+    "city": "대구",
     "regions": ["남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"]
   },
   {
-    "city": "광주광역시",
+    "city": "광주",
     "regions": ["광산구", "남구", "동구", "북구", "서구"]
   },
   {
-    "city": "울산광역시",
+    "city": "울산",
     "regions": ["남구", "동구", "북구", "울주군", "중구"]
   },
   {
-    "city": "제주특별자치도",
+    "city": "제주",
     "regions": ["서귀포시", "제주시"]
   },
   {
-    "city": "세종특별자치시",
+    "city": "세종",
     "regions": [""]
   },
   {
