@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -11,12 +12,14 @@ import 'package:atwoz_app/app/enum/enum.dart';
 import 'widget.dart';
 
 class MatchedProfile extends ConsumerWidget {
-  const MatchedProfile({super.key});
+  const MatchedProfile(this.userId, {super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileNotifierProvider).profile;
-    if(profile == null) return Container();
+    final profile = ref.watch(profileNotifierProvider(userId)).profile;
+    if (profile == null) return const SizedBox.shrink();
 
     final matchStatus = profile.matchStatus;
 
@@ -28,15 +31,15 @@ class MatchedProfile extends ConsumerWidget {
           horizontal: 16.0,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 16.0,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _GuideMessage(otherUserName: profile.name),
             SizedBox(
               height: 420.0,
               child: ProfileMainImage(profileUri: profile.profileUri),
             ),
-            const _ProfilePageMoveButton(),
+            _ProfilePageMoveButton(userId),
             if (matchStatus is Matched)
               _MatchedInformation(
                 contactMethod: matchStatus.contactMethod,
@@ -78,7 +81,9 @@ class _GuideMessage extends StatelessWidget {
 }
 
 class _ProfilePageMoveButton extends StatelessWidget {
-  const _ProfilePageMoveButton();
+  const _ProfilePageMoveButton(this.userId);
+
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +92,10 @@ class _ProfilePageMoveButton extends StatelessWidget {
         context,
         route: AppRoute.profile,
         method: NavigationMethod.pushReplacement,
-        extra: true,
+        extra: ProfileDetailArguments(
+          userId: userId,
+          fromMatchedProfile: true,
+        ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 11.5),
       child: const Text('프로필 보러가기'),
@@ -146,8 +154,8 @@ class _InformationBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 8.0,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8.0,
       children: [
         Text(title, style: Fonts.body02Medium()),
         Container(

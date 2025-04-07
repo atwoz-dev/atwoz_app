@@ -116,4 +116,3 @@ flutter_launcher_icons:
     foreground: "assets/images/logo.png"
     # background: "assets/images/app_icon_bg.png" # 배경 이미지 (필요시)
     background_color: "#00000000"
-  

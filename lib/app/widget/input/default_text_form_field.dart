@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:atwoz_app/core/state/base_widget_state.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 
 import '../../constants/constants.dart';
@@ -136,6 +135,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
   void initState() {
     super.initState();
     controller.addListener(_updateCharacterCount);
+    controller.text = widget.initialValue ?? '';
   }
 
   @override
@@ -226,13 +226,13 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
   }
 
   InputDecoration buildDecoration(BuildContext context) {
-    final double defaultPadding = 16;
+    const double defaultPadding = 16;
     final EdgeInsets defaultContentPadding = widget.showCharacterCount
-        ? EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 33.25)
-        : EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 17.25);
+        ? const EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 33.25)
+        : const EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 17.25);
 
     // 기본 둥근 테두리
-    final InputBorder roundedBorder = OutlineInputBorder(
+    const InputBorder roundedBorder = OutlineInputBorder(
       borderRadius: Dimens.buttonRadius, // 기본 둥근 모서리 설정
       borderSide: BorderSide.none, // 테두리 제거
     );
@@ -250,7 +250,8 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
       contentPadding: widget.contentPadding ?? defaultContentPadding,
       counterText: '', // 기본 counter 숨기기
       prefix: Padding(
-          padding: EdgeInsets.only(left: defaultPadding), child: widget.prefix),
+          padding: const EdgeInsets.only(left: defaultPadding),
+          child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
       suffix: widget.suffix,

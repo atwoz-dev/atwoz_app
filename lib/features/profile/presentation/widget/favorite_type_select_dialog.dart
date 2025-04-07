@@ -9,16 +9,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
-  const FavoriteTypeSelectDialog({super.key});
+  const FavoriteTypeSelectDialog(this.userId, {super.key});
+
+  final int userId;
 
   @override
   ConsumerState<FavoriteTypeSelectDialog> createState() =>
       _FavoriteTypeSelectDialogState();
 
-  static Future<FavoriteType?> open(BuildContext context) =>
+  static Future<FavoriteType?> open(
+    BuildContext context, {
+    required int userId,
+  }) =>
       showDialog<FavoriteType>(
         context: context,
-        builder: (context) => const FavoriteTypeSelectDialog(),
+        builder: (context) => FavoriteTypeSelectDialog(userId),
       );
 }
 
@@ -28,7 +33,8 @@ class _FavoriteTypeSelectDialogState
 
   @override
   void initState() {
-    _selectedType = ref.read(profileNotifierProvider).profile?.favoriteType;
+    _selectedType =
+        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
     super.initState();
   }
 
@@ -36,7 +42,7 @@ class _FavoriteTypeSelectDialogState
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-      shape: RoundedRectangleBorder(borderRadius: Dimens.dialogRadius),
+      shape: const RoundedRectangleBorder(borderRadius: Dimens.dialogRadius),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -135,7 +141,7 @@ class _FavoriteTypeItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: Params.animationDuration,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(3.2)),
+          borderRadius: const BorderRadius.all(Radius.circular(3.2)),
           border: Border.all(
             width: 1.0,
             color: borderPrimary,
@@ -144,7 +150,7 @@ class _FavoriteTypeItem extends StatelessWidget {
               ? context.colorScheme.primaryContainer.withValues(alpha: .12)
               : null,
         ),
-        padding: EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.0),
         child: DefaultIcon(
           value.path,
           size: 35.2,

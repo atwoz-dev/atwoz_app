@@ -10,12 +10,17 @@ import 'package:gap/gap.dart';
 import '../../domain/common/model.dart';
 
 class ProfileSubInformation extends ConsumerWidget {
-  const ProfileSubInformation({super.key});
+  const ProfileSubInformation(this.userId, {super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subInformationItems =
-        ref.watch(profileNotifierProvider).profile?.subInformationItems ?? [];
+    final subInformationItems = ref
+            .watch(profileNotifierProvider(userId))
+            .profile
+            ?.subInformationItems ??
+        [];
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -71,7 +76,7 @@ class _SubInformationContainer extends StatelessWidget {
       children: subInformationItems
           .map(
             (subInfo) => _SubInformationItem(
-              iconPath: subInfo.iconPath,
+              iconPath: subInfo.type.iconPath,
               information: subInfo.information,
             ),
           )
