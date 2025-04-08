@@ -1,8 +1,8 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 const List<String> _buttonLabels = [
   "상위 5%",
@@ -48,8 +48,9 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
                       backgroundColor:
                           WidgetStateProperty.all(Palette.colorBlack),
                     ),
-                    onPressed: () => context.pushNamed('userByCategory',
-                        pathParameters: {'category': label}),
+                    onPressed: () => navigate(context,
+                        route: AppRoute.userByCategory,
+                        extra: {'category': label}),
                     child: Text(
                       label,
                       style: Fonts.body02Regular().copyWith(

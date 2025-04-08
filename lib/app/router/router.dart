@@ -121,9 +121,10 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.userByCategory.path,
-      name: 'userByCategory',
       builder: (context, state) {
-        final category = state.pathParameters['category'] ?? "상위 5%";
+        print('router에서 카테고리: ${state.extra}');
+        final category = (state.extra as Map<String, dynamic>)['category'];
+
         return UserByCategoryPage(category: category);
       },
     ),
