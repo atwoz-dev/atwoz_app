@@ -77,11 +77,11 @@ class UserByCategoryListItem extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    const FavoriteTypeSelectDialog(),
-                              );
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (context) =>
+                              //       const FavoriteTypeSelectDialog(),
+                              // ); // TODO: 호감 표시 다이얼로그
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(

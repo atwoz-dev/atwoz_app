@@ -149,10 +149,10 @@ class _ProfileCardWidget extends StatelessWidget {
               const SizedBox(height: 24),
               GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const FavoriteTypeSelectDialog(),
-                  );
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (context) => const FavoriteTypeSelectDialog(),
+                  // ); TODO: 호감 표시 다이얼로그
                 },
                 child: Container(
                   // 좋아요 버튼
