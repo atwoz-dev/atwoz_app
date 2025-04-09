@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
@@ -41,7 +39,7 @@ class UserByCategoryListItem extends StatelessWidget {
                     radius: 50,
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     children: [
@@ -58,11 +56,11 @@ class UserByCategoryListItem extends StatelessWidget {
                                 tagName: profile.hashTags[index]);
                           },
                           separatorBuilder: (context, index) {
-                            return SizedBox(width: 8);
+                            return const SizedBox(width: 8);
                           },
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         profile.interviewContent,
                         maxLines: 2,
@@ -73,7 +71,7 @@ class UserByCategoryListItem extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -82,11 +80,11 @@ class UserByCategoryListItem extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (context) =>
-                                    FavoriteTypeSelectDialog(),
+                                    const FavoriteTypeSelectDialog(),
                               );
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                   color: Palette.colorGrey100,
@@ -109,29 +107,6 @@ class UserByCategoryListItem extends StatelessWidget {
           ),
           if (isBlurred) BlurCoverWidget(),
         ],
-      ),
-    );
-  }
-}
-
-// Home 화면에서도 사용하는 위젯이라 public으로 설정하였습니다
-class BlurCoverWidget extends StatelessWidget {
-  const BlurCoverWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-        ),
       ),
     );
   }

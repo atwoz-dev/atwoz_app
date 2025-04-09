@@ -6,9 +6,10 @@ part 'recommended_profile.g.dart';
 @freezed
 class RecommendedProfile with _$RecommendedProfile {
   const factory RecommendedProfile({
+    @Default(0) int id,
     @Default('') String image, // imageUrl
-    @Default([]) List<String> hashTags, // 관련 정보들
-    @Default('') String interview, // 인터뷰 첫 대답
+    @Default([]) List<String> hashTags, // 종교, 취미 정보
+    @Default('') String interviewContent, // 인터뷰 첫 대답
   }) = _RecommendedProfile;
 
   factory RecommendedProfile.fromJson(

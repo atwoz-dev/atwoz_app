@@ -3,8 +3,8 @@ import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/domain/model/recommended_profile.dart';
-import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
+import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,11 +19,22 @@ class HomeProfileCardArea extends ConsumerStatefulWidget {
 
 class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
   int _currentPage = 0; // 현재 페이지 0으로 설정
+  List<bool> blurredList = []; // 프로필 카드 블러 처리 여부 리스트
 
   @override
   Widget build(BuildContext context) {
     final profiles =
         ref.watch(homeNotifierProvider).recommendedProfiles; // 소개받은 프로필 정보들
+
+    // 프로필 수가 바뀌면 블러 리스트 초기화
+    if (blurredList.length != profiles.length) {
+      blurredList = List.generate(profiles.length, (_) => true);
+    }
+
+    // 프로필이 아직 없다면 로딩 or 빈 상태
+    if (profiles.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Column(
       children: [
@@ -35,18 +46,30 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
             itemCount: profiles.length,
             onPageChanged: (value) => setState(() => _currentPage = value),
             itemBuilder: (context, index) {
-              return ProfileCardWidget(profile: profiles[index]);
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    blurredList[index] = false;
+                  });
+                },
+                child: Stack(
+                  children: [
+                    _ProfileCardWidget(profile: profiles[index]),
+                    if (blurredList[index]) const BlurCoverWidget(),
+                  ],
+                ),
+              );
             },
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           // 페이지 번호 상태 바
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(profiles.length, (index) {
             return AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              margin: EdgeInsets.symmetric(horizontal: 4),
+              duration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
               width: 6,
               height: 6,
               decoration: BoxDecoration(
@@ -64,9 +87,8 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
 }
 
 // 소개받은 프로필 페이지 - 프로필 정보 카드
-class ProfileCardWidget extends StatelessWidget {
-  const ProfileCardWidget({
-    super.key,
+class _ProfileCardWidget extends StatelessWidget {
+  const _ProfileCardWidget({
     required this.profile,
   });
 
@@ -76,7 +98,7 @@ class ProfileCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.screenWidth,
-      padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 40),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
         color: Palette.colorGrey50,
@@ -95,7 +117,7 @@ class ProfileCardWidget extends StatelessWidget {
                   AssetImage(profile.image), // 추후 api 연동 시 NetworkImage로 변경
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Column(
             // 하단 프로필 정보
             children: [
@@ -103,7 +125,7 @@ class ProfileCardWidget extends StatelessWidget {
                 // 해시태그 리스트 뷰
                 width: context.screenHeight,
                 height: 18,
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: profile.hashTags.length,
@@ -111,27 +133,32 @@ class ProfileCardWidget extends StatelessWidget {
                     return HomeHashtagWidget(tagName: profile.hashTags[index]);
                   },
                   separatorBuilder: (context, index) {
-                    return SizedBox(width: 8);
+                    return const SizedBox(width: 8);
                   },
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 // 인터뷰 글
-                "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
+                profile.interviewContent,
                 style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400, color: Palette.colorGrey600),
                 maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               GestureDetector(
                 onTap: () {
-                  // 좋아요 버튼 클릭 로직
+                  showDialog(
+                    context: context,
+                    builder: (context) => const FavoriteTypeSelectDialog(),
+                  );
                 },
                 child: Container(
                   // 좋아요 버튼
-                  margin: EdgeInsets.symmetric(horizontal: 54),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12.5),
+                  margin: const EdgeInsets.symmetric(horizontal: 54),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 12.5),
                   decoration: BoxDecoration(
                       color: Palette.colorPrimary500,
                       borderRadius: BorderRadius.circular(12)),
@@ -139,7 +166,7 @@ class ProfileCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DefaultIcon(IconPath.homeHeart, size: 24),
+                      const DefaultIcon(IconPath.homeHeart, size: 24),
                       SizedBox(width: 8),
                       Text(
                         "좋아요",
@@ -153,31 +180,6 @@ class ProfileCardWidget extends StatelessWidget {
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-class HomeHashtagWidget extends StatelessWidget {
-  final String tagName;
-  const HomeHashtagWidget({
-    super.key,
-    required this.tagName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: BoxDecoration(
-          color: Palette.colorPrimary100,
-          borderRadius: BorderRadius.circular(2)),
-      child: Text(
-        tagName,
-        style: Fonts.body03Regular().copyWith(
-          fontWeight: FontWeight.w500,
-          color: Palette.colorPrimary600,
-        ),
       ),
     );
   }
