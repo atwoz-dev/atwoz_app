@@ -1,3 +1,5 @@
-// TODO: export 작성 or domain 폴더 미사용 시 파일이랑 폴더 둘 다 삭제
-
-export 'repository/introduced_profile_repository.dart';
+export 'model/ideal_type.dart';
+export 'model/introduced_profile.dart';
+export 'model/recommended_profile.dart';
+export 'repository/ideal_type_repository.dart';
+export 'repository/recommended_profile_repository.dart';

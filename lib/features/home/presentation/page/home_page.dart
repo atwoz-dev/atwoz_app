@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_category_buttons_area.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_navbar_area.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_profile_card_area.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_area.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
