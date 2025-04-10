@@ -11,6 +11,7 @@ class IntroducedProfile with _$IntroducedProfile {
     @Default('') String interview, // 인터뷰 첫 대답
   }) = _IntroducedProfile;
 
-  factory IntroducedProfile.fromJson(Map<String, dynamic> json) =>
+  factory IntroducedProfile.fromJson(
+          Map<String, dynamic> json) => // TODO: DTO 파일 생성 시 제거
       _$IntroducedProfileFromJson(json);
 }
