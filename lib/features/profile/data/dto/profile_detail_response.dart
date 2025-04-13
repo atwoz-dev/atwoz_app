@@ -7,7 +7,7 @@ part 'profile_detail_response.g.dart';
 class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
     required BasicMemberInformation basicMemberInfo,
-    MatchInformation? matchInfo,
+    required MatchInformation? matchInfo,
     @Default([]) List<ProfileInterview> interviews,
   }) = _ProfileDetailResponse;
 
@@ -22,7 +22,7 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required String nickname,
     required String profileImageUrl,
     // TODO(Han): server non-nullable requirement check
-    @Default(0) int age,
+    required int age,
     required String gender,
     required int height,
     required String job,

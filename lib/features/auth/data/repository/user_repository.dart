@@ -37,19 +37,11 @@ class UserRepository extends BaseRepository {
       );
 
   // 프로필 업데이트
-  Future<UserResponse> updateProfile(ProfileUploadRequest requestData) async {
-    try {
-      final response = await apiService.putJson(
-        '$path/profile',
-        data: requestData.toJson(),
-        requiresAuthToken: true,
-      );
-
-      final userResponse = UserResponse.fromJson(response['data']);
-      return userResponse;
-    } catch (e) {
-      Log.e("❌ 프로필 업데이트 실패: $e");
-      rethrow;
-    }
+  Future<void> updateProfile(ProfileUploadRequest requestData) async {
+    await apiService.putJson(
+      '$path/profile',
+      data: requestData.toJson(),
+      requiresAuthToken: true,
+    );
   }
 }

@@ -44,7 +44,7 @@ class AuthSignUpTermsPageState
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: '약관 동의',
       ),
       body: Padding(
@@ -56,12 +56,12 @@ class AuthSignUpTermsPageState
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  AuthStepIndicatorWidget(
+                  const AuthStepIndicatorWidget(
                     totalSteps: 4,
                     currentStep: 4,
                   ),
                   Gap(16.h),
-                  TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
+                  const TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
                   Gap(28.h),
                   ..._renderCheckList(),
                 ])),
