@@ -94,9 +94,11 @@ class ProfileDesignInspection extends StatelessWidget {
         primary: context.colorScheme.primary,
         onPressed: () {
           kDebugPageType = type;
-          navigate(context,
-              route: AppRoute.profile,
-              extra: const ProfileDetailArguments(userId: 4));
+          navigate(
+            context,
+            route: AppRoute.profile,
+            extra: const ProfileDetailArguments(userId: 4),
+          );
         },
         child: Text(
           title,

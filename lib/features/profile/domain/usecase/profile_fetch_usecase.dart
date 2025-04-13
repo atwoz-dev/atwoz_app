@@ -12,28 +12,29 @@ class ProfileFetchUseCase {
   const ProfileFetchUseCase(this.ref);
 
   Future<UserProfile> call(int id) async {
-    // final designInspectionPresetData = _designInspectionStatus;
+    final designInspectionPresetData = _designInspectionStatus;
 
-    // if (designInspectionPresetData != null) {
-    //   return UserProfile(
-    //     name: '장원영',
-    //     profileUri: 'https://picsum.photos/200/300',
-    //     age: 20,
-    //     mbti: 'ISTP',
-    //     address: '서울특별시 동작구',
-    //     hobbies: ['클라이밍', '공연 전시회 관람'],
-    //     selfIntroductionItems: [],
-    //     smokingStatus: SmokingStatus.none,
-    //     drinkingStatus: DrinkingStatus.none,
-    //     educationLevel: EducationLevel.other,
-    //     religion: Religion.none,
-    //     region: Region.seoul,
-    //     height: 165.0,
-    //     job: '직장인',
-    //     matchStatus: designInspectionPresetData,
-    //     favoriteType: FavoriteType.none,
-    //   );
-    // }
+    if (designInspectionPresetData != null) {
+      return UserProfile(
+        id: 0,
+        name: '장원영',
+        profileUri: 'https://picsum.photos/200/300',
+        age: 20,
+        mbti: 'ISTP',
+        address: '서울특별시 동작구',
+        hobbies: ['클라이밍', '공연 전시회 관람'],
+        selfIntroductionItems: [],
+        smokingStatus: SmokingStatus.none,
+        drinkingStatus: DrinkingStatus.none,
+        educationLevel: EducationLevel.other,
+        religion: Religion.none,
+        region: Region.seoul,
+        height: 165.0,
+        job: '직장인',
+        matchStatus: designInspectionPresetData,
+        favoriteType: FavoriteType.interest,
+      );
+    }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
     // TODO(Han): 실패 처리 필요 + my user id 받아오기
