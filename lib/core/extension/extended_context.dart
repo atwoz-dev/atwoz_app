@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 /// BuildContext에 다양한 유틸리티 메서드를 추가합니다.
 extension ExtendedContext on BuildContext {
-  /// 다국어 반환
-
   /// 앱 테마 및 색 반환
   ThemeData get theme => Theme.of(this);
 

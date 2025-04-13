@@ -10,57 +10,59 @@ class HomeNavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: context.screenWidth * 0.05,
-                vertical: context.screenWidth * 0.2),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.home,
-                      );
-                    },
-                    child: Text(
-                      '홈',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.ideal,
-                      );
-                    },
-                    child: Text(
-                      '이상형 설정',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.userByCategory,
-                      );
-                    },
-                    child: Text(
-                      '소개받고 싶은 이성',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                ],
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: context.screenWidth * 0.05,
+            vertical: context.screenWidth * 0.2),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.home,
+                  );
+                },
+                child: Text(
+                  '홈',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
               ),
-            )));
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.ideal,
+                  );
+                },
+                child: Text(
+                  '이상형 설정',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.userByCategory,
+                  );
+                },
+                child: Text(
+                  '소개받고 싶은 이성',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

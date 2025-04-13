@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/validation.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
@@ -12,10 +13,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
-  const OnboardingCertificationPage({super.key});
+  const OnboardingCertificationPage({
+    super.key,
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
 
   @override
   OnboardingCertificationPageState createState() =>
@@ -63,8 +68,6 @@ class OnboardingCertificationPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
-    final phoneNumber = args?['phoneNumber'] ?? '';
     final bool isButtonEnabled =
         _phoneController.text.isNotEmpty && validationError == null;
 
@@ -80,7 +83,7 @@ class OnboardingCertificationPageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(title: '인증번호를 입력해주세요'),
+                const TitleText(title: '인증번호를 입력해주세요'),
                 const Gap(5),
                 Text(
                   '문자로 보내드린 인증번호를 입력해주세요',
@@ -121,12 +124,10 @@ class OnboardingCertificationPageState
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
                                   onPressed: () {
-                                    print("인증번호 재발송");
+                                    Log.d("인증번호 재발송");
                                     // TODO: 재발송 로직 추가
                                   },
-                                  child: Text(
-                                    '재발송',
-                                  ),
+                                  child: const Text('재발송'),
                                 ),
                               ),
                             ),
@@ -150,8 +151,9 @@ class OnboardingCertificationPageState
               onPressed: isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
-                      await authUseCase
-                          .signIn(UserSignInRequest(phoneNumber: phoneNumber));
+                      await authUseCase.signIn(UserSignInRequest(
+                        phoneNumber: widget.phoneNumber,
+                      ));
                       navigate(context, route: AppRoute.signUp);
                     }
                   : null,

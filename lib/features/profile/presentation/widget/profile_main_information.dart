@@ -12,6 +12,7 @@ import 'message_send_bottomsheet.dart';
 class ProfileMainInformation extends StatelessWidget {
   const ProfileMainInformation({
     super.key,
+    required this.userId,
     required this.name,
     required this.age,
     required this.mbti,
@@ -22,6 +23,7 @@ class ProfileMainInformation extends StatelessWidget {
     required this.onFavoriteTypeChanged,
   });
 
+  final int userId;
   final String name;
   final int age;
   final String mbti;
@@ -33,7 +35,7 @@ class ProfileMainInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColor = Colors.white;
+    final mainColor = context.colorScheme.surface;
 
     return Container(
       height: context.screenHeight * 0.3,
@@ -64,11 +66,12 @@ class ProfileMainInformation extends StatelessWidget {
             children: hobbies.map(_MainHobbyBadge.new).toList(),
           ),
           const Gap(12.0),
-          _InteractionButtons(
-            chatEnabled: chatEnabled,
-            favoriteUser: favoriteType.isFavorite,
-            onFavoriteTypeChanged: onFavoriteTypeChanged,
-          ),
+          if (chatEnabled)
+            _InteractionButtons(
+              userId: userId,
+              favoriteUser: favoriteType.isFavorite,
+              onFavoriteTypeChanged: onFavoriteTypeChanged,
+            ),
         ],
       ),
     );
@@ -99,12 +102,12 @@ class _MainHobbyBadge extends StatelessWidget {
 
 class _InteractionButtons extends StatelessWidget {
   const _InteractionButtons({
-    required this.chatEnabled,
+    required this.userId,
     required this.favoriteUser,
     required this.onFavoriteTypeChanged,
   });
 
-  final bool chatEnabled;
+  final int userId;
   final bool favoriteUser;
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
@@ -115,8 +118,10 @@ class _InteractionButtons extends StatelessWidget {
         Expanded(
           child: DefaultElevatedButton(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            onPressed:
-                chatEnabled ? () => MessageSendBottomSheet.open(context) : null,
+            onPressed: () => MessageSendBottomSheet.open(
+              context,
+              userId: userId,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -144,7 +149,10 @@ class _InteractionButtons extends StatelessWidget {
               onFavoriteTypeChanged(FavoriteType.none);
               return;
             }
-            final favoriteType = await FavoriteTypeSelectDialog.open(context);
+            final favoriteType = await FavoriteTypeSelectDialog.open(
+              context,
+              userId: userId,
+            );
             if (favoriteType == null) return;
             onFavoriteTypeChanged(favoriteType);
           },

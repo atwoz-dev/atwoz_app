@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,26 +9,27 @@ part 'profile_notifier.g.dart';
 @riverpod
 class ProfileNotifier extends _$ProfileNotifier {
   @override
-  ProfileState build() {
-    _initialize();
+  ProfileState build(int userId) {
+    _initialize(userId);
     return ProfileState.initial();
   }
 
-  Future<void> _initialize() async {
-    final profile = await ProfileFetchUseCase.call();
-    if (profile == null) {
-      // TODO(Han): error handling
-      return;
-    }
+  Future<void> _initialize(int userId) async {
+    try {
+      final profile = await ProfileFetchUseCase(ref).call(userId);
 
-    state = state.copyWith(
-      profile: profile,
-      myUserName: '은우',
-      registeredContact: false,
-      heartPoint: 30,
-      message: '',
-      isLoaded: true,
-    );
+      state = state.copyWith(
+        profile: profile,
+        myUserName: '은우',
+        registeredContact: false,
+        heartPoint: 30,
+        message: '',
+        isLoaded: true,
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(isLoaded: true);
+    }
   }
 
   set message(String message) {

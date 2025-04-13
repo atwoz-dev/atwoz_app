@@ -1,16 +1,20 @@
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/text/title_text.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
+import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:atwoz_app/app/widget/text/title_text.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthSignUpTermsPage extends ConsumerStatefulWidget {
   const AuthSignUpTermsPage({super.key});
@@ -40,7 +44,7 @@ class AuthSignUpTermsPageState
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: '약관 동의',
       ),
       body: Padding(
@@ -52,12 +56,12 @@ class AuthSignUpTermsPageState
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  AuthStepIndicatorWidget(
+                  const AuthStepIndicatorWidget(
                     totalSteps: 4,
                     currentStep: 4,
                   ),
                   Gap(16.h),
-                  TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
+                  const TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
                   Gap(28.h),
                   ..._renderCheckList(),
                 ])),
@@ -65,8 +69,26 @@ class AuthSignUpTermsPageState
               padding: EdgeInsets.only(bottom: screenHeight * 0.05),
               child: DefaultElevatedButton(
                 onPressed: isButtonEnabled
-                    ? () {
-                        // TODO: 회원가입 완료 처리
+                    ? () async {
+                        // 프로필 이미지 등록
+                        final List<XFile?> photos = ref.read(photoProvider);
+                        await ref
+                            .read(authUsecaseProvider)
+                            .uploadProfilePhotos(photos);
+
+                        // 프로필 등록
+                        final authUseCase = ref.read(authUsecaseProvider);
+                        final profileState = ref.read(signUpProcessProvider);
+                        final profileData =
+                            profileState.toProfileUploadRequest(); // DTO 변환
+                        await authUseCase.uploadProfile(profileData);
+
+                        // 홈 화면으로 이동
+                        navigate(
+                          context,
+                          route: AppRoute.home,
+                          method: NavigationMethod.go,
+                        );
                       }
                     : null,
                 child: Text(

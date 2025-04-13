@@ -24,8 +24,9 @@ class ApiServiceImpl implements ApiService {
     required this.ref,
     this.enableAuth = false,
     String? baseUrl,
-    this.timeout = Config.timeout,
-  }) : baseUrl = baseUrl ?? Config.baseUrl;
+    Duration? timeout,
+  })  : baseUrl = baseUrl ?? Config.baseUrl,
+        timeout = timeout ?? Config.timeout;
 
   final Ref ref;
   final bool enableAuth;
@@ -148,12 +149,10 @@ class ApiServiceImpl implements ApiService {
   }
 
   String? _extractRefreshToken(List<String> cookies) {
-    for (var cookie in cookies) {
-      final regex = RegExp(r'refresh_token=([^;]+)');
-      final match = regex.firstMatch(cookie);
-      if (match != null) return match.group(1);
-    }
-    return null;
+    return cookies
+        .map((cookie) => RegExp(r'refresh_token=([^;]+)').firstMatch(cookie))
+        .firstWhere((match) => match != null, orElse: () => null)
+        ?.group(1);
   }
 
   Future<void> _initializeCookieJar() async {

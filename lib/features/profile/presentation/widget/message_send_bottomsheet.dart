@@ -13,20 +13,23 @@ import '../../domain/common/model.dart';
 import 'common_button_group.dart';
 
 class MessageSendBottomSheet extends ConsumerStatefulWidget {
-  const MessageSendBottomSheet({super.key});
+  const MessageSendBottomSheet(this.userId, {super.key});
+
+  final int userId;
 
   @override
   ConsumerState<MessageSendBottomSheet> createState() =>
       _MessageSendBottomSheetState();
 
-  static Future<void> open(BuildContext context) => showModalBottomSheet(
+  static Future<void> open(BuildContext context, {required int userId}) =>
+      showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         useSafeArea: true,
         builder: (context) => Padding(
           padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
-          child: const MessageSendBottomSheet(),
+          child: MessageSendBottomSheet(userId),
         ),
       );
 }
@@ -37,11 +40,12 @@ class _MessageSendBottomSheetState
 
   @override
   void initState() {
-    final message = ref.read(profileNotifierProvider).message;
+    final message = ref.read(profileNotifierProvider(widget.userId)).message;
 
     _controller = TextEditingController(text: message)
       ..addListener(() {
-        ref.read(profileNotifierProvider.notifier).message = _controller.text;
+        ref.read(profileNotifierProvider(widget.userId).notifier).message =
+            _controller.text;
       });
     super.initState();
   }
@@ -54,7 +58,7 @@ class _MessageSendBottomSheetState
 
   @override
   Widget build(BuildContext context) {
-    final status = ref.watch(profileNotifierProvider);
+    final status = ref.watch(profileNotifierProvider(widget.userId));
     final messageReceived = status.matchStatus is MatchingReceived;
 
     final (
@@ -150,7 +154,7 @@ class _MessageSendBottomSheetState
         hasContactMethod: registeredContact,
       ),
     );
-    if (!context.mounted) return;
+    if (!mounted) return;
     context.pop();
   }
 

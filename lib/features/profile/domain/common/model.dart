@@ -8,6 +8,7 @@ part 'model.freezed.dart';
 @freezed
 class UserProfile with _$UserProfile {
   const factory UserProfile({
+    required int id,
     required String name,
     required String profileUri,
     required int age,
@@ -22,17 +23,22 @@ class UserProfile with _$UserProfile {
 }
 
 class SubInformationData {
-  const SubInformationData(this.iconPath, this.information);
+  const SubInformationData(this.type, this.information);
 
-  final String iconPath;
+  final ProfileSubInfoType type;
   final String information;
 }
 
 class SelfIntroductionData {
-  const SelfIntroductionData(this.about, this.introduction);
+  const SelfIntroductionData({
+    required this.about,
+    required this.title,
+    required this.content,
+  });
 
   final String about;
-  final String introduction;
+  final String title;
+  final String content;
 }
 
 sealed class MatchStatus extends Equatable {
@@ -54,11 +60,11 @@ class Matched extends MatchStatus {
 
   @override
   List<Object> get props => [
-    sentMessage,
-    receivedMessage,
-    contactMethod,
-    contactInfo,
-  ];
+        sentMessage,
+        receivedMessage,
+        contactMethod,
+        contactInfo,
+      ];
 }
 
 class UnMatched extends MatchStatus {
@@ -69,46 +75,47 @@ class UnMatched extends MatchStatus {
 }
 
 abstract class Matching extends MatchStatus {
-  const Matching();
+  const Matching({required this.isExpired});
 
-  bool get isExpired;
+  final bool isExpired;
 }
 
 class MatchingRequested extends Matching {
   const MatchingRequested({
     required this.sentMessage,
-    required this.requestedDateTime,
+    super.isExpired = false,
   });
 
   final String sentMessage;
-  final DateTime requestedDateTime;
 
   @override
-  List<Object> get props => [sentMessage, requestedDateTime];
-
-  @override
-  bool get isExpired =>
-      requestedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+  List<Object> get props => [sentMessage, isExpired];
 }
 
 class MatchingReceived extends Matching {
   const MatchingReceived({
     required this.receivedMessage,
-    required this.receivedDateTime,
+    super.isExpired = false,
   });
 
   final String receivedMessage;
-  final DateTime receivedDateTime;
 
   @override
-  List<Object> get props => [receivedMessage, receivedDateTime];
-
-  @override
-  bool get isExpired =>
-      receivedDateTime.isBefore(DateTime.now().subtract(_expiredDuration));
+  List<Object> get props => [receivedMessage, isExpired];
 }
 
-const _expiredDuration = Duration(days: 3);
+enum ProfileSubInfoType {
+  smoking(IconPath.smoking),
+  drinking(IconPath.wineglass),
+  education(IconPath.school),
+  religion(IconPath.bless),
+  height(IconPath.ruler),
+  job(IconPath.business);
+
+  final String iconPath;
+
+  const ProfileSubInfoType(this.iconPath);
+}
 
 enum FavoriteType {
   none(''),

@@ -153,7 +153,7 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.storeNavigation,
                       );
                     },
                     child: Text(
@@ -167,7 +167,7 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.profile,
+                        route: AppRoute.profileDesignInspection,
                       );
                     },
                     child: Text(
@@ -181,7 +181,7 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.myNavigation,
                       );
                     },
                     child: Text(
