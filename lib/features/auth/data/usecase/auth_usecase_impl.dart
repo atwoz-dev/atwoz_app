@@ -4,12 +4,12 @@ import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,7 +57,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
-    final cookieJar = _apiService.dioService.getCookieJar();
+    final cookieJar = _apiService.dioService.cookieJar;
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();

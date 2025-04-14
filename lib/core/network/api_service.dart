@@ -12,13 +12,10 @@ typedef Progress = void Function(int count, int total);
 abstract class ApiService {
   const ApiService();
 
-  /// `ref`를 필수로 받아야 하도록 수정
-  factory ApiService.create(Ref ref) =>
-      ApiServiceImpl(ref: ref, enableAuth: true);
+  factory ApiService.create(Ref ref) => ApiServiceImpl.instance(ref);
 
-  /// 커스텀 baseUrl 설정을 위한 팩토리 메서드
   factory ApiService.custom(Ref ref, {String? baseUrl}) =>
-      ApiServiceImpl(ref: ref, baseUrl: baseUrl);
+      ApiServiceImpl.instance(ref, baseUrl: baseUrl);
 
   void cancelRequests({CancelToken? cancelToken});
 
@@ -31,22 +28,28 @@ abstract class ApiService {
     void Function(int, int)? onReceiveProgress,
     required String method,
     required String contentType,
-    bool requiresAuthToken = true,
-    T Function(dynamic)? converter,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
+    Converter<T>? converter,
     Map<String, dynamic>? headers,
   });
 
   Future<T> deleteJson<T>(
     String path, {
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
 
   Future<T> getJson<T>(
     String path, {
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
     String? contentType,
     Map<String, String>? headers,
@@ -56,7 +59,9 @@ abstract class ApiService {
     String path, {
     Object? data,
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
 
@@ -64,7 +69,9 @@ abstract class ApiService {
     String path, {
     required Object? data,
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
     Map<String, dynamic>? headers,
   });
@@ -73,7 +80,9 @@ abstract class ApiService {
     String path, {
     required Object? data,
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
 
@@ -81,7 +90,9 @@ abstract class ApiService {
     String path, {
     Object? data,
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
 
@@ -89,7 +100,22 @@ abstract class ApiService {
     String path, {
     required FormData data,
     Json? queryParameters,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
     Converter<T>? converter,
   });
+
+  Future<T> patchJson<T>(
+    String path, {
+    Object? data,
+    Json? queryParameters,
+    bool requiresAccessToken = true,
+    bool requiresRefreshToken = false,
+    bool requiresRefreshCookie = false,
+    Converter<T>? converter,
+    Map<String, dynamic>? headers, // ← 오타 수정 (headeres → headers)
+  });
+
+  initialize();
 }

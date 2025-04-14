@@ -7,27 +7,34 @@ import 'package:path_provider/path_provider.dart';
 
 /// Common service call API support cancel api
 class DioService extends DioForNative {
-  static late PersistCookieJar _cookieJar; // 쿠키 저장소 초기화
-  PersistCookieJar getCookieJar() {
-    return _cookieJar;
+  PersistCookieJar? _cookieJar;
+
+  PersistCookieJar get cookieJar {
+    if (_cookieJar == null) {
+      throw Exception("`_cookieJar`가 아직 초기화되지 않았습니다!");
+    }
+    return _cookieJar!;
+  }
+
+  /// 쿠키 저장소 초기화 후 `_cookieJar`를 사용 가능하도록 설정
+  Future<void> initializeCookieJar() async {
+    final appDocDir = await getApplicationDocumentsDirectory();
+    _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
   }
 
   DioService([super.baseOptions, Iterable<Interceptor>? interceptors])
       : _cancelToken = CancelToken() {
     interceptors ??= [];
-    _initializeCookieJar(); // 쿠키 저장소 초기화 함수 호출 (비동기)
 
-    interceptors = [
-      ...interceptors,
-      CookieManager(_cookieJar), // 쿠키 관리자 추가
-      LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
-    ];
-    this.interceptors.addAll(interceptors);
-  }
-
-  static Future<void> _initializeCookieJar() async {
-    final appDocDir = await getApplicationDocumentsDirectory();
-    _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
+    /// 쿠키 저장소 초기화 완료 후 쿠키 관리자 추가
+    initializeCookieJar().then((_) {
+      interceptors = [
+        ...interceptors!,
+        CookieManager(_cookieJar!), // 쿠키 저장소 초기화 후 사용
+        LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
+      ];
+      this.interceptors.addAll(interceptors!);
+    });
   }
 
   final CancelToken _cancelToken;
@@ -42,7 +49,10 @@ class DioService extends DioForNative {
 
   /// 저장된 쿠키 가져오는 메서드
   Future<List<Cookie>> getStoredCookies(Uri uri) async {
-    return _cookieJar.loadForRequest(uri);
+    if (_cookieJar == null) {
+      throw Exception("`_cookieJar`가 아직 초기화되지 않았습니다!");
+    }
+    return _cookieJar!.loadForRequest(uri);
   }
 
   @override
