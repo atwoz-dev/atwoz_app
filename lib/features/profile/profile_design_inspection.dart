@@ -97,6 +97,7 @@ class ProfileDesignInspection extends StatelessWidget {
           navigate(
             context,
             route: AppRoute.profile,
+            extra: const ProfileDetailArguments(userId: 4),
           );
         },
         child: Text(

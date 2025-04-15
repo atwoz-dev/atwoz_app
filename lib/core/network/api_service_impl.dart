@@ -276,4 +276,22 @@ class ApiServiceImpl implements ApiService {
         requiresAuthToken: requiresAuthToken,
         converter: converter,
       );
+
+  @override
+  Future<T> patchJson<T>(
+    String path, {
+    Object? data,
+    Json? queryParameters,
+    bool requiresAuthToken = true,
+    Converter<T>? converter,
+  }) =>
+      request(
+        path,
+        method: 'PATCH',
+        contentType: Headers.jsonContentType,
+        data: data,
+        queryParameters: queryParameters,
+        requiresAuthToken: requiresAuthToken,
+        converter: converter,
+      );
 }

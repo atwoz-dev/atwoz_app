@@ -1,7 +1,8 @@
-import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'enum.dart';
 
 part 'model.freezed.dart';
 
@@ -16,17 +17,16 @@ class UserProfile with _$UserProfile {
     required String address,
     required List<String> hobbies,
     required List<SelfIntroductionData> selfIntroductionItems,
-    required List<SubInformationData> subInformationItems,
+    required SmokingStatus smokingStatus,
+    required DrinkingStatus drinkingStatus,
+    required EducationLevel educationLevel,
+    required Religion religion,
+    required Region region,
+    required double height,
+    required String job,
     required MatchStatus matchStatus,
-    required FavoriteType favoriteType,
+    required FavoriteType? favoriteType,
   }) = _UserProfile;
-}
-
-class SubInformationData {
-  const SubInformationData(this.type, this.information);
-
-  final ProfileSubInfoType type;
-  final String information;
 }
 
 class SelfIntroductionData {
@@ -43,6 +43,9 @@ class SelfIntroductionData {
 
 sealed class MatchStatus extends Equatable {
   const MatchStatus();
+
+  @override
+  List<Object> get props => [];
 }
 
 class Matched extends MatchStatus {
@@ -69,9 +72,6 @@ class Matched extends MatchStatus {
 
 class UnMatched extends MatchStatus {
   const UnMatched();
-
-  @override
-  List<Object> get props => [];
 }
 
 abstract class Matching extends MatchStatus {
@@ -92,6 +92,12 @@ class MatchingRequested extends Matching {
   List<Object> get props => [sentMessage, isExpired];
 }
 
+class MatchRejected extends MatchingRequested {
+  const MatchRejected({
+    required super.sentMessage,
+  }) : super(isExpired: true);
+}
+
 class MatchingReceived extends Matching {
   const MatchingReceived({
     required this.receivedMessage,
@@ -104,26 +110,10 @@ class MatchingReceived extends Matching {
   List<Object> get props => [receivedMessage, isExpired];
 }
 
-enum ProfileSubInfoType {
-  smoking(IconPath.smoking),
-  drinking(IconPath.wineglass),
-  education(IconPath.school),
-  religion(IconPath.bless),
-  height(IconPath.ruler),
-  job(IconPath.business);
+enum ProfileErrorType {
+  network('네트워크 연결에 실패했습니다.'),
+  unknown('알 수 없는 오류가 발생했습니다.');
 
-  final String iconPath;
-
-  const ProfileSubInfoType(this.iconPath);
-}
-
-enum FavoriteType {
-  none(''),
-  general(IconPath.generalFavorite),
-  strong(IconPath.strongFavorite);
-
-  final String path;
-  const FavoriteType(this.path);
-
-  bool get isFavorite => this != none;
+  const ProfileErrorType(this.label);
+  final String label;
 }

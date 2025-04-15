@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/provider/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,7 +81,7 @@ class _FavoriteTypeSelectDialogState
                   ? () => context.pop(_selectedType)
                   : null,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(_selectedType != null ? '관심있어요' : '호감도를 선택해주세요'),
+              child: Text(_selectedType?.label ?? '호감도를 선택해주세요'),
             ),
           ],
         ),
@@ -105,8 +105,8 @@ class _FavoriteTypeSelector extends StatelessWidget {
       spacing: 16.0,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FavoriteType.general,
-        FavoriteType.strong,
+        FavoriteType.interest,
+        FavoriteType.veryInterest,
       ]
           .map((type) => _FavoriteTypeItem(
                 value: type,
@@ -152,7 +152,7 @@ class _FavoriteTypeItem extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(12.0),
         child: DefaultIcon(
-          value.path,
+          value.iconPath,
           size: 35.2,
           colorFilter: DefaultIcon.fillColor(iconPrimary),
         ),
