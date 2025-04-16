@@ -81,7 +81,7 @@ class IdealTypeSettingBox extends StatelessWidget {
           builder: (_) => MultiBtnSelectDialog(
             title: label,
             btnNames: options,
-            maxSelectableCount: item.maxSelectableCount ?? 3,
+            maxSelectableCount: item.maxSelectableCount,
           ),
         );
         break;
