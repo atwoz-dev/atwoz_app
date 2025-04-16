@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'ideal_type.freezed.dart';
@@ -6,13 +7,13 @@ part 'ideal_type.g.dart';
 @freezed
 class IdealType with _$IdealType {
   const factory IdealType({
-    @Default(20) int minAge,
-    @Default(46) int maxAge,
-    @Default([]) List<String> hobbies,
-    @Default([]) List<String> regions,
-    @Default('') String religion,
-    @Default('') String smokingStatus,
-    @Default('') String drinkingStatus,
+    required int minAge,
+    required int maxAge,
+    required List<String> hobbies,
+    required List<String> regions,
+    required ReligionEnum religion,
+    required SmokingStatusEnum smokingStatus,
+    required DrinkingStatusEnum drinkingStatus,
   }) = _IdealType;
 
   factory IdealType.fromJson(
