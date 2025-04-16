@@ -13,12 +13,4 @@ class IdealTypeSettingItem with _$IdealTypeSettingItem {
     @Default(IdealTypeDialogType.single) IdealTypeDialogType type,
     @Default(1) int maxSelectableCount,
   }) = _IdealTypeSettingItem;
-
-  // const IdealTypeSettingItem({
-  //   required this.label,
-  //   required this.placeholder,
-  //   required this.options,
-  //   this.type = IdealTypeDialogType.single,
-  //   this.maxSelectableCount,
-  // });
 }
