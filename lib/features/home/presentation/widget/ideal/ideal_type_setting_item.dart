@@ -7,7 +7,7 @@ class IdealTypeSettingItem {
   final IdealTypeDialogType type;
   final int? maxSelectableCount;
 
-  IdealTypeSettingItem({
+  const IdealTypeSettingItem({
     required this.label,
     required this.placeholder,
     required this.options,

@@ -7,9 +7,9 @@ class IdealTypeRepositoryImpl implements IdealTypeRepository {
     "maxAge": 30,
     "hobbies": ['등산/클라이밍', '맛집탐방', '쇼핑'],
     "regions": ['서울', '대구'],
-    "religion": "무교",
-    "smokingStatus": "비흡연",
-    "drinkingStatus": "사회적 음주"
+    "religion": "none",
+    "smokingStatus": "none",
+    "drinkingStatus": "none"
   };
 
   @override

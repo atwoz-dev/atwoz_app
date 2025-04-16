@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:flutter/material.dart';
@@ -62,57 +64,58 @@ class IdealSettingArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeStatus = ref.watch(idealTypeNotifierProvider).idealType;
+    return ref.watch(idealTypeNotifierProvider).when(
+          data: (idealType) => Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: _getIdealTypeSettingItemList(idealType)
+                  .map((item) => IdealTypeSettingBox(
+                        item: item,
+                        idealType: idealType,
+                      ))
+                  .toList(),
+            ),
+          ),
+          error: (error, stackTrace) => Text('$error'),
+          loading: () => Center(child: CircularProgressIndicator()),
+        );
+  }
 
-    final List<IdealTypeSettingItem> idealTypes = [
+  List<IdealTypeSettingItem> _getIdealTypeSettingItemList(IdealType idealType) {
+    return [
       IdealTypeSettingItem(
-        label: "지역",
-        placeholder: idealTypeStatus.regions.isNotEmpty
-            ? idealTypeStatus.regions.join(', ')
-            : "선호 지역을 선택해주세요",
+        label: '지역',
+        placeholder: idealType.regions.isNotEmpty
+            ? idealType.regions.join(', ')
+            : '선호 지역을 선택해주세요',
         options: _regions,
         type: IdealTypeDialogType.multi,
         maxSelectableCount: 2,
       ),
       IdealTypeSettingItem(
-        label: "흡연",
-        placeholder: idealTypeStatus.smokingStatus.isNotEmpty
-            ? idealTypeStatus.smokingStatus
-            : "흡연여부를 선택해주세요",
-        options: ["비흡연", "금연 중", "전자담배", "가끔 피움", "매일 피움"],
+        label: '흡연',
+        placeholder: smokingMap[idealType.smokingStatus] ?? '흡연여부를 선택해주세요',
+        options: ['비흡연', '금연 중', '전자담배', '가끔 피움', '매일 피움'],
       ),
       IdealTypeSettingItem(
-        label: "음주",
-        placeholder: idealTypeStatus.drinkingStatus.isNotEmpty
-            ? idealTypeStatus.drinkingStatus
-            : "음주여부를 선택해주세요",
-        options: ["전혀 마시지 않음", "사회적 음주", "가끔 마심", "술자리를 즐김", "금주 중"],
+        label: '음주',
+        placeholder: drinkingMap[idealType.drinkingStatus] ?? '음주여부를 선택해주세요',
+        options: ['전혀 마시지 않음', '사회적 음주', '가끔 마심', '술자리를 즐김', '금주 중'],
       ),
       IdealTypeSettingItem(
-        label: "종교",
-        placeholder: idealTypeStatus.religion.isNotEmpty
-            ? idealTypeStatus.religion
-            : "종교를 선택해주세요",
-        options: ["무교", "기독교", "천주교", "불교", "기타"],
+        label: '종교',
+        placeholder: religionMap[idealType.religion] ?? '종교를 선택해주세요',
+        options: ['무교', '기독교', '천주교', '불교', '기타'],
       ),
       IdealTypeSettingItem(
-        label: "취미",
-        placeholder: idealTypeStatus.hobbies.isNotEmpty
-            ? idealTypeStatus.hobbies.join(", ")
-            : "취미를 선택해주세요",
+        label: '취미',
+        placeholder: idealType.hobbies.isNotEmpty
+            ? idealType.hobbies.join(', ')
+            : '취미를 선택해주세요',
         options: _hobbies,
         type: IdealTypeDialogType.multi,
         maxSelectableCount: 3,
       ),
     ];
-
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: idealTypes.map((item) {
-          return IdealTypeSettingBox(item: item, idealType: idealTypeStatus);
-        }).toList(),
-      ),
-    );
   }
 }

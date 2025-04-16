@@ -1,54 +1,19 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/home/domain/model/ideal_type.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class IdealTypeSettingBox extends StatelessWidget {
-  final IdealTypeSettingItem item;
-  final IdealType idealType;
-
   const IdealTypeSettingBox({
     super.key,
     required this.item,
     required this.idealType,
   });
 
-  void _showDialog(BuildContext context) {
-    final options = item.options;
-    final label = item.label;
-
-    switch (item.type) {
-      case IdealTypeDialogType.single:
-        int initialIndex = switch (label) {
-          "흡연" => options.indexOf(idealType.smokingStatus),
-          "음주" => options.indexOf(idealType.drinkingStatus),
-          "종교" => options.indexOf(idealType.religion),
-          _ => 0,
-        };
-
-        showDialog(
-          context: context,
-          builder: (_) => SingleBtnSelectDialg(
-            label: label,
-            options: options,
-            initialIndex: initialIndex >= 0 ? initialIndex : 0,
-          ),
-        );
-        break;
-
-      case IdealTypeDialogType.multi:
-        showDialog(
-          context: context,
-          builder: (_) => MultiBtnSelectDialog(
-            title: label,
-            btnNames: options,
-            maxSelectableCount: item.maxSelectableCount ?? 3,
-          ),
-        );
-        break;
-    }
-  }
+  final IdealTypeSettingItem item;
+  final IdealType idealType;
 
   @override
   Widget build(BuildContext context) {
@@ -85,5 +50,41 @@ class IdealTypeSettingBox extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _showDialog(BuildContext context) {
+    final options = item.options;
+    final label = item.label;
+
+    switch (item.type) {
+      case IdealTypeDialogType.single:
+        int initialIndex = switch (label) {
+          "흡연" => options.indexOf(smokingMap[idealType.smokingStatus]!),
+          "음주" => options.indexOf(drinkingMap[idealType.drinkingStatus]!),
+          "종교" => options.indexOf(religionMap[idealType.religion]!),
+          _ => 0,
+        };
+
+        showDialog(
+          context: context,
+          builder: (_) => SingleBtnSelectDialg(
+            label: label,
+            options: options,
+            initialIndex: initialIndex >= 0 ? initialIndex : 0,
+          ),
+        );
+        break;
+
+      case IdealTypeDialogType.multi:
+        showDialog(
+          context: context,
+          builder: (_) => MultiBtnSelectDialog(
+            title: label,
+            btnNames: options,
+            maxSelectableCount: item.maxSelectableCount ?? 3,
+          ),
+        );
+        break;
+    }
   }
 }
