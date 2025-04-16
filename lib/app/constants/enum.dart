@@ -69,7 +69,7 @@ enum DrinkingStatusEnum { none, quit, social, occasional, frequent }
 const Map<DrinkingStatusEnum, String> drinkingMap = {
   DrinkingStatusEnum.none: "전혀 마시지 않음",
   DrinkingStatusEnum.quit: "금주 중",
-  DrinkingStatusEnum.social: "사교적 음주",
+  DrinkingStatusEnum.social: "사회적 음주",
   DrinkingStatusEnum.occasional: "가끔 마심",
   DrinkingStatusEnum.frequent: "술자리를 즐김",
 };

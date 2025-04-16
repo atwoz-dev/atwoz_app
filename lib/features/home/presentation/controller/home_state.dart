@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_state.freezed.dart';
