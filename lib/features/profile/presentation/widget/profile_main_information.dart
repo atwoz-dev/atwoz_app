@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -12,6 +12,7 @@ import 'message_send_bottomsheet.dart';
 class ProfileMainInformation extends StatelessWidget {
   const ProfileMainInformation({
     super.key,
+    required this.userId,
     required this.name,
     required this.age,
     required this.mbti,
@@ -22,18 +23,19 @@ class ProfileMainInformation extends StatelessWidget {
     required this.onFavoriteTypeChanged,
   });
 
+  final int userId;
   final String name;
   final int age;
   final String mbti;
   final String address;
   final List<String> hobbies;
   final bool chatEnabled;
-  final FavoriteType favoriteType;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final FavoriteType? favoriteType;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
-    final mainColor = Colors.white;
+    final mainColor = context.colorScheme.surface;
 
     return Container(
       height: context.screenHeight * 0.3,
@@ -66,7 +68,8 @@ class ProfileMainInformation extends StatelessWidget {
           const Gap(12.0),
           if (chatEnabled)
             _InteractionButtons(
-              favoriteUser: favoriteType.isFavorite,
+              userId: userId,
+              favoriteUser: favoriteType != null,
               onFavoriteTypeChanged: onFavoriteTypeChanged,
             ),
         ],
@@ -99,12 +102,14 @@ class _MainHobbyBadge extends StatelessWidget {
 
 class _InteractionButtons extends StatelessWidget {
   const _InteractionButtons({
+    required this.userId,
     required this.favoriteUser,
     required this.onFavoriteTypeChanged,
   });
 
+  final int userId;
   final bool favoriteUser;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +118,10 @@ class _InteractionButtons extends StatelessWidget {
         Expanded(
           child: DefaultElevatedButton(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            onPressed: () => MessageSendBottomSheet.open(context),
+            onPressed: () => MessageSendBottomSheet.open(
+              context,
+              userId: userId,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -138,10 +146,13 @@ class _InteractionButtons extends StatelessWidget {
         GestureDetector(
           onTap: () async {
             if (favoriteUser) {
-              onFavoriteTypeChanged(FavoriteType.none);
+              onFavoriteTypeChanged(null);
               return;
             }
-            final favoriteType = await FavoriteTypeSelectDialog.open(context);
+            final favoriteType = await FavoriteTypeSelectDialog.open(
+              context,
+              userId: userId,
+            );
             if (favoriteType == null) return;
             onFavoriteTypeChanged(favoriteType);
           },

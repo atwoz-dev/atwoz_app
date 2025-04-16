@@ -22,6 +22,5 @@ class IdealTypeRepositoryImpl implements IdealTypeRepository {
   Future<void> setIdealType(IdealType idealType) async {
     // TODO: 테스트용 코드. api 연동 시 변경
     sampleIdealType = idealType.toJson();
-    print(sampleIdealType);
   }
 }

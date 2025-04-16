@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -7,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../domain/common/model.dart';
-
 class ProfileSubInformation extends ConsumerWidget {
-  const ProfileSubInformation({super.key});
+  const ProfileSubInformation(this.userId, {super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subInformationItems =
-        ref.watch(profileNotifierProvider).profile?.subInformationItems ?? [];
+    final profile = ref.watch(profileNotifierProvider(userId)).profile;
+    if (profile == null) return Container();
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -26,16 +27,44 @@ class ProfileSubInformation extends ConsumerWidget {
         horizontal: 16.0,
       ),
       decoration: BoxDecoration(
-          borderRadius: Dimens.cardRadius,
-          border: Border.all(
-            width: 1.0,
-            color: context.palette.outline,
-          )),
+        borderRadius: Dimens.cardRadius,
+        border: Border.all(
+          width: 1.0,
+          color: context.palette.outline,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _Title(),
-          _SubInformationContainer(subInformationItems),
+          _SubInformationContainer(
+            items: [
+              SubInfoItem(
+                iconPath: IconPath.smoking,
+                label: profile.smokingStatus.label,
+              ),
+              SubInfoItem(
+                iconPath: IconPath.wineglass,
+                label: profile.drinkingStatus.label,
+              ),
+              SubInfoItem(
+                iconPath: IconPath.school,
+                label: profile.educationLevel.label,
+              ),
+              SubInfoItem(
+                iconPath: IconPath.bless,
+                label: profile.religion.label,
+              ),
+              SubInfoItem(
+                iconPath: IconPath.ruler,
+                label: '${profile.height}cm',
+              ),
+              SubInfoItem(
+                iconPath: IconPath.business,
+                label: profile.job,
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -51,10 +80,20 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _SubInformationContainer extends StatelessWidget {
-  const _SubInformationContainer(this.subInformationItems);
+class SubInfoItem {
+  const SubInfoItem({
+    required this.iconPath,
+    required this.label,
+  });
 
-  final List<SubInformationData> subInformationItems;
+  final String iconPath;
+  final String label;
+}
+
+class _SubInformationContainer extends StatelessWidget {
+  const _SubInformationContainer({required this.items});
+
+  final List<SubInfoItem> items;
 
   @override
   Widget build(BuildContext context) {
@@ -68,26 +107,15 @@ class _SubInformationContainer extends StatelessWidget {
       ),
       padding: const EdgeInsets.only(top: 16.0),
       physics: const NeverScrollableScrollPhysics(),
-      children: subInformationItems
-          .map(
-            (subInfo) => _SubInformationItem(
-              iconPath: subInfo.iconPath,
-              information: subInfo.information,
-            ),
-          )
-          .toList(),
+      children: items.map((item) => _SubInformationItem(item: item)).toList(),
     );
   }
 }
 
 class _SubInformationItem extends StatelessWidget {
-  const _SubInformationItem({
-    required this.iconPath,
-    required this.information,
-  });
+  const _SubInformationItem({required this.item});
 
-  final String iconPath;
-  final String information;
+  final SubInfoItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +123,7 @@ class _SubInformationItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         DefaultIcon(
-          iconPath,
+          item.iconPath,
           size: 16.0,
           colorFilter: DefaultIcon.fillColor(
             context.palette.secondary,
@@ -103,7 +131,7 @@ class _SubInformationItem extends StatelessWidget {
         ),
         const Gap(10.0),
         Text(
-          information,
+          item.label,
           style: Fonts.body02Medium(
             context.palette.tertiary,
           ),

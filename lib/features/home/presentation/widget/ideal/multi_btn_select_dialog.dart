@@ -1,39 +1,37 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class MultiBtnSelectDialog extends ConsumerStatefulWidget {
+class MultiBtnSelectDialog extends StatefulWidget {
   const MultiBtnSelectDialog({
     super.key,
     required this.btnNames,
     required this.maxSelectableCount,
     required this.title,
+    required this.selectedValues,
+    required this.onSubmit,
   });
 
   final String title; // 다이얼로그 제목
   final List<String> btnNames; // 선택된 버튼 이름 리스트
   final int maxSelectableCount; // 최대 선택 가능 개수
+  final List<String> selectedValues;
+  final void Function(List<String> selectedItems) onSubmit;
 
   @override
-  ConsumerState<MultiBtnSelectDialog> createState() =>
-      _MultiBtnSelectDialogState();
+  State<MultiBtnSelectDialog> createState() => _MultiBtnSelectDialogState();
 }
 
-class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
+class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
   late List<String> _selectedItems;
 
   @override
   void initState() {
     super.initState();
-    final idealType = ref.read(idealTypeNotifierProvider).value;
-    _selectedItems = widget.title == '지역'
-        ? List<String>.from(idealType?.regions ?? [])
-        : List<String>.from(idealType?.hobbies ?? []);
+    _selectedItems = List.from(widget.selectedValues);
   }
 
   @override
@@ -42,8 +40,8 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 25),
-          padding: EdgeInsets.only(top: 16, bottom: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.only(top: 16, bottom: 24),
           width: context.screenWidth,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -57,7 +55,9 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                        onTap: context.pop, child: DefaultIcon(IconPath.close)),
+                      onTap: context.pop,
+                      child: const DefaultIcon(IconPath.close),
+                    ),
                   ],
                 ),
                 Text(
@@ -67,17 +67,17 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
                     color: Palette.colorBlack,
                   ),
                 ),
-                SizedBox(height: 6),
+                const Gap(6),
                 Text(
                   '${widget.maxSelectableCount}개까지 중복 선택이 가능해요',
                   style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400,
-                    color: Color(0xff8D92A0),
+                    color: const Color(0xff8D92A0),
                   ),
                 ),
                 Container(
                   height: context.screenHeight * 0.26,
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: SingleChildScrollView(
                     child: Wrap(
                       alignment: WrapAlignment.center,
@@ -89,21 +89,28 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
                           behavior: HitTestBehavior.opaque,
                           onTap: () => _toggleItem(tag),
                           child: Container(
-                            margin: EdgeInsets.all(4),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 9),
+                            margin: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 9,
+                            ),
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? Palette.colorPrimary100
                                   : Colors.white,
-                              border: Border.all(color: Color(0xffEDEEF0)),
+                              border: Border.all(
+                                color: const Color(0xffEDEEF0),
+                              ),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text(tag,
-                                style: TextStyle(
-                                    color: isSelected
-                                        ? Palette.colorPrimary600
-                                        : Palette.colorGrey800)),
+                            child: Text(
+                              tag,
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Palette.colorPrimary600
+                                    : Palette.colorGrey800,
+                              ),
+                            ),
                           ),
                         );
                       }).toList(),
@@ -111,11 +118,11 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
                   ),
                 ),
                 DefaultElevatedButton(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  onPressed: _selectedItems.isNotEmpty ? _submit : null,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  onPressed: () => widget.onSubmit(_selectedItems),
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
-                  child: Text("확인"),
+                  child: const Text("확인"),
                 )
               ],
             ),
@@ -137,15 +144,5 @@ class _MultiBtnSelectDialogState extends ConsumerState<MultiBtnSelectDialog> {
         }
       }
     });
-  }
-
-  void _submit() {
-    final notifier = ref.read(idealTypeNotifierProvider.notifier);
-    if (widget.title == '지역') {
-      notifier.updateRegions(_selectedItems);
-    } else {
-      notifier.updateHobbies(_selectedItems);
-    }
-    pop(context);
   }
 }

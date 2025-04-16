@@ -1,15 +1,10 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../common/model.dart';
 
 part 'profile_state.freezed.dart';
 
 @freezed
 class ProfileState with _$ProfileState {
-  const ProfileState._();
-
   const factory ProfileState({
     required UserProfile? profile,
     required String myUserName,
@@ -17,6 +12,7 @@ class ProfileState with _$ProfileState {
     required int heartPoint,
     required String message,
     required bool isLoaded,
+    required ProfileErrorType? error,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
@@ -26,14 +22,12 @@ class ProfileState with _$ProfileState {
         heartPoint: 0,
         message: '',
         isLoaded: false,
+        error: null,
       );
+
+  const ProfileState._();
 
   MatchStatus? get matchStatus => profile?.matchStatus;
 
-  bool get enabledMessageInput {
-    final matchStatus = profile?.matchStatus;
-    return matchStatus is UnMatched ||
-        matchStatus is MatchingReceived ||
-        (matchStatus is Matching && matchStatus.isExpired);
-  }
+  bool get enabledMessageInput => profile?.matchStatus is! Matching;
 }

@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class IdealAgeSettingArea extends ConsumerWidget {
   const IdealAgeSettingArea({
@@ -32,13 +33,13 @@ class IdealAgeSettingArea extends ConsumerWidget {
                   "${data.minAge.toString()}세~${data.maxAge.toString()}세",
                   style: Fonts.body02Regular().copyWith(
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff3B3B3B),
+                    color: const Color(0xff3B3B3B),
                   ),
                 )
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const Gap(20),
           Row(
             children: [
               Expanded(
@@ -56,7 +57,7 @@ class IdealAgeSettingArea extends ConsumerWidget {
                     );
                   },
                   activeColor: Palette.colorPrimary500,
-                  inactiveColor: Color(0xffEEEEEE),
+                  inactiveColor: const Color(0xffEEEEEE),
                 ),
               ),
             ],
@@ -64,7 +65,7 @@ class IdealAgeSettingArea extends ConsumerWidget {
         ],
       ),
       error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 }

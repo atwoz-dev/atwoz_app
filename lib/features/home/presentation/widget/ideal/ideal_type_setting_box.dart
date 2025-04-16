@@ -1,11 +1,14 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/home/domain/model/ideal_type.dart';
+import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
-class IdealTypeSettingBox extends StatelessWidget {
+class IdealTypeSettingBox extends ConsumerWidget {
   const IdealTypeSettingBox({
     super.key,
     required this.item,
@@ -16,7 +19,7 @@ class IdealTypeSettingBox extends StatelessWidget {
   final IdealType idealType;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,7 +33,7 @@ class IdealTypeSettingBox extends StatelessWidget {
         const Gap(8),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => _showDialog(context),
+          onTap: () => _showDialog(context, ref),
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 24),
@@ -52,9 +55,10 @@ class IdealTypeSettingBox extends StatelessWidget {
     );
   }
 
-  void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext context, WidgetRef ref) {
     final options = item.options;
     final label = item.label;
+    final notifier = ref.read(idealTypeNotifierProvider.notifier);
 
     switch (item.type) {
       case IdealTypeDialogType.single:
@@ -71,17 +75,57 @@ class IdealTypeSettingBox extends StatelessWidget {
             label: label,
             options: options,
             initialIndex: initialIndex >= 0 ? initialIndex : 0,
+            onItemSelected: (selectedValue) {
+              switch (item.label) {
+                case '흡연':
+                  final smokingEnum = smokingMap.entries
+                      .firstWhere((entry) => entry.value == selectedValue)
+                      .key;
+                  notifier.updateSmokingStatus(smokingEnum);
+                  break;
+                case '음주':
+                  final drinkingEnum = drinkingMap.entries
+                      .firstWhere((entry) => entry.value == selectedValue)
+                      .key;
+                  notifier.updateDrinkingStatus(drinkingEnum);
+                  break;
+                case '종교':
+                  final religionEnum = religionMap.entries
+                      .firstWhere((entry) => entry.value == selectedValue)
+                      .key;
+                  notifier.updateReligion(religionEnum);
+                  break;
+              }
+            },
           ),
         );
         break;
 
       case IdealTypeDialogType.multi:
+        List<String> selectedValues = switch (label) {
+          "지역" => idealType.regions,
+          "취미" => idealType.hobbies,
+          _ => [],
+        };
+
         showDialog(
           context: context,
           builder: (_) => MultiBtnSelectDialog(
             title: label,
             btnNames: options,
-            maxSelectableCount: item.maxSelectableCount ?? 3,
+            maxSelectableCount: item.maxSelectableCount,
+            selectedValues: selectedValues,
+            onSubmit: (selectedItems) {
+              switch (label) {
+                case '지역':
+                  notifier.updateRegions(selectedItems);
+                  break;
+                case '취미':
+                  notifier.updateHobbies(selectedItems);
+                  break;
+              }
+              context.pop();
+            },
           ),
         );
         break;

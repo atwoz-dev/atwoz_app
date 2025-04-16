@@ -13,11 +13,13 @@ class SingleBtnSelectDialg extends ConsumerStatefulWidget {
     required this.label,
     required this.options,
     required this.initialIndex,
+    required this.onItemSelected,
   });
 
   final String label;
   final List<String> options;
   final int initialIndex;
+  final void Function(String selectedValue) onItemSelected;
 
   @override
   ConsumerState<SingleBtnSelectDialg> createState() =>
@@ -37,8 +39,8 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,11 +50,13 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 25),
-          padding: EdgeInsets.only(top: 16, bottom: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.only(top: 16, bottom: 24),
           width: context.screenWidth,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -62,7 +66,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   children: [
                     GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: DefaultIcon(IconPath.close)),
+                        child: const DefaultIcon(IconPath.close)),
                   ],
                 ),
                 Text(
@@ -73,7 +77,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   height: context.screenHeight * 0.2,
                   child: ListWheelScrollView(
                     controller: _controller,
@@ -82,31 +86,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                       setState(() {
                         _selectedIndex = value;
                         final selectedValue = widget.options[_selectedIndex];
-
-                        switch (widget.label) {
-                          case '흡연':
-                            final smokingEnum = smokingMap.entries
-                                .firstWhere(
-                                    (entry) => entry.value == selectedValue)
-                                .key;
-                            idealTypeNotifier.updateSmokingStatus(smokingEnum);
-                            break;
-                          case '음주':
-                            final drinkingEnum = drinkingMap.entries
-                                .firstWhere(
-                                    (entry) => entry.value == selectedValue)
-                                .key;
-                            idealTypeNotifier
-                                .updateDrinkingStatus(drinkingEnum);
-                            break;
-                          case '종교':
-                            final religionEnum = religionMap.entries
-                                .firstWhere(
-                                    (entry) => entry.value == selectedValue)
-                                .key;
-                            idealTypeNotifier.updateReligion(religionEnum);
-                            break;
-                        }
+                        widget.onItemSelected(selectedValue);
                       });
                     },
                     children: widget.options.map((element) {
@@ -140,11 +120,11 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   ),
                 ),
                 DefaultElevatedButton(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   onPressed: context.pop,
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
-                  child: Text("확인"),
+                  child: const Text("확인"),
                 )
               ],
             ),

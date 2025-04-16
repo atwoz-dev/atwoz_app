@@ -13,10 +13,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
-  const OnboardingCertificationPage({super.key});
+  const OnboardingCertificationPage({
+    super.key,
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
 
   @override
   OnboardingCertificationPageState createState() =>
@@ -64,8 +68,6 @@ class OnboardingCertificationPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
-    final phoneNumber = args?['phoneNumber'] ?? '';
     final bool isButtonEnabled =
         _phoneController.text.isNotEmpty && validationError == null;
 
@@ -81,7 +83,7 @@ class OnboardingCertificationPageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(title: '인증번호를 입력해주세요'),
+                const TitleText(title: '인증번호를 입력해주세요'),
                 const Gap(5),
                 Text(
                   '문자로 보내드린 인증번호를 입력해주세요',
@@ -125,9 +127,7 @@ class OnboardingCertificationPageState
                                     Log.d("인증번호 재발송");
                                     // TODO: 재발송 로직 추가
                                   },
-                                  child: Text(
-                                    '재발송',
-                                  ),
+                                  child: const Text('재발송'),
                                 ),
                               ),
                             ),
@@ -151,8 +151,9 @@ class OnboardingCertificationPageState
               onPressed: isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
-                      await authUseCase
-                          .signIn(UserSignInRequest(phoneNumber: phoneNumber));
+                      await authUseCase.signIn(UserSignInRequest(
+                        phoneNumber: widget.phoneNumber,
+                      ));
                       navigate(context, route: AppRoute.signUp);
                     }
                   : null,

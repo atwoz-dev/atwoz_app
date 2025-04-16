@@ -1,5 +1,7 @@
+import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:atwoz_app/features/profile/domain/usecase/profile_usecase.dart';
+import 'package:atwoz_app/features/profile/domain/usecase/usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'profile_state.dart';
 
@@ -8,40 +10,119 @@ part 'profile_notifier.g.dart';
 @riverpod
 class ProfileNotifier extends _$ProfileNotifier {
   @override
-  ProfileState build() {
-    _initialize();
+  ProfileState build(int userId) {
+    _initializeProfileState(userId);
     return ProfileState.initial();
   }
 
-  Future<void> _initialize() async {
-    final profile = await ProfileFetchUseCase.call();
-    if (profile == null) {
-      // TODO(Han): error handling
-      return;
-    }
+  Future<void> _initializeProfileState(int userId) async {
+    try {
+      final profile = await ProfileFetchUseCase(ref).call(userId);
 
-    state = state.copyWith(
-      profile: profile,
-      myUserName: '은우',
-      registeredContact: false,
-      heartPoint: 30,
-      message: '',
-      isLoaded: true,
-    );
+      state = state.copyWith(
+        profile: profile,
+        // TODO(Han): replace my user data from server
+        myUserName: '은우',
+        registeredContact: true,
+        heartPoint: 30,
+        message: '',
+        isLoaded: true,
+        error: null,
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(
+        isLoaded: true,
+        error: ProfileErrorType.network,
+      );
+    }
   }
 
   set message(String message) {
     if (!state.enabledMessageInput) {
       assert(false, 'message couldn\'t be edited after trying match');
-
       return;
     }
     state = state.copyWith(message: message);
   }
 
-  set favoriteType(FavoriteType type) {
+  set favoriteType(FavoriteType? type) {
     state = state.copyWith(
       profile: state.profile?.copyWith(favoriteType: type),
     );
+  }
+
+  Future<void> requestMatch() async {
+    if (state.profile == null) return;
+
+    try {
+      await ProfileMatchRequestUseCase(ref).call(
+        userId: state.profile!.id,
+        message: state.message,
+      );
+
+      state = state.copyWith(
+        profile: state.profile?.copyWith(
+          matchStatus: MatchingRequested(
+            sentMessage: state.message,
+          ),
+        ),
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(error: ProfileErrorType.network);
+    }
+  }
+
+  Future<void> rejectMatch(int matchId) async {
+    if (state.profile == null) return;
+
+    try {
+      await ProfileMatchRejectUseCase(ref).call(matchId);
+
+      state = state.copyWith(
+        profile: state.profile?.copyWith(
+          matchStatus: const UnMatched(),
+        ),
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(error: ProfileErrorType.network);
+    }
+  }
+
+  Future<void> resetMatchStatus(int matchId) async {
+    try {
+      await ProfileMatchResetUseCase(ref).call(matchId);
+
+      state = state.copyWith(
+        profile: state.profile?.copyWith(
+          matchStatus: const UnMatched(),
+        ),
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(error: ProfileErrorType.network);
+    }
+  }
+
+  Future<void> approveMatch(int matchId) async {
+    if (state.profile == null) return;
+
+    try {
+      await ProfileMatchApproveUseCase(ref).call(
+        matchId: matchId,
+        message: state.message,
+      );
+
+      _initializeProfileState(userId);
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(error: ProfileErrorType.network);
+    }
+  }
+
+  void resetError() {
+    state = state.copyWith(error: null);
   }
 }
