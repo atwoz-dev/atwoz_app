@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class IdealAgeSettingArea extends ConsumerWidget {
   const IdealAgeSettingArea({
@@ -38,7 +39,7 @@ class IdealAgeSettingArea extends ConsumerWidget {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          Gap(20),
           Row(
             children: [
               Expanded(
