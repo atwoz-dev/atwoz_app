@@ -104,7 +104,7 @@ class OnboardingPhoneInputPageState
                     autofocus: false,
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    hintText: '010-0000-0000',
+                    hintText: '01000000000',
                     fillColor: Palette.colorGrey100,
                     // validator: (_) => validationError, // 에러 메시지 표시
                     errorText: validationError,
