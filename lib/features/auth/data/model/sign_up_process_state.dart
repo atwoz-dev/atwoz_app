@@ -33,7 +33,7 @@ class SignUpProcessState with _$SignUpProcessState {
 
   const SignUpProcessState._();
 
-  int? get age => selectedYear != null
+  int? get yearOfBirth => selectedYear != null
       ? DateTimeUtil.calculateAge(yearOfBirth: selectedYear!)
       : null;
 
@@ -114,7 +114,7 @@ class SignUpProcessState with _$SignUpProcessState {
     return ProfileUploadRequest(
       nickname: nickname ?? "",
       selectedGender: selectedGender.toJson(), // Enum → 백엔드 변환
-      age: selectedYear ?? 0,
+      yearOfBirth: selectedYear ?? 0,
       selectedHeight: selectedHeight ?? 0,
       jobId: jobOptions.indexOf(selectedJob!) + 1,
       // region: selectedLocation ?? "",

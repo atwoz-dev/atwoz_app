@@ -8,7 +8,7 @@ class ProfileUploadRequest with _$ProfileUploadRequest {
   const factory ProfileUploadRequest({
     @JsonKey(name: "nickName") required String nickname,
     @JsonKey(name: "gender") required String selectedGender,
-    required int age,
+    required int yearOfBirth,
     @JsonKey(name: "height") required int selectedHeight,
     required int jobId,
     @JsonKey(name: "region") required String region,
