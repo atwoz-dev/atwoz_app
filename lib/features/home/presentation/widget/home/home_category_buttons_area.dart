@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,9 +27,9 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
           "이런 분들은 어떠세요? 🧐",
           style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
           decoration: BoxDecoration(
               color: Palette.colorGrey50,
               borderRadius: BorderRadius.circular(16)),
@@ -41,7 +42,7 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
                 return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                             backgroundColor: Palette.colorBlack,
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)))
                         .copyWith(
@@ -50,7 +51,7 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
                     ),
                     onPressed: () => navigate(context,
                         route: AppRoute.userByCategory,
-                        extra: {'category': label}),
+                        extra: UserByCategoryArguments(category: label)),
                     child: Text(
                       label,
                       style: Fonts.body02Regular().copyWith(

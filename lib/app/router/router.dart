@@ -126,10 +126,9 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.userByCategory.path,
       builder: (context, state) {
-        print('router에서 카테고리: ${state.extra}');
-        final category = (state.extra as Map<String, dynamic>)['category'];
-
-        return UserByCategoryPage(category: category);
+        final args = state.extra;
+        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
+        return UserByCategoryPage(category: args.category);
       },
     ),
     GoRoute(

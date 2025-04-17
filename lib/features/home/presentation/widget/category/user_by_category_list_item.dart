@@ -41,7 +41,7 @@ class UserByCategoryListItem extends StatelessWidget {
                     radius: 50,
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     children: [
@@ -58,11 +58,11 @@ class UserByCategoryListItem extends StatelessWidget {
                                 tagName: profile.hashTags[index]);
                           },
                           separatorBuilder: (context, index) {
-                            return SizedBox(width: 8);
+                            return const SizedBox(width: 8);
                           },
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         profile.interviewContent,
                         maxLines: 2,
@@ -73,20 +73,14 @@ class UserByCategoryListItem extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    FavoriteTypeSelectDialog(),
-                              );
-                            },
+                            onTap: () {},
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                   color: Palette.colorGrey100,
@@ -107,7 +101,7 @@ class UserByCategoryListItem extends StatelessWidget {
               ],
             ),
           ),
-          if (isBlurred) BlurCoverWidget(),
+          if (isBlurred) const BlurCoverWidget(),
         ],
       ),
     );

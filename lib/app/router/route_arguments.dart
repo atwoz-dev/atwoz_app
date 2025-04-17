@@ -19,3 +19,11 @@ class OnboardCertificationArguments extends RouteArguments {
 
   final String phoneNumber;
 }
+
+class UserByCategoryArguments extends RouteArguments {
+  const UserByCategoryArguments({
+    required this.category,
+  });
+
+  final String category;
+}
