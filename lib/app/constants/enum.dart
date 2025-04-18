@@ -84,3 +84,20 @@ const Map<ReligionEnum, String> religionMap = {
   ReligionEnum.buddhist: "불교",
   ReligionEnum.other: "기타",
 };
+
+// 홈 - 소개받고 싶은 이성 카테고리
+enum IntroducedCategoryEnum {
+  fivePercent,
+  newUser,
+  nearby,
+  sameReligion,
+  sameHobby,
+}
+
+const Map<IntroducedCategoryEnum, String> introducedCategoryMap = {
+  IntroducedCategoryEnum.fivePercent: "상위 5%",
+  IntroducedCategoryEnum.newUser: "새로 가입했어요",
+  IntroducedCategoryEnum.nearby: "지금 근처인 사람!",
+  IntroducedCategoryEnum.sameReligion: "종교가 같아요",
+  IntroducedCategoryEnum.sameHobby: "취미가 같아요",
+};
