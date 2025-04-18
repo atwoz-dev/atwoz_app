@@ -21,7 +21,9 @@ class UnlockWithHeartDialog extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 30),
           padding: const EdgeInsets.fromLTRB(13, 24, 13, 16),
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(12)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Column(
             children: [
               Text(
@@ -29,7 +31,7 @@ class UnlockWithHeartDialog extends StatelessWidget {
                 style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
-              Gap(12),
+              const Gap(12),
               Text(
                 "보유한 하트:10", // TODO: 하트 개수 가져오기
                 style: Fonts.body02Medium().copyWith(
@@ -38,7 +40,7 @@ class UnlockWithHeartDialog extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              Gap(24),
+              const Gap(24),
               Row(
                 children: [
                   Expanded(
@@ -47,16 +49,19 @@ class UnlockWithHeartDialog extends StatelessWidget {
                         pop(context);
                       },
                       primary: Colors.white,
-                      border: BorderSide(color: const Color(0xffE1E1E1)),
+                      border: const BorderSide(
+                        color: Color(0xffE1E1E1),
+                      ),
                       child: Text(
                         "취소",
                         style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: Palette.colorBlack),
+                          fontWeight: FontWeight.w400,
+                          color: Palette.colorBlack,
+                        ),
                       ),
                     ),
                   ),
-                  Gap(8),
+                  const Gap(8),
                   Expanded(
                     child: DefaultElevatedButton(
                       onPressed: () {
@@ -66,13 +71,14 @@ class UnlockWithHeartDialog extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          DefaultIcon(IconPath.homeHeart, size: 16),
-                          Gap(4),
+                          const DefaultIcon(IconPath.homeHeart, size: 16),
+                          const Gap(4),
                           Text(
                             "8",
                             style: Fonts.body02Medium().copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),

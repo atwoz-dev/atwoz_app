@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
@@ -127,8 +128,12 @@ class HomeBranch {
       path: AppRoute.userByCategory.path,
       builder: (context, state) {
         final args = state.extra;
-        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
-        return UserByCategoryPage(category: args.category);
+        if (args is! UserByCategoryArguments ||
+            introducedCategoryMap[args.category] == null)
+          return const SizedBox.shrink();
+
+        return UserByCategoryPage(
+            category: introducedCategoryMap[args.category]!);
       },
     ),
     GoRoute(

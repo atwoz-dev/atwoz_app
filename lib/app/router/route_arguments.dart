@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+
 sealed class RouteArguments {
   const RouteArguments();
 }
@@ -25,5 +27,5 @@ class UserByCategoryArguments extends RouteArguments {
     required this.category,
   });
 
-  final String category;
+  final IntroducedCategoryEnum category;
 }

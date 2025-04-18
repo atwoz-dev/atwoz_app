@@ -143,6 +143,8 @@ class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
     }
   ]
   ''';
+
+  /// TODO: api 연동 후 제거
   @override
   Future<List<IntroducedProfile>> getProfiles(String category) async {
     final List response = jsonDecode(mockData);

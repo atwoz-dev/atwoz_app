@@ -17,50 +17,47 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final categoryProfilesState =
-        ref.watch(GetCategoryProfilesNotifierProvider(widget.category));
-    final categoryProfilesNotifier =
-        ref.read(getCategoryProfilesNotifierProvider(widget.category).notifier);
-    // 데이터가 아직 로딩 중이라면 로딩 화면 보여주기
-    if (categoryProfilesState.isLoading) {
-      return Scaffold(
-        appBar: DefaultAppBar(title: widget.category),
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    _blurredList =
-        categoryProfilesState.profiles.map((e) => !e.isIntroduced).toList();
+    final introducedProfilesAsync =
+        ref.watch(introducedProfilesNotifierProvider(widget.category));
+    final introducedProfilesNotifier =
+        ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
 
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: ListView.separated(
-          itemCount: _blurredList.length,
-          separatorBuilder: (context, index) => SizedBox(height: 8),
-          itemBuilder: (context, index) {
-            return UserByCategoryListItem(
-              isBlurred: _blurredList[index],
-              onTap: () async {
-                // true면 소개받지 않은 프로필
-                if (_blurredList[index]) {
-                  final result = await showDialog<bool>(
-                    context: context,
-                    builder: (context) => UnlockWithHeartDialog(),
-                  );
+      body: introducedProfilesAsync.when(
+        data: (profiles) {
+          _blurredList = profiles.map((e) => !e.isIntroduced).toList();
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: ListView.separated(
+              itemCount: profiles.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              itemBuilder: (context, index) {
+                return UserByCategoryListItem(
+                  isBlurred: _blurredList[index],
+                  onTap: () async {
+                    // true면 소개받지 않은 프로필
+                    if (_blurredList[index]) {
+                      final result = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => const UnlockWithHeartDialog(),
+                      );
 
-                  // 하트 소모 다이얼로그에서 확인을 누른 경우
-                  if (result == true) {
-                    final selectedId = categoryProfilesState.profiles[index].id;
-                    categoryProfilesNotifier.openProfile(selectedId);
-                  }
-                }
+                      // 하트 소모 다이얼로그에서 확인을 누른 경우
+                      if (result == true) {
+                        final selectedId = profiles[index].id;
+                        introducedProfilesNotifier.openProfile(selectedId);
+                      }
+                    }
+                  },
+                  profile: profiles[index],
+                );
               },
-              profile: categoryProfilesState.profiles[index],
-            );
-          },
-        ),
+            ),
+          );
+        },
+        error: (error, stackTrace) => Center(child: Text('Error: $error')),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }

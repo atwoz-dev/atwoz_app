@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
-import 'package:atwoz_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,7 +26,9 @@ class UserByCategoryListItem extends StatelessWidget {
             margin: const EdgeInsets.only(top: 8),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Palette.gray10, borderRadius: BorderRadius.circular(16)),
+              color: Palette.gray10,
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,8 +53,9 @@ class UserByCategoryListItem extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: profile.hashTags.length,
                           itemBuilder: (context, index) {
-                            return HomeHashtagWidget(
-                                tagName: profile.hashTags[index]);
+                            return HashtagWidget(
+                              tagName: profile.hashTags[index],
+                            );
                           },
                           separatorBuilder: (context, index) {
                             return const SizedBox(width: 8);
@@ -81,10 +81,13 @@ class UserByCategoryListItem extends StatelessWidget {
                             onTap: () {},
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
-                                  color: Palette.colorGrey100,
-                                  borderRadius: BorderRadius.circular(12)),
+                                color: Palette.colorGrey100,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                               child: SvgPicture.asset(
                                 "assets/icons/home_heart.svg",
                                 width: 24,
@@ -103,29 +106,6 @@ class UserByCategoryListItem extends StatelessWidget {
           ),
           if (isBlurred) const BlurCoverWidget(),
         ],
-      ),
-    );
-  }
-}
-
-// Home 화면에서도 사용하는 위젯이라 public으로 설정하였습니다
-class BlurCoverWidget extends StatelessWidget {
-  const BlurCoverWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-        ),
       ),
     );
   }
