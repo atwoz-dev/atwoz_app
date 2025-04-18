@@ -5,7 +5,7 @@ part 'introduced_profile.freezed.dart';
 part 'introduced_profile.g.dart';
 
 @freezed
-abstract class IntroducedProfile with _$IntroducedProfile {
+class IntroducedProfile with _$IntroducedProfile {
   const factory IntroducedProfile({
     required int id,
     required String imageUrl, // imageUrl
