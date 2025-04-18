@@ -3,6 +3,7 @@ import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 
 class UserByCategoryListItem extends StatelessWidget {
   final bool isBlurred;
@@ -40,7 +41,7 @@ class UserByCategoryListItem extends StatelessWidget {
                     radius: 50,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const Gap(16),
                 Expanded(
                   child: Column(
                     children: [
@@ -58,11 +59,11 @@ class UserByCategoryListItem extends StatelessWidget {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return const SizedBox(width: 8);
+                            return const Gap(8);
                           },
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const Gap(8),
                       Text(
                         profile.interviewContent,
                         maxLines: 2,
@@ -73,7 +74,7 @@ class UserByCategoryListItem extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const Gap(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

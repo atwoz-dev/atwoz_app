@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 const List<String> _buttonLabels = [
   "상위 5%",
@@ -27,7 +28,7 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
           "이런 분들은 어떠세요? 🧐",
           style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
         ),
-        const SizedBox(height: 16),
+        const Gap(16),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 45.5,

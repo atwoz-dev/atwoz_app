@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class UserByCategoryPage extends ConsumerStatefulWidget {
   final String category;
@@ -31,7 +32,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: ListView.separated(
               itemCount: profiles.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              separatorBuilder: (context, index) => const Gap(8),
               itemBuilder: (context, index) {
                 return UserByCategoryListItem(
                   isBlurred: _blurredList[index],
