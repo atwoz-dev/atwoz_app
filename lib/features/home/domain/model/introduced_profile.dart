@@ -2,7 +2,6 @@ import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'introduced_profile.freezed.dart';
-part 'introduced_profile.g.dart';
 
 @freezed
 class IntroducedProfile with _$IntroducedProfile {
