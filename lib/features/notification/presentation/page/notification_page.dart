@@ -60,9 +60,9 @@ class NotificationPage extends ConsumerWidget with LogMixin {
           final repo = ref.read(notificationRepositoryProvider);
           await repo.sendTestNotification(
             senderId: 1,
-            senderType: 'MEMBER', // 정확한 ENUM 문자열
-            receiverId: 31,
-            notificationType: 'message', // 정확한 ENUM 문자열
+            senderType: 'MEMBER',
+            receiverId: 1,
+            notificationType: 'MATCH_REQUESTED', // ← 이걸로 변경
           );
         },
         child: const Text('테스트 알림 보내기'),
