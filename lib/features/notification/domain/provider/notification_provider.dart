@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/features/notification/data/repository/notification_repository.dart';
+import 'package:atwoz_app/features/notification/domain/usecase/notification_fcm_usecase.dart';
 import 'package:atwoz_app/features/notification/domain/usecase/notification_fetch_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,6 +10,11 @@ part 'notification_provider.g.dart';
 /// 알림 데이터를 관리하는 Riverpod 상태 관리 클래스를 정의
 /// 유즈케이스를 호출하고, 알림 데이터를 전역적으로 관리
 /// NotificationRepository를 Provider로 관리
+@Riverpod(keepAlive: true)
+NotificationFCMUsecase notificationFCMUsecase(Ref ref) {
+  return NotificationFCMUsecase();
+}
+
 @Riverpod(keepAlive: true)
 NotificationRepository notificationRepository(Ref ref) {
   return NotificationRepository(ref: ref);
@@ -34,42 +40,28 @@ class NotificationDataNotifier extends _$NotificationDataNotifier {
     return _notifications;
   }
 
-  /// 모든 알림을 읽음 처리
-  void markAllAsRead() {
-    _notifications = _notifications
-        .map((notification) => notification.copyWith(isRead: true))
-        .toList();
-    state = AsyncData(_notifications);
-  }
-
   /// 읽지 않은 알림 가져오기 (유즈케이스 활용)
   Future<List<NotificationModel>> fetchUnreadNotifications() async {
     final fetchNotificationsUseCase =
         ref.watch(fetchNotificationsUseCaseProvider);
     return await fetchNotificationsUseCase.execute(unreadOnly: true);
   }
+
+  /// (기능 제거됨) 알림을 읽음 처리하는 기능은 현재 모델 구조에서는 사용되지 않음
+  /// 만약 향후 isRead 같은 속성이 추가된다면 아래처럼 복원 가능
+  // Future<void> markNotificationAsRead(int id) async {
+  //   final repository = ref.read(notificationRepositoryProvider);
+  //   await repository.markAsRead(id);
+  //   _notifications = _notifications.map((n) {
+  //     return n.notificationId == id ? n.copyWith(isRead: true) : n;
+  //   }).toList();
+  //   state = AsyncData(_notifications);
+  // }
+
+  // void markAllAsRead() {
+  //   _notifications = _notifications
+  //       .map((notification) => notification.copyWith(isRead: true))
+  //       .toList();
+  //   state = AsyncData(_notifications);
+  // }
 }
-
-/*
-< 사용 예제 >
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/features/notification/domain/notification_provider.dart';
-
-// 알림 데이터를 가져오는 예제
-Future<void> useNotificationProviderExample(WidgetRef ref) async {
-  // 알림 데이터를 전역적으로 관리하는 NotificationDataNotifier를 사용
-  final notifier = ref.read(notificationDataNotifierProvider.notifier);
-
-  // 전체 알림 가져오기
-  final allNotifications = await notifier.build();
-  print('전체 알림: $allNotifications');
-
-  // 읽지 않은 알림만 가져오기
-  final unreadNotifications = await notifier.fetchUnreadNotifications();
-  print('읽지 않은 알림: $unreadNotifications');
-
-  // 모든 알림을 읽음 처리
-  notifier.markAllAsRead();
-  print('모든 알림을 읽음 처리했습니다.');
-}
- */

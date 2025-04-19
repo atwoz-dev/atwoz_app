@@ -12,12 +12,16 @@ class NotificationFetchUseCase {
   Future<List<NotificationModel>> execute({bool unreadOnly = false}) async {
     final notifications = await repository.fetchNotifications();
 
-    // 읽지 않은 알림만 필터링
-    return unreadOnly
-        ? notifications.where((notification) => !notification.isRead).toList()
-        : notifications;
+    // 현재 모델에는 isRead 필드가 없음
+    // TODO: 추후 필드가 추가되면 아래 필터링 로직 사용 (아예 추가 안 되면 삭제)
+    // return unreadOnly
+    //     ? notifications.where((notification) => !notification.isRead).toList()
+    //     : notifications;
+
+    return notifications;
   }
 }
+
 /*
 < 사용 예제 >
 import 'package:atwoz_app/features/notification/domain/fetch_notifications_usecase.dart';
