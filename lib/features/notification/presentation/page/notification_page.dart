@@ -20,23 +20,62 @@ class NotificationPage extends ConsumerWidget with LogMixin {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget buildNotificationList(
+      BuildContext context,
+      List<NotificationModel> notifications,
+      double horizontalPadding,
+    ) {
+      if (notifications.isEmpty) {
+        return _buildEmptyView();
+      }
+
+      return ListView(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        children: [
+          const DefaultDivider(), // 구분선
+          ...notifications.map(
+            (notification) => NotificationCardWidget(
+              notification: notification,
+              onTap: () async {
+                logD('알림 클릭됨: ${notification.notificationId}');
+                final repo = ref.read(notificationRepositoryProvider);
+                await repo.markAsRead(notification.notificationId);
+                // 선택사항: 리스트 새로고침
+                ref.invalidate(notificationDataNotifierProvider);
+              },
+            ),
+          ),
+        ],
+      );
+    }
+
     final double horizontalPadding =
         context.screenWidth * horizontalPaddingFactor;
 
-    // notificationDataProvider를 통해 알림 데이터를 구독
     final notificationDataAsync = ref.watch(notificationDataNotifierProvider);
 
     return Scaffold(
-      appBar: DefaultAppBar(title: '알림'),
+      floatingActionButton: ElevatedButton(
+        onPressed: () async {
+          final repo = ref.read(notificationRepositoryProvider);
+          await repo.sendTestNotification(
+            senderId: 1,
+            senderType: 'MEMBER', // 정확한 ENUM 문자열
+            receiverId: 31,
+            notificationType: 'message', // 정확한 ENUM 문자열
+          );
+        },
+        child: const Text('테스트 알림 보내기'),
+      ),
+      appBar: const DefaultAppBar(title: '알림'),
       body: notificationDataAsync.when(
-        data: (notifications) => _buildNotificationList(
+        data: (notifications) => buildNotificationList(
           context,
-          ref,
           notifications,
           horizontalPadding,
         ),
-        loading: () => _buildLoadingView(),
-        error: (e, stackTrace) => _buildErrorView(e, stackTrace),
+        loading: _buildLoadingView,
+        error: _buildErrorView,
       ),
       bottomNavigationBar: DefaultBottomNavigationBar(
         currentIndex: 0,
@@ -45,75 +84,20 @@ class NotificationPage extends ConsumerWidget with LogMixin {
     );
   }
 
-  /// 알림 목록을 빌드
-  Widget _buildNotificationList(
-    BuildContext context,
-    WidgetRef ref,
-    List<NotificationModel> notifications,
-    double horizontalPadding,
-  ) {
-    final unreadNotifications =
-        notifications.where((notification) => !notification.isRead).toList();
-
-    if (unreadNotifications.isEmpty) {
-      return _buildEmptyView();
-    }
-
-    return ListView(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-      children: [
-        _buildMarkAllAsReadButton(ref),
-        const DefaultDivider(), // 첫 번째 알람 위에 구분선 추가
-        ...unreadNotifications.map(
-          (notification) => NotificationCardWidget(notification: notification),
-        ),
-      ],
-    );
-  }
-
-  /// 빈 알림 상태를 빌드
   Widget _buildEmptyView() {
     return NotificationEmptyViewWidget(
       onSettingsPressed: () {
         logD('알림 설정하러 가기 클릭');
-        // TODO: 알림 설정 화면으로 이동하는 로직 추가
       },
     );
   }
 
-  /// 로딩 상태를 빌드
   Widget _buildLoadingView() {
-    return const Center(
-      child: DefaultCircularProgressIndicator(),
-    );
+    return const Center(child: DefaultCircularProgressIndicator());
   }
 
-  /// 오류 상태를 빌드
   Widget _buildErrorView(Object error, StackTrace? stackTrace) {
-    logE(
-      '알림을 가져오는 데 실패했습니다.',
-      errorObject: error,
-      stackTrace: stackTrace,
-    );
-    return const Center(
-      child: Text('알림을 가져오는 데 실패했습니다.'),
-    );
-  }
-
-  /// '전체 읽음' 버튼을 빌드
-  Widget _buildMarkAllAsReadButton(WidgetRef ref) {
-    return DefaultTextButton(
-      padding: EdgeInsets.symmetric(vertical: 8), // 왼쪽 패딩 제거
-      alignment: Alignment.centerLeft,
-      primary: Palette.colorGrey800,
-      child: Text(
-        '전체 읽음',
-        style: Fonts.body02Regular(Palette.colorGrey800),
-      ),
-      onPressed: () {
-        logD('전체 읽음 클릭!');
-        ref.read(notificationDataNotifierProvider.notifier).markAllAsRead();
-      },
-    );
+    logE('알림을 가져오는 데 실패했습니다.', errorObject: error, stackTrace: stackTrace);
+    return const Center(child: Text('알림을 가져오는 데 실패했습니다.'));
   }
 }
