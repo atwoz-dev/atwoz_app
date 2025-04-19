@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,12 +36,24 @@ class NotificationFCMUsecase {
   Future<void> registerDeviceToken(WidgetRef ref) async {
     final token = await initAndGetToken();
     Log.d('디바이스 토큰: $token');
-    if (token != null) {
-      final repository = ref.read(notificationRepositoryProvider);
-      await repository.registerDeviceToken(token);
-      Log.i("디바이스 토큰 서버 등록 완료");
-    } else {
+    if (token == null) {
       Log.e("FCM 토큰 가져오기 실패 또는 권한 없음");
+      return;
     }
+
+    final localStorage = ref.read(localStorageProvider);
+    final oldToken =
+        await localStorage.getEncrypted('Notification.FCMDeviceToken');
+
+    if (oldToken == token) {
+      Log.i("기존 토큰과 동일하므로 서버 등록 생략");
+      return;
+    }
+
+    final repository = ref.read(notificationRepositoryProvider);
+    await repository.registerDeviceToken(token);
+    Log.i("디바이스 토큰 서버 등록 완료");
+
+    await localStorage.saveEncrypted('Notification.FCMDeviceToken', token);
   }
 }
