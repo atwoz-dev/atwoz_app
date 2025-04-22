@@ -14,7 +14,7 @@ class ProfileManagePhotoArea extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Gap(24),
+          const Gap(24),
           Text(
             "프로필 사진",
             style: Fonts.header03().copyWith(
@@ -22,11 +22,11 @@ class ProfileManagePhotoArea extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Gap(16),
+          const Gap(16),
           GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
@@ -39,10 +39,10 @@ class ProfileManagePhotoArea extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffEDEEF0),
+                        color: const Color(0xffEDEEF0),
                       ),
                       child: index == 0 // TODO: api 연동 시 사진으로 변경
-                          ? DefaultIcon(
+                          ? const DefaultIcon(
                               IconPath.personPlaceholder,
                               size: 150,
                             )
@@ -54,7 +54,7 @@ class ProfileManagePhotoArea extends StatelessWidget {
                         top: 8,
                         left: 8,
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 6,
                             vertical: 2,
                           ),
@@ -81,13 +81,14 @@ class ProfileManagePhotoArea extends StatelessWidget {
                         color: Colors.white,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Color(0xff8D92A0),
+                          color: const Color(0xff8D92A0),
                           width: 1.5,
                         ),
                       ),
                       child: DefaultIcon(
                         IconPath.add,
-                        colorFilter: DefaultIcon.fillColor(Color(0xff8D92A0)),
+                        colorFilter:
+                            DefaultIcon.fillColor(const Color(0xff8D92A0)),
                       ),
                     ),
                   )

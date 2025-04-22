@@ -25,17 +25,23 @@ class _PushNotificationSettingPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DefaultAppBar(
+        appBar: const DefaultAppBar(
           title: "푸쉬알림 설정",
         ),
         body: SafeArea(
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 19,
+                ),
+                decoration: const BoxDecoration(
                     border: Border(
-                  bottom: BorderSide(color: Color(0xffEEEEEE), width: 4),
+                  bottom: BorderSide(
+                    color: Color(0xffEEEEEE),
+                    width: 4,
+                  ),
                 )),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,16 +49,18 @@ class _PushNotificationSettingPageState
                     Text(
                       "앱푸시 알림을 설정하시면\n새로운 메시지, 관심을 받는 즉시 알려드려요",
                       style: Fonts.body02Medium().copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Palette.colorBlack,
-                          height: 1.5),
+                        fontWeight: FontWeight.w400,
+                        color: Palette.colorBlack,
+                        height: 1.5,
+                      ),
                     ),
                     SizedBox(
                       height: 24,
                       child: Switch(
-                        inactiveTrackColor: Color(0xffDEDEDE),
-                        inactiveThumbImage:
-                            AssetImage("assets/icons/inactive_thumb_image.svg"),
+                        inactiveTrackColor: const Color(0xffDEDEDE),
+                        inactiveThumbImage: const AssetImage(
+                          "assets/icons/inactive_thumb_image.svg",
+                        ),
                         value: isSwitched,
                         onChanged: (value) {
                           setState(() {
@@ -69,10 +77,14 @@ class _PushNotificationSettingPageState
                 itemCount: notifications.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 19),
+                    decoration: const BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Color(0xffE1E1E1), width: 1),
+                        bottom: BorderSide(
+                          color: Color(0xffE1E1E1),
+                          width: 1,
+                        ),
                       ),
                     ),
                     child: Row(
@@ -81,15 +93,17 @@ class _PushNotificationSettingPageState
                         Text(
                           notifications[index],
                           style: Fonts.body02Medium().copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: Palette.colorBlack),
+                            fontWeight: FontWeight.w500,
+                            color: Palette.colorBlack,
+                          ),
                         ),
                         SizedBox(
                           height: 24,
                           child: Switch(
-                            inactiveTrackColor: Color(0xffDEDEDE),
-                            inactiveThumbImage: AssetImage(
-                                "assets/icons/inactive_thumb_image.svg"),
+                            inactiveTrackColor: const Color(0xffDEDEDE),
+                            inactiveThumbImage: const AssetImage(
+                              "assets/icons/inactive_thumb_image.svg",
+                            ),
                             value: isSwitched,
                             onChanged: (value) {
                               setState(() {

@@ -4,7 +4,7 @@ import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 final TextStyle _defaultHintStyle =
-    Fonts.body02Medium().copyWith(color: Color(0xffB4B8C0));
+    Fonts.body02Medium().copyWith(color: const Color(0xffB4B8C0));
 
 final TextStyle _blackHintStyle =
     Fonts.body02Medium().copyWith(color: Palette.colorBlack);

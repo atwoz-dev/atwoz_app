@@ -1,23 +1,11 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/my/presentation/controller/controller.dart';
+import 'package:atwoz_app/features/my/presentation/enum/enum.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
-const List<String> _featureNames = [
-  '푸쉬알림 설정',
-  '계정 설정',
-  '버전정보',
-  '연락처 설정',
-  '개인정보 취급방침',
-  '이용약관',
-  'FAQ',
-];
-
-Future<String> _getAppVersion() async {
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  return packageInfo.version;
-}
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MySettingPage extends StatelessWidget {
   const MySettingPage({super.key});
@@ -25,32 +13,63 @@ class MySettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "설정",
       ),
       body: ListView.builder(
-        itemCount: _featureNames.length,
+        itemCount: MySettingTypeEnum.values.length,
         itemBuilder: (context, index) {
-          return _MySettingListItem(title: _featureNames[index]);
+          final type = MySettingTypeEnum.values[index];
+          return _MySettingListItem(
+            title: mySettingTypeMap[type]!,
+            onTapMove: () {
+              switch (type) {
+                case MySettingTypeEnum.pushNotification:
+                  navigate(context, route: AppRoute.pushNotificationSetting);
+                case MySettingTypeEnum.accountSetting:
+                  navigate(context, route: AppRoute.accountSetting);
+                case MySettingTypeEnum.versionInfo:
+                  break;
+                case MySettingTypeEnum.contactSetting:
+                  navigate(context, route: AppRoute.contactSetting);
+                case MySettingTypeEnum.privacyPolicy:
+                  navigate(context, route: AppRoute.privacyPolicy);
+                case MySettingTypeEnum.useTerms:
+                  navigate(context, route: AppRoute.termsOfUse);
+                case MySettingTypeEnum.faq:
+                  break;
+              }
+            },
+          );
         },
       ),
     );
   }
 }
 
-class _MySettingListItem extends StatelessWidget {
+class _MySettingListItem extends ConsumerWidget {
   final String title;
+  final VoidCallback onTapMove;
   const _MySettingListItem({
     required this.title,
+    required this.onTapMove,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mySettingAsync = ref.watch(mySettingNotifierProvider);
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 19,
+      ),
+      decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Color(0xffE1E1E1), width: 1),
+          bottom: BorderSide(
+            color: Color(0xffE1E1E1),
+            width: 1,
+          ),
         ),
       ),
       child: Row(
@@ -63,41 +82,22 @@ class _MySettingListItem extends StatelessWidget {
               color: Palette.colorBlack,
             ),
           ),
-          _ListIcon(
-            title: title,
-          )
+          if (title == mySettingTypeMap[MySettingTypeEnum.versionInfo])
+            mySettingAsync.when(
+              data: (data) => Text("V$data"),
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stackTrace) => const Text("버전 정보 없음"),
+            )
+          else
+            GestureDetector(
+              onTap: onTapMove,
+              child: const DefaultIcon(
+                IconPath.chevronRight2,
+                size: 24,
+              ),
+            ),
         ],
       ),
     );
-  }
-}
-
-class _ListIcon extends StatelessWidget {
-  final String title;
-  const _ListIcon({
-    required this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (title != _featureNames[2]) {
-      return DefaultIcon(
-        IconPath.chevronRight2,
-        size: 24,
-      );
-    } else {
-      return FutureBuilder(
-        //TODO: 추후 riverpod 사용 시 수정
-        future: _getAppVersion(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return Text("버전 정보 없음");
-          }
-          return Text("V${snapshot.data!}");
-        },
-      );
-    }
   }
 }

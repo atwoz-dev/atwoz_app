@@ -39,11 +39,11 @@ class ProfileUpdatePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Gap(32),
-              ProfileUpdateInfoSelector(),
-              Spacer(),
+              const Gap(32),
+              const ProfileUpdateInfoSelector(),
+              const Spacer(),
               DefaultElevatedButton(
-                child: Text('저장'),
+                child: const Text('저장'),
                 onPressed: () {
                   //TODO: 수정된 프로필 저장 로직 구현
                 },

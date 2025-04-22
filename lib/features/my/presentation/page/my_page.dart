@@ -1,26 +1,10 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/my/presentation/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-const List<String> _featureNames = [
-  '프로필 관리',
-  '이상형 설정',
-  '지인차단',
-  '스토어',
-  '고객센터',
-  '설정'
-];
-
-const List<String> _iconPaths = [
-  IconPath.myProfile,
-  IconPath.idealSetting,
-  IconPath.blockFriend,
-  IconPath.store,
-  IconPath.customerCenter,
-  IconPath.setting
-];
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -28,17 +12,39 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "마이페이지",
       ),
       body: ListView.builder(
           itemBuilder: (context, index) {
+            final type = MyPageTypeEnum.values[index];
             return _MyPageListItem(
-              title: _featureNames[index],
-              iconPath: _iconPaths[index],
+              title: myPageTypeMap[type]!,
+              iconPath: myPageIconMap[type]!,
+              onTapMove: () {
+                switch (type) {
+                  case MyPageTypeEnum.profileManage:
+                    navigate(context, route: AppRoute.profileManage);
+                    break;
+                  case MyPageTypeEnum.idealSetting:
+                    navigate(context, route: AppRoute.idealSetting);
+                    break;
+                  case MyPageTypeEnum.friendBlock:
+                    navigate(context, route: AppRoute.blockFriend);
+                    break;
+                  case MyPageTypeEnum.store:
+                    navigate(context, route: AppRoute.store);
+                    break;
+                  case MyPageTypeEnum.serviceCenter:
+                    break;
+                  case MyPageTypeEnum.setting:
+                    navigate(context, route: AppRoute.setting);
+                    break;
+                }
+              },
             );
           },
-          itemCount: _featureNames.length),
+          itemCount: MyPageTypeEnum.values.length),
     );
   }
 }
@@ -46,15 +52,17 @@ class MyPage extends StatelessWidget {
 class _MyPageListItem extends StatelessWidget {
   final String title;
   final String iconPath;
+  final VoidCallback onTapMove;
   const _MyPageListItem({
     required this.title,
     required this.iconPath,
+    required this.onTapMove,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
         children: [
           Expanded(
@@ -64,7 +72,7 @@ class _MyPageListItem extends StatelessWidget {
                   iconPath,
                   size: 24,
                 ),
-                Gap(8),
+                const Gap(8),
                 Text(
                   title,
                   style: Fonts.body02Medium().copyWith(
@@ -76,9 +84,12 @@ class _MyPageListItem extends StatelessWidget {
               ],
             ),
           ),
-          DefaultIcon(
-            IconPath.chevronRight,
-            size: 24,
+          GestureDetector(
+            onTap: onTapMove,
+            child: const DefaultIcon(
+              IconPath.chevronRight,
+              size: 24,
+            ),
           )
         ],
       ),

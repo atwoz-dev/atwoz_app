@@ -23,8 +23,11 @@ class ProfileManageInfoArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.5, vertical: 24),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.5,
+        vertical: 24,
+      ),
+      decoration: const BoxDecoration(
         color: Palette.colorGrey50,
       ),
       child: Column(
@@ -36,7 +39,7 @@ class ProfileManageInfoArea extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Gap(16),
+          const Gap(16),
           Column(
             children: _profiles.map((profile) {
               return Column(
@@ -44,23 +47,26 @@ class ProfileManageInfoArea extends StatelessWidget {
                   buildLabeledRow(
                       label: profile,
                       child: GestureDetector(
-                        onTap: () =>
-                            navigate(context, route: AppRoute.profileUpdate),
+                        onTap: () => navigate(
+                          context,
+                          route: AppRoute.profileUpdate,
+                        ),
                         child: DefaultTextFormField(
                           hintText: profile, //TODO: 추후 프로필 정보로 수정
-                          hintStyle: Fonts.body02Medium()
-                              .copyWith(color: Palette.colorBlack),
+                          hintStyle: Fonts.body02Medium().copyWith(
+                            color: Palette.colorBlack,
+                          ),
                           fillColor: Palette.colorGrey100,
                           readOnly: true,
                         ),
                       ),
                       context: context),
-                  Gap(16),
+                  const Gap(16),
                 ],
               );
             }).toList(),
           ),
-          Gap(32),
+          const Gap(32),
           DefaultElevatedButton(
             child: Text(
               "프로필 미리보기",
@@ -71,7 +77,7 @@ class ProfileManageInfoArea extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          ProfileManageBasicInfoArea()
+          const ProfileManageBasicInfoArea()
         ],
       ),
     );

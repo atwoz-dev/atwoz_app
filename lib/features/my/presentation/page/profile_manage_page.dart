@@ -10,7 +10,7 @@ class ProfileManagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Scaffold(
+      child: const Scaffold(
         backgroundColor: Palette.colorGrey50,
         appBar: DefaultAppBar(
           title: "프로필 관리",

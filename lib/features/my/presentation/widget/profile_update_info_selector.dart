@@ -24,9 +24,9 @@ class ProfileUpdateInfoSelector extends StatelessWidget {
       '흡연여부': _ButtonTypeSelector(options: smokingMap.values.toList()),
       '음주빈도': _ButtonTypeSelector(options: drinkingMap.values.toList()),
       '종교': _ButtonTypeSelector(options: religionMap.values.toList()),
-      'MBTI': _GroupTypeSelector(),
+      'MBTI': const _GroupTypeSelector(),
       '취미': _ButtonTypeSelector(options: hobbies),
-      '닉네임': _InputTypeSelector()
+      '닉네임': const _InputTypeSelector()
     };
 
     return Column(
@@ -36,7 +36,7 @@ class ProfileUpdateInfoSelector extends StatelessWidget {
           "직업이 어떻게 되세요?", // TODO: UI 확인용 하드코딩. 추후 변경
           style: Fonts.header03().copyWith(fontWeight: FontWeight.w700),
         ),
-        Gap(24),
+        const Gap(24),
         infoValues['MBTI']!, // TODO: UI 확인용 하드코딩. 추후 변경
       ],
     );
@@ -53,9 +53,10 @@ class _ButtonTypeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleSelectListChip(
-        options: options,
-        selectedOption: options[0], //TODO: 추후 수정
-        onSelectionChanged: (value) {});
+      options: options,
+      selectedOption: options[0], //TODO: 추후 수정
+      onSelectionChanged: (value) {},
+    );
   }
 }
 
@@ -68,17 +69,19 @@ class _InputTypeSelector extends StatelessWidget {
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
         hintText: "진저", //TODO: 추후 프로필 정보로 변경
-        hintStyle: Fonts.body02Medium()
-            .copyWith(fontWeight: FontWeight.w400, color: Color(0xff8D92A0)),
+        hintStyle: Fonts.body02Medium().copyWith(
+          fontWeight: FontWeight.w400,
+          color: const Color(0xff8D92A0),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Color(0xffEDEEF0),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Palette.colorBlack,
           ),
         ),
@@ -109,12 +112,13 @@ class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          childAspectRatio: 1),
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        childAspectRatio: 1,
+      ),
       itemCount: _mbtiLetters.length,
       itemBuilder: (context, index) {
         return GestureDetector(
@@ -142,7 +146,10 @@ class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
                 _selectedMbti.contains(_mbtiLetters[index])
                     ? context.palette.primary
                     : Palette.colorGrey200,
-              ).copyWith(fontWeight: FontWeight.bold, fontSize: 30.sp),
+              ).copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 30.sp,
+              ),
             ),
           ),
         );
