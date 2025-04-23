@@ -1,7 +1,10 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 final TextStyle _defaultHintStyle =
     Fonts.body02Medium().copyWith(color: const Color(0xffB4B8C0));
@@ -9,9 +12,26 @@ final TextStyle _defaultHintStyle =
 final TextStyle _blackHintStyle =
     Fonts.body02Medium().copyWith(color: Palette.colorBlack);
 
+String _getDisplayValue(MyBasicInfoTypeEnum type, MyProfile profile) {
+  switch (type) {
+    case MyBasicInfoTypeEnum.nickname:
+      return profile.nickname;
+    case MyBasicInfoTypeEnum.age:
+      return profile.age.toString();
+    case MyBasicInfoTypeEnum.height:
+      return "${profile.height}cm";
+    case MyBasicInfoTypeEnum.gender:
+      return profile.gender == GenderEnum.male ? '남자' : '여자';
+    case MyBasicInfoTypeEnum.phoneNum:
+      return profile.phoneNum;
+  }
+}
+
 class ProfileManageBasicInfoArea extends StatelessWidget {
+  final MyProfile profile;
   const ProfileManageBasicInfoArea({
     super.key,
+    required this.profile,
   });
 
   @override
@@ -28,61 +48,36 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          buildLabeledRow(
-            label: "닉네임",
-            child: GestureDetector(
-              onTap: () => navigate(context, route: AppRoute.profileUpdate),
-              child: DefaultTextFormField(
-                fillColor: Palette.colorGrey100,
-                readOnly: true,
-                hintText: "닉네임", //TODO: 추후 프로필 정보로 변경
-                hintStyle: _blackHintStyle,
-              ),
-            ),
-            context: context,
-          ),
-          buildLabeledRow(
-            label: "나이",
-            child: DefaultTextFormField(
-              fillColor: Palette.colorGrey100,
-              readOnly: true,
-              hintText: "34", //TODO: 추후 프로필 정보로 변경
-              hintStyle: _defaultHintStyle,
-            ),
-            context: context,
-          ),
-          buildLabeledRow(
-            label: "키",
-            child: DefaultTextFormField(
-              fillColor: Palette.colorGrey100,
-              readOnly: true,
-              hintText: "172cm", //TODO: 추후 프로필 정보로 변경
-              hintStyle: _defaultHintStyle,
-            ),
-            context: context,
-          ),
-          buildLabeledRow(
-            label: "성별",
-            child: DefaultTextFormField(
-              fillColor: Palette.colorGrey100,
-              readOnly: true,
-              hintText: "남자", //TODO: 추후 프로필 정보로 변경
-              hintStyle: _defaultHintStyle,
-            ),
-            context: context,
-          ),
-          buildLabeledRow(
-            label: "연락처",
-            child: GestureDetector(
-              onTap: () => navigate(context, route: AppRoute.contactSetting),
-              child: DefaultTextFormField(
-                fillColor: Palette.colorGrey100,
-                readOnly: true,
-                hintText: "010-1234-5678", //TODO: 추후 프로필 정보로 변경
-                hintStyle: _blackHintStyle,
-              ),
-            ),
-            context: context,
+          Column(
+            children: myBasicInfoTypeMap.values
+                .toList()
+                .map((label) => Column(
+                      children: [
+                        buildLabeledRow(
+                          label: label,
+                          child: DefaultTextFormField(
+                            fillColor: Palette.colorGrey100,
+                            readOnly: true,
+                            hintText: _getDisplayValue(
+                                myBasicInfoTypeMap.entries
+                                    .firstWhere((entry) => entry.value == label)
+                                    .key,
+                                profile),
+                            hintStyle: label ==
+                                        myBasicInfoTypeMap[
+                                            MyBasicInfoTypeEnum.nickname] ||
+                                    label ==
+                                        myBasicInfoTypeMap[
+                                            MyBasicInfoTypeEnum.phoneNum]
+                                ? _blackHintStyle
+                                : _defaultHintStyle,
+                          ),
+                          context: context,
+                        ),
+                        const Gap(24)
+                      ],
+                    ))
+                .toList(),
           ),
         ],
       ),

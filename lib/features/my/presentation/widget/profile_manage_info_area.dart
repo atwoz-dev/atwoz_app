@@ -2,26 +2,43 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
+import 'package:atwoz_app/features/my/my.dart';
+import 'package:atwoz_app/features/my/presentation/controller/profile_manage_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-const List<String> _profiles = [
-  "직업",
-  "지역",
-  "학력",
-  "흡연여부",
-  "음주빈도",
-  "종교",
-  "MBTI",
-  "취미",
-];
+import '../../../../app/constants/enum.dart';
+import '../../domain/model/my_profile.dart';
 
-class ProfileManageInfoArea extends StatelessWidget {
+String _getDisplayValue(MyProfileInfoTypeEnum type, MyProfile profile) {
+  switch (type) {
+    case MyProfileInfoTypeEnum.job:
+      return profile.job;
+    case MyProfileInfoTypeEnum.region:
+      return profile.region;
+    case MyProfileInfoTypeEnum.education:
+      return profile.education;
+    case MyProfileInfoTypeEnum.smokingStatus:
+      return smokingMap[profile.smokingStatus] ?? '';
+    case MyProfileInfoTypeEnum.drinkingStatus:
+      return drinkingMap[profile.drinkingStatus] ?? '';
+    case MyProfileInfoTypeEnum.religion:
+      return religionMap[profile.religion] ?? '';
+    case MyProfileInfoTypeEnum.mbti:
+      return profile.mbti;
+    case MyProfileInfoTypeEnum.hobbies:
+      return profile.hobbies.join(', ');
+  }
+}
+
+class ProfileManageInfoArea extends ConsumerWidget {
   const ProfileManageInfoArea({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(profileManageNotifierProvider);
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.5,
@@ -41,32 +58,39 @@ class ProfileManageInfoArea extends StatelessWidget {
           ),
           const Gap(16),
           Column(
-            children: _profiles.map((profile) {
-              return Column(
-                children: [
-                  buildLabeledRow(
-                      label: profile,
-                      child: GestureDetector(
-                        onTap: () => navigate(
-                          context,
-                          route: AppRoute.profileUpdate,
-                        ),
-                        child: DefaultTextFormField(
-                          hintText: profile, //TODO: 추후 프로필 정보로 수정
-                          hintStyle: Fonts.body02Medium().copyWith(
-                            color: Palette.colorBlack,
+            children: myProfileInfoTypeMap.values
+                .toList()
+                .map(
+                  (label) => Column(
+                    children: [
+                      buildLabeledRow(
+                          label: label,
+                          child: GestureDetector(
+                            onTap: () => navigate(
+                              context,
+                              route: AppRoute.profileUpdate,
+                            ),
+                            child: DefaultTextFormField(
+                              hintText: _getDisplayValue(
+                                  myProfileInfoTypeMap.entries
+                                      .firstWhere((e) => e.value == label)
+                                      .key,
+                                  profile), //TODO: 추후 프로필 정보로 수정
+                              hintStyle: Fonts.body02Medium().copyWith(
+                                color: Palette.colorBlack,
+                              ),
+                              fillColor: Palette.colorGrey100,
+                              readOnly: true,
+                            ),
                           ),
-                          fillColor: Palette.colorGrey100,
-                          readOnly: true,
-                        ),
-                      ),
-                      context: context),
-                  const Gap(16),
-                ],
-              );
-            }).toList(),
+                          context: context),
+                      const Gap(24),
+                    ],
+                  ),
+                )
+                .toList(),
           ),
-          const Gap(32),
+          const Gap(8),
           DefaultElevatedButton(
             child: Text(
               "프로필 미리보기",
@@ -77,7 +101,10 @@ class ProfileManageInfoArea extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          const ProfileManageBasicInfoArea()
+          ProfileManageBasicInfoArea(
+            profile: profile,
+          ),
+          const Gap(24),
         ],
       ),
     );
