@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/my/my.dart';
 
 sealed class RouteArguments {
   const RouteArguments();
@@ -28,4 +29,12 @@ class UserByCategoryArguments extends RouteArguments {
   });
 
   final IntroducedCategory category;
+}
+
+class MyProfileUpdateArguments extends RouteArguments {
+  const MyProfileUpdateArguments({
+    required this.profileType,
+  });
+
+  final MyProfileInfoTypeEnum profileType;
 }

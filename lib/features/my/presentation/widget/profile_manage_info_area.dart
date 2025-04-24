@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
@@ -37,7 +38,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileManageNotifierProvider);
+    final profileManageState = ref.watch(profileManageNotifierProvider);
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -66,16 +67,19 @@ class ProfileManageInfoArea extends ConsumerWidget {
                       buildLabeledRow(
                           label: label,
                           child: GestureDetector(
-                            onTap: () => navigate(
-                              context,
-                              route: AppRoute.profileUpdate,
-                            ),
+                            onTap: () => navigate(context,
+                                route: AppRoute.profileUpdate,
+                                extra: MyProfileUpdateArguments(
+                                    profileType: myProfileInfoTypeMap.entries
+                                        .firstWhere((e) => e.value == label)
+                                        .key)),
                             child: DefaultTextFormField(
                               hintText: _getDisplayValue(
                                   myProfileInfoTypeMap.entries
                                       .firstWhere((e) => e.value == label)
                                       .key,
-                                  profile), //TODO: 추후 프로필 정보로 수정
+                                  profileManageState
+                                      .profile), //TODO: 추후 프로필 정보로 수정
                               hintStyle: Fonts.body02Medium().copyWith(
                                 color: Palette.colorBlack,
                               ),
@@ -102,7 +106,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
             onPressed: () {},
           ),
           ProfileManageBasicInfoArea(
-            profile: profile,
+            profile: profileManageState.profile,
           ),
           const Gap(24),
         ],

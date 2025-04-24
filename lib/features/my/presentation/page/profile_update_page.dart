@@ -1,16 +1,35 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/view/view.dart';
-import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/features/my/presentation/controller/profile_manage_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class ProfileUpdatePage extends StatelessWidget {
-  const ProfileUpdatePage({super.key});
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/button.dart';
+import 'package:atwoz_app/app/widget/view/view.dart';
+import 'package:atwoz_app/features/my/presentation/enum/enum.dart';
+import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../domain/model/my_profile.dart';
+
+class ProfileUpdatePage extends ConsumerWidget {
+  final MyProfileInfoTypeEnum profileType;
+
+  const ProfileUpdatePage({
+    super.key,
+    required this.profileType,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileManageState = ref.read(profileManageNotifierProvider);
+    final profileManageNotifier =
+        ref.read(profileManageNotifierProvider.notifier);
+    MyProfile tempProfile = profileManageState.profile;
+
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
@@ -40,12 +59,27 @@ class ProfileUpdatePage extends StatelessWidget {
           child: Column(
             children: [
               const Gap(32),
-              const ProfileUpdateInfoSelector(),
-              const Spacer(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProfileUpdateInfoSelector(
+                        profileType: profileType,
+                        profile: tempProfile,
+                        onProfileUpdated: (selectedValue) {
+                          tempProfile = selectedValue;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               DefaultElevatedButton(
                 child: const Text('저장'),
                 onPressed: () {
-                  //TODO: 수정된 프로필 저장 로직 구현
+                  profileManageNotifier.updateProfile(tempProfile).then((_) {
+                    if (context.mounted) pop(context);
+                  });
                 },
               )
             ],

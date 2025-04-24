@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../app/constants/enum.dart';
 
 part 'my_profile.freezed.dart';
-part 'my_profile.g.dart';
 
 @freezed
 class MyProfile with _$MyProfile {
@@ -23,7 +22,4 @@ class MyProfile with _$MyProfile {
     required GenderEnum gender,
     required String phoneNum,
   }) = _MyProfile;
-
-  factory MyProfile.fromJson(Map<String, dynamic> json) =>
-      _$MyProfileFromJson(json);
 }

@@ -271,7 +271,14 @@ class MyBranch {
         ),
         GoRoute(
           path: 'manage-profile/update-profile',
-          builder: (context, state) => const ProfileUpdatePage(),
+          builder: (context, state) {
+            final args = state.extra;
+            if (args is! MyProfileUpdateArguments)
+              return const SizedBox.shrink();
+            return ProfileUpdatePage(
+              profileType: args.profileType,
+            );
+          },
         ),
         GoRoute(
           path: 'ideal-setting',

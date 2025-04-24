@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
+import 'package:atwoz_app/features/my/presentation/controller/profile_manage_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_manage_notifier.g.dart';
@@ -7,10 +8,11 @@ part 'profile_manage_notifier.g.dart';
 @riverpod
 class ProfileManageNotifier extends _$ProfileManageNotifier {
   @override
-  MyProfile build() {
-    return const MyProfile(
+  ProfileManageState build() {
+    return const ProfileManageState(
+        profile: MyProfile(
       profileImages: [],
-      job: '벡엔드 개발자',
+      job: '연구개발/엔지니어',
       region: '서울시 강남구',
       education: '서울 4년제',
       smokingStatus: SmokingStatusEnum.none,
@@ -23,6 +25,10 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
       height: 172,
       gender: GenderEnum.male,
       phoneNum: '010-1234-5678',
-    );
+    ));
+  }
+
+  Future<void> updateProfile(MyProfile profile) async {
+    state = state.copyWith(profile: profile);
   }
 }
