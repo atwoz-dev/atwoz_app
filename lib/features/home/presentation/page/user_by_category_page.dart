@@ -14,7 +14,7 @@ class UserByCategoryPage extends ConsumerStatefulWidget {
 }
 
 class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
-  late List<bool> _blurredList;
+  //late List<bool> _blurredList;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,8 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
       appBar: DefaultAppBar(title: widget.category),
       body: introducedProfilesAsync.when(
         data: (profiles) {
-          _blurredList = profiles.map((e) => !e.isIntroduced).toList();
+          List<bool> blurredList =
+              profiles.map((e) => !e.isIntroduced).toList();
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: ListView.separated(
@@ -35,17 +36,17 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
               separatorBuilder: (context, index) => const Gap(8),
               itemBuilder: (context, index) {
                 return UserByCategoryListItem(
-                  isBlurred: _blurredList[index],
+                  isBlurred: blurredList[index],
                   onTap: () async {
                     // true면 소개받지 않은 프로필
-                    if (_blurredList[index]) {
-                      final result = await showDialog<bool>(
+                    if (blurredList[index]) {
+                      final pressed = await showDialog<bool>(
                         context: context,
                         builder: (context) => const UnlockWithHeartDialog(),
                       );
 
                       // 하트 소모 다이얼로그에서 확인을 누른 경우
-                      if (result == true) {
+                      if (pressed!) {
                         final selectedId = profiles[index].id;
                         introducedProfilesNotifier.openProfile(selectedId);
                       }

@@ -33,9 +33,8 @@ class UserByCategoryListItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 54,
-                  width: 54,
+                SizedBox.square(
+                  dimension: 54,
                   child: CircleAvatar(
                     backgroundImage: NetworkImage(profile.imageUrl),
                     radius: 50,

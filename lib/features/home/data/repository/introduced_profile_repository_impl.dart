@@ -4,7 +4,8 @@ import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/domain/repository/introduced_profile_repository.dart';
 
 class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
-  final mockData = '''
+  // TODO: api 연동 후 제거
+  final _mockData = '''
   [
     {
       "id": 1,
@@ -147,7 +148,7 @@ class IntroducedProfileRepositoryImpl implements IntroducedProfileRepository {
   /// TODO: api 연동 후 제거
   @override
   Future<List<IntroducedProfile>> getProfiles(String category) async {
-    final List response = jsonDecode(mockData);
+    final List response = jsonDecode(_mockData);
     final decodedResp = response.map((e) => e as Map<String, dynamic>).toList();
     return decodedResp
         .where((e) => e['category'] == category)

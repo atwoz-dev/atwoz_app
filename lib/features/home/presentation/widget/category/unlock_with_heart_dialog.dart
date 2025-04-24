@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class UnlockWithHeartDialog extends StatelessWidget {
   const UnlockWithHeartDialog({
@@ -45,9 +46,7 @@ class UnlockWithHeartDialog extends StatelessWidget {
                 children: [
                   Expanded(
                     child: DefaultElevatedButton(
-                      onPressed: () {
-                        pop(context);
-                      },
+                      onPressed: context.pop,
                       primary: Colors.white,
                       border: const BorderSide(
                         color: Color(0xffE1E1E1),
@@ -71,7 +70,10 @@ class UnlockWithHeartDialog extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const DefaultIcon(IconPath.homeHeart, size: 16),
+                          const DefaultIcon(
+                            IconPath.homeHeart,
+                            size: 16,
+                          ),
                           const Gap(4),
                           Text(
                             "8",

@@ -1,7 +1,7 @@
 import 'package:atwoz_app/features/home/domain/domain.dart';
 
 class RecommendedProfileRepositoryImpl implements RecommendedProfileRepository {
-  final List<Map<String, dynamic>> sampleData = [
+  final List<Map<String, dynamic>> _mockData = [
     // 샘플 데이터 제작
     // TODO: 추후 api 연동 시 제거
     {
@@ -23,6 +23,6 @@ class RecommendedProfileRepositoryImpl implements RecommendedProfileRepository {
 
   @override
   Future<List<RecommendedProfile>> getProfiles() async {
-    return sampleData.map((e) => RecommendedProfile.fromJson(e)).toList();
+    return _mockData.map((e) => RecommendedProfile.fromJson(e)).toList();
   }
 }

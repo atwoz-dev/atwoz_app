@@ -128,12 +128,9 @@ class HomeBranch {
       path: AppRoute.userByCategory.path,
       builder: (context, state) {
         final args = state.extra;
-        if (args is! UserByCategoryArguments ||
-            introducedCategoryMap[args.category] == null)
-          return const SizedBox.shrink();
+        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
 
-        return UserByCategoryPage(
-            category: introducedCategoryMap[args.category]!);
+        return UserByCategoryPage(category: args.category.label);
       },
     ),
     GoRoute(

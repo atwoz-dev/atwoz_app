@@ -51,10 +51,6 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                  ).copyWith(
-                    backgroundColor: WidgetStateProperty.all(
-                      Palette.colorBlack,
-                    ),
                   ),
                   onPressed: () => onTapButton(label),
                   child: Text(

@@ -41,14 +41,11 @@ class _HomePageState extends State<HomePage> {
               HomeCategoryButtonsArea(
                 // 카테고리 버튼 영역
                 onTapButton: (category) {
-                  final categoryEnum = introducedCategoryMap.entries
-                      .firstWhere((entry) => entry.value == category)
-                      .key;
-
                   navigate(
                     context,
                     route: AppRoute.userByCategory,
-                    extra: UserByCategoryArguments(category: categoryEnum),
+                    extra: UserByCategoryArguments(
+                        category: IntroducedCategory.parse(category)),
                   );
                 },
               )

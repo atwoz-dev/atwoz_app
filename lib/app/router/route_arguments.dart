@@ -27,5 +27,5 @@ class UserByCategoryArguments extends RouteArguments {
     required this.category,
   });
 
-  final IntroducedCategoryEnum category;
+  final IntroducedCategory category;
 }
