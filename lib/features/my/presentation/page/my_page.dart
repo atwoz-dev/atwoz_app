@@ -15,36 +15,37 @@ class MyPage extends StatelessWidget {
       appBar: const DefaultAppBar(
         title: "마이페이지",
       ),
-      body: ListView.builder(
-          itemBuilder: (context, index) {
-            final type = MyPageTypeEnum.values[index];
+      body: Column(
+        children: MyPageType.values.map(
+          (type) {
             return _MyPageListItem(
-              title: myPageTypeMap[type]!,
-              iconPath: myPageIconMap[type]!,
+              title: type.label,
+              iconPath: MyPageType.iconPath[type] ?? '',
               onTapMove: () {
                 switch (type) {
-                  case MyPageTypeEnum.profileManage:
+                  case MyPageType.profileManage:
                     navigate(context, route: AppRoute.profileManage);
                     break;
-                  case MyPageTypeEnum.idealSetting:
+                  case MyPageType.idealSetting:
                     navigate(context, route: AppRoute.idealSetting);
                     break;
-                  case MyPageTypeEnum.friendBlock:
+                  case MyPageType.friendBlock:
                     navigate(context, route: AppRoute.blockFriend);
                     break;
-                  case MyPageTypeEnum.store:
+                  case MyPageType.store:
                     navigate(context, route: AppRoute.store);
                     break;
-                  case MyPageTypeEnum.serviceCenter:
+                  case MyPageType.serviceCenter:
                     break;
-                  case MyPageTypeEnum.setting:
+                  case MyPageType.setting:
                     navigate(context, route: AppRoute.setting);
                     break;
                 }
               },
             );
           },
-          itemCount: MyPageTypeEnum.values.length),
+        ).toList(),
+      ),
     );
   }
 }

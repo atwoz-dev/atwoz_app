@@ -16,32 +16,37 @@ class MySettingPage extends StatelessWidget {
       appBar: const DefaultAppBar(
         title: "설정",
       ),
-      body: ListView.builder(
-        itemCount: MySettingTypeEnum.values.length,
-        itemBuilder: (context, index) {
-          final type = MySettingTypeEnum.values[index];
-          return _MySettingListItem(
-            title: mySettingTypeMap[type]!,
-            onTapMove: () {
-              switch (type) {
-                case MySettingTypeEnum.pushNotification:
-                  navigate(context, route: AppRoute.pushNotificationSetting);
-                case MySettingTypeEnum.accountSetting:
-                  navigate(context, route: AppRoute.accountSetting);
-                case MySettingTypeEnum.versionInfo:
-                  break;
-                case MySettingTypeEnum.contactSetting:
-                  navigate(context, route: AppRoute.contactSetting);
-                case MySettingTypeEnum.privacyPolicy:
-                  navigate(context, route: AppRoute.privacyPolicy);
-                case MySettingTypeEnum.useTerms:
-                  navigate(context, route: AppRoute.termsOfUse);
-                case MySettingTypeEnum.faq:
-                  break;
-              }
-            },
-          );
-        },
+      body: Column(
+        children: MySettingType.values.map(
+          (type) {
+            return _MySettingListItem(
+              title: type.label,
+              onTapMove: () {
+                switch (type) {
+                  case MySettingType.pushNotification:
+                    navigate(context, route: AppRoute.pushNotificationSetting);
+                    break;
+                  case MySettingType.accountSetting:
+                    navigate(context, route: AppRoute.accountSetting);
+                    break;
+                  case MySettingType.versionInfo:
+                    break;
+                  case MySettingType.contactSetting:
+                    navigate(context, route: AppRoute.contactSetting);
+                    break;
+                  case MySettingType.privacyPolicy:
+                    navigate(context, route: AppRoute.privacyPolicy);
+                    break;
+                  case MySettingType.useTerms:
+                    navigate(context, route: AppRoute.termsOfUse);
+                    break;
+                  case MySettingType.faq:
+                    break;
+                }
+              },
+            );
+          },
+        ).toList(),
       ),
     );
   }
@@ -82,7 +87,7 @@ class _MySettingListItem extends ConsumerWidget {
               color: Palette.colorBlack,
             ),
           ),
-          if (title == mySettingTypeMap[MySettingTypeEnum.versionInfo])
+          if (MySettingType.versionInfo.label == title)
             mySettingAsync.when(
               data: (data) => Text("V$data"),
               loading: () => const CircularProgressIndicator(),

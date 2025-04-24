@@ -12,17 +12,17 @@ final TextStyle _defaultHintStyle =
 final TextStyle _blackHintStyle =
     Fonts.body02Medium().copyWith(color: Palette.colorBlack);
 
-String _getDisplayValue(MyBasicInfoTypeEnum type, MyProfile profile) {
+String _getDisplayValue(MyBasicInfoType type, MyProfile profile) {
   switch (type) {
-    case MyBasicInfoTypeEnum.nickname:
+    case MyBasicInfoType.nickname:
       return profile.nickname;
-    case MyBasicInfoTypeEnum.age:
+    case MyBasicInfoType.age:
       return profile.age.toString();
-    case MyBasicInfoTypeEnum.height:
+    case MyBasicInfoType.height:
       return "${profile.height}cm";
-    case MyBasicInfoTypeEnum.gender:
+    case MyBasicInfoType.gender:
       return profile.gender == GenderEnum.male ? '남자' : '여자';
-    case MyBasicInfoTypeEnum.phoneNum:
+    case MyBasicInfoType.phoneNum:
       return profile.phoneNum;
   }
 }
@@ -49,26 +49,19 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
             ),
           ),
           Column(
-            children: myBasicInfoTypeMap.values
+            children: MyBasicInfoType.values
                 .toList()
-                .map((label) => Column(
+                .map((type) => Column(
                       children: [
                         buildLabeledRow(
-                          label: label,
+                          label: type.label,
                           child: DefaultTextFormField(
                             fillColor: Palette.colorGrey100,
                             readOnly: true,
                             hintText: _getDisplayValue(
-                                myBasicInfoTypeMap.entries
-                                    .firstWhere((entry) => entry.value == label)
-                                    .key,
-                                profile),
-                            hintStyle: label ==
-                                        myBasicInfoTypeMap[
-                                            MyBasicInfoTypeEnum.nickname] ||
-                                    label ==
-                                        myBasicInfoTypeMap[
-                                            MyBasicInfoTypeEnum.phoneNum]
+                                MyBasicInfoType.parse(type.label), profile),
+                            hintStyle: type == MyBasicInfoType.nickname ||
+                                    type == MyBasicInfoType.phoneNum
                                 ? _blackHintStyle
                                 : _defaultHintStyle,
                           ),

@@ -12,23 +12,23 @@ import 'package:gap/gap.dart';
 import '../../../../app/constants/enum.dart';
 import '../../domain/model/my_profile.dart';
 
-String _getDisplayValue(MyProfileInfoTypeEnum type, MyProfile profile) {
+String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
   switch (type) {
-    case MyProfileInfoTypeEnum.job:
+    case MyProfileInfoType.job:
       return profile.job;
-    case MyProfileInfoTypeEnum.region:
+    case MyProfileInfoType.region:
       return profile.region;
-    case MyProfileInfoTypeEnum.education:
+    case MyProfileInfoType.education:
       return profile.education;
-    case MyProfileInfoTypeEnum.smokingStatus:
+    case MyProfileInfoType.smokingStatus:
       return smokingMap[profile.smokingStatus] ?? '';
-    case MyProfileInfoTypeEnum.drinkingStatus:
+    case MyProfileInfoType.drinkingStatus:
       return drinkingMap[profile.drinkingStatus] ?? '';
-    case MyProfileInfoTypeEnum.religion:
+    case MyProfileInfoType.religion:
       return religionMap[profile.religion] ?? '';
-    case MyProfileInfoTypeEnum.mbti:
+    case MyProfileInfoType.mbti:
       return profile.mbti;
-    case MyProfileInfoTypeEnum.hobbies:
+    case MyProfileInfoType.hobbies:
       return profile.hobbies.join(', ');
   }
 }
@@ -59,27 +59,26 @@ class ProfileManageInfoArea extends ConsumerWidget {
           ),
           const Gap(16),
           Column(
-            children: myProfileInfoTypeMap.values
+            children: MyProfileInfoType.values
                 .toList()
                 .map(
-                  (label) => Column(
+                  (type) => Column(
                     children: [
                       buildLabeledRow(
-                          label: label,
+                          label: type.label,
                           child: GestureDetector(
-                            onTap: () => navigate(context,
-                                route: AppRoute.profileUpdate,
-                                extra: MyProfileUpdateArguments(
-                                    profileType: myProfileInfoTypeMap.entries
-                                        .firstWhere((e) => e.value == label)
-                                        .key)),
+                            onTap: () => navigate(
+                              context,
+                              route: AppRoute.profileUpdate,
+                              extra: MyProfileUpdateArguments(
+                                profileType: type,
+                              ),
+                            ),
                             child: DefaultTextFormField(
                               hintText: _getDisplayValue(
-                                  myProfileInfoTypeMap.entries
-                                      .firstWhere((e) => e.value == label)
-                                      .key,
-                                  profileManageState
-                                      .profile), //TODO: 추후 프로필 정보로 수정
+                                type,
+                                profileManageState.profile,
+                              ), //TODO: 추후 프로필 정보로 수정
                               hintStyle: Fonts.body02Medium().copyWith(
                                 color: Palette.colorBlack,
                               ),

@@ -36,5 +36,5 @@ class MyProfileUpdateArguments extends RouteArguments {
     required this.profileType,
   });
 
-  final MyProfileInfoTypeEnum profileType;
+  final MyProfileInfoType profileType;
 }

@@ -14,7 +14,7 @@ import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_choi
 import 'package:atwoz_app/features/my/my.dart';
 
 class ProfileUpdateInfoSelector extends ConsumerStatefulWidget {
-  final MyProfileInfoTypeEnum profileType;
+  final MyProfileInfoType profileType;
   final MyProfile profile;
   final void Function(MyProfile) onProfileUpdated;
   const ProfileUpdateInfoSelector({
@@ -128,30 +128,29 @@ class _ProfileUpdateInfoSelectorState
           ],
         ),
         const Gap(24),
-        infoValues[myProfileInfoTypeMap[
-            widget.profileType]]!, // TODO: UI 확인용 하드코딩. 추후 변경
+        infoValues[widget.profileType.label]!, // TODO: UI 확인용 하드코딩. 추후 변경
       ],
     );
   }
 }
 
-String _getTitleByType(MyProfileInfoTypeEnum type) {
+String _getTitleByType(MyProfileInfoType type) {
   switch (type) {
-    case MyProfileInfoTypeEnum.job:
+    case MyProfileInfoType.job:
       return "직업이 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.region:
+    case MyProfileInfoType.region:
       return "지역이 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.education:
+    case MyProfileInfoType.education:
       return "학력이 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.smokingStatus:
+    case MyProfileInfoType.smokingStatus:
       return "흡연 여부가 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.drinkingStatus:
+    case MyProfileInfoType.drinkingStatus:
       return "음주 빈도가 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.religion:
+    case MyProfileInfoType.religion:
       return "종교가 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.mbti:
+    case MyProfileInfoType.mbti:
       return "MBTI가 어떻게 되세요?";
-    case MyProfileInfoTypeEnum.hobbies:
+    case MyProfileInfoType.hobbies:
       return "취미가 어떻게 되세요?";
   }
 }

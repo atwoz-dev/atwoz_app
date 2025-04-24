@@ -16,7 +16,7 @@ import 'package:go_router/go_router.dart';
 import '../../domain/model/my_profile.dart';
 
 class ProfileUpdatePage extends ConsumerWidget {
-  final MyProfileInfoTypeEnum profileType;
+  final MyProfileInfoType profileType;
 
   const ProfileUpdatePage({
     super.key,
