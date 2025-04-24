@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:gap/gap.dart';
 
 const List<String> _buttonLabels = [
   "상위 5%",
@@ -13,8 +13,10 @@ const List<String> _buttonLabels = [
 ];
 
 class HomeCategoryButtonsArea extends ConsumerWidget {
+  final void Function(String category) onTapButton;
   const HomeCategoryButtonsArea({
     super.key,
+    required this.onTapButton,
   });
 
   @override
@@ -26,12 +28,16 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
           "이런 분들은 어떠세요? 🧐",
           style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 16),
+        const Gap(16),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 45.5, vertical: 24),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 45.5,
+            vertical: 24,
+          ),
           decoration: BoxDecoration(
-              color: Palette.colorGrey50,
-              borderRadius: BorderRadius.circular(16)),
+            color: Palette.colorGrey50,
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -39,22 +45,22 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
             children: _buttonLabels.map(
               (label) {
                 return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette.colorBlack,
-                            padding: EdgeInsets.all(10),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)))
-                        .copyWith(
-                      backgroundColor:
-                          WidgetStateProperty.all(Palette.colorBlack),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.colorBlack,
+                    padding: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    onPressed: () => context.pushNamed('userByCategory',
-                        pathParameters: {'category': label}),
-                    child: Text(
-                      label,
-                      style: Fonts.body02Regular().copyWith(
-                          fontWeight: FontWeight.w400, color: Colors.white),
-                    ));
+                  ),
+                  onPressed: () => onTapButton(label),
+                  child: Text(
+                    label,
+                    style: Fonts.body02Regular().copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
               },
             ).toList(),
           ),

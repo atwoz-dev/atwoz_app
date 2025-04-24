@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
@@ -125,10 +126,11 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.userByCategory.path,
-      name: 'userByCategory',
       builder: (context, state) {
-        final category = state.pathParameters['category'] ?? "상위 5%";
-        return UserByCategoryPage(category: category);
+        final args = state.extra;
+        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
+
+        return UserByCategoryPage(category: args.category.label);
       },
     ),
     GoRoute(

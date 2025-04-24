@@ -5,10 +5,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ideal_type_notifier.g.dart'; // 코드 생성을 위한 부분
 
-final idealTypeRepository = Provider<IdealTypeRepository>((ref) {
-  return IdealTypeRepositoryImpl();
-});
-
 @riverpod
 class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
   @override
