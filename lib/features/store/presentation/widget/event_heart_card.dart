@@ -10,8 +10,11 @@ class EventHeartCard extends StatelessWidget {
   const EventHeartCard({
     super.key,
     required this.code,
+    required this.onCreate,
   });
+
   final String code;
+  final void Function(String code) onCreate;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +50,21 @@ class EventHeartCard extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 18.h),
               child: GestureDetector(
-                  onTap: () async {
-                    // TODO: 상품 코드로 하트 구매
-                  },
+                  onTap: () => onCreate(code),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('90',
-                          style: Fonts.header01()
-                              .copyWith(fontWeight: FontWeight.w700)),
+                      Row(
+                        children: [
+                          DefaultIcon(
+                            IconPath.storeHeart,
+                          ),
+                          Gap(2),
+                          Text('90',
+                              style: Fonts.header01()
+                                  .copyWith(fontWeight: FontWeight.w700)),
+                        ],
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

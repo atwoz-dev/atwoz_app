@@ -1,9 +1,9 @@
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_area.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_category_buttons_area.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_navbar_area.dart';
-import 'package:atwoz_app/features/home/presentation/widget/home_profile_card_area.dart';
 import 'package:flutter/material.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/features/notification/domain/provider/notification_provider.dart'; // FCM Usecase import
 

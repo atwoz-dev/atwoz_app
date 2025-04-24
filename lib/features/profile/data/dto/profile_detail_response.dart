@@ -6,7 +6,6 @@ part 'profile_detail_response.g.dart';
 @freezed
 class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
-    required int id,
     required BasicMemberInformation basicMemberInfo,
     required MatchInformation? matchInfo,
     @Default([]) List<ProfileInterview> interviews,
@@ -19,9 +18,11 @@ class ProfileDetailResponse with _$ProfileDetailResponse {
 @freezed
 class BasicMemberInformation with _$BasicMemberInformation {
   const factory BasicMemberInformation({
+    required int id,
     required String nickname,
     required String profileImageUrl,
-    @JsonKey(name: 'age') required int year,
+    // TODO(Han): server non-nullable requirement check
+    required int age,
     required String gender,
     required int height,
     required String job,
@@ -32,6 +33,7 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required String drinkingStatus,
     required String highestEducation,
     required String religion,
+    required String? like,
   }) = _BasicMemberInformation;
 
   factory BasicMemberInformation.fromJson(Map<String, dynamic> json) =>

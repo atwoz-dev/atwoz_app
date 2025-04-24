@@ -38,8 +38,8 @@
 	<string>앱에서 사진을 저장하기 위해 사진 라이브러리에 접근합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>앱에서 사진 라이브러리에 접근합니다.</string>
-	<!-- <key>UIApplicationExitsOnSuspend</key> -->
-	<!-- <false/> -->
+	<key>UIApplicationExitsOnSuspend</key>
+	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchScreen</key>
@@ -51,6 +51,12 @@
 	<key>UIStatusBarHidden</key>
 	<false/>
 	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>

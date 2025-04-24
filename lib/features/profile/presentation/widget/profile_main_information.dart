@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -30,8 +30,8 @@ class ProfileMainInformation extends StatelessWidget {
   final String address;
   final List<String> hobbies;
   final bool chatEnabled;
-  final FavoriteType favoriteType;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final FavoriteType? favoriteType;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class ProfileMainInformation extends StatelessWidget {
           if (chatEnabled)
             _InteractionButtons(
               userId: userId,
-              favoriteUser: favoriteType.isFavorite,
+              favoriteUser: favoriteType != null,
               onFavoriteTypeChanged: onFavoriteTypeChanged,
             ),
         ],
@@ -109,7 +109,7 @@ class _InteractionButtons extends StatelessWidget {
 
   final int userId;
   final bool favoriteUser;
-  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
+  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class _InteractionButtons extends StatelessWidget {
         GestureDetector(
           onTap: () async {
             if (favoriteUser) {
-              onFavoriteTypeChanged(FavoriteType.none);
+              onFavoriteTypeChanged(null);
               return;
             }
             final favoriteType = await FavoriteTypeSelectDialog.open(
