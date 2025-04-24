@@ -11,11 +11,13 @@ class DefaultHeartCard extends StatelessWidget {
     required this.heart,
     required this.price,
     required this.code,
+    required this.onCreate,
   });
 
   final String heart;
   final String price;
   final String code;
+  final void Function(String code) onCreate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,7 @@ class DefaultHeartCard extends StatelessWidget {
           Gap(2),
           Gap(24),
           DefaultElevatedButton(
-            onPressed: () => {
-              // TODO: 상품 코드로 하트 구매
-            },
+            onPressed: () => onCreate(code),
             padding: const EdgeInsets.symmetric(vertical: 7.0),
             child: Text('구매하기',
                 style:
