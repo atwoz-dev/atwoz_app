@@ -12,7 +12,9 @@ import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
@@ -86,6 +88,8 @@ enum AppRoute {
   profile('/profile'),
   contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
+  introduceRegister('/introduceRegister'),
+  introduceEdit('/introduceEdit'),
   introduceDetail('/introduceDetail'),
   introduceFilter('/introduceFilter'),
   introduceNavigation('/introduceNavigation'),
@@ -144,6 +148,14 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.introduce.path,
       builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceRegister.path,
+      builder: (context, state) => const IntroduceRegisterPage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceEdit.path,
+      builder: (context, state) => const IntroduceEditPage(),
     ),
     GoRoute(
       path: AppRoute.introduceDetail.path,

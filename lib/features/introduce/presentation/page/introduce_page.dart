@@ -1,8 +1,8 @@
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,7 +71,10 @@ class IntroducePageState
                       ),
                       GestureDetector(
                         onTap: () async {
-                          //AutoRouter.of(context).push(const IntroduceDetailScreen());
+                          navigate(
+                            context,
+                            route: AppRoute.introduceFilter,
+                          );
                         },
                         child: Container(
                             padding: const EdgeInsets.all(4),
@@ -102,7 +105,12 @@ class IntroducePageState
           ),
         )),
         PostButton(
-          onTap: () {},
+          onTap: () {
+            navigate(
+              context,
+              route: AppRoute.introduceRegister,
+            );
+          },
         ),
       ],
     );
