@@ -1,5 +1,7 @@
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
+import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +28,29 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
         actions: [
           DefaultTextButton(
             primary: Palette.colorGrey500,
-            child: Text('완료'),
+            child: Text('수정'),
             onPressed: () {
-              // 이벤트
+              CustomDialogue.showTwoChoiceDialogue(
+                  context: context,
+                  content: '수정 버튼을 누르면\n작성된 내용을 저장합니다.',
+                  elevatedButtonText: '수정',
+                  onElevatedButtonPressed: () {
+                    //TODO: 작성한 내용 저장
+                  });
             },
           )
         ],
+        leadingAction: () => {
+          CustomDialogue.showTwoChoiceDialogue(
+              context: context,
+              content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
+              onElevatedButtonPressed: () {
+                navigate(
+                  context,
+                  route: AppRoute.introduce,
+                );
+              })
+        },
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
