@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../app/constants/enum.dart';
@@ -10,16 +11,16 @@ class MyProfile with _$MyProfile {
     required List<String> profileImages,
     required String job,
     required String region,
-    required String education,
-    required SmokingStatusEnum smokingStatus,
-    required DrinkingStatusEnum drinkingStatus,
-    required ReligionEnum religion,
+    required HighestEducationEnum education, // constants/enum 재사용
+    required SmokingStatus smokingStatus, // profile/domain/enum 재사용
+    required DrinkingStatus drinkingStatus, // profile/domain/enum 재사용
+    required Religion religion, // profile/domain/enum 재사용
     required String mbti,
     required List<String> hobbies,
     required String nickname,
     required int age,
     required int height,
-    required GenderEnum gender,
+    required GenderEnum gender, // constants/enum 재사용
     required String phoneNum,
   }) = _MyProfile;
 }

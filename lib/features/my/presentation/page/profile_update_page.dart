@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/my/presentation/controller/profile_manage_notifier.dart';
+import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,13 +9,8 @@ import 'package:gap/gap.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/view/view.dart';
-import 'package:atwoz_app/features/my/presentation/enum/enum.dart';
-import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../domain/model/my_profile.dart';
-
-class ProfileUpdatePage extends ConsumerWidget {
+class ProfileUpdatePage extends ConsumerStatefulWidget {
   final MyProfileInfoType profileType;
 
   const ProfileUpdatePage({
@@ -24,21 +19,39 @@ class ProfileUpdatePage extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileUpdatePage> createState() => _ProfileUpdatePageState();
+}
+
+class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
+  late MyProfile originalProfile; // 기존 프로필 정보
+  late MyProfile tempProfile; // 변경된 프로필 정보
+  bool _isChanged = false; // 변경 여부
+
+  @override
+  void initState() {
+    super.initState();
     final profileManageState = ref.read(profileManageNotifierProvider);
+    originalProfile = profileManageState.profile;
+    tempProfile = profileManageState.profile;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final profileManageNotifier =
         ref.read(profileManageNotifierProvider.notifier);
-    MyProfile tempProfile = profileManageState.profile;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: DefaultAppBar(
         title: '프로필 정보',
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
+          preferredSize: Size.fromHeight(4.h),
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
               begin: 0,
-              end: 0.5, //TODO: 프로필 수정 시 1로 변경되도록 추후 변경
+              end: _isChanged
+                  ? 1.0
+                  : 0.5, // profileManageState.isSelected 대신 _isChanged 사용
             ),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -64,10 +77,13 @@ class ProfileUpdatePage extends ConsumerWidget {
                   child: Column(
                     children: [
                       ProfileUpdateInfoSelector(
-                        profileType: profileType,
-                        profile: tempProfile,
-                        onProfileUpdated: (selectedValue) {
-                          tempProfile = selectedValue;
+                        profileType: widget.profileType,
+                        profile: originalProfile,
+                        onProfileUpdated: (selectedValue, isChanged) {
+                          setState(() {
+                            tempProfile = selectedValue;
+                            _isChanged = isChanged;
+                          });
                         },
                       ),
                     ],
@@ -75,13 +91,28 @@ class ProfileUpdatePage extends ConsumerWidget {
                 ),
               ),
               DefaultElevatedButton(
-                child: const Text('저장'),
+                primary:
+                    _isChanged // profileManageState.isSelected 대신 _isChanged 사용
+                        ? Palette.colorPrimary500
+                        : Palette.colorGrey200,
                 onPressed: () {
-                  profileManageNotifier.updateProfile(tempProfile).then((_) {
-                    if (context.mounted) pop(context);
-                  });
+                  if (_isChanged) {
+                    // profileManageState.isSelected 대신 _isChanged 사용
+                    profileManageNotifier.updateProfile(tempProfile).then((_) {
+                      if (context.mounted) pop(context);
+                    });
+                  }
                 },
-              )
+                child: Text(
+                  '저장',
+                  style: Fonts.body01Medium(
+                    _isChanged // profileManageState.isSelected 대신 _isChanged 사용
+                        ? Colors.white
+                        : Palette.colorGrey300,
+                  ),
+                ),
+              ),
+              const Gap(20),
             ],
           ),
         ),

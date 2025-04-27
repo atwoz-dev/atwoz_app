@@ -4,7 +4,8 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/my/presentation/controller/profile_manage_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -19,17 +20,19 @@ String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
     case MyProfileInfoType.region:
       return profile.region;
     case MyProfileInfoType.education:
-      return profile.education;
+      return educationMap[profile.education] ?? '';
     case MyProfileInfoType.smokingStatus:
-      return smokingMap[profile.smokingStatus] ?? '';
+      return profile.smokingStatus.label;
     case MyProfileInfoType.drinkingStatus:
-      return drinkingMap[profile.drinkingStatus] ?? '';
+      return profile.drinkingStatus.label;
     case MyProfileInfoType.religion:
-      return religionMap[profile.religion] ?? '';
+      return profile.religion.label;
     case MyProfileInfoType.mbti:
       return profile.mbti;
     case MyProfileInfoType.hobbies:
       return profile.hobbies.join(', ');
+    case MyProfileInfoType.nickname:
+      return '';
   }
 }
 
@@ -60,6 +63,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
           const Gap(16),
           Column(
             children: MyProfileInfoType.values
+                .where((type) => type != MyProfileInfoType.nickname)
                 .toList()
                 .map(
                   (type) => Column(
@@ -78,7 +82,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
                               hintText: _getDisplayValue(
                                 type,
                                 profileManageState.profile,
-                              ), //TODO: 추후 프로필 정보로 수정
+                              ),
                               hintStyle: Fonts.body02Medium().copyWith(
                                 color: Palette.colorBlack,
                               ),

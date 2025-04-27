@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 
 class ProfileManagePage extends StatelessWidget {

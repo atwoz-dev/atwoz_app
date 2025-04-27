@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/features/my/presentation/enum/enum.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

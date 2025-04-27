@@ -1,5 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +16,7 @@ import 'package:atwoz_app/features/my/my.dart';
 class ProfileUpdateInfoSelector extends ConsumerStatefulWidget {
   final MyProfileInfoType profileType;
   final MyProfile profile;
-  final void Function(MyProfile) onProfileUpdated;
+  final void Function(MyProfile, bool) onProfileUpdated;
   const ProfileUpdateInfoSelector({
     super.key,
     required this.profileType,
@@ -55,64 +55,92 @@ class _ProfileUpdateInfoSelectorState
         initialValue: widget.profile.job,
         onSelected: (value) {
           _tempProfile.value = _tempProfile.value.copyWith(job: value);
-          widget.onProfileUpdated(_tempProfile.value);
+          widget.onProfileUpdated(
+              _tempProfile.value, value != widget.profile.job);
         },
       ),
       '지역': LocationInputWidget(
-        selectedLocation: null,
-        onLocationUpdated: (p0) {},
+        selectedLocation: null, // TODO: 기존 정보로 지역값 초기화. 현재 해당부분 문제 있어 null 처리
+        onLocationUpdated: (value) {
+          if (value != null) {
+            _tempProfile.value = _tempProfile.value.copyWith(region: value);
+            widget.onProfileUpdated(
+                _tempProfile.value, value != widget.profile.region);
+          }
+        },
       ),
       '학력': _SingleButtonTypeSelector(
         options: educationMap.values.toList(),
-        initialValue: widget.profile.education,
+        initialValue: educationMap[widget.profile.education] ?? '',
         onSelected: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(education: value);
-          widget.onProfileUpdated(_tempProfile.value);
+          final education =
+              educationMap.entries.firstWhere((e) => e.value == value).key;
+          _tempProfile.value =
+              _tempProfile.value.copyWith(education: education);
+          widget.onProfileUpdated(
+              _tempProfile.value, education != widget.profile.education);
         },
       ),
       '흡연여부': _SingleButtonTypeSelector(
-        options: smokingMap.values.toList(),
-        initialValue: smokingMap[widget.profile.smokingStatus] ?? '',
+        options: SmokingStatus.values.map((e) => e.label).toList(),
+        initialValue: widget.profile.smokingStatus.label,
         onSelected: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(
-              smokingStatus:
-                  smokingMap.entries.firstWhere((e) => e.value == value).key);
-          widget.onProfileUpdated(_tempProfile.value);
+          final newStatus = SmokingStatus.values.firstWhere(
+              (e) => e.label == value,
+              orElse: () => SmokingStatus.none);
+          final isChanged = newStatus != widget.profile.smokingStatus;
+          _tempProfile.value =
+              _tempProfile.value.copyWith(smokingStatus: newStatus);
+          widget.onProfileUpdated(_tempProfile.value, isChanged);
         },
       ),
       '음주빈도': _SingleButtonTypeSelector(
-        options: drinkingMap.values.toList(),
-        initialValue: drinkingMap[widget.profile.drinkingStatus] ?? '',
+        options: DrinkingStatus.values.map((e) => e.label).toList(),
+        initialValue: widget.profile.drinkingStatus.label,
         onSelected: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(
-              drinkingStatus:
-                  drinkingMap.entries.firstWhere((e) => e.value == value).key);
-          widget.onProfileUpdated(_tempProfile.value);
+          final newStatus = DrinkingStatus.values.firstWhere(
+              (e) => e.label == value,
+              orElse: () => DrinkingStatus.none);
+          _tempProfile.value =
+              _tempProfile.value.copyWith(drinkingStatus: newStatus);
+          widget.onProfileUpdated(
+              _tempProfile.value, newStatus != widget.profile.drinkingStatus);
         },
       ),
       '종교': _SingleButtonTypeSelector(
         options: religionMap.values.toList(),
-        initialValue: religionMap[widget.profile.religion] ?? '',
+        initialValue: widget.profile.religion.label,
         onSelected: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(
-              religion:
-                  religionMap.entries.firstWhere((e) => e.value == value).key);
-          widget.onProfileUpdated(_tempProfile.value);
+          final newReligion = Religion.values
+              .firstWhere((e) => e.label == value, orElse: () => Religion.none);
+          _tempProfile.value =
+              _tempProfile.value.copyWith(religion: newReligion);
+          widget.onProfileUpdated(
+              _tempProfile.value, newReligion != widget.profile.religion);
         },
       ),
       'MBTI': _GroupTypeSelector(
         initialValues: widget.profile.mbti.split(''),
         onSelected: (value) {
           _tempProfile.value = _tempProfile.value.copyWith(mbti: value.join());
-          widget.onProfileUpdated(_tempProfile.value);
+          widget.onProfileUpdated(
+              _tempProfile.value, value.join() != widget.profile.mbti);
         },
       ),
       '취미': _MultiBtnTypeSelector(
         options: hobbies,
         initialValues: widget.profile.hobbies,
-        onSelected: (value) {
+        onSelected: (value, isChanged) {
           _tempProfile.value = _tempProfile.value.copyWith(hobbies: value);
-          widget.onProfileUpdated(_tempProfile.value);
+          widget.onProfileUpdated(_tempProfile.value, isChanged);
+        },
+      ),
+      '닉네임': _InputTypeSelector(
+        initialValue: widget.profile.nickname,
+        onSubmitted: (value) {
+          _tempProfile.value = _tempProfile.value.copyWith(nickname: value);
+          widget.onProfileUpdated(
+              _tempProfile.value, value != widget.profile.nickname);
         },
       ),
     };
@@ -122,13 +150,13 @@ class _ProfileUpdateInfoSelectorState
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              _getTitleByType(widget.profileType), // TODO: UI 확인용 하드코딩. 추후 변경
+              _getTitleByType(widget.profileType),
               style: Fonts.header03().copyWith(fontWeight: FontWeight.w700),
             ),
           ],
         ),
         const Gap(24),
-        infoValues[widget.profileType.label]!, // TODO: UI 확인용 하드코딩. 추후 변경
+        infoValues[widget.profileType.label]!,
       ],
     );
   }
@@ -152,6 +180,8 @@ String _getTitleByType(MyProfileInfoType type) {
       return "MBTI가 어떻게 되세요?";
     case MyProfileInfoType.hobbies:
       return "취미가 어떻게 되세요?";
+    case MyProfileInfoType.nickname:
+      return "닉네임이 어떻게 되세요?";
   }
 }
 
@@ -172,17 +202,26 @@ class _SingleButtonTypeSelector extends StatefulWidget {
 }
 
 class _SingleButtonTypeSelectorState extends State<_SingleButtonTypeSelector> {
-  int initialIndex = 0;
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.options.indexOf(widget.initialValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleSelectListChip(
       options: widget.options,
-      selectedOption: widget.options[initialIndex],
+      selectedOption: widget.options[_selectedIndex],
       onSelectionChanged: (value) {
-        setState(() {
-          initialIndex = widget.options.indexOf(value!);
+        if (value != null) {
+          setState(() {
+            _selectedIndex = widget.options.indexOf(value); // 선택된 인덱스 업데이트
+          });
           widget.onSelected(value);
-        });
+        }
       },
     );
   }
@@ -197,7 +236,7 @@ class _MultiBtnTypeSelector extends StatefulWidget {
 
   final List<String> options;
   final List<String> initialValues;
-  final void Function(List<String>) onSelected;
+  final void Function(List<String>, bool) onSelected;
 
   @override
   State<_MultiBtnTypeSelector> createState() => _MultiBtnTypeSelectorState();
@@ -229,7 +268,13 @@ class _MultiBtnTypeSelectorState extends State<_MultiBtnTypeSelector> {
               behavior: HitTestBehavior.opaque,
               onTap: () {
                 _toggleItem(tag);
-                widget.onSelected(_selectedItems);
+                // Set으로 변환하여 내용 비교
+                final currentSet = Set.from(_selectedItems); // 현재 선택된 아이템들 Set
+                final initialSet =
+                    Set.from(widget.initialValues); // 초기 선택한 아이템들 Set
+                final isChanged = !currentSet.containsAll(initialSet) ||
+                    !initialSet.containsAll(currentSet); // 변경 여부 체크
+                widget.onSelected(_selectedItems.toList(), isChanged);
               },
               child: Container(
                 //margin: const EdgeInsets.all(4),
@@ -276,14 +321,22 @@ class _MultiBtnTypeSelectorState extends State<_MultiBtnTypeSelector> {
 }
 
 class _InputTypeSelector extends StatelessWidget {
-  const _InputTypeSelector();
+  const _InputTypeSelector({
+    required this.initialValue,
+    required this.onSubmitted,
+  });
+
+  final String initialValue;
+  final void Function(String) onSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onTapOutside: (event) => FocusScope.of(context).unfocus(),
+      onFieldSubmitted: (value) {
+        onSubmitted(value);
+      },
       decoration: InputDecoration(
-        hintText: "진저", //TODO: 추후 프로필 정보로 변경
+        hintText: initialValue,
         hintStyle: Fonts.body02Medium().copyWith(
           fontWeight: FontWeight.w400,
           color: const Color(0xff8D92A0),
@@ -324,8 +377,7 @@ class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    _selectedMbti = widget.initialValues; // TODO: 기존 MBTI로 값 설정
+    _selectedMbti = widget.initialValues;
     super.initState();
   }
 

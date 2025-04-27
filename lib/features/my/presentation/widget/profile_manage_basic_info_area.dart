@@ -1,5 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
 import 'package:atwoz_app/features/my/my.dart';
@@ -55,15 +57,28 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
                       children: [
                         buildLabeledRow(
                           label: type.label,
-                          child: DefaultTextFormField(
-                            fillColor: Palette.colorGrey100,
-                            readOnly: true,
-                            hintText: _getDisplayValue(
-                                MyBasicInfoType.parse(type.label), profile),
-                            hintStyle: type == MyBasicInfoType.nickname ||
-                                    type == MyBasicInfoType.phoneNum
-                                ? _blackHintStyle
-                                : _defaultHintStyle,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (type == MyBasicInfoType.nickname) {
+                                navigate(context,
+                                    route: AppRoute.profileUpdate,
+                                    extra: const MyProfileUpdateArguments(
+                                        profileType:
+                                            MyProfileInfoType.nickname));
+                              } else if (type == MyBasicInfoType.phoneNum) {
+                                navigate(context,
+                                    route: AppRoute.contactSetting);
+                              }
+                            },
+                            child: DefaultTextFormField(
+                              fillColor: Palette.colorGrey100,
+                              readOnly: true,
+                              hintText: _getDisplayValue(type, profile),
+                              hintStyle: type == MyBasicInfoType.nickname ||
+                                      type == MyBasicInfoType.phoneNum
+                                  ? _blackHintStyle
+                                  : _defaultHintStyle,
+                            ),
                           ),
                           context: context,
                         ),

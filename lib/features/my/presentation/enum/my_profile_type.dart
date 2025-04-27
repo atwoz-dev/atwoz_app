@@ -6,7 +6,8 @@ enum MyProfileInfoType {
   drinkingStatus('음주빈도'),
   religion('종교'),
   mbti('MBTI'),
-  hobbies('취미');
+  hobbies('취미'),
+  nickname('닉네임'); // 단순 화면이동 용도
 
   final String label;
   const MyProfileInfoType(this.label);
