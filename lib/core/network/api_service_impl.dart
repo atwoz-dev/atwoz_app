@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -5,6 +8,7 @@ import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'api_service.dart';
 import 'dio_service.dart';
@@ -22,26 +26,42 @@ final apiServiceProvider = Provider<ApiServiceImpl>((ref) {
 class ApiServiceImpl implements ApiService {
   ApiServiceImpl({
     required this.ref,
-    this.enableAuth = false,
     String? baseUrl,
+    bool enableAuth = false,
     Duration? timeout,
-  })  : baseUrl = baseUrl ?? Config.baseUrl,
-        timeout = timeout ?? Config.timeout;
+  }) {
+    _initialize(
+      enableAuth: enableAuth,
+      baseUrl: baseUrl,
+      timeout: timeout ?? Config.timeout,
+    );
+  }
 
   final Ref ref;
-  final bool enableAuth;
-  final String baseUrl;
-  final Duration timeout;
 
-  DioService? _dioService;
-  PersistCookieJar? _cookieJar;
+  late final String _baseUrl;
+  late final DioService _dioService;
+  late final PersistCookieJar _cookieJar;
 
-  DioService get dioService => _dioService ??= _createDioService();
+  final Completer _initCompleter = Completer();
 
-  DioService _createDioService() {
-    return DioService(
+  Future<PersistCookieJar> get cookieJar async {
+    await _initCompleter.future;
+    return _cookieJar;
+  }
+
+  Future<void> _initialize({
+    required bool enableAuth,
+    required String? baseUrl,
+    required Duration timeout,
+  }) async {
+    _baseUrl = baseUrl ?? Config.baseUrl;
+    final appDocDir = await getApplicationDocumentsDirectory();
+    _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
+
+    _dioService = DioService(
       BaseOptions(
-        baseUrl: baseUrl,
+        baseUrl: _baseUrl,
         sendTimeout: timeout,
         connectTimeout: timeout,
         receiveTimeout: timeout,
@@ -49,8 +69,11 @@ class ApiServiceImpl implements ApiService {
       [
         if (enableAuth) TokenInterceptor(ref),
         if (Config.enableLogRequestInfo) LoggingInterceptor(),
+        CookieManager(_cookieJar),
       ],
     );
+
+    _initCompleter.complete();
   }
 
   @override
@@ -67,13 +90,14 @@ class ApiServiceImpl implements ApiService {
     Converter<T>? converter,
     Map<String, dynamic>? headers,
   }) async {
+    await _initCompleter.future;
     try {
       final finalHeaders = await _prepareHeaders(
         headers: headers,
         requiresAuthToken: requiresAuthToken,
       );
 
-      final response = await dioService.request(
+      final response = await _dioService.request(
         path,
         data: data,
         options: Options(
@@ -103,6 +127,7 @@ class ApiServiceImpl implements ApiService {
     Map<String, dynamic>? headers,
     bool requiresAuthToken = true,
   }) async {
+    await _initCompleter.future;
     final Map<String, dynamic> finalHeaders = {
       "Accept": "*/*",
       ...?headers,
@@ -126,6 +151,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   Future<void> _handleLoginResponse(Response response) async {
+    await _initCompleter.future;
     final setCookieHeaders = response.headers.map['set-cookie'];
     if (setCookieHeaders == null || setCookieHeaders.isEmpty) return;
 
@@ -136,9 +162,8 @@ class ApiServiceImpl implements ApiService {
   }
 
   Future<void> _saveRefreshToken(String refreshToken) async {
-    await _initializeCookieJar();
-    final uri = Uri.parse(baseUrl);
-    _cookieJar?.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
+    final uri = Uri.parse(_baseUrl);
+    _cookieJar.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
 
     await ref.read(localStorageProvider.notifier).initialize();
     await ref
@@ -155,16 +180,12 @@ class ApiServiceImpl implements ApiService {
         ?.group(1);
   }
 
-  Future<void> _initializeCookieJar() async {
-    if (_cookieJar == null) {
-      final appDocDir = await getApplicationDocumentsDirectory();
-      _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
-    }
-  }
-
   @override
-  void cancelRequests({CancelToken? cancelToken}) =>
-      dioService.cancelRequests(cancelToken: cancelToken);
+  Future<void> cancelRequests({CancelToken? cancelToken}) async {
+    await _initCompleter.future;
+
+    _dioService.cancelRequests(cancelToken: cancelToken);
+  }
 
   @override
   Future<T> deleteJson<T>(
