@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/features/notification/data/dto/test_notification_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NotificationRepository extends BaseRepository {
@@ -12,20 +13,10 @@ class NotificationRepository extends BaseRepository {
         requiresRefreshCookie: true);
   }
 
-  Future<void> sendTestNotification({
-    required int senderId,
-    required String senderType,
-    required int receiverId,
-    required String notificationType,
-  }) async {
+  Future<void> sendTestNotification(TestNotificationRequest request) async {
     await apiService.postJson(
       '$path/test',
-      data: {
-        'senderId': senderId,
-        'senderType': senderType,
-        'receiverId': receiverId,
-        'notificationType': notificationType,
-      },
+      data: request.toJson(),
     );
   }
 

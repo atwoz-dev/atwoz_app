@@ -5,6 +5,8 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_type.dart';
+import 'package:atwoz_app/features/notification/data/dto/test_notification_request.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_empty_view_widget.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -59,10 +61,12 @@ class NotificationPage extends ConsumerWidget with LogMixin {
         onPressed: () async {
           final repo = ref.read(notificationRepositoryProvider);
           await repo.sendTestNotification(
-            senderId: 1,
-            senderType: 'MEMBER',
-            receiverId: 1,
-            notificationType: 'MATCH_REQUESTED', // ← 이걸로 변경
+            const TestNotificationRequest(
+              senderId: 7,
+              senderType: 'MEMBER',
+              receiverId: 35,
+              notificationType: NotificationType.matchRequested,
+            ),
           );
         },
         child: const Text('테스트 알림 보내기'),

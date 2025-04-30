@@ -1,41 +1,8 @@
-import 'package:atwoz_app/core/util/log.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_type.dart'; // enum 정의 파일 import
 
 part 'notification_response.freezed.dart';
 part 'notification_response.g.dart';
-
-// NotificationType을 union으로 변경
-@freezed
-class NotificationType with _$NotificationType {
-  const factory NotificationType.request() = RequestType;
-  const factory NotificationType.message() = MessageType;
-  const factory NotificationType.rejectHeart() = RejectHeartType;
-  const factory NotificationType.rejectProfile() = RejectProfileType;
-  const factory NotificationType.match() = MatchType;
-  const factory NotificationType.notification() = GeneralNotificationType;
-  factory NotificationType.fromJson(Map<String, dynamic> json) {
-    final runtimeType = json['runtimeType'] ?? json['type'];
-    Log.d('NotificationType fromJson 호출됨. 받은 값: $runtimeType');
-
-    switch (runtimeType) {
-      case 'request':
-        return const NotificationType.request();
-      case 'message':
-        return const NotificationType.message();
-      case 'rejectHeart':
-        return const NotificationType.rejectHeart();
-      case 'rejectProfile':
-        return const NotificationType.rejectProfile();
-      case 'match':
-        return const NotificationType.match();
-      case 'notification':
-        return const NotificationType.notification();
-      default:
-        Log.e('정의되지 않은 알림 타입입니다: $runtimeType');
-        throw ArgumentError('Unknown notification type: $runtimeType');
-    }
-  }
-}
 
 @freezed
 class NotificationModel with _$NotificationModel {
@@ -44,7 +11,7 @@ class NotificationModel with _$NotificationModel {
   const factory NotificationModel({
     required int notificationId,
     required int senderId,
-    required String notificationType,
+    @NotificationTypeConverter() required NotificationType notificationType,
     required String title,
     required String content,
   }) = _NotificationModel;
