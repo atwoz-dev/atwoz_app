@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
-import 'package:atwoz_app/features/my/presentation/controller/profile_manage_state.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,7 +12,20 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     // TODO: Hive에서 프로필 정보 가져오기
     return const ProfileManageState(
         profile: MyProfile(
-      profileImages: [],
+      profileImages: [
+        MyProfileImage(
+            id: 0,
+            imageUrl:
+                'https://cdn.rnx.kr/news/photo/202206/296912_304213_2613.jpg'),
+        MyProfileImage(
+            id: 1,
+            imageUrl:
+                'https://img4.yna.co.kr/etc/inner/KR/2021/02/19/AKR20210219023200005_01_i_P4.jpg'),
+        MyProfileImage(
+            id: 3,
+            imageUrl:
+                'https://img.vogue.co.kr/vogue/2024/08/style_66b97644144f2.jpg'),
+      ],
       job: '연구개발/엔지니어',
       region: '서울시 강남구',
       education: HighestEducationEnum.bachelorsSeoul,

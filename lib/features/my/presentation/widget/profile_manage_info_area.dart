@@ -4,14 +4,11 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../app/constants/enum.dart';
-import '../../domain/model/my_profile.dart';
 
 String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
   switch (type) {
@@ -36,13 +33,12 @@ String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
   }
 }
 
-class ProfileManageInfoArea extends ConsumerWidget {
-  const ProfileManageInfoArea({super.key});
+class ProfileManageInfoArea extends StatelessWidget {
+  final MyProfile profile;
+  const ProfileManageInfoArea({super.key, required this.profile});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final profileManageState = ref.watch(profileManageNotifierProvider);
-
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.5,
@@ -81,7 +77,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
                             child: DefaultTextFormField(
                               hintText: _getDisplayValue(
                                 type,
-                                profileManageState.profile,
+                                profile,
                               ),
                               hintStyle: Fonts.body02Medium().copyWith(
                                 color: Palette.colorBlack,
@@ -109,7 +105,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
             onPressed: () {},
           ),
           ProfileManageBasicInfoArea(
-            profile: profileManageState.profile,
+            profile: profile,
           ),
           const Gap(24),
         ],
