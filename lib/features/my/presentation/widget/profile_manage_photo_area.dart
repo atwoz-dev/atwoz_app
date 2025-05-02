@@ -94,7 +94,8 @@ class ProfileManagePhotoArea extends StatelessWidget {
                             child: DefaultIcon(
                               IconPath.add,
                               colorFilter: DefaultIcon.fillColor(
-                                  const Color(0xff8D92A0)),
+                                const Color(0xff8D92A0),
+                              ),
                             ),
                           ),
                   )

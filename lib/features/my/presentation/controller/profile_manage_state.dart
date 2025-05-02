@@ -8,5 +8,11 @@ part 'profile_manage_state.freezed.dart';
 class ProfileManageState with _$ProfileManageState {
   const factory ProfileManageState({
     required MyProfile profile,
+    MyProfile? updatedProfile,
+    @Default(false) bool isChanged,
   }) = _ProfileManageState;
+
+  const ProfileManageState._();
+
+  MyProfile get originalProfile => profile;
 }

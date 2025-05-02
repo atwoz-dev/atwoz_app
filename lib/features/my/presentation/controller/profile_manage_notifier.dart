@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,14 +27,14 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
             imageUrl:
                 'https://img.vogue.co.kr/vogue/2024/08/style_66b97644144f2.jpg'),
       ],
-      job: '연구개발/엔지니어',
+      job: Job.researchAndEngineering,
       region: '서울시 강남구',
       education: HighestEducationEnum.bachelorsSeoul,
       smokingStatus: SmokingStatus.none,
       drinkingStatus: DrinkingStatus.none,
       religion: Religion.none,
       mbti: 'ENFJ',
-      hobbies: ['국내여행/해외여행', '맛집탐방'],
+      hobbies: [Hobby.travel, Hobby.foodHunt],
       nickname: '진저',
       age: 34,
       height: 172,
@@ -42,7 +43,17 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     ));
   }
 
-  Future<void> updateProfile(MyProfile profile) async {
-    state = state.copyWith(profile: profile);
+  void updateProfile(MyProfile profile, bool? isChanged) {
+    state =
+        state.copyWith(updatedProfile: profile, isChanged: isChanged ?? false);
+  }
+
+  Future<void> saveProfile() async {
+    if (state.updatedProfile == null) return;
+    state = state.copyWith(
+      profile: state.updatedProfile!,
+      updatedProfile: null,
+      isChanged: false,
+    );
   }
 }

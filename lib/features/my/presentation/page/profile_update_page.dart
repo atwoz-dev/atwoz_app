@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/enum/job.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/view/view.dart';
 
-class ProfileUpdatePage extends ConsumerStatefulWidget {
+class ProfileUpdatePage extends ConsumerWidget {
   final MyProfileInfoType profileType;
 
   const ProfileUpdatePage({
@@ -18,24 +19,8 @@ class ProfileUpdatePage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ProfileUpdatePage> createState() => _ProfileUpdatePageState();
-}
-
-class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
-  late MyProfile originalProfile; // 기존 프로필 정보
-  late MyProfile tempProfile; // 변경된 프로필 정보
-  bool _isChanged = false; // 변경 여부
-
-  @override
-  void initState() {
-    super.initState();
-    final profileManageState = ref.read(profileManageNotifierProvider);
-    originalProfile = profileManageState.profile;
-    tempProfile = profileManageState.profile;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileManageState = ref.watch(profileManageNotifierProvider);
     final profileManageNotifier =
         ref.read(profileManageNotifierProvider.notifier);
 
@@ -48,9 +33,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
               begin: 0,
-              end: _isChanged
-                  ? 1.0
-                  : 0.5, // profileManageState.isSelected 대신 _isChanged 사용
+              end: profileManageState.isChanged ? 1.0 : 0.5,
             ),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -76,13 +59,11 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                   child: Column(
                     children: [
                       ProfileUpdateInfoSelector(
-                        profileType: widget.profileType,
-                        profile: originalProfile,
+                        profileType: profileType,
+                        profile: profileManageState.originalProfile,
                         onProfileUpdated: (selectedValue, isChanged) {
-                          setState(() {
-                            tempProfile = selectedValue;
-                            _isChanged = isChanged;
-                          });
+                          profileManageNotifier.updateProfile(
+                              selectedValue, isChanged);
                         },
                       ),
                     ],
@@ -90,14 +71,12 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                 ),
               ),
               DefaultElevatedButton(
-                primary:
-                    _isChanged // profileManageState.isSelected 대신 _isChanged 사용
-                        ? Palette.colorPrimary500
-                        : Palette.colorGrey200,
+                primary: profileManageState.isChanged
+                    ? Palette.colorPrimary500
+                    : Palette.colorGrey200,
                 onPressed: () {
-                  if (_isChanged) {
-                    // profileManageState.isSelected 대신 _isChanged 사용
-                    profileManageNotifier.updateProfile(tempProfile).then((_) {
+                  if (profileManageState.isChanged) {
+                    profileManageNotifier.saveProfile().then((_) {
                       if (context.mounted) pop(context);
                     });
                   }
@@ -105,7 +84,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                 child: Text(
                   '저장',
                   style: Fonts.body01Medium(
-                    _isChanged // profileManageState.isSelected 대신 _isChanged 사용
+                    profileManageState.isChanged
                         ? Colors.white
                         : Palette.colorGrey300,
                   ),

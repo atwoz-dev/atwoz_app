@@ -13,7 +13,7 @@ import '../../../../app/constants/enum.dart';
 String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
   switch (type) {
     case MyProfileInfoType.job:
-      return profile.job;
+      return profile.job.label;
     case MyProfileInfoType.region:
       return profile.region;
     case MyProfileInfoType.education:
@@ -27,7 +27,7 @@ String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
     case MyProfileInfoType.mbti:
       return profile.mbti;
     case MyProfileInfoType.hobbies:
-      return profile.hobbies.join(', ');
+      return profile.hobbies.map((hobby) => hobby.label).join(', ');
     case MyProfileInfoType.nickname:
       return '';
   }

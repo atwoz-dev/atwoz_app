@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,11 +52,12 @@ class _ProfileUpdateInfoSelectorState
     Map<String, Widget> infoValues = {
       '직업': _SingleButtonTypeSelector(
         options: jobOptions,
-        initialValue: widget.profile.job,
+        initialValue: widget.profile.job.label,
         onSelected: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(job: value);
+          _tempProfile.value =
+              _tempProfile.value.copyWith(job: Job.fromLabel(value)!);
           widget.onProfileUpdated(
-              _tempProfile.value, value != widget.profile.job);
+              _tempProfile.value, value != widget.profile.job.label);
         },
       ),
       '지역': LocationInputWidget(
@@ -128,9 +130,11 @@ class _ProfileUpdateInfoSelectorState
       ),
       '취미': _MultiBtnTypeSelector(
         options: hobbies,
-        initialValues: widget.profile.hobbies,
+        initialValues: widget.profile.hobbies.map((e) => e.label).toList(),
         onSelected: (value, isChanged) {
-          _tempProfile.value = _tempProfile.value.copyWith(hobbies: value);
+          _tempProfile.value = _tempProfile.value.copyWith(
+            hobbies: value.map((e) => Hobby.fromLabel(e)!).toList(),
+          );
           widget.onProfileUpdated(_tempProfile.value, isChanged);
         },
       ),
