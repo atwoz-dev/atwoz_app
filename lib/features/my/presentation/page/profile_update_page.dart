@@ -1,4 +1,3 @@
-import 'package:atwoz_app/app/enum/job.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
