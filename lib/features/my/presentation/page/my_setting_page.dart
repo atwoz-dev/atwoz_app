@@ -16,36 +16,37 @@ class MySettingPage extends StatelessWidget {
         title: "설정",
       ),
       body: Column(
-        children: MySettingType.values.map(
-          (type) {
-            return _MySettingListItem(
-              title: type.label,
-              onTapMove: () {
-                switch (type) {
-                  case MySettingType.pushNotification:
-                    navigate(context, route: AppRoute.pushNotificationSetting);
-                    break;
-                  case MySettingType.accountSetting:
-                    navigate(context, route: AppRoute.accountSetting);
-                    break;
-                  case MySettingType.versionInfo:
-                    break;
-                  case MySettingType.contactSetting:
-                    navigate(context, route: AppRoute.contactSetting);
-                    break;
-                  case MySettingType.privacyPolicy:
-                    navigate(context, route: AppRoute.privacyPolicy);
-                    break;
-                  case MySettingType.useTerms:
-                    navigate(context, route: AppRoute.termsOfUse);
-                    break;
-                  case MySettingType.faq:
-                    break;
-                }
-              },
-            );
-          },
-        ).toList(),
+        children: [
+          _MySettingListItem(
+            title: '알림 설정',
+            onTapMove: () =>
+                navigate(context, route: AppRoute.pushNotificationSetting),
+          ),
+          _MySettingListItem(
+            title: '계정 설정',
+            onTapMove: () => navigate(context, route: AppRoute.accountSetting),
+          ),
+          _MySettingListItem(
+            title: '버전 정보',
+            onTapMove: () {},
+          ),
+          _MySettingListItem(
+            title: '연락처 설정',
+            onTapMove: () => navigate(context, route: AppRoute.contactSetting),
+          ),
+          _MySettingListItem(
+            title: '개인정보 처리방침',
+            onTapMove: () => navigate(context, route: AppRoute.privacyPolicy),
+          ),
+          _MySettingListItem(
+            title: '이용약관',
+            onTapMove: () => navigate(context, route: AppRoute.termsOfUse),
+          ),
+          _MySettingListItem(
+            title: 'FAQ',
+            onTapMove: () {},
+          ),
+        ],
       ),
     );
   }
@@ -86,7 +87,7 @@ class _MySettingListItem extends ConsumerWidget {
               color: Palette.colorBlack,
             ),
           ),
-          if (MySettingType.versionInfo.label == title)
+          if (title == '버전 정보')
             mySettingAsync.when(
               data: (data) => Text("V$data"),
               loading: () => const CircularProgressIndicator(),

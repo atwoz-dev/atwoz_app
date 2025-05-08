@@ -12,7 +12,7 @@ class MySettingNotifier extends _$MySettingNotifier {
   }
 
   Future<String> _fetchAppVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    final packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
 }

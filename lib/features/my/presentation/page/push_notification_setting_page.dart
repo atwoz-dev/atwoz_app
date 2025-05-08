@@ -78,7 +78,9 @@ class _PushNotificationSettingPageState
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 19),
+                      horizontal: 16,
+                      vertical: 19,
+                    ),
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(

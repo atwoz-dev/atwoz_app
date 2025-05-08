@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/my/my.dart';
+import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,17 +56,13 @@ class ProfileUpdatePage extends ConsumerWidget {
               const Gap(32),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ProfileUpdateInfoSelector(
-                        profileType: profileType,
-                        profile: profileManageState.originalProfile,
-                        onProfileUpdated: (selectedValue, isChanged) {
-                          profileManageNotifier.updateProfile(
-                              selectedValue, isChanged);
-                        },
-                      ),
-                    ],
+                  child: ProfileUpdateInfoSelector(
+                    profileType: profileType,
+                    profile: profileManageState.profile,
+                    onProfileUpdated: (selectedValue, isChanged) {
+                      profileManageNotifier.updateProfile(
+                          selectedValue, isChanged);
+                    },
                   ),
                 ),
               ),

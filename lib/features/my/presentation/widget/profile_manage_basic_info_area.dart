@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/my/my.dart';
+import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -13,20 +14,14 @@ final TextStyle _defaultHintStyle =
 final TextStyle _blackHintStyle =
     Fonts.body02Medium().copyWith(color: Palette.colorBlack);
 
-String _getDisplayValue(MyBasicInfoType type, MyProfile profile) {
-  switch (type) {
-    case MyBasicInfoType.nickname:
-      return profile.nickname;
-    case MyBasicInfoType.age:
-      return profile.age.toString();
-    case MyBasicInfoType.height:
-      return "${profile.height}cm";
-    case MyBasicInfoType.gender:
-      return profile.gender == GenderEnum.male ? '남자' : '여자';
-    case MyBasicInfoType.phoneNum:
-      return profile.phoneNum;
-  }
-}
+String _getDisplayValue(MyBasicInfoType type, MyProfile profile) =>
+    switch (type) {
+      MyBasicInfoType.nickname => profile.nickname,
+      MyBasicInfoType.age => profile.age.toString(),
+      MyBasicInfoType.height => "${profile.height}cm",
+      MyBasicInfoType.gender => profile.gender == GenderEnum.male ? '남자' : '여자',
+      MyBasicInfoType.phoneNum => profile.phoneNum,
+    };
 
 class ProfileManageBasicInfoArea extends StatelessWidget {
   final MyProfile profile;

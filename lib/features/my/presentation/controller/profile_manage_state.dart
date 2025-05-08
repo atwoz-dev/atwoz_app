@@ -13,6 +13,4 @@ class ProfileManageState with _$ProfileManageState {
   }) = _ProfileManageState;
 
   const ProfileManageState._();
-
-  MyProfile get originalProfile => profile;
 }

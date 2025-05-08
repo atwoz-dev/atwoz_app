@@ -2,9 +2,41 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+const List<Map<String, dynamic>> _menuItems = [
+  {
+    'title': '프로필 관리',
+    'iconPath': IconPath.myProfile,
+    'route': AppRoute.profileManage,
+  },
+  {
+    'title': '이상형 설정',
+    'iconPath': IconPath.idealSetting,
+    'route': AppRoute.idealSetting,
+  },
+  {
+    'title': '차단친구 관리',
+    'iconPath': IconPath.blockFriend,
+    'route': AppRoute.blockFriend,
+  },
+  {
+    'title': '스토어',
+    'iconPath': IconPath.store,
+    'route': AppRoute.store,
+  },
+  {
+    'title': '고객센터',
+    'iconPath': IconPath.customerCenter,
+    'route': null,
+  },
+  {
+    'title': '설정',
+    'iconPath': IconPath.setting,
+    'route': AppRoute.setting,
+  },
+];
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -16,35 +48,19 @@ class MyPage extends StatelessWidget {
         title: "마이페이지",
       ),
       body: Column(
-        children: MyPageType.values.map(
-          (type) {
-            return _MyPageListItem(
-              title: type.label,
-              iconPath: MyPageType.iconPath[type] ?? '',
-              onTapMove: () {
-                switch (type) {
-                  case MyPageType.profileManage:
-                    navigate(context, route: AppRoute.profileManage);
-                    break;
-                  case MyPageType.idealSetting:
-                    navigate(context, route: AppRoute.idealSetting);
-                    break;
-                  case MyPageType.friendBlock:
-                    navigate(context, route: AppRoute.blockFriend);
-                    break;
-                  case MyPageType.store:
-                    navigate(context, route: AppRoute.store);
-                    break;
-                  case MyPageType.serviceCenter:
-                    break;
-                  case MyPageType.setting:
-                    navigate(context, route: AppRoute.setting);
-                    break;
-                }
-              },
-            );
-          },
-        ).toList(),
+        children: _menuItems
+            .map(
+              (item) => _MyPageListItem(
+                title: item['title'],
+                iconPath: item['iconPath'],
+                onTapMove: () {
+                  if (item['route'] != null) {
+                    navigate(context, route: item['route']);
+                  }
+                },
+              ),
+            )
+            .toList(),
       ),
     );
   }

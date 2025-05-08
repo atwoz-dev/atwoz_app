@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 List<Map<String, dynamic>> cityRegionMap = [
   {
     "city": "서울",
@@ -281,7 +283,6 @@ List<Map<String, dynamic>> cityRegionMap = [
     ]
   },
 ];
-// TODO: cityRegionMap 추후 삭제 예정
 
 enum CityEnum {
   seoul('서울'),
@@ -307,14 +308,10 @@ enum CityEnum {
 
   static CityEnum? fromServerData(String? value) {
     if (value == null) return null;
-    try {
-      final camelCase = value.toLowerCase();
-      return CityEnum.values.firstWhere(
-        (city) => city.name == camelCase,
-      );
-    } catch (e) {
-      return null;
-    }
+    final lowerCaseValue = value.toLowerCase();
+    return CityEnum.values.firstWhereOrNull(
+      (city) => city.name == lowerCaseValue,
+    );
   }
 }
 
@@ -586,41 +583,42 @@ enum DistrictEnum {
   const DistrictEnum(this.city, this.label);
 
   static DistrictEnum? fromServerData(String? value) {
-    if (value == null) return null;
-    try {
-      // 서버에서 받은 대문자 값을 camelCase로 변환
-      final parts = value.split('_');
-      if (parts.isEmpty) return null;
-
-      // 첫 번째 단어는 모두 소문자로
-      final firstWord = parts[0].toLowerCase();
-
-      // 나머지 단어들은 첫 글자만 대문자로
-      final remainingWords = parts.skip(1).map((part) {
-        if (part.isEmpty) return '';
-        return part[0].toUpperCase() + part.substring(1).toLowerCase();
-      });
-
-      final camelCase = firstWord + remainingWords.join();
-
-      return DistrictEnum.values.firstWhere(
-        (district) => district.name == camelCase,
-      );
-    } catch (e) {
-      return null;
+    if (value == null) {
+      throw ArgumentError('값이 null일 수 없습니다.');
     }
+
+    // 서버에서 받은 대문자 값을 camelCase로 변환
+    final parts = value.split('_');
+    if (parts.isEmpty) {
+      throw FormatException('잘못된 형식입니다: $value');
+    }
+
+    // 첫 번째 단어는 모두 소문자로
+    final firstWord = parts[0].toLowerCase();
+
+    // 나머지 단어들은 첫 글자만 대문자로
+    final remainingWords = parts.skip(1).map((part) {
+      if (part.isEmpty) {
+        throw FormatException('값에 잘못된 부분이 있습니다: $value');
+      }
+      return part[0].toUpperCase() + part.substring(1).toLowerCase();
+    });
+
+    final camelCase = firstWord + remainingWords.join();
+
+    return DistrictEnum.values.firstWhere(
+      (district) => district.name == camelCase,
+      orElse: () => throw StateError('해당 값에 일치하는 DistrictEnum이 없습니다: $value'),
+    );
   }
 
   // label을 enum으로 변환
   static DistrictEnum? fromLabel(String? label) {
     if (label == null) return null;
-    try {
-      return DistrictEnum.values.firstWhere(
-        (district) => district.label == label,
-      );
-    } catch (e) {
-      return null;
-    }
+
+    return DistrictEnum.values.firstWhereOrNull(
+      (district) => district.label == label,
+    );
   }
 
   // 서버 형식으로 변환하는 메서드
@@ -646,12 +644,16 @@ extension LocationParsingExtension on Map<String, dynamic> {
     final city = this['city'] as String?; // 'CityEnum'에서 'city'로 변경
     final district = this['district'] as String?;
 
-    if (city == null) return null;
+    if (city == null) {
+      throw ArgumentError('도시 정보가 누락되었습니다.');
+    }
 
     final CityEnum? cityEnum = CityEnum.fromServerData(city);
-    final DistrictEnum? districtEnum = DistrictEnum.fromServerData(district);
+    if (cityEnum == null) {
+      throw StateError('유효하지 않은 도시 값입니다: $city');
+    }
 
-    if (cityEnum == null) return null;
+    final DistrictEnum? districtEnum = DistrictEnum.fromServerData(district);
 
     if (districtEnum != null) {
       return '${cityEnum.label} ${districtEnum.label}';

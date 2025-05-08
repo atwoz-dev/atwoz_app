@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/features/my/my.dart';
+import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -11,26 +12,18 @@ import 'package:gap/gap.dart';
 import '../../../../app/constants/enum.dart';
 
 String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
-  switch (type) {
-    case MyProfileInfoType.job:
-      return profile.job.label;
-    case MyProfileInfoType.region:
-      return profile.region;
-    case MyProfileInfoType.education:
-      return educationMap[profile.education] ?? '';
-    case MyProfileInfoType.smokingStatus:
-      return profile.smokingStatus.label;
-    case MyProfileInfoType.drinkingStatus:
-      return profile.drinkingStatus.label;
-    case MyProfileInfoType.religion:
-      return profile.religion.label;
-    case MyProfileInfoType.mbti:
-      return profile.mbti;
-    case MyProfileInfoType.hobbies:
-      return profile.hobbies.map((hobby) => hobby.label).join(', ');
-    case MyProfileInfoType.nickname:
-      return '';
-  }
+  return switch (type) {
+    MyProfileInfoType.job => profile.job.label,
+    MyProfileInfoType.region => profile.region,
+    MyProfileInfoType.education => educationMap[profile.education] ?? '',
+    MyProfileInfoType.smokingStatus => profile.smokingStatus.label,
+    MyProfileInfoType.drinkingStatus => profile.drinkingStatus.label,
+    MyProfileInfoType.religion => profile.religion.label,
+    MyProfileInfoType.mbti => profile.mbti,
+    MyProfileInfoType.hobbies =>
+      profile.hobbies.map((hobby) => hobby.label).join(', '),
+    MyProfileInfoType.nickname => '',
+  };
 }
 
 class ProfileManageInfoArea extends StatelessWidget {

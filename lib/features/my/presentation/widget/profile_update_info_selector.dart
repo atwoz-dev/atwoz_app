@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
