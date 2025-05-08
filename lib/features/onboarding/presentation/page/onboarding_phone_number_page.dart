@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/core/util/phone_number_formatter.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
@@ -49,7 +50,9 @@ class OnboardingPhoneInputPageState
       });
       return;
     }
-    final isValid = Validation.phoneMobile.hasMatch(input);
+    final isValid = Validation.phoneMobile
+        .hasMatch(input.replaceAll(RegExp(r'\D'), '')); // 하이픈 제거 후 비교
+
     safeSetState(() {
       validationError = isValid ? null : '올바른 휴대폰 번호 형식이 아닙니다.';
     });
@@ -104,12 +107,12 @@ class OnboardingPhoneInputPageState
                     autofocus: false,
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    hintText: '01000000000',
+                    hintText: '010-0000-0000',
                     fillColor: Palette.colorGrey100,
-                    // validator: (_) => validationError, // 에러 메시지 표시
                     errorText: validationError,
+                    inputFormatters: [PhoneNumberFormatter()],
                     onFieldSubmitted: (value) {
-                      _validateInput(value); // 엔터를 눌렀을 때 유효성 검사
+                      _validateInput(value); // 유효성 검사 실행
                     },
                   ),
                 ),
