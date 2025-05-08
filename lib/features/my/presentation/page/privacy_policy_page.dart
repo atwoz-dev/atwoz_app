@@ -9,7 +9,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "개인정보 취급방침",
       ),
       body: SafeArea(
@@ -18,7 +18,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               style: Fonts.body02Medium().copyWith(
-                color: Color(0xff7E7E7E),
+                color: const Color(0xff7E7E7E),
                 fontWeight: FontWeight.w400,
               ),
               children: _parsePrivacyPolicy(privacyPolicyText),
