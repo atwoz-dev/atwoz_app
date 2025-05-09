@@ -57,20 +57,6 @@ class NotificationPage extends ConsumerWidget with LogMixin {
     final notificationDataAsync = ref.watch(notificationDataNotifierProvider);
 
     return Scaffold(
-      floatingActionButton: ElevatedButton(
-        onPressed: () async {
-          final repo = ref.read(notificationRepositoryProvider);
-          await repo.sendTestNotification(
-            const TestNotificationRequest(
-              senderId: 7,
-              senderType: 'MEMBER',
-              receiverId: 35,
-              notificationType: NotificationType.matchRequested,
-            ),
-          );
-        },
-        child: const Text('테스트 알림 보내기'),
-      ),
       appBar: const DefaultAppBar(title: '알림'),
       body: notificationDataAsync.when(
         data: (notifications) => buildNotificationList(

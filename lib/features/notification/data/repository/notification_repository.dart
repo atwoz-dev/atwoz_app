@@ -13,13 +13,6 @@ class NotificationRepository extends BaseRepository {
         requiresRefreshCookie: true);
   }
 
-  Future<void> sendTestNotification(TestNotificationRequest request) async {
-    await apiService.postJson(
-      '$path/test',
-      data: request.toJson(),
-    );
-  }
-
   Future<void> markAsRead(int notificationId) async {
     await apiService.patchJson(
       '/notifications/$notificationId',
