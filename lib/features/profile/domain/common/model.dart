@@ -42,14 +42,17 @@ class SelfIntroductionData {
 }
 
 sealed class MatchStatus extends Equatable {
-  const MatchStatus();
+  const MatchStatus({required this.matchId});
+
+  final int matchId;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [matchId];
 }
 
 class Matched extends MatchStatus {
   const Matched({
+    required super.matchId,
     required this.sentMessage,
     required this.receivedMessage,
     required this.contactMethod,
@@ -63,6 +66,7 @@ class Matched extends MatchStatus {
 
   @override
   List<Object> get props => [
+        matchId,
         sentMessage,
         receivedMessage,
         contactMethod,
@@ -71,17 +75,24 @@ class Matched extends MatchStatus {
 }
 
 class UnMatched extends MatchStatus {
-  const UnMatched();
+  const UnMatched() : super(matchId: 0);
 }
 
 abstract class Matching extends MatchStatus {
-  const Matching({required this.isExpired});
+  const Matching({
+    required super.matchId,
+    required this.isExpired,
+  });
 
   final bool isExpired;
+
+  @override
+  List<Object> get props => [matchId, isExpired];
 }
 
 class MatchingRequested extends Matching {
   const MatchingRequested({
+    required super.matchId,
     required this.sentMessage,
     super.isExpired = false,
   });
@@ -89,17 +100,23 @@ class MatchingRequested extends Matching {
   final String sentMessage;
 
   @override
-  List<Object> get props => [sentMessage, isExpired];
+  List<Object> get props => [
+        matchId,
+        sentMessage,
+        isExpired,
+      ];
 }
 
 class MatchRejected extends MatchingRequested {
   const MatchRejected({
+    required super.matchId,
     required super.sentMessage,
   }) : super(isExpired: true);
 }
 
 class MatchingReceived extends Matching {
   const MatchingReceived({
+    required super.matchId,
     required this.receivedMessage,
     super.isExpired = false,
   });
@@ -107,7 +124,11 @@ class MatchingReceived extends Matching {
   final String receivedMessage;
 
   @override
-  List<Object> get props => [receivedMessage, isExpired];
+  List<Object> get props => [
+        matchId,
+        receivedMessage,
+        isExpired,
+      ];
 }
 
 enum ProfileErrorType {

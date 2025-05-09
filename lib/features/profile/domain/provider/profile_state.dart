@@ -29,5 +29,7 @@ class ProfileState with _$ProfileState {
 
   MatchStatus? get matchStatus => profile?.matchStatus;
 
-  bool get enabledMessageInput => profile?.matchStatus is! Matching;
+  bool get enabledMessageInput =>
+      profile?.matchStatus is UnMatched ||
+      profile?.matchStatus is MatchingReceived;
 }

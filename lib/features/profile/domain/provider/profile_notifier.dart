@@ -64,6 +64,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       state = state.copyWith(
         profile: state.profile?.copyWith(
           matchStatus: MatchingRequested(
+            matchId: state.profile!.matchStatus.matchId,
             sentMessage: state.message,
           ),
         ),
@@ -74,11 +75,13 @@ class ProfileNotifier extends _$ProfileNotifier {
     }
   }
 
-  Future<void> rejectMatch(int matchId) async {
+  Future<void> rejectMatch() async {
     if (state.profile == null) return;
 
     try {
-      await ProfileMatchRejectUseCase(ref).call(matchId);
+      await ProfileMatchRejectUseCase(ref).call(
+        state.profile!.matchStatus.matchId,
+      );
 
       state = state.copyWith(
         profile: state.profile?.copyWith(
@@ -91,9 +94,11 @@ class ProfileNotifier extends _$ProfileNotifier {
     }
   }
 
-  Future<void> resetMatchStatus(int matchId) async {
+  Future<void> resetMatchStatus() async {
     try {
-      await ProfileMatchResetUseCase(ref).call(matchId);
+      await ProfileMatchResetUseCase(ref).call(
+        state.profile!.matchStatus.matchId,
+      );
 
       state = state.copyWith(
         profile: state.profile?.copyWith(
@@ -106,12 +111,12 @@ class ProfileNotifier extends _$ProfileNotifier {
     }
   }
 
-  Future<void> approveMatch(int matchId) async {
+  Future<void> approveMatch() async {
     if (state.profile == null) return;
 
     try {
       await ProfileMatchApproveUseCase(ref).call(
-        matchId: matchId,
+        matchId: state.profile!.matchStatus.matchId,
         message: state.message,
       );
 

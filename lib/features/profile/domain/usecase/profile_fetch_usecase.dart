@@ -16,7 +16,7 @@ class ProfileFetchUseCase {
 
     if (designInspectionPresetData != null) {
       return UserProfile(
-        id: 0,
+        id: 1,
         name: '장원영',
         profileUri: 'https://picsum.photos/200/300',
         age: 20,
@@ -38,7 +38,7 @@ class ProfileFetchUseCase {
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
     // TODO(Han): 실패 처리 필요 + my user id 받아오기
-    return response.toModel(3);
+    return response.toModel(myUserId);
   }
 }
 
@@ -49,9 +49,9 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       id: basic.id,
       name: basic.nickname,
       profileUri: basic.profileImageUrl,
-      age: basic.age,
+      age: basic.age ?? 0,
       mbti: basic.mbti,
-      address: basic.region,
+      address: basic.region ?? '',
       hobbies: basic.hobbies,
       selfIntroductionItems:
           interviews.map((intro) => intro.toModel()).toList(),
@@ -72,15 +72,18 @@ extension MatchInformationX on MatchInformation {
   MatchStatus toModel(int myUserId) => switch (matchStatus) {
         ('WAITING' || 'EXPIRED') when requesterId == myUserId =>
           MatchingRequested(
+            matchId: matchId,
             sentMessage: requestMessage ?? '',
             isExpired: matchStatus == 'EXPIRED',
           ),
         ('WAITING' || 'EXPIRED') when responderId == myUserId =>
           MatchingReceived(
-            receivedMessage: responseMessage ?? '',
+            matchId: matchId,
+            receivedMessage: requestMessage ?? '',
             isExpired: matchStatus == 'EXPIRED',
           ),
         'MATCHED' => Matched(
+            matchId: matchId,
             sentMessage: requestMessage ?? '',
             receivedMessage: responseMessage ?? '',
             contactMethod: switch (contactType) {
@@ -90,7 +93,10 @@ extension MatchInformationX on MatchInformation {
             },
             contactInfo: contact ?? '',
           ),
-        'REJECTED' || _ => MatchRejected(sentMessage: requestMessage ?? ''),
+        'REJECTED' || _ => MatchRejected(
+            matchId: matchId,
+            sentMessage: requestMessage ?? '',
+          ),
       };
 }
 
@@ -107,20 +113,24 @@ MatchStatus? get _designInspectionStatus => switch (kDebugPageType) {
       ProfileDesignInspectionType.main => const UnMatched(),
       ProfileDesignInspectionType.matchingBeforeResponse =>
         const MatchingRequested(
+          matchId: 0,
           sentMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
         ),
       ProfileDesignInspectionType.matchingExpiredOrDenied =>
         const MatchingRequested(
+          matchId: 0,
           sentMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
           isExpired: true,
         ),
       ProfileDesignInspectionType.messageReceived => const MatchingReceived(
+          matchId: 0,
           receivedMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
         ),
       ProfileDesignInspectionType.matched => const Matched(
+          matchId: 0,
           sentMessage: '''
 저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요
 괜찮으시다면 저희 연락 한번 해봐요!
