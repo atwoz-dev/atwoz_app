@@ -6,8 +6,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants/constants.dart';
 import '../../../core/util/string_util.dart';
+import '../../constants/constants.dart';
 import '../view/default_progress_indicator.dart';
 import 'error_image.dart';
 
@@ -50,25 +50,26 @@ class DefaultImage extends ConsumerWidget {
     }
 
     return ClipRRect(
-        borderRadius: borderRadius,
-        child: ColoredBox(
-          color: context.palette.shadow,
-          child: CachedNetworkImage(
-            imageUrl: imageURL!,
+      borderRadius: borderRadius,
+      child: ColoredBox(
+        color: context.palette.shadow,
+        child: CachedNetworkImage(
+          imageUrl: imageURL!,
+          width: width,
+          height: height,
+          fit: fit,
+          progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
+              DefaultCircularProgressIndicator(
+            progress: progress.progress,
+          ),
+          errorWidget: (_, __, ___) => ErrorImage(
             width: width,
             height: height,
-            fit: fit,
-            progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
-                DefaultCircularProgressIndicator(
-              progress: progress.progress,
-            ),
-            errorWidget: (_, __, ___) => ErrorImage(
-              width: width,
-              height: height,
-              borderRadius: borderRadius,
-            ),
+            borderRadius: borderRadius,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   static Widget file(

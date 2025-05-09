@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
@@ -8,11 +7,12 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
+import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
@@ -94,7 +94,8 @@ enum AppRoute {
   introduceFilter('/introduceFilter'),
   introduceNavigation('/introduceNavigation'),
   notification('/notification'),
-  storeNavigation('/storeNavigation');
+  storeNavigation('/storeNavigation'),
+  favoriteList('/favorite-list');
 
   final String path;
 
@@ -204,6 +205,10 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.storeNavigation.path,
       builder: (context, state) => const StoreNavigationPage(),
+    ),
+    GoRoute(
+      path: AppRoute.favoriteList.path,
+      builder: (context, state) => const FavoriteListPage(),
     ),
   ];
 }
