@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/favorite_list/domain/provider/domain.dart';
 import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'empty_favorite.dart';
 import 'favorite_grid_item.dart';
 
-class FavoriteListBody extends ConsumerWidget {
-  const FavoriteListBody({
-    super.key,
-  });
+class FavoriteListBody extends ConsumerStatefulWidget {
+  const FavoriteListBody({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FavoriteListBody> createState() => _FavoriteListBodyState();
+}
+
+class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
+  late final ScrollController _controller;
+  late final List<int> _unBlurIdList;
+
+  @override
+  void initState() {
+    _controller = ScrollController()..addListener(_onScroll);
+    _unBlurIdList = [];
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final notifier = ref.watch(favoriteListNotifierProvider);
 
     return SafeArea(
@@ -28,6 +49,7 @@ class FavoriteListBody extends ConsumerWidget {
           }
 
           return CustomScrollView(
+            controller: _controller,
             slivers: [
               SliverPadding(
                 padding: const EdgeInsets.symmetric(
@@ -35,10 +57,22 @@ class FavoriteListBody extends ConsumerWidget {
                 ),
                 sliver: SliverGrid(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => FavoriteGridItem(
-                      profile: profiles[index],
-                      isBlurred: index >= _previewProfileCount,
-                    ),
+                    (context, index) {
+                      final profile = profiles[index];
+                      return FavoriteGridItem(
+                        profile: profile,
+                        isBlurred: !(index < _previewProfileCount &&
+                            _unBlurIdList.contains(profile.userId)),
+                        onProfielTab: () => navigate(
+                          context,
+                          route: AppRoute.profile,
+                          extra: ProfileDetailArguments(userId: profile.userId),
+                        ),
+                        onBlurTap: () => setState(
+                          () => _unBlurIdList.add(profile.userId),
+                        ),
+                      );
+                    },
                     childCount: profiles.length,
                   ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -56,9 +90,27 @@ class FavoriteListBody extends ConsumerWidget {
     );
   }
 
-  static const _gridItemSize = Size(104.0, 150.0);
+  static const _gridItemSize = Size(104.0, 152.0);
 
   static const _gridColumnCount = 3;
 
   static const _previewProfileCount = 6;
+
+  void _onScroll() {
+    final pixel = _controller.position.pixels;
+    const threshold = 300;
+    if (_controller.position.maxScrollExtent >= pixel + threshold) return;
+
+    final notifier = ref.read(favoriteListNotifierProvider.notifier);
+
+    final currentSelectedTab =
+        FavoriteTabType.values[DefaultTabController.of(context).index];
+
+    switch (currentSelectedTab) {
+      case FavoriteTabType.sent:
+        notifier.loadMoreMyFavorites();
+      case FavoriteTabType.received:
+        notifier.loadMoreFavoriteMe();
+    }
+  }
 }

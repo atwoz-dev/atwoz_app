@@ -13,10 +13,14 @@ class FavoriteGridItem extends StatelessWidget {
     super.key,
     required this.profile,
     required this.isBlurred,
+    required this.onProfielTab,
+    required this.onBlurTap,
   });
 
   final FavoriteUserSummary profile;
   final bool isBlurred;
+  final VoidCallback onProfielTab;
+  final VoidCallback onBlurTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +30,21 @@ class FavoriteGridItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: _imageRadius,
-          child: isBlurred
-              ? ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: _ProfileImageContainer(profile: profile),
-                )
-              : _ProfileImageContainer(profile: profile),
+          child: GestureDetector(
+            onTap: isBlurred ? onBlurTap : onProfielTab,
+            child: isBlurred
+                ? ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: _ProfileImageContainer(profile: profile),
+                  )
+                : _ProfileImageContainer(profile: profile),
+          ),
         ),
         const Gap(8.0),
         Text(profile.name, style: Fonts.body02Medium()),
         const Gap(4.0),
         Text(
-          '${profile.region}, ${profile.age}',
+          '${profile.city}, ${profile.age}',
           style: Fonts.body03Regular(
             context.colorScheme.secondary,
           ),
@@ -78,12 +85,12 @@ class _ProfileImageContainer extends StatelessWidget {
               smallSize: 8.0,
             ),
           ),
-        if (profile.isMessageReceived)
+        if (profile.isMutual)
           const Positioned(
             right: 5.0,
             bottom: 5.0,
             child: DefaultIcon(
-              IconPath.mailOutline,
+              IconPath.heart,
               size: 20.0,
             ),
           ),

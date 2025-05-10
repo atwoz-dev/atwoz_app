@@ -1,22 +1,24 @@
 import 'dart:math';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'favorite_list_state.freezed.dart';
 
+enum FavoriteListErrorType {
+  network,
+}
+
 @freezed
 class FavoriteListState with _$FavoriteListState {
   const factory FavoriteListState({
-    required List<FavoriteUserSummary> favoriteMeUsers,
-    required List<FavoriteUserSummary> myFavoriteUsers,
+    @Default([]) List<FavoriteUserSummary> myFavoriteUsers,
+    @Default([]) List<FavoriteUserSummary> favoriteMeUsers,
+    @Default(false) bool isLoaded,
+    FavoriteListErrorType? error,
   }) = _FavoriteListState;
 
-  factory FavoriteListState.initial() => FavoriteListState(
-        favoriteMeUsers: _debugData,
-        myFavoriteUsers: _debugData,
-      );
-
   const FavoriteListState._();
+
+  factory FavoriteListState.initial() => const FavoriteListState();
 }
 
 class FavoriteUserSummary {
@@ -25,28 +27,27 @@ class FavoriteUserSummary {
     required this.profileUrl,
     required this.name,
     required this.age,
-    required this.region,
+    required this.city,
     required this.favoriteAt,
-    required this.isMessageReceived,
+    required this.isMutual,
   });
 
   final int userId;
   final String profileUrl;
   final String name;
   final int age;
-  final String region;
-
+  final String city;
   final DateTime favoriteAt;
-  final bool isMessageReceived;
+  final bool isMutual;
 
-  bool get isRecent => favoriteAt.isBefore(_today.subtract(const Duration(
+  bool get isRecent => favoriteAt.isAfter(_today.subtract(const Duration(
         hours: 12,
       )));
 
   static final _today = DateTime.now();
 }
 
-// List<FavoriteUserSummary> get _debugData => [];
+// TODO(Han): test data creator
 List<FavoriteUserSummary> get _debugData => List.generate(
       11,
       (index) => FavoriteUserSummary(
@@ -60,9 +61,9 @@ List<FavoriteUserSummary> get _debugData => List.generate(
             .first,
         name: (['조이현', '박보영', '신민아']..shuffle()).first,
         age: Random().nextInt(10) + 20,
-        region: (['서울, 경기']..shuffle()).first,
+        city: (['서울, 경기']..shuffle()).first,
         favoriteAt:
             DateTime.now().subtract(Duration(days: Random().nextInt(5))),
-        isMessageReceived: Random().nextBool(),
+        isMutual: Random().nextBool(),
       ),
     )..sort((a, b) => a.favoriteAt.compareTo(b.favoriteAt));
