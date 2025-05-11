@@ -5,37 +5,44 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-const List<Map<String, dynamic>> _menuItems = [
-  {
-    'title': '프로필 관리',
-    'iconPath': IconPath.myProfile,
-    'route': AppRoute.profileManage,
-  },
-  {
-    'title': '이상형 설정',
-    'iconPath': IconPath.idealSetting,
-    'route': AppRoute.idealSetting,
-  },
-  {
-    'title': '차단친구 관리',
-    'iconPath': IconPath.blockFriend,
-    'route': AppRoute.blockFriend,
-  },
-  {
-    'title': '스토어',
-    'iconPath': IconPath.store,
-    'route': AppRoute.store,
-  },
-  {
-    'title': '고객센터',
-    'iconPath': IconPath.customerCenter,
-    'route': null,
-  },
-  {
-    'title': '설정',
-    'iconPath': IconPath.setting,
-    'route': AppRoute.setting,
-  },
+typedef MenuItem = ({
+  String title,
+  String iconPath,
+  AppRoute? route,
+});
+
+// Record를 사용한 menuItems 정의
+const List<MenuItem> _menuItems = [
+  (
+    title: '프로필 관리',
+    iconPath: IconPath.myProfile,
+    route: AppRoute.profileManage,
+  ),
+  (
+    title: '이상형 설정',
+    iconPath: IconPath.idealSetting,
+    route: AppRoute.idealSetting,
+  ),
+  (
+    title: '차단친구 관리',
+    iconPath: IconPath.blockFriend,
+    route: AppRoute.blockFriend,
+  ),
+  (
+    title: '스토어',
+    iconPath: IconPath.store,
+    route: AppRoute.store,
+  ),
+  (
+    title: '고객센터',
+    iconPath: IconPath.customerCenter,
+    route: null,
+  ),
+  (
+    title: '설정',
+    iconPath: IconPath.setting,
+    route: AppRoute.setting,
+  ),
 ];
 
 class MyPage extends StatelessWidget {
@@ -51,11 +58,11 @@ class MyPage extends StatelessWidget {
         children: _menuItems
             .map(
               (item) => _MyPageListItem(
-                title: item['title'],
-                iconPath: item['iconPath'],
+                title: item.title,
+                iconPath: item.iconPath,
                 onTapMove: () {
-                  if (item['route'] != null) {
-                    navigate(context, route: item['route']);
+                  if (item.route != null) {
+                    navigate(context, route: item.route!);
                   }
                 },
               ),
