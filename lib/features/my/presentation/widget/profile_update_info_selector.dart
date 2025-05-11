@@ -133,7 +133,8 @@ class _ProfileUpdateInfoSelectorState
           _tempProfile.value = _tempProfile.value.copyWith(
             hobbies: value.map((e) => Hobby.parse(e)).toList(),
           );
-          widget.onProfileUpdated(_tempProfile.value, isChanged);
+          widget.onProfileUpdated(
+              _tempProfile.value, isChanged && value.isNotEmpty);
         },
       ),
       '닉네임': _InputTypeSelector(
