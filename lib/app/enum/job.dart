@@ -23,19 +23,14 @@ enum Job {
   final String label;
   const Job(this.label);
 
-  // label을 enum으로 반환
-  static Job? fromLabel(String? label) {
-    if (label == null) return null;
-    try {
-      return Job.values.firstWhere(
-        (job) => job.label == label,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  static final Map<String, Job> _byValue = {
+    for (final level in Job.values) level.label: level,
+  };
 
-  // 서버 형식으로 변환
+  // label을 enum으로 변환
+  static Job parse(String? value) => _byValue[value] ?? Job.others;
+
+  // enum을 서버데이터로 변환
   String toServerString() {
     final serverFormat = name
         .replaceAllMapped(
@@ -50,25 +45,10 @@ enum Job {
   }
 
   // 서버 데이터를 enum으로 변환
-  static Job? fromServerData(String? value) {
-    if (value == null) return null;
-    try {
-      final parts = value.split('_');
-      if (parts.isEmpty) return null;
+  // 서버에서 오는 프로필 데이터는 id, 전화번호 제외 모두 nullable
+  static final Map<String, Job> _byServerData = {
+    for (final job in Job.values) job.toServerString(): job,
+  };
 
-      final firstWord = parts[0].toLowerCase();
-      final remainingWords = parts.skip(1).map((part) {
-        if (part.isEmpty) return '';
-        return part[0].toUpperCase() + part.substring(1).toLowerCase();
-      });
-
-      final camelCase = firstWord + remainingWords.join();
-
-      return Job.values.firstWhere(
-        (job) => job.name == camelCase,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  static Job parseFromData(String? value) => _byServerData[value] ?? Job.others;
 }

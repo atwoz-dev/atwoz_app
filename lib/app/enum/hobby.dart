@@ -32,19 +32,14 @@ enum Hobby {
   final String label;
   const Hobby(this.label);
 
-  // label을 enum으로 반환
-  static Hobby? fromLabel(String? label) {
-    if (label == null) return null;
-    try {
-      return Hobby.values.firstWhere(
-        (hobby) => hobby.label == label,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  static final Map<String, Hobby> _byValue = {
+    for (final level in Hobby.values) level.label: level,
+  };
 
-  // 서버 형식으로 변환
+  // label을 enum으로 변환
+  static Hobby parse(String? value) => _byValue[value] ?? Hobby.others;
+
+  // enum을 서버데이터로 변환
   String toServerString() {
     final serverFormat = name
         .replaceAllMapped(
@@ -59,25 +54,11 @@ enum Hobby {
   }
 
   // 서버 데이터를 enum으로 변환
-  static Hobby? fromServerData(String? value) {
-    if (value == null) return null;
-    try {
-      final parts = value.split('_');
-      if (parts.isEmpty) return null;
+  // 서버에서 오는 프로필 데이터는 id, 전화번호 제외 모두 nullable
+  static final Map<String, Hobby> _byServerData = {
+    for (final hobby in Hobby.values) hobby.toServerString(): hobby,
+  };
 
-      final firstWord = parts[0].toLowerCase();
-      final remainingWords = parts.skip(1).map((part) {
-        if (part.isEmpty) return '';
-        return part[0].toUpperCase() + part.substring(1).toLowerCase();
-      });
-
-      final camelCase = firstWord + remainingWords.join();
-
-      return Hobby.values.firstWhere(
-        (hobby) => hobby.name == camelCase,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  static Hobby parseFromData(String? value) =>
+      _byServerData[value] ?? Hobby.others;
 }
