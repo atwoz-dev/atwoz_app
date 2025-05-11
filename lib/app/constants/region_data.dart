@@ -658,15 +658,27 @@ class AddressData {
           );
         } else {
           // district 이름으로 검색
+          final filteredDistricts = districts.entries.where(
+            (entry) => entry.value.label.contains(parts.sublist(1).join(' ')),
+          );
           results.addAll(
-            districts.entries
-                .where((entry) => entry.value.label.contains(parts[1]))
-                .map((entry) => '$cityLabel ${entry.value.label}'),
+            filteredDistricts.map((entry) => '$cityLabel ${entry.value.label}'),
           );
         }
         return;
       }
     });
+
+    // district 이름으로 직접 검색
+    if (results.isEmpty) {
+      _districtByLabel.forEach((cityLabel, districts) {
+        districts.forEach((districtLabel, district) {
+          if (districtLabel.contains(keyword)) {
+            results.add('$cityLabel $districtLabel');
+          }
+        });
+      });
+    }
 
     return results;
   }

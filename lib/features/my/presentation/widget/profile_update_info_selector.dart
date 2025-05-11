@@ -522,10 +522,11 @@ class _LocationInputWidgetState extends State<_LocationInputWidget> {
           ),
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: context.screenHeight, // 스크롤 가능한 최대 높이 설정
+            maxHeight: context.screenHeight * 0.4, // 스크롤 가능한 최대 높이 설정
           ),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: _filteredLocations.map((location) {
                 return GestureDetector(
                   onTap: () {
