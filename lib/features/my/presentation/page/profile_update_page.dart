@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +11,7 @@ import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/view/view.dart';
 
 class ProfileUpdatePage extends ConsumerWidget {
-  final MyProfileInfoType profileType;
+  final String profileType;
 
   const ProfileUpdatePage({
     super.key,

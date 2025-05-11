@@ -1,21 +1,20 @@
-import 'package:atwoz_app/app/enum/enum.dart';
-import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/temp.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_choices.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
 class ProfileUpdateInfoSelector extends ConsumerStatefulWidget {
-  final MyProfileInfoType profileType;
+  final String profileType;
   final MyProfile profile;
   final void Function(MyProfile, bool) onProfileUpdated;
   const ProfileUpdateInfoSelector({
@@ -56,19 +55,17 @@ class _ProfileUpdateInfoSelectorState
         initialValue: widget.profile.job.label,
         onSelected: (value) {
           _tempProfile.value =
-              _tempProfile.value.copyWith(job: Job.fromLabel(value)!);
+              _tempProfile.value.copyWith(job: Job.parse(value));
           widget.onProfileUpdated(
               _tempProfile.value, value != widget.profile.job.label);
         },
       ),
-      '지역': LocationInputWidget(
-        selectedLocation: null, // TODO: 기존 정보로 지역값 초기화. 현재 해당부분 문제 있어 null 처리
-        onLocationUpdated: (value) {
-          if (value != null) {
-            _tempProfile.value = _tempProfile.value.copyWith(region: value);
-            widget.onProfileUpdated(
-                _tempProfile.value, value != widget.profile.region);
-          }
+      '지역': _LocationInputWidget(
+        initialValue: widget.profile.region,
+        onSubmitted: (value) {
+          _tempProfile.value = _tempProfile.value.copyWith(region: value);
+          widget.onProfileUpdated(_tempProfile.value,
+              value != widget.profile.region && value.isNotEmpty);
         },
       ),
       '학력': _SingleButtonTypeSelector(
@@ -134,7 +131,7 @@ class _ProfileUpdateInfoSelectorState
         initialValues: widget.profile.hobbies.map((e) => e.label).toList(),
         onSelected: (value, isChanged) {
           _tempProfile.value = _tempProfile.value.copyWith(
-            hobbies: value.map((e) => Hobby.fromLabel(e)!).toList(),
+            hobbies: value.map((e) => Hobby.parse(e)).toList(),
           );
           widget.onProfileUpdated(_tempProfile.value, isChanged);
         },
@@ -160,32 +157,34 @@ class _ProfileUpdateInfoSelectorState
           ],
         ),
         const Gap(24),
-        infoValues[widget.profileType.label]!,
+        infoValues[widget.profileType]!,
       ],
     );
   }
 }
 
-String _getTitleByType(MyProfileInfoType type) {
+String _getTitleByType(String type) {
   switch (type) {
-    case MyProfileInfoType.job:
+    case '직업':
       return "직업이 어떻게 되세요?";
-    case MyProfileInfoType.region:
+    case '지역':
       return "지역이 어떻게 되세요?";
-    case MyProfileInfoType.education:
+    case '학력':
       return "학력이 어떻게 되세요?";
-    case MyProfileInfoType.smokingStatus:
+    case '흡연여부':
       return "흡연 여부가 어떻게 되세요?";
-    case MyProfileInfoType.drinkingStatus:
+    case '음주빈도':
       return "음주 빈도가 어떻게 되세요?";
-    case MyProfileInfoType.religion:
+    case '종교':
       return "종교가 어떻게 되세요?";
-    case MyProfileInfoType.mbti:
+    case 'MBTI':
       return "MBTI가 어떻게 되세요?";
-    case MyProfileInfoType.hobbies:
+    case '취미':
       return "취미가 어떻게 되세요?";
-    case MyProfileInfoType.nickname:
+    case '닉네임':
       return "닉네임이 어떻게 되세요?";
+    default:
+      return '';
   }
 }
 
@@ -432,6 +431,136 @@ class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
           ),
         );
       },
+    );
+  }
+}
+
+class _LocationInputWidget extends StatefulWidget {
+  const _LocationInputWidget({
+    required this.initialValue,
+    required this.onSubmitted,
+  });
+
+  final String initialValue;
+  final void Function(String) onSubmitted;
+
+  @override
+  State<_LocationInputWidget> createState() => _LocationInputWidgetState();
+}
+
+class _LocationInputWidgetState extends State<_LocationInputWidget> {
+  late final TextEditingController _controller;
+
+  List<String> _filteredLocations = [];
+
+  @override
+  void initState() {
+    _controller = TextEditingController(text: widget.initialValue);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: _controller,
+          onChanged: (value) {
+            setState(() {
+              _filteredLocations = addressData.searchLocations(value);
+            });
+          },
+          decoration: InputDecoration(
+            hintText: '지역을 입력하세요',
+            hintStyle: Fonts.body02Medium().copyWith(
+              fontWeight: FontWeight.w400,
+              color: const Color(0xff8D92A0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Color(0xffEDEEF0),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Palette.colorBlack,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        if (_controller.text.isEmpty)
+          GestureDetector(
+            onTap: () {
+              // TODO: 현재 위치로 설정하기 기능 구현
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xffDCDEE3),
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  '현재 위치로 설정하기',
+                  style: Fonts.body02Medium(Palette.colorBlack),
+                ),
+              ),
+            ),
+          ),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: context.screenHeight, // 스크롤 가능한 최대 높이 설정
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: _filteredLocations.map((location) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _controller.text = location;
+                      widget.onSubmitted(location);
+                      _filteredLocations.clear(); // 검색 후 결과 초기화
+                    });
+
+                    FocusScope.of(context).unfocus(); // 키보드 내리기
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 14,
+                      horizontal: 16,
+                    ),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Palette.colorGrey50,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      location,
+                      style: Fonts.body02Medium(Palette.colorGrey800),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

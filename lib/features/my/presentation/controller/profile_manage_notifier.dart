@@ -28,7 +28,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
                 'https://img.vogue.co.kr/vogue/2024/08/style_66b97644144f2.jpg'),
       ],
       job: Job.researchAndEngineering,
-      region: '서울시 강남구',
+      region: '서울 강남구',
       education: HighestEducationEnum.bachelorsSeoul,
       smokingStatus: SmokingStatus.none,
       drinkingStatus: DrinkingStatus.none,
