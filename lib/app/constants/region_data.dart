@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 List<Map<String, dynamic>> cityRegionMap = [
   {
     "city": "서울",
@@ -284,381 +282,392 @@ List<Map<String, dynamic>> cityRegionMap = [
   },
 ];
 
-enum CityEnum {
-  seoul('서울'),
-  incheon('인천'),
-  busan('부산'),
-  daejeon('대전'),
-  daegu('대구'),
-  gwangju('광주'),
-  ulsan('울산'),
-  jeju("제주"),
-  sejong('세종'),
-  gangwon('강원도'),
-  gyeonggi('경기도'),
-  gyeongsangnam('경상남도'),
-  gyeongsangbuk('경상북도'),
-  chungcheongnam('충청남도'),
-  chungcheongbuk('충청북도'),
-  jeollanam('전라남도'),
-  jeollabuk('전라북도');
-
+/// 기본 주소 아이템 클래스
+abstract class AddressItem {
   final String label;
-  const CityEnum(this.label);
+  final String value;
+  final List<AddressItem> subAddress;
 
-  static CityEnum? fromServerData(String? value) {
-    if (value == null) return null;
-    final lowerCaseValue = value.toLowerCase();
-    return CityEnum.values.firstWhereOrNull(
-      (city) => city.name == lowerCaseValue,
-    );
-  }
+  const AddressItem({
+    required this.label,
+    required this.value,
+    this.subAddress = const [],
+  });
 }
 
-enum DistrictEnum {
-  // 서울
-  gangnamGu(CityEnum.seoul, '강남구'),
-  gangdongGu(CityEnum.seoul, '강동구'),
-  gangbukGu(CityEnum.seoul, '강북구'),
-  gangseoGu(CityEnum.seoul, '강서구'),
-  gwanakGu(CityEnum.seoul, '관악구'),
-  gwangjinGu(CityEnum.seoul, '광진구'),
-  guroGu(CityEnum.seoul, '구로구'),
-  geumcheonGu(CityEnum.seoul, '금천구'),
-  nowonGu(CityEnum.seoul, '노원구'),
-  dobongGu(CityEnum.seoul, '도봉구'),
-  dongdaemunGu(CityEnum.seoul, '동대문구'),
-  dongjakGu(CityEnum.seoul, '동작구'),
-  mapoGu(CityEnum.seoul, '마포구'),
-  seodaemunGu(CityEnum.seoul, '서대문구'),
-  seochoGu(CityEnum.seoul, '서초구'),
-  seongdongGu(CityEnum.seoul, '성동구'),
-  seongbukGu(CityEnum.seoul, '성북구'),
-  songpaGu(CityEnum.seoul, '송파구'),
-  yangcheonGu(CityEnum.seoul, '양천구'),
-  yeongdeungpoGu(CityEnum.seoul, '영등포구'),
-  yongsanGu(CityEnum.seoul, '용산구'),
-  eunpyeongGu(CityEnum.seoul, '은평구'),
-  jongnoGu(CityEnum.seoul, '종로구'),
-  jungGu(CityEnum.seoul, '중구'),
-  jungnangGu(CityEnum.seoul, '중랑구'),
+/// 도시 주소 클래스
+class CityAddressItem extends AddressItem {
+  CityAddressItem({
+    required super.label,
+    required super.value,
+    List<DistrictAddressItem> districts = const [],
+  }) : super(subAddress: districts);
 
-  // 인천
-  ganghwaGun(CityEnum.incheon, "강화군"),
-  gyeyangGu(CityEnum.incheon, "계양구"),
-  namdongGu(CityEnum.incheon, "남동구"),
-  dongGuIncheon(CityEnum.incheon, "동구"),
-  michuholdGu(CityEnum.incheon, "미추홀구"),
-  bupyeongGu(CityEnum.incheon, "부평구"),
-  seoGuIncheon(CityEnum.incheon, "서구"),
-  yeonsuGu(CityEnum.incheon, "연수구"),
-  ongjinGun(CityEnum.incheon, "옹진군"),
-  jungGuIncheon(CityEnum.incheon, "중구"),
+  List<DistrictAddressItem> get districts =>
+      subAddress.cast<DistrictAddressItem>();
+}
 
-  // 부산
-  gangseoGuBusan(CityEnum.busan, "강서구"),
-  geumjeongGu(CityEnum.busan, "금정구"),
-  gijangGun(CityEnum.busan, "기장군"),
-  namGuBusan(CityEnum.busan, "남구"),
-  dongGuBusan(CityEnum.busan, "동구"),
-  dongnaeGu(CityEnum.busan, "동래구"),
-  busanjinGu(CityEnum.busan, "부산진구"),
-  bukGuBusan(CityEnum.busan, "북구"),
-  sasangGu(CityEnum.busan, "사상구"),
-  sahaGu(CityEnum.busan, "사하구"),
-  seoGuBusan(CityEnum.busan, "서구"),
-  suyeongGu(CityEnum.busan, "수영구"),
-  yeonjeGu(CityEnum.busan, "연제구"),
-  yeongdoGu(CityEnum.busan, "영도구"),
-  jungGuBusan(CityEnum.busan, "중구"),
-  haeundaeGu(CityEnum.busan, "해운대구"),
+/// 지역구 주소 클래스
+class DistrictAddressItem extends AddressItem {
+  DistrictAddressItem({
+    required super.label,
+    required super.value,
+    super.subAddress,
+  });
+}
 
-  // 대전
-  daedeokGu(CityEnum.daejeon, "대덕구"),
-  dongGuDaejeon(CityEnum.daejeon, "동구"),
-  seoGuDaejeon(CityEnum.daejeon, "서구"),
-  yuseongGu(CityEnum.daejeon, "유성구"),
-  jungGuDaejeon(CityEnum.daejeon, "중구"),
+/// 주소 데이터
+final addressData = AddressData(cities: [
+  CityAddressItem(label: '서울', value: 'SEOUL', districts: [
+    DistrictAddressItem(label: '강남구', value: 'GANGNAM_GU'),
+    DistrictAddressItem(label: '강동구', value: 'GANGDONG_GU'),
+    DistrictAddressItem(label: '강북구', value: 'GANGBUK_GU'),
+    DistrictAddressItem(label: '강서구', value: 'GANGSEO_GU'),
+    DistrictAddressItem(label: '관악구', value: 'GWANAK_GU'),
+    DistrictAddressItem(label: '광진구', value: 'GWANGJIN_GU'),
+    DistrictAddressItem(label: '구로구', value: 'GURO_GU'),
+    DistrictAddressItem(label: '금천구', value: 'GEUMCHEON_GU'),
+    DistrictAddressItem(label: '노원구', value: 'NOWON_GU'),
+    DistrictAddressItem(label: '도봉구', value: 'DOBONG_GU'),
+    DistrictAddressItem(label: '동대문구', value: 'DONGDAEMUN_GU'),
+    DistrictAddressItem(label: '동작구', value: 'DONGJAK_GU'),
+    DistrictAddressItem(label: '마포구', value: 'MAPO_GU'),
+    DistrictAddressItem(label: '서대문구', value: 'SEODAEMUN_GU'),
+    DistrictAddressItem(label: '서초구', value: 'SEOCHO_GU'),
+    DistrictAddressItem(label: '성동구', value: 'SEONGDONG_GU'),
+    DistrictAddressItem(label: '성북구', value: 'SEONGBUK_GU'),
+    DistrictAddressItem(label: '송파구', value: 'SONGPA_GU'),
+    DistrictAddressItem(label: '양천구', value: 'YANGCHEON_GU'),
+    DistrictAddressItem(label: '영등포구', value: 'YEONGDEUNGPO_GU'),
+    DistrictAddressItem(label: '용산구', value: 'YONGSAN_GU'),
+    DistrictAddressItem(label: '은평구', value: 'EUNPYEONG_GU'),
+    DistrictAddressItem(label: '종로구', value: 'JONGNO_GU'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU'),
+    DistrictAddressItem(label: '중랑구', value: 'JUNGRANG_GU'),
+  ]),
+  CityAddressItem(label: '부산', value: 'BUSAN', districts: [
+    DistrictAddressItem(label: '강서구', value: 'GANGSEO_GU_BUSAN'),
+    DistrictAddressItem(label: '금정구', value: 'GEUMJEONG_GU'),
+    DistrictAddressItem(label: '기장군', value: 'GIJANG_GUN'),
+    DistrictAddressItem(label: '남구', value: 'NAM_GU_BUSAN'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_BUSAN'),
+    DistrictAddressItem(label: '동래구', value: 'DONGNAE_GU'),
+    DistrictAddressItem(label: '부산진구', value: 'BUSANJIN_GU'),
+    DistrictAddressItem(label: '북구', value: 'BUK_GU_BUSAN'),
+    DistrictAddressItem(label: '사상구', value: 'SASANG_GU'),
+    DistrictAddressItem(label: '사하구', value: 'SAHA_GU'),
+    DistrictAddressItem(label: '서구', value: 'SEO_GU_BUSAN'),
+    DistrictAddressItem(label: '수영구', value: 'SUYEONG_GU'),
+    DistrictAddressItem(label: '연제구', value: 'YEONJE_GU'),
+    DistrictAddressItem(label: '영도구', value: 'YEONGDO_GU'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU_BUSAN'),
+    DistrictAddressItem(label: '해운대구', value: 'HAEUNDAE_GU')
+  ]),
+  CityAddressItem(label: '인천', value: 'INCHEON', districts: [
+    DistrictAddressItem(label: '강화군', value: 'GANGHWA_GUN'),
+    DistrictAddressItem(label: '계양구', value: 'GYEYANG_GU'),
+    DistrictAddressItem(label: '남동구', value: 'NAMDONG_GU'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_INCHEON'),
+    DistrictAddressItem(label: '미추홀구', value: 'MICHUHOL_GU'),
+    DistrictAddressItem(label: '부평구', value: 'BUPYEONG_GU'),
+    DistrictAddressItem(label: '서구', value: 'SEO_GU_INCHEON'),
+    DistrictAddressItem(label: '연수구', value: 'YEONSU_GU'),
+    DistrictAddressItem(label: '옹진군', value: 'ONGJIN_GUN'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU_INCHEON')
+  ]),
+  CityAddressItem(label: '대전', value: 'DAEJEON', districts: [
+    DistrictAddressItem(label: '대덕구', value: 'DAEDEOK_GU'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_DAEJEON'),
+    DistrictAddressItem(label: '서구', value: 'SEO_GU_DAEJEON'),
+    DistrictAddressItem(label: '유성구', value: 'YUSEONG_GU'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU_DAEJEON')
+  ]),
+  CityAddressItem(label: '대구', value: 'DAEGU', districts: [
+    DistrictAddressItem(label: '남구', value: 'NAM_GU_DAEGU'),
+    DistrictAddressItem(label: '달서구', value: 'DALSEO_GU'),
+    DistrictAddressItem(label: '달성군', value: 'DALSEONG_GUN'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_DAEGU'),
+    DistrictAddressItem(label: '북구', value: 'BUK_GU_DAEGU'),
+    DistrictAddressItem(label: '서구', value: 'SEO_GU_DAEGU'),
+    DistrictAddressItem(label: '수성구', value: 'SUSEONG_GU'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU_DAEGU')
+  ]),
+  CityAddressItem(label: '광주', value: 'GWANGJU', districts: [
+    DistrictAddressItem(label: '광산구', value: 'GWANGSAN_GU'),
+    DistrictAddressItem(label: '남구', value: 'NAM_GU_GWANGJU'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_GWANGJU'),
+    DistrictAddressItem(label: '북구', value: 'BUK_GU_GWANGJU'),
+    DistrictAddressItem(label: '서구', value: 'SEO_GU_GWANGJU')
+  ]),
+  CityAddressItem(label: '울산', value: 'ULSAN', districts: [
+    DistrictAddressItem(label: '남구', value: 'NAM_GU_ULSAN'),
+    DistrictAddressItem(label: '동구', value: 'DONG_GU_ULSAN'),
+    DistrictAddressItem(label: '북구', value: 'BUK_GU_ULSAN'),
+    DistrictAddressItem(label: '울주군', value: 'ULJU_GUN'),
+    DistrictAddressItem(label: '중구', value: 'JUNG_GU_ULSAN')
+  ]),
+  CityAddressItem(label: '세종', value: 'SEJONG'),
+  CityAddressItem(label: '강원도', value: 'GANGWON', districts: [
+    DistrictAddressItem(label: '강릉시', value: 'GANGNEUNG_SI'),
+    DistrictAddressItem(label: '고성군', value: 'GOSEONG_GUN_GANGWON'),
+    DistrictAddressItem(label: '동해시', value: 'DONGHAE_SI'),
+    DistrictAddressItem(label: '삼척시', value: 'SAMCHEOK_SI'),
+    DistrictAddressItem(label: '속초시', value: 'SOKCHO_SI'),
+    DistrictAddressItem(label: '양구군', value: 'YANGGU_GUN'),
+    DistrictAddressItem(label: '양양군', value: 'YANGYANG_GUN'),
+    DistrictAddressItem(label: '영월군', value: 'YEONGWOL_GUN'),
+    DistrictAddressItem(label: '원주시', value: 'WONJU_SI'),
+    DistrictAddressItem(label: '인제군', value: 'INJE_GUN'),
+    DistrictAddressItem(label: '정선군', value: 'JEONGSEON_GUN'),
+    DistrictAddressItem(label: '철원군', value: 'CHEORWON_GUN'),
+    DistrictAddressItem(label: '춘천시', value: 'CHUNCHEON_SI'),
+    DistrictAddressItem(label: '평창군', value: 'PYEONGCHANG_GUN'),
+    DistrictAddressItem(label: '홍천군', value: 'HONGCHEON_GUN'),
+    DistrictAddressItem(label: '화천군', value: 'HWACHEON_GUN'),
+    DistrictAddressItem(label: '횡성군', value: 'HWANGSEONG_GUN')
+  ]),
+  CityAddressItem(label: '경기도', value: 'KYEONGGI', districts: [
+    DistrictAddressItem(label: '가평군', value: 'GAPYEONG_GUN'),
+    DistrictAddressItem(label: '고양시', value: 'GOYANG_SI'),
+    DistrictAddressItem(label: '과천시', value: 'GWACHEON_SI'),
+    DistrictAddressItem(label: '광명시', value: 'GWANGMYEONG_SI'),
+    DistrictAddressItem(label: '광주시', value: 'GWANGJU_SI'),
+    DistrictAddressItem(label: '구리시', value: 'GURI_SI'),
+    DistrictAddressItem(label: '군포시', value: 'GUNPO_SI'),
+    DistrictAddressItem(label: '김포시', value: 'GIMPO_SI'),
+    DistrictAddressItem(label: '남양주시', value: 'NAMYANGJU_SI'),
+    DistrictAddressItem(label: '동두천시', value: 'DONGDUCHEON_SI'),
+    DistrictAddressItem(label: '부천시', value: 'BUCHEON_SI'),
+    DistrictAddressItem(label: '성남시', value: 'SEONGNAM_SI'),
+    DistrictAddressItem(label: '수원시', value: 'SUWON_SI'),
+    DistrictAddressItem(label: '시흥시', value: 'SIHEUNG_SI'),
+    DistrictAddressItem(label: '안산시', value: 'ANSAN_SI'),
+    DistrictAddressItem(label: '안성시', value: 'ANSEONG_SI'),
+    DistrictAddressItem(label: '안양시', value: 'ANYANG_SI'),
+    DistrictAddressItem(label: '양주시', value: 'YANGJU_SI'),
+    DistrictAddressItem(label: '양평군', value: 'YANGPYEONG_GUN'),
+    DistrictAddressItem(label: '여주시', value: 'YEOJU_SI'),
+    DistrictAddressItem(label: '연천군', value: 'YEONCHEON_GUN'),
+    DistrictAddressItem(label: '오산시', value: 'OSAN_SI'),
+    DistrictAddressItem(label: '용인시', value: 'YONGIN_SI'),
+    DistrictAddressItem(label: '의왕시', value: 'UIWANG_SI'),
+    DistrictAddressItem(label: '의정부시', value: 'UIJUNGBU_SI'),
+    DistrictAddressItem(label: '이천시', value: 'ICHEON_SI'),
+    DistrictAddressItem(label: '파주시', value: 'PAJU_SI'),
+    DistrictAddressItem(label: '평택시', value: 'PYEONGTAEK_SI'),
+    DistrictAddressItem(label: '포천시', value: 'POCHON_SI'),
+    DistrictAddressItem(label: '하남시', value: 'HANAM_SI'),
+    DistrictAddressItem(label: '화성시', value: 'HWASEONG_SI'),
+  ]),
+  CityAddressItem(label: '경상남도', value: 'GYEONGSANGNAM', districts: [
+    DistrictAddressItem(label: '거제시', value: 'GEOJE_SI'),
+    DistrictAddressItem(label: '거창군', value: 'GEOCHANG_GUN'),
+    DistrictAddressItem(label: '고성군', value: 'GOSEONG_GUN_GYEONGSANGNAM'),
+    DistrictAddressItem(label: '김해시', value: 'GIMHAE_SI'),
+    DistrictAddressItem(label: '남해군', value: 'NAMHAE_GUN'),
+    DistrictAddressItem(label: '밀양시', value: 'MIRYANG_SI'),
+    DistrictAddressItem(label: '사천시', value: 'SACHEON_SI'),
+    DistrictAddressItem(label: '산청군', value: 'SANCHEONG_GUN'),
+    DistrictAddressItem(label: '양산시', value: 'YANGSAN_SI'),
+    DistrictAddressItem(label: '의령군', value: 'UIRYEONG_GUN'),
+    DistrictAddressItem(label: '진주시', value: 'JINJU_SI'),
+    DistrictAddressItem(label: '창녕군', value: 'CHANGNYEONG_GUN'),
+    DistrictAddressItem(label: '창원시', value: 'CHANGWON_SI'),
+    DistrictAddressItem(label: '통영시', value: 'TONGYEONG_SI'),
+    DistrictAddressItem(label: '하동군', value: 'HADONG_GUN'),
+    DistrictAddressItem(label: '함안군', value: 'HAMAN_GUN'),
+    DistrictAddressItem(label: '함양군', value: 'HAMYANG_GUN'),
+    DistrictAddressItem(label: '합천군', value: 'HAPCHEON_GUN')
+  ]),
+  CityAddressItem(label: '경상북도', value: 'GYEONGSANGBUK', districts: [
+    DistrictAddressItem(label: '경산시', value: 'GYEONGSAN_SI'),
+    DistrictAddressItem(label: '경주시', value: 'GYEONGJU_SI'),
+    DistrictAddressItem(label: '고령군', value: 'GORYEONG_GUN'),
+    DistrictAddressItem(label: '구미시', value: 'GUMI_SI'),
+    DistrictAddressItem(label: '김천시', value: 'GIMCHEON_SI'),
+    DistrictAddressItem(label: '문경시', value: 'MUNGYEONG_SI'),
+    DistrictAddressItem(label: '봉화군', value: 'BONGHWA_GUN'),
+    DistrictAddressItem(label: '상주시', value: 'SANGJU_SI'),
+    DistrictAddressItem(label: '성주군', value: 'SEONGJU_GUN'),
+    DistrictAddressItem(label: '안동시', value: 'ANDONG_SI'),
+    DistrictAddressItem(label: '영덕군', value: 'YEONGDEOK_GUN'),
+    DistrictAddressItem(label: '영양군', value: 'YEONGYANG_GUN'),
+    DistrictAddressItem(label: '영주시', value: 'YEONGJU_SI'),
+    DistrictAddressItem(label: '영천시', value: 'YEONGCHEON_SI'),
+    DistrictAddressItem(label: '예천군', value: 'YECHEON_GUN'),
+    DistrictAddressItem(label: '울진군', value: 'ULJIN_GUN'),
+    DistrictAddressItem(label: '의성군', value: 'UISEONG_GUN'),
+    DistrictAddressItem(label: '청도군', value: 'CHEONGDO_GUN'),
+    DistrictAddressItem(label: '청송군', value: 'CHEONGSONG_GUN'),
+    DistrictAddressItem(label: '칠곡군', value: 'CHILGOK_GUN')
+  ]),
+  CityAddressItem(label: '전라남도', value: 'JEOLLANAM', districts: [
+    DistrictAddressItem(label: '강진군', value: 'GANGJIN_GUN'),
+    DistrictAddressItem(label: '고흥군', value: 'GOHEUNG_GUN'),
+    DistrictAddressItem(label: '곡성군', value: 'GOKSEONG_GUN'),
+    DistrictAddressItem(label: '광양시', value: 'GWANGYANG_SI'),
+    DistrictAddressItem(label: '구례군', value: 'GURYE_GUN'),
+    DistrictAddressItem(label: '나주시', value: 'NAJU_SI'),
+    DistrictAddressItem(label: '담양군', value: 'DAMYANG_GUN'),
+    DistrictAddressItem(label: '목포시', value: 'MOKPO_SI'),
+    DistrictAddressItem(label: '무안군', value: 'MUAN_GUN'),
+    DistrictAddressItem(label: '보성군', value: 'BOSEONG_GUN'),
+    DistrictAddressItem(label: '순천시', value: 'SUNCHEON_SI'),
+    DistrictAddressItem(label: '신안군', value: 'SINAN_GUN'),
+    DistrictAddressItem(label: '여수시', value: 'YEOSU_SI'),
+    DistrictAddressItem(label: '영광군', value: 'YEONGGWANG_GUN'),
+    DistrictAddressItem(label: '영암군', value: 'YEONGAM_GUN'),
+    DistrictAddressItem(label: '완도군', value: 'WANDO_GUN'),
+    DistrictAddressItem(label: '장성군', value: 'JANGSEONG_GUN'),
+    DistrictAddressItem(label: '장흥군', value: 'JANGHEUNG_GUN'),
+    DistrictAddressItem(label: '진도군', value: 'JINDO_GUN'),
+    DistrictAddressItem(label: '함평군', value: 'HAMPYEONG_GUN')
+  ]),
+  CityAddressItem(label: '전라북도', value: 'JEOLLABUK', districts: [
+    DistrictAddressItem(label: '고창군', value: 'GOCHANG_GUN'),
+    DistrictAddressItem(label: '군산시', value: 'GUNSAN_SI'),
+    DistrictAddressItem(label: '김제시', value: 'GIMJE_SI'),
+    DistrictAddressItem(label: '남원시', value: 'NAMWON_SI'),
+    DistrictAddressItem(label: '무주군', value: 'MUJU_GUN'),
+    DistrictAddressItem(label: '부안군', value: 'BUAN_GUN'),
+    DistrictAddressItem(label: '순창군', value: 'SUNCHANG_GUN'),
+    DistrictAddressItem(label: '완주군', value: 'WANJU_GUN'),
+    DistrictAddressItem(label: '익산시', value: 'IKSAN_SI'),
+    DistrictAddressItem(label: '전주시', value: 'JEONJU_SI'),
+    DistrictAddressItem(label: '정읍시', value: 'JEONGEUP_SI')
+  ]),
+  CityAddressItem(label: '충청남도', value: 'CHUNGCHEONGNAM', districts: [
+    DistrictAddressItem(label: '공주시', value: 'GONGJU_SI'),
+    DistrictAddressItem(label: '논산시', value: 'NONSAN_SI'),
+    DistrictAddressItem(label: '당진시', value: 'DANGJIN_SI'),
+    DistrictAddressItem(label: '보령시', value: 'BOREUNG_SI'),
+    DistrictAddressItem(label: '서산시', value: 'SEOSAN_SI'),
+    DistrictAddressItem(label: '아산시', value: 'ASAN_SI'),
+    DistrictAddressItem(label: '예산군', value: 'YESAN_GUN'),
+    DistrictAddressItem(label: '천안시', value: 'CHEONAN_SI'),
+    DistrictAddressItem(label: '청양군', value: 'CHEONGYANG_GUN'),
+    DistrictAddressItem(label: '태안군', value: 'TAEAN_GUN'),
+    DistrictAddressItem(label: '홍성군', value: 'HONGSEONG_GUN')
+  ]),
+  CityAddressItem(label: '충청북도', value: 'CHUNGCHEONGBUK', districts: [
+    DistrictAddressItem(label: '괴산군', value: 'GOESAN_GUN'),
+    DistrictAddressItem(label: '단양군', value: 'DANYANG_GUN'),
+    DistrictAddressItem(label: '보은군', value: 'BOEUN_GUN'),
+    DistrictAddressItem(label: '영동군', value: 'YEONGDONG_GUN'),
+    DistrictAddressItem(label: '옥천군', value: 'OKCHEON_GUN'),
+    DistrictAddressItem(label: '음성군', value: 'EUMSEONG_GUN'),
+    DistrictAddressItem(label: '제천시', value: 'JECHON_SI'),
+    DistrictAddressItem(label: '증평군', value: 'JEUNGPEONG_GUN'),
+    DistrictAddressItem(label: '진천군', value: 'JINCHEON_GUN'),
+    DistrictAddressItem(label: '청주시', value: 'CHEONGJU_SI')
+  ]),
+  CityAddressItem(label: '제주특별자치도', value: 'JEJU', districts: [
+    DistrictAddressItem(label: '서귀포시', value: 'SEOGWIPO_SI'),
+    DistrictAddressItem(label: '제주시', value: 'JEJU_SI')
+  ]),
+]);
 
-  // 대구
-  namGuDaegu(CityEnum.daegu, "남구"),
-  dalseoGu(CityEnum.daegu, "달서구"),
-  dalseongGun(CityEnum.daegu, "달성군"),
-  dongGuDaegu(CityEnum.daegu, "동구"),
-  bukGuDaegu(CityEnum.daegu, "북구"),
-  seoGuDaegu(CityEnum.daegu, "서구"),
-  suseongGu(CityEnum.daegu, "수성구"),
-  jungGuDaegu(CityEnum.daegu, "중구"),
+/// AddressData 클래스 정의
+class AddressData {
+  final List<CityAddressItem> cities;
 
-  // 광주
-  gwangsanGu(CityEnum.gwangju, "광산구"),
-  namGuGwangju(CityEnum.gwangju, "남구"),
-  dongGuGwangju(CityEnum.gwangju, "동구"),
-  bukGuGwangju(CityEnum.gwangju, "북구"),
-  seoGuGwangju(CityEnum.gwangju, "서구"),
+  // 서버 데이터를 이용하여 도시를 조회하는 맵
+  final Map<String, CityAddressItem> _cityByValue;
 
-  // 울산
-  namGuUlsan(CityEnum.ulsan, "남구"),
-  dongGuUlsan(CityEnum.ulsan, "동구"),
-  bukGuUlsan(CityEnum.ulsan, "북구"),
-  uljuGun(CityEnum.ulsan, "울주군"),
-  jungGuUlsan(CityEnum.ulsan, "중구"),
+  // 지역명을 이용하여 도시를 조회하는 맵
+  final Map<String, CityAddressItem> _cityByLabel;
 
-  // 제주
-  jejuSi(CityEnum.jeju, "제주시"),
-  seogwipoSi(CityEnum.jeju, "서귀포시"),
+  // 서버 데이터를 이용하여 district를 조회하는 맵
+  final Map<String, Map<String, DistrictAddressItem>> _districtByValue;
 
-  // 세종
-  sejong(CityEnum.sejong, "세종특별자치시"),
+  // 지역명을 이용하여 district를 조회하는 맵
+  final Map<String, Map<String, DistrictAddressItem>> _districtByLabel;
 
-  // 강원도
-  gangneungSi(CityEnum.gangwon, "강릉시"),
-  goseongGun(CityEnum.gangwon, "고성군"),
-  donghaeSi(CityEnum.gangwon, "동해시"),
-  samcheokSi(CityEnum.gangwon, "삼척시"),
-  sokchoSi(CityEnum.gangwon, "속초시"),
-  yangguGun(CityEnum.gangwon, "양구군"),
-  yangyangGun(CityEnum.gangwon, "양양군"),
-  yeongwolGun(CityEnum.gangwon, "영월군"),
-  wonjuSi(CityEnum.gangwon, "원주시"),
-  injeGun(CityEnum.gangwon, "인제군"),
-  jeongseonGun(CityEnum.gangwon, "정선군"),
-  cheorwonGun(CityEnum.gangwon, "철원군"),
-  chuncheonSi(CityEnum.gangwon, "춘천시"),
-  pyeongchangGun(CityEnum.gangwon, "평창군"),
-  hongcheonGun(CityEnum.gangwon, "홍천군"),
-  hwacheonGun(CityEnum.gangwon, "화천군"),
-  hwangseongGun(CityEnum.gangwon, "횡성군"),
+  AddressData({required this.cities})
+      : _cityByValue = {
+          for (final city in cities) city.value: city,
+        },
+        _cityByLabel = {
+          for (final city in cities) city.label: city,
+        },
+        _districtByValue = {
+          for (final city in cities)
+            city.label: {
+              for (final district in city.districts) district.value: district,
+            },
+        },
+        _districtByLabel = {
+          for (final city in cities)
+            city.label: {
+              for (final district in city.districts) district.label: district,
+            },
+        };
 
-  // 경기도
-  gapyeongGun(CityEnum.gyeonggi, "가평군"),
-  goyangSi(CityEnum.gyeonggi, "고양시"),
-  gwacheonSi(CityEnum.gyeonggi, "과천시"),
-  gwangmyeongSi(CityEnum.gyeonggi, "광명시"),
-  gwangjuSi(CityEnum.gyeonggi, "광주시"),
-  guriSi(CityEnum.gyeonggi, "구리시"),
-  gunpoSi(CityEnum.gyeonggi, "군포시"),
-  gimpoSi(CityEnum.gyeonggi, "김포시"),
-  namyangjuSi(CityEnum.gyeonggi, "남양주시"),
-  dongducheonSi(CityEnum.gyeonggi, "동두천시"),
-  bucheonSi(CityEnum.gyeonggi, "부천시"),
-  seongnamSi(CityEnum.gyeonggi, "성남시"),
-  suwonSi(CityEnum.gyeonggi, "수원시"),
-  siheungSi(CityEnum.gyeonggi, "시흥시"),
-  ansanSi(CityEnum.gyeonggi, "안산시"),
-  anseongSi(CityEnum.gyeonggi, "안성시"),
-  anyangSi(CityEnum.gyeonggi, "안양시"),
-  yangjuSi(CityEnum.gyeonggi, "양주시"),
-  yangpyeongGun(CityEnum.gyeonggi, "양평군"),
-  yeojuSi(CityEnum.gyeonggi, "여주시"),
-  yeoncheonGun(CityEnum.gyeonggi, "연천군"),
-  osanSi(CityEnum.gyeonggi, "오산시"),
-  yonginSi(CityEnum.gyeonggi, "용인시"),
-  uiwangSi(CityEnum.gyeonggi, "의왕시"),
-  uijeongbuSi(CityEnum.gyeonggi, "의정부시"),
-  icheonSi(CityEnum.gyeonggi, "이천시"),
-  pajuSi(CityEnum.gyeonggi, "파주시"),
-  pyeongtaekSi(CityEnum.gyeonggi, "평택시"),
-  pocheonSi(CityEnum.gyeonggi, "포천시"),
-  hanamSi(CityEnum.gyeonggi, "하남시"),
-  hwaseongSi(CityEnum.gyeonggi, "화성시"),
+  /// 서버 데이터를 화면 표시용 문자열로 변환
+  String getLocationString(String cityValue, String? districtValue) {
+    final city = _cityByValue[cityValue];
 
-  // 경상남도
-  geojeSi(CityEnum.gyeongsangnam, "거제시"),
-  geochangGun(CityEnum.gyeongsangnam, "거창군"),
-  goseongGunGyeongsangnam(CityEnum.gyeongsangnam, "고성군"),
-  gimhaeSi(CityEnum.gyeongsangnam, "김해시"),
-  namhaeGun(CityEnum.gyeongsangnam, "남해군"),
-  milyangSi(CityEnum.gyeongsangnam, "밀양시"),
-  sacheonSi(CityEnum.gyeongsangnam, "사천시"),
-  sanchangGun(CityEnum.gyeongsangnam, "산청군"),
-  yangsanSi(CityEnum.gyeongsangnam, "양산시"),
-  uiryeongGun(CityEnum.gyeongsangnam, "의령군"),
-  jinjuSi(CityEnum.gyeongsangnam, "진주시"),
-  changnyeongGun(CityEnum.gyeongsangnam, "창녕군"),
-  changwonSi(CityEnum.gyeongsangnam, "창원시"),
-  tongyeongSi(CityEnum.gyeongsangnam, "통영시"),
-  hadongGun(CityEnum.gyeongsangnam, "하동군"),
-  hamanGun(CityEnum.gyeongsangnam, "함안군"),
-  hamyangGun(CityEnum.gyeongsangnam, "함양군"),
-  hapcheonGun(CityEnum.gyeongsangnam, "합천군"),
-
-  // 경상북도
-  goryeongGun(CityEnum.gyeongsangbuk, "고령군"),
-  gyeongsanSi(CityEnum.gyeongsangbuk, "경산시"),
-  gyeongjuSi(CityEnum.gyeongsangbuk, "경주시"),
-  gimcheonSi(CityEnum.gyeongsangbuk, "김천시"),
-  andongSi(CityEnum.gyeongsangbuk, "안동시"),
-  gumiSi(CityEnum.gyeongsangbuk, "구미시"),
-  gunwiGun(CityEnum.gyeongsangbuk, "군위군"),
-  mungyeongSi(CityEnum.gyeongsangbuk, "문경시"),
-  bonghwaGun(CityEnum.gyeongsangbuk, "봉화군"),
-  sangjuSi(CityEnum.gyeongsangbuk, "상주시"),
-  seongjuGun(CityEnum.gyeongsangbuk, "성주군"),
-  yeongjuSi(CityEnum.gyeongsangbuk, "영주시"),
-  yeongcheonSi(CityEnum.gyeongsangbuk, "영천시"),
-  uljinGun(CityEnum.gyeongsangbuk, "울진군"),
-  ullungGun(CityEnum.gyeongsangbuk, "울릉군"),
-  uiseongGun(CityEnum.gyeongsangbuk, "의성군"),
-  yeongyangGun(CityEnum.gyeongsangbuk, "영양군"),
-  yeongdeokGun(CityEnum.gyeongsangbuk, "영덕군"),
-  cheongsongGun(CityEnum.gyeongsangbuk, "청송군"),
-  cheongdoGun(CityEnum.gyeongsangbuk, "청도군"),
-  chilgokGun(CityEnum.gyeongsangbuk, "칠곡군"),
-  yecheonGun(CityEnum.gyeongsangbuk, "예천군"),
-  pohangSi(CityEnum.gyeongsangbuk, "포항시"),
-
-  // 충청남도
-  gyeryongSi(CityEnum.chungcheongnam, "계룡시"),
-  gongjuSi(CityEnum.chungcheongnam, "공주시"),
-  geumsanGun(CityEnum.chungcheongnam, "금산군"),
-  nongsanSi(CityEnum.chungcheongnam, "논산시"),
-  dangjinSi(CityEnum.chungcheongnam, "당진시"),
-  boryeongSi(CityEnum.chungcheongnam, "보령시"),
-  buyeoGun(CityEnum.chungcheongnam, "부여군"),
-  seosanSi(CityEnum.chungcheongnam, "서산시"),
-  secheonGun(CityEnum.chungcheongnam, "서천군"),
-  asanSi(CityEnum.chungcheongnam, "아산시"),
-  yesanGun(CityEnum.chungcheongnam, "예산군"),
-  cheonanSi(CityEnum.chungcheongnam, "천안시"),
-  cheongyangGun(CityEnum.chungcheongnam, "청양군"),
-  taeanGun(CityEnum.chungcheongnam, "태안군"),
-  hongseongGun(CityEnum.chungcheongnam, "홍성군"),
-
-  // 충청북도
-  goesanGun(CityEnum.chungcheongbuk, "괴산군"),
-  danyangGun(CityEnum.chungcheongbuk, "단양군"),
-  boeunGun(CityEnum.chungcheongbuk, "보은군"),
-  yeongdongGun(CityEnum.chungcheongbuk, "영동군"),
-  okcheonGun(CityEnum.chungcheongbuk, "옥천군"),
-  eumseongGun(CityEnum.chungcheongbuk, "음성군"),
-  jecheonSi(CityEnum.chungcheongbuk, "제천시"),
-  jeungpyeongGun(CityEnum.chungcheongbuk, "증평군"),
-  jincheonGun(CityEnum.chungcheongbuk, "진천군"),
-  cheongjuSi(CityEnum.chungcheongbuk, "청주시"),
-  chungjuSi(CityEnum.chungcheongbuk, "충주시"),
-
-  // 전라남도
-  gangjinGun(CityEnum.jeollanam, "강진군"),
-  goheungGun(CityEnum.jeollanam, "고흥군"),
-  gokseongGun(CityEnum.jeollanam, "곡성군"),
-  gwangyangSi(CityEnum.jeollanam, "광양시"),
-  guraeGun(CityEnum.jeollanam, "구례군"),
-  najuSi(CityEnum.jeollanam, "나주시"),
-  damyangGun(CityEnum.jeollanam, "담양군"),
-  mokpoSi(CityEnum.jeollanam, "목포시"),
-  muanGun(CityEnum.jeollanam, "무안군"),
-  boseongGun(CityEnum.jeollanam, "보성군"),
-  suncheonSi(CityEnum.jeollanam, "순천시"),
-  shinanGun(CityEnum.jeollanam, "신안군"),
-  yeosuSi(CityEnum.jeollanam, "여수시"),
-  yeonggwangGun(CityEnum.jeollanam, "영광군"),
-  yeongamGun(CityEnum.jeollanam, "영암군"),
-  wandoGun(CityEnum.jeollanam, "완도군"),
-  jangseongGun(CityEnum.jeollanam, "장성군"),
-  jangheungGun(CityEnum.jeollanam, "장흥군"),
-  jindoGun(CityEnum.jeollanam, "진도군"),
-  hampyeongGun(CityEnum.jeollanam, "함평군"),
-  haenamGun(CityEnum.jeollanam, "해남군"),
-  hwasunGun(CityEnum.jeollanam, "화순군"),
-
-  // 전라북도
-  gochangGun(CityEnum.jeollabuk, "고창군"),
-  gunsanSi(CityEnum.jeollabuk, "군산시"),
-  gimjeSi(CityEnum.jeollabuk, "김제시"),
-  namwonSi(CityEnum.jeollabuk, "남원시"),
-  mujuGun(CityEnum.jeollabuk, "무주군"),
-  buanGun(CityEnum.jeollabuk, "부안군"),
-  sunchangGun(CityEnum.jeollabuk, "순창군"),
-  wanjuGun(CityEnum.jeollabuk, "완주군"),
-  iksanSi(CityEnum.jeollabuk, "익산시"),
-  imsilGun(CityEnum.jeollabuk, "임실군"),
-  jangsuGun(CityEnum.jeollabuk, "장수군"),
-  jeonjuSi(CityEnum.jeollabuk, "전주시"),
-  jeongeupSi(CityEnum.jeollabuk, "정읍시"),
-  jinanGun(CityEnum.jeollabuk, "진안군");
-
-  final CityEnum city;
-  final String label;
-  const DistrictEnum(this.city, this.label);
-
-  static DistrictEnum? fromServerData(String? value) {
-    if (value == null) {
-      throw ArgumentError('값이 null일 수 없습니다.');
+    // 세종특별자치시와 같이 district가 없는 경우
+    if (districtValue == null || city!.districts.isEmpty) {
+      return city!.label;
     }
 
-    // 서버에서 받은 대문자 값을 camelCase로 변환
-    final parts = value.split('_');
-    if (parts.isEmpty) {
-      throw FormatException('잘못된 형식입니다: $value');
+    final district = _districtByValue[city.label]![districtValue];
+
+    return '${city.label} ${district!.label}';
+  }
+
+  /// 화면 표시용 문자열을 서버 데이터로 변환 (district value만 반환)
+  String getDistrictValue(String locationString) {
+    final parts = locationString.split(' ');
+
+    // 도시 찾기
+    final city = _cityByLabel[parts.first];
+
+    // district가 없는 도시(예: 세종특별자치시)의 경우 city value를 반환
+    if (city!.districts.isEmpty) {
+      return city.value;
     }
 
-    // 첫 번째 단어는 모두 소문자로
-    final firstWord = parts[0].toLowerCase();
+    // 구/군 찾기
+    final district = _districtByLabel[city.label]![parts[1]];
+    return district!.value;
+  }
 
-    // 나머지 단어들은 첫 글자만 대문자로
-    final remainingWords = parts.skip(1).map((part) {
-      if (part.isEmpty) {
-        throw FormatException('값에 잘못된 부분이 있습니다: $value');
+  /// 검색어로 지역 검색하기
+  List<String> searchLocations(String keyword) {
+    if (keyword.isEmpty) return [];
+
+    List<String> results = [];
+    final parts = keyword.split(' ');
+
+    // 도시 이름으로 검색
+    _cityByLabel.forEach((cityLabel, city) {
+      if (cityLabel.contains(parts.first)) {
+        // district가 없는 도시는 도시 이름만 추가
+        if (city.districts.isEmpty) {
+          results.add(cityLabel);
+          return;
+        }
+
+        // 해당 도시의 모든 district 추가
+        final districts = _districtByLabel[cityLabel]!;
+        if (parts.length == 1) {
+          results.addAll(
+            districts.values.map((district) => '$cityLabel ${district.label}'),
+          );
+        } else {
+          // district 이름으로 검색
+          results.addAll(
+            districts.entries
+                .where((entry) => entry.value.label.contains(parts[1]))
+                .map((entry) => '$cityLabel ${entry.value.label}'),
+          );
+        }
+        return;
       }
-      return part[0].toUpperCase() + part.substring(1).toLowerCase();
     });
 
-    final camelCase = firstWord + remainingWords.join();
-
-    return DistrictEnum.values.firstWhere(
-      (district) => district.name == camelCase,
-      orElse: () => throw StateError('해당 값에 일치하는 DistrictEnum이 없습니다: $value'),
-    );
-  }
-
-  // label을 enum으로 변환
-  static DistrictEnum? fromLabel(String? label) {
-    if (label == null) return null;
-
-    return DistrictEnum.values.firstWhereOrNull(
-      (district) => district.label == label,
-    );
-  }
-
-  // 서버 형식으로 변환하는 메서드
-  String toServerString() {
-    // camelCase를 UPPER_SNAKE_CASE로 변환
-    final serverFormat = name
-        .replaceAllMapped(
-          RegExp(r'([A-Z])'),
-          (match) => '_${match.group(0)}',
-        )
-        .toUpperCase();
-
-    // 맨 앞의 언더스코어 제거
-    return serverFormat.startsWith('_')
-        ? serverFormat.substring(1)
-        : serverFormat;
-  }
-}
-
-// 서버 응답을 파싱하기 위한 확장 메서드
-extension LocationParsingExtension on Map<String, dynamic> {
-  String? getLocationString() {
-    final city = this['city'] as String?; // 'CityEnum'에서 'city'로 변경
-    final district = this['district'] as String?;
-
-    if (city == null) {
-      throw ArgumentError('도시 정보가 누락되었습니다.');
-    }
-
-    final CityEnum? cityEnum = CityEnum.fromServerData(city);
-    if (cityEnum == null) {
-      throw StateError('유효하지 않은 도시 값입니다: $city');
-    }
-
-    final DistrictEnum? districtEnum = DistrictEnum.fromServerData(district);
-
-    if (districtEnum != null) {
-      return '${cityEnum.label} ${districtEnum.label}';
-    }
-
-    return cityEnum.label;
+    return results;
   }
 }
