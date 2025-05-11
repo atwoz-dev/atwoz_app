@@ -4,7 +4,6 @@ import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -14,14 +13,13 @@ final TextStyle _defaultHintStyle =
 final TextStyle _blackHintStyle =
     Fonts.body02Medium().copyWith(color: Palette.colorBlack);
 
-String _getDisplayValue(MyBasicInfoType type, MyProfile profile) =>
-    switch (type) {
-      MyBasicInfoType.nickname => profile.nickname,
-      MyBasicInfoType.age => profile.age.toString(),
-      MyBasicInfoType.height => "${profile.height}cm",
-      MyBasicInfoType.gender => profile.gender == GenderEnum.male ? '남자' : '여자',
-      MyBasicInfoType.phoneNum => profile.phoneNum,
-    };
+final List<String> _labels = [
+  '닉네임',
+  '나이',
+  '키',
+  '성별',
+  '연락처',
+];
 
 class ProfileManageBasicInfoArea extends StatelessWidget {
   final MyProfile profile;
@@ -45,41 +43,45 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
             ),
           ),
           Column(
-            children: MyBasicInfoType.values
-                .toList()
-                .map((type) => Column(
-                      children: [
-                        buildLabeledRow(
-                          label: type.label,
-                          child: GestureDetector(
-                            onTap: () {
-                              if (type == MyBasicInfoType.nickname) {
-                                navigate(context,
-                                    route: AppRoute.profileUpdate,
-                                    extra: const MyProfileUpdateArguments(
-                                        profileType:
-                                            MyProfileInfoType.nickname));
-                              } else if (type == MyBasicInfoType.phoneNum) {
-                                navigate(context,
-                                    route: AppRoute.contactSetting);
-                              }
-                            },
-                            child: DefaultTextFormField(
-                              fillColor: Palette.colorGrey100,
-                              readOnly: true,
-                              hintText: _getDisplayValue(type, profile),
-                              hintStyle: type == MyBasicInfoType.nickname ||
-                                      type == MyBasicInfoType.phoneNum
-                                  ? _blackHintStyle
-                                  : _defaultHintStyle,
-                            ),
-                          ),
-                          context: context,
-                        ),
-                        const Gap(24)
-                      ],
-                    ))
-                .toList(),
+            children: _labels.map((label) {
+              final String value = switch (label) {
+                '닉네임' => profile.nickname,
+                '나이' => profile.age.toString(),
+                '키' => "${profile.height}cm",
+                '성별' => genderMap[profile.gender] ?? '',
+                '연락처' => profile.phoneNum,
+                _ => '',
+              };
+              return Column(
+                children: [
+                  buildLabeledRow(
+                    label: label,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (label == '닉네임') {
+                          navigate(context,
+                              route: AppRoute.profileUpdate,
+                              extra: const MyProfileUpdateArguments(
+                                  profileType: '닉네임'));
+                        } else if (label == '연락처') {
+                          navigate(context, route: AppRoute.contactSetting);
+                        }
+                      },
+                      child: DefaultTextFormField(
+                        fillColor: Palette.colorGrey100,
+                        readOnly: true,
+                        hintText: value,
+                        hintStyle: label == '닉네임' || label == '연락처'
+                            ? _blackHintStyle
+                            : _defaultHintStyle,
+                      ),
+                    ),
+                    context: context,
+                  ),
+                  const Gap(24)
+                ],
+              );
+            }).toList(),
           ),
         ],
       ),

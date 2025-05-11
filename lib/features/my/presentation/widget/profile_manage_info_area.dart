@@ -1,30 +1,24 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/my/presentation/enum/my_profile_type.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../app/constants/enum.dart';
-
-String _getDisplayValue(MyProfileInfoType type, MyProfile profile) {
-  return switch (type) {
-    MyProfileInfoType.job => profile.job.label,
-    MyProfileInfoType.region => profile.region,
-    MyProfileInfoType.education => educationMap[profile.education] ?? '',
-    MyProfileInfoType.smokingStatus => profile.smokingStatus.label,
-    MyProfileInfoType.drinkingStatus => profile.drinkingStatus.label,
-    MyProfileInfoType.religion => profile.religion.label,
-    MyProfileInfoType.mbti => profile.mbti,
-    MyProfileInfoType.hobbies =>
-      profile.hobbies.map((hobby) => hobby.label).join(', '),
-    MyProfileInfoType.nickname => '',
-  };
-}
+const List<String> _labels = [
+  '직업',
+  '지역',
+  '학력',
+  '흡연여부',
+  '음주빈도',
+  '종교',
+  'MBTI',
+  '취미',
+];
 
 class ProfileManageInfoArea extends StatelessWidget {
   final MyProfile profile;
@@ -51,40 +45,48 @@ class ProfileManageInfoArea extends StatelessWidget {
           ),
           const Gap(16),
           Column(
-            children: MyProfileInfoType.values
-                .where((type) => type != MyProfileInfoType.nickname)
-                .toList()
-                .map(
-                  (type) => Column(
-                    children: [
-                      buildLabeledRow(
-                          label: type.label,
-                          child: GestureDetector(
-                            onTap: () => navigate(
-                              context,
-                              route: AppRoute.profileUpdate,
-                              extra: MyProfileUpdateArguments(
-                                profileType: type,
-                              ),
-                            ),
-                            child: DefaultTextFormField(
-                              hintText: _getDisplayValue(
-                                type,
-                                profile,
-                              ),
-                              hintStyle: Fonts.body02Medium().copyWith(
-                                color: Palette.colorBlack,
-                              ),
-                              fillColor: Palette.colorGrey100,
-                              readOnly: true,
-                            ),
+            children: _labels.map(
+              (label) {
+                final String displayValue = switch (label) {
+                  '직업' => profile.job.label,
+                  '지역' => profile.region,
+                  '학력' => educationMap[profile.education] ?? '',
+                  '흡연여부' => profile.smokingStatus.label,
+                  '음주빈도' => profile.drinkingStatus.label,
+                  '종교' => profile.religion.label,
+                  'MBTI' => profile.mbti,
+                  '취미' =>
+                    profile.hobbies.map((hobby) => hobby.label).join(', '),
+                  _ => '',
+                };
+                return Column(
+                  children: [
+                    buildLabeledRow(
+                      label: label,
+                      child: GestureDetector(
+                        onTap: () => navigate(
+                          context,
+                          route: AppRoute.profileUpdate,
+                          extra: MyProfileUpdateArguments(
+                            profileType: label,
                           ),
-                          context: context),
-                      const Gap(24),
-                    ],
-                  ),
-                )
-                .toList(),
+                        ),
+                        child: DefaultTextFormField(
+                          hintText: displayValue,
+                          hintStyle: Fonts.body02Medium().copyWith(
+                            color: Palette.colorBlack,
+                          ),
+                          fillColor: Palette.colorGrey100,
+                          readOnly: true,
+                        ),
+                      ),
+                      context: context,
+                    ),
+                    const Gap(24),
+                  ],
+                );
+              },
+            ).toList(),
           ),
           const Gap(8),
           DefaultElevatedButton(
