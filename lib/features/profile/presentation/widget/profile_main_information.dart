@@ -3,8 +3,10 @@ import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import 'message_send_bottomsheet.dart';
@@ -100,7 +102,7 @@ class _MainHobbyBadge extends StatelessWidget {
   }
 }
 
-class _InteractionButtons extends StatelessWidget {
+class _InteractionButtons extends ConsumerWidget {
   const _InteractionButtons({
     required this.userId,
     required this.favoriteUser,
@@ -112,7 +114,7 @@ class _InteractionButtons extends StatelessWidget {
   final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         Expanded(
@@ -121,6 +123,9 @@ class _InteractionButtons extends StatelessWidget {
             onPressed: () => MessageSendBottomSheet.open(
               context,
               userId: userId,
+              onSubmit: () => ref
+                  .read(profileNotifierProvider(userId).notifier)
+                  .requestMatch(),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
