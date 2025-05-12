@@ -11,7 +11,7 @@ class MatchRepository extends BaseRepository {
   Future<void> requestMatch(int targetId, String message) async {
     await apiService.postJson(
       '$path/request',
-      data: {'targetId': targetId, 'message': message},
+      data: {'responderId': targetId, 'requestMessage': message},
     );
   }
 
@@ -26,7 +26,7 @@ class MatchRepository extends BaseRepository {
   Future<void> approveMatch(int matchId, String message) async {
     await apiService.patchJson(
       '$path/$matchId/approve',
-      data: {'message': message},
+      data: {'responseMessage': message},
     );
   }
 }

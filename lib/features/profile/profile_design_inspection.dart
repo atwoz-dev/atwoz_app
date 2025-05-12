@@ -97,7 +97,7 @@ class ProfileDesignInspection extends StatelessWidget {
           navigate(
             context,
             route: AppRoute.profile,
-            extra: const ProfileDetailArguments(userId: 4),
+            extra: const ProfileDetailArguments(userId: targetUserId),
           );
         },
         child: Text(
@@ -116,3 +116,6 @@ enum ProfileDesignInspectionType {
 }
 
 ProfileDesignInspectionType? kDebugPageType = ProfileDesignInspectionType.main;
+
+const targetUserId = 9;
+const myUserId = 1;

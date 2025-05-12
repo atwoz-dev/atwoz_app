@@ -22,13 +22,14 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required String nickname,
     required String profileImageUrl,
     // TODO(Han): server non-nullable requirement check
-    required int age,
+    required int? age,
     required String gender,
     required int height,
     required String job,
     required List<String> hobbies,
     required String mbti,
-    required String region,
+    // TODO(Han): server non-nullable requirement check
+    required String? region,
     required String smokingStatus,
     required String drinkingStatus,
     required String highestEducation,
