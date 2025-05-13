@@ -1,4 +1,5 @@
 import 'package:atwoz_app/features/home/data/data.dart';
+import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,7 +18,13 @@ class HomeNotifier extends _$HomeNotifier {
   @override
   HomeState build() {
     _fetchRecommendedProfiles();
-    return HomeState();
+    _fetchHomeProfile();
+    return const HomeState();
+  }
+
+  Future<void> _fetchHomeProfile() async {
+    final homeProfileRepository = ref.read(homeProfileRepositoryProvider);
+    final profile = await homeProfileRepository.getProfile();
   }
 
   Future<void> _fetchRecommendedProfiles() async {
