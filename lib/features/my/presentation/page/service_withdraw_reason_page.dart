@@ -26,7 +26,7 @@ class _ServiceWithdrawReasonPageState extends State<ServiceWithdrawReasonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "서비스 탈퇴",
       ),
       body: SafeArea(
@@ -39,12 +39,14 @@ class _ServiceWithdrawReasonPageState extends State<ServiceWithdrawReasonPage> {
                 "서비스를 탈퇴 하시는 이유를 알려주세요.",
                 style: Fonts.body01Medium(),
               ),
-              Gap(16),
+              const Gap(16),
               Text(
                 "서비스 개선에 많은 도움이 됩니다",
-                style: Fonts.body02Medium().copyWith(color: Color(0xff7E7E7E)),
+                style: Fonts.body02Medium().copyWith(
+                  color: const Color(0xff7E7E7E),
+                ),
               ),
-              Gap(24),
+              const Gap(24),
               ListView.separated(
                 shrinkWrap: true,
                 itemCount: reasons.length,
@@ -57,8 +59,10 @@ class _ServiceWithdrawReasonPageState extends State<ServiceWithdrawReasonPage> {
                       });
                     },
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 19,
+                      ),
                       decoration: BoxDecoration(
                         color: selectedIndex == index
                             ? Palette.colorPrimary500.withValues(alpha: 0.1)
@@ -66,7 +70,7 @@ class _ServiceWithdrawReasonPageState extends State<ServiceWithdrawReasonPage> {
                         border: Border.all(
                           color: selectedIndex == index
                               ? Palette.colorPrimary500.withValues(alpha: 0.3)
-                              : Color(0xffE1E1E1),
+                              : const Color(0xffE1E1E1),
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -75,38 +79,38 @@ class _ServiceWithdrawReasonPageState extends State<ServiceWithdrawReasonPage> {
                         style: Fonts.body02Medium().copyWith(
                           color: selectedIndex == index
                               ? Palette.colorPrimary500
-                              : Color(0xff515151),
+                              : const Color(0xff515151),
                         ),
                       ),
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                   height: 8,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               DefaultElevatedButton(
                 onPressed: () {
                   if (selectedIndex != null) {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return TestDialog();
+                        return const TestDialog();
                       },
                     );
                   }
                 },
                 primary: selectedIndex != null
                     ? Palette.colorPrimary500
-                    : Color(0xffE9EBEC), //배경색
+                    : const Color(0xffE9EBEC), //배경색
                 child: Text(
                   "탈퇴하기",
                   style: Fonts.body01Medium().copyWith(
                       fontWeight: FontWeight.w600,
                       color: selectedIndex != null
                           ? Colors.white
-                          : Color(0xffB3B7C0)),
+                          : const Color(0xffB3B7C0)),
                 ),
               )
             ],
@@ -130,27 +134,27 @@ class TestDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(shape: BoxShape.rectangle),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: const BoxDecoration(shape: BoxShape.rectangle),
             child: Column(
               children: [
-                Gap(32),
+                const Gap(32),
                 Text(
                   "서비스 탈퇴",
                   style: Fonts.header02().copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Gap(16),
+                const Gap(16),
                 Text(
                   "탈퇴 후 24시간은 재가입이 불가능합니다.\n정말로 서비스를 탈퇴하시겠습니까?",
                   style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400,
-                    color: Color(0xff515151),
+                    color: const Color(0xff515151),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Gap(24),
+                const Gap(24),
                 Row(
                   children: [
                     Expanded(
@@ -160,7 +164,7 @@ class TestDialog extends StatelessWidget {
                           pop(context);
                         },
                         primary: Colors.white,
-                        border: BorderSide(color: Color(0xffE1E1E1)),
+                        border: const BorderSide(color: Color(0xffE1E1E1)),
                         child: Text(
                           "취소",
                           style: Fonts.body02Medium().copyWith(
@@ -169,7 +173,7 @@ class TestDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Gap(8),
+                    const Gap(8),
                     Expanded(
                       child: DefaultElevatedButton(
                         onPressed: () {
@@ -191,7 +195,7 @@ class TestDialog extends StatelessWidget {
                     )
                   ],
                 ),
-                Gap(16),
+                const Gap(16),
               ],
             ),
           )

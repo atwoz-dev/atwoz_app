@@ -1,25 +1,39 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/view/view.dart';
-import 'package:atwoz_app/features/my/presentation/widget/widget.dart';
+import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/features/my/my.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class ProfileUpdatePage extends StatelessWidget {
-  const ProfileUpdatePage({super.key});
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/button/button.dart';
+import 'package:atwoz_app/app/widget/view/view.dart';
+
+class ProfileUpdatePage extends ConsumerWidget {
+  final String profileType;
+
+  const ProfileUpdatePage({
+    super.key,
+    required this.profileType,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileManageState = ref.watch(profileManageNotifierProvider);
+    final profileManageNotifier =
+        ref.read(profileManageNotifierProvider.notifier);
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: DefaultAppBar(
         title: '프로필 정보',
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
+          preferredSize: Size.fromHeight(4.h),
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(
               begin: 0,
-              end: 0.5, //TODO: 프로필 수정 시 1로 변경되도록 추후 변경
+              end: profileManageState.isChanged ? 1.0 : 0.5,
             ),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -39,15 +53,40 @@ class ProfileUpdatePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Gap(32),
-              ProfileUpdateInfoSelector(),
-              Spacer(),
+              const Gap(32),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: ProfileUpdateInfoSelector(
+                    profileType: profileType,
+                    profile: profileManageState.profile,
+                    onProfileUpdated: (selectedValue, isChanged) {
+                      profileManageNotifier.updateProfile(
+                          selectedValue, isChanged);
+                    },
+                  ),
+                ),
+              ),
               DefaultElevatedButton(
-                child: Text('저장'),
+                primary: profileManageState.isChanged
+                    ? Palette.colorPrimary500
+                    : Palette.colorGrey200,
                 onPressed: () {
-                  //TODO: 수정된 프로필 저장 로직 구현
+                  if (profileManageState.isChanged) {
+                    profileManageNotifier.saveProfile().then((_) {
+                      if (context.mounted) pop(context);
+                    });
+                  }
                 },
-              )
+                child: Text(
+                  '저장',
+                  style: Fonts.body01Medium(
+                    profileManageState.isChanged
+                        ? Colors.white
+                        : Palette.colorGrey300,
+                  ),
+                ),
+              ),
+              const Gap(20),
             ],
           ),
         ),

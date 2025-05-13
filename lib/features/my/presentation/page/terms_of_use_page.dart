@@ -9,16 +9,16 @@ class TermsOfUsePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "이용약관",
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: RichText(
             text: TextSpan(
               style: Fonts.body02Medium().copyWith(
-                color: Color(0xff7E7E7E),
+                color: const Color(0xff7E7E7E),
                 fontWeight: FontWeight.w400,
               ),
               children: _parseTermsOfuse(termsOfUseText),

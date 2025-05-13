@@ -31,10 +31,16 @@ class MyBlockFriendPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 12,
+              ),
+              decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: Palette.colorGrey50, width: 1),
+                  bottom: BorderSide(
+                    color: Palette.colorGrey50,
+                    width: 1,
+                  ),
                 ),
               ),
               child: Row(
@@ -42,21 +48,28 @@ class MyBlockFriendPage extends StatelessWidget {
                   Text(
                     "차단된 연락처",
                     style: Fonts.body02Medium().copyWith(
-                        fontWeight: FontWeight.w400, color: Colors.black),
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
                   ),
-                  Gap(5),
+                  const Gap(5),
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Color(0xffEAECEF),
-                        borderRadius: BorderRadius.circular(15),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffEAECEF),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      "0",
+                      style: Fonts.body02Medium().copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff222529),
                       ),
-                      child: Text(
-                        "0",
-                        style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff222529)),
-                      ))
+                    ),
+                  )
                 ],
               ),
             ),
@@ -65,11 +78,16 @@ class MyBlockFriendPage extends StatelessWidget {
                 itemCount: 8,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 12,
+                    ),
+                    decoration: const BoxDecoration(
                       border: Border(
-                        bottom:
-                            BorderSide(color: Palette.colorGrey50, width: 1),
+                        bottom: BorderSide(
+                          color: Palette.colorGrey50,
+                          width: 1,
+                        ),
                       ),
                     ),
                     child: Row(
@@ -80,20 +98,22 @@ class MyBlockFriendPage extends StatelessWidget {
                             Text(
                               "김민지",
                               style: Fonts.body02Medium().copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: Palette.colorBlack),
+                                fontWeight: FontWeight.w400,
+                                color: Palette.colorBlack,
+                              ),
                             ),
-                            Gap(4),
+                            const Gap(4),
                             Text(
                               "010-0000-0000",
                               style: Fonts.body02Medium().copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff9F9F9F)),
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xff9F9F9F),
+                              ),
                             )
                           ],
                         ),
-                        Spacer(),
-                        DefaultIcon(
+                        const Spacer(),
+                        const DefaultIcon(
                           IconPath.checkFillGray,
                           size: 24,
                         )
