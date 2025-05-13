@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/store/presentation/widget/default_heart_card.dart';
 import 'package:atwoz_app/features/store/presentation/widget/event_heart_card.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -16,6 +20,87 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
+  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
+
+  final List<String> _productIds = [
+    'APP_HEART_45',
+    'APP_HEART_90',
+    'APP_HEART_110',
+    'APP_HEART_350',
+    'APP_HEART_550',
+  ];
+
+  List<ProductDetails> _products = [];
+
+  // TODO: 결제 처리중 구현되어야함
+  bool _loading = true;
+  bool _purchasePending = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (Platform.isIOS) {
+      _subscription = _inAppPurchase.purchaseStream.listen(_onPurchaseUpdated);
+      _initializeStore();
+    }
+  }
+
+  // 스토어의 상품ID를 저장
+  Future<void> _initializeStore() async {
+    final isAvailable = await _inAppPurchase.isAvailable();
+
+    if (!isAvailable) {
+      setState(() => _loading = false);
+      return;
+    }
+
+    final response =
+        await _inAppPurchase.queryProductDetails(_productIds.toSet());
+
+    print('🛒 response.productDetails: ${response.productDetails}');
+    print('🛑 response.notFoundIDs: ${response.notFoundIDs}');
+    print('⚠️ response.error: ${response.error}');
+
+    setState(() {
+      _products = response.productDetails;
+      _loading = false;
+    });
+  }
+
+  // 앱 내 구매상태 변경 시 콜백
+  void _onPurchaseUpdated(List<PurchaseDetails> purchases) async {
+    for (final purchase in purchases) {
+      if (purchase.status == PurchaseStatus.purchased) {
+        debugPrint('✅ 구매 성공: ${purchase.productID}');
+        if (purchase.pendingCompletePurchase) {
+          await _inAppPurchase.completePurchase(purchase);
+        }
+      } else if (purchase.status == PurchaseStatus.error) {
+        debugPrint('❌ 구매 실패: ${purchase.error}');
+      }
+
+      setState(() => _purchasePending = false);
+    }
+  }
+
+  // 하트상품 구입
+  void _buyProduct(String productId) {
+    final product = _products.firstWhere((p) => p.id == productId,
+        orElse: () => throw 'Product not found');
+    final param = PurchaseParam(productDetails: product);
+
+    _inAppPurchase.buyConsumable(purchaseParam: param, autoConsume: true);
+    setState(() => _purchasePending = true);
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     final double tagSpacing = 16;
@@ -26,22 +111,22 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
       {
         'heart': '45',
         'price': '9000',
-        'code': '',
+        'code': 'APP_HEART_45',
       },
       {
         'heart': '110',
-        'price': '20000',
-        'code': '',
+        'price': '22000',
+        'code': 'APP_HEART_110',
       },
       {
         'heart': '350',
         'price': '59000',
-        'code': '',
+        'code': 'APP_HEART_350',
       },
       {
         'heart': '550',
         'price': '88000',
-        'code': '',
+        'code': 'APP_HEART_550',
       },
     ];
 
@@ -74,7 +159,11 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
           Padding(
               padding: contentPadding,
               child: Row(
-                children: [EventHeartCard(code: 'C190192')],
+                children: [
+                  EventHeartCard(
+                      code: 'APP_HEART_90',
+                      onCreate: (code) => _buyProduct(code)),
+                ],
               )),
           Padding(
             padding: contentPadding,
@@ -89,9 +178,10 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                     child: DefaultHeartCard(
                         heart: '${item['heart']}',
                         price: '${item['price']}',
-                        code: '${item['code']}'),
+                        code: '${item['code']}',
+                        onCreate: (code) => _buyProduct(code)),
                   );
-                }).toList(), // map()의 결과를 List<Widget>으로 변환
+                }).toList(),
               ),
             ),
           ),

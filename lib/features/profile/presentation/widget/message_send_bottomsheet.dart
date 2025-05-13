@@ -13,7 +13,13 @@ import '../../domain/common/model.dart';
 import 'common_button_group.dart';
 
 class MessageSendBottomSheet extends ConsumerStatefulWidget {
-  const MessageSendBottomSheet(this.userId, {super.key});
+  const MessageSendBottomSheet(
+    this.userId, {
+    super.key,
+    required this.onSubmit,
+  });
+
+  final Future Function() onSubmit;
 
   final int userId;
 
@@ -21,7 +27,11 @@ class MessageSendBottomSheet extends ConsumerStatefulWidget {
   ConsumerState<MessageSendBottomSheet> createState() =>
       _MessageSendBottomSheetState();
 
-  static Future<void> open(BuildContext context, {required int userId}) =>
+  static Future<void> open(
+    BuildContext context, {
+    required int userId,
+    required Future Function() onSubmit,
+  }) =>
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -29,7 +39,10 @@ class MessageSendBottomSheet extends ConsumerStatefulWidget {
         useSafeArea: true,
         builder: (context) => Padding(
           padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
-          child: MessageSendBottomSheet(userId),
+          child: MessageSendBottomSheet(
+            userId,
+            onSubmit: onSubmit,
+          ),
         ),
       );
 }
@@ -137,15 +150,14 @@ class _MessageSendBottomSheetState
     );
   }
 
-  void _onSubmit({
+  Future<void> _onSubmit({
     required bool messageReceived,
     required bool registeredContact,
   }) async {
     if (messageReceived) {
-      _messageSendAndDetuctPoint(0);
-      context.pop();
-      return;
+      return _messageSendAndDetuctPoint(0);
     }
+
     await showDialog(
       context: context,
       builder: (context) => _MessageSendConfirm(
@@ -154,12 +166,16 @@ class _MessageSendBottomSheetState
         hasContactMethod: registeredContact,
       ),
     );
+
     if (!mounted) return;
     context.pop();
   }
 
-  void _messageSendAndDetuctPoint(int point) {
-    // TDOO(Han): message 전송 로직 (usecase 로 추후 구현)
+  Future<void> _messageSendAndDetuctPoint(int point) async {
+    await widget.onSubmit();
+
+    if (!mounted) return;
+    context.pop();
   }
 }
 
@@ -392,8 +408,7 @@ class _MessageSendConfirm extends StatelessWidget {
   }
 
   Future<bool> _checkContactMethodAndRegisterIfInvalid(
-      BuildContext context) async {
-    return hasContactMethod ||
-        (await ContactRegistrationDialog.open(context) ?? false);
-  }
+          BuildContext context) async =>
+      hasContactMethod ||
+      (await ContactRegistrationDialog.open(context) ?? false);
 }

@@ -1,12 +1,11 @@
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../common/model.dart';
-
-// TODO(Han): 추후 repository 를 받고 DI 로 주입 하도록 수정
 class ProfileFetchUseCase {
   final Ref ref;
 
@@ -17,7 +16,7 @@ class ProfileFetchUseCase {
 
     if (designInspectionPresetData != null) {
       return UserProfile(
-        id: 0,
+        id: 1,
         name: '장원영',
         profileUri: 'https://picsum.photos/200/300',
         age: 20,
@@ -25,45 +24,46 @@ class ProfileFetchUseCase {
         address: '서울특별시 동작구',
         hobbies: ['클라이밍', '공연 전시회 관람'],
         selfIntroductionItems: [],
-        subInformationItems: [],
+        smokingStatus: SmokingStatus.none,
+        drinkingStatus: DrinkingStatus.none,
+        educationLevel: EducationLevel.other,
+        religion: Religion.none,
+        region: Region.seoul,
+        height: 165.0,
+        job: '직장인',
         matchStatus: designInspectionPresetData,
-        favoriteType: FavoriteType.none,
+        favoriteType: FavoriteType.interest,
       );
     }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
     // TODO(Han): 실패 처리 필요 + my user id 받아오기
-    return response.toModel(3);
+    return response.toModel(myUserId);
   }
 }
 
 extension ProfileDetailResponseX on ProfileDetailResponse {
   UserProfile toModel(int myUserId) {
     final basic = basicMemberInfo;
-    final currentYear = DateTime.now().year;
     return UserProfile(
-      id: id,
+      id: basic.id,
       name: basic.nickname,
       profileUri: basic.profileImageUrl,
-      age: currentYear - basic.year,
+      age: basic.age ?? 0,
       mbti: basic.mbti,
-      address: basic.region,
-      hobbies: basicMemberInfo.hobbies,
+      address: basic.region ?? '',
+      hobbies: basic.hobbies,
       selfIntroductionItems:
           interviews.map((intro) => intro.toModel()).toList(),
-      subInformationItems: [
-        SubInformationData(ProfileSubInfoType.smoking, basic.smokingStatus),
-        SubInformationData(ProfileSubInfoType.drinking, basic.drinkingStatus),
-        SubInformationData(
-          ProfileSubInfoType.education,
-          basic.highestEducation,
-        ),
-        SubInformationData(ProfileSubInfoType.religion, basic.religion),
-        SubInformationData(ProfileSubInfoType.height, '${basic.height}cm'),
-        SubInformationData(ProfileSubInfoType.job, basic.job),
-      ],
+      smokingStatus: SmokingStatus.parse(basic.smokingStatus),
+      drinkingStatus: DrinkingStatus.parse(basic.drinkingStatus),
+      educationLevel: EducationLevel.parse(basic.highestEducation),
+      religion: Religion.parse(basic.religion),
+      region: Region.parse(basic.region),
+      height: basic.height.toDouble(),
+      job: basic.job,
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
-      favoriteType: FavoriteType.none, // TODO(Han): server 구현 후 적용
+      favoriteType: FavoriteType.tryParse(basic.like),
     );
   }
 }
@@ -72,15 +72,18 @@ extension MatchInformationX on MatchInformation {
   MatchStatus toModel(int myUserId) => switch (matchStatus) {
         ('WAITING' || 'EXPIRED') when requesterId == myUserId =>
           MatchingRequested(
+            matchId: matchId,
             sentMessage: requestMessage ?? '',
             isExpired: matchStatus == 'EXPIRED',
           ),
         ('WAITING' || 'EXPIRED') when responderId == myUserId =>
           MatchingReceived(
-            receivedMessage: responseMessage ?? '',
+            matchId: matchId,
+            receivedMessage: requestMessage ?? '',
             isExpired: matchStatus == 'EXPIRED',
           ),
         'MATCHED' => Matched(
+            matchId: matchId,
             sentMessage: requestMessage ?? '',
             receivedMessage: responseMessage ?? '',
             contactMethod: switch (contactType) {
@@ -90,7 +93,10 @@ extension MatchInformationX on MatchInformation {
             },
             contactInfo: contact ?? '',
           ),
-        'REJECTED' || _ => const UnMatched(),
+        'REJECTED' || _ => MatchRejected(
+            matchId: matchId,
+            sentMessage: requestMessage ?? '',
+          ),
       };
 }
 
@@ -107,20 +113,24 @@ MatchStatus? get _designInspectionStatus => switch (kDebugPageType) {
       ProfileDesignInspectionType.main => const UnMatched(),
       ProfileDesignInspectionType.matchingBeforeResponse =>
         const MatchingRequested(
+          matchId: 0,
           sentMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
         ),
       ProfileDesignInspectionType.matchingExpiredOrDenied =>
         const MatchingRequested(
+          matchId: 0,
           sentMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
           isExpired: true,
         ),
       ProfileDesignInspectionType.messageReceived => const MatchingReceived(
+          matchId: 0,
           receivedMessage: '저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요\n'
               '괜찮으시다면 저희 연락 한번 해봐요!',
         ),
       ProfileDesignInspectionType.matched => const Matched(
+          matchId: 0,
           sentMessage: '''
 저와 비슷한 가치관을 가지고 계셔서 호감이 생겼어요
 괜찮으시다면 저희 연락 한번 해봐요!

@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+
 sealed class RouteArguments {
   const RouteArguments();
 }
@@ -18,4 +20,12 @@ class OnboardCertificationArguments extends RouteArguments {
   });
 
   final String phoneNumber;
+}
+
+class UserByCategoryArguments extends RouteArguments {
+  const UserByCategoryArguments({
+    required this.category,
+  });
+
+  final IntroducedCategory category;
 }

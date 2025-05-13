@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/common/model.dart';
 import '../widget/widget.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/error_dialog.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({
@@ -44,15 +45,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   void _listener(ProfileState? prev, ProfileState curr) {
-    if (prev?.matchStatus == curr.matchStatus || curr.matchStatus == null) {
-      return;
+    if (prev?.matchStatus != curr.matchStatus) {
+      _handleStatusChanged(curr.matchStatus);
     }
 
-    _handleStatusChanged(curr.matchStatus!);
+    if (prev?.error != curr.error) {
+      _handleErrorChanged(curr.error);
+    }
   }
 
-  void _handleStatusChanged(MatchStatus status) async {
+  void _handleStatusChanged(MatchStatus? status) {
+    if (status == null) return;
+
     if (!mounted) return;
+    final profileNotifier =
+        ref.read(profileNotifierProvider(widget.userId).notifier);
 
     switch (status) {
       case final Matching status when status is MatchingReceived:
@@ -67,12 +74,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             MessageSendBottomSheet.open(
               context,
               userId: widget.userId,
+              onSubmit: () => ref
+                  .read(profileNotifierProvider(widget.userId).notifier)
+                  .approveMatch(),
             );
           },
           cancelLabel: '거절',
-          onCancel: () {
+          onCancel: () async {
             context.pop();
-            // TODO(Han): 서버로 매칭 종료 전송
+            await profileNotifier.rejectMatch();
           },
         );
         break;
@@ -84,9 +94,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             subTitle: '상대방으로부터 응답이 없어 사용하신 하트를 돌려드렸어요',
             content: status.sentMessage,
             submitLabel: '닫기',
-            onSubmit: () {
-              // TODO(Han): 서버로 매칭 종료 전송
+            onSubmit: () async {
               context.pop();
+              await profileNotifier.resetMatchStatus();
             },
           );
           return;
@@ -103,5 +113,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       case final Matching _ || Matched _ || UnMatched _:
         break;
     }
+  }
+
+  void _handleErrorChanged(ProfileErrorType? error) {
+    if (error == null) return;
+
+    ErrorDialog.open(
+      context,
+      error: error,
+      onConfirm: () {
+        ref.read(profileNotifierProvider(widget.userId).notifier).resetError();
+        Navigator.of(context)
+          ..pop()
+          ..pop();
+      },
+    );
   }
 }

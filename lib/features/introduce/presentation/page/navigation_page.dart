@@ -39,7 +39,7 @@ class IntroduceNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.introduce,
+                        route: AppRoute.introduceRegister,
                       );
                     },
                     child: Text(
@@ -53,7 +53,7 @@ class IntroduceNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.introduce,
+                        route: AppRoute.introduceEdit,
                       );
                     },
                     child: Text(

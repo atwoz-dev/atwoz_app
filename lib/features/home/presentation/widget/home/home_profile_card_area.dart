@@ -3,7 +3,7 @@ import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/data/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/recommended_profile.dart';
 import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
   @override
   Widget build(BuildContext context) {
     final profiles =
-        ref.watch(homeNotifierProvider).introducedProfiles; // 소개받은 프로필 정보들
+        ref.watch(homeNotifierProvider).recommendedProfiles; // 소개받은 프로필 정보들
 
     return Column(
       children: [
@@ -70,7 +70,7 @@ class ProfileCardWidget extends StatelessWidget {
     required this.profile,
   });
 
-  final IntroducedProfile profile;
+  final RecommendedProfile profile;
 
   @override
   Widget build(BuildContext context) {

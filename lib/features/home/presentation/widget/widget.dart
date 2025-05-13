@@ -1,5 +1,5 @@
-// TODO: export 작성 or widget 폴더 미사용 시 파일이랑 폴더 둘 다 삭제
-export 'home_category_buttons_area.dart';
-export 'home_navbar_area.dart';
-export 'home_profile_card_area.dart';
-export 'ideal_age_setting_area.dart';
+export 'category/category_widget.dart';
+export 'home/home_widget.dart';
+export 'ideal/ideal_widget.dart';
+export 'hash_tag_widget.dart';
+export 'blur_cover_widget.dart';
