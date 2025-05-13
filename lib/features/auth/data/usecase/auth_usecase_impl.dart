@@ -57,7 +57,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
-    final cookieJar = _apiService.dioService.getCookieJar();
+    final cookieJar = await _apiService.cookieJar;
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
