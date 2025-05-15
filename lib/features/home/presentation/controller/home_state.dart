@@ -7,6 +7,7 @@ part 'home_state.g.dart';
 @freezed
 class HomeState with _$HomeState {
   const factory HomeState({
+    required String nickname,
     @Default([]) List<RecommendedProfile> recommendedProfiles,
   }) = _HomeState;
 

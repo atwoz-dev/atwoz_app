@@ -1,7 +1,12 @@
 import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+
+final getGlobalUserProfileUseCaseProvider =
+    FutureProvider<GetGlobalUserProfileUseCase>((ref) =>
+        GetGlobalUserProfileUseCase(ref.read(homeProfileRepositoryProvider)));
 
 class GetGlobalUserProfileUseCase {
   final HomeProfileRepository repository;

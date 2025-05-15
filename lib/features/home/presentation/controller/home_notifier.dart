@@ -1,5 +1,5 @@
 import 'package:atwoz_app/features/home/data/data.dart';
-import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
+import 'package:atwoz_app/features/home/domain/use_case/get_global_user_profile_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,14 +17,17 @@ RecommendedProfileRepository recommendedProfileRepository(
 class HomeNotifier extends _$HomeNotifier {
   @override
   HomeState build() {
-    _fetchRecommendedProfiles();
+    //_fetchRecommendedProfiles();
     _fetchHomeProfile();
-    return const HomeState();
+    return const HomeState(nickname: '');
   }
 
   Future<void> _fetchHomeProfile() async {
-    final homeProfileRepository = ref.read(homeProfileRepositoryProvider);
-    final profile = await homeProfileRepository.getProfile();
+    final profile = ref.read(getGlobalUserProfileUseCaseProvider);
+    profile.whenData((data) async {
+      final profile = await data.execute();
+      state = state.copyWith(nickname: profile.nickname);
+    });
   }
 
   Future<void> _fetchRecommendedProfiles() async {

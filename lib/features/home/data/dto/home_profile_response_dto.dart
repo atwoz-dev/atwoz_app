@@ -25,14 +25,14 @@ class HomeProfileResponseDto {
 
 @JsonSerializable()
 class StatusInfoDto {
-  final String? activityStatus;
-  final bool? isVip;
+  final String activityStatus;
+  final bool isVip;
   final String? primaryContactType;
 
   StatusInfoDto({
-    this.activityStatus,
-    this.isVip,
-    this.primaryContactType,
+    required this.activityStatus,
+    required this.isVip,
+    required this.primaryContactType,
   });
 
   factory StatusInfoDto.fromJson(Map<String, dynamic> json) =>
@@ -43,19 +43,19 @@ class StatusInfoDto {
 
 @JsonSerializable()
 class BasicInfoDto {
-  final String? nickname;
-  final String? gender;
+  final String nickname;
+  final String gender;
   final String? kakaoId;
-  final int? yearOfBirth;
-  final int? height;
+  final int yearOfBirth;
+  final int height;
   final String phoneNumber;
 
   BasicInfoDto({
-    this.nickname,
-    this.gender,
+    required this.nickname,
+    required this.gender,
     this.kakaoId,
-    this.yearOfBirth,
-    this.height,
+    required this.yearOfBirth,
+    required this.height,
     required this.phoneNumber,
   });
 
@@ -67,26 +67,26 @@ class BasicInfoDto {
 
 @JsonSerializable()
 class ProfileInfoDto {
-  final String? job;
-  final String? highestEducation;
-  final String? city;
-  final String? district;
-  final String? mbti;
-  final String? smokingStatus;
-  final String? drinkingStatus;
-  final String? religion;
+  final String job;
+  final String highestEducation;
+  final String city;
+  final String district;
+  final String mbti;
+  final String smokingStatus;
+  final String drinkingStatus;
+  final String religion;
   final List<String>? hobbies;
 
   ProfileInfoDto({
-    this.job,
-    this.highestEducation,
-    this.city,
-    this.district,
-    this.mbti,
-    this.smokingStatus,
-    this.drinkingStatus,
-    this.religion,
-    this.hobbies,
+    required this.job,
+    required this.highestEducation,
+    required this.city,
+    required this.district,
+    required this.mbti,
+    required this.smokingStatus,
+    required this.drinkingStatus,
+    required this.religion,
+    required this.hobbies,
   });
 
   factory ProfileInfoDto.fromJson(Map<String, dynamic> json) =>
@@ -97,12 +97,12 @@ class ProfileInfoDto {
 
 @JsonSerializable()
 class InterviewInfoDto {
-  final String? title;
-  final String? content;
+  final String title;
+  final String content;
 
   InterviewInfoDto({
-    this.title,
-    this.content,
+    required this.title,
+    required this.content,
   });
 
   factory InterviewInfoDto.fromJson(Map<String, dynamic> json) =>
