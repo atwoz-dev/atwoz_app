@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(title: "계정 설정"),
+      appBar: const DefaultAppBar(title: "계정 설정"),
       body: Column(
         children: [
           _AccountSettingItem(
@@ -30,8 +31,8 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
                   color: Palette.colorBlack,
                 ),
               ),
-              Spacer(),
-              Text("마카롱조아")
+              const Spacer(),
+              const Text("마카롱조아")
             ],
           ),
           _AccountSettingItem(
@@ -43,12 +44,12 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
                   color: Palette.colorBlack,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Switch(
                 value: _isSwitched,
                 inactiveThumbImage:
-                    AssetImage("assets/images/inactive_thumb.png"),
-                inactiveTrackColor: Color(0xffDEDEDE),
+                    const AssetImage("assets/images/inactive_thumb.png"),
+                inactiveTrackColor: const Color(0xffDEDEDE),
                 onChanged: (value) {
                   // setState(() {
                   //   isSwitched = !isSwitched;
@@ -56,7 +57,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return _HumanUserChangeDialog();
+                      return const _HumanUserChangeDialog();
                     },
                   );
                 },
@@ -76,11 +77,14 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
           ),
           _AccountSettingItem(
             children: [
-              Text(
-                "서비스 탈퇴",
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xffbdbdbd),
+              GestureDetector(
+                onTap: () => navigate(context, route: AppRoute.serviceWithdraw),
+                child: Text(
+                  "서비스 탈퇴",
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xffbdbdbd),
+                  ),
                 ),
               ),
             ],
@@ -100,8 +104,8 @@ class _AccountSettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: Color(0xffE1E1E1),
@@ -130,35 +134,35 @@ class _HumanUserChangeDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(12)),
               child: Column(
                 children: [
-                  Gap(32),
+                  const Gap(32),
                   Text(
                     "휴먼회원 전환",
                     style: Fonts.header02().copyWith(
                         fontWeight: FontWeight.w700, color: Palette.colorBlack),
                     textAlign: TextAlign.center,
                   ),
-                  Gap(16),
+                  const Gap(16),
                   Text(
                     "프로필이 상대방에게 노출되지 않고\n받은 호감과 메시지가 모두 사라집니다\n휴면회원으로 전환하시겠습니까?",
                     style: Fonts.body02Medium().copyWith(
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff515151),
+                        color: const Color(0xff515151),
                         height: 1.5),
                     textAlign: TextAlign.center,
                   ),
-                  Gap(24),
+                  const Gap(24),
                   Row(
                     children: [
                       Expanded(
                         child: DefaultElevatedButton(
                           onPressed: context.pop,
                           primary: Colors.white,
-                          border: BorderSide(color: Color(0xffE1E1E1)),
+                          border: const BorderSide(color: Color(0xffE1E1E1)),
                           child: Text(
                             "취소",
                             style: Fonts.body02Medium().copyWith(
@@ -167,7 +171,7 @@ class _HumanUserChangeDialog extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Gap(8),
+                      const Gap(8),
                       Expanded(
                         child: DefaultElevatedButton(
                           onPressed: context.pop,
@@ -187,7 +191,7 @@ class _HumanUserChangeDialog extends StatelessWidget {
                       )
                     ],
                   ),
-                  Gap(16)
+                  const Gap(16)
                 ],
               ),
             ),

@@ -17,11 +17,6 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.da
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
-import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/profile_update_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/service_withdraw_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/service_withdraw_reason_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/terms_of_use_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
@@ -283,13 +278,21 @@ class MyBranch {
           builder: (context, state) => const MyPage(),
         ),
         GoRoute(
-          path: 'manage-profile',
-          builder: (context, state) => const ProfileManagePage(),
-        ),
-        GoRoute(
-          path: 'manage-profile/update-profile',
-          builder: (context, state) => const ProfileUpdatePage(),
-        ),
+            path: 'manage-profile',
+            builder: (context, state) => const ProfileManagePage(),
+            routes: [
+              GoRoute(
+                  path: 'update-profile',
+                  builder: (context, state) {
+                    final args = state.extra;
+                    if (args is! MyProfileUpdateArguments) {
+                      return const SizedBox.shrink();
+                    }
+                    return ProfileUpdatePage(
+                      profileType: args.profileType,
+                    );
+                  }),
+            ]),
         GoRoute(
           path: 'ideal-setting',
           builder: (context, state) => const IdealTypeSettingPage(),

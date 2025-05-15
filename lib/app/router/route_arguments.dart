@@ -29,3 +29,11 @@ class UserByCategoryArguments extends RouteArguments {
 
   final IntroducedCategory category;
 }
+
+class MyProfileUpdateArguments extends RouteArguments {
+  const MyProfileUpdateArguments({
+    required this.profileType,
+  });
+
+  final String profileType;
+}

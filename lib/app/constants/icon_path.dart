@@ -44,6 +44,7 @@ class IconPath {
   static const String celebrate = '$iconsPath/celebrate.svg';
   static const String sadEmotion = '$iconsPath/sad_emotion.svg';
   static const String mailOutline = '$iconsPath/mail_outline.svg';
+  static const String imageDelete = '$iconsPath/image_delete.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';

@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class MyNavigationPage extends StatefulWidget {
   const MyNavigationPage({super.key});
@@ -18,13 +19,15 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05, vertical: screenWidth * 0.2),
+          horizontal: screenWidth * 0.05,
+          vertical: screenWidth * 0.2,
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.myPage,
@@ -35,10 +38,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.profileManage,
@@ -49,10 +52,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.idealSetting,
@@ -63,10 +66,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.blockFriend,
@@ -77,10 +80,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.store,
@@ -91,10 +94,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.customerCenter,
@@ -105,10 +108,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.setting,
@@ -119,10 +122,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.pushNotificationSetting,
@@ -133,10 +136,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.accountSetting,
@@ -150,7 +153,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               const SizedBox(height: 16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.serviceWithdraw,
@@ -161,10 +164,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.withdrawReason,
@@ -175,10 +178,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.privacyPolicy,
@@ -189,10 +192,10 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
-              const SizedBox(height: 16),
+              const Gap(16),
               DefaultElevatedButton(
                 primary: palette.primary,
-                onPressed: (){
+                onPressed: () {
                   navigate(
                     context,
                     route: AppRoute.termsOfUse,
