@@ -12,6 +12,9 @@ import 'package:atwoz_app/features/interview/presentation/page/interview_page.da
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/lovetest/presentation/page/lovetest_page.dart';
+import 'package:atwoz_app/features/lovetest/presentation/page/lovetest_test_page.dart';
+import 'package:atwoz_app/features/lovetest/presentation/page/match_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/profile_update_page.dart';
@@ -77,6 +80,9 @@ enum AppRoute {
   signUpProfileUpdate('/auth/sign-up/profile-update'),
   signUpProfilePicture('/auth/sign-up-profile-picture'),
   interview('/interview'),
+  lovetestIntroduce('/lovetest'),
+  lovetest('/lovetest/test'),
+  lovetestMatchResult('/lovetest/match-result'),
   @Deprecated('This variable will be removed after design check')
   profileDesignInspection('/profile-design-inspection'),
   profile('/profile'),
@@ -97,6 +103,7 @@ final allRoutes = [
   ...OnboardBranch.routes,
   ...SignBranch.routes,
   ...MyBranch.routes,
+  ...LoveTestBranch.routes,
 ];
 
 // Home branch routes
@@ -136,8 +143,8 @@ class HomeBranch {
       builder: (context, state) => const ReportPage(),
     ),
     GoRoute(
-      path: AppRoute.introduce.path,
-      builder: (context, state) => const IntroducePage(),
+      path: AppRoute.lovetestIntroduce.path,
+      builder: (context, state) => const LoveTestMainPage(),
     ),
     GoRoute(
       path: AppRoute.introduceDetail.path,
@@ -300,6 +307,21 @@ class MyBranch {
         ),
       ],
     ),
+  ];
+}
+
+class LoveTestBranch {
+  static final routes = [
+    GoRoute(
+        path: '/lovetest',
+        builder: (context, state) => const LoveTestMainPage(),
+        routes: [
+          GoRoute(
+            path: '/match-result',
+            builder: (context, state) => const MatchResultPage(),
+          ),
+          GoRoute(path: '/test', builder: (context, state) => const LoveTest()),
+        ]),
   ];
 }
 

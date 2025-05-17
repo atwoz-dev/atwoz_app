@@ -57,4 +57,6 @@ class IconPath {
 
   // 알림
   static const String frowningFace = '$iconsPath/frowning_face.svg';
+
+  static const String checkProfile = '$iconsPath/check_red.svg';
 }
