@@ -16,4 +16,7 @@ abstract class AuthUseCase {
   Future<void> deleteProfilePhoto(int index);
   Future<void> uploadProfile(ProfileUploadRequest profileData);
   Future<ProfileImageResponse?> fetchProfileImages();
+  Future<String> requestBizgoToken();
+  Future<void> sendVerificationCode(
+      String phoneNumber, String token, String message);
 }

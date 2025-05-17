@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -7,6 +9,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -58,13 +61,29 @@ class OnboardingPhoneInputPageState
     });
   }
 
+  String generateRandomCode([int length = 6]) {
+    final random = Random();
+    return List.generate(length, (_) => random.nextInt(10)).join();
+  }
+
   Future<void> _handleLogin(WidgetRef ref) async {
     final phoneNumber = _phoneController.text;
 
     if (phoneNumber.isEmpty || validationError != null || !mounted) {
       return;
     }
+
     try {
+      final authUseCase = ref.read(authUsecaseProvider);
+
+      final bizgoToken = await authUseCase.requestBizgoToken();
+      // final code = generateRandomCode(6);
+      final code = '123123'; // TODO: 교체 필요 (테스트용 코드)
+      await authUseCase.sendVerificationCode(
+          phoneNumber, bizgoToken, '인증번호는 $code입니다.');
+
+      // TODO: 인증번호를 서버에 저장하는 요청 필요
+
       navigate(
         context,
         route: AppRoute.onboardCertification,

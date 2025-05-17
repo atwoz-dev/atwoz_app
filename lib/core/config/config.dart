@@ -18,6 +18,9 @@ abstract class Config {
   static String? _deepLinkUrl;
   static bool? _enableNotificationLog;
   static String? _kakaoContactUrl;
+  static String? _bizGoId;
+  static String? _bizGoPw;
+  static String? _bizGoSenderPhone;
 
   /// Getter를 사용하여 안전하게 접근
   static bool get enableGeneralLog => _enableGeneralLog ?? kDebugMode;
@@ -37,6 +40,9 @@ abstract class Config {
   static String get deepLinkUrl => _deepLinkUrl ?? '';
   static bool get enableNotificationLog => _enableNotificationLog ?? kDebugMode;
   static String get kakaoContactUrl => _kakaoContactUrl ?? '';
+  static String get bizGoId => _bizGoId ?? '';
+  static String get bizGoPw => _bizGoPw ?? '';
+  static String get bizGoSenderPhone => _bizGoSenderPhone ?? '';
 
   /// `.env` 로드하는 초기화 메서드
   static Future<void> initialize() async {
@@ -85,5 +91,9 @@ abstract class Config {
         'true';
 
     _kakaoContactUrl = dotenv.get('KAKAO_CONTACT_URL', fallback: '');
+
+    _bizGoId = dotenv.get('BIZ_GO_ID', fallback: '');
+    _bizGoPw = dotenv.get('BIZ_GO_PW', fallback: '');
+    _bizGoSenderPhone = dotenv.get('BIZ_GO_SENDER_PHONE', fallback: '');
   }
 }

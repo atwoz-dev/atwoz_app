@@ -114,10 +114,25 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   Future<void> uploadProfile(ProfileUploadRequest profileData) async {
     try {
       await _userRepository.updateProfile(profileData);
-      Log.d("✅ 프로필 업로드 성공");
+      Log.d("프로필 업로드 성공");
     } catch (e) {
-      Log.e("❌ 프로필 업로드 실패: $e");
+      Log.e("프로필 업로드 실패: $e");
       rethrow;
     }
+  }
+
+  @override
+  Future<String> requestBizgoToken() async {
+    return await _userRepository.requestBizgoToken();
+  }
+
+  @override
+  Future<void> sendVerificationCode(
+      String phoneNumber, String token, String message) async {
+    await _userRepository.sendSmsVerificationCode(
+      phoneNumber: phoneNumber,
+      token: token,
+      message: message,
+    );
   }
 }

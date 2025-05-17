@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -50,5 +51,44 @@ class UserRepository extends BaseRepository {
       Log.e("프로필 업데이트 실패", errorObject: e, stackTrace: st);
       rethrow;
     }
+  }
+
+  Future<String> requestBizgoToken() async {
+    final tokenResponse = await apiService.postJson<Map<String, dynamic>>(
+      'https://omni.ibapi.kr/v1/auth/token',
+      requiresAccessToken: false,
+      headers: {
+        'X-IB-Client-Id': Config.bizGoId,
+        'X-IB-Client-Passwd': Config.bizGoPw,
+      },
+      data: {}, // 비즈고 토큰 발급은 body 없음
+    );
+
+    if (tokenResponse['code'] == 'A000') {
+      final data = tokenResponse['data'];
+      return '${data['schema']} ${data['token']}';
+    } else {
+      throw Exception('비즈고 토큰 발급 실패: ${tokenResponse['result']}');
+    }
+  }
+
+  Future<void> sendSmsVerificationCode({
+    required String phoneNumber,
+    required String token,
+    required String message,
+  }) async {
+    await apiService.postJson<Map<String, dynamic>>(
+      'https://omni.ibapi.kr/v1/send/sms',
+      requiresAccessToken: false,
+      requiresRefreshToken: false,
+      headers: {
+        'Authorization': token,
+      },
+      data: {
+        'from': Config.bizGoSenderPhone, // 등록된 발신번호
+        'to': phoneNumber.replaceAll('-', ''),
+        'text': message,
+      },
+    );
   }
 }

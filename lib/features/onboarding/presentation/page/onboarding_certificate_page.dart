@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -28,7 +29,8 @@ class OnboardingCertificationPage extends ConsumerStatefulWidget {
 }
 
 class OnboardingCertificationPageState
-    extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
+    extends BaseConsumerStatefulPageState<OnboardingCertificationPage>
+    with ToastMixin {
   OnboardingCertificationPageState();
 
   final TextEditingController _phoneController = TextEditingController();
@@ -106,9 +108,10 @@ class OnboardingCertificationPageState
                                 focusNode: focusNode,
                                 autofocus: false,
                                 controller: _phoneController,
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.number,
                                 hintText: '000000',
                                 fillColor: Palette.colorGrey100,
+                                // errorText: validationError,
                                 onFieldSubmitted: _validateInput,
                               ),
                             ),
@@ -123,9 +126,23 @@ class OnboardingCertificationPageState
                                   textStyle: Fonts.body02Regular()
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
-                                  onPressed: () {
-                                    Log.d("인증번호 재발송");
-                                    // TODO: 재발송 로직 추가
+                                  onPressed: () async {
+                                    final authUseCase =
+                                        ref.read(authUsecaseProvider);
+                                    final token =
+                                        await authUseCase.requestBizgoToken();
+                                    final code =
+                                        '123123'; // TODO: 테스트 코드 (추후 따로 백엔드 API도 나와야 할듯)
+                                    await authUseCase.sendVerificationCode(
+                                      widget.phoneNumber,
+                                      token,
+                                      '재전송된 인증번호는 $code입니다.',
+                                    );
+                                    setState(() {
+                                      validationError = null; // 기존 오류 메시지 제거
+                                    });
+
+                                    addToastMessage('인증번호가 재전송되었습니다.');
                                   },
                                   child: const Text('재발송'),
                                 ),
@@ -151,10 +168,31 @@ class OnboardingCertificationPageState
               onPressed: isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
-                      await authUseCase.signIn(UserSignInRequest(
-                        phoneNumber: widget.phoneNumber,
-                      ));
-                      navigate(context, route: AppRoute.signUp);
+                      final inputCode = _phoneController.text;
+
+                      try {
+                        // 1. 인증번호 검증 요청
+                        // final bool isVerified = await authUseCase.verifyCode(
+                        //     widget.phoneNumber, inputCode);
+                        final bool isVerified = inputCode == '123123';
+                        if (isVerified) {
+                          // 2. 로그인 또는 다음 화면 이동
+                          await authUseCase.signIn(UserSignInRequest(
+                            phoneNumber: widget.phoneNumber,
+                          ));
+                          navigate(context, route: AppRoute.signUp);
+                        } else {
+                          setState(() {
+                            validationError = '인증번호가 일치하지 않습니다.';
+                          });
+                          FocusScope.of(context).requestFocus(focusNode);
+                        }
+                      } catch (e) {
+                        Log.e('인증 실패', errorObject: e);
+                        safeSetState(() {
+                          validationError = '인증에 실패했습니다.';
+                        });
+                      }
                     }
                   : null,
               child: Text(
