@@ -21,7 +21,7 @@ NotificationRepository notificationRepository(Ref ref) {
 }
 
 /// FetchNotificationsUseCase를 Provider로 관리
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: false)
 NotificationFetchUseCase fetchNotificationsUseCase(Ref ref) {
   final repository = ref.watch(notificationRepositoryProvider);
   return NotificationFetchUseCase(repository: repository);
@@ -46,22 +46,4 @@ class NotificationDataNotifier extends _$NotificationDataNotifier {
         ref.watch(fetchNotificationsUseCaseProvider);
     return await fetchNotificationsUseCase.execute(unreadOnly: true);
   }
-
-  /// (기능 제거됨) 알림을 읽음 처리하는 기능은 현재 모델 구조에서는 사용되지 않음
-  /// 만약 향후 isRead 같은 속성이 추가된다면 아래처럼 복원 가능
-  // Future<void> markNotificationAsRead(int id) async {
-  //   final repository = ref.read(notificationRepositoryProvider);
-  //   await repository.markAsRead(id);
-  //   _notifications = _notifications.map((n) {
-  //     return n.notificationId == id ? n.copyWith(isRead: true) : n;
-  //   }).toList();
-  //   state = AsyncData(_notifications);
-  // }
-
-  // void markAllAsRead() {
-  //   _notifications = _notifications
-  //       .map((notification) => notification.copyWith(isRead: true))
-  //       .toList();
-  //   state = AsyncData(_notifications);
-  // }
 }

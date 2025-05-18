@@ -1,4 +1,4 @@
-package com.gooemeet.atwoz
+package com.goodmeet.atwoz
 
 import io.flutter.embedding.android.FlutterActivity
 

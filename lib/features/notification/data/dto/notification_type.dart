@@ -12,6 +12,7 @@ enum NotificationType {
   inappropriateContent,
   interviewRequested,
   loginRequested,
+  likeSent,
 }
 
 /// enum ↔ string 매핑
@@ -38,6 +39,8 @@ extension NotificationTypeX on NotificationType {
         return 'INTERVIEW_REQUESTED';
       case NotificationType.loginRequested:
         return 'LOGIN_REQUESTED';
+      case NotificationType.likeSent:
+        return 'LIKE_SENT';
     }
   }
 

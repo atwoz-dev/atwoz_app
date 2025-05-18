@@ -1,12 +1,9 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_text_button.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
-import 'package:atwoz_app/features/notification/data/dto/notification_type.dart';
-import 'package:atwoz_app/features/notification/data/dto/test_notification_request.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_empty_view_widget.dart';
 import 'package:atwoz_app/features/notification/presentation/widget/notification_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +25,7 @@ class NotificationPage extends ConsumerWidget with LogMixin {
       double horizontalPadding,
     ) {
       if (notifications.isEmpty) {
-        return _buildEmptyView();
+        return _buildEmptyView(context);
       }
 
       return ListView(
@@ -74,10 +71,10 @@ class NotificationPage extends ConsumerWidget with LogMixin {
     );
   }
 
-  Widget _buildEmptyView() {
+  Widget _buildEmptyView(BuildContext context) {
     return NotificationEmptyViewWidget(
       onSettingsPressed: () {
-        logD('알림 설정하러 가기 클릭');
+        navigate(context, route: AppRoute.pushNotificationSetting);
       },
     );
   }
