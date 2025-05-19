@@ -38,16 +38,21 @@ class FavoriteListNotifier extends _$FavoriteListNotifier {
   }
 
   Future<void> loadMoreMyFavorites() async {
-    if (state.myFavoriteUsers.isEmpty) return;
+    if (!state.myFavoriteUsers.hasMore) {
+      return;
+    }
 
     try {
-      final lastId = state.myFavoriteUsers.last.userId;
-      final moreFavorites = await ref
+      final lastId = state.myFavoriteUsers.users.last.userId;
+      final favoriteListData = await ref
           .read(favoriteRepositoryProvider)
           .getMyFavoriteUserList(lastId);
 
       state = state.copyWith(
-        myFavoriteUsers: [...state.myFavoriteUsers, ...moreFavorites],
+        myFavoriteUsers: state.myFavoriteUsers.copyWith(
+          users: [...state.myFavoriteUsers.users, ...favoriteListData.users],
+          hasMore: favoriteListData.hasMore,
+        ),
       );
     } catch (e) {
       Log.e(e);
@@ -56,16 +61,21 @@ class FavoriteListNotifier extends _$FavoriteListNotifier {
   }
 
   Future<void> loadMoreFavoriteMe() async {
-    if (state.favoriteMeUsers.isEmpty) return;
+    if (!state.favoriteMeUsers.hasMore) {
+      return;
+    }
 
     try {
-      final lastId = state.favoriteMeUsers.last.userId;
-      final moreFavorites = await ref
+      final lastId = state.favoriteMeUsers.users.last.userId;
+      final favoriteListData = await ref
           .read(favoriteRepositoryProvider)
           .getUserListFavoriteMe(lastId);
 
       state = state.copyWith(
-        favoriteMeUsers: [...state.favoriteMeUsers, ...moreFavorites],
+        favoriteMeUsers: state.favoriteMeUsers.copyWith(
+          users: [...state.myFavoriteUsers.users, ...favoriteListData.users],
+          hasMore: favoriteListData.hasMore,
+        ),
       );
     } catch (e) {
       Log.e(e);

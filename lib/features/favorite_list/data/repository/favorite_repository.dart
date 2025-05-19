@@ -26,7 +26,9 @@ class FavoriteRepository extends BaseRepository {
     );
   }
 
-  Future<List<FavoriteUserSummary>> getMyFavoriteUserList([int? lastId]) async {
+  Future<FavoriteListData> getMyFavoriteUserList([
+    int? lastId,
+  ]) async {
     final res = await apiService.getJson(
       '$path/sent',
       queryParameters: lastId != null ? {'lastLikeId': lastId} : null,
@@ -34,7 +36,9 @@ class FavoriteRepository extends BaseRepository {
     return _parseFavoriteList(res);
   }
 
-  Future<List<FavoriteUserSummary>> getUserListFavoriteMe([int? lastId]) async {
+  Future<FavoriteListData> getUserListFavoriteMe([
+    int? lastId,
+  ]) async {
     final res = await apiService.getJson(
       '$path/received',
       queryParameters: lastId != null ? {'lastLikeId': lastId} : null,
@@ -42,16 +46,16 @@ class FavoriteRepository extends BaseRepository {
     return _parseFavoriteList(res);
   }
 
-  List<FavoriteUserSummary> _parseFavoriteList(dynamic res) {
-    if (res is! Map<String, dynamic> || res['data'] is! List) {
-      Log.e('data type is not List $res');
+  FavoriteListData _parseFavoriteList(dynamic res) {
+    if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
+      Log.e('data type is not Map $res');
       throw Exception();
     }
 
-    return (res['data'] as List)
-        .map((e) => FavoriteListResponse.fromJson(
-              e as Map<String, dynamic>,
-            ).toModel())
-        .toList();
+    final response = FavoriteListResponse.fromJson(res['data']);
+    return FavoriteListData(
+      users: response.likes.map((e) => e.toModel()).toList(),
+      hasMore: response.hasMore,
+    );
   }
 }

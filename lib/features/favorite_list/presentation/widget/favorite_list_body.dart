@@ -39,12 +39,12 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
     return SafeArea(
       child: TabBarView(
         children: FavoriteTabType.values.map((type) {
-          final profiles = switch (type) {
+          final data = switch (type) {
             FavoriteTabType.received => notifier.favoriteMeUsers,
             FavoriteTabType.sent => notifier.myFavoriteUsers,
           };
 
-          if (profiles.isEmpty) {
+          if (data.users.isEmpty) {
             return EmptyFavorite(type: type);
           }
 
@@ -58,7 +58,7 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
                 sliver: SliverGrid(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final profile = profiles[index];
+                      final profile = data.users[index];
                       return FavoriteGridItem(
                         profile: profile,
                         isBlurred: !(index < _previewProfileCount &&
@@ -73,7 +73,7 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
                         ),
                       );
                     },
-                    childCount: profiles.length,
+                    childCount: data.users.length,
                   ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: _gridColumnCount,
@@ -103,8 +103,9 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
 
     final notifier = ref.read(favoriteListNotifierProvider.notifier);
 
-    final currentSelectedTab =
-        FavoriteTabType.values[DefaultTabController.of(context).index];
+    final currentSelectedTab = FavoriteTabType.values[DefaultTabController.of(
+      context,
+    ).index];
 
     switch (currentSelectedTab) {
       case FavoriteTabType.sent:

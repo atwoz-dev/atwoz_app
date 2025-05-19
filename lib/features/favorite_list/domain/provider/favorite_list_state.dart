@@ -10,8 +10,8 @@ enum FavoriteListErrorType {
 @freezed
 class FavoriteListState with _$FavoriteListState {
   const factory FavoriteListState({
-    @Default([]) List<FavoriteUserSummary> myFavoriteUsers,
-    @Default([]) List<FavoriteUserSummary> favoriteMeUsers,
+    @Default(FavoriteListData()) FavoriteListData myFavoriteUsers,
+    @Default(FavoriteListData()) FavoriteListData favoriteMeUsers,
     @Default(false) bool isLoaded,
     FavoriteListErrorType? error,
   }) = _FavoriteListState;
@@ -19,6 +19,26 @@ class FavoriteListState with _$FavoriteListState {
   const FavoriteListState._();
 
   factory FavoriteListState.initial() => const FavoriteListState();
+}
+
+class FavoriteListData {
+  const FavoriteListData({
+    this.users = const [],
+    this.hasMore = false,
+  });
+
+  final List<FavoriteUserSummary> users;
+  final bool hasMore;
+
+  FavoriteListData copyWith({
+    List<FavoriteUserSummary>? users,
+    bool? hasMore,
+  }) {
+    return FavoriteListData(
+      users: users ?? this.users,
+      hasMore: hasMore ?? this.hasMore,
+    );
+  }
 }
 
 class FavoriteUserSummary {
@@ -45,6 +65,19 @@ class FavoriteUserSummary {
       )));
 
   static final _today = DateTime.now();
+}
+
+class DummyFavoriteUserSummary extends FavoriteUserSummary {
+  DummyFavoriteUserSummary()
+      : super(
+          userId: 0,
+          profileUrl: '',
+          name: '',
+          age: 0,
+          city: '',
+          favoriteAt: DateTime.now(),
+          isMutual: false,
+        );
 }
 
 // TODO(Han): test data creator
