@@ -1,33 +1,32 @@
 import 'package:atwoz_app/app/state/global_user_profile.dart';
-import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
-import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-final getGlobalUserProfileUseCaseProvider =
-    FutureProvider<GetGlobalUserProfileUseCase>((ref) =>
-        GetGlobalUserProfileUseCase(ref.read(homeProfileRepositoryProvider)));
+final getGlobalUserProfileUseCaseProvider = Provider.autoDispose(
+  (ref) =>
+      GetGlobalUserProfileUseCase(secureStorage: const FlutterSecureStorage()),
+);
 
 class GetGlobalUserProfileUseCase {
-  final HomeProfileRepository repository;
+  final FlutterSecureStorage _secureStorage;
 
-  GetGlobalUserProfileUseCase(this.repository);
+  GetGlobalUserProfileUseCase({required FlutterSecureStorage secureStorage})
+      : _secureStorage = secureStorage;
 
-  Future<GlobalUserProfile> execute() async {
-    final box = await Hive.openBox<GlobalUserProfile>('GlobalUserProfileBox');
+  Future<GlobalUserProfile?> execute() async {
+    final box = await Hive.openBox<GlobalUserProfile>('globalUserProfile');
+    final profile = box.get('profile');
 
-    if (box.isNotEmpty) {
-      return box.getAt(0)!;
-    } else {
-      try {
-        final profile = await repository.getProfile();
-        final globalUserProfile = profile.toGlobalUserProfile();
-        await box.add(globalUserProfile);
-        return globalUserProfile;
-      } catch (e) {
-        // 예외 처리: 서버 응답이 유효하지 않거나 필수 프로필 항목이 누락된 경우
-        throw Exception('서버 응답 오류: $e');
-      }
-    }
+    if (profile == null) return null;
+
+    // secureStorage에서 민감 정보 복원
+    final kakaoId = await _secureStorage.read(key: 'kakaoId');
+    final phoneNumber = await _secureStorage.read(key: 'phoneNumber');
+
+    return profile.copyWith(
+      kakaoId: kakaoId,
+      phoneNumber: phoneNumber!, // null이 아님을 보장하기 위해
+    );
   }
 }

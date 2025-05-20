@@ -6,11 +6,13 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
     return GlobalUserProfile(
       activityStatus: statusInfo.activityStatus,
       isVip: statusInfo.isVip,
+      primaryContactType: statusInfo.primaryContactType,
       nickname: basicInfo.nickname,
       gender: basicInfo.gender,
+      kakaoId: null, // Hive 저장 x
       yearOfBirth: basicInfo.yearOfBirth,
       height: basicInfo.height,
-      phoneNumber: basicInfo.phoneNumber,
+      phoneNumber: '', // Hive 저장 x
       job: profileInfo.job,
       highestEducation: profileInfo.highestEducation,
       city: profileInfo.city,
@@ -19,7 +21,7 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
       smokingStatus: profileInfo.smokingStatus,
       drinkingStatus: profileInfo.drinkingStatus,
       religion: profileInfo.religion,
-      hobbies: profileInfo.hobbies!,
+      hobbies: profileInfo.hobbies,
       interviewInfoView: interviewInfoView
           .map(
             (e) => e.toInterviewInfo(),
@@ -31,6 +33,7 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
 
 extension InterviewInfoMapper on InterviewInfoDto {
   InterviewInfo toInterviewInfo() {
-    return InterviewInfo(title: title, content: content);
+    return InterviewInfo(
+        title: title ?? '', content: content ?? ''); // TODO(jh): null 처리 제거
   }
 }

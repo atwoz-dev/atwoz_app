@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/domain/model/recommended_profile.dart';
 import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
+import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,51 +23,68 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
 
   @override
   Widget build(BuildContext context) {
-    final profiles =
-        ref.watch(homeNotifierProvider).recommendedProfiles; // 소개받은 프로필 정보들
+    final homeStateAsync = ref.watch(homeNotifierProvider.select((value) =>
+        value.whenData((data) => data.recommendedProfiles))); // 소개받은 프로필 정보들
 
-    return Column(
-      children: [
-        SizedBox(
-          // 소개받은 프로필 페이지 뷰
-          width: context.screenWidth,
-          height: context.screenHeight * 0.41,
-          child: PageView.builder(
-            itemCount: profiles.length,
-            onPageChanged: (value) => setState(() => _currentPage = value),
-            itemBuilder: (context, index) {
-              return ProfileCardWidget(profile: profiles[index]);
-            },
-          ),
-        ),
-        SizedBox(height: 16),
-        Row(
-          // 페이지 번호 상태 바
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(profiles.length, (index) {
-            return AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              margin: EdgeInsets.symmetric(horizontal: 4),
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
-                color: _currentPage == index
-                    ? Palette.colorPrimary500
-                    : Palette.colorGrey100,
-                borderRadius: BorderRadius.circular(8),
+    return homeStateAsync.when(
+        data: (profiles) => Column(
+              children: [
+                SizedBox(
+                  // 소개받은 프로필 페이지 뷰
+                  width: context.screenWidth,
+                  height: context.screenHeight * 0.41,
+                  child: PageView.builder(
+                    itemCount: profiles.length,
+                    onPageChanged: (value) =>
+                        setState(() => _currentPage = value),
+                    itemBuilder: (context, index) {
+                      return _ProfileCardWidget(profile: profiles[index]);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  // 페이지 번호 상태 바
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(profiles.length, (index) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: _currentPage == index
+                            ? Palette.colorPrimary500
+                            : Palette.colorGrey100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
+        error: (error, stackTrace) {
+          return Center(
+            child: Text(
+              error.toString(),
+              style: Fonts.body01Regular().copyWith(
+                fontWeight: FontWeight.w500,
+                color: Palette.colorGrey600,
               ),
-            );
-          }),
-        ),
-      ],
-    );
+            ),
+          );
+        },
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 }
 
 // 소개받은 프로필 페이지 - 프로필 정보 카드
-class ProfileCardWidget extends StatelessWidget {
-  const ProfileCardWidget({
-    super.key,
+class _ProfileCardWidget extends StatelessWidget {
+  const _ProfileCardWidget({
     required this.profile,
   });
 
@@ -76,7 +94,10 @@ class ProfileCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.screenWidth,
-      padding: EdgeInsets.symmetric(horizontal: 45, vertical: 40),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 45,
+        vertical: 40,
+      ),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
         color: Palette.colorGrey50,
@@ -95,7 +116,7 @@ class ProfileCardWidget extends StatelessWidget {
                   AssetImage(profile.image), // 추후 api 연동 시 NetworkImage로 변경
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Column(
             // 하단 프로필 정보
             children: [
@@ -103,48 +124,56 @@ class ProfileCardWidget extends StatelessWidget {
                 // 해시태그 리스트 뷰
                 width: context.screenHeight,
                 height: 18,
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: profile.hashTags.length,
                   itemBuilder: (context, index) {
-                    return HomeHashtagWidget(tagName: profile.hashTags[index]);
+                    return HashtagWidget(tagName: profile.hashTags[index]);
                   },
                   separatorBuilder: (context, index) {
-                    return SizedBox(width: 8);
+                    return const SizedBox(width: 8);
                   },
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
-                // 인터뷰 글
+                // TODO(jh): api 연동 시 하드코딩 제거
                 "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
                 style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400, color: Palette.colorGrey600),
                 maxLines: 2,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               GestureDetector(
                 onTap: () {
                   // 좋아요 버튼 클릭 로직
                 },
                 child: Container(
                   // 좋아요 버튼
-                  margin: EdgeInsets.symmetric(horizontal: 54),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12.5),
+                  margin: const EdgeInsets.symmetric(horizontal: 54),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12.5,
+                  ),
                   decoration: BoxDecoration(
-                      color: Palette.colorPrimary500,
-                      borderRadius: BorderRadius.circular(12)),
+                    color: Palette.colorPrimary500,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DefaultIcon(IconPath.homeHeart, size: 24),
-                      SizedBox(width: 8),
+                      const DefaultIcon(
+                        IconPath.homeHeart,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 8),
                       Text(
                         "좋아요",
-                        style:
-                            Fonts.body01Regular().copyWith(color: Colors.white),
+                        style: Fonts.body01Regular().copyWith(
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -153,31 +182,6 @@ class ProfileCardWidget extends StatelessWidget {
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-class HomeHashtagWidget extends StatelessWidget {
-  final String tagName;
-  const HomeHashtagWidget({
-    super.key,
-    required this.tagName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: BoxDecoration(
-          color: Palette.colorPrimary100,
-          borderRadius: BorderRadius.circular(2)),
-      child: Text(
-        tagName,
-        style: Fonts.body03Regular().copyWith(
-          fontWeight: FontWeight.w500,
-          color: Palette.colorPrimary600,
-        ),
       ),
     );
   }

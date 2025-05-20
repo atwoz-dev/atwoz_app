@@ -44,7 +44,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
   @HiveField(19)
   bool get hasInterview =>
       interviewInfoView.isNotEmpty &&
-      interviewInfoView.any((i) => i.title != null || i.content != null);
+      interviewInfoView.any((i) => i.title.isNotEmpty || i.content.isNotEmpty);
 }
 
 @freezed

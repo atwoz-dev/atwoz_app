@@ -75,7 +75,7 @@ class ProfileInfoDto {
   final String smokingStatus;
   final String drinkingStatus;
   final String religion;
-  final List<String>? hobbies;
+  final List<String> hobbies;
 
   ProfileInfoDto({
     required this.job,
@@ -97,12 +97,13 @@ class ProfileInfoDto {
 
 @JsonSerializable()
 class InterviewInfoDto {
-  final String title;
-  final String content;
+  // TODO(jh): 필드 모두 required로 변경. 현재 null로 응답 중
+  final String? title;
+  final String? content;
 
   InterviewInfoDto({
-    required this.title,
-    required this.content,
+    this.title,
+    this.content,
   });
 
   factory InterviewInfoDto.fromJson(Map<String, dynamic> json) =>
