@@ -1,25 +1,48 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-const List<String> _featureNames = [
-  '프로필 관리',
-  '이상형 설정',
-  '지인차단',
-  '스토어',
-  '고객센터',
-  '설정'
-];
+typedef MenuItem = ({
+  String title,
+  String iconPath,
+  AppRoute? route,
+});
 
-const List<String> _iconPaths = [
-  IconPath.myProfile,
-  IconPath.idealSetting,
-  IconPath.blockFriend,
-  IconPath.store,
-  IconPath.customerCenter,
-  IconPath.setting
+// Record를 사용한 menuItems 정의
+const List<MenuItem> _menuItems = [
+  (
+    title: '프로필 관리',
+    iconPath: IconPath.myProfile,
+    route: AppRoute.profileManage,
+  ),
+  (
+    title: '이상형 설정',
+    iconPath: IconPath.idealSetting,
+    route: AppRoute.idealSetting,
+  ),
+  (
+    title: '차단친구 관리',
+    iconPath: IconPath.blockFriend,
+    route: AppRoute.blockFriend,
+  ),
+  (
+    title: '스토어',
+    iconPath: IconPath.store,
+    route: AppRoute.store,
+  ),
+  (
+    title: '고객센터',
+    iconPath: IconPath.customerCenter,
+    route: null,
+  ),
+  (
+    title: '설정',
+    iconPath: IconPath.setting,
+    route: AppRoute.setting,
+  ),
 ];
 
 class MyPage extends StatelessWidget {
@@ -28,17 +51,24 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(
+      appBar: const DefaultAppBar(
         title: "마이페이지",
       ),
-      body: ListView.builder(
-          itemBuilder: (context, index) {
-            return _MyPageListItem(
-              title: _featureNames[index],
-              iconPath: _iconPaths[index],
-            );
-          },
-          itemCount: _featureNames.length),
+      body: Column(
+        children: _menuItems
+            .map(
+              (item) => _MyPageListItem(
+                title: item.title,
+                iconPath: item.iconPath,
+                onTapMove: () {
+                  if (item.route != null) {
+                    navigate(context, route: item.route!);
+                  }
+                },
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
@@ -46,15 +76,17 @@ class MyPage extends StatelessWidget {
 class _MyPageListItem extends StatelessWidget {
   final String title;
   final String iconPath;
+  final VoidCallback onTapMove;
   const _MyPageListItem({
     required this.title,
     required this.iconPath,
+    required this.onTapMove,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
         children: [
           Expanded(
@@ -64,7 +96,7 @@ class _MyPageListItem extends StatelessWidget {
                   iconPath,
                   size: 24,
                 ),
-                Gap(8),
+                const Gap(8),
                 Text(
                   title,
                   style: Fonts.body02Medium().copyWith(
@@ -76,9 +108,12 @@ class _MyPageListItem extends StatelessWidget {
               ],
             ),
           ),
-          DefaultIcon(
-            IconPath.chevronRight,
-            size: 24,
+          GestureDetector(
+            onTap: onTapMove,
+            child: const DefaultIcon(
+              IconPath.chevronRight,
+              size: 24,
+            ),
           )
         ],
       ),

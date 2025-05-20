@@ -1,4 +1,9 @@
 import 'package:atwoz_app/features/home/domain/domain.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final idealTypeRepository = Provider<IdealTypeRepository>((ref) {
+  return IdealTypeRepositoryImpl();
+});
 
 class IdealTypeRepositoryImpl implements IdealTypeRepository {
   Map<String, dynamic> sampleIdealType = {

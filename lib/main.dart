@@ -40,11 +40,6 @@ void main() {
     }
     Hive.registerAdapter<UserResponse>(UserResponseAdapter());
     await LocalStorage().initialize();
-    final container = ProviderContainer();
-    final apiService = container.read(apiServiceProvider);
-
-    /// API 서비스 초기화
-    apiService.initialize();
 
     runApp(
       ProviderScope(

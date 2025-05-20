@@ -1,10 +1,12 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ProfileManagePhotoArea extends StatelessWidget {
-  const ProfileManagePhotoArea({super.key});
+  final MyProfile profile;
+  const ProfileManagePhotoArea({super.key, required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class ProfileManagePhotoArea extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Gap(24),
+          const Gap(24),
           Text(
             "프로필 사진",
             style: Fonts.header03().copyWith(
@@ -22,11 +24,11 @@ class ProfileManagePhotoArea extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Gap(16),
+          const Gap(16),
           GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
@@ -36,17 +38,16 @@ class ProfileManagePhotoArea extends StatelessWidget {
               return Stack(
                 children: [
                   Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffEDEEF0),
-                      ),
-                      child: index == 0 // TODO: api 연동 시 사진으로 변경
-                          ? DefaultIcon(
-                              IconPath.personPlaceholder,
-                              size: 150,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: index <= profile.profileImages.length - 1
+                          ? Image.network(
+                              profile.profileImages[index].imageUrl,
+                              fit: BoxFit.cover,
                             )
-                          : null,
+                          : Container(
+                              color: const Color(0xffEDEEF0),
+                            ),
                     ),
                   ),
                   if (index == 0)
@@ -54,7 +55,7 @@ class ProfileManagePhotoArea extends StatelessWidget {
                         top: 8,
                         left: 8,
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 6,
                             vertical: 2,
                           ),
@@ -74,22 +75,29 @@ class ProfileManagePhotoArea extends StatelessWidget {
                   Positioned(
                     right: 8,
                     bottom: 8,
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Color(0xff8D92A0),
-                          width: 1.5,
-                        ),
-                      ),
-                      child: DefaultIcon(
-                        IconPath.add,
-                        colorFilter: DefaultIcon.fillColor(Color(0xff8D92A0)),
-                      ),
-                    ),
+                    child: index <= profile.profileImages.length - 1
+                        ? const DefaultIcon(
+                            IconPath.imageDelete,
+                            size: 24,
+                          )
+                        : Container(
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: const Color(0xff8D92A0),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: DefaultIcon(
+                              IconPath.add,
+                              colorFilter: DefaultIcon.fillColor(
+                                const Color(0xff8D92A0),
+                              ),
+                            ),
+                          ),
                   )
                 ],
               );

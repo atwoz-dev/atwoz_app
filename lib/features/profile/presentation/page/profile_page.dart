@@ -74,12 +74,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             MessageSendBottomSheet.open(
               context,
               userId: widget.userId,
+              onSubmit: () => ref
+                  .read(profileNotifierProvider(widget.userId).notifier)
+                  .approveMatch(),
             );
           },
           cancelLabel: '거절',
           onCancel: () async {
             context.pop();
-            await profileNotifier.rejectMatch(widget.userId);
+            await profileNotifier.rejectMatch();
           },
         );
         break;
@@ -93,7 +96,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             submitLabel: '닫기',
             onSubmit: () async {
               context.pop();
-              await profileNotifier.resetMatchStatus(widget.userId);
+              await profileNotifier.resetMatchStatus();
             },
           );
           return;

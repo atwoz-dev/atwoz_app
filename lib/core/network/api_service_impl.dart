@@ -1,83 +1,135 @@
-import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'dart:async';
+
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'api_service.dart';
 import 'dio_service.dart';
 import 'logging_interceptor.dart';
-import 'token_interceptor.dart';
 import 'network_exception.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'token_interceptor.dart';
 
-/// ApiServiceImpl Provider 정의
 final apiServiceProvider = Provider<ApiServiceImpl>((ref) {
-  return ApiServiceImpl.instance(ref);
+  return ApiServiceImpl(
+    ref: ref,
+    baseUrl: Config.baseUrl,
+    enableAuth: true,
+    timeout: Config.timeout,
+  );
 });
 
-/// HTTP 네트워킹 서비스를 구현한 ApiServiceImpl
 class ApiServiceImpl implements ApiService {
-  static ApiServiceImpl? _instance;
-
-  static ApiServiceImpl instance(Ref ref,
-      {String? baseUrl, Duration? timeout}) {
-    _instance ??= ApiServiceImpl._internal(ref,
-        baseUrl: baseUrl ?? Config.baseUrl, timeout: timeout ?? Config.timeout);
-    _instance!.initialize(); // 동기 실행
-    return _instance!;
-  }
-
   final Ref ref;
-  final String? baseUrl;
-  DioService? _dioService;
-  PersistCookieJar? _cookieJar;
+  late final String _baseUrl;
+  late final DioService _dioService;
+  late final PersistCookieJar _cookieJar;
+  final Completer<void> _initCompleter = Completer();
+  PersistCookieJar get cookieJar => _cookieJar;
+  DioService get dioService => _dioService;
 
-  ApiServiceImpl._internal(this.ref, {this.baseUrl, Duration? timeout}) {
-    initialize();
-  }
-
-  DioService get dioService {
-    if (_dioService == null) {
-      Log.d("`_dioService`가 null. `initialize()` 실행 중...");
-      initialize(); // `null`일 경우 자동 초기화
-    }
-    return _dioService!;
-  }
-
-  @override
-  void initialize() {
-    if (_dioService != null) {
-      Log.d("ApiServiceImpl 초기화 스킵 (이미 초기화됨)");
-      return;
-    }
-
-    Log.d("ApiServiceImpl 초기화 시작");
-
-    if (_cookieJar == null) {
-      getApplicationDocumentsDirectory().then((appDocDir) {
-        _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
-      });
-    }
-
-    _dioService = DioService(
-      BaseOptions(
-        baseUrl: baseUrl ?? Config.baseUrl,
-        sendTimeout: Config.timeout,
-        connectTimeout: Config.timeout,
-        receiveTimeout: Config.timeout,
-      ),
-      [
-        TokenInterceptor(ref),
-        if (Config.enableLogRequestInfo) LoggingInterceptor(),
-      ],
+  ApiServiceImpl({
+    required this.ref,
+    String? baseUrl,
+    bool enableAuth = false,
+    Duration? timeout,
+  }) {
+    _initialize(
+      enableAuth: enableAuth,
+      baseUrl: baseUrl,
+      timeout: timeout ?? Config.timeout,
     );
-
-    Log.d("ApiServiceImpl 초기화 완료");
   }
 
-  /// API 요청 시 requiresRefreshToken을 체크하여 토큰 설정
+  Future<void> _initialize({
+    required bool enableAuth,
+    required String? baseUrl,
+    required Duration timeout,
+  }) async {
+    try {
+      _baseUrl = baseUrl ?? Config.baseUrl;
+      final appDocDir = await getApplicationDocumentsDirectory();
+      _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
+
+      _dioService = DioService(
+        BaseOptions(
+          baseUrl: _baseUrl,
+          sendTimeout: timeout,
+          connectTimeout: timeout,
+          receiveTimeout: timeout,
+        ),
+        [
+          if (enableAuth) TokenInterceptor(ref),
+          if (Config.enableLogRequestInfo) LoggingInterceptor(),
+          CookieManager(_cookieJar),
+        ],
+      );
+    } catch (e, st) {
+      Log.e('초기화 실패: $e', stackTrace: st);
+      rethrow; // 완전한 실패시 throw 해서 외부에서도 알 수 있도록
+    } finally {
+      if (!_initCompleter.isCompleted) {
+        _initCompleter.complete();
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>> _prepareHeaders({
+    Map<String, dynamic>? headers,
+    bool requiresAuthToken = true,
+  }) async {
+    await _initCompleter.future;
+    final finalHeaders = <String, dynamic>{"Accept": "*/*", ...?headers};
+
+    if (requiresAuthToken) {
+      final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
+      await ref.read(localStorageProvider.notifier).initialize();
+      final refreshToken =
+          await ref.read(localStorageProvider).getEncrypted('_refreshToken');
+
+      if (accessToken != null) {
+        finalHeaders['Authorization'] = "Bearer $accessToken";
+      }
+      if (refreshToken != null) {
+        finalHeaders['x-refresh-token'] = refreshToken;
+      }
+    }
+
+    return finalHeaders;
+  }
+
+  Future<void> _handleLoginResponse(Response response) async {
+    await _initCompleter.future;
+    final setCookieHeaders = response.headers.map['set-cookie'];
+    if (setCookieHeaders == null || setCookieHeaders.isEmpty) return;
+
+    final refreshToken = _extractRefreshToken(setCookieHeaders);
+    if (refreshToken == null) return;
+
+    final uri = Uri.parse(_baseUrl);
+    _cookieJar.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
+
+    await ref.read(localStorageProvider.notifier).initialize();
+    await ref
+        .read(localStorageProvider)
+        .saveEncrypted('AuthProvider.reToken', refreshToken);
+
+    Log.d("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
+  }
+
+  String? _extractRefreshToken(List<String> cookies) {
+    return cookies
+        .map((cookie) => RegExp(r'refresh_token=([^;]+)').firstMatch(cookie))
+        .firstWhere((match) => match != null, orElse: () => null)
+        ?.group(1);
+  }
+
   @override
   Future<T> request<T>(
     String path, {
@@ -94,34 +146,14 @@ class ApiServiceImpl implements ApiService {
     Converter<T>? converter,
     Map<String, dynamic>? headers,
   }) async {
+    await _initCompleter.future;
     try {
-      print('시작시작: $requiresAccessToken / $requiresRefreshToken');
-      final Map<String, dynamic> finalHeaders = {
-        "Accept": "*/*",
-        ...?headers,
-      };
+      final finalHeaders = await _prepareHeaders(
+        headers: headers,
+        requiresAuthToken: requiresAccessToken,
+      );
 
-      if (requiresAccessToken) {
-        final String? accessToken =
-            await ref.read(authUsecaseProvider).getAccessToken();
-
-        if (accessToken != null) {
-          print('액세스 토큰: $accessToken');
-          finalHeaders['Authorization'] = "Bearer $accessToken";
-        }
-      }
-
-      if (requiresRefreshToken) {
-        final String? refreshToken =
-            await ref.read(authUsecaseProvider).getRefreshToken();
-
-        if (refreshToken != null) {
-          print('리프레시 토큰: $refreshToken');
-          finalHeaders['x-refresh-token'] = refreshToken;
-        }
-      }
-
-      final Response<dynamic> response = await dioService.request(
+      final response = await _dioService.request(
         path,
         data: data,
         options: Options(
@@ -135,28 +167,11 @@ class ApiServiceImpl implements ApiService {
         cancelToken: cancelToken,
       );
 
-      if (response.data == null) {
-        Log.e('❌ 응답 데이터가 null입니다.', errorObject: response);
-        throw Exception("응답 데이터가 null입니다.");
+      if (path.contains("/login")) {
+        await _handleLoginResponse(response);
       }
 
-      print(
-          "📥 [RESPONSE] status=${response.statusCode}, data=${response.data}");
-
-      /// 로그인 요청 시 `Set-Cookie`에서 `_refreshToken` 저장
-      if (path.contains("login")) {
-        _saveRefreshTokenIfLogin(response.headers.map['set-cookie']);
-      }
-
-      /// `converter`가 있으면 변환, 없으면 기본적으로 `response.data` 반환
-      if (converter != null) {
-        return converter(response.data);
-      } else if (T == dynamic || response.data is T) {
-        return response.data as T;
-      } else {
-        throw Exception(
-            "converter 없음 + 타입 불일치: ${response.data.runtimeType} → $T");
-      }
+      return converter?.call(response.data) ?? response.data as T;
     } on DioException catch (e) {
       throw NetworkException.getException(e);
     } catch (error) {
@@ -164,45 +179,11 @@ class ApiServiceImpl implements ApiService {
     }
   }
 
-  /// `Set-Cookie`에서 `_refreshToken`을 추출하는 함수
-  String? _extractRefreshToken(List<String> cookies) {
-    return cookies
-        .map((cookie) => RegExp(r'refresh_token=([^;]+)').firstMatch(cookie))
-        .firstWhere((match) => match != null, orElse: () => null)
-        ?.group(1);
-  }
-
-  /// 쿠키 저장소 초기화
-  Future<void> _initializeCookieJar() async {
-    if (_cookieJar == null) {
-      final appDocDir = await getApplicationDocumentsDirectory();
-      _cookieJar = PersistCookieJar(storage: FileStorage(appDocDir.path));
-    }
-  }
-
-  /// 로그인 응답에서 Refresh Token 저장하는 함수
-  Future<void> _saveRefreshTokenIfLogin(List<String>? setCookieHeaders) async {
-    if (setCookieHeaders == null || setCookieHeaders.isEmpty) return;
-
-    final refreshToken = _extractRefreshToken(setCookieHeaders);
-    if (refreshToken != null) {
-      await _initializeCookieJar();
-      final Uri uri = Uri.parse(baseUrl.toString());
-      _cookieJar
-          ?.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
-
-      await ref.read(localStorageProvider.notifier).initialize();
-      await ref
-          .read(localStorageProvider)
-          .saveEncrypted('AuthProvider.reToken', refreshToken);
-
-      Log.d("Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
-    }
-  }
-
   @override
-  void cancelRequests({CancelToken? cancelToken}) =>
-      dioService.cancelRequests(cancelToken: cancelToken);
+  void cancelRequests({CancelToken? cancelToken}) async {
+    await _initCompleter.future;
+    _dioService.cancelRequests(cancelToken: cancelToken);
+  }
 
   @override
   Future<T> deleteJson<T>(
@@ -358,6 +339,7 @@ class ApiServiceImpl implements ApiService {
         requiresRefreshCookie: requiresRefreshCookie,
         converter: converter,
       );
+
   @override
   Future<T> patchJson<T>(
     String path, {
@@ -376,8 +358,8 @@ class ApiServiceImpl implements ApiService {
         data: data,
         queryParameters: queryParameters,
         requiresAccessToken: requiresAccessToken,
-        requiresRefreshCookie: requiresRefreshCookie,
         requiresRefreshToken: requiresRefreshToken,
+        requiresRefreshCookie: requiresRefreshCookie,
         converter: converter,
         headers: headers,
       );

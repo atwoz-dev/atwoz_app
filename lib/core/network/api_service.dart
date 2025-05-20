@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'api_service_impl.dart';
 
 typedef Json = Map<String, dynamic>;
 typedef FromJson<T> = T Function(Json json);
@@ -10,15 +8,7 @@ typedef Progress = void Function(int count, int total);
 
 /// HTTP networking interface
 abstract class ApiService {
-  const ApiService();
-
-  factory ApiService.create(Ref ref) => ApiServiceImpl.instance(ref);
-
-  factory ApiService.custom(Ref ref, {String? baseUrl}) =>
-      ApiServiceImpl.instance(ref, baseUrl: baseUrl);
-
-  void cancelRequests({CancelToken? cancelToken});
-
+  /// 모든 HTTP 요청에 공통으로 사용하는 메서드
   Future<T> request<T>(
     String path, {
     Object? data,
@@ -35,21 +25,23 @@ abstract class ApiService {
     Map<String, dynamic>? headers,
   });
 
+  void cancelRequests({CancelToken? cancelToken});
+
   Future<T> deleteJson<T>(
     String path, {
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
   });
 
   Future<T> getJson<T>(
     String path, {
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
     String? contentType,
     Map<String, String>? headers,
@@ -59,9 +51,9 @@ abstract class ApiService {
     String path, {
     Object? data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
   });
 
@@ -69,9 +61,9 @@ abstract class ApiService {
     String path, {
     required Object? data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
     Map<String, dynamic>? headers,
   });
@@ -80,9 +72,9 @@ abstract class ApiService {
     String path, {
     required Object? data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
   });
 
@@ -90,9 +82,9 @@ abstract class ApiService {
     String path, {
     Object? data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
   });
 
@@ -100,9 +92,9 @@ abstract class ApiService {
     String path, {
     required FormData data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
   });
 
@@ -110,12 +102,10 @@ abstract class ApiService {
     String path, {
     Object? data,
     Json? queryParameters,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAccessToken,
+    bool requiresRefreshToken,
+    bool requiresRefreshCookie,
     Converter<T>? converter,
-    Map<String, dynamic>? headers, // ← 오타 수정 (headeres → headers)
+    Map<String, dynamic>? headers,
   });
-
-  initialize();
 }

@@ -11,14 +11,11 @@ import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
-import 'package:atwoz_app/features/my/presentation/page/privacy_policy_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/profile_update_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/service_withdraw_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/service_withdraw_reason_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/terms_of_use_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
@@ -85,6 +82,8 @@ enum AppRoute {
   profile('/profile'),
   contactSetting('/profile/contact-setting'),
   introduce('/introduce'),
+  introduceRegister('/introduceRegister'),
+  introduceEdit('/introduceEdit'),
   introduceDetail('/introduceDetail'),
   introduceFilter('/introduceFilter'),
   introduceNavigation('/introduceNavigation'),
@@ -125,10 +124,11 @@ class HomeBranch {
     ),
     GoRoute(
       path: AppRoute.userByCategory.path,
-      name: 'userByCategory',
       builder: (context, state) {
-        final category = state.pathParameters['category'] ?? "상위 5%";
-        return UserByCategoryPage(category: category);
+        final args = state.extra;
+        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
+
+        return UserByCategoryPage(category: args.category.label);
       },
     ),
     GoRoute(
@@ -142,6 +142,14 @@ class HomeBranch {
     GoRoute(
       path: AppRoute.introduce.path,
       builder: (context, state) => const IntroducePage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceRegister.path,
+      builder: (context, state) => const IntroduceRegisterPage(),
+    ),
+    GoRoute(
+      path: AppRoute.introduceEdit.path,
+      builder: (context, state) => const IntroduceEditPage(),
     ),
     GoRoute(
       path: AppRoute.introduceDetail.path,
@@ -264,13 +272,21 @@ class MyBranch {
           builder: (context, state) => const MyPage(),
         ),
         GoRoute(
-          path: 'manage-profile',
-          builder: (context, state) => const ProfileManagePage(),
-        ),
-        GoRoute(
-          path: 'manage-profile/update-profile',
-          builder: (context, state) => const ProfileUpdatePage(),
-        ),
+            path: 'manage-profile',
+            builder: (context, state) => const ProfileManagePage(),
+            routes: [
+              GoRoute(
+                  path: 'update-profile',
+                  builder: (context, state) {
+                    final args = state.extra;
+                    if (args is! MyProfileUpdateArguments) {
+                      return const SizedBox.shrink();
+                    }
+                    return ProfileUpdatePage(
+                      profileType: args.profileType,
+                    );
+                  }),
+            ]),
         GoRoute(
           path: 'ideal-setting',
           builder: (context, state) => const IdealTypeSettingPage(),

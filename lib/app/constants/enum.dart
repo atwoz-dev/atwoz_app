@@ -84,3 +84,22 @@ const Map<ReligionEnum, String> religionMap = {
   ReligionEnum.buddhist: "불교",
   ReligionEnum.other: "기타",
 };
+
+enum IntroducedCategory {
+  fivePercent('상위 5%'),
+  newUser('새로 가입했어요'),
+  nearby('지금 근처인 사람!'),
+  sameReligion('종교가 같아요'),
+  sameHobby('취미가 같아요');
+
+  final String label;
+  const IntroducedCategory(this.label);
+
+  static final Map<String, IntroducedCategory> _byValue = {
+    for (final category in IntroducedCategory.values)
+      category.label.toUpperCase(): category,
+  };
+
+  static IntroducedCategory parse(String? value) =>
+      _byValue[value?.toUpperCase()] ?? IntroducedCategory.fivePercent;
+}
