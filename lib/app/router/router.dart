@@ -128,7 +128,7 @@ class HomeBranch {
         final args = state.extra;
         if (args is! UserByCategoryArguments) return const SizedBox.shrink();
 
-        return UserByCategoryPage(category: args.category.label);
+        return UserByCategoryPage(category: args.category.name);
       },
     ),
     GoRoute(
