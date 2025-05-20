@@ -1,11 +1,11 @@
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final idealTypeRepository = Provider<IdealTypeRepository>((ref) {
-  return IdealTypeRepositoryImpl();
+final idealTypeRepository = Provider<MockIdealTypeRepository>((ref) {
+  return MockIdealTypeRepository();
 });
 
-class IdealTypeRepositoryImpl implements IdealTypeRepository {
+class MockIdealTypeRepository {
   Map<String, dynamic> sampleIdealType = {
     // TODO: api 연동 시 제거
     "minAge": 20,
@@ -17,13 +17,12 @@ class IdealTypeRepositoryImpl implements IdealTypeRepository {
     "drinkingStatus": "none"
   };
 
-  @override
   Future<IdealType> getIdealType() async {
+    await Future.delayed(const Duration(seconds: 5));
     // TODO: 테스트용 코드. api 연동 시 변경
     return IdealType.fromJson(sampleIdealType);
   }
 
-  @override
   Future<void> setIdealType(IdealType idealType) async {
     // TODO: 테스트용 코드. api 연동 시 변경
     sampleIdealType = idealType.toJson();

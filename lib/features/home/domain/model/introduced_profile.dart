@@ -12,7 +12,7 @@ class IntroducedProfile with _$IntroducedProfile {
     required String interviewContent, // 인터뷰 첫 대답
     required bool isIntroduced, // 프로필 소개 여부
     required bool isFavorite, // 좋아요 여부
-    required IntroducedCategory category,
+    IntroducedCategory? category,
   }) = _IntroducedProfile;
 
   factory IntroducedProfile.fromJson(Map<String, dynamic> json) {

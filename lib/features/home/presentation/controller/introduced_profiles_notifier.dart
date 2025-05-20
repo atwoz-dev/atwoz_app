@@ -1,21 +1,18 @@
-import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository_impl.dart';
+import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
+import 'package:atwoz_app/features/home/data/repository/mock_introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/repository/introduced_profile_repository.dart';
+import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduced_profiles_notifier.g.dart'; // 코드 생성을 위한 부분
-
-final introducedProfileRepository =
-    Provider<IntroducedProfileRepository>((ref) {
-  return IntroducedProfileRepositoryImpl();
-});
 
 @riverpod
 class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   @override
   Future<List<IntroducedProfile>> build(String category) async {
-    final repository = ref.read(introducedProfileRepository);
-    final profiles = await repository.getProfiles(category);
+    final profiles =
+        await FetchIntroducedProfilesUseCase(ref).execute(category);
+
     return profiles;
   }
 
