@@ -8,6 +8,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class OnboardingCertificationPageState
                                         ref.read(authUsecaseProvider);
                                     final token =
                                         await authUseCase.requestBizgoToken();
-                                    final code =
+                                    const code =
                                         '123123'; // TODO: 테스트 코드 (추후 따로 백엔드 API도 나와야 할듯)
                                     await authUseCase.sendVerificationCode(
                                       widget.phoneNumber,
@@ -177,10 +178,16 @@ class OnboardingCertificationPageState
                         final bool isVerified = inputCode == '123123';
                         if (isVerified) {
                           // 2. 로그인 또는 다음 화면 이동
-                          await authUseCase.signIn(UserSignInRequest(
+                          UserData userData =
+                              await authUseCase.signIn(UserSignInRequest(
                             phoneNumber: widget.phoneNumber,
                           ));
-                          navigate(context, route: AppRoute.signUp);
+                          if (userData.isProfileSettingNeeded) {
+                            navigate(context, route: AppRoute.signUp);
+                          } else {
+                            // 프로필 설정이 필요하지 않은 경우
+                            navigate(context, route: AppRoute.home);
+                          }
                         } else {
                           setState(() {
                             validationError = '인증번호가 일치하지 않습니다.';

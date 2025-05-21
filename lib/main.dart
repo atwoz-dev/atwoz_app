@@ -38,7 +38,7 @@ void main() {
     } else {
       Firebase.app(); // 기존 초기화된 앱 사용
     }
-    Hive.registerAdapter<UserResponse>(UserResponseAdapter());
+    Hive.registerAdapter<UserData>(UserDataAdapter());
     await LocalStorage().initialize();
 
     runApp(

@@ -6,14 +6,25 @@ part 'user_response.g.dart';
 
 @freezed
 class UserResponse with _$UserResponse {
-  @HiveType(typeId: 2, adapterName: 'UserResponseAdapter')
   const factory UserResponse({
-    @HiveField(0) required String accessToken,
-    // @HiveField(1) String? refreshToken,
-    // @HiveField(2) Member? member,
-    @HiveField(1) required bool isProfileSettingNeeded,
+    required int status,
+    required String code,
+    required String message,
+    required UserData data,
   }) = _UserResponse;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
+}
+
+@freezed
+class UserData with _$UserData {
+  @HiveType(typeId: 2, adapterName: 'UserDataAdapter')
+  const factory UserData({
+    @HiveField(0) required String accessToken,
+    @HiveField(1) required bool isProfileSettingNeeded,
+  }) = _UserData;
+
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
 }

@@ -16,8 +16,9 @@ class UserRepository extends BaseRepository {
   UserRepository(Ref ref) : super(ref, '/member');
 
   // 회원가입 및 로그인
-  Future<UserResponse> signIn(UserSignInRequest data) async {
-    final response = await apiService.postJson(
+  Future<UserData> signIn(UserSignInRequest data) async {
+    // 이건 Map<String, dynamic>으로 받아야 함
+    final Map<String, dynamic> json = await apiService.postJson(
       '$path/login',
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
@@ -27,8 +28,11 @@ class UserRepository extends BaseRepository {
 
     await ref.read(authUsecaseProvider).getRefreshToken();
 
-    final userResponse = UserResponse.fromJson(response['data']);
-    return userResponse;
+    // 전체 응답 파싱
+    final UserResponse userResponse = UserResponse.fromJson(json);
+
+    // data만 리턴
+    return userResponse.data;
   }
 
   // 로그아웃

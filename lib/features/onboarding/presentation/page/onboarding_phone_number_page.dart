@@ -78,9 +78,10 @@ class OnboardingPhoneInputPageState
 
       final bizgoToken = await authUseCase.requestBizgoToken();
       // final code = generateRandomCode(6);
-      final code = '123123'; // TODO: 교체 필요 (테스트용 코드)
-      await authUseCase.sendVerificationCode(
-          phoneNumber, bizgoToken, '인증번호는 $code입니다.');
+      const code = '123123'; // TODO: 교체 필요 (테스트용 코드)
+      // TODO: 백엔드 구현 후 각주 풀기
+      // await authUseCase.sendVerificationCode(
+      //     phoneNumber, bizgoToken, '인증번호는 $code입니다.');
 
       // TODO: 인증번호를 서버에 저장하는 요청 필요
 

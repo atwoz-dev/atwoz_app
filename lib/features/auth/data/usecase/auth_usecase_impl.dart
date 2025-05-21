@@ -40,11 +40,11 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   static const String _user = 'AuthProvider.user';
 
   @override
-  Future<UserResponse> signIn(UserSignInRequest user) async {
+  Future<UserData> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
-      await _localStorage.saveItem<UserResponse>(_user, userResponse);
+      await _localStorage.saveItem<UserData>(_user, userResponse);
 
       return userResponse;
     } catch (e) {
