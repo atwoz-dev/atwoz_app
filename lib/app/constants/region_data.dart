@@ -561,7 +561,7 @@ final addressData = AddressData(cities: [
     DistrictAddressItem(label: '진천군', value: 'JINCHEON_GUN'),
     DistrictAddressItem(label: '청주시', value: 'CHEONGJU_SI')
   ]),
-  CityAddressItem(label: '제주특별자치도', value: 'JEJU', districts: [
+  CityAddressItem(label: '제주', value: 'JEJU', districts: [
     DistrictAddressItem(label: '서귀포시', value: 'SEOGWIPO_SI'),
     DistrictAddressItem(label: '제주시', value: 'JEJU_SI')
   ]),
