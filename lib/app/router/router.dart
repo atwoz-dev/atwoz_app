@@ -126,13 +126,13 @@ class HomeBranch {
       builder: (context, state) => const NavigationPage(),
     ),
     NamedGoRoute(
-      name: AppRoute.home.name,
-      builder: (context, state) => const HomePage(),
+      name: AppRoute.homeNavigation.name,
+      builder: (context, state) => const HomeNavigationPage(),
+      isRoot: false,
       routes: [
         NamedGoRoute(
-          name: AppRoute.homeNavigation.name,
-          builder: (context, state) => const HomeNavigationPage(),
-          isRoot: false,
+          name: AppRoute.home.name,
+          builder: (context, state) => const HomePage(),
         ),
         NamedGoRoute(
           name: AppRoute.ideal.name,
