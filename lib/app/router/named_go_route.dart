@@ -7,8 +7,4 @@ class NamedGoRoute extends GoRoute {
     super.routes,
     bool isRoot = true,
   }) : super(path: isRoot ? '/$name' : name);
-
-  static String getFullPath(String name, {bool isRoot = false}) {
-    return isRoot ? '/$name' : name;
-  }
 }
