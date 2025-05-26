@@ -5,6 +5,5 @@ class NamedGoRoute extends GoRoute {
     required String super.name,
     required super.builder,
     super.routes,
-    bool isRoot = true,
-  }) : super(path: isRoot ? '/$name' : name);
+  }) : super(path: name);
 }

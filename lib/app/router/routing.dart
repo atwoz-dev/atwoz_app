@@ -16,7 +16,7 @@ class Routing {
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/${AppRoute.navigation.name}', // 초기 경로 설정
+    initialLocation: '/', // 초기 경로 설정
     routes: allRoutes, // router.dart의 routes 가져오기
     refreshListenable: ValueNotifier(authProvider),
     errorBuilder: (context, GoRouterState state) => RouteErrorPage(state),
