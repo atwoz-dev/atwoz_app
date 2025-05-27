@@ -1,5 +1,4 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/home/domain/model/ideal_type.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
@@ -46,7 +45,7 @@ class IdealTypeSettingBox extends ConsumerWidget {
               item.placeholder,
               style: Fonts.body02Regular().copyWith(
                 fontWeight: FontWeight.w400,
-                color: const Color(0xff8D92A0),
+                color: Palette.colorBlack,
               ),
             ),
           ),
@@ -63,9 +62,9 @@ class IdealTypeSettingBox extends ConsumerWidget {
     switch (item.type) {
       case IdealTypeDialogType.single:
         int initialIndex = switch (label) {
-          "흡연" => options.indexOf(smokingMap[idealType.smokingStatus]!),
-          "음주" => options.indexOf(drinkingMap[idealType.drinkingStatus]!),
-          "종교" => options.indexOf(religionMap[idealType.religion]!),
+          "흡연" => options.indexOf(item.placeholder),
+          "음주" => options.indexOf(item.placeholder),
+          "종교" => options.indexOf(item.placeholder),
           _ => 0,
         };
 
@@ -78,22 +77,13 @@ class IdealTypeSettingBox extends ConsumerWidget {
             onItemSelected: (selectedValue) {
               switch (item.label) {
                 case '흡연':
-                  final smokingEnum = smokingMap.entries
-                      .firstWhere((entry) => entry.value == selectedValue)
-                      .key;
-                  notifier.updateSmokingStatus(smokingEnum);
+                  notifier.updateSmokingStatus(selectedValue);
                   break;
                 case '음주':
-                  final drinkingEnum = drinkingMap.entries
-                      .firstWhere((entry) => entry.value == selectedValue)
-                      .key;
-                  notifier.updateDrinkingStatus(drinkingEnum);
+                  notifier.updateDrinkingStatus(selectedValue);
                   break;
                 case '종교':
-                  final religionEnum = religionMap.entries
-                      .firstWhere((entry) => entry.value == selectedValue)
-                      .key;
-                  notifier.updateReligion(religionEnum);
+                  notifier.updateReligion(selectedValue);
                   break;
               }
             },
@@ -103,8 +93,8 @@ class IdealTypeSettingBox extends ConsumerWidget {
 
       case IdealTypeDialogType.multi:
         List<String> selectedValues = switch (label) {
-          "지역" => idealType.regions,
-          "취미" => idealType.hobbies,
+          "지역" => idealType.cities.map((e) => e.label).toList(),
+          "취미" => idealType.hobbies.map((e) => e.label).toList(),
           _ => [],
         };
         showDialog(
@@ -117,7 +107,7 @@ class IdealTypeSettingBox extends ConsumerWidget {
             onSubmit: (selectedItems) {
               switch (label) {
                 case '지역':
-                  notifier.updateRegions(selectedItems);
+                  notifier.updateCities(selectedItems);
                   break;
                 case '취미':
                   notifier.updateHobbies(selectedItems);

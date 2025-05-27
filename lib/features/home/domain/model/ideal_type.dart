@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/home/domain/enum/extended_enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,8 +11,8 @@ class IdealType with _$IdealType {
   const factory IdealType({
     required int minAge,
     required int maxAge,
-    required List<String> hobbies,
-    required List<String> cities,
+    required List<Hobby> hobbies,
+    required List<CityAddressItem> cities,
     required ExtendedSmokingStatus smokingStatus,
     required ExtendedDrinkingStatus drinkingStatus,
     required ExtendedReligionStatus religion,

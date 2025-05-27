@@ -88,7 +88,7 @@ const Map<ReligionEnum, String> religionMap = {
 enum IntroducedCategory {
   grade('상위 5%'),
   recent('새로 가입했어요'),
-  region('지금 근처인 사람!'),
+  city('지금 근처인 사람!'),
   religion('종교가 같아요'),
   hobby('취미가 같아요');
 

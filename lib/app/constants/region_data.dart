@@ -617,6 +617,15 @@ class AddressData {
     return '${city.label} ${district!.label}';
   }
 
+  /// 서버 데이터를 CityAddressItem으로 반환
+  CityAddressItem getCityByValue(String value) {
+    return _cityByValue[value]!;
+  }
+
+  CityAddressItem getCityByLabel(String label) {
+    return _cityByLabel[label]!;
+  }
+
   /// 화면 표시용 문자열을 서버 데이터로 변환 (district value만 반환)
   String getDistrictValue(String locationString) {
     final parts = locationString.split(' ');

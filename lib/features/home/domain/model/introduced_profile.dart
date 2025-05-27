@@ -16,7 +16,7 @@ class IntroducedProfile with _$IntroducedProfile {
   }) = _IntroducedProfile;
 
   factory IntroducedProfile.fromJson(Map<String, dynamic> json) {
-    // TODO: DTO 생성 시 삭제
+    // TODO: 서버에 데이터 추가 시 삭제
     final categoryString = json['category'] as String;
 
     final categoryEnum = IntroducedCategory.parse(categoryString);

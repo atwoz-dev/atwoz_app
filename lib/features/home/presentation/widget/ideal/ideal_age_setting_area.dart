@@ -18,26 +18,23 @@ class IdealAgeSettingArea extends ConsumerWidget {
     return idealTypeAsync.when(
       data: (data) => Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "나이",
-                  style: Fonts.body02Regular().copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "나이",
+                style: Fonts.body02Regular().copyWith(
+                  fontWeight: FontWeight.w500,
                 ),
-                Text(
-                  "${data.minAge.toString()}세~${data.maxAge.toString()}세",
-                  style: Fonts.body02Regular().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xff3B3B3B),
-                  ),
-                )
-              ],
-            ),
+              ),
+              Text(
+                "${data.minAge.toString()}세~${data.maxAge.toString()}세",
+                style: Fonts.body02Regular().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xff3B3B3B),
+                ),
+              )
+            ],
           ),
           const Gap(20),
           Row(
@@ -65,7 +62,9 @@ class IdealAgeSettingArea extends ConsumerWidget {
         ],
       ),
       error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => const LoadingWithPercentage(),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

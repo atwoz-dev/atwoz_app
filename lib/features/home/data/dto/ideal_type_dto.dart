@@ -25,4 +25,17 @@ class IdealTypeDto {
   factory IdealTypeDto.fromJson(Map<String, dynamic> json) =>
       _$IdealTypeDtoFromJson(json);
   Map<String, dynamic> toJson() => _$IdealTypeDtoToJson(this);
+
+  @override
+  String toString() {
+    return 'IdealTypeDto('
+        'minAge: $minAge, '
+        'maxAge: $maxAge, '
+        'hobbies: $hobbies, '
+        'cities: $cities, '
+        'religion: $religion, '
+        'smokingStatus: $smokingStatus, '
+        'drinkingStatus: $drinkingStatus'
+        ')';
+  }
 }

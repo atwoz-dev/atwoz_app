@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/home/domain/domain.dart';
+import 'package:atwoz_app/features/home/data/dto/ideal_type_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final idealTypeRepository = Provider<MockIdealTypeRepository>((ref) {
@@ -11,20 +11,19 @@ class MockIdealTypeRepository {
     "minAge": 20,
     "maxAge": 30,
     "hobbies": ['등산/클라이밍', '맛집탐방', '쇼핑'],
-    "regions": ['서울', '대구'],
-    "religion": "none",
-    "smokingStatus": "none",
-    "drinkingStatus": "none"
+    "cities": ['서울', '대구'],
+    "religion": null,
+    "smokingStatus": null,
+    "drinkingStatus": null
   };
 
-  Future<IdealType> getIdealType() async {
-    await Future.delayed(const Duration(seconds: 5));
+  Future<IdealTypeDto> getIdealType() async {
     // TODO: 테스트용 코드. api 연동 시 변경
-    return IdealType.fromJson(sampleIdealType);
+    return IdealTypeDto.fromJson(sampleIdealType);
   }
 
-  Future<void> setIdealType(IdealType idealType) async {
+  Future<void> setIdealType(IdealTypeDto idealTypeDto) async {
     // TODO: 테스트용 코드. api 연동 시 변경
-    sampleIdealType = idealType.toJson();
+    sampleIdealType = idealTypeDto.toJson();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/presentation/controller/ideal_type_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_age_setting_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_setting_area.dart';
@@ -12,78 +13,31 @@ class IdealTypeSettingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final idealTypeAsync = ref.watch(idealTypeNotifierProvider);
+    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
 
     return idealTypeAsync.when(
-        data: (data) => const Scaffold(
-              appBar: DefaultAppBar(title: "이상형 설정"),
-              body: Column(
-                children: [
-                  IdealAgeSettingArea(),
-                  IdealSettingArea(),
-                ],
+        data: (data) => Scaffold(
+              appBar: const DefaultAppBar(title: "이상형 설정"),
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    children: [
+                      const IdealAgeSettingArea(),
+                      const IdealSettingArea(),
+                      const Spacer(),
+                      DefaultElevatedButton(
+                        onPressed: idealTypeNotifier.updateIdealType,
+                        child: const Text('필터 적용하기'),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
         error: (error, stack) => Text(error.toString()),
-        loading: () => const LoadingWithPercentage());
-  }
-}
-
-class LoadingWithPercentage extends StatefulWidget {
-  const LoadingWithPercentage({super.key});
-
-  @override
-  State<LoadingWithPercentage> createState() => _LoadingWithPercentageState();
-}
-
-class _LoadingWithPercentageState extends State<LoadingWithPercentage> {
-  double progress = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-    _simulateProgress();
-  }
-
-  void _simulateProgress() async {
-    while (progress < 1.0) {
-      await Future.delayed(const Duration(milliseconds: 50));
-      setState(() {
-        progress += 0.01;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: CircularProgressIndicator(
-                    color: Colors.lightBlue,
-                    value: progress,
-                    strokeWidth: 15,
-                  ),
-                ),
-                Text(
-                  '${(progress * 100).toInt()}%',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const Gap(24),
-            const Text('문제집 생성 중')
-          ],
-        ),
-      ),
-    );
+        loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ));
   }
 }
