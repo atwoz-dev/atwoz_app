@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class UserByCategoryPage extends ConsumerStatefulWidget {
-  final String category;
+  final IntroducedCategory category;
   const UserByCategoryPage({super.key, required this.category});
 
   @override
@@ -19,12 +20,12 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   @override
   Widget build(BuildContext context) {
     final introducedProfilesAsync =
-        ref.watch(introducedProfilesNotifierProvider(widget.category));
-    final introducedProfilesNotifier =
-        ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
+        ref.watch(introducedProfilesNotifierProvider(widget.category.name));
+    final introducedProfilesNotifier = ref.read(
+        introducedProfilesNotifierProvider(widget.category.name).notifier);
 
     return Scaffold(
-      appBar: DefaultAppBar(title: widget.category),
+      appBar: DefaultAppBar(title: widget.category.label),
       body: introducedProfilesAsync.when(
         data: (profiles) {
           List<bool> blurredList =
