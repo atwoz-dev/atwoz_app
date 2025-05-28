@@ -8,7 +8,7 @@ class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
   @override
   GlobalUserProfile? build() => null;
 
-  void set(GlobalUserProfile profile) {
+  set profile(GlobalUserProfile profile) {
     state = profile;
   }
 

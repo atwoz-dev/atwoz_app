@@ -10,7 +10,7 @@ final recommendedProfileRepositoryProvider =
 class RecommendedProfileRepositoryImpl implements RecommendedProfileRepository {
   final List<Map<String, dynamic>> _mockData = [
     // 샘플 데이터 제작
-    // TODO(jh: 추후 api 연동 시 제거
+    // TODO(jh): 추후 api 연동 시 제거
     {
       'image': "assets/images/home_pic.png",
       'hashTags': ["#클라이밍", "#불교", "#무계획 여행", "+2"],

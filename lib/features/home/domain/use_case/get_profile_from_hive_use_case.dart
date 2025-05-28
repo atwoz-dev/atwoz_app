@@ -1,21 +1,26 @@
 import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-final getGlobalUserProfileUseCaseProvider = Provider.autoDispose(
-  (ref) =>
-      GetGlobalUserProfileUseCase(secureStorage: const FlutterSecureStorage()),
+final getProfileFromHiveUseCaseProvider = Provider.autoDispose(
+  (ref) => GetProfileFromHiveUseCase(
+    secureStorage: const FlutterSecureStorage(),
+  ),
 );
 
-class GetGlobalUserProfileUseCase {
+class GetProfileFromHiveUseCase {
   final FlutterSecureStorage _secureStorage;
 
-  GetGlobalUserProfileUseCase({required FlutterSecureStorage secureStorage})
-      : _secureStorage = secureStorage;
+  GetProfileFromHiveUseCase({
+    required FlutterSecureStorage secureStorage,
+  }) : _secureStorage = secureStorage;
 
   Future<GlobalUserProfile?> execute() async {
-    final box = await Hive.openBox<GlobalUserProfile>('globalUserProfile');
+    final box = await Hive.openBox<GlobalUserProfile>(
+      GlobalUserProfile.boxName,
+    );
     final profile = box.get('profile');
 
     if (profile == null) return null;
@@ -24,9 +29,15 @@ class GetGlobalUserProfileUseCase {
     final kakaoId = await _secureStorage.read(key: 'kakaoId');
     final phoneNumber = await _secureStorage.read(key: 'phoneNumber');
 
+    if (phoneNumber == null) {
+      debugPrint(
+        '⚠️ phoneNumber is null in secure storage, fallback to empty string',
+      );
+    }
+
     return profile.copyWith(
       kakaoId: kakaoId,
-      phoneNumber: phoneNumber!, // null이 아님을 보장하기 위해
+      phoneNumber: phoneNumber ?? '',
     );
   }
 }

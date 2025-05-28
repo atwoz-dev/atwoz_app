@@ -11,7 +11,7 @@ class HomeProfileRepository extends BaseRepository {
 
   Future<HomeProfileResponseDto> getProfile() async {
     final response = await apiService.getJson(
-      '$path/profile',
+      '$path/cache',
       requiresAuthToken: true,
     );
 

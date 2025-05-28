@@ -34,6 +34,8 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
 extension InterviewInfoMapper on InterviewInfoDto {
   InterviewInfo toInterviewInfo() {
     return InterviewInfo(
-        title: title ?? '', content: content ?? ''); // TODO(jh): null 처리 제거
+      title: title ?? '',
+      content: content ?? '',
+    ); // TODO(jh): null 처리 제거
   }
 }

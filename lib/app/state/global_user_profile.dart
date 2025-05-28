@@ -45,6 +45,8 @@ class GlobalUserProfile with _$GlobalUserProfile {
   bool get hasInterview =>
       interviewInfoView.isNotEmpty &&
       interviewInfoView.any((i) => i.title.isNotEmpty || i.content.isNotEmpty);
+
+  static String get boxName => 'GlobalUserProfile';
 }
 
 @freezed

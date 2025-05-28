@@ -4,7 +4,6 @@ part 'home_profile_response_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class HomeProfileResponseDto {
-  //
   final StatusInfoDto statusInfo;
   final BasicInfoDto basicInfo;
   final ProfileInfoDto profileInfo;

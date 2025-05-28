@@ -5,20 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-final saveHomeProfileUseCaseProvider = Provider.autoDispose(
-  (ref) => SaveHomeProfileUseCase(
-      repository: ref.read(homeProfileRepositoryProvider),
-      secureStorage: const FlutterSecureStorage()),
+final saveProfileToHiveUseCaseProvider = Provider.autoDispose(
+  (ref) => SaveProfileToHiveUseCase(
+    repository: ref.read(homeProfileRepositoryProvider),
+    secureStorage: const FlutterSecureStorage(),
+  ),
 );
 
-class SaveHomeProfileUseCase {
+class SaveProfileToHiveUseCase {
   final HomeProfileRepository _repository;
   final FlutterSecureStorage _secureStorage;
 
-  SaveHomeProfileUseCase(
-      {required HomeProfileRepository repository,
-      required FlutterSecureStorage secureStorage})
-      : _repository = repository,
+  SaveProfileToHiveUseCase({
+    required HomeProfileRepository repository,
+    required FlutterSecureStorage secureStorage,
+  })  : _repository = repository,
         _secureStorage = secureStorage;
 
   Future<void> execute() async {
@@ -26,7 +27,9 @@ class SaveHomeProfileUseCase {
 
     final globalUserProfile = homeProfileDto.toGlobalUserProfile();
 
-    final box = await Hive.openBox<GlobalUserProfile>('globalUserProfile');
+    final box = await Hive.openBox<GlobalUserProfile>(
+      GlobalUserProfile.boxName,
+    );
 
     await box.put('profile', globalUserProfile);
 

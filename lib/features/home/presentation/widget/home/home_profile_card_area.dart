@@ -8,6 +8,7 @@ import 'package:atwoz_app/features/home/presentation/controller/home_notifier.da
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 // 페이지뷰 + 페이지 번호 상태 바
 class HomeProfileCardArea extends ConsumerStatefulWidget {
@@ -42,7 +43,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                     },
                   ),
                 ),
-                const SizedBox(height: 16),
+                const Gap(16),
                 Row(
                   // 페이지 번호 상태 바
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +117,7 @@ class _ProfileCardWidget extends StatelessWidget {
                   AssetImage(profile.image), // 추후 api 연동 시 NetworkImage로 변경
             ),
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Column(
             // 하단 프로필 정보
             children: [
@@ -132,11 +133,11 @@ class _ProfileCardWidget extends StatelessWidget {
                     return HashtagWidget(tagName: profile.hashTags[index]);
                   },
                   separatorBuilder: (context, index) {
-                    return const SizedBox(width: 8);
+                    return const Gap(8);
                   },
                 ),
               ),
-              const SizedBox(height: 8),
+              const Gap(8),
               Text(
                 // TODO(jh): api 연동 시 하드코딩 제거
                 "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
@@ -144,7 +145,7 @@ class _ProfileCardWidget extends StatelessWidget {
                     fontWeight: FontWeight.w400, color: Palette.colorGrey600),
                 maxLines: 2,
               ),
-              const SizedBox(height: 24),
+              const Gap(24),
               GestureDetector(
                 onTap: () {
                   // 좋아요 버튼 클릭 로직
