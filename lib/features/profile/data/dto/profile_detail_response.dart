@@ -25,7 +25,7 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required int? age,
     required String gender,
     required int height,
-    required String job,
+    required String? job,
     required List<String> hobbies,
     required String mbti,
     // TODO(Han): server non-nullable requirement check
@@ -33,8 +33,8 @@ class BasicMemberInformation with _$BasicMemberInformation {
     required String smokingStatus,
     required String drinkingStatus,
     required String highestEducation,
-    required String religion,
-    required String? like,
+    required String? religion,
+    required String? likeLevel,
   }) = _BasicMemberInformation;
 
   factory BasicMemberInformation.fromJson(Map<String, dynamic> json) =>

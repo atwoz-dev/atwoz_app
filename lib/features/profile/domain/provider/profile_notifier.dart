@@ -19,7 +19,6 @@ class ProfileNotifier extends _$ProfileNotifier {
   Future<void> _initializeProfileState(int userId) async {
     try {
       final profile = await ProfileFetchUseCase(ref).call(userId);
-
       state = state.copyWith(
         profile: profile,
         // TODO(Han): replace my user data from server
@@ -47,15 +46,15 @@ class ProfileNotifier extends _$ProfileNotifier {
     state = state.copyWith(message: message);
   }
 
-  set favoriteType(FavoriteType? type) {
+  set favoriteType(FavoriteType type) {
     state = state.copyWith(
       profile: state.profile?.copyWith(favoriteType: type),
     );
     _updateFavoriteType(type);
   }
 
-  Future<void> _updateFavoriteType(FavoriteType? type) async {
-    if (state.profile == null || type == null) return;
+  Future<void> _updateFavoriteType(FavoriteType type) async {
+    if (state.profile == null) return;
 
     try {
       await ref.read(favoriteRepositoryProvider).requestFavorite(

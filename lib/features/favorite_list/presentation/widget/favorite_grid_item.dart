@@ -41,15 +41,19 @@ class FavoriteGridItem extends StatelessWidget {
           ),
         ),
         const Gap(8.0),
-        Text(
-          profile.name,
-          style: Fonts.body02Medium(),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        if (profile.name.isNotEmpty)
+          Text(
+            profile.name,
+            style: Fonts.body02Medium(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         const Gap(4.0),
         Text(
-          '${profile.city}, ${profile.age}',
+          [
+            if (profile.city.isNotEmpty) profile.city,
+            if (profile.age > 0) profile.age,
+          ].join(', '),
           style: Fonts.body03Regular(
             context.colorScheme.secondary,
           ),
