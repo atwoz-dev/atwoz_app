@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'route_arguments.dart';
+import 'named_go_route.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -42,299 +43,295 @@ final authProvider = StateProvider<bool>((ref) => false);
 // Navigation methods enum
 enum NavigationMethod { push, replace, go, pushReplacement }
 
-// Route enum with path
+// Route names enum
 enum AppRoute {
-  navigation('/navigation'),
-  authNavigation('/auth'),
-  home('/home'),
-  homeNavigation('/homeNavigation'),
-  ideal('/ideal'),
-  userByCategory('/home/userByCategory/:category'),
-  auth('/auth'),
-  myNavigation('/my'),
-  myPage('/my/main'),
-  profileManage('/my/manage-profile'),
-  profileUpdate('/my/manage-profile/update-profile'),
-  idealSetting('/my/ideal-setting'),
-  blockFriend('/my/block-friend'),
-  store('/my/store'),
-  customerCenter('/my/customer-center'),
-  setting('/my/setting'),
-  pushNotificationSetting('/my/setting/push'),
-  accountSetting('/my/setting/account-setting'),
-  serviceWithdraw('/my/setting/account-setting/service-withdraw'),
-  withdrawReason('/my/setting/account-setting/withdraw-reason'),
-  privacyPolicy('/my/setting/privacy-policy'),
-  termsOfUse('/my/setting/terms-of-use'),
-  onboard('/onboard'),
-  onboardPhone('/onboard/phone'),
-  onboardCertification('/onboard/certification'),
-  report('/report'),
-  signUp('/auth/sign-up'),
-  signUpProfile('/auth/sign-up/profile'),
-  signUpTerms('/auth/sign-up/terms'),
-  signUpProfileChoice('/auth/sign-up-profile-choice'),
-  signUpProfileUpdate('/auth/sign-up/profile-update'),
-  signUpProfilePicture('/auth/sign-up-profile-picture'),
-  interview('/interview'),
-  @Deprecated('This variable will be removed after design check')
-  profileDesignInspection('/profile-design-inspection'),
-  profile('/profile'),
-  contactSetting('/profile/contact-setting'),
-  introduce('/introduce'),
-  introduceRegister('/introduceRegister'),
-  introduceEdit('/introduceEdit'),
-  introduceDetail('/introduceDetail'),
-  introduceFilter('/introduceFilter'),
-  introduceNavigation('/introduceNavigation'),
-  notification('/notification'),
-  storeNavigation('/storeNavigation');
+  // Navigation
+  navigation('navigation'),
+  home('home'),
+  homeNavigation('home-navigation'),
+  ideal('ideal'),
+  userByCategory('user-by-category'),
+  myNavigation('my-navigation'),
+  report('report'),
 
-  final String path;
+  // Introduce
+  introduce('introduce'),
+  introduceRegister('introduce-register'),
+  introduceEdit('introduce-edit'),
+  introduceDetail('introduce-detail'),
+  introduceFilter('introduce-filter'),
+  introduceNavigation('introduce-navigation'),
 
-  const AppRoute(this.path);
+  // Profile
+  profile('profile'),
+  profileDesignInspection('profile-design-inspection'),
+  contactSetting('contact-setting'),
+
+  // Store
+  store('store'),
+  storeNavigation('store-navigation'),
+
+  // Notification
+  notification('notification'),
+
+  // Interview
+  interview('interview'),
+
+  // Onboard
+  onboard('onboard'),
+  onboardPhone('onboard-phone'),
+  onboardCertification('onboard-certification'),
+
+  // Auth
+  auth('auth'),
+  authNavigation('auth-navigation'),
+  signUp('sign-up'),
+  signUpProfile('sign-up-profile'),
+  signUpTerms('sign-up-terms'),
+  signUpProfileChoice('sign-up-profile-choice'),
+  signUpProfileUpdate('sign-up-profile-update'),
+  signUpProfilePicture('sign-up-profile-picture'),
+
+  // My
+  myPage('my-page'),
+  profileManage('profile-manage'),
+  profileUpdate('profile-update'),
+  idealSetting('ideal-setting'),
+  blockFriend('block-friend'),
+  customerCenter('customer-center'),
+  setting('setting'),
+  pushNotificationSetting('push-notification-setting'),
+  accountSetting('account-setting'),
+  serviceWithdraw('service-withdraw'),
+  withdrawReason('withdraw-reason'),
+  privacyPolicy('privacy-policy'),
+  termsOfUse('terms-of-use');
+
+  final String name;
+  const AppRoute(this.name);
 }
 
 final allRoutes = [
-  ...HomeBranch.routes,
-  ...OnboardBranch.routes,
-  ...SignBranch.routes,
-  ...MyBranch.routes,
-];
-
-// Home branch routes
-class HomeBranch {
-  static final routes = [
-    // TODO: 화면 전부 나오면 삭제하기
-    GoRoute(
-      path: AppRoute.navigation.path,
-      builder: (context, state) => const NavigationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.home.path,
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: AppRoute.homeNavigation.path,
-      builder: (context, state) => const HomeNavigationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.ideal.path,
-      builder: (context, state) => const IdealTypeSettingPage(),
-    ),
-    GoRoute(
-      path: AppRoute.userByCategory.path,
-      builder: (context, state) {
-        final args = state.extra;
-        if (args is! UserByCategoryArguments) return const SizedBox.shrink();
-
-        return UserByCategoryPage(category: args.category);
-      },
-    ),
-    GoRoute(
-      path: AppRoute.myNavigation.path,
-      builder: (context, state) => const MyNavigationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.report.path,
-      builder: (context, state) => const ReportPage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduce.path,
-      builder: (context, state) => const IntroducePage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduceRegister.path,
-      builder: (context, state) => const IntroduceRegisterPage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduceEdit.path,
-      builder: (context, state) => const IntroduceEditPage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduceDetail.path,
-      builder: (context, state) => const IntroduceDetailPage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduceFilter.path,
-      builder: (context, state) => const IntroduceFilterPage(),
-    ),
-    GoRoute(
-      path: AppRoute.introduceNavigation.path,
-      builder: (context, state) => const IntroduceNavigationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.interview.path,
-      builder: (context, state) => const InterviewPage(),
-    ),
-    GoRoute(
-      path: AppRoute.profileDesignInspection.path,
-      builder: (context, state) => const ProfileDesignInspection(),
-    ),
-    GoRoute(
-      path: AppRoute.profile.path,
-      builder: (context, state) {
-        final args = state.extra;
-        // TODO(Han): this will be removed after implement ErrorPage
-        if (args is! ProfileDetailArguments) return const SizedBox.shrink();
-        return ProfilePage(
-          userId: args.userId,
-          fromMatchedProfile: args.fromMatchedProfile,
-        );
-      },
-    ),
-    GoRoute(
-      path: AppRoute.contactSetting.path,
-      builder: (context, state) => const ContactSettingPage(),
-    ),
-    GoRoute(
-      path: AppRoute.notification.path,
-      builder: (context, state) => const NotificationPage(),
-    ),
-    GoRoute(
-      path: AppRoute.store.path,
-      builder: (context, state) => const StorePage(),
-    ),
-    GoRoute(
-      path: AppRoute.storeNavigation.path,
-      builder: (context, state) => const StoreNavigationPage(),
-    ),
-  ];
-}
-
-// Onboard branch routes
-class OnboardBranch {
-  static final routes = [
-    GoRoute(
-      path: AppRoute.onboard.path,
-      builder: (context, state) => const OnBoardPage(),
-      routes: [
-        GoRoute(
-          path: AppRoute.onboardPhone.path.split('/onboard').last,
-          builder: (context, state) => const OnboardingPhoneInputPage(),
-        ),
-        GoRoute(
-          path: AppRoute.onboardCertification.path.split('/onboard').last,
-          builder: (context, state) {
-            final args = state.extra;
-            // TODO(Geumbin): this will be removed after implement ErrorPage
-            if (args is! OnboardCertificationArguments)
-              return const SizedBox.shrink();
-            return OnboardingCertificationPage(phoneNumber: args.phoneNumber);
-          },
-        ),
-      ],
-    ),
-  ];
-}
-
-// Sign branch routes
-class SignBranch {
-  static final routes = [
-    GoRoute(
-      path: AppRoute.authNavigation.path,
-      builder: (context, state) => const AuthNavigationPage(),
-      routes: [
-        GoRoute(
-          path: 'sign-up',
-          builder: (context, state) => const SignUpPage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-choice',
-          builder: (context, state) => const SignUpProfileChoicePage(),
-        ),
-        GoRoute(
-          path: 'sign-up-profile-picture',
-          builder: (context, state) => const SignUpProfilePicturePage(),
-        ),
-        GoRoute(
-          path: 'sign-up/terms', // 경로를 명시적으로 정의
-          builder: (context, state) => const AuthSignUpTermsPage(),
-        ),
-        GoRoute(
-          path: 'sign-up/profile-update',
-          builder: (context, state) => const SignUpProfileUpdatePage(),
-        ),
-      ],
-    ),
-  ];
-}
-
-//My branch routes
-class MyBranch {
-  static final routes = [
-    GoRoute(
-      path: AppRoute.myNavigation.path,
-      builder: (context, state) => const MyNavigationPage(),
-      routes: [
-        GoRoute(
-          path: 'main',
-          builder: (context, state) => const MyPage(),
-        ),
-        GoRoute(
-            path: 'manage-profile',
-            builder: (context, state) => const ProfileManagePage(),
+  NamedGoRoute(
+    name: '/',
+    builder: (context, state) => const NavigationPage(),
+    routes: [
+      // Home routes
+      NamedGoRoute(
+        name: AppRoute.homeNavigation.name,
+        builder: (context, state) => const HomeNavigationPage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.home.name,
+            builder: (context, state) => const HomePage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.ideal.name,
+            builder: (context, state) => const IdealTypeSettingPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.userByCategory.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! UserByCategoryArguments) {
+                return const SizedBox.shrink();
+              }
+              return UserByCategoryPage(category: args.category);
+            },
+          ),
+        ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.myNavigation.name,
+        builder: (context, state) => const MyNavigationPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.report.name,
+        builder: (context, state) => const ReportPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.introduce.name,
+        builder: (context, state) => const IntroducePage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.introduceRegister.name,
+            builder: (context, state) => const IntroduceRegisterPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.introduceEdit.name,
+            builder: (context, state) => const IntroduceEditPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.introduceDetail.name,
+            builder: (context, state) => const IntroduceDetailPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.introduceFilter.name,
+            builder: (context, state) => const IntroduceFilterPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.introduceNavigation.name,
+            builder: (context, state) => const IntroduceNavigationPage(),
+          ),
+        ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.interview.name,
+        builder: (context, state) => const InterviewPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.profile.name,
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! ProfileDetailArguments) return const SizedBox.shrink();
+          return ProfilePage(
+            userId: args.userId,
+            fromMatchedProfile: args.fromMatchedProfile,
+          );
+        },
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.profileDesignInspection.name,
+            builder: (context, state) => const ProfileDesignInspection(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.contactSetting.name,
+            builder: (context, state) => const ContactSettingPage(),
+          ),
+        ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.notification.name,
+        builder: (context, state) => const NotificationPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.store.name,
+        builder: (context, state) => const StorePage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.storeNavigation.name,
+            builder: (context, state) => const StoreNavigationPage(),
+          ),
+        ],
+      ),
+      // Onboard routes
+      NamedGoRoute(
+        name: AppRoute.onboard.name,
+        builder: (context, state) => const OnBoardPage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.onboardPhone.name,
+            builder: (context, state) => const OnboardingPhoneInputPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.onboardCertification.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! OnboardCertificationArguments) {
+                return const SizedBox.shrink();
+              }
+              return OnboardingCertificationPage(phoneNumber: args.phoneNumber);
+            },
+          ),
+        ],
+      ),
+      // Auth routes
+      NamedGoRoute(
+        name: AppRoute.authNavigation.name,
+        builder: (context, state) => const AuthNavigationPage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.signUp.name,
+            builder: (context, state) => const SignUpPage(),
             routes: [
-              GoRoute(
-                  path: 'update-profile',
-                  builder: (context, state) {
-                    final args = state.extra;
-                    if (args is! MyProfileUpdateArguments) {
-                      return const SizedBox.shrink();
-                    }
-                    return ProfileUpdatePage(
-                      profileType: args.profileType,
-                    );
-                  }),
-            ]),
-        GoRoute(
-          path: 'ideal-setting',
-          builder: (context, state) => const IdealTypeSettingPage(),
-        ),
-        GoRoute(
-          path: 'block-friend',
-          builder: (context, state) => const MyBlockFriendPage(),
-        ),
-        GoRoute(
-          path: 'store', // 경로를 명시적으로 정의
-          builder: (context, state) => const AuthSignUpTermsPage(),
-        ),
-        GoRoute(
-          path: 'customer-center',
-          builder: (context, state) => const SignUpProfileUpdatePage(),
-        ),
-        GoRoute(
-          path: 'setting',
-          builder: (context, state) => const MySettingPage(),
-        ),
-        GoRoute(
-          path: '/setting/push',
-          builder: (context, state) => const PushNotificationSettingPage(),
-        ),
-        GoRoute(
-          path: '/setting/account-setting',
-          builder: (context, state) => const MyAccountSettingPage(),
-        ),
-        GoRoute(
-          path: '/setting/account-setting/service-withdraw',
-          builder: (context, state) => const ServiceWithdrawPage(),
-        ),
-        GoRoute(
-          path: '/setting/account-setting/withdraw-reason',
-          builder: (context, state) => const ServiceWithdrawReasonPage(),
-        ),
-        GoRoute(
-          path: '/setting/privacy-policy',
-          builder: (context, state) => const PrivacyPolicyPage(),
-        ),
-        GoRoute(
-          path: '/setting/terms-of-use',
-          builder: (context, state) => const TermsOfUsePage(),
-        ),
-      ],
-    ),
-  ];
-}
+              NamedGoRoute(
+                name: AppRoute.signUpProfileChoice.name,
+                builder: (context, state) => const SignUpProfileChoicePage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfilePicture.name,
+                builder: (context, state) => const SignUpProfilePicturePage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.signUpTerms.name,
+                builder: (context, state) => const AuthSignUpTermsPage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfileUpdate.name,
+                builder: (context, state) => const SignUpProfileUpdatePage(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      // My routes
+      NamedGoRoute(
+        name: AppRoute.myPage.name,
+        builder: (context, state) => const MyPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.profileManage.name,
+        builder: (context, state) => const ProfileManagePage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.profileUpdate.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! MyProfileUpdateArguments) {
+                return const SizedBox.shrink();
+              }
+              return ProfileUpdatePage(profileType: args.profileType);
+            },
+          ),
+        ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.idealSetting.name,
+        builder: (context, state) => const IdealTypeSettingPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.blockFriend.name,
+        builder: (context, state) => const MyBlockFriendPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.customerCenter.name,
+        builder: (context, state) => const SignUpProfileUpdatePage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.setting.name,
+        builder: (context, state) => const MySettingPage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.pushNotificationSetting.name,
+            builder: (context, state) => const PushNotificationSettingPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.accountSetting.name,
+            builder: (context, state) => const MyAccountSettingPage(),
+            routes: [
+              NamedGoRoute(
+                name: AppRoute.serviceWithdraw.name,
+                builder: (context, state) => const ServiceWithdrawPage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.withdrawReason.name,
+                builder: (context, state) => const ServiceWithdrawReasonPage(),
+              ),
+            ],
+          ),
+          NamedGoRoute(
+            name: AppRoute.privacyPolicy.name,
+            builder: (context, state) => const PrivacyPolicyPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.termsOfUse.name,
+            builder: (context, state) => const TermsOfUsePage(),
+          ),
+        ],
+      ),
+    ],
+  ),
+];
 
 // Navigation helper methods
 void pop(BuildContext context, [Object? extra]) =>
@@ -345,31 +342,21 @@ Future<T?> navigate<T>(
   required AppRoute route,
   NavigationMethod method = NavigationMethod.push,
   RouteArguments? extra,
-  VoidCallback? callback,
 }) async {
   final goRouter = GoRouter.of(context);
-  T? result;
 
-  switch (method) {
-    case NavigationMethod.push:
-      result = await goRouter.push<T>(route.path, extra: extra);
-      break;
-    case NavigationMethod.replace:
-      result = await goRouter.replace<T>(route.path, extra: extra);
-      break;
-    case NavigationMethod.go:
-      goRouter.go(route.path, extra: extra);
-      break;
-    case NavigationMethod.pushReplacement:
-      result = await goRouter.pushReplacement<T>(route.path, extra: extra);
-      break;
-  }
-
-  if (callback != null && result != null) {
-    callback();
-  }
-
-  return result;
+  return switch (method) {
+    NavigationMethod.push =>
+      await goRouter.pushNamed<T>(route.name, extra: extra),
+    NavigationMethod.replace =>
+      await goRouter.replaceNamed<T>(route.name, extra: extra),
+    NavigationMethod.go => (() {
+        goRouter.goNamed(route.name, extra: extra);
+        return null;
+      })(),
+    NavigationMethod.pushReplacement =>
+      await goRouter.pushReplacementNamed<T>(route.name, extra: extra),
+  };
 }
 
 /* < navigate() 메서드 용례 >
