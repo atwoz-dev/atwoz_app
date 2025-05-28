@@ -13,33 +13,49 @@ class IdealSettingArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(idealTypeNotifierProvider).when(
-          data: (idealType) => Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: Column(
-              children: _getIdealTypeSettingItemList(idealType)
-                  .map(
-                    (item) => IdealTypeSettingBox(
-                      item: item,
-                      idealType: idealType,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-          error: (error, stackTrace) => Text('$error'),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
+    final asyncIdealType = ref.watch(idealTypeNotifierProvider);
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: asyncIdealType.when(
+        data: (idealType) {
+          final items = _getIdealTypeSettingItemList(idealType);
+          return Column(
+            children: items
+                .map(
+                  (item) => IdealTypeSettingBox(
+                    item: item,
+                    idealType: idealType,
+                  ),
+                )
+                .toList(),
+          );
+        },
+        error: (error, stackTrace) => Text('$error'),
+        loading: () {
+          final items = _getIdealTypeSettingItemList(null);
+          return Column(
+            children: items
+                .map(
+                  (item) => IdealTypeSettingBox(
+                    item: item,
+                    idealType: null, // 실제 데이터 없음
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
+    );
   }
 
-  List<IdealTypeSettingItem> _getIdealTypeSettingItemList(IdealType idealType) {
+  List<IdealTypeSettingItem> _getIdealTypeSettingItemList(
+      IdealType? idealType) {
     return [
       IdealTypeSettingItem(
         label: '지역',
-        placeholder: idealType.cities.isNotEmpty
-            ? idealType.cities.map((e) => e.label).toList().join(', ')
+        placeholder: idealType?.cities.isNotEmpty == true
+            ? idealType!.cities.map((e) => e.label).join(', ')
             : '상관없음',
         options: addressData.cities.map((e) => e.label).toList(),
         type: IdealTypeDialogType.multi,
@@ -47,7 +63,7 @@ class IdealSettingArea extends ConsumerWidget {
       ),
       IdealTypeSettingItem(
         label: '흡연',
-        placeholder: idealType.smokingStatus.korean,
+        placeholder: idealType?.smokingStatus.korean ?? '',
         options:
             ExtendedSmokingStatus.valuesOf(SmokingStatus.values, (r) => r.label)
                 .map((e) => e.korean)
@@ -55,7 +71,7 @@ class IdealSettingArea extends ConsumerWidget {
       ),
       IdealTypeSettingItem(
         label: '음주',
-        placeholder: idealType.drinkingStatus.korean,
+        placeholder: idealType?.drinkingStatus.korean ?? '',
         options: ExtendedDrinkingStatus.valuesOf(
                 DrinkingStatus.values, (r) => r.label)
             .map((e) => e.korean)
@@ -63,7 +79,7 @@ class IdealSettingArea extends ConsumerWidget {
       ),
       IdealTypeSettingItem(
         label: '종교',
-        placeholder: idealType.religion.korean,
+        placeholder: idealType?.religion.korean ?? '',
         options:
             ExtendedReligionStatus.valuesOf(Religion.values, (r) => r.label)
                 .map((e) => e.korean)
@@ -71,8 +87,8 @@ class IdealSettingArea extends ConsumerWidget {
       ),
       IdealTypeSettingItem(
         label: '취미',
-        placeholder: idealType.hobbies.isNotEmpty
-            ? idealType.hobbies.join(', ')
+        placeholder: idealType?.hobbies.isNotEmpty == true
+            ? idealType!.hobbies.map((e) => e.label).join(', ')
             : '상관없음',
         options: Hobby.values.map((e) => e.label).toList(),
         type: IdealTypeDialogType.multi,

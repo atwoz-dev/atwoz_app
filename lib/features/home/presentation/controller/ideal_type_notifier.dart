@@ -6,6 +6,7 @@ import 'package:atwoz_app/features/home/domain/enum/extended_enum.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ideal_type_notifier.g.dart';
@@ -86,11 +87,16 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
     );
   }
 
-  Future<void> updateIdealType() async {
-    if (!state.hasValue) return;
+  Future<bool> updateIdealType() async {
+    if (!state.hasValue) return false;
 
     final idealType = state.requireValue;
 
-    await ref.read(updateIdealTypeUseCaseProvider).execute(idealType);
+    try {
+      await ref.read(updateIdealTypeUseCaseProvider).execute(idealType);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

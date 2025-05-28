@@ -15,7 +15,7 @@ class IdealTypeSettingBox extends ConsumerWidget {
   });
 
   final IdealTypeSettingItem item;
-  final IdealType idealType;
+  final IdealType? idealType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -93,8 +93,8 @@ class IdealTypeSettingBox extends ConsumerWidget {
 
       case IdealTypeDialogType.multi:
         List<String> selectedValues = switch (label) {
-          "지역" => idealType.cities.map((e) => e.label).toList(),
-          "취미" => idealType.hobbies.map((e) => e.label).toList(),
+          "지역" => idealType?.cities.map((e) => e.label).toList() ?? [],
+          "취미" => idealType?.hobbies.map((e) => e.label).toList() ?? [],
           _ => [],
         };
         showDialog(

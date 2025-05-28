@@ -17,6 +17,6 @@ class IdealTypeRepository extends BaseRepository {
   }
 
   Future<void> updateIdealType(IdealTypeDto idealTypeDto) async {
-    await apiService.patchJson(path);
+    await apiService.patchJson(path, data: idealTypeDto);
   }
 }
