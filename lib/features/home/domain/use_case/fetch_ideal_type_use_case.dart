@@ -1,6 +1,5 @@
 import 'package:atwoz_app/features/home/data/mapper/ideal_type_mapper.dart';
-import 'package:atwoz_app/features/home/data/repository/ideal_type_repository.dart';
-import 'package:atwoz_app/features/home/domain/domain.dart';
+import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final fetchIdealTypeUseCaseProvider = Provider<FetchIdealTypeUseCase>((ref) {
