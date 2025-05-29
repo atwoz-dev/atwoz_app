@@ -40,6 +40,16 @@ enum HighestEducationEnum {
   other
 }
 
+extension EnumToBackendKey on Enum {
+  String toBackendEnumKey() {
+    // lowerCamelCase → UPPER_SNAKE_CASE 변환
+    return name
+        .replaceAllMapped(
+            RegExp(r'([a-z])([A-Z])'), (match) => '${match[1]}_${match[2]}')
+        .toUpperCase();
+  }
+}
+
 const Map<HighestEducationEnum, String> educationMap = {
   HighestEducationEnum.highSchool: "고등학교 졸업",
   HighestEducationEnum.associate: "전문대",

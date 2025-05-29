@@ -108,25 +108,24 @@ class SignUpProcessState with _$SignUpProcessState {
     }
   }
 
-  // TODO(gb): 추후 백엔드 api 나오면 연동 후 수정해야 할 값들이 존재함
-  // ProfileUploadRequest로 변환할 때 인덱스로 변환
   ProfileUploadRequest toProfileUploadRequest() {
     return ProfileUploadRequest(
       nickname: nickname ?? "",
-      selectedGender: selectedGender.toJson(), // Enum → 백엔드 변환
+      selectedGender: selectedGender.toBackendEnumKey(),
       yearOfBirth: selectedYear ?? 0,
       selectedHeight: selectedHeight ?? 0,
-      jobId: jobOptions.indexOf(selectedJob!) + 1,
-      // region: selectedLocation ?? "",
-      region: "SEOUL", // TODO(gb): 교체 필요
-      selectedEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
+      // TODO: 나중에 디폴트 없애기
+      region: selectedLocation != null
+          ? cityNameToEnumKey[selectedLocation!] ?? "GANGNAM_GU"
+          : "GANGNAM_GU",
+      selectedEducation: selectedEducation?.toBackendEnumKey() ?? "OTHER",
       mbti: mbti ?? "",
-      selectedSmoking: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환
-      selectedDrinking: selectedDrinking?.toJson() ?? "", // Enum → 백엔드 변환
-      selectedReligion: selectedReligion?.toJson() ?? "", // Enum → 백엔드 변환
+      selectedSmoking: selectedSmoking?.toBackendEnumKey() ?? "NONE",
+      selectedDrinking: selectedDrinking?.toBackendEnumKey() ?? "NONE",
+      selectedReligion: selectedReligion?.toBackendEnumKey() ?? "NONE",
+      selectedJob: jobLabelToEnumKey[selectedJob] ?? "OTHERS",
       selectedHobbies: selectedHobbies
-          .map((hobby) => hobbies.indexOf(hobby) + 1)
-          .where((index) => index != -1)
+          .map((hobby) => hobbyLabelToEnumKey[hobby] ?? "OTHERS")
           .toList(),
     );
   }
