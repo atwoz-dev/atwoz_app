@@ -186,7 +186,9 @@ class OnboardingCertificationPageState
                             navigate(context, route: AppRoute.signUp);
                           } else {
                             // 프로필 설정이 필요하지 않은 경우
-                            navigate(context, route: AppRoute.home);
+                            navigate(context,
+                                route: AppRoute.home,
+                                method: NavigationMethod.go);
                           }
                         } else {
                           setState(() {

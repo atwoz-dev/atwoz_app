@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
@@ -38,39 +39,39 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const HomeNavbarArea(), // 홈 상단 네비게이션바
-                const Gap(16),
-                const HomeProfileCardArea(), // 소개받은 프로필 부분
-                const Gap(16),
-                Image.asset(
-                  ImagePath.homeTest,
-                  fit: BoxFit.cover,
-                  width: context.screenWidth,
-                  height: 89,
-                ),
-                const Gap(24),
-                HomeCategoryButtonsArea(
-                  // 카테고리 버튼 영역
-                  onTapButton: (category) {
-                    navigate(
-                      context,
-                      route: AppRoute.userByCategory,
-                      extra: UserByCategoryArguments(
-                          category: IntroducedCategory.parse(category)),
-                    );
-                  },
-                )
-              ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const HomeNavbarArea(), // 홈 상단 네비게이션바
+                  const Gap(16),
+                  const HomeProfileCardArea(), // 소개받은 프로필 부분
+                  const Gap(16),
+                  Image.asset(
+                    ImagePath.homeTest,
+                    fit: BoxFit.cover,
+                    width: context.screenWidth,
+                    height: 89,
+                  ),
+                  const Gap(24),
+                  HomeCategoryButtonsArea(
+                    // 카테고리 버튼 영역
+                    onTapButton: (category) {
+                      navigate(
+                        context,
+                        route: AppRoute.userByCategory,
+                        extra: UserByCategoryArguments(
+                            category: IntroducedCategory.parse(category)),
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+        bottomNavigationBar: const DefaultBottomNavigationBar(currentIndex: 0));
   }
 }

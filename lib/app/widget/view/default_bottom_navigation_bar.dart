@@ -10,13 +10,13 @@ class DefaultBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final bool isHighlighted; // 강조 여부를 제어하는 파라미터
 
-  DefaultBottomNavigationBar({
+  const DefaultBottomNavigationBar({
     super.key,
     required this.currentIndex,
     this.isHighlighted = true, // 기본값은 강조 활성화
   });
 
-  final List<_NavItem> _items = [
+  final List<_NavItem> _items = const [
     _NavItem(
         icon: IconPath.home,
         iconFill: IconPath.homeFill,
@@ -55,7 +55,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.only(top: 20),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           top: BorderSide(
             color: Palette.colorGrey100,
