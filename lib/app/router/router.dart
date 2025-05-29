@@ -285,6 +285,12 @@ final allRoutes = [
           ),
         ],
       ),
+      // TODO: 추후 삭제
+      NamedGoRoute(
+        name: AppRoute.navigation.name,
+        builder: (context, state) => const NavigationPage(),
+      ),
+
       NamedGoRoute(
         name: AppRoute.idealSetting.name,
         builder: (context, state) => const IdealTypeSettingPage(),
