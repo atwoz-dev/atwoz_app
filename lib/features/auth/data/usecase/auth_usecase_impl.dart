@@ -4,12 +4,12 @@ import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,11 +40,11 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   static const String _user = 'AuthProvider.user';
 
   @override
-  Future<UserResponse> signIn(UserSignInRequest user) async {
+  Future<UserData> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
-      await _localStorage.saveItem<UserResponse>(_user, userResponse);
+      await _localStorage.saveItem<UserData>(_user, userResponse);
 
       return userResponse;
     } catch (e) {
@@ -57,7 +57,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
-    final cookieJar = await _apiService.cookieJar;
+    final cookieJar = _apiService.cookieJar;
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
@@ -114,10 +114,25 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   Future<void> uploadProfile(ProfileUploadRequest profileData) async {
     try {
       await _userRepository.updateProfile(profileData);
-      Log.d("✅ 프로필 업로드 성공");
+      Log.d("프로필 업로드 성공");
     } catch (e) {
-      Log.e("❌ 프로필 업로드 실패: $e");
+      Log.e("프로필 업로드 실패: $e");
       rethrow;
     }
+  }
+
+  @override
+  Future<String> requestBizgoToken() async {
+    return await _userRepository.requestBizgoToken();
+  }
+
+  @override
+  Future<void> sendVerificationCode(
+      String phoneNumber, String token, String message) async {
+    await _userRepository.sendSmsVerificationCode(
+      phoneNumber: phoneNumber,
+      token: token,
+      message: message,
+    );
   }
 }

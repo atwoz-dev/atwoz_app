@@ -46,7 +46,7 @@ class PhotoRepository extends BaseRepository {
     try {
       Log.d("단건 업로드 요청 데이터: ${formData.fields}");
       await apiService.postFormData(path,
-          data: formData, requiresAuthToken: true);
+          data: formData, requiresAccessToken: true);
     } catch (e) {
       Log.d("단건 사진 업로드 중 오류 발생: $e");
     }
@@ -68,6 +68,7 @@ class PhotoRepository extends BaseRepository {
     for (var i = 0; i < files.length; i++) {
       formData.files.add(MapEntry("requests[$i].image", files[i]));
     }
+
     final fields = <String, String>{};
 
     for (var i = 0; i < files.length; i++) {
@@ -78,12 +79,11 @@ class PhotoRepository extends BaseRepository {
         fields["requests[$i].${entry.key}"] = entry.value.toString();
       });
     }
-
     formData.fields.addAll(fields.entries);
 
     try {
       await apiService.postFormData(path,
-          data: formData, requiresAuthToken: true);
+          data: formData, requiresAccessToken: true);
     } catch (e) {
       Log.d("사진 업로드 중 오류 발생: $e");
     }
@@ -94,7 +94,7 @@ class PhotoRepository extends BaseRepository {
     try {
       await apiService.deleteJson(
         '$path/$id',
-        requiresAuthToken: true,
+        requiresAccessToken: true,
       );
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
@@ -104,7 +104,8 @@ class PhotoRepository extends BaseRepository {
   // 프로필 이미지 조회
   Future<ProfileImageResponse?> fetchProfileImages() async {
     try {
-      final response = await apiService.getJson(path, requiresAuthToken: true);
+      final response =
+          await apiService.getJson(path, requiresAccessToken: true);
       final profileImageResponse = ProfileImageResponse.fromJson(response);
 
       Log.d("프로필 이미지 조회 성공: ${profileImageResponse.toString()}");

@@ -24,6 +24,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -32,10 +34,12 @@
 	<string>앱에서 사진을 저장하기 위해 사진 라이브러리에 접근합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>앱에서 사진 라이브러리에 접근합니다.</string>
-	<key>UIApplicationExitsOnSuspend</key>
-	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<string>LaunchScreen</string>
 	<key>UILaunchStoryboardName</key>

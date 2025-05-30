@@ -33,12 +33,19 @@ Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultYear = 1997;
+  // selectedYear가 없으면 초기 세팅
+  if (selectedYear == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedYear(defaultYear);
+    });
+  }
+
   return ListWheelInput(
-    key: const Key('birthInput'),
-    selectedValue: selectedYear,
+    selectedValue: selectedYear ?? defaultYear,
     minValue: 1960,
-    maxValue: 2022,
-    defaultValue: 1997,
+    maxValue: DateTime.now().year,
+    defaultValue: defaultYear,
     unit: '년',
     onValueChanged: signUpNotifier.updateSelectedYear,
   );
@@ -48,14 +55,24 @@ Widget buildHeightInput({
   required int? selectedHeight,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultHeight = 170;
+
+  if (selectedHeight == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedHeight(defaultHeight);
+    });
+  }
+
   return ListWheelInput(
     key: const Key('heightInput'),
-    selectedValue: selectedHeight,
+    selectedValue: selectedHeight ?? defaultHeight,
     minValue: 130,
     maxValue: 200,
-    defaultValue: 170,
+    defaultValue: defaultHeight,
     unit: 'cm',
-    onValueChanged: signUpNotifier.updateSelectedHeight,
+    onValueChanged: (value) {
+      signUpNotifier.updateSelectedHeight(value);
+    },
   );
 }
 
@@ -64,7 +81,7 @@ Widget buildJobInput({
   required SignUpProcess signUpNotifier,
 }) {
   return SingleSelectListChip(
-    options: jobOptions,
+    options: jobLabelToEnumKey.keys.toList(),
     selectedOption: selectedJob,
     onSelectionChanged: signUpNotifier.updateSelectedJob,
   );
@@ -215,7 +232,7 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
               expandedWidth: true,
               onPressed: () {
                 if (mounted) {
-                  const currentLocation = '현재 위치';
+                  const currentLocation = '강남구';
                   widget.onLocationUpdated(currentLocation);
                   locationController.text = currentLocation;
                 }
@@ -288,7 +305,7 @@ Widget buildMbtiInput({
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, // 각 행에 4개의 카드
             mainAxisSpacing: 8.0, // 카드 간 세로 간격
             crossAxisSpacing: 8.0, // 카드 간 가로 간격
@@ -362,7 +379,7 @@ Widget buildHobbiesInput({
   required SignUpProcess signUpNotifier,
 }) {
   return ListChip(
-    options: hobbies,
+    options: hobbyLabelToEnumKey.keys.toList(),
     selectedOptions: selectedHobbies,
     onSelectionChanged: signUpNotifier.updateHobbies,
   );

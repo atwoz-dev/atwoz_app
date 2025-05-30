@@ -1,14 +1,9 @@
 import 'package:atwoz_app/core/state/base_widget_state.dart';
-
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
-import 'package:atwoz_app/app/widget/dialogue/custom_dialogue.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/app/widget/dialogue/default_dialogue.dart';
 
 class InterviewAnswerDialogueWidget extends StatefulWidget {
   final String questionTitle;

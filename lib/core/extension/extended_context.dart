@@ -64,26 +64,6 @@ extension ExtendedContext on BuildContext {
 
   /// 기기가 태블릿인지 검사
   bool get isTablet => isSmallTablet || isLargeTablet;
-
-  /// 화면 크기에 따라 특정 값을 반환하는 반응형 유틸리티
-  T responsiveValue<T>({
-    required T mobile,
-    T? tablet,
-    T? desktop,
-    T? watch,
-  }) {
-    final double deviceWidth = mediaQuerySize.shortestSide;
-
-    if (deviceWidth >= 1200 && desktop != null) {
-      return desktop;
-    } else if (deviceWidth >= 600 && tablet != null) {
-      return tablet;
-    } else if (deviceWidth < 300 && watch != null) {
-      return watch;
-    } else {
-      return mobile;
-    }
-  }
 }
 
 /// `Widget`을 Sliver 위젯으로 변환하는 확장 메서드

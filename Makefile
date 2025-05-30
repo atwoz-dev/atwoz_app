@@ -39,6 +39,14 @@ help:
 	@echo "  make run ENV_FILE=dev.env  # 환경 파일 지정 필요";
 	@echo "  make android-dev-build";
 	@echo "  make ios-prod-build";
+		@echo "  make clean-all            - 캐시 및 의존성 완전 삭제 후 재설정";
+	@echo "  make android-dev-build    - dev 환경으로 Android 빌드";
+	@echo "  make android-prod-build   - prod 환경으로 Android 빌드";
+	@echo "  make ios-dev-build        - dev 환경으로 iOS 빌드";
+	@echo "  make ios-prod-build       - prod 환경으로 iOS 빌드";
+	@echo "  make run-release          - 릴리즈 모드 실행 (디바이스용)";
+	@echo "  make outdated             - 의존성 버전 확인";
+
 
 
 
@@ -84,3 +92,46 @@ ios-build:
 download-firebase:
 	curl -o android/app/google-services.json https://example.com/firebase-dev.json
 	curl -o ios/Runner/GoogleService-Info.plist https://example.com/firebase-dev.plist
+
+clean-all:
+	@echo "🔄 전체 캐시 및 빌드 파일 삭제 중..."
+	rm -rf build
+	rm -rf .dart_tool
+	rm -rf .packages
+	rm -rf pubspec.lock
+	rm -rf ios/Pods
+	rm -rf ios/Runner.xcworkspace
+	rm -rf android/.gradle
+	rm -rf android/build
+	rm -rf ios/build
+	rm -rf macos/Pods
+	rm -rf macos/Runner.xcworkspace
+	$(FLUTTER) clean
+	@echo "클린 완료! pub get 진행 중..."
+	$(FLUTTER) pub get
+
+android-dev-build:
+	$(FLUTTER) build apk --release --dart-define-from-file=dev.env
+
+android-prod-build:
+	$(FLUTTER) build apk --release --dart-define-from-file=prod.env
+
+ios-dev-build:
+	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
+		$(FLUTTER) build ipa --release --dart-define-from-file=dev.env; \
+	else \
+		echo "iOS 빌드는 macOS 환경에서만 실행 가능합니다."; \
+	fi
+
+ios-prod-build:
+	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
+		$(FLUTTER) build ipa --release --dart-define-from-file=prod.env; \
+	else \
+		echo "iOS 빌드는 macOS 환경에서만 실행 가능합니다."; \
+	fi
+
+run-release:
+	$(FLUTTER) run --release --dart-define-from-file=$(ENV_FILE)
+
+outdated:
+	$(FLUTTER) pub outdated
