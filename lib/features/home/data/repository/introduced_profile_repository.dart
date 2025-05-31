@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,8 +15,12 @@ class IntroducedProfileRepository extends BaseRepository {
     final res =
         await apiService.getJson('$path/$category', requiresAuthToken: true);
 
-    return (res['data'] as List<dynamic>)
-        .map((e) => IntroducedProfileDto.fromJson(e))
-        .toList();
+    final data = res['data'];
+    if (data == null || data is! List) {
+      Log.e('Invalid API response format: data field must be a list');
+      throw Exception();
+    }
+
+    return (data).map((e) => IntroducedProfileDto.fromJson(e)).toList();
   }
 }
