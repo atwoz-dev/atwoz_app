@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,9 +35,14 @@ class SaveProfileToHiveUseCase {
     await box.put('profile', globalUserProfile);
 
     // SecureStorage 저장
-    await _secureStorage.write(
-        key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
-    await _secureStorage.write(
-        key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
+    try {
+      await _secureStorage.write(
+          key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
+      await _secureStorage.write(
+          key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
+    } catch (e) {
+      // SecureStorage 실패 시 로깅 처리
+      Log.e('SecureStorage 저장 실패: $e');
+    }
   }
 }

@@ -6,13 +6,9 @@ part 'global_user_profile_notifier.g.dart';
 @Riverpod(keepAlive: true)
 class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
   @override
-  GlobalUserProfile? build() => null;
+  GlobalUserProfile build() => GlobalUserProfile.init();
 
   set profile(GlobalUserProfile profile) {
     state = profile;
-  }
-
-  void clear() {
-    state = null;
   }
 }

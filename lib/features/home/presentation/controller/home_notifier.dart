@@ -13,87 +13,45 @@ class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
     state = const AsyncData(HomeState(nickname: ''));
-    await _fetchHomeProfile();
-    await _fetchRecommendedProfiles();
+    try {
+      await _fetchHomeProfile();
+      await _fetchRecommendedProfiles();
+    } catch (e, stackTrace) {
+      state = AsyncError(e, stackTrace);
+      rethrow;
+    }
     return state.value!;
   }
 
   Future<void> _fetchHomeProfile() async {
-    GlobalUserProfile? profile = ref.read(globalUserProfileNotifierProvider);
+    GlobalUserProfile profile = ref.read(globalUserProfileNotifierProvider);
 
     // 전역 상태가 없으면 Hive 또는 서버에서 가져오기
-    if (profile == null) {
+    if (_isDefaultProfile(profile)) {
       profile = await _getProfileFromHive();
 
-      if (profile == null) {
+      if (_isDefaultProfile(profile)) {
         // Hive에도 데이터가 없으면 서버에서 가져와서 Hive에 저장
-        await _fetchProfileFromServer();
+        await _fetchProfileToHiveFromServer();
       }
 
-      _saveProfileToGlobalState(profile!);
+      _saveProfileToGlobalState(profile);
     }
 
-    // state 업데이트 (공통 처리)
     state = AsyncData(state.value!.copyWith(nickname: profile.nickname));
-    // final globalProfile =
-    //     ref.read(globalUserProfileNotifierProvider); // 전역상태 프로필 먼저 확인
-
-    // if (globalProfile != null) {
-    //   // 전역상태에 프로필이 있다면 nickname 저장
-    //   state = AsyncData(state.value!.copyWith(
-    //     nickname: globalProfile.nickname,
-    //   ));
-    //   return;
-    // }
-
-    // final userProfile = await ref
-    //     .read(getProfileFromHiveUseCaseProvider)
-    //     .execute(); // 로컬 DB에서 프로필 가져오기
-
-    // if (userProfile == null) {
-    //   // 로컬 DB에 프로필이 없다면 서버에서 프로필 가져오기
-    //   await ref
-    //       .read(saveProfileToHiveUseCaseProvider)
-    //       .execute(); // 서버에서 가져온 프로필 Hive에 저장
-
-    //   final updatedProfile = await ref
-    //       .read(getProfileFromHiveUseCaseProvider)
-    //       .execute(); // 다시 로컬 DB에서 프로필 가져오기
-
-    //   if (updatedProfile != null) {
-    //     ref
-    //         .read(
-    //           globalUserProfileNotifierProvider.notifier,
-    //         )
-    //         .profile = updatedProfile;
-
-    //     state = AsyncData(state.value!.copyWith(
-    //       nickname: updatedProfile.nickname,
-    //     ));
-    //   }
-    // } else {
-    //   // 로컬 DB에 프로필이 있다면 nickname 저장
-    //   ref
-    //       .read(
-    //         globalUserProfileNotifierProvider.notifier,
-    //       )
-    //       .profile = userProfile;
-
-    //   state = AsyncData(state.value!.copyWith(
-    //     nickname: userProfile.nickname,
-    //   ));
-    // }
   }
 
-  Future<GlobalUserProfile?> _getProfileFromHive() {
+  bool _isDefaultProfile(GlobalUserProfile profile) =>
+      profile == GlobalUserProfile.init();
+
+  Future<GlobalUserProfile> _getProfileFromHive() {
     return ref.read(getProfileFromHiveUseCaseProvider).execute();
   }
 
-  Future<GlobalUserProfile> _fetchProfileFromServer() async {
+  Future<GlobalUserProfile> _fetchProfileToHiveFromServer() async {
     await ref.read(saveProfileToHiveUseCaseProvider).execute();
     final updated = await _getProfileFromHive();
-    assert(updated != null, '서버에서 프로필 저장 후에도 Hive에 없음');
-    return updated!;
+    return updated;
   }
 
   void _saveProfileToGlobalState(GlobalUserProfile profile) {

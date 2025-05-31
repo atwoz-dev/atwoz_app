@@ -36,17 +36,38 @@ class GlobalUserProfile with _$GlobalUserProfile {
 
     // interviewInfo
     @HiveField(18) required List<InterviewInfo> interviewInfoView,
-  }) = $GlobalUserProfile;
+  }) = _GlobalUserProfile;
 
   factory GlobalUserProfile.fromJson(Map<String, dynamic> json) =>
       _$GlobalUserProfileFromJson(json);
 
-  @HiveField(19)
   bool get hasInterview =>
       interviewInfoView.isNotEmpty &&
       interviewInfoView.any((i) => i.title.isNotEmpty || i.content.isNotEmpty);
 
   static String get boxName => 'GlobalUserProfile';
+
+  factory GlobalUserProfile.init() {
+    return const GlobalUserProfile(
+      activityStatus: '',
+      isVip: false,
+      nickname: '',
+      gender: '',
+      yearOfBirth: 0,
+      height: 0,
+      phoneNumber: '',
+      job: '',
+      highestEducation: '',
+      city: '',
+      district: '',
+      mbti: '',
+      smokingStatus: '',
+      drinkingStatus: '',
+      religion: '',
+      hobbies: [],
+      interviewInfoView: [],
+    );
+  }
 }
 
 @freezed
