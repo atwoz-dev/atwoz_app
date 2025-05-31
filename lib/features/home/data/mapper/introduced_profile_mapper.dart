@@ -2,14 +2,14 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/home.dart';
 
 extension IntroducedProfileMapper on IntroducedProfileDto {
-  IntroducedProfile toIntroducedProfile() {
+  IntroducedProfile toIntroducedProfile({required bool isFavorite}) {
     return IntroducedProfile(
       id: memberId,
       imageUrl: profileImageUrl ?? '',
       hashTags: tags.map((tag) => tag ?? '').toList(),
       interviewContent: interviewAnswerContent,
       isIntroduced: isIntroduced,
-      isFavorite: false,
+      isFavorite: isFavorite,
     );
   }
 }
