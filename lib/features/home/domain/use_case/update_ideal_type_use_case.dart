@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final updateIdealTypeUseCaseProvider = Provider<UpdateIdealTypeUseCase>(
   (ref) => UpdateIdealTypeUseCase(
-    idealTypeRepository: IdealTypeRepository(ref),
+    idealTypeRepository: ref.read(idealTypeRepositoryProvider),
   ),
 );
 
@@ -15,7 +15,9 @@ class UpdateIdealTypeUseCase {
     required IdealTypeRepository idealTypeRepository,
   }) : _idealTypeRepository = idealTypeRepository;
 
-  Future<void> execute(IdealType idealType) async {
-    await _idealTypeRepository.updateIdealType(idealType.toIdealTypeDto());
+  Future<bool> execute(IdealType idealType) async {
+    return await _idealTypeRepository.updateIdealType(
+      idealType.toIdealTypeDto(),
+    );
   }
 }

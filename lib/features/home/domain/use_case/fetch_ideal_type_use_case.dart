@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final fetchIdealTypeUseCaseProvider = Provider<FetchIdealTypeUseCase>((ref) {
   return FetchIdealTypeUseCase(
-    repository: IdealTypeRepository(ref),
+    repository: ref.read(idealTypeRepositoryProvider),
   );
 });
 
