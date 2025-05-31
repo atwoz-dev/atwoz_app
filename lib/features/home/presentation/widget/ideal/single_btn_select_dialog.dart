@@ -1,8 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +25,7 @@ class SingleBtnSelectDialg extends ConsumerStatefulWidget {
 }
 
 class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
-  late int _selectedIndex; // 초기 인덱스 중앙값으로 설정
+  late int _selectedIndex;
   late final FixedExtentScrollController _controller;
 
   @override
@@ -45,13 +43,15 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
 
   @override
   Widget build(BuildContext context) {
-    final idealTypeNotifier = ref.watch(idealTypeNotifierProvider.notifier);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 25),
-          padding: EdgeInsets.only(top: 16, bottom: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.only(
+            top: 16,
+            bottom: 24,
+          ),
           width: context.screenWidth,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -65,8 +65,11 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: DefaultIcon(IconPath.close)),
+                      onTap: () => Navigator.pop(context),
+                      child: const DefaultIcon(
+                        IconPath.close,
+                      ),
+                    ),
                   ],
                 ),
                 Text(
@@ -77,7 +80,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   height: context.screenHeight * 0.2,
                   child: ListWheelScrollView(
                     controller: _controller,
@@ -121,11 +124,11 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   ),
                 ),
                 DefaultElevatedButton(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   onPressed: context.pop,
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
-                  child: Text("확인"),
+                  child: const Text("확인"),
                 )
               ],
             ),

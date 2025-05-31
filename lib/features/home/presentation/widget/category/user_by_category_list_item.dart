@@ -43,12 +43,12 @@ class UserByCategoryListItem extends StatelessWidget {
                 const Gap(16),
                 Expanded(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         // 해시태그 리스트 뷰
                         width: context.screenHeight,
                         height: 18,
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: profile.hashTags.length,
