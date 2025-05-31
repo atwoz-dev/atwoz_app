@@ -5,16 +5,20 @@ part 'introduced_profile_dto.g.dart';
 @JsonSerializable()
 class IntroducedProfileDto {
   final int memberId;
-  final String? profileImageUrl;
-  final List<String?> tags;
+  final String profileImageUrl;
+  final List<String> hobbies;
+  final String mbti;
+  final String religion;
   final String interviewAnswerContent;
   final int? likeLevel;
   final bool isIntroduced;
 
   IntroducedProfileDto({
     required this.memberId,
-    this.profileImageUrl,
-    required this.tags,
+    required this.profileImageUrl,
+    required this.hobbies,
+    required this.mbti,
+    required this.religion,
     required this.interviewAnswerContent,
     this.likeLevel,
     required this.isIntroduced,
