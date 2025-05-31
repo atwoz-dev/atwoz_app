@@ -91,12 +91,8 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
     if (!state.hasValue) return false;
 
     final idealType = state.requireValue;
-
-    try {
-      await ref.read(updateIdealTypeUseCaseProvider).execute(idealType);
-      return true;
-    } catch (e) {
-      return false;
-    }
+    final isUpdated =
+        await ref.read(updateIdealTypeUseCaseProvider).execute(idealType);
+    return isUpdated;
   }
 }

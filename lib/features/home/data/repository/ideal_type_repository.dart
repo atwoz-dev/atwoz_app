@@ -1,5 +1,6 @@
-import 'package:atwoz_app/core/network/api_service.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/dto/ideal_type_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,20 @@ class IdealTypeRepository extends BaseRepository {
     return IdealTypeDto.fromJson(response['data']);
   }
 
-  Future<void> updateIdealType(IdealTypeDto idealTypeDto) async {
-    await apiService.patchJson(path, data: idealTypeDto);
+  Future<bool> updateIdealType(IdealTypeDto idealTypeDto) async {
+    try {
+      await apiService.patchJson(
+        path,
+        data: idealTypeDto,
+      );
+
+      return true;
+    } on NetworkException catch (e) {
+      Log.e('네트워크 오류입니다. ${e.message}');
+      return false;
+    } catch (e) {
+      Log.e('알 수 없는 오류입니다. $e');
+      return false;
+    }
   }
 }
