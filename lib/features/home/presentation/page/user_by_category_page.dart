@@ -20,9 +20,9 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   @override
   Widget build(BuildContext context) {
     final introducedProfilesAsync =
-        ref.watch(introducedProfilesNotifierProvider(widget.category.name));
-    final introducedProfilesNotifier = ref.read(
-        introducedProfilesNotifierProvider(widget.category.name).notifier);
+        ref.watch(introducedProfilesNotifierProvider(widget.category));
+    final introducedProfilesNotifier =
+        ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
 
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
