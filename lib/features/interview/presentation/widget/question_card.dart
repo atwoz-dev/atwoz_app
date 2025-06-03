@@ -1,11 +1,16 @@
+import 'package:atwoz_app/app/constants/dimens.dart';
+import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/core/state/base_widget_state.dart';
-import 'package:atwoz_app/features/interview/domain/interview_provider.dart';
+import 'package:atwoz_app/features/interview/data/dto/interview_question_response.dart';
+import 'package:atwoz_app/features/interview/domain/provider/usecase_providers.dart';
+
 import 'package:atwoz_app/features/interview/presentation/widget/interview_answer_dialogue_widget.dart';
+import 'package:atwoz_app/features/interview/presentation/widget/interview_answer_tag_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/features/interview/presentation/widget/interview_answer_tag_widget.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
 
 class QuestionCard extends ConsumerStatefulWidget {
   final double tagSpacing;
@@ -26,7 +31,7 @@ class QuestionCard extends ConsumerStatefulWidget {
 }
 
 class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
-  final Map<String, TextEditingController> _controllers = {};
+  final Map<int, TextEditingController> _controllers = {};
 
   @override
   void dispose() {
@@ -38,65 +43,74 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
 
   @override
   Widget build(BuildContext context) {
-    final questions = [
-      [
-        '내가 생각하는 내 장점과 단점은 이거다!',
-        '나의 평일과 주말은 이런식으로 보내고 있어!',
-        '작고 귀여운 소소한 행복은 어떤게 있나요?',
-        '내가 생각하는 나의 반전 매력은 이거야!',
-        '스트레스는 만병의 근원! 나만의 방법은?',
-        '내 최애 음식과 싫어하는 음식은?',
-        '나는 요즘 이런걸 배워보고 싶더라!',
-        '10년 뒤 멋진 내 모습, 과연 어떤 모습일까?',
-        '비밀인데, 관리 루틴을 알려줄게~',
-        '내 삶에 있어서 우선 순위를 매겨봐',
-      ],
-      List.generate(10, (index) => '관계 질문 ${index + 1}\n관계 질문 ${index + 1}'),
-      List.generate(10, (index) => '연인 질문 ${index + 1}\n연인 질문 ${index + 1}'),
-    ][widget.currentTabIndex];
+    final category = InterviewCategory.values[widget.currentTabIndex];
+    final getQuestions = ref.watch(getInterviewQuestionsUseCaseProvider);
 
-    return Padding(
-      padding: widget.contentPadding,
-      child: SingleChildScrollView(
-        child: Wrap(
-          spacing: widget.tagSpacing,
-          runSpacing: widget.tagSpacing - 4,
-          children: questions.map((question) {
-            _controllers.putIfAbsent(question, () => TextEditingController());
+    return FutureBuilder<List<InterviewItem>>(
+      future: getQuestions(category),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError || !snapshot.hasData) {
+          return const Center(child: Text('질문을 불러오지 못했습니다.'));
+        }
 
-            final isAnswered =
-                ref.watch(interviewNotifierProvider).answers[question] != null;
-
-            return GestureDetector(
-              onTap: () {
-                InterviewAnswerDialogueWidget.showAnswerFormDialog(
-                  initialValue: ref
-                      .read(interviewNotifierProvider.notifier)
-                      .getAnswer(question),
-                  title: '인터뷰 답변',
-                  hintText: '답변을 입력해주세요',
-                  context: context,
-                  questionTitle: question,
-                  answerController: _controllers[question]!,
-                  onSave: () {
-                    final answer = _controllers[question]!.text;
-                    ref
-                        .read(interviewNotifierProvider.notifier)
-                        .saveAnswer(question, answer);
-                    Navigator.of(context).pop();
-                  },
+        final questions = snapshot.data!;
+        return Padding(
+          padding: widget.contentPadding,
+          child: SingleChildScrollView(
+            child: Wrap(
+              spacing: widget.tagSpacing,
+              runSpacing: widget.tagSpacing - 4,
+              children: questions.map((question) {
+                final controller = _controllers.putIfAbsent(
+                  question.questionId,
+                  () => TextEditingController(text: question.answerContent),
                 );
-              },
-              child: _buildQuestionCard(context, question, isAnswered),
-            );
-          }).toList(),
-        ),
-      ),
+
+                return GestureDetector(
+                  onTap: () {
+                    InterviewAnswerDialogueWidget.showAnswerFormDialog(
+                      initialValue: controller.text,
+                      title: '인터뷰 답변',
+                      hintText: '답변을 입력해주세요',
+                      context: context,
+                      questionTitle: question.questionContent,
+                      answerController: controller,
+                      onSave: () async {
+                        final content = controller.text.trim();
+                        if (question.isAnswered) {
+                          await ref
+                              .read(updateInterviewAnswerUseCaseProvider)
+                              .call(
+                                  answerId: question.answerId!,
+                                  answerContent: content);
+                        } else {
+                          await ref
+                              .read(submitInterviewAnswerUseCaseProvider)
+                              .call(
+                                  questionId: question.questionId,
+                                  answerContent: content);
+                        }
+
+                        // 다시 불러오기 (강제 리빌드 또는 invalidate 필요)
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  },
+                  child: _buildQuestionCard(context, question),
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildQuestionCard(
-      BuildContext context, String question, bool isAnswered) {
+  Widget _buildQuestionCard(BuildContext context, InterviewItem question) {
     return SizedBox(
       width:
           (screenWidth - widget.horizontalPadding * 2 - widget.tagSpacing) / 2,
@@ -109,10 +123,10 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InterviewAnswerTagWidget(isAnswered),
-            const Gap(8),
+            InterviewAnswerTagWidget(question.isAnswered),
+            Gap(8.h),
             Text(
-              question,
+              question.questionContent,
               style: Fonts.body02Regular(palette.onSurface),
               maxLines: 2,
               overflow: TextOverflow.visible,

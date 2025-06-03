@@ -37,13 +37,13 @@ class SignUpProfileUpdatePageState
           context: context,
           label: label,
           child: DefaultTextFormField(
-            controller: TextEditingController(text: initialValue),
+            initialValue: initialValue,
             onTap: () {
               signUpProcess.updateCurrentStep(step);
               navigate(context, route: route);
             },
-            enabled: true,
             readOnly: true,
+            enabled: true,
             autofocus: false,
             keyboardType: TextInputType.text,
             hintText: hintText,
@@ -58,6 +58,7 @@ class SignUpProfileUpdatePageState
   @override
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
+    print('signUpState 상태: $signUpState');
 
     // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료
     final bool isButtonEnabled = signUpState.isSecondStepCompleted;
@@ -70,7 +71,7 @@ class SignUpProfileUpdatePageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AuthStepIndicatorWidget(
+                const AuthStepIndicatorWidget(
                   totalSteps: 4,
                   currentStep: 2,
                 ),
@@ -85,8 +86,9 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '나이',
                   hintText: '나이를 선택해주세요.',
-                  initialValue:
-                      signUpState.age != null ? '${signUpState.age}살' : null,
+                  initialValue: signUpState.yearOfBirth != null
+                      ? '${signUpState.yearOfBirth}살'
+                      : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 1,
                 ),

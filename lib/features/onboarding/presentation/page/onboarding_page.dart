@@ -94,113 +94,133 @@ class _OnBoardPageState extends AppBaseStatefulPageBase<OnBoardPage>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: Stack(
+        // TODO: (Stack 위젯) 전체 네비게이션 버튼 삭제하면 같이 삭제
+        alignment: Alignment.center,
         children: [
-          Expanded(
-            flex: 7,
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Stack(
-                  children: [
-                    // 기존 풍선 애니메이션
-                    ...List.generate(
-                      ((balloons.length / balloonsPerRow).ceil()) *
-                          2, // 두 배의 줄 생성
-                      (rowIndex) {
-                        final int startBalloonIndex = (rowIndex %
-                                (balloons.length / balloonsPerRow).ceil()) *
-                            balloonsPerRow;
+          Column(
+            children: [
+              Expanded(
+                flex: 7,
+                child: AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    return Stack(
+                      children: [
+                        // 기존 풍선 애니메이션
+                        ...List.generate(
+                          ((balloons.length / balloonsPerRow).ceil()) *
+                              2, // 두 배의 줄 생성
+                          (rowIndex) {
+                            final int startBalloonIndex = (rowIndex %
+                                    (balloons.length / balloonsPerRow).ceil()) *
+                                balloonsPerRow;
 
-                        final double yOffset =
-                            (_animation.value - rowIndex * rowHeight) %
-                                ((balloons.length / balloonsPerRow).ceil() *
-                                    rowHeight);
+                            final double yOffset =
+                                (_animation.value - rowIndex * rowHeight) %
+                                    ((balloons.length / balloonsPerRow).ceil() *
+                                        rowHeight);
 
-                        return Positioned(
-                          top: screenHeight - yOffset, // 아래에서 위로 이동
-                          left: randomRowStartX[rowIndex %
-                              randomRowStartX.length], // 각 줄의 시작 X축 랜덤 위치
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: List.generate(
-                              balloonsPerRow,
-                              (colIndex) {
-                                final int balloonIndex =
-                                    (startBalloonIndex + colIndex) %
-                                        balloons.length;
-                                return OnboardingBalloonWidget(
-                                  text: balloons[balloonIndex]['text'],
-                                  color: balloons[balloonIndex]['color'],
-                                  textStyle: Fonts.header02()
-                                      .copyWith(fontWeight: FontWeight.w900),
-                                );
-                              },
+                            return Positioned(
+                              top: screenHeight - yOffset, // 아래에서 위로 이동
+                              left: randomRowStartX[rowIndex %
+                                  randomRowStartX.length], // 각 줄의 시작 X축 랜덤 위치
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: List.generate(
+                                  balloonsPerRow,
+                                  (colIndex) {
+                                    final int balloonIndex =
+                                        (startBalloonIndex + colIndex) %
+                                            balloons.length;
+                                    return OnboardingBalloonWidget(
+                                      text: balloons[balloonIndex]['text'],
+                                      color: balloons[balloonIndex]['color'],
+                                      textStyle: Fonts.header02().copyWith(
+                                          fontWeight: FontWeight.w900),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        // 아래쪽에 흰색 그라데이션 추가
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: screenHeight * 0.7, // 그라데이션 높이
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.white.withOpacity(0), // 투명 흰색
+                                  Colors.white.withOpacity(0.05), // 투명 흰색
+                                  Colors.white, // 완전 흰색
+                                ],
+                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                    // 아래쪽에 흰색 그라데이션 추가
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        height: screenHeight * 0.7, // 그라데이션 높이
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.white.withOpacity(0), // 투명 흰색
-                              Colors.white.withOpacity(0.05), // 투명 흰색
-                              Colors.white, // 완전 흰색
-                            ],
-                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                flex: 3, // 하단 UI 유지
+                child: Padding(
+                  padding: EdgeInsets.all(screenWidth * 0.05),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      bubbleWidget(
+                          comment: '회원가입하고 포인트 선물받기',
+                          boldText: '포인트 선물',
+                          width: screenWidth * 0.5,
+                          textStyle: Fonts.body03Regular(),
+                          shadowColor: Palette.colorGrey200),
+                      DefaultElevatedButton(
+                        primary: palette.primary,
+                        onPressed: () async {
+                          navigate(
+                            context,
+                            route: AppRoute.onboardPhone,
+                          );
+                        },
+                        child: Text(
+                          '전화번호로 시작하기',
+                          style: Fonts.body01Regular(palette.onPrimary),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          Expanded(
-            flex: 3, // 하단 UI 유지
-            child: Padding(
-              padding: EdgeInsets.all(screenWidth * 0.05),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  bubbleWidget(
-                      comment: '회원가입하고 포인트 선물받기',
-                      boldText: '포인트 선물',
-                      width: screenWidth * 0.5,
-                      textStyle: Fonts.body03Regular(),
-                      shadowColor: Palette.colorGrey200),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.onboardPhone,
-                      );
-                    },
-                    child: Text(
-                      '전화번호로 시작하기',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        '만 18세 이상만 이용 가능하며 회원가입 시\n'
+                        '이용약관, 개인정보처리방침에 동의하게 됩니다.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    '만 18세 이상만 이용 가능하며 회원가입 시\n'
-                    '이용약관, 개인정보처리방침에 동의하게 됩니다.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ],
+                ),
               ),
+            ],
+          ),
+          DefaultElevatedButton(
+            expandedWidth: false,
+            primary: palette.primary,
+            onPressed: () async {
+              navigate(
+                context,
+                route: AppRoute.navigation,
+              );
+            },
+            child: Text(
+              '전체 네비게이션 보기 (삭제 예정)',
+              style: Fonts.body01Regular(palette.onPrimary),
             ),
           ),
         ],

@@ -16,13 +16,13 @@ class LocalStorageNotifier extends StateNotifier<LocalStorage> {
 final localStorageProvider =
     StateNotifierProvider<LocalStorageNotifier, LocalStorage>((ref) {
   final notifier = LocalStorageNotifier();
-  notifier.initialize(); // 초기화 실행
+  // 여긴 그냥 반환하고, Consumer 쪽에서 initialize 호출해줘야 함
   return notifier;
 });
 
 class LocalStorage {
   LocalStorage._();
-
+  LocalStorage();
   static Box? _hiveStorage;
   static FlutterSecureStorage? _secureStorage;
 
@@ -35,8 +35,11 @@ class LocalStorage {
   /* ------------------ SECURE STORAGE ----------------------- */
 
   Future<String?> getEncrypted(String key) async {
+    if (_secureStorage == null) {
+      throw Exception('[LocalStorage] secureStorage가 초기화되지 않았습니다.');
+    }
     try {
-      return _secureStorage?.read(key: key);
+      return _secureStorage!.read(key: key);
     } on PlatformException {
       return null;
     }
