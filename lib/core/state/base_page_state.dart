@@ -120,7 +120,6 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
               (isDefaultBottomNavigationBar
                   ? DefaultBottomNavigationBar(
                       key: defaultBottomNavigationBarKey,
-                      currentIndex: defaultBottomNavigationBarIndex ?? 2,
                       isHighlighted: isHighlightedDefaultBottomNavigationBar,
                     )
                   : null),

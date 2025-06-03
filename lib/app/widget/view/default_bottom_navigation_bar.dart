@@ -7,12 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class DefaultBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
+  final int? currentIndex;
   final bool isHighlighted; // 강조 여부를 제어하는 파라미터
 
   DefaultBottomNavigationBar({
     super.key,
-    required this.currentIndex,
+    this.currentIndex,
     this.isHighlighted = true, // 기본값은 강조 활성화
   });
 
@@ -64,7 +64,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         ),
       ),
       child: BottomNavigationBar(
-        currentIndex: currentIndex,
+        currentIndex: currentIndex ?? 0,
         onTap: (index) {
           navigate(
             context,
@@ -73,10 +73,11 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           );
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            isHighlighted ? context.palette.primary : Palette.colorGrey400,
+        selectedItemColor: (isHighlighted && currentIndex != null)
+            ? context.palette.primary
+            : Palette.colorGrey400,
         unselectedItemColor: Palette.colorGrey500,
-        selectedLabelStyle: isHighlighted
+        selectedLabelStyle: (isHighlighted && currentIndex != null)
             ? defaultTextStyle.copyWith(color: context.palette.primary)
             : defaultTextStyle,
         unselectedLabelStyle: defaultTextStyle,
