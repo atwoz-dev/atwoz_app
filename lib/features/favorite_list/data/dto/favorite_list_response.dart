@@ -24,6 +24,7 @@ class FavoriteListItemResponse with _$FavoriteListItemResponse {
 
   FavoriteUserSummary toModel() => FavoriteUserSummary(
         userId: opponentId,
+        // TODO(Han): server 데이터 정합성 확보 후 non-nullable 하도록 수정
         profileUrl: profileImageUrl ?? '',
         name: nickname ?? '',
         city: city ?? '',

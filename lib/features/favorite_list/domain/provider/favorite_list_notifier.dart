@@ -73,7 +73,7 @@ class FavoriteListNotifier extends _$FavoriteListNotifier {
 
       state = state.copyWith(
         favoriteMeUsers: state.favoriteMeUsers.copyWith(
-          users: [...state.myFavoriteUsers.users, ...favoriteListData.users],
+          users: [...state.favoriteMeUsers.users, ...favoriteListData.users],
           hasMore: favoriteListData.hasMore,
         ),
       );

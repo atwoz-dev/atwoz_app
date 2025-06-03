@@ -63,7 +63,7 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
                         profile: profile,
                         isBlurred: !(index < _previewProfileCount &&
                             _unBlurIdList.contains(profile.userId)),
-                        onProfielTab: () => navigate(
+                        onProfileTab: () => navigate(
                           context,
                           route: AppRoute.profile,
                           extra: ProfileDetailArguments(userId: profile.userId),

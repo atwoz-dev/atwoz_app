@@ -13,13 +13,13 @@ class FavoriteGridItem extends StatelessWidget {
     super.key,
     required this.profile,
     required this.isBlurred,
-    required this.onProfielTab,
+    required this.onProfileTab,
     required this.onBlurTap,
   });
 
   final FavoriteUserSummary profile;
   final bool isBlurred;
-  final VoidCallback onProfielTab;
+  final VoidCallback onProfileTab;
   final VoidCallback onBlurTap;
 
   @override
@@ -31,7 +31,7 @@ class FavoriteGridItem extends StatelessWidget {
         ClipRRect(
           borderRadius: _imageRadius,
           child: GestureDetector(
-            onTap: isBlurred ? onBlurTap : onProfielTab,
+            onTap: isBlurred ? onBlurTap : onProfileTab,
             child: isBlurred
                 ? ImageFiltered(
                     imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
