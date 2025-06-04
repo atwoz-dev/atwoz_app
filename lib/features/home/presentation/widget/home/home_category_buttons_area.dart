@@ -5,14 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-// const List<String> _buttonLabels = [
-//   "상위 5%",
-//   "새로 가입했어요",
-//   "지금 근처인 사람!",
-//   "종교가 같아요",
-//   "취미가 같아요",
-// ];
-
 class HomeCategoryButtonsArea extends ConsumerWidget {
   final void Function(String category) onTapButton;
   const HomeCategoryButtonsArea({
@@ -27,7 +19,9 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
       children: [
         Text(
           "이런 분들은 어떠세요? 🧐",
-          style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
+          style: Fonts.header03().copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const Gap(16),
         Container(

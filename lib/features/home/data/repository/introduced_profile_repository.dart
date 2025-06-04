@@ -16,11 +16,11 @@ class IntroducedProfileRepository extends BaseRepository {
         await apiService.getJson('$path/$category', requiresAuthToken: true);
 
     final data = res['data'];
-    if (data == null || data is! List) {
-      Log.e('Invalid API response format: data field must be a list');
-      throw Exception();
+    if (data is! List<Map<String, dynamic>>) {
+      Log.e('응답 형식 오류: data 필드가 리스트 아님');
+      throw const FormatException('응답 형식이 올바르지 않습니다');
     }
 
-    return (data).map((e) => IntroducedProfileDto.fromJson(e)).toList();
+    return data.map(IntroducedProfileDto.fromJson).toList();
   }
 }

@@ -13,7 +13,7 @@ class IntroducedProfileDto {
   final int? likeLevel;
   final bool isIntroduced;
 
-  IntroducedProfileDto({
+  const IntroducedProfileDto({
     required this.memberId,
     required this.profileImageUrl,
     required this.hobbies,

@@ -619,7 +619,7 @@ class AddressData {
 
   /// 서버 데이터를 CityAddressItem으로 반환
   CityAddressItem getCityByValue(String value) {
-    return _cityByValue[value]!;
+    return _cityByValue[value] ?? CityAddressItem(label: '', value: value);
   }
 
   CityAddressItem getCityByLabel(String label) {

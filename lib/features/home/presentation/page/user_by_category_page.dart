@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
@@ -15,8 +14,6 @@ class UserByCategoryPage extends ConsumerStatefulWidget {
 }
 
 class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
-  //late List<bool> _blurredList;
-
   @override
   Widget build(BuildContext context) {
     final introducedProfilesAsync =
@@ -59,8 +56,12 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
             ),
           );
         },
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error'),
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }

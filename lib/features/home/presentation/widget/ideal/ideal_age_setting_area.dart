@@ -14,25 +14,35 @@ class IdealAgeSettingArea extends ConsumerWidget {
     final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
 
     return idealTypeAsync.when(
-      data: (data) => _buildSlider(
+      data: (data) => IdealAgeSlider(
         minAge: data.minAge,
         maxAge: data.maxAge,
-        onChanged: (start, end) => idealTypeNotifier.updateAgeRange(start, end),
+        onChanged: idealTypeNotifier.updateAgeRange,
       ),
       error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => _buildSlider(
+      loading: () => const IdealAgeSlider(
         minAge: 20,
         maxAge: 46,
-        onChanged: null, // 로딩 중엔 슬라이더 비활성화
+        onChanged: null,
       ),
     );
   }
+}
 
-  Widget _buildSlider({
-    required int minAge,
-    required int maxAge,
-    void Function(int start, int end)? onChanged,
-  }) {
+class IdealAgeSlider extends StatelessWidget {
+  final int minAge;
+  final int maxAge;
+  final void Function(int start, int end)? onChanged;
+
+  const IdealAgeSlider({
+    super.key,
+    required this.minAge,
+    required this.maxAge,
+    this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -50,7 +60,7 @@ class IdealAgeSettingArea extends ConsumerWidget {
                 fontWeight: FontWeight.w500,
                 color: const Color(0xff3B3B3B),
               ),
-            )
+            ),
           ],
         ),
         const Gap(20),
@@ -58,12 +68,17 @@ class IdealAgeSettingArea extends ConsumerWidget {
           children: [
             Expanded(
               child: RangeSlider(
-                values: RangeValues(minAge.toDouble(), maxAge.toDouble()),
+                values: RangeValues(
+                  minAge.toDouble(),
+                  maxAge.toDouble(),
+                ),
                 min: 20,
                 max: 46,
                 onChanged: onChanged != null
-                    ? (values) =>
-                        onChanged(values.start.toInt(), values.end.toInt())
+                    ? (values) => onChanged!(
+                          values.start.toInt(),
+                          values.end.toInt(),
+                        )
                     : null,
                 activeColor: Palette.colorPrimary500,
                 inactiveColor: const Color(0xffEEEEEE),

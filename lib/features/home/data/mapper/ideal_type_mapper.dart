@@ -10,8 +10,8 @@ extension IdealTypeMapper on IdealTypeDto {
     return IdealType(
       minAge: minAge,
       maxAge: maxAge,
-      hobbies: hobbies.map((e) => Hobby.parseFromData(e)).toList(),
-      cities: cities.map((e) => addressData.getCityByValue(e)).toList(),
+      hobbies: hobbies.map(Hobby.parseFromData).toList(),
+      cities: cities.map(addressData.getCityByValue).toList(),
       religion: ExtendedReligionStatus.parseUpper(
         religion,
         Religion.values,

@@ -12,9 +12,14 @@ class IdealTypeRepository extends BaseRepository {
   IdealTypeRepository(Ref ref) : super(ref, '/member/ideal');
 
   Future<IdealTypeDto> getIdealType() async {
-    final response = await apiService.getJson(path);
+    final res = await apiService.getJson(path);
 
-    return IdealTypeDto.fromJson(response['data']);
+    if (res is! Map<String, dynamic> || res['data'] is! Map<String, Object?>) {
+      Log.e('data type is not Map<String, dynamic> $res');
+      throw Exception();
+    }
+
+    return IdealTypeDto.fromJson(res['data']);
   }
 
   Future<bool> updateIdealType(IdealTypeDto idealTypeDto) async {

@@ -11,7 +11,6 @@ class IdealTypeSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final idealTypeAsync = ref.watch(idealTypeNotifierProvider);
     final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
 
     return Scaffold(

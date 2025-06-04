@@ -12,7 +12,7 @@ class IdealTypeDto {
   final String? smokingStatus;
   final String? drinkingStatus;
 
-  IdealTypeDto({
+  const IdealTypeDto({
     required this.minAge,
     required this.maxAge,
     required this.hobbies,
