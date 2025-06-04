@@ -1,20 +1,35 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../app/constants/enum.dart';
 import '../../../../app/router/route_arguments.dart';
 import '../../../../app/router/router.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
+  HomePageState()
+      : super(
+          isAppBar: false,
+          isHorizontalMargin: false,
+          isDefaultBottomNavigationBar: true,
+          defaultBottomNavigationBarIndex: 0,
+        );
+
+  @override
+  Widget buildPage(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Padding(
