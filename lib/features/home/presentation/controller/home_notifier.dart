@@ -27,10 +27,10 @@ class HomeNotifier extends _$HomeNotifier {
     GlobalUserProfile profile = ref.read(globalUserProfileNotifierProvider);
 
     // 전역 상태가 없으면 Hive 또는 서버에서 가져오기
-    if (_isDefaultProfile(profile)) {
+    if (profile.isDefault) {
       profile = await _getProfileFromHive();
 
-      if (_isDefaultProfile(profile)) {
+      if (profile.isDefault) {
         // Hive에도 데이터가 없으면 서버에서 가져와서 Hive에 저장
         await _fetchProfileToHiveFromServer();
       }
@@ -40,9 +40,6 @@ class HomeNotifier extends _$HomeNotifier {
 
     state = AsyncData(state.value!.copyWith(nickname: profile.nickname));
   }
-
-  bool _isDefaultProfile(GlobalUserProfile profile) =>
-      profile == GlobalUserProfile.init();
 
   Future<GlobalUserProfile> _getProfileFromHive() {
     return ref.read(getProfileFromHiveUseCaseProvider).execute();
@@ -59,11 +56,13 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<void> _fetchRecommendedProfiles() async {
-    final recommendedProfileRepository =
-        ref.read(recommendedProfileRepositoryProvider);
+    final recommendedProfileRepository = ref.read(
+      recommendedProfileRepositoryProvider,
+    );
     final profiles = await recommendedProfileRepository.getProfiles();
     if (!state.hasValue) return;
-    state =
-        AsyncValue.data(state.value!.copyWith(recommendedProfiles: profiles));
+    state = AsyncValue.data(
+      state.value!.copyWith(recommendedProfiles: profiles),
+    );
   }
 }

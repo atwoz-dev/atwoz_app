@@ -47,27 +47,29 @@ class GlobalUserProfile with _$GlobalUserProfile {
 
   static String get boxName => 'GlobalUserProfile';
 
-  factory GlobalUserProfile.init() {
-    return const GlobalUserProfile(
-      activityStatus: '',
-      isVip: false,
-      nickname: '',
-      gender: '',
-      yearOfBirth: 0,
-      height: 0,
-      phoneNumber: '',
-      job: '',
-      highestEducation: '',
-      city: '',
-      district: '',
-      mbti: '',
-      smokingStatus: '',
-      drinkingStatus: '',
-      religion: '',
-      hobbies: [],
-      interviewInfoView: [],
-    );
-  }
+  factory GlobalUserProfile.init() => _default;
+
+  static const _default = GlobalUserProfile(
+    activityStatus: '',
+    isVip: false,
+    nickname: '',
+    gender: '',
+    yearOfBirth: 0,
+    height: 0,
+    phoneNumber: '',
+    job: '',
+    highestEducation: '',
+    city: '',
+    district: '',
+    mbti: '',
+    smokingStatus: '',
+    drinkingStatus: '',
+    religion: '',
+    hobbies: [],
+    interviewInfoView: [],
+  );
+
+  bool get isDefault => this == _default;
 }
 
 @freezed
