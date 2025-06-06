@@ -86,13 +86,6 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
       ),
     );
   }
-
-  // TODO: implement buildPage
-  // @override
-  // Widget buildPage(BuildContext context) {
-  //
-  //   throw UnimplementedError();
-  // }
 }
 
 class _MyPageListItem extends StatelessWidget {
