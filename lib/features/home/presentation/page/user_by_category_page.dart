@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class UserByCategoryPage extends ConsumerStatefulWidget {
-  final String category;
+  final IntroducedCategory category;
   const UserByCategoryPage({super.key, required this.category});
 
   @override
@@ -14,8 +14,6 @@ class UserByCategoryPage extends ConsumerStatefulWidget {
 }
 
 class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
-  //late List<bool> _blurredList;
-
   @override
   Widget build(BuildContext context) {
     final introducedProfilesAsync =
@@ -24,7 +22,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
         ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
 
     return Scaffold(
-      appBar: DefaultAppBar(title: widget.category),
+      appBar: DefaultAppBar(title: widget.category.label),
       body: introducedProfilesAsync.when(
         data: (profiles) {
           List<bool> blurredList =
@@ -58,8 +56,12 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
             ),
           );
         },
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error'),
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }

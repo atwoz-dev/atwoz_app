@@ -1,16 +1,9 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-
-const List<String> _buttonLabels = [
-  "상위 5%",
-  "새로 가입했어요",
-  "지금 근처인 사람!",
-  "종교가 같아요",
-  "취미가 같아요",
-];
 
 class HomeCategoryButtonsArea extends ConsumerWidget {
   final void Function(String category) onTapButton;
@@ -26,7 +19,9 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
       children: [
         Text(
           "이런 분들은 어떠세요? 🧐",
-          style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
+          style: Fonts.header03().copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const Gap(16),
         Container(
@@ -42,8 +37,8 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
             spacing: 8,
             runSpacing: 8,
             alignment: WrapAlignment.center,
-            children: _buttonLabels.map(
-              (label) {
+            children: IntroducedCategory.values.map(
+              (value) {
                 return ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.colorBlack,
@@ -52,9 +47,9 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () => onTapButton(label),
+                  onPressed: () => onTapButton(value.label),
                   child: Text(
-                    label,
+                    value.label,
                     style: Fonts.body02Regular().copyWith(
                       fontWeight: FontWeight.w400,
                       color: Colors.white,

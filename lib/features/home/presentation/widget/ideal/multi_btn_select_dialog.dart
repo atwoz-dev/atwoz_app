@@ -40,8 +40,11 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 25),
-          padding: EdgeInsets.only(top: 16, bottom: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.only(
+            top: 16,
+            bottom: 24,
+          ),
           width: context.screenWidth,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -56,7 +59,7 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                   children: [
                     GestureDetector(
                       onTap: context.pop,
-                      child: DefaultIcon(IconPath.close),
+                      child: const DefaultIcon(IconPath.close),
                     ),
                   ],
                 ),
@@ -67,17 +70,17 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                     color: Palette.colorBlack,
                   ),
                 ),
-                Gap(6),
+                const Gap(6),
                 Text(
                   '${widget.maxSelectableCount}개까지 중복 선택이 가능해요',
                   style: Fonts.body02Medium().copyWith(
                     fontWeight: FontWeight.w400,
-                    color: Color(0xff8D92A0),
+                    color: const Color(0xff8D92A0),
                   ),
                 ),
                 Container(
                   height: context.screenHeight * 0.26,
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: SingleChildScrollView(
                     child: Wrap(
                       alignment: WrapAlignment.center,
@@ -89,8 +92,8 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                           behavior: HitTestBehavior.opaque,
                           onTap: () => _toggleItem(tag),
                           child: Container(
-                            margin: EdgeInsets.all(4),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 9,
                             ),
@@ -99,7 +102,7 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                                   ? Palette.colorPrimary100
                                   : Colors.white,
                               border: Border.all(
-                                color: Color(0xffEDEEF0),
+                                color: const Color(0xffEDEEF0),
                               ),
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -118,11 +121,11 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                   ),
                 ),
                 DefaultElevatedButton(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   onPressed: () => widget.onSubmit(_selectedItems),
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
-                  child: Text("확인"),
+                  child: const Text("확인"),
                 )
               ],
             ),

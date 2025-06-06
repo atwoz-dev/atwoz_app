@@ -6,9 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class IdealAgeSettingArea extends ConsumerWidget {
-  const IdealAgeSettingArea({
-    super.key,
-  });
+  const IdealAgeSettingArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,56 +14,79 @@ class IdealAgeSettingArea extends ConsumerWidget {
     final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
 
     return idealTypeAsync.when(
-      data: (data) => Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "나이",
-                  style: Fonts.body02Regular().copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  "${data.minAge.toString()}세~${data.maxAge.toString()}세",
-                  style: Fonts.body02Regular().copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff3B3B3B),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Gap(20),
-          Row(
-            children: [
-              Expanded(
-                child: RangeSlider(
-                  values: RangeValues(
-                    data.minAge.toDouble(),
-                    data.maxAge.toDouble(),
-                  ),
-                  min: 20,
-                  max: 46,
-                  onChanged: (RangeValues values) {
-                    idealTypeNotifier.updateAgeRange(
-                      values.start.toInt(),
-                      values.end.toInt(),
-                    );
-                  },
-                  activeColor: Palette.colorPrimary500,
-                  inactiveColor: Color(0xffEEEEEE),
-                ),
-              ),
-            ],
-          )
-        ],
+      data: (data) => IdealAgeSlider(
+        minAge: data.minAge,
+        maxAge: data.maxAge,
+        onChanged: idealTypeNotifier.updateAgeRange,
       ),
       error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => Center(child: CircularProgressIndicator()),
+      loading: () => const IdealAgeSlider(
+        minAge: 20,
+        maxAge: 46,
+        onChanged: null,
+      ),
+    );
+  }
+}
+
+class IdealAgeSlider extends StatelessWidget {
+  final int minAge;
+  final int maxAge;
+  final void Function(int start, int end)? onChanged;
+
+  const IdealAgeSlider({
+    super.key,
+    required this.minAge,
+    required this.maxAge,
+    this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "나이",
+              style: Fonts.body02Regular().copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              "$minAge세~$maxAge세",
+              style: Fonts.body02Regular().copyWith(
+                fontWeight: FontWeight.w500,
+                color: const Color(0xff3B3B3B),
+              ),
+            ),
+          ],
+        ),
+        const Gap(20),
+        Row(
+          children: [
+            Expanded(
+              child: RangeSlider(
+                values: RangeValues(
+                  minAge.toDouble(),
+                  maxAge.toDouble(),
+                ),
+                min: 20,
+                max: 46,
+                onChanged: onChanged != null
+                    ? (values) => onChanged!(
+                          values.start.toInt(),
+                          values.end.toInt(),
+                        )
+                    : null,
+                activeColor: Palette.colorPrimary500,
+                inactiveColor: const Color(0xffEEEEEE),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
