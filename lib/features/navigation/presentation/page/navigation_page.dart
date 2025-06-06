@@ -21,6 +21,7 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                 horizontal: screenWidth * 0.05, vertical: screenWidth * 0.2),
             child: SingleChildScrollView(
               child: Column(
+                spacing: 16.0,
                 children: [
                   DefaultElevatedButton(
                     primary: palette.primary,
@@ -35,7 +36,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -49,7 +49,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -63,7 +62,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -77,7 +75,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -91,7 +88,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -105,7 +101,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -119,7 +114,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -133,7 +127,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -147,7 +140,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -161,7 +153,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -175,7 +166,6 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   DefaultElevatedButton(
                     primary: palette.primary,
                     onPressed: () async {
@@ -186,6 +176,19 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     },
                     child: Text(
                       '마이페이지',
+                      style: Fonts.body01Regular(palette.onPrimary),
+                    ),
+                  ),
+                  DefaultElevatedButton(
+                    primary: palette.primary,
+                    onPressed: () async {
+                      navigate(
+                        context,
+                        route: AppRoute.favoriteList,
+                      );
+                    },
+                    child: Text(
+                      '좋아요 목록',
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),

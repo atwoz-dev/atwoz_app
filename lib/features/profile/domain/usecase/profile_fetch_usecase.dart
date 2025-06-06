@@ -61,9 +61,9 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       religion: Religion.parse(basic.religion),
       region: Region.parse(basic.region),
       height: basic.height.toDouble(),
-      job: basic.job,
+      job: basic.job ?? '',
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
-      favoriteType: FavoriteType.tryParse(basic.like),
+      favoriteType: FavoriteType.tryParse(basic.likeLevel),
     );
   }
 }

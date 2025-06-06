@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/usecase.dart';
@@ -18,7 +19,6 @@ class ProfileNotifier extends _$ProfileNotifier {
   Future<void> _initializeProfileState(int userId) async {
     try {
       final profile = await ProfileFetchUseCase(ref).call(userId);
-
       state = state.copyWith(
         profile: profile,
         // TODO(Han): replace my user data from server
@@ -46,10 +46,25 @@ class ProfileNotifier extends _$ProfileNotifier {
     state = state.copyWith(message: message);
   }
 
-  set favoriteType(FavoriteType? type) {
+  set favoriteType(FavoriteType type) {
     state = state.copyWith(
       profile: state.profile?.copyWith(favoriteType: type),
     );
+    _updateFavoriteType(type);
+  }
+
+  Future<void> _updateFavoriteType(FavoriteType type) async {
+    if (state.profile == null) return;
+
+    try {
+      await ref.read(favoriteRepositoryProvider).requestFavorite(
+            state.profile!.id,
+            type: type,
+          );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(error: ProfileErrorType.network);
+    }
   }
 
   Future<void> requestMatch() async {
