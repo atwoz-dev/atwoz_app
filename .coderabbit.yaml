@@ -29,6 +29,7 @@ reviews:
   poem: false
   labeling_instructions: []
   path_filters:
+    - "**/*.dart"
     - "!**/*.g.dart"
     - "!**/*.freezed.dart"
     - "!**/*.mocks.dart"
