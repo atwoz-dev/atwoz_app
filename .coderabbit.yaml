@@ -37,12 +37,15 @@ reviews:
     - path: "**/*.dart"
       instructions: >
         In addition to existing rules, review code based on:
-        - Clean Architecture: Maintain a clear separation of concerns (UI, business logic, data layers).
+        - **Clean Architecture**: Maintain clear separation of concerns (UI, business logic, data layers).
         - Prefer small, single-purpose functions and methods. Avoid functions with more than 50 lines of code.
         - Maintain a consistent naming convention, following Dart’s recommended style guide.
         - Enforce the use of async/await for asynchronous code and avoid callback hell.
         - Use streams and Futures properly, ensuring that there is clear error handling for async code.
-        - Apply SOLID principles to classes, methods, and functions where applicable.
+        - Apply **SOLID principles** to classes, methods
+        - Avoid unnecessary comments. Code should be self-explanatory with meaningful names.
+        - Use comments only when the code's intent is not immediately obvious, and avoid redundant explanations.
+        - If a comment is necessary, describe the *why*, not the *what* (the code itself should explain the *what*).
 
     - path: "**/*.dart"
       instructions: >

@@ -180,7 +180,7 @@ class _InteractionButtons extends ConsumerWidget {
                   duration: Params.animationDurationLow,
                   curve: Curves.elasticInOut,
                   child: DefaultIcon(
-                    IconPath.heartFill,
+                    IconPath.heart,
                     size: null,
                     colorFilter: DefaultIcon.fillColor(
                       context.colorScheme.primary,
