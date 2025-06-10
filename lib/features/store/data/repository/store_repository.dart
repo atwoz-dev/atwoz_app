@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final storeRepositoryProvider = Provider<StoreRepository>((ref) {
@@ -6,28 +10,37 @@ final storeRepositoryProvider = Provider<StoreRepository>((ref) {
 });
 
 class StoreRepository extends BaseRepository {
-  StoreRepository(Ref ref) : super(ref, '/store');
+  StoreRepository(Ref ref) : super(ref, '/admin');
 
 // 상점 하트 사용내역
-  Future<void> storeHistory() async {
+  Future storeHistory() async {
     Map<String, dynamic> queryParameters = {
-      'condition': {
+      'condition': jsonEncode({
         "productId": "string",
         "name": "string",
         "createdDateGoe": "2025-06-03",
         "createdDateLoe": "2025-06-03"
-      },
-      'pageable': {
+      }),
+      'pageable': jsonEncode({
         "page": 0,
         "size": 1,
         "sort": ["string"]
-      }
+      })
     };
 
-    await apiService.getJson(
-      '$path/admin/heart-purchase-options',
+    final res = await apiService.getJson(
+      '$path/heart-purchase-options',
       queryParameters: queryParameters,
       requiresAuthToken: true,
     );
+
+    debugPrint("데이터 체킹 ::: $res");
+
+    return res;
   }
 }
+
+final storeHistoryProvider = FutureProvider((ref) async {
+  final repository = ref.watch(storeRepositoryProvider);
+  return await repository.storeHistory();
+});
