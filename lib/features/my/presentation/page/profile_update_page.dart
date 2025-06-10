@@ -72,8 +72,10 @@ class ProfileUpdatePage extends ConsumerWidget {
                     : Palette.colorGrey200,
                 onPressed: () {
                   if (profileManageState.isChanged) {
-                    profileManageNotifier.saveProfile().then((_) {
-                      if (context.mounted) pop(context);
+                    profileManageNotifier.saveProfile().then((success) {
+                      if (success) {
+                        if (context.mounted) pop(context);
+                      }
                     });
                   }
                 },

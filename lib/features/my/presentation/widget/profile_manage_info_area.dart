@@ -50,7 +50,7 @@ class ProfileManageInfoArea extends StatelessWidget {
                 final String displayValue = switch (label) {
                   '직업' => profile.job.label,
                   '지역' => profile.region,
-                  '학력' => educationMap[profile.education] ?? '',
+                  '학력' => profile.education.label,
                   '흡연여부' => profile.smokingStatus.label,
                   '음주빈도' => profile.drinkingStatus.label,
                   '종교' => profile.religion.label,
