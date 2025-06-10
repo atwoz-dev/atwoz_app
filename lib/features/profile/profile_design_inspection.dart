@@ -115,7 +115,7 @@ enum ProfileDesignInspectionType {
   matched,
 }
 
-ProfileDesignInspectionType? kDebugPageType = ProfileDesignInspectionType.main;
+ProfileDesignInspectionType? kDebugPageType;
 
 const targetUserId = 9;
 const myUserId = 1;

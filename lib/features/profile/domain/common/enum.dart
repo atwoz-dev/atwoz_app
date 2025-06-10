@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/icon_path.dart';
+import 'package:atwoz_app/core/util/string_extension.dart';
 
 enum SmokingStatus {
   none("비흡연"),
@@ -97,7 +98,7 @@ enum Region {
 
 enum FavoriteType {
   interest(IconPath.generalFavorite, '관심있어요'),
-  veryInterest(IconPath.strongFavorite, '매우 관심있어요');
+  highlyInterested(IconPath.strongFavorite, '매우 관심있어요');
 
   final String iconPath;
   final String label;
@@ -105,7 +106,7 @@ enum FavoriteType {
 
   static final Map<String, FavoriteType> _byValue = {
     for (final type in FavoriteType.values)
-      type.name.toUpperCase().replaceAll('_', ''): type,
+      type.name.camelCaseToSnakeCase(): type,
   };
 
   static FavoriteType? tryParse(String? value) =>

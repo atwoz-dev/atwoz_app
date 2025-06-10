@@ -31,7 +31,6 @@ class StoreHistoryPage extends ConsumerWidget {
                       },
                       itemCount: data['data']['content'].length,
                     ),
-                // data: (data) => Text('${data['data']['content']}'),
                 error: (err, stack) {
                   return Text('${err}');
                 },

@@ -1,7 +1,9 @@
+import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -45,11 +47,24 @@ const List<MenuItem> _menuItems = [
   ),
 ];
 
-class MyPage extends StatelessWidget {
+class MyPage extends ConsumerStatefulWidget {
   const MyPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  MyPageState createState() => MyPageState();
+}
+
+class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
+  MyPageState()
+      : super(
+          isAppBar: false,
+          isHorizontalMargin: false,
+          isDefaultBottomNavigationBar: true,
+          defaultBottomNavigationBarIndex: 4,
+        );
+
+  @override
+  Widget buildPage(BuildContext context) {
     return Scaffold(
       appBar: const DefaultAppBar(
         title: "마이페이지",

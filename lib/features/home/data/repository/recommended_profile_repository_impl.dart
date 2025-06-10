@@ -1,9 +1,16 @@
 import 'package:atwoz_app/features/home/domain/domain.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final recommendedProfileRepositoryProvider =
+    Provider<RecommendedProfileRepository>(
+  (ref) => RecommendedProfileRepositoryImpl(),
+);
+
+// TODO(jh): 추후 extends BaseRepository 변경
 class RecommendedProfileRepositoryImpl implements RecommendedProfileRepository {
   final List<Map<String, dynamic>> _mockData = [
     // 샘플 데이터 제작
-    // TODO: 추후 api 연동 시 제거
+    // TODO(jh): 추후 api 연동 시 제거
     {
       'image': "assets/images/home_pic.png",
       'hashTags': ["#클라이밍", "#불교", "#무계획 여행", "+2"],

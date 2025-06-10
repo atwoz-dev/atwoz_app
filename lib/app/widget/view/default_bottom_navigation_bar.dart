@@ -7,12 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class DefaultBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
+  final int? currentIndex;
   final bool isHighlighted; // 강조 여부를 제어하는 파라미터
 
   DefaultBottomNavigationBar({
     super.key,
-    required this.currentIndex,
+    this.currentIndex,
     this.isHighlighted = true, // 기본값은 강조 활성화
   });
 
@@ -23,26 +23,26 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         label: '홈',
         route: AppRoute.home),
     _NavItem(
-        icon: IconPath.heart,
-        iconFill: IconPath.heartFill,
+        icon: IconPath.like,
+        iconFill: IconPath.likeFill,
         label: '좋아요',
         route: AppRoute.home // TODO: 좋아요 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: IconPath.boltFill,
-        iconFill: IconPath.boltFill,
+        icon: IconPath.self,
+        iconFill: IconPath.selfFill,
         label: '셀프소개',
         route: AppRoute.interview // TODO:셀프소개 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: IconPath.exam,
-        iconFill: IconPath.examFill,
-        label: '모의고사',
+        icon: IconPath.interview,
+        iconFill: IconPath.interviewFill,
+        label: '인터뷰',
         route: AppRoute.home // TODO: 모의고사 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
-        icon: IconPath.user,
-        iconFill: IconPath.userFill,
+        icon: IconPath.mypage,
+        iconFill: IconPath.mypageFill,
         label: 'MY',
         route: AppRoute.home // TODO: 마이페이지 화면 네비게이션으로 바꾸기
         ),
@@ -51,10 +51,10 @@ class DefaultBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultTextStyle =
-        Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 10.sp);
+        Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 11.sp);
 
     return Container(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 15),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
@@ -64,7 +64,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         ),
       ),
       child: BottomNavigationBar(
-        currentIndex: currentIndex,
+        currentIndex: currentIndex ?? 0,
         onTap: (index) {
           navigate(
             context,
@@ -73,10 +73,11 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           );
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            isHighlighted ? context.palette.primary : Palette.colorGrey400,
-        unselectedItemColor: Palette.colorGrey800,
-        selectedLabelStyle: isHighlighted
+        selectedItemColor: (isHighlighted && currentIndex != null)
+            ? context.palette.primary
+            : Palette.colorGrey400,
+        unselectedItemColor: Palette.colorGrey500,
+        selectedLabelStyle: (isHighlighted && currentIndex != null)
             ? defaultTextStyle.copyWith(color: context.palette.primary)
             : defaultTextStyle,
         unselectedLabelStyle: defaultTextStyle,
@@ -90,9 +91,6 @@ class DefaultBottomNavigationBar extends StatelessWidget {
                 DefaultIcon(
                   size: 20.h,
                   isSelected ? item.iconFill : item.icon,
-                  colorFilter: DefaultIcon.fillColor(isSelected
-                      ? context.palette.primary
-                      : Palette.colorGrey400),
                 ),
                 Gap(8.h), // 아이콘과 레이블 사이 간격
               ],

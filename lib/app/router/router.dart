@@ -7,11 +7,12 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
+import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
+import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
@@ -67,6 +68,7 @@ enum AppRoute {
   profile('profile'),
   profileDesignInspection('profile-design-inspection'),
   contactSetting('contact-setting'),
+  favoriteList('favorite-list'),
 
   // Store
   store('store'),
@@ -202,6 +204,10 @@ final allRoutes = [
             builder: (context, state) => const ContactSettingPage(),
           ),
         ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.favoriteList.name,
+        builder: (_, __) => const FavoriteListPage(),
       ),
       NamedGoRoute(
         name: AppRoute.notification.name,

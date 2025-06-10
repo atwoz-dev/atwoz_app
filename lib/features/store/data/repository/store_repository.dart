@@ -14,29 +14,33 @@ class StoreRepository extends BaseRepository {
 
 // 상점 하트 사용내역
   Future storeHistory() async {
-    Map<String, dynamic> queryParameters = {
-      'condition': jsonEncode({
-        "productId": "string",
-        "name": "string",
-        "createdDateGoe": "2025-06-03",
-        "createdDateLoe": "2025-06-03"
-      }),
-      'pageable': jsonEncode({
-        "page": 0,
-        "size": 1,
-        "sort": ["string"]
-      })
-    };
+    try {
+      Map<String, dynamic> queryParameters = {
+        'condition': jsonEncode({
+          "productId": "string",
+          "name": "string",
+          "createdDateGoe": "2025-06-03",
+          "createdDateLoe": "2025-06-03"
+        }),
+        'pageable': jsonEncode({
+          "page": 0,
+          "size": 1,
+          "sort": ["string"]
+        })
+      };
 
-    final res = await apiService.getJson(
-      '$path/heart-purchase-options',
-      queryParameters: queryParameters,
-      requiresAuthToken: true,
-    );
+      final res = await apiService.getJson(
+        '$path/heart-purchase-options',
+        queryParameters: queryParameters,
+        requiresAuthToken: true,
+      );
 
-    debugPrint("데이터 체킹 ::: $res");
+      debugPrint("데이터 체킹 ::: $res");
 
-    return res;
+      return res;
+    } catch (error) {
+      debugPrint('하트 사용내역 api 에러 : $error');
+    }
   }
 }
 
