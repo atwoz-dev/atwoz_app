@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/enum/extended_enum.dart';
+import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -63,27 +63,27 @@ class IdealSettingArea extends ConsumerWidget {
       ),
       IdealTypeSettingItem(
         label: '흡연',
-        placeholder: idealType?.smokingStatus.korean ?? '',
-        options:
-            ExtendedSmokingStatus.valuesOf(SmokingStatus.values, (r) => r.label)
-                .map((e) => e.korean)
-                .toList(),
+        placeholder: idealType?.smokingStatus.label ?? '상관없음',
+        options: ExtendedSmokingStatus.fromValue(
+          enumValues: SmokingStatus.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '음주',
-        placeholder: idealType?.drinkingStatus.korean ?? '',
-        options: ExtendedDrinkingStatus.valuesOf(
-                DrinkingStatus.values, (r) => r.label)
-            .map((e) => e.korean)
-            .toList(),
+        placeholder: idealType?.drinkingStatus.label ?? '상관없음',
+        options: ExtendedDrinkingStatus.fromValue(
+          enumValues: DrinkingStatus.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '종교',
-        placeholder: idealType?.religion.korean ?? '',
-        options:
-            ExtendedReligionStatus.valuesOf(Religion.values, (r) => r.label)
-                .map((e) => e.korean)
-                .toList(),
+        placeholder: idealType?.religion.label ?? '상관없음',
+        options: ExtendedReligionStatus.fromValue(
+          enumValues: Religion.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '취미',

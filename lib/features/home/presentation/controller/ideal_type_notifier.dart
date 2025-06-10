@@ -1,12 +1,10 @@
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
-import 'package:atwoz_app/features/home/data/mapper/ideal_type_mapper.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/enum/extended_enum.dart';
+import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ideal_type_notifier.g.dart';
@@ -54,10 +52,10 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
   void updateSmokingStatus(String smokingStatus) {
     _updateState(
       (it) => it.copyWith(
-        smokingStatus: ExtendedSmokingStatus.parseLabel(
-          smokingStatus,
-          SmokingStatus.values,
-          (r) => r.label,
+        smokingStatus: ExtendedSmokingStatus.fromLabel(
+          label: smokingStatus,
+          enumValues: SmokingStatus.values,
+          valueToLabel: (value) => value.label,
         ),
       ),
     );
@@ -66,10 +64,10 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
   void updateDrinkingStatus(String drinkingStatus) {
     _updateState(
       (it) => it.copyWith(
-        drinkingStatus: ExtendedDrinkingStatus.parseLabel(
-          drinkingStatus,
-          DrinkingStatus.values,
-          (r) => r.label,
+        drinkingStatus: ExtendedDrinkingStatus.fromLabel(
+          label: drinkingStatus,
+          enumValues: DrinkingStatus.values,
+          valueToLabel: (value) => value.label,
         ),
       ),
     );
@@ -78,10 +76,10 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
   void updateReligion(String religion) {
     _updateState(
       (it) => it.copyWith(
-        religion: ExtendedReligionStatus.parseLabel(
-          religion,
-          Religion.values,
-          (r) => r.label,
+        religion: ExtendedReligionStatus.fromLabel(
+          label: religion,
+          enumValues: Religion.values,
+          valueToLabel: (value) => value.label,
         ),
       ),
     );
