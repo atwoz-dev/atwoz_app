@@ -13,7 +13,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     this.bottom,
     this.title,
     this.isDivider = false,
-    this.leadingIcon,
+    this.leading,
     this.leadingAction,
   });
 
@@ -21,7 +21,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final bool isDivider;
-  final Widget? leadingIcon;
+  final Widget? leading;
   final VoidCallback? leadingAction;
 
   @override
@@ -81,7 +81,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed('/'),
       child: IconButton(
-        icon: leadingIcon ?? Icon(Icons.arrow_back_ios_new),
+        icon: leading ?? const Icon(Icons.arrow_back_ios_new),
         color: context.palette.onSurface,
         iconSize: 24.0,
         onPressed: leadingAction ?? () => Navigator.of(context).pop(),

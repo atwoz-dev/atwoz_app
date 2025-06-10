@@ -33,7 +33,7 @@ class ProfileMainInformation extends StatelessWidget {
   final List<String> hobbies;
   final bool chatEnabled;
   final FavoriteType? favoriteType;
-  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
+  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class _InteractionButtons extends ConsumerWidget {
 
   final int userId;
   final bool favoriteUser;
-  final ValueChanged<FavoriteType?> onFavoriteTypeChanged;
+  final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -150,10 +150,7 @@ class _InteractionButtons extends ConsumerWidget {
         const Gap(8.0),
         GestureDetector(
           onTap: () async {
-            if (favoriteUser) {
-              onFavoriteTypeChanged(null);
-              return;
-            }
+            if (favoriteUser) return;
             final favoriteType = await FavoriteTypeSelectDialog.open(
               context,
               userId: userId,
