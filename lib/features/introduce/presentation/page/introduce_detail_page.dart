@@ -161,7 +161,7 @@ class _InteractionButtons extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               primary: Palette.colorGrey100,
               onPressed: () {},
-              child: DefaultIcon(IconPath.like)),
+              child: DefaultIcon(IconPath.heart)),
         ),
       ],
     );

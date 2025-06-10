@@ -30,7 +30,7 @@ class IconPath {
   static const String customerCenter = '$iconsPath/my_customer_center.svg';
   static const String setting = '$iconsPath/my_setting.svg';
   static const String letter = '$iconsPath/letter.svg';
-  static const String like = '$iconsPath/like.svg';
+  static const String heart = '$iconsPath/heart.svg';
   static const String heartLine = '$iconsPath/heart_line.svg';
   static const String bless = '$iconsPath/bless.svg';
   static const String business = '$iconsPath/business.svg';
@@ -42,19 +42,21 @@ class IconPath {
   static const String strongFavorite = '$iconsPath/strong_favorite.svg';
   static const String storeHeart = '$iconsPath/store_heart.svg';
   static const String celebrate = '$iconsPath/celebrate.svg';
+  static const String sadEmotion = '$iconsPath/sad_emotion.svg';
+  static const String mailOutline = '$iconsPath/mail_outline.svg';
   static const String imageDelete = '$iconsPath/image_delete.svg';
 
   // 네비게이션 바
-  static const String bolt = '$iconsPath/bolt.svg';
-  static const String boltFill = '$iconsPath/bolt_fill.svg';
-  static const String exam = '$iconsPath/exam.svg';
-  static const String examFill = '$iconsPath/exam_fill.svg';
   static const String home = '$iconsPath/home.svg';
   static const String homeFill = '$iconsPath/home_fill.svg';
-  static const String heart = '$iconsPath/heart.svg';
-  static const String heartFill = '$iconsPath/heart_fill.svg';
-  static const String user = '$iconsPath/user.svg';
-  static const String userFill = '$iconsPath/user_fill.svg';
+  static const String like = '$iconsPath/like.svg';
+  static const String likeFill = '$iconsPath/like_fill.svg';
+  static const String self = '$iconsPath/self.svg';
+  static const String selfFill = '$iconsPath/self_fill.svg';
+  static const String interview = '$iconsPath/interview.svg';
+  static const String interviewFill = '$iconsPath/interview_fill.svg';
+  static const String mypage = '$iconsPath/mypage.svg';
+  static const String mypageFill = '$iconsPath/mypage_fill.svg';
 
   // 알림
   static const String frowningFace = '$iconsPath/frowning_face.svg';

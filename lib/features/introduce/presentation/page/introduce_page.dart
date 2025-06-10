@@ -17,8 +17,14 @@ class IntroducePage extends ConsumerStatefulWidget {
   IntroducePageState createState() => IntroducePageState();
 }
 
-class IntroducePageState
-    extends AppBaseConsumerStatefulPageState<IntroducePage> {
+class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
+  IntroducePageState()
+      : super(
+          isAppBar: false,
+          isHorizontalMargin: false,
+          isDefaultBottomNavigationBar: true,
+          defaultBottomNavigationBarIndex: 2,
+        );
   int _currentTabIndex = 0;
 
   void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
@@ -134,7 +140,7 @@ class IntroducePageState
                   ? null
                   : Border(
                       bottom:
-                          BorderSide(width: 1.w, color: Palette.colorGrey100),
+                          BorderSide(width: 1.w, color: Palette.colorGrey50),
                     ),
             ),
             child: GestureDetector(
@@ -188,7 +194,7 @@ class IntroducePageState
           return Container(
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(width: 1.w, color: Palette.colorGrey100),
+                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
               ),
             ),
             child: GestureDetector(
