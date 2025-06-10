@@ -24,15 +24,16 @@ class SaveProfileToHiveUseCase {
         _secureStorage = secureStorage;
 
   Future<void> execute() async {
-    final homeProfileDto = await _repository.getProfile();
+    final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
 
-    final globalUserProfile = homeProfileDto.toGlobalUserProfile();
+    final globalUserProfile =
+        homeProfileDto.toGlobalUserProfile(); // Hive에 저장할 프로필
 
     final box = await Hive.openBox<GlobalUserProfile>(
       GlobalUserProfile.boxName,
-    );
+    ); // Hive Box 가져오기
 
-    await box.put('profile', globalUserProfile);
+    await box.put('profile', globalUserProfile); // Hive에 저장
 
     // SecureStorage 저장
     try {
