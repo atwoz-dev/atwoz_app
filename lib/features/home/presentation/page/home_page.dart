@@ -55,7 +55,8 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                     context,
                     route: AppRoute.userByCategory,
                     extra: UserByCategoryArguments(
-                        category: IntroducedCategory.parse(category)),
+                      category: IntroducedCategory.parse(category),
+                    ),
                   );
                 },
               )

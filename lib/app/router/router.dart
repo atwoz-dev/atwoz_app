@@ -138,7 +138,7 @@ final allRoutes = [
               if (args is! UserByCategoryArguments) {
                 return const SizedBox.shrink();
               }
-              return UserByCategoryPage(category: args.category.label);
+              return UserByCategoryPage(category: args.category);
             },
           ),
         ],
