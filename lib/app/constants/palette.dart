@@ -59,6 +59,9 @@ class Palette {
   static const Color gray10 = Color(0xFFF8F8F8);
   static const Color gray500 = Color(0xFF808080);
 
+  // subText colors
+  static const Color subText = Color(0xFF9E9E9E);
+
   // Transparent blacks
   static const Color black50 = Color(0x80000000); // 50% transparent black
 
@@ -106,7 +109,8 @@ ThemeData createThemeData(ColorScheme colorScheme) {
     ),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colorScheme.surface,
-    useMaterial3: true, // Material 3 디자인 사용
+    useMaterial3: true,
+    // Material 3 디자인 사용
     // TextTheme 커스터마이징
     textTheme: baseTextTheme.copyWith(
       bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: Palette.gray500),
