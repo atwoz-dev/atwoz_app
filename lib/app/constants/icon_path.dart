@@ -43,6 +43,7 @@ class IconPath {
   static const String storeHeart = '$iconsPath/store_heart.svg';
   static const String celebrate = '$iconsPath/celebrate.svg';
   static const String imageDelete = '$iconsPath/image_delete.svg';
+  static const String emptyProfileImage = '$iconsPath/empty_profile_image.svg';
 
   // 네비게이션 바
   static const String bolt = '$iconsPath/bolt.svg';
