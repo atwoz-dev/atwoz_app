@@ -19,10 +19,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
     );
   }
 
-  bool get isSaveEnabled =>
-      state.editableProfileImages.first != null &&
-      state.editableProfileImages.first?.status != ProfileImageStatus.delete &&
-      state.editableProfileImages.any(
+  bool get isSaveEnabled => state.editableProfileImages.any(
         (image) =>
             image?.status == ProfileImageStatus.add ||
             image?.status == ProfileImageStatus.update ||
