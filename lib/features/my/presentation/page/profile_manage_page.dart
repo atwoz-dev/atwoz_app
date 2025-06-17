@@ -10,26 +10,36 @@ class ProfileManagePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileManageState = ref.watch(profileManageNotifierProvider);
-    return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,
-      child: Scaffold(
-        backgroundColor: Palette.colorGrey50,
-        appBar: const DefaultAppBar(
-          title: "프로필 관리",
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileManagePhotoArea(
-                profile: profileManageState.profile,
-              ), // 프로필 사진 영역
-              ProfileManageInfoArea(
-                profile: profileManageState.profile,
-              ) // 프로필 정보 영역
-            ],
+    return profileManageState.when(
+      data: (state) {
+        return GestureDetector(
+          onTap: FocusScope.of(context).unfocus,
+          child: Scaffold(
+            backgroundColor: Palette.colorGrey50,
+            appBar: const DefaultAppBar(
+              title: "프로필 관리",
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ProfileManagePhotoArea(
+                    profile: state.profile,
+                  ), // 프로필 사진 영역
+                  ProfileManageInfoArea(
+                    profile: state.profile,
+                  ) // 프로필 정보 영역
+                ],
+              ),
+            ),
           ),
-        ),
+        );
+      },
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Center(
+        child: Text(error.toString()),
       ),
     );
   }

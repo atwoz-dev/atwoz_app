@@ -4,6 +4,7 @@ import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
+import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,7 @@ void main() {
     Hive.registerAdapter<UserResponse>(UserResponseAdapter());
     Hive.registerAdapter<GlobalUserProfile>(GlobalUserProfileAdapter());
     Hive.registerAdapter<InterviewInfo>(InterviewInfoAdapter());
+    Hive.registerAdapter<MyProfileImage>(MyProfileImageAdapter());
 
     /// 앱 실행
     runApp(

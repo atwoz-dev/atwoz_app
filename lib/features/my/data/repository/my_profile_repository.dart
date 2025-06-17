@@ -9,13 +9,12 @@ final myProfileRepositoryProvider = Provider<MyProfileRepository>(
 );
 
 class MyProfileRepository extends BaseRepository {
-  MyProfileRepository(Ref ref) : super(ref, '/member');
+  MyProfileRepository(Ref ref) : super(ref, '/');
 
   Future<bool> updateProfile(ProfileUpdateRequestDto profile) async {
-    Log.d('profile: ${profile.toJson()}');
     try {
       await apiService.putJson(
-        '$path/profile',
+        '$path/member/profile',
         requiresAuthToken: true,
         data: profile.toJson(),
       );
