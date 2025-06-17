@@ -1,15 +1,22 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfileManagePhotoArea extends StatelessWidget {
+class ProfileManagePhotoArea extends ConsumerWidget {
   final MyProfile profile;
   const ProfileManagePhotoArea({super.key, required this.profile});
 
+  static const int maxProfileImageCount = 6;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       color: Colors.white,
@@ -33,73 +40,95 @@ class ProfileManagePhotoArea extends StatelessWidget {
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
             ),
-            itemCount: 6,
+            itemCount: maxProfileImageCount,
             itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  Positioned.fill(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: index <= profile.profileImages.length - 1
-                          ? Image.network(
-                              profile.profileImages[index].imageUrl,
-                              fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () async {
+                  await navigate(
+                    context,
+                    route: AppRoute.myProfileImageUpdate,
+                    extra: MyProfileImageUpdateArguments(
+                      profileImages:
+                          _toEditableProfileImages(profile.profileImages),
+                    ),
+                  );
+
+                  ref.invalidate(profileManageNotifierProvider);
+                },
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Container(
+                        color: const Color(0xffEDEEF0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: index < maxProfileImageCount &&
+                                  profile.profileImages[index] != null
+                              ? Image.network(
+                                  profile.profileImages[index]!.imageUrl,
+                                  fit: BoxFit.cover,
+                                )
+                              : const DefaultIcon(
+                                  IconPath.emptyProfileImage,
+                                  size: 24,
+                                  fit: BoxFit.contain,
+                                  padding: EdgeInsets.only(top: 14),
+                                ),
+                        ),
+                      ),
+                    ),
+                    if (index == 0)
+                      Positioned(
+                          top: 8,
+                          left: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Palette.colorPrimary600,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            child: Text(
+                              "대표",
+                              style: Fonts.body03Regular().copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                    Positioned(
+                      right: 8,
+                      bottom: 8,
+                      child: index <= profile.profileImages.length - 1 &&
+                              profile.profileImages[index] != null
+                          ? const DefaultIcon(
+                              IconPath.imageDelete,
+                              size: 24,
                             )
                           : Container(
-                              color: const Color(0xffEDEEF0),
-                            ),
-                    ),
-                  ),
-                  if (index == 0)
-                    Positioned(
-                        top: 8,
-                        left: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Palette.colorPrimary600,
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          child: Text(
-                            "대표",
-                            style: Fonts.body03Regular().copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )),
-                  Positioned(
-                    right: 8,
-                    bottom: 8,
-                    child: index <= profile.profileImages.length - 1
-                        ? const DefaultIcon(
-                            IconPath.imageDelete,
-                            size: 24,
-                          )
-                        : Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: const Color(0xff8D92A0),
-                                width: 1.5,
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: const Color(0xff8D92A0),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: DefaultIcon(
+                                IconPath.add,
+                                colorFilter: DefaultIcon.fillColor(
+                                  const Color(0xff8D92A0),
+                                ),
                               ),
                             ),
-                            child: DefaultIcon(
-                              IconPath.add,
-                              colorFilter: DefaultIcon.fillColor(
-                                const Color(0xff8D92A0),
-                              ),
-                            ),
-                          ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               );
             },
           ),
@@ -107,4 +136,21 @@ class ProfileManagePhotoArea extends StatelessWidget {
       ),
     );
   }
+}
+
+List<EditableProfileImage?> _toEditableProfileImages(
+    List<MyProfileImage?> profileImages) {
+  return profileImages.map(
+    (image) {
+      if (image == null) return null;
+      return EditableProfileImage(
+        id: image.id,
+        imageUrl: image.imageUrl,
+        imageFile: XFile(image.imageUrl),
+        order: profileImages.indexOf(image),
+        isPrimary: profileImages.indexOf(image) == 0,
+        status: ProfileImageStatus.none,
+      );
+    },
+  ).toList();
 }

@@ -15,6 +15,7 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_pa
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/my_profile_image_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
@@ -105,7 +106,8 @@ enum AppRoute {
   serviceWithdraw('service-withdraw'),
   withdrawReason('withdraw-reason'),
   privacyPolicy('privacy-policy'),
-  termsOfUse('terms-of-use');
+  termsOfUse('terms-of-use'),
+  myProfileImageUpdate('my-profile-image-update');
 
   final String name;
   const AppRoute(this.name);
@@ -281,6 +283,18 @@ final allRoutes = [
                 return const SizedBox.shrink();
               }
               return ProfileUpdatePage(profileType: args.profileType);
+            },
+          ),
+          NamedGoRoute(
+            name: AppRoute.myProfileImageUpdate.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! MyProfileImageUpdateArguments) {
+                return const SizedBox.shrink();
+              }
+              return MyProfileImageUpdatePage(
+                profileImages: args.profileImages,
+              );
             },
           ),
         ],

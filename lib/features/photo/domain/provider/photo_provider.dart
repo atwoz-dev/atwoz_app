@@ -1,6 +1,8 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
+import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/update_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -101,5 +103,30 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     final updatedPhotos = [...state]..[index] = photo;
 
     state = updatedPhotos;
+  }
+
+  // 프로필 사진 업데이트
+  Future<void> updateProfilePhotos(List<EditableProfileImage?> photos) async {
+    // 서버에 업로드 or 수정
+    await ref.read(updatePhotosUsecaseProvider).execute(photos);
+
+    // null 제거
+    final validPhotos = photos.whereType<EditableProfileImage>().toList();
+
+    // 리스트 크기는 6
+    final updatedState = List<XFile?>.filled(6, null);
+
+    // 각 EditableProfileImage의 order 위치에 XFile 할당
+    for (final photo in validPhotos) {
+      final order = photo.order;
+      if (order >= 0 && order < 6) {
+        updatedState[order] = photo.imageFile;
+      } else {
+        Log.d("❌ 잘못된 order 값: $order (0~5 사이여야 함)");
+      }
+    }
+
+    // 상태(state) 업데이트 (UI 반영됨)
+    state = updatedState;
   }
 }

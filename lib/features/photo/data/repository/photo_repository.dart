@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,6 +113,37 @@ class PhotoRepository extends BaseRepository {
     } catch (e) {
       Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
       return null;
+    }
+  }
+
+  // 프로필 이미지 업데이트
+  Future<void> updateProfilePhotos(List<EditableProfileImage> photos) async {
+    final formData = FormData();
+
+    for (int i = 0; i < photos.length; i++) {
+      final photo = photos[i];
+
+      if (photo.imageFile == null) continue;
+
+      final multipartFile = await _convertToMultipartFile(photo.imageFile!);
+      if (multipartFile == null) continue;
+
+      formData.files.add(MapEntry("requests[$i].image", multipartFile));
+      formData.fields
+          .add(MapEntry("requests[$i].order", photo.order.toString()));
+      formData.fields
+          .add(MapEntry("requests[$i].isPrimary", photo.isPrimary.toString()));
+
+      if (photo.id != null) {
+        formData.fields.add(MapEntry("requests[$i].id", photo.id.toString()));
+      }
+    }
+
+    try {
+      await apiService.postFormData(path,
+          data: formData, requiresAuthToken: true);
+    } catch (e) {
+      Log.d("❌ 프로필 사진 업데이트 중 오류 발생: $e");
     }
   }
 }
