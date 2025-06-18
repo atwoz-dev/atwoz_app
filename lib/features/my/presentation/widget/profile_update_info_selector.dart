@@ -211,7 +211,8 @@ class _SingleButtonTypeSelectorState extends State<_SingleButtonTypeSelector> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.options.indexOf(widget.initialValue);
+    final idx = widget.options.indexOf(widget.initialValue);
+    _selectedIndex = idx >= 0 ? idx : 0;
   }
 
   @override

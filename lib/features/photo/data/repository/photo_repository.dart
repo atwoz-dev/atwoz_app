@@ -120,23 +120,47 @@ class PhotoRepository extends BaseRepository {
   Future<void> updateProfilePhotos(List<EditableProfileImage> photos) async {
     final formData = FormData();
 
-    for (int i = 0; i < photos.length; i++) {
-      final photo = photos[i];
+    int reqIdx = 0; // 요청 인덱스
 
-      if (photo.imageFile == null) continue;
+    for (final photo in photos) {
+      if (photo.imageFile == null) continue; // imageFile이 null이면 건너뜀
 
-      final multipartFile = await _convertToMultipartFile(photo.imageFile!);
-      if (multipartFile == null) continue;
+      final multipartFile = await _convertToMultipartFile(
+          photo.imageFile!); // XFile → MultipartFile 변환
+      if (multipartFile == null) continue; // multipartFile이 null이면 건너뜀
 
-      formData.files.add(MapEntry("requests[$i].image", multipartFile));
-      formData.fields
-          .add(MapEntry("requests[$i].order", photo.order.toString()));
-      formData.fields
-          .add(MapEntry("requests[$i].isPrimary", photo.isPrimary.toString()));
+      formData.files.add(
+        MapEntry(
+          "requests[$reqIdx].image",
+          multipartFile,
+        ),
+      ); // 요청 이미지 추가
+
+      formData.fields.add(
+        MapEntry(
+          "requests[$reqIdx].order",
+          photo.order.toString(),
+        ),
+      ); // 요청 order 추가
+
+      formData.fields.add(
+        MapEntry(
+          "requests[$reqIdx].isPrimary",
+          photo.isPrimary.toString(),
+        ),
+      ); // 요청 isPrimary 추가
 
       if (photo.id != null) {
-        formData.fields.add(MapEntry("requests[$i].id", photo.id.toString()));
+        // id가 null이 아니면 이미지 변경
+        formData.fields.add(
+          MapEntry(
+            "requests[$reqIdx].id",
+            photo.id.toString(),
+          ),
+        ); // 요청 id 추가
       }
+
+      reqIdx++;
     }
 
     try {

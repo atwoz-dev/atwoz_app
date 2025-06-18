@@ -10,27 +10,40 @@ class UpdatePhotosUseCase
 
   @override
   Future<void> execute(List<EditableProfileImage?> params) async {
-    final filteredPhotos = params.whereType<EditableProfileImage>().toList();
-    final addOrUpdatePhotos = filteredPhotos
+    final validPhotos = params.whereType<EditableProfileImage>().toList();
+    final addOrUpdatePhotos = validPhotos
         .where(
           (photo) =>
               photo.status == ProfileImageStatus.add ||
               photo.status == ProfileImageStatus.update,
         )
         .toList();
-    final deletedPhotos = filteredPhotos
+
+    final deletedPhotos = validPhotos
         .where(
           (photo) => photo.status == ProfileImageStatus.delete,
         )
         .toList();
 
-    await ref
-        .read(photoRepositoryProvider)
-        .updateProfilePhotos(addOrUpdatePhotos);
+    if (addOrUpdatePhotos.isNotEmpty) {
+      await ref
+          .read(photoRepositoryProvider)
+          .updateProfilePhotos(addOrUpdatePhotos);
+    }
 
-    for (final photo in deletedPhotos) {
-      if (photo.id == null) continue;
-      await ref.read(photoRepositoryProvider).deleteProfilePhoto(photo.id!);
+    if (deletedPhotos.isNotEmpty) {
+      final validPhotoIds = deletedPhotos
+          .where(
+            (photo) => photo.id != null,
+          )
+          .toList();
+
+      await Future.wait(
+        validPhotoIds.map(
+          (photo) =>
+              ref.read(photoRepositoryProvider).deleteProfilePhoto(photo.id!),
+        ),
+      );
     }
   }
 }

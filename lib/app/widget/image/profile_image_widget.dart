@@ -16,7 +16,7 @@ class ProfileImageWidget extends StatelessWidget {
   final VoidCallback onPickImage;
   final VoidCallback? onRemoveImage;
   final bool isRepresentative;
-  final bool? isUpdate;
+  final bool isUpdate;
 
   const ProfileImageWidget({
     super.key,
@@ -78,12 +78,18 @@ class ProfileImageWidget extends StatelessWidget {
               ),
             ),
           ),
-        if (!isUpdate!)
+        if (!isUpdate)
           Positioned(
             bottom: 8,
             right: 8,
             child: GestureDetector(
-              onTap: imageFile != null ? onRemoveImage : onPickImage,
+              onTap: () {
+                if (imageFile != null) {
+                  onRemoveImage?.call();
+                } else {
+                  onPickImage();
+                }
+              },
               child: Container(
                 width: 24,
                 height: 24,

@@ -62,10 +62,11 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                         color: const Color(0xffEDEEF0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: index < maxProfileImageCount &&
+                          child: index < profile.profileImages.length &&
                                   profile.profileImages[index] != null
-                              ? Image.network(
-                                  profile.profileImages[index]!.imageUrl,
+                              ? DefaultImage(
+                                  imageURL:
+                                      profile.profileImages[index]!.imageUrl,
                                   fit: BoxFit.cover,
                                 )
                               : const DefaultIcon(
