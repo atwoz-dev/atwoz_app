@@ -40,7 +40,7 @@ class FetchProfileImagesUseCase {
         final profileImages = List<MyProfileImage?>.filled(6, null);
 
         for (final image in sortedPhotos) {
-          if (image.order < 0 || image.order >= sortedPhotos.length) {
+          if (image.order < 0 || image.order >= profileImages.length) {
             continue;
           }
           profileImages[image.order] = MyProfileImage(
