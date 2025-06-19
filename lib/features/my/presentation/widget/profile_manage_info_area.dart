@@ -100,7 +100,11 @@ class ProfileManageInfoArea extends ConsumerWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => navigate(
+                context,
+                route: AppRoute.profilePreview,
+                extra: ProfilePreviewArguments(profile: data.profile),
+              ),
             ),
             ProfileManageBasicInfoArea(
               profile: data.profile,
