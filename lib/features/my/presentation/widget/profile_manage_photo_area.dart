@@ -59,23 +59,23 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                   children: [
                     Positioned.fill(
                       child: Container(
-                        color: const Color(0xffEDEEF0),
-                        child: ClipRRect(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          child: index < profile.profileImages.length &&
-                                  profile.profileImages[index] != null
-                              ? DefaultImage(
-                                  imageURL:
-                                      profile.profileImages[index]!.imageUrl,
-                                  fit: BoxFit.cover,
-                                )
-                              : const DefaultIcon(
-                                  IconPath.emptyProfileImage,
-                                  size: 24,
-                                  fit: BoxFit.contain,
-                                  padding: EdgeInsets.only(top: 14),
-                                ),
+                          color: const Color(0xffEDEEF0),
                         ),
+                        child: index < profile.profileImages.length &&
+                                profile.profileImages[index] != null
+                            ? DefaultImage(
+                                imageURL:
+                                    profile.profileImages[index]!.imageUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : const DefaultIcon(
+                                IconPath.emptyProfileImage,
+                                size: 24,
+                                fit: BoxFit.contain,
+                                padding: EdgeInsets.only(top: 14),
+                              ),
                       ),
                     ),
                     if (index == 0)
