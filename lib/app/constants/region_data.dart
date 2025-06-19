@@ -561,7 +561,7 @@ final addressData = AddressData(cities: [
     DistrictAddressItem(label: '진천군', value: 'JINCHEON_GUN'),
     DistrictAddressItem(label: '청주시', value: 'CHEONGJU_SI')
   ]),
-  CityAddressItem(label: '제주특별자치도', value: 'JEJU', districts: [
+  CityAddressItem(label: '제주', value: 'JEJU', districts: [
     DistrictAddressItem(label: '서귀포시', value: 'SEOGWIPO_SI'),
     DistrictAddressItem(label: '제주시', value: 'JEJU_SI')
   ]),
@@ -615,6 +615,15 @@ class AddressData {
     final district = _districtByValue[city.label]![districtValue];
 
     return '${city.label} ${district!.label}';
+  }
+
+  /// 서버 데이터를 CityAddressItem으로 반환
+  CityAddressItem getCityByValue(String value) {
+    return _cityByValue[value] ?? CityAddressItem(label: '', value: value);
+  }
+
+  CityAddressItem getCityByLabel(String label) {
+    return _cityByLabel[label]!;
   }
 
   /// 화면 표시용 문자열을 서버 데이터로 변환 (district value만 반환)
