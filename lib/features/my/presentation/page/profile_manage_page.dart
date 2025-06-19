@@ -2,44 +2,28 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileManagePage extends ConsumerWidget {
+class ProfileManagePage extends StatelessWidget {
   const ProfileManagePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final profileManageState = ref.watch(profileManageNotifierProvider);
-    return profileManageState.when(
-      data: (state) {
-        return GestureDetector(
-          onTap: FocusScope.of(context).unfocus,
-          child: Scaffold(
-            backgroundColor: Palette.colorGrey50,
-            appBar: const DefaultAppBar(
-              title: "프로필 관리",
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ProfileManagePhotoArea(
-                    profile: state.profile,
-                  ), // 프로필 사진 영역
-                  ProfileManageInfoArea(
-                    profile: state.profile,
-                  ) // 프로필 정보 영역
-                ],
-              ),
-            ),
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: const Scaffold(
+        backgroundColor: Palette.colorGrey50,
+        appBar: DefaultAppBar(
+          title: "프로필 관리",
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProfileManagePhotoArea(), // 프로필 사진 영역
+              ProfileManageInfoArea() // 프로필 정보 영역
+            ],
           ),
-        );
-      },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (error, stackTrace) => Center(
-        child: Text(error.toString()),
+        ),
       ),
     );
   }

@@ -10,76 +10,79 @@ import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileManagePhotoArea extends ConsumerWidget {
-  final MyProfile profile;
-  const ProfileManagePhotoArea({super.key, required this.profile});
+  const ProfileManagePhotoArea({super.key});
 
   static const int maxProfileImageCount = 6;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Gap(24),
-          Text(
-            "프로필 사진",
-            style: Fonts.header03().copyWith(
-              color: Palette.colorBlack,
-              fontWeight: FontWeight.w600,
+    final profileImagesAsync = ref.watch(
+      profileManageNotifierProvider.select(
+        (value) => value.whenData((data) => data.profile.profileImages),
+      ),
+    );
+    return profileImagesAsync.when(
+      data: (profileImages) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Gap(24),
+            Text(
+              "프로필 사진",
+              style: Fonts.header03().copyWith(
+                color: Palette.colorBlack,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          const Gap(16),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-            ),
-            itemCount: maxProfileImageCount,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () async {
-                  await navigate(
-                    context,
-                    route: AppRoute.myProfileImageUpdate,
-                    extra: MyProfileImageUpdateArguments(
-                      profileImages:
-                          _toEditableProfileImages(profile.profileImages),
-                    ),
-                  );
-
-                  ref.invalidate(profileManageNotifierProvider);
-                },
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: const Color(0xffEDEEF0),
-                        ),
-                        child: index < profile.profileImages.length &&
-                                profile.profileImages[index] != null
-                            ? DefaultImage(
-                                imageURL:
-                                    profile.profileImages[index]!.imageUrl,
-                                fit: BoxFit.cover,
-                              )
-                            : const DefaultIcon(
-                                IconPath.emptyProfileImage,
-                                size: 24,
-                                fit: BoxFit.contain,
-                                padding: EdgeInsets.only(top: 14),
-                              ),
+            const Gap(16),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+              ),
+              itemCount: maxProfileImageCount,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () async {
+                    await navigate(
+                      context,
+                      route: AppRoute.myProfileImageUpdate,
+                      extra: MyProfileImageUpdateArguments(
+                        profileImages: _toEditableProfileImages(profileImages),
                       ),
-                    ),
-                    if (index == 0)
-                      Positioned(
+                    );
+
+                    ref.invalidate(profileManageNotifierProvider);
+                  },
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color(0xffEDEEF0),
+                          ),
+                          child: index < profileImages.length &&
+                                  profileImages[index] != null
+                              ? DefaultImage(
+                                  imageURL: profileImages[index]!.imageUrl,
+                                  fit: BoxFit.cover,
+                                )
+                              : const DefaultIcon(
+                                  IconPath.emptyProfileImage,
+                                  size: 24,
+                                  fit: BoxFit.contain,
+                                  padding: EdgeInsets.only(top: 14),
+                                ),
+                        ),
+                      ),
+                      if (index == 0)
+                        Positioned(
                           top: 8,
                           left: 8,
                           child: Container(
@@ -99,41 +102,23 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                          )),
-                    Positioned(
-                      right: 8,
-                      bottom: 8,
-                      child: index <= profile.profileImages.length - 1 &&
-                              profile.profileImages[index] != null
-                          ? const DefaultIcon(
-                              IconPath.imageDelete,
-                              size: 24,
-                            )
-                          : Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xff8D92A0),
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: DefaultIcon(
-                                IconPath.add,
-                                colorFilter: DefaultIcon.fillColor(
-                                  const Color(0xff8D92A0),
-                                ),
-                              ),
-                            ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      error: (error, stackTrace) => Center(
+        child: Text(
+          error.toString(),
+        ),
+      ),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
