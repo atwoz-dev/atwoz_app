@@ -20,20 +20,39 @@ class ProfilePreviewPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: DefaultImage(
-              imageURL: profile.profileImages.first?.imageUrl,
-              height: context.screenHeight * 0.47,
+          /// 배경 이미지 (상단 상태바까지 포함됨)
+          Positioned.fill(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                /// 이미지가 상태바까지 닿도록 상단 패딩 없이 배치
+                DefaultImage(
+                  imageURL: profile.profileImages[1]?.imageUrl,
+                  fit: BoxFit.cover,
+                  height: context.screenHeight * 0.47,
+                ),
+              ],
             ),
           ),
+
+          /// 상단 Back 버튼
           Positioned(
-            top: 300,
-            left: 16,
+            top: MediaQuery.of(context).padding.top + 8, // 상태바 높이 + 여유
+            left: 8,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {},
+              color: Palette.colorBlack,
+            ),
+          ),
+
+          /// 아래쪽 프로필 카드
+          Positioned(
+            top: 300, // 이미지 높이보다 약간 아래
+            left: 0,
+            right: 0,
             child: Container(
-              //height: context.screenHeight * 0.3,
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -45,15 +64,13 @@ class ProfilePreviewPage extends StatelessWidget {
                   ],
                 ),
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ).copyWith(bottom: 10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${profile.nickname}, ${profile.age}',
-                      style: Fonts.header02()),
+                  Text(
+                    '${profile.nickname}, ${profile.age}',
+                    style: Fonts.header02(),
+                  ),
                   const Gap(6.0),
                   Text('${profile.mbti} · ${profile.region}',
                       style: Fonts.body02Medium()),
@@ -61,7 +78,9 @@ class ProfilePreviewPage extends StatelessWidget {
                   Wrap(
                     spacing: 6.0,
                     children: profile.hobbies
-                        .map((hobby) => _MainHobbyBadge(hobby.label))
+                        .map(
+                          (hobby) => _MainHobbyBadge(hobby.label),
+                        )
                         .toList(),
                   ),
                 ],
