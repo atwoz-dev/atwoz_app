@@ -106,7 +106,7 @@ class _FavoriteTypeSelector extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FavoriteType.interest,
-        FavoriteType.veryInterest,
+        FavoriteType.highlyInterested,
       ]
           .map((type) => _FavoriteTypeItem(
                 value: type,

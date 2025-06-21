@@ -91,11 +91,11 @@ const Map<ReligionEnum, String> religionMap = {
 };
 
 enum IntroducedCategory {
-  fivePercent('상위 5%'),
-  newUser('새로 가입했어요'),
-  nearby('지금 근처인 사람!'),
-  sameReligion('종교가 같아요'),
-  sameHobby('취미가 같아요');
+  grade('상위 5%'),
+  recent('새로 가입했어요'),
+  city('지금 근처인 사람!'),
+  religion('종교가 같아요'),
+  hobby('취미가 같아요');
 
   final String label;
   const IntroducedCategory(this.label);
@@ -106,5 +106,5 @@ enum IntroducedCategory {
   };
 
   static IntroducedCategory parse(String? value) =>
-      _byValue[value?.toUpperCase()] ?? IntroducedCategory.fivePercent;
+      _byValue[value?.toUpperCase()] ?? IntroducedCategory.grade;
 }

@@ -12,8 +12,8 @@ class PostButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        bottom: 45.h,
-        right: 16.w,
+        bottom: 24.h,
+        right: 20.w,
         child: GestureDetector(
           onTap: onTap,
           child: Container(
