@@ -26,7 +26,6 @@ import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
-import 'package:atwoz_app/features/store/presentation/page/store_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,7 +72,6 @@ enum AppRoute {
   // Store
   store('store'),
   storeNavigation('store-navigation'),
-  storeHistory('store-history'),
 
   // Notification
   notification('notification'),
@@ -112,7 +110,6 @@ enum AppRoute {
   termsOfUse('terms-of-use');
 
   final String name;
-
   const AppRoute(this.name);
 }
 
@@ -220,10 +217,6 @@ final allRoutes = [
           NamedGoRoute(
             name: AppRoute.storeNavigation.name,
             builder: (context, state) => const StoreNavigationPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.storeHistory.name,
-            builder: (context, state) => const StoreHistoryPage(),
           ),
         ],
       ),

@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/store/presentation/widget/default_heart_card.dart';
 import 'package:atwoz_app/features/store/presentation/widget/event_heart_card.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:go_router/go_router.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,11 +24,11 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   final List<String> _productIds = [
-    'APP_ITEM_HEART_45',
-    'APP_ITEM_HEART_90',
-    'APP_ITEM_HEART_110',
-    'APP_ITEM_HEART_350',
-    'APP_ITEM_HEART_550',
+    'APP_HEART_45',
+    'APP_HEART_90',
+    'APP_HEART_110',
+    'APP_HEART_350',
+    'APP_HEART_550',
   ];
 
   List<ProductDetails> _products = [];
@@ -90,8 +87,6 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
 
   // 하트상품 구입
   void _buyProduct(String productId) {
-    debugPrint("productId : $productId");
-    debugPrint("productId2 : $_products");
     final product = _products.firstWhere((p) => p.id == productId,
         orElse: () => throw 'Product not found');
     final param = PurchaseParam(productDetails: product);
@@ -116,22 +111,22 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
       {
         'heart': '45',
         'price': '9000',
-        'code': 'APP_ITEM_HEART_45',
+        'code': 'APP_HEART_45',
       },
       {
         'heart': '110',
         'price': '22000',
-        'code': 'APP_ITEM_HEART_110',
+        'code': 'APP_HEART_110',
       },
       {
         'heart': '350',
         'price': '59000',
-        'code': 'APP_ITEM_HEART_350',
+        'code': 'APP_HEART_350',
       },
       {
         'heart': '550',
         'price': '88000',
-        'code': 'APP_ITEM_HEART_550',
+        'code': 'APP_HEART_550',
       },
     ];
 
@@ -140,70 +135,33 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: contentPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: contentPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('보유한 하트',
                         style: Fonts.header03()
                             .copyWith(fontWeight: FontWeight.w900)),
-                    SizedBox(
-                      width: 94,
-                      height: 32,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 12),
-                            shadowColor: Colors.transparent,
-                            backgroundColor: Palette.colorPrimary100,
-                            side: BorderSide(
-                              width: 1,
-                              color: Palette.colorPrimary500,
-                            )),
-                        onPressed: () {
-                          navigate(
-                            context,
-                            route: AppRoute.storeHistory,
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            DefaultIcon(
-                              IconPath.storeHeart,
-                              size: 16,
-                            ),
-                            Text(
-                              '45',
-                              style: Fonts.button14(Palette.colorBlack),
-                            ),
-                            DefaultIcon(
-                              IconPath.chevronRight2,
-                              size: 16,
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+                    const Gap(8),
+                    Text(
+                      '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
+                      style: Fonts.body03Regular(Palette.colorGrey600),
+                    ),
                   ],
                 ),
-                const Gap(8),
-                Text(
-                  '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
-                  style: Fonts.body03Regular(Palette.colorGrey600),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
               padding: contentPadding,
               child: Row(
                 children: [
                   EventHeartCard(
-                      code: 'APP_ITEM_HEART_90',
+                      code: 'APP_HEART_90',
                       onCreate: (code) => _buyProduct(code)),
                 ],
               )),
