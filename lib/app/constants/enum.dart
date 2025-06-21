@@ -1,9 +1,14 @@
 // Enum → 백엔드 대문자 스네이크_CASE 변환
 extension EnumToJson on Enum {
   String toJson() {
-    return name
-        .replaceAllMapped(RegExp(r'[A-Z]'), (match) => "_${match[0]}")
+    final converted = name
+        .replaceAllMapped(
+          RegExp(r'[A-Z]'),
+          (match) => '_${match.group(0)}',
+        )
         .toUpperCase();
+
+    return converted.startsWith('_') ? converted.substring(1) : converted;
   }
 }
 

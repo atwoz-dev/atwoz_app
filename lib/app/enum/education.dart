@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+
 enum Education {
   highSchool("고등학교 졸업"),
   associate("전문대"),
@@ -13,32 +15,18 @@ enum Education {
   const Education(this.label);
 
   static final Map<String, Education> _byValue = {
-    for (final level in Education.values) level.label: level,
+    for (final value in Education.values) value.label: value,
   };
 
   // label을 enum으로 변환
-  static Education parse(String? value) => _byValue[value] ?? Education.other;
-
-  // enum을 서버데이터로 변환
-  String toServerString() {
-    final serverFormat = name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)}',
-        )
-        .toUpperCase();
-
-    return serverFormat.startsWith('_')
-        ? serverFormat.substring(1)
-        : serverFormat;
-  }
+  static Education fromLabel(String? value) =>
+      _byValue[value] ?? Education.other;
 
   // 서버 데이터를 enum으로 변환
   static final Map<String, Education> _byServerData = {
-    for (final education in Education.values)
-      education.toServerString(): education,
+    for (final value in Education.values) value.toJson(): value,
   };
 
-  static Education parseFromData(String? value) =>
+  static Education parse(String? value) =>
       _byServerData[value] ?? Education.other;
 }

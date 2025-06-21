@@ -12,20 +12,22 @@ extension MyProfileMapper on GlobalUserProfile {
   MyProfile toMyProfile() {
     return MyProfile(
       profileImages: [],
-      job: Job.parseFromData(job),
+      job: Job.parse(job),
       region: addressData.getLocationString(city, district),
-      education: Education.parseFromData(highestEducation),
+      education: Education.parse(highestEducation),
       smokingStatus: SmokingStatus.parse(smokingStatus),
       drinkingStatus: DrinkingStatus.parse(drinkingStatus),
       religion: Religion.parse(religion),
       mbti: mbti,
-      hobbies: hobbies.map((e) => Hobby.parseFromData(e)).toList(),
+      hobbies: hobbies.map((e) => Hobby.parse(e)).toList(),
       nickname: nickname,
       age: DateTime.now().year - yearOfBirth + 1,
       height: height,
-      gender: GenderEnum.values.firstWhere(
-        (e) => e.name == gender.toLowerCase(),
-      ),
+      gender: switch (gender) {
+        'male' => GenderEnum.male,
+        'female' => GenderEnum.female,
+        _ => GenderEnum.male,
+      },
       phoneNum: const PhoneNumberTextFormatter().formatPhoneNumber(phoneNumber),
     );
   }
@@ -39,13 +41,13 @@ extension ProfileUpdateRequestDtoMapper on MyProfile {
       yearOfBirth: DateTime.now().year - age + 1,
       height: height,
       district: addressData.getDistrictValue(region),
-      highestEducation: education.toServerString(),
+      highestEducation: education.toJson(),
       mbti: mbti,
       smokingStatus: smokingStatus.name.toUpperCase(),
       drinkingStatus: drinkingStatus.name.toUpperCase(),
       religion: religion.name.toUpperCase(),
-      hobbies: hobbies.map((e) => e.toServerString()).toList(),
-      job: job.toServerString(),
+      hobbies: hobbies.map((e) => e.toJson()).toList(),
+      job: job.toJson(),
     );
   }
 }
