@@ -32,18 +32,12 @@ class UpdatePhotosUseCase
     }
 
     if (deletedPhotos.isNotEmpty) {
-      final validPhotoIds = deletedPhotos
-          .where(
-            (photo) => photo.id != null,
+      await deletedPhotos
+          .map(
+            (photo) =>
+                ref.read(photoRepositoryProvider).deleteProfilePhoto(photo.id!),
           )
-          .toList();
-
-      await Future.wait(
-        validPhotoIds.map(
-          (photo) =>
-              ref.read(photoRepositoryProvider).deleteProfilePhoto(photo.id!),
-        ),
-      );
+          .wait;
     }
   }
 }

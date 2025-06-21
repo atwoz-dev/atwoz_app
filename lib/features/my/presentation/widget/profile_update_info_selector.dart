@@ -55,7 +55,7 @@ class _ProfileUpdateInfoSelectorState
         initialValue: widget.profile.job.label,
         onSelected: (value) {
           _tempProfile.value =
-              _tempProfile.value.copyWith(job: Job.parse(value));
+              _tempProfile.value.copyWith(job: Job.fromLabel(value));
           widget.onProfileUpdated(
               _tempProfile.value, value != widget.profile.job.label);
         },
@@ -131,7 +131,7 @@ class _ProfileUpdateInfoSelectorState
         initialValues: widget.profile.hobbies.map((e) => e.label).toList(),
         onSelected: (value, isChanged) {
           _tempProfile.value = _tempProfile.value.copyWith(
-            hobbies: value.map((e) => Hobby.parse(e)).toList(),
+            hobbies: value.map((e) => Hobby.fromLabel(e)).toList(),
           );
           widget.onProfileUpdated(
               _tempProfile.value, isChanged && value.isNotEmpty);

@@ -28,8 +28,10 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
       );
 
   void updateEditableProfileImage({required int index, required XFile image}) {
-    final updatedList =
-        state.editableProfileImages.map((e) => e?.copyWith()).toList();
+    final oldList = state.editableProfileImages;
+
+    // 새 리스트 생성 (불변성을 유지하기 위함)
+    final updatedList = List<EditableProfileImage?>.from(oldList);
 
     final oldImage = updatedList[index];
 

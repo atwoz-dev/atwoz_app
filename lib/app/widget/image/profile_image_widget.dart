@@ -83,13 +83,7 @@ class ProfileImageWidget extends StatelessWidget {
             bottom: 8,
             right: 8,
             child: GestureDetector(
-              onTap: () {
-                if (imageFile != null) {
-                  onRemoveImage?.call();
-                } else {
-                  onPickImage();
-                }
-              },
+              onTap: imageFile != null ? onRemoveImage : onPickImage,
               child: Container(
                 width: 24,
                 height: 24,

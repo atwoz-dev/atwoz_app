@@ -14,11 +14,8 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
   Future<ProfileManageState> build() async {
     final profile = ref.watch(globalUserProfileNotifierProvider);
     final profileImages = await _fetchProfileImages();
-    final myProfile =
-        profile.toMyProfile().copyWith(profileImages: profileImages);
-
     return ProfileManageState(
-      profile: myProfile,
+      profile: profile.toMyProfile().copyWith(profileImages: profileImages),
     );
   }
 
@@ -37,15 +34,13 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     final profileNotifier =
         ref.read(globalUserProfileNotifierProvider.notifier);
 
-    if (!state.hasValue) return false;
-
-    if (state.requireValue.updatedProfile == null) return false;
+    if (state.value?.updatedProfile == null) return false;
 
     try {
       // 서버에 프로필 업데이트 요청
       final success = await ref
           .read(updateMyProfileUseCaseProvider)
-          .updateProfile(state.requireValue.updatedProfile!);
+          .updateProfile(state.value!.updatedProfile!);
 
       if (!success) {
         return false;
@@ -59,7 +54,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
 
       // 상태 초기화
       state = AsyncData(
-        state.requireValue.copyWith(
+        state.value!.copyWith(
           updatedProfile: null,
           isChanged: false,
         ),
