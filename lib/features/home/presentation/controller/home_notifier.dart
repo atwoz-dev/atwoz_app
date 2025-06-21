@@ -1,8 +1,6 @@
 import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/features/home/data/data.dart';
-import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
-import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -25,34 +23,22 @@ class HomeNotifier extends _$HomeNotifier {
 
   Future<void> _fetchHomeProfile() async {
     GlobalUserProfile profile = ref.read(globalUserProfileNotifierProvider);
+    final profileNotifier =
+        ref.read(globalUserProfileNotifierProvider.notifier);
 
-    // 전역 상태가 없으면 Hive 또는 서버에서 가져오기
+    // 전역 상태가 Default라면 Hive 또는 서버에서 가져오기
     if (profile.isDefault) {
-      profile = await _getProfileFromHive();
+      profile = await profileNotifier.getProfileFromHive();
 
       if (profile.isDefault) {
         // Hive에도 데이터가 없으면 서버에서 가져와서 Hive에 저장
-        await _fetchProfileToHiveFromServer();
+        profile = await profileNotifier.fetchProfileToHiveFromServer();
       }
 
-      _saveProfileToGlobalState(profile);
+      profileNotifier.profile = profile;
     }
 
     state = AsyncData(state.value!.copyWith(nickname: profile.nickname));
-  }
-
-  Future<GlobalUserProfile> _getProfileFromHive() {
-    return ref.read(getProfileFromHiveUseCaseProvider).execute();
-  }
-
-  Future<GlobalUserProfile> _fetchProfileToHiveFromServer() async {
-    await ref.read(saveProfileToHiveUseCaseProvider).execute();
-    final updated = await _getProfileFromHive();
-    return updated;
-  }
-
-  void _saveProfileToGlobalState(GlobalUserProfile profile) {
-    ref.read(globalUserProfileNotifierProvider.notifier).profile = profile;
   }
 
   Future<void> _fetchRecommendedProfiles() async {

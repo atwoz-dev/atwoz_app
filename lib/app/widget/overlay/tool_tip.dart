@@ -20,6 +20,7 @@ class ToolTip extends DefaultOverlay {
               DefaultIcon(
                 IconPath.help,
                 colorFilter: ColorFilter.mode(fillColor, BlendMode.srcIn),
+                size: 20,
               ),
         );
 

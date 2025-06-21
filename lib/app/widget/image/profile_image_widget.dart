@@ -16,6 +16,7 @@ class ProfileImageWidget extends StatelessWidget {
   final VoidCallback onPickImage;
   final VoidCallback? onRemoveImage;
   final bool isRepresentative;
+  final bool isUpdate;
 
   const ProfileImageWidget({
     super.key,
@@ -23,6 +24,7 @@ class ProfileImageWidget extends StatelessWidget {
     required this.onPickImage,
     this.onRemoveImage, // 콜백 초기화
     this.isRepresentative = false,
+    this.isUpdate = false, // 수정 페이지 여부
   });
 
   @override
@@ -51,9 +53,11 @@ class ProfileImageWidget extends StatelessWidget {
                   base64Decode(imageFile!.path), // Base64 디코딩
                   fit: BoxFit.cover,
                 ),
-              _ => DefaultIcon(
-                  IconPath.personPlaceholder,
+              _ => const DefaultIcon(
+                  IconPath.emptyProfileImage,
                   size: 100,
+                  fit: BoxFit.contain,
+                  padding: EdgeInsets.only(top: 14),
                 ),
             },
           ),
@@ -74,26 +78,27 @@ class ProfileImageWidget extends StatelessWidget {
               ),
             ),
           ),
-        Positioned(
-          bottom: 8,
-          right: 8,
-          child: GestureDetector(
-            onTap: imageFile != null ? onRemoveImage : onPickImage,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: Palette.colorWhite,
-                shape: BoxShape.circle,
-                border: Border.all(color: Palette.colorGrey400, width: 1.5),
-              ),
-              child: DefaultIcon(
-                imageFile != null ? IconPath.close : IconPath.add,
-                colorFilter: DefaultIcon.fillColor(Palette.colorGrey400),
+        if (!isUpdate)
+          Positioned(
+            bottom: 8,
+            right: 8,
+            child: GestureDetector(
+              onTap: imageFile != null ? onRemoveImage : onPickImage,
+              child: Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Palette.colorWhite,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Palette.colorGrey400, width: 1.5),
+                ),
+                child: DefaultIcon(
+                  imageFile != null ? IconPath.close : IconPath.add,
+                  colorFilter: DefaultIcon.fillColor(Palette.colorGrey400),
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }

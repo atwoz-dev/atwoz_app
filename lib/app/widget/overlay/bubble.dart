@@ -9,8 +9,8 @@ Widget bubbleWidget({
   String? boldText, // bold 처리할 텍스트
   Color bubbleColor = Palette.colorWhite, // 말풍선 배경색
   Color textColor = Palette.colorBlack, // 텍스트 색깔
-  double width = 200, // 말풍선 너비
-  double height = 60, // 말풍선 높이
+  double width = 170, // 말풍선 너비
+  double height = 70, // 말풍선 높이
   double shadowBlur = 5, // 그림자 흐림 정도
   double shadowOffset = 5, // 그림자 아래 이동 정도
   Color shadowColor = Palette.colorGrey100, // 그림자 색깔
@@ -44,10 +44,10 @@ Widget bubbleWidget({
             color: bubbleColor,
           ),
           padding: EdgeInsets.only(
-            top: trianglePosition == BubblePosition.top ? 7 : 0,
+            top: trianglePosition == BubblePosition.top ? 8 : 0,
             left: 15,
             right: 15,
-            bottom: trianglePosition == BubblePosition.bottom ? 7 : 0,
+            bottom: trianglePosition == BubblePosition.bottom ? 8 : 0,
           ),
           width: width,
           height: height,
@@ -114,8 +114,8 @@ class BubbleClipper extends CustomClipper<Path> {
 
   Path getBubblePath(Size size) {
     final Path path = Path();
-    final double tailHeight = 10;
-    final double tailWidth = 15;
+    const double tailHeight = 10;
+    const double tailWidth = 15;
 
     switch (trianglePosition) {
       case BubblePosition.bottom:
