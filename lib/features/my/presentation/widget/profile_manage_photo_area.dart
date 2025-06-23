@@ -12,8 +12,6 @@ import 'package:image_picker/image_picker.dart';
 class ProfileManagePhotoArea extends ConsumerWidget {
   const ProfileManagePhotoArea({super.key});
 
-  static const int maxProfileImageCount = 6;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileImagesAsync = ref.watch(
@@ -45,7 +43,7 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),
-              itemCount: maxProfileImageCount,
+              itemCount: Dimens.profileImageMaxCount,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () async {

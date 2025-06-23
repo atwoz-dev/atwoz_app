@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
@@ -16,7 +17,7 @@ class FetchProfileImagesUseCase {
   Future<List<MyProfileImage?>> fetchProfileImages() async {
     try {
       //Hive에서 이미지 리스트 가져오기
-      final box = await _ref.read(myProfileImageBoxProvider.future);
+      final box = await Hive.openBox(MyProfileImage.boxName);
       final storedProfileImages = box.get('images');
 
       final profileImages = (storedProfileImages is List)
@@ -36,13 +37,16 @@ class FetchProfileImagesUseCase {
           await _ref.read(photoRepositoryProvider).fetchProfileImages();
 
       // 서버 응답이 없으면 빈 리스트 반환
-      if (response == null) return List<MyProfileImage?>.filled(6, null);
+      if (response == null) {
+        return List<MyProfileImage?>.filled(Dimens.profileImageMaxCount, null);
+      }
 
       // 정렬 및 매핑
       final sortedPhotos = response.data.toList()
         ..sort((a, b) => a.order.compareTo(b.order));
 
-      final newProfileImages = List<MyProfileImage?>.filled(6, null);
+      final newProfileImages =
+          List<MyProfileImage?>.filled(Dimens.profileImageMaxCount, null);
 
       for (final image in sortedPhotos) {
         if (image.order >= 0 && image.order < newProfileImages.length) {
@@ -59,11 +63,8 @@ class FetchProfileImagesUseCase {
       return newProfileImages;
     } catch (e) {
       Log.e("❌ 프로필 이미지 가져오기 중 오류 발생: $e");
-      return List.filled(6, null); // 앱이 정상적으로 작동할 수 있도록 null로 채운 리스트 반환
+      return List.filled(Dimens.profileImageMaxCount,
+          null); // 앱이 정상적으로 작동할 수 있도록 null로 채운 리스트 반환
     }
   }
 }
-
-final myProfileImageBoxProvider = FutureProvider<Box>((ref) async {
-  return Hive.openBox(MyProfileImage.boxName);
-});
