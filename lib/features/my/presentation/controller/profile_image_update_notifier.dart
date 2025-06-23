@@ -1,7 +1,6 @@
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
-import 'package:atwoz_app/features/my/domain/use_case/fetch_profile_images_use_case.dart';
 import 'package:atwoz_app/features/my/presentation/controller/profile_image_update_state.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/update_photos_use_case.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -28,66 +27,43 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
       );
 
   void updateEditableProfileImage({required int index, required XFile image}) {
-    final oldList = state.editableProfileImages;
+    final updatedImages = [...state.editableProfileImages];
 
-    // 새 리스트 생성 (불변성을 유지하기 위함)
-    final updatedList = List<EditableProfileImage?>.from(oldList);
+    final previousImage = updatedImages[index];
 
-    final oldImage = updatedList[index];
+    updatedImages[index] = (previousImage == null)
+        ? EditableProfileImage(
+            id: null,
+            imageUrl: null,
+            imageFile: image,
+            order: index,
+            isPrimary: index == 0,
+            status: ProfileImageStatus.add,
+          )
+        : previousImage.copyWith(
+            imageFile: image,
+            status: ProfileImageStatus.update,
+          );
 
-    if (oldImage == null) {
-      updatedList[index] = EditableProfileImage(
-        id: null,
-        imageUrl: null,
-        imageFile: image,
-        order: index,
-        isPrimary: index == 0,
-        status: ProfileImageStatus.add,
-      );
-    } else {
-      updatedList[index] = oldImage.copyWith(
-        imageFile: image,
-        status: ProfileImageStatus.update,
-      );
-    }
-
-    state = state.copyWith(
-      editableProfileImages: updatedList,
-    );
+    state = state.copyWith(editableProfileImages: updatedImages);
   }
 
   void deleteEditableProfileImage({required int index}) {
-    final oldList = state.editableProfileImages;
+    final targetProfileImage = state.editableProfileImages[index];
 
-    // 새 리스트 생성 (불변성을 유지하기 위함)
-    final updatedList = List<EditableProfileImage?>.from(oldList);
+    if (targetProfileImage == null) return;
 
-    final oldImage = updatedList[index];
+    final updatedList = [...state.editableProfileImages];
 
-    if (oldImage == null) {
-      return;
-    }
-
-    // 새로 추가한 이후에 다시 삭제하는 경우
-    if (oldImage.status == ProfileImageStatus.add) {
+    if (targetProfileImage.status == ProfileImageStatus.add) {
       updatedList[index] = null;
-      state = state.copyWith(
-        editableProfileImages: updatedList,
+    } else {
+      updatedList[index] = targetProfileImage.copyWith(
+        imageFile: null,
+        status: ProfileImageStatus.delete,
       );
-      return;
     }
-
-    // 기존 이미지 삭제
-    updatedList[index] = oldImage.copyWith(
-      imageFile: null,
-      status: ProfileImageStatus.delete,
-    );
-
-    state = state.copyWith(
-      editableProfileImages: updatedList,
-    );
-
-    Log.d("editableProfileImages: ${state.editableProfileImages}");
+    state = state.copyWith(editableProfileImages: updatedList);
   }
 
   Future<bool> save() async {
@@ -99,8 +75,6 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
       final box = await Hive.openBox(MyProfileImage.boxName); // Hive Box 가져오기
 
       await box.delete('images'); // Hive Box에서 'images' 키로 저장된 데이터 삭제
-
-      ref.invalidate(myProfileImageBoxProvider); // FutureProvider 강제 리프레시
 
       return true;
     } catch (e) {
