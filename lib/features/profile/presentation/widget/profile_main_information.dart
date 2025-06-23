@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
@@ -187,10 +186,41 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
 
   static const _transDuration = 1000;
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+  static const _grayColor = Color(0xFFDCDEE3);
+  static const _gradientStart = Color(0xFFBCD5F3);
+  static const _gradientEnd = Color(0xFF4F37E2);
+  static const _transitionGradientStart = Color(0xA1BCD5F3);
+  static const _transitionGradientEnd = Color(0xA14F37E2);
+
+  BoxDecoration get _currentDecoration {
+    const baseDecoration = BoxDecoration(borderRadius: Dimens.buttonRadius);
+
+    if (!widget.isFavoriteUser) {
+      return baseDecoration.copyWith(
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [_grayColor, _grayColor],
+        ),
+      );
+    }
+    if (!_enabled) {
+      return baseDecoration.copyWith(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [_transitionGradientStart, _transitionGradientEnd],
+          stops: [.0, .9],
+        ),
+      );
+    }
+    return baseDecoration.copyWith(
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [_gradientStart, _gradientEnd],
+      ),
+    );
   }
 
   @override
@@ -205,44 +235,10 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
     });
   }
 
-  BoxDecoration get _currentDecoration {
-    const baseDecoration = BoxDecoration(borderRadius: Dimens.buttonRadius);
-
-    if (!widget.isFavoriteUser) {
-      return baseDecoration.copyWith(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFFDCDEE3),
-            Color(0xFFDCDEE3),
-          ],
-        ),
-      );
-    }
-    if (!_enabled) {
-      return baseDecoration.copyWith(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xA1BCD5F3),
-            Color(0xA14F37E2),
-          ],
-          stops: [.0, .9],
-        ),
-      );
-    }
-    return baseDecoration.copyWith(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          Color(0xFFBCD5F3),
-          Color(0xFF4F37E2),
-        ],
-      ),
-    );
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
