@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/state/global_user_profile.dart';
-import 'package:atwoz_app/features/home/data/data.dart';
+import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
@@ -56,13 +56,13 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<void> _fetchRecommendedProfiles() async {
-    final recommendedProfileRepository = ref.read(
-      recommendedProfileRepositoryProvider,
-    );
-    final profiles = await recommendedProfileRepository.getProfiles();
+    final profiles =
+        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+
     if (!state.hasValue) return;
-    state = AsyncValue.data(
-      state.value!.copyWith(recommendedProfiles: profiles),
-    );
+
+    state = AsyncData(state.requireValue.copyWith(
+      recommendedProfiles: profiles,
+    ));
   }
 }

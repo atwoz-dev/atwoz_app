@@ -3,7 +3,7 @@ import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'introduced_profiles_notifier.g.dart'; // 코드 생성을 위한 부분
+part 'introduced_profiles_notifier.g.dart';
 
 @riverpod
 class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
@@ -22,7 +22,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
     final currentProfiles = state.requireValue;
 
     final updatedProfiles = currentProfiles
-        .map((e) => e.id == memberId ? e.copyWith(isIntroduced: true) : e)
+        .map((e) => e.memberId == memberId ? e.copyWith(isIntroduced: true) : e)
         .toList();
 
     state = AsyncData(updatedProfiles);
