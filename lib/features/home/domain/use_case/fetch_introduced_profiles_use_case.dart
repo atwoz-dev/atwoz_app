@@ -5,33 +5,53 @@ import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final fetchIntroducedProfilesUseCaseProvider = Provider(
-  (ref) => FetchIntroducedProfilesUseCase(
-    repository: ref.read(
-      introducedProfileRepositoryProvider,
-    ),
-  ),
+  (ref) => FetchIntroducedProfilesUseCase(ref: ref),
 );
 
 class FetchIntroducedProfilesUseCase {
-  final IntroducedProfileRepository _repository;
+  final Ref _ref;
 
-  FetchIntroducedProfilesUseCase({
-    required IntroducedProfileRepository repository,
-  }) : _repository = repository;
+  FetchIntroducedProfilesUseCase({required Ref ref}) : _ref = ref;
 
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
     try {
-      final response = await _repository.getProfiles(category.name);
-      return response
-          .map(
-            (e) => e.toIntroducedProfile(
-              isFavorite: false,
-            ), // TODO(jh): 추후 좋아요 API와 연결한 후 isFavorite 값을 지정할 예정. 현재는 false로 하드코딩
-          )
-          .toList();
+      final response = await _ref
+          .read(mockIntroducedProfileRepositoryProvider)
+          .getProfiles(category.name);
+      final profiles = response.map((e) => e.toIntroducedProfile()).toList();
+
+      return profiles.map((profile) {
+        final tags = _getTagsForCategory(profile, category);
+        tags.sort((a, b) => a.length.compareTo(b.length));
+        return profile.copyWith(tags: tags);
+      }).toList();
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
       return [];
+    }
+  }
+
+  List<String> _getTagsForCategory(
+      IntroducedProfile profile, IntroducedCategory category) {
+    switch (category) {
+      case IntroducedCategory.grade:
+      case IntroducedCategory.recent:
+      case IntroducedCategory.city:
+        return [
+          ...profile.hobbies.map((hobby) => hobby.label),
+          profile.religion.label,
+          profile.mbti,
+        ];
+      case IntroducedCategory.religion:
+        return [
+          ...profile.hobbies.map((hobby) => hobby.label),
+          profile.mbti,
+        ];
+      case IntroducedCategory.hobby:
+        return [
+          profile.religion.label,
+          profile.mbti,
+        ];
     }
   }
 }
