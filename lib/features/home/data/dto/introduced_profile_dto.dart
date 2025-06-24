@@ -10,7 +10,7 @@ class IntroducedProfileDto {
   final String mbti;
   final String religion;
   final String interviewAnswerContent;
-  final int? likeLevel;
+  final String? likeLevel;
   final bool isIntroduced;
 
   const IntroducedProfileDto({
