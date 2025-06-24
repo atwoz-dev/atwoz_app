@@ -45,7 +45,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
                       // 하트 소모 다이얼로그에서 확인을 누른 경우
                       if (pressed!) {
-                        final selectedId = profiles[index].id;
+                        final selectedId = profiles[index].memberId;
                         introducedProfilesNotifier.openProfile(selectedId);
                       }
                     }

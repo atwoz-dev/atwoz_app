@@ -1,8 +1,9 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 class UserByCategoryListItem extends StatelessWidget {
@@ -36,7 +37,7 @@ class UserByCategoryListItem extends StatelessWidget {
                 SizedBox.square(
                   dimension: 54,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(profile.imageUrl),
+                    backgroundImage: NetworkImage(profile.profileImageUrl),
                     radius: 50,
                   ),
                 ),
@@ -49,17 +50,8 @@ class UserByCategoryListItem extends StatelessWidget {
                         // 해시태그 리스트 뷰
                         width: context.screenHeight,
                         height: 18,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: profile.hashTags.length,
-                          itemBuilder: (context, index) {
-                            return HashtagWidget(
-                              tagName: profile.hashTags[index],
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Gap(8);
-                          },
+                        child: HashtagWrap(
+                          tags: profile.tags,
                         ),
                       ),
                       const Gap(8),
@@ -78,21 +70,27 @@ class UserByCategoryListItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () => FavoriteTypeSelectDialog.open(
+                              context,
+                              userId: profile.memberId,
+                            ),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
-                                vertical: 6,
+                                vertical: 10,
                               ),
                               decoration: BoxDecoration(
-                                color: Palette.colorGrey100,
-                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: const Color(0xFFDCDEE3),
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              child: SvgPicture.asset(
-                                "assets/icons/home_heart.svg",
-                                width: 24,
-                                height: 24,
-                                color: Palette.colorPrimary500,
+                              child: const DefaultIcon(
+                                IconPath.heart,
+                                colorFilter: ColorFilter.mode(
+                                  Palette.colorBlack,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                             ),
                           )
