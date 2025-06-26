@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+
 enum Job {
   researchAndEngineering('연구개발/엔지니어'),
   selfEmployment('개인사업/자영업'),
@@ -24,31 +26,16 @@ enum Job {
   const Job(this.label);
 
   static final Map<String, Job> _byValue = {
-    for (final level in Job.values) level.label: level,
+    for (final value in Job.values) value.label: value,
   };
 
   // label을 enum으로 변환
-  static Job parse(String? value) => _byValue[value] ?? Job.others;
-
-  // enum을 서버데이터로 변환
-  String toServerString() {
-    final serverFormat = name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)}',
-        )
-        .toUpperCase();
-
-    return serverFormat.startsWith('_')
-        ? serverFormat.substring(1)
-        : serverFormat;
-  }
+  static Job fromLabel(String? value) => _byValue[value] ?? Job.others;
 
   // 서버 데이터를 enum으로 변환
-  // 서버에서 오는 프로필 데이터는 id, 전화번호 제외 모두 nullable
   static final Map<String, Job> _byServerData = {
-    for (final job in Job.values) job.toServerString(): job,
+    for (final value in Job.values) value.toJson(): value,
   };
 
-  static Job parseFromData(String? value) => _byServerData[value] ?? Job.others;
+  static Job parse(String? value) => _byServerData[value] ?? Job.others;
 }

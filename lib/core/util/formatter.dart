@@ -89,6 +89,11 @@ class TimeTextFormatter extends TextInputFormatter {
 class PhoneNumberTextFormatter extends TextInputFormatter {
   const PhoneNumberTextFormatter();
 
+  // 전화번호 포맷팅을 위한 메서드 추가
+  String formatPhoneNumber(String phoneNumber) {
+    return _format(phoneNumber, '-');
+  }
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
