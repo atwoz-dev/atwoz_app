@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
-import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final mockIntroducedProfileRepositoryProvider =
@@ -11,12 +10,11 @@ final mockIntroducedProfileRepositoryProvider =
 
 /// 서버 응답 데이터가 적어 Mock 데이터로 구현해 놓은 repository입니다.
 /// 추후 삭제될 에정입니다
-/// TODO: 추후 삭제
 class MockIntroducedProfileRepository {
   final _mockData = '''
 [
   {
-    "memberId": 1,
+    "memberId": 11,
     "profileImageUrl": "https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png",
     "hobbies": ["TRAVEL", "ANIMATION", "FOOD_HUNT"],
     "mbti": "ISTJ",
@@ -43,7 +41,7 @@ class MockIntroducedProfileRepository {
     "religion": "BUDDHIST",
     "interviewAnswerContent": "진지한 대화와 감정 공유를 중요하게 생각해요.",
     "likeLevel": "INTERESTED",
-    "isIntroduced": false
+    "isIntroduced": true
   },
   {
     "memberId": 4,
@@ -53,7 +51,7 @@ class MockIntroducedProfileRepository {
     "religion": "CHRISTIAN",
     "interviewAnswerContent": "함께 즐길 수 있는 취미가 많았으면 좋겠어요!",
     "likeLevel": "HIGHLY_INTERESTED",
-    "isIntroduced": false
+    "isIntroduced": true
   },
   {
     "memberId": 5,
@@ -65,7 +63,6 @@ class MockIntroducedProfileRepository {
     "likeLevel": "INTERESTED",
     "isIntroduced": false
   },
-  [
   {
     "memberId": 6,
     "profileImageUrl": "https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png",
@@ -107,7 +104,7 @@ class MockIntroducedProfileRepository {
     "isIntroduced": false
   },
   {
-    "memberId": 10,
+    "memberId": 16,
     "profileImageUrl": "https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png",
     "hobbies": ["WINE", "GOLF"],
     "mbti": "ESTJ",
@@ -117,7 +114,7 @@ class MockIntroducedProfileRepository {
     "isIntroduced": false
   },
   {
-    "memberId": 11,
+    "memberId": 21,
     "profileImageUrl": "https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png",
     "hobbies": ["DRIVING"],
     "mbti": "ESFP",
@@ -170,11 +167,8 @@ class MockIntroducedProfileRepository {
 ''';
 
   Future<List<IntroducedProfileDto>> getProfiles(String category) async {
-    final List response = jsonDecode(_mockData);
+    final List<dynamic> response = jsonDecode(_mockData);
     final decodedResp = response.map((e) => e as Map<String, dynamic>).toList();
-    return decodedResp
-        .where((e) => e['category'] == '종교가 같아요')
-        .map((e) => IntroducedProfileDto.fromJson(e))
-        .toList();
+    return decodedResp.map((e) => IntroducedProfileDto.fromJson(e)).toList();
   }
 }
