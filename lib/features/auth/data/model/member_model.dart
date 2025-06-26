@@ -33,8 +33,9 @@ class MemberProfile with _$MemberProfile {
 @freezed
 class HeartBalance with _$HeartBalance {
   const factory HeartBalance({
-    required int purchaseHeart,
-    required int missionHeart,
+    required int purchaseHeartBalance,
+    required int missionHeartBalance,
+    required int totalHeartBalance,
   }) = _HeartBalance;
 
   factory HeartBalance.fromJson(Map<String, dynamic> json) =>
