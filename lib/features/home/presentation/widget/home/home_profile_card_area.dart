@@ -204,7 +204,7 @@ class _ProfileCardWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const DefaultIcon(
-                        IconPath.homeHeart,
+                        IconPath.heart,
                         size: 24,
                       ),
                       const SizedBox(width: 8),
