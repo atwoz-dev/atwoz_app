@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
@@ -20,7 +21,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   @override
   List<XFile?> build() {
     WidgetsBinding.instance.addObserver(this); // 라이프사이클 관찰 시작
-    return List.filled(6, null); // 초기화 상태: 6개의 null 값
+    return List.filled(Dimens.profileImageMaxCount, null); // 초기화 상태: 6개의 null 값
   }
 
   @override

@@ -31,6 +31,7 @@ class IconPath {
   static const String setting = '$iconsPath/my_setting.svg';
   static const String letter = '$iconsPath/letter.svg';
   static const String heart = '$iconsPath/heart.svg';
+  static const String heartFill = '$iconsPath/heart_fill.svg';
   static const String heartLine = '$iconsPath/heart_line.svg';
   static const String bless = '$iconsPath/bless.svg';
   static const String business = '$iconsPath/business.svg';
@@ -45,6 +46,7 @@ class IconPath {
   static const String sadEmotion = '$iconsPath/sad_emotion.svg';
   static const String mailOutline = '$iconsPath/mail_outline.svg';
   static const String imageDelete = '$iconsPath/image_delete.svg';
+  static const String emptyProfileImage = '$iconsPath/empty_profile_image.svg';
 
   // 네비게이션 바
   static const String home = '$iconsPath/home.svg';

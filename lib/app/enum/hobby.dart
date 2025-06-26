@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+
 enum Hobby {
   travel('국내여행/해외여행'),
   performanceAndExhibition('공연/전시회관람'),
@@ -33,32 +35,16 @@ enum Hobby {
   const Hobby(this.label);
 
   static final Map<String, Hobby> _byValue = {
-    for (final level in Hobby.values) level.label: level,
+    for (final value in Hobby.values) value.label: value,
   };
 
   // label을 enum으로 변환
-  static Hobby parse(String? value) => _byValue[value] ?? Hobby.others;
-
-  // enum을 서버데이터로 변환
-  String toServerString() {
-    final serverFormat = name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)}',
-        )
-        .toUpperCase();
-
-    return serverFormat.startsWith('_')
-        ? serverFormat.substring(1)
-        : serverFormat;
-  }
+  static Hobby fromLabel(String? value) => _byValue[value] ?? Hobby.others;
 
   // 서버 데이터를 enum으로 변환
-  // 서버에서 오는 프로필 데이터는 id, 전화번호 제외 모두 nullable
   static final Map<String, Hobby> _byServerData = {
-    for (final hobby in Hobby.values) hobby.toServerString(): hobby,
+    for (final value in Hobby.values) value.toJson(): value,
   };
 
-  static Hobby parseFromData(String? value) =>
-      _byServerData[value] ?? Hobby.others;
+  static Hobby parse(String? value) => _byServerData[value] ?? Hobby.others;
 }

@@ -135,9 +135,7 @@ class ApiServiceImpl implements ApiService {
 
     if (!requiresAuthToken) return finalHeaders;
 
-    // final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
-    final accessToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzOSIsInJvbGUiOiJNRU1CRVIiLCJpYXQiOjE3NDk1NjA0NDgsImV4cCI6MTc0OTU2MjI0OH0.Y5Nztr5lI7VWDui9GKIJHOwvPID_MJkQ6DWwiH6UTxo';
+    final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
     await ref.read(localStorageProvider.notifier).initialize();
     final refreshToken =
         await ref.read(localStorageProvider).getEncrypted('_refreshToken');

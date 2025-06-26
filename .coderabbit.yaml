@@ -27,7 +27,7 @@ reviews:
   suggested_reviewers: false
   auto_assign_reviewers: false
   poem: false
-  labeling_instructions: [ ]
+  labeling_instructions: []
   path_filters:
     - "**/*.dart"
     - "!**/*.g.dart"
@@ -96,10 +96,10 @@ reviews:
   auto_review:
     enabled: true
     auto_incremental_review: true
-    ignore_title_keywords: [ ]
-    labels: [ ]
+    ignore_title_keywords: []
+    labels: []
     drafts: true
-    base_branches: [ ]
+    base_branches: []
 
 chat:
   auto_reply: true
@@ -114,6 +114,6 @@ knowledge_base:
     scope: auto
   jira:
     usage: auto
-    project_keys: [ ]
+    project_keys: []
   pull_requests:
     scope: auto
