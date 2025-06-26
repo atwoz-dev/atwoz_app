@@ -85,10 +85,13 @@ class UserByCategoryListItem extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const DefaultIcon(
+                              child: DefaultIcon(
                                 IconPath.heart,
+                                size: 20,
                                 colorFilter: ColorFilter.mode(
-                                  Palette.colorBlack,
+                                  profile.favoriteType != null
+                                      ? Palette.colorPrimary500
+                                      : Palette.colorBlack,
                                   BlendMode.srcIn,
                                 ),
                               ),
