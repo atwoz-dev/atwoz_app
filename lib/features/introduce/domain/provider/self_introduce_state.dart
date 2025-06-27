@@ -1,9 +1,4 @@
-import 'dart:math';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-// part 'favorite_list_state.freezed.dart';
-
-enum FavoriteListErrorType {
+enum SelfIntroduceListErrorType {
   network,
 }
 
@@ -35,6 +30,7 @@ class SelfIntroduceListData {
     this.yearOfBirth = 0,
     this.title = '',
   });
+
   SelfIntroduceListData copyWith({
     int? id,
     String? nickname,
@@ -52,61 +48,56 @@ class SelfIntroduceListData {
   }
 }
 
-class FavoriteListData {
-  const FavoriteListData({
-    this.users = const [],
-    this.hasMore = false,
-  });
+class SelfIntroduceDetailData {
+  final String like;
+  final String title;
+  final String content;
+  final String profileExchangeStatus;
+  final SelfIntroduceMemberBasicInfo? memberBasicInfo;
 
-  final List<FavoriteUserSummary> users;
-  final bool hasMore;
+  const SelfIntroduceDetailData(
+      {this.like = '',
+      this.title = '',
+      this.content = '',
+      this.profileExchangeStatus = '',
+      this.memberBasicInfo});
 
-  FavoriteListData copyWith({
-    List<FavoriteUserSummary>? users,
-    bool? hasMore,
+  SelfIntroduceDetailData copyWith({
+    String? like,
+    String? title,
+    String? content,
+    String? profileExchangeStatus,
+    SelfIntroduceMemberBasicInfo? memberBasicInfo,
   }) {
-    return FavoriteListData(
-      users: users ?? this.users,
-      hasMore: hasMore ?? this.hasMore,
+    return SelfIntroduceDetailData(
+      like: like ?? this.like,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      profileExchangeStatus:
+          profileExchangeStatus ?? this.profileExchangeStatus,
+      memberBasicInfo: memberBasicInfo ?? this.memberBasicInfo,
     );
   }
 }
 
-class FavoriteUserSummary {
-  const FavoriteUserSummary({
-    required this.userId,
-    required this.profileUrl,
-    required this.name,
-    required this.age,
-    required this.city,
-    required this.favoriteAt,
-    required this.isMutual,
-  });
-
-  final int userId;
-  final String profileUrl;
-  final String name;
+class SelfIntroduceMemberBasicInfo {
+  final int memberId;
+  final String nickname;
   final int age;
+  final String profileImageUrl;
   final String city;
-  final DateTime favoriteAt;
-  final bool isMutual;
+  final String district;
+  final String mbti;
+  final List<String> hobbies;
 
-  bool get isRecent => favoriteAt.isAfter(_today.subtract(const Duration(
-        hours: 12,
-      )));
-
-  static final _today = DateTime.now();
-}
-
-class DummyFavoriteUserSummary extends FavoriteUserSummary {
-  DummyFavoriteUserSummary()
-      : super(
-          userId: 0,
-          profileUrl: '',
-          name: '',
-          age: 0,
-          city: '',
-          favoriteAt: DateTime.now(),
-          isMutual: false,
-        );
+  const SelfIntroduceMemberBasicInfo({
+    required this.memberId,
+    required this.nickname,
+    required this.age,
+    required this.profileImageUrl,
+    required this.city,
+    required this.district,
+    required this.mbti,
+    required this.hobbies,
+  });
 }

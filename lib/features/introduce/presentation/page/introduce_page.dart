@@ -70,7 +70,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                         },
                         child: Container(
                             padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
+                            child: const DefaultIcon(
                               IconPath.notification,
                               size: 24,
                             )),
@@ -84,7 +84,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                         },
                         child: Container(
                             padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
+                            child: const DefaultIcon(
                               IconPath.tune,
                               size: 24,
                             )),

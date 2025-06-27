@@ -28,7 +28,7 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
         actions: [
           DefaultTextButton(
             primary: Palette.colorGrey500,
-            child: Text('등록'),
+            child: const Text('등록'),
             onPressed: () {
               CustomDialogue.showTwoChoiceDialogue(
                   context: context,

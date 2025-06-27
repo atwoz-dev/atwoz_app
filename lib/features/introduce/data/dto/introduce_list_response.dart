@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/introduce/domain/provider/self_introduce_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'introduce_list_response.freezed.dart';
@@ -17,15 +18,57 @@ class IntroduceListItemResponse with _$IntroduceListItemResponse {
       _$IntroduceListItemResponseFromJson(json);
 
   const IntroduceListItemResponse._();
+
+  SelfIntroduceListData toModel() => SelfIntroduceListData(
+        id: id,
+        nickname: nickname ?? '',
+        profileUrl: profileUrl ?? '',
+        yearOfBirth: yearOfBirth,
+        title: title,
+      );
 }
 
 @freezed
-class IntroduceListResponse with _$IntroduceListResponse {
-  const factory IntroduceListResponse({
-    required List<IntroduceListItemResponse> likes,
-    required bool hasMore,
-  }) = _IntroduceListResponse;
+class IntroduceMemberBasicInfoResponse with _$IntroduceMemberBasicInfoResponse {
+  const factory IntroduceMemberBasicInfoResponse({
+    required int memberId,
+    required String nickname,
+    required int age,
+    required String profileImageUrl,
+    required String city,
+    required String district,
+    required String mbti,
+    required List<String> hobbies,
+  }) = _IntroduceMemberBasicInfoResponse;
 
-  factory IntroduceListResponse.fromJson(Map<String, dynamic> json) =>
-      _$IntroduceListResponseFromJson(json);
+  factory IntroduceMemberBasicInfoResponse.fromJson(
+          Map<String, dynamic> json) =>
+      _$IntroduceMemberBasicInfoResponseFromJson(json);
+
+  const IntroduceMemberBasicInfoResponse._();
+
+  SelfIntroduceMemberBasicInfo toModel() => SelfIntroduceMemberBasicInfo(
+        memberId: memberId,
+        nickname: nickname,
+        age: age,
+        profileImageUrl: profileImageUrl,
+        city: city,
+        district: district,
+        mbti: mbti,
+        hobbies: hobbies,
+      );
+}
+
+@freezed
+class IntroduceResponse with _$IntroduceResponse {
+  const factory IntroduceResponse({
+    required IntroduceMemberBasicInfoResponse memberBasicInfo,
+    required String like,
+    required String title,
+    required String content,
+    required String profileExchangeStatus,
+  }) = _IntroduceResponse;
+
+  factory IntroduceResponse.fromJson(Map<String, dynamic> json) =>
+      _$IntroduceResponseFromJson(json);
 }
