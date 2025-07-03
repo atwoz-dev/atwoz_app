@@ -1,4 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +51,20 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
                         introducedProfilesNotifier.openProfile(selectedId);
                       }
                     }
+                    // false면 소개받은 프로필
+                    if (context.mounted) {
+                      navigate(
+                        context,
+                        route: AppRoute.profile,
+                        extra: ProfileDetailArguments(
+                          userId: profiles[index].memberId,
+                          fromMatchedProfile: false,
+                        ),
+                      );
+                    }
                   },
                   profile: profiles[index],
+                  category: widget.category,
                 );
               },
             ),

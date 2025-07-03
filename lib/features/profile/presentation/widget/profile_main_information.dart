@@ -102,7 +102,7 @@ class _MainHobbyBadge extends StatelessWidget {
   }
 }
 
-class _InteractionButtons extends ConsumerWidget {
+class _InteractionButtons extends ConsumerStatefulWidget {
   const _InteractionButtons({
     required this.userId,
     required this.favoriteUser,
@@ -114,7 +114,22 @@ class _InteractionButtons extends ConsumerWidget {
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_InteractionButtons> createState() =>
+      _InteractionButtonsState();
+}
+
+class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
+  FavoriteType? _selectedType;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedType =
+        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -122,9 +137,9 @@ class _InteractionButtons extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             onPressed: () => MessageSendBottomSheet.open(
               context,
-              userId: userId,
+              userId: widget.userId,
               onSubmit: () => ref
-                  .read(profileNotifierProvider(userId).notifier)
+                  .read(profileNotifierProvider(widget.userId).notifier)
                   .requestMatch(),
             ),
             child: Row(
@@ -150,13 +165,15 @@ class _InteractionButtons extends ConsumerWidget {
         const Gap(8.0),
         GestureDetector(
           onTap: () async {
-            if (favoriteUser) return;
+            if (widget.favoriteUser) return;
             final favoriteType = await FavoriteTypeSelectDialog.open(
               context,
-              userId: userId,
+              userId: widget.userId,
+              favoriteType: _selectedType,
+              onFavoriteTypeChanged: widget.onFavoriteTypeChanged,
             );
             if (favoriteType == null) return;
-            onFavoriteTypeChanged(favoriteType);
+            widget.onFavoriteTypeChanged(favoriteType);
           },
           child: Container(
             decoration: const BoxDecoration(
@@ -173,7 +190,7 @@ class _InteractionButtons extends ConsumerWidget {
                   colorFilter: DefaultIcon.fillColor(Colors.white),
                 ),
                 AnimatedScale(
-                  scale: favoriteUser ? 1 : 0,
+                  scale: widget.favoriteUser ? 1 : 0,
                   duration: Params.animationDurationLow,
                   curve: Curves.elasticInOut,
                   child: DefaultIcon(

@@ -3,15 +3,21 @@ import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:atwoz_app/features/profile/domain/provider/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
-  const FavoriteTypeSelectDialog(this.userId, {super.key});
+  const FavoriteTypeSelectDialog({
+    required this.userId,
+    this.favoriteType,
+    required this.onFavoriteTypeChanged,
+    super.key,
+  });
 
   final int userId;
+  final FavoriteType? favoriteType;
+  final Function(FavoriteType) onFavoriteTypeChanged;
 
   @override
   ConsumerState<FavoriteTypeSelectDialog> createState() =>
@@ -20,10 +26,16 @@ class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
   static Future<FavoriteType?> open(
     BuildContext context, {
     required int userId,
+    required FavoriteType? favoriteType,
+    required Function(FavoriteType) onFavoriteTypeChanged,
   }) =>
       showDialog<FavoriteType>(
         context: context,
-        builder: (context) => FavoriteTypeSelectDialog(userId),
+        builder: (context) => FavoriteTypeSelectDialog(
+          userId: userId,
+          favoriteType: favoriteType,
+          onFavoriteTypeChanged: onFavoriteTypeChanged,
+        ),
       );
 }
 
@@ -33,8 +45,7 @@ class _FavoriteTypeSelectDialogState
 
   @override
   void initState() {
-    _selectedType =
-        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
+    _selectedType = widget.favoriteType;
     super.initState();
   }
 
@@ -105,7 +116,7 @@ class _FavoriteTypeSelector extends StatelessWidget {
       spacing: 16.0,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FavoriteType.interest,
+        FavoriteType.interested,
         FavoriteType.highlyInterested,
       ]
           .map((type) => _FavoriteTypeItem(

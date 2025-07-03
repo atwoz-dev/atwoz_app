@@ -97,7 +97,8 @@ enum Region {
 }
 
 enum FavoriteType {
-  interest(IconPath.generalFavorite, '관심있어요'),
+  interested(IconPath.generalFavorite, '관심있어요'),
+
   highlyInterested(IconPath.strongFavorite, '매우 관심있어요');
 
   final String iconPath;
