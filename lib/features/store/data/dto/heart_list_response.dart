@@ -20,9 +20,8 @@ class HeartListItemResponse with _$HeartListItemResponse {
 
   HeartTransactionSummary toModel() => HeartTransactionSummary(
         id: id,
-        // TODO(Han): server 데이터 정합성 확보 후 non-nullable 하도록 수정
         createdAt: createdAt,
-        content: content ?? '',
+        content: content,
         heartAmount: heartAmount,
       );
 }
