@@ -2,9 +2,6 @@ import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/store/data/dto/heart_list_response.dart';
 import 'package:atwoz_app/features/store/domain/provider/heart_list_state.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/scroll_view.dart';
-import 'package:flutter/src/widgets/text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final storeRepositoryProvider = Provider<StoreRepository>((ref) {
