@@ -152,15 +152,20 @@ class OnboardingCertificationPageState
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
                                   onPressed: () async {
-                                    final authUseCase =
-                                        ref.read(authUsecaseProvider);
-                                    await authUseCase.sendSmsVerificationCode(
-                                        widget.phoneNumber);
-                                    setState(() {
-                                      validationError = null; // 기존 오류 메시지 제거
-                                    });
-                                    _codeController.clear();
-                                    addToastMessage('인증번호가 재전송되었습니다.');
+                                    try {
+                                      final authUseCase =
+                                          ref.read(authUsecaseProvider);
+                                      await authUseCase.sendSmsVerificationCode(
+                                          widget.phoneNumber);
+                                      safeSetState(() {
+                                        validationError = null; // 기존 오류 메시지 제거
+                                      });
+                                      _codeController.clear();
+                                      addToastMessage('인증번호가 재전송되었습니다.');
+                                    } catch (e) {
+                                      Log.e('재발송 실패', errorObject: e);
+                                      addToastMessage('인증번호 재발송에 실패했습니다.');
+                                    }
                                   },
                                   child: const Text('재발송'),
                                 ),
