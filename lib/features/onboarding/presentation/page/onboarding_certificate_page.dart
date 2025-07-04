@@ -45,9 +45,14 @@ class OnboardingCertificationPageState
 
     // 인증번호 자동 전송
     Future.microtask(() async {
-      final authUseCase = ref.read(authUsecaseProvider);
-      await authUseCase.sendSmsVerificationCode(widget.phoneNumber);
-      addToastMessage('인증번호가 발송되었습니다.');
+      try {
+        final authUseCase = ref.read(authUsecaseProvider);
+        await authUseCase.sendSmsVerificationCode(widget.phoneNumber);
+        addToastMessage('인증번호가 발송되었습니다.');
+      } catch (e) {
+        Log.e('SMS 발송 실패', errorObject: e);
+        addToastMessage('인증번호 발송에 실패했습니다.');
+      }
     });
 
     focusNode.addListener(() {
