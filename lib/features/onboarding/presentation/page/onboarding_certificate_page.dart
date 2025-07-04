@@ -64,7 +64,7 @@ class OnboardingCertificationPageState
     _codeController.addListener(() {
       final codeNumber = _codeController.text.replaceAll(RegExp(r'\D'), '');
       if (codeNumber.length >= 6) {
-        _validateInput(_codeController.text); // 6자리 이상일 때만 유효성 검사
+        _validateInput(codeNumber); // 6자리 이상일 때만 유효성 검사
       } else {
         safeSetState(() {
           validationError = null;
