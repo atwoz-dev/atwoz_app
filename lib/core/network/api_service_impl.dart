@@ -72,8 +72,11 @@ class ApiServiceImpl implements ApiService {
       );
     } catch (e, st) {
       Log.e('초기화 실패: $e', stackTrace: st);
-      rethrow; // 완전한 실패시 throw 해서 외부에서도 알 수 있도록
+      if (!_initCompleter.isCompleted) {
+        _initCompleter.completeError(e, st);
+      }
     } finally {
+      // 성공 case만 처리
       if (!_initCompleter.isCompleted) {
         _initCompleter.complete();
       }
