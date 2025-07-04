@@ -182,7 +182,7 @@ class OnboardingCertificationPageState
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
                       final inputCode = _codeController.text;
-                      final isVerified = true;
+
                       try {
                         // 1. 인증번호 검증
                         UserData userData = await authUseCase.signIn(
