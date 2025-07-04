@@ -19,7 +19,7 @@ mixin ToastMixin on Object {
   }) {
     return Fluttertoast.showToast(
       msg: message,
-      gravity: gravity = ToastGravity.BOTTOM, // 기본값 = ToastGravity.BOTTOM
+      gravity: gravity = ToastGravity.TOP, // 기본값 = ToastGravity.BOTTOM
       toastLength: toastLength = Toast.LENGTH_SHORT, // 기본값 = Toast.LENGTH_SHORT
       timeInSecForIosWeb: 1,
       textColor: textColor = Colors.white, // 기본값 = Colors.white
