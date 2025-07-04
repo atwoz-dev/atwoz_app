@@ -118,7 +118,7 @@ class ApiServiceImpl implements ApiService {
     await ref.read(localStorageProvider.notifier).initialize();
     await ref
         .read(localStorageProvider)
-        .saveEncrypted('AuthProvider.reToken', refreshToken);
+        .saveEncrypted('_refreshToken', refreshToken);
 
     Log.d("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
   }
@@ -180,7 +180,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  void cancelRequests({CancelToken? cancelToken}) async {
+  Future<void> cancelRequests({CancelToken? cancelToken}) async {
     await _initCompleter.future;
     _dioService.cancelRequests(cancelToken: cancelToken);
   }
