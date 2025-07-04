@@ -1,6 +1,4 @@
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/scroll_view.dart';
-import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'heart_list_state.freezed.dart';
