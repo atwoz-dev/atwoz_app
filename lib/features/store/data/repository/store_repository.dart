@@ -14,15 +14,6 @@ final storeRepositoryProvider = Provider<StoreRepository>((ref) {
 class StoreRepository extends BaseRepository {
   StoreRepository(Ref ref) : super(ref, '/heart-transactions');
 
-  Future<void> requestStore(int lastId) async {
-    await apiService.postJson(
-      path,
-      data: {
-        'lastId': lastId,
-      },
-    );
-  }
-
   Future<HeartListData> getHeartTransactionList([
     int? lastId,
   ]) async {
