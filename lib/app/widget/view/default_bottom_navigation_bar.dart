@@ -26,25 +26,25 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         icon: IconPath.like,
         iconFill: IconPath.likeFill,
         label: '좋아요',
-        route: AppRoute.home // TODO: 좋아요 화면 네비게이션으로 바꾸기
+        route: AppRoute.favoriteList // TODO: 좋아요 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
         icon: IconPath.self,
         iconFill: IconPath.selfFill,
         label: '셀프소개',
-        route: AppRoute.interview // TODO:셀프소개 화면 네비게이션으로 바꾸기
+        route: AppRoute.introduce // TODO:셀프소개 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
         icon: IconPath.interview,
         iconFill: IconPath.interviewFill,
         label: '인터뷰',
-        route: AppRoute.home // TODO: 모의고사 화면 네비게이션으로 바꾸기
+        route: AppRoute.interview // TODO: 모의고사 화면 네비게이션으로 바꾸기
         ),
     _NavItem(
         icon: IconPath.mypage,
         iconFill: IconPath.mypageFill,
         label: 'MY',
-        route: AppRoute.home // TODO: 마이페이지 화면 네비게이션으로 바꾸기
+        route: AppRoute.myPage // TODO: 마이페이지 화면 네비게이션으로 바꾸기
         ),
   ];
 
