@@ -82,12 +82,12 @@ class ApiServiceImpl implements ApiService {
 
   Future<Map<String, dynamic>> _prepareHeaders({
     Map<String, dynamic>? headers,
-    bool requiresAuthToken = true,
+    bool requiresAccessToken = true,
   }) async {
     await _initCompleter.future;
     final finalHeaders = <String, dynamic>{"Accept": "*/*", ...?headers};
 
-    if (requiresAuthToken) {
+    if (requiresAccessToken) {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
       await ref.read(localStorageProvider.notifier).initialize();
       final refreshToken =
@@ -150,7 +150,7 @@ class ApiServiceImpl implements ApiService {
     try {
       final finalHeaders = await _prepareHeaders(
         headers: headers,
-        requiresAuthToken: requiresAccessToken,
+        requiresAccessToken: requiresAccessToken,
       );
 
       final response = await _dioService.request(
