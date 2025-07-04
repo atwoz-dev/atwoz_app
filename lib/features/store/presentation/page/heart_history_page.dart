@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/store/presentation/widget/heart_history_card.dart';
 import 'package:flutter/material.dart';
+import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/features/store/domain/provider/domain.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +12,8 @@ class HeartHistoryPage extends ConsumerStatefulWidget {
   ConsumerState<HeartHistoryPage> createState() => _HeartHistoryPageState();
 }
 
-class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
+class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage>
+    with ToastMixin {
   bool _isLoadingMore = false;
   final _scrollController = ScrollController();
 
@@ -22,15 +24,33 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
     _scrollController.addListener(_onScroll);
   }
 
-  void _onScroll() async {
+  void _onScroll() {
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent - 60 &&
         !_isLoadingMore) {
+      _loadMoreTransactions();
+    }
+  }
+
+  Future<void> _loadMoreTransactions() async {
+    if (_isLoadingMore) return;
+
+    setState(() {
       _isLoadingMore = true;
+    });
+
+    try {
       await ref
           .read(heartListNotifierProvider.notifier)
           .loadMoreHeartTractions();
-      _isLoadingMore = false;
+    } catch (e) {
+      addToastMessage('표시할 항목이 더 이상 없습니다.');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoadingMore = false;
+        });
+      }
     }
   }
 
