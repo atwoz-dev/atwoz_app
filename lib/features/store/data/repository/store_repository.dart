@@ -23,8 +23,9 @@ class StoreRepository extends BaseRepository {
 
   HeartListData _parseHeartList(dynamic res) {
     if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
-      Log.e('data type is not Map $res');
-      throw Exception();
+      Log.e(
+          'Invalid response format: expected Map<String, dynamic> with data key, got $res');
+      throw Exception('Invalid heart transaction response format');
     }
 
     final response = HeartListResponse.fromJson(res['data']);
