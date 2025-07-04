@@ -21,17 +21,20 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
   late final Animation<double> _animation;
   late final List<double> randomRowStartX;
 
-  final double rowHeight = 120.0;
-  final int balloonsPerRow = 2;
+  static const double _rowHeight = 120.0;
+  static const int _balloonsPerRow = 2;
+  static const double _animationSpeedFactor = 10.0;
+  static const double _randomOffsetRange = 100.0;
 
   @override
   void initState() {
     super.initState();
-    final totalRows = (widget.balloons.length / balloonsPerRow).ceil();
-    final totalHeight = totalRows * rowHeight;
+    final totalRows = (widget.balloons.length / _balloonsPerRow).ceil();
+    final totalHeight = totalRows * _rowHeight;
 
     _controller = AnimationController(
-      duration: Duration(milliseconds: (totalHeight * 10).toInt()),
+      duration:
+          Duration(milliseconds: (totalHeight * _animationSpeedFactor).toInt()),
       vsync: this,
     )..repeat();
 
@@ -45,7 +48,7 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
 
     randomRowStartX = List.generate(
       totalRows,
-      (_) => Random().nextDouble() * 100 - 100,
+      (_) => Random().nextDouble() * _randomOffsetRange - _randomOffsetRange,
     );
   }
 
@@ -65,23 +68,23 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
         return Stack(
           children: [
             ...List.generate(
-              ((widget.balloons.length / balloonsPerRow).ceil()) * 2,
+              ((widget.balloons.length / _balloonsPerRow).ceil()) * 2,
               (rowIndex) {
                 final int startBalloonIndex = (rowIndex %
-                        (widget.balloons.length / balloonsPerRow).ceil()) *
-                    balloonsPerRow;
+                        (widget.balloons.length / _balloonsPerRow).ceil()) *
+                    _balloonsPerRow;
 
                 final double yOffset =
-                    (_animation.value - rowIndex * rowHeight) %
-                        ((widget.balloons.length / balloonsPerRow).ceil() *
-                            rowHeight);
+                    (_animation.value - rowIndex * _rowHeight) %
+                        ((widget.balloons.length / _balloonsPerRow).ceil() *
+                            _rowHeight);
 
                 return Positioned(
                   top: screenHeight - yOffset,
                   left: randomRowStartX[rowIndex % randomRowStartX.length],
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: List.generate(balloonsPerRow, (colIndex) {
+                    children: List.generate(_balloonsPerRow, (colIndex) {
                       final int balloonIndex = (startBalloonIndex + colIndex) %
                           widget.balloons.length;
 
