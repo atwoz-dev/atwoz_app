@@ -29,7 +29,7 @@ void main() {
 
     /// Hive - 로컬 데이터베이스 초기화
     await Hive.initFlutter();
-    Hive.registerAdapter<UserResponse>(UserResponseAdapter());
+    Hive.registerAdapter<UserData>(UserDataAdapter());
     Hive.registerAdapter<GlobalUserProfile>(GlobalUserProfileAdapter());
     Hive.registerAdapter<InterviewInfo>(InterviewInfoAdapter());
     Hive.registerAdapter<MyProfileImage>(MyProfileImageAdapter());
