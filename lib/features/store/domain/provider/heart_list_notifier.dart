@@ -39,6 +39,9 @@ class HeartListNotifier extends _$HeartListNotifier {
     }
 
     try {
+      if (state.heartTractions.transactions.isEmpty) {
+        return;
+      }
       final lastId = state.heartTractions.transactions.last.id;
       final heartListData = await ref
           .read(storeRepositoryProvider)
