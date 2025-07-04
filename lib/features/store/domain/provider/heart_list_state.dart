@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'heart_list_state.freezed.dart';
@@ -18,11 +17,6 @@ class HeartListState with _$HeartListState {
   const HeartListState._();
 
   factory HeartListState.initial() => const HeartListState();
-
-  when(
-      {required ListView Function(dynamic data) data,
-      required Text Function(dynamic error, dynamic stack) error,
-      required Center Function() loading}) {}
 }
 
 class HeartListData {
