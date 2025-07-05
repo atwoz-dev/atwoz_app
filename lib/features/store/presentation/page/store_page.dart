@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/store/presentation/widget/default_heart_card.dart';
 import 'package:atwoz_app/features/store/presentation/widget/event_heart_card.dart';
+import 'package:atwoz_app/app/widget/text/bullet_text.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -24,11 +27,11 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   final List<String> _productIds = [
-    'APP_HEART_45',
-    'APP_HEART_90',
-    'APP_HEART_110',
-    'APP_HEART_350',
-    'APP_HEART_550',
+    'APP_ITEM_HEART_45',
+    'APP_ITEM_HEART_90',
+    'APP_ITEM_HEART_110',
+    'APP_ITEM_HEART_350',
+    'APP_ITEM_HEART_550',
   ];
 
   List<ProductDetails> _products = [];
@@ -111,22 +114,22 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
       {
         'heart': '45',
         'price': '9000',
-        'code': 'APP_HEART_45',
+        'code': 'APP_ITEM_HEART_45',
       },
       {
         'heart': '110',
         'price': '22000',
-        'code': 'APP_HEART_110',
+        'code': 'APP_ITEM_HEART_110',
       },
       {
         'heart': '350',
         'price': '59000',
-        'code': 'APP_HEART_350',
+        'code': 'APP_ITEM_HEART_350',
       },
       {
         'heart': '550',
         'price': '88000',
-        'code': 'APP_HEART_550',
+        'code': 'APP_ITEM_HEART_550',
       },
     ];
 
@@ -135,33 +138,77 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: contentPadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('보유한 하트',
-                        style: Fonts.header03()
-                            .copyWith(fontWeight: FontWeight.w900)),
-                    const Gap(8),
-                    Text(
-                      '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
-                      style: Fonts.body03Regular(Palette.colorGrey600),
+          Padding(
+              padding: contentPadding,
+              child: Expanded(
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('보유한 하트',
+                            style: Fonts.header03()
+                                .copyWith(fontWeight: FontWeight.w900)),
+                        const Gap(8),
+                        Text(
+                          '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
+                          style: Fonts.body03Regular(Palette.colorGrey600),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                    SizedBox(
+                      width: 88,
+                      height: 32,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            shadowColor: Colors.transparent,
+                            backgroundColor: Palette.colorPrimary100,
+                            side: BorderSide(
+                              width: 1,
+                              color: Palette.colorPrimary500,
+                            )),
+                        onPressed: () {
+                          navigate(
+                            context,
+                            route: AppRoute.heartHistory,
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                DefaultIcon(
+                                  IconPath.storeHeart,
+                                  size: 16,
+                                ),
+                                const Gap(2),
+                                // TODO(mh): 현재 보유하트 연동 필요함
+                                Text(
+                                  '0',
+                                  style:
+                                      Fonts.body03Regular(Palette.colorGrey900),
+                                ),
+                              ],
+                            ),
+                            DefaultIcon(
+                              IconPath.chevronRight2,
+                              size: 16,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]))),
           Padding(
               padding: contentPadding,
               child: Row(
                 children: [
                   EventHeartCard(
-                      code: 'APP_HEART_90',
+                      code: 'APP_ITEM_HEART_90',
                       onCreate: (code) => _buyProduct(code)),
                 ],
               )),
@@ -185,6 +232,19 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
               ),
             ),
           ),
+          const Gap(12),
+          Padding(
+            padding: contentPadding,
+            child: BulletText(
+              texts: [
+                '운영정책 위반으로 계정정지 시 환불이 불가합니다',
+                '미션으로 받은 하트의 유효기간은 90일간 유효합니다.',
+              ],
+              textStyle: Fonts.body03Regular(
+                const Color.fromRGBO(155, 160, 171, 1),
+              ),
+            ),
+          )
         ],
       ),
     );
