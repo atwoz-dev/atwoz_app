@@ -13,17 +13,17 @@ class HeartHistoryCard extends StatelessWidget {
       required this.content,
       required this.heartAmount});
 
+  String get _displayedDate {
+    final dateData = createdAt.toLocal(); // 필요시 toLocal()
+    final year = dateData.year % 100; // 2025 → 25
+    final month = dateData.month.toString().padLeft(2, '0'); // 6 → 06
+    final day = dateData.day.toString().padLeft(2, '0'); // 10 → 10
+    return '$year.$month.$day';
+  }
+
   @override
   Widget build(BuildContext context) {
-    String dateText() {
-      final dateData = createdAt.toLocal(); // 필요시 toLocal()
-      final year = dateData.year % 100; // 2025 → 25
-      final month = dateData.month.toString().padLeft(2, '0'); // 6 → 06
-      final day = dateData.day.toString().padLeft(2, '0'); // 10 → 10
-      return '$year.$month.$day';
-    }
-
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: SizedBox(
         height: 48,
@@ -33,7 +33,7 @@ class HeartHistoryCard extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Text(
-                '${dateText()}',
+                _displayedDate,
                 style: Fonts.body02Regular(Palette.colorGrey500),
               ),
             ),
