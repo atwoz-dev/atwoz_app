@@ -7,11 +7,12 @@ class HeartHistoryCard extends StatelessWidget {
   final String content;
   final int heartAmount;
 
-  const HeartHistoryCard(
-      {super.key,
-      required this.createdAt,
-      required this.content,
-      required this.heartAmount});
+  const HeartHistoryCard({
+    super.key,
+    required this.createdAt,
+    required this.content,
+    required this.heartAmount,
+  });
 
   String get _displayedDate {
     final dateData = createdAt.toLocal(); // 필요시 toLocal()
