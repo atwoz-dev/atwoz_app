@@ -92,6 +92,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
 
   @override
   Future<String?> getAccessToken() async {
+    return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMSIsInJvbGUiOiJNRU1CRVIiLCJpYXQiOjE3NTAxNzEyMjMsImV4cCI6MTc1MDE3MzAyM30.YgqGUNzV28q0PMoISWkiYhAEP40JTR2edfxalJnZ8ms";
     return _localStorage.getEncrypted(_accessToken);
   }
 

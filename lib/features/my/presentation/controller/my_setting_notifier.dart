@@ -15,4 +15,8 @@ class MySettingNotifier extends _$MySettingNotifier {
     final packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
+
+  Future<bool> withdrawAccount() async {}
+
+  Future<bool> switchDormantAccount(bool dormant) async {}
 }
