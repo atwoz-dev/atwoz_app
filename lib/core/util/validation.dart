@@ -9,8 +9,8 @@ class Validation {
   static final RegExp password =
       RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)');
   static final RegExp email = RegExp(r'^(([\w-\.]+@([\w-]+\.)+[\w-]{2,4}))$');
-  // 휴대폰 번호는 000-0000-0000 형식이며 하이픈은 필수
-  static final RegExp phoneMobile = RegExp(r'^\d{3}-\d{4}-\d{4}$');
+  // 휴대폰 번호 검증: 010 포함 11자리 숫자만 허용. e.g. 01012345678
+  static final RegExp phoneMobile = RegExp(r'^010\d{8}$');
   // dateDMY: DD-MM-YYYY 또는 DD/MM/YYYY 형태
   static final RegExp dateDMY = RegExp(
       r'([0-2][0-9]|3[0-1])?(\\|\/|\-|\.|\,|\s)?(0[1-9]|1[0-2])(\\|\/|\-|\.|\,|\s)([0-9]{4}|[0-9]{2})');
