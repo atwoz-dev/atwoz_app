@@ -40,6 +40,7 @@ class IntroduceNavigationPage extends StatelessWidget {
                       navigate(
                         context,
                         route: AppRoute.introduceRegister,
+                        method: NavigationMethod.pushReplacement,
                       );
                     },
                     child: Text(

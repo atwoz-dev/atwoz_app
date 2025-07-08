@@ -156,10 +156,6 @@ final allRoutes = [
         builder: (context, state) => const IntroducePage(),
         routes: [
           NamedGoRoute(
-            name: AppRoute.introduceRegister.name,
-            builder: (context, state) => const IntroduceRegisterPage(),
-          ),
-          NamedGoRoute(
             name: AppRoute.introduceEdit.name,
             builder: (context, state) => const IntroduceEditPage(),
           ),
@@ -176,6 +172,10 @@ final allRoutes = [
             builder: (context, state) => const IntroduceNavigationPage(),
           ),
         ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.introduceRegister.name,
+        builder: (context, state) => const IntroduceRegisterPage(),
       ),
       NamedGoRoute(
         name: AppRoute.interview.name,

@@ -1,5 +1,10 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'self_introduce_state.freezed.dart';
+
 enum SelfIntroduceListErrorType {
   network,
+  validation,
 }
 
 // @freezed
@@ -15,6 +20,35 @@ enum SelfIntroduceListErrorType {
 
 //   factory FavoriteListState.initial() => const FavoriteListState();
 // }
+
+@freezed
+class SelfIntroduceState with _$SelfIntroduceState {
+  const factory SelfIntroduceState({
+    @Default([]) List<SelfIntroduceListData> introduceList,
+    @Default(false) bool isLoading,
+    @Default(false) bool isLoaded,
+    @Default(false) bool hasMore,
+    SelfIntroduceListErrorType? error,
+  }) = _SelfIntroduceState;
+
+  const SelfIntroduceState._();
+
+  factory SelfIntroduceState.initial() => const SelfIntroduceState();
+}
+
+@freezed
+class SelfIntroduceRegisterState with _$SelfIntroduceRegisterState {
+  const factory SelfIntroduceRegisterState({
+    @Default(false) bool isLoading,
+    @Default(false) bool isSuccess,
+    String? error,
+  }) = _SelfIntroduceRegisterState;
+
+  const SelfIntroduceRegisterState._();
+
+  factory SelfIntroduceRegisterState.initial() =>
+      const SelfIntroduceRegisterState();
+}
 
 class SelfIntroduceListData {
   final int id;

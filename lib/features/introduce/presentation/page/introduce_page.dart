@@ -115,6 +115,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
             navigate(
               context,
               route: AppRoute.introduceRegister,
+              method: NavigationMethod.pushReplacement,
             );
           },
         ),
