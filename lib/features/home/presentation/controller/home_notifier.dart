@@ -61,8 +61,10 @@ class HomeNotifier extends _$HomeNotifier {
 
     if (!state.hasValue) return;
 
-    state = AsyncData(state.requireValue.copyWith(
-      recommendedProfiles: profiles,
-    ));
+    state = AsyncData(
+      state.requireValue.copyWith(
+        recommendedProfiles: profiles,
+      ),
+    );
   }
 }

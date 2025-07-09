@@ -155,15 +155,21 @@ class _ProfileCardWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            // 상단 프로필 사진
-            width: 100,
-            height: 100,
-            child: CircleAvatar(
-              radius: 100,
-              backgroundImage: AssetImage(
-                  profile.profileImageUrl), // 추후 api 연동 시 NetworkImage로 변경
-            ),
+          Stack(
+            children: [
+              SizedBox(
+                // 상단 프로필 사진
+                width: 100,
+                height: 100,
+                child: CircleAvatar(
+                  radius: 999,
+                  backgroundImage: AssetImage(
+                    profile.profileImageUrl,
+                  ), // 추후 api 연동 시 NetworkImage로 변경
+                ),
+              ),
+              const BlurCoverWidget()
+            ],
           ),
           const Gap(16),
           Column(
@@ -180,7 +186,9 @@ class _ProfileCardWidget extends StatelessWidget {
               Text(
                 profile.interviewContent,
                 style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400, color: Palette.colorGrey600),
+                  fontWeight: FontWeight.w400,
+                  color: Palette.colorGrey600,
+                ),
                 maxLines: 2,
               ),
               const Gap(24),
