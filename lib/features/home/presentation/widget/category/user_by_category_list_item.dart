@@ -3,7 +3,6 @@ import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
-import 'package:atwoz_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +12,7 @@ class UserByCategoryListItem extends ConsumerWidget {
   final VoidCallback onTap;
   final IntroducedProfile profile;
   final IntroducedCategory category;
+  final VoidCallback onTapFavorite;
 
   const UserByCategoryListItem({
     super.key,
@@ -20,6 +20,7 @@ class UserByCategoryListItem extends ConsumerWidget {
     required this.onTap,
     required this.profile,
     required this.category,
+    required this.onTapFavorite,
   });
 
   @override
@@ -74,21 +75,7 @@ class UserByCategoryListItem extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () => FavoriteTypeSelectDialog.open(
-                              context,
-                              userId: profile.memberId,
-                              favoriteType: profile.favoriteType,
-                              onFavoriteTypeChanged: (favoriteType) {
-                                ref
-                                    .watch(introducedProfilesNotifierProvider(
-                                            category)
-                                        .notifier)
-                                    .setFavoriteType(
-                                      profile.memberId,
-                                      favoriteType,
-                                    );
-                              },
-                            ),
+                            onTap: onTapFavorite,
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,

@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -35,6 +36,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
               itemCount: profiles.length,
               separatorBuilder: (context, index) => const Gap(8),
               itemBuilder: (context, index) {
+                final profile = profiles[index];
                 return UserByCategoryListItem(
                   isBlurred: blurredList[index],
                   onTap: () async {
@@ -48,7 +50,11 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
                       // 하트 소모 다이얼로그에서 확인을 누른 경우
                       if (pressed!) {
                         final selectedId = profiles[index].memberId;
-                        introducedProfilesNotifier.openProfile(selectedId);
+                        introducedProfilesNotifier.openProfile(
+                          memberId: selectedId,
+                          category: widget.category,
+                        );
+                        return;
                       }
                     }
                     // false면 소개받은 프로필
@@ -58,13 +64,32 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
                         route: AppRoute.profile,
                         extra: ProfileDetailArguments(
                           userId: profiles[index].memberId,
-                          fromMatchedProfile: false,
                         ),
                       );
                     }
                   },
                   profile: profiles[index],
                   category: widget.category,
+                  onTapFavorite: () async {
+                    if (profile.favoriteType != null) {
+                      return; // 좋아요 등록된 경우 모달 띄우지 않음
+                    }
+
+                    final favoriteType = await FavoriteTypeSelectDialog.open(
+                      context,
+                      userId: profile.memberId,
+                      favoriteType: profile.favoriteType,
+                    );
+                    if (favoriteType == null) return;
+                    ref
+                        .read(
+                            introducedProfilesNotifierProvider(widget.category)
+                                .notifier)
+                        .setFavoriteType(
+                          profile.memberId,
+                          favoriteType,
+                        );
+                  },
                 );
               },
             ),
