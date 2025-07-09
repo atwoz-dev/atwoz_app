@@ -1,9 +1,11 @@
+import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final recommendedProfileRepositoryProvider =
-    Provider<RecommendedProfileRepositoryImpl>(
-  (ref) => RecommendedProfileRepositoryImpl(),
+    Provider<RecommendProfileRepository>(
+  (ref) => RecommendProfileRepository(ref),
 );
 
 // TODO(jh): 추후 extends BaseRepository 변경
@@ -55,6 +57,27 @@ class RecommendedProfileRepositoryImpl {
         .map(
           (e) => IntroducedProfileDto.fromJson(e),
         )
+        .toList();
+  }
+}
+
+class RecommendProfileRepository extends BaseRepository {
+  RecommendProfileRepository(Ref ref) : super(ref, '/member/introduction');
+
+  Future<List<IntroducedProfileDto>> getProfiles() async {
+    final res = await apiService.postJson(
+      '$path/today-card',
+      requiresAuthToken: true,
+      data: {},
+    );
+
+    if (res is! Map<String, dynamic> || res['data'] is! List) {
+      Log.e('data type is not Map<String, dynamic> $res');
+      throw Exception();
+    }
+
+    return (res['data'] as List)
+        .map((e) => IntroducedProfileDto.fromJson(e))
         .toList();
   }
 }
