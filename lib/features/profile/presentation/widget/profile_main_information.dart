@@ -170,7 +170,6 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
               context,
               userId: widget.userId,
               favoriteType: _selectedType,
-              onFavoriteTypeChanged: widget.onFavoriteTypeChanged,
             );
             if (favoriteType == null) return;
             widget.onFavoriteTypeChanged(favoriteType);

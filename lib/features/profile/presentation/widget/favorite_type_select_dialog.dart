@@ -11,13 +11,11 @@ class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
   const FavoriteTypeSelectDialog({
     required this.userId,
     this.favoriteType,
-    required this.onFavoriteTypeChanged,
     super.key,
   });
 
   final int userId;
   final FavoriteType? favoriteType;
-  final Function(FavoriteType) onFavoriteTypeChanged;
 
   @override
   ConsumerState<FavoriteTypeSelectDialog> createState() =>
@@ -27,14 +25,12 @@ class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
     BuildContext context, {
     required int userId,
     required FavoriteType? favoriteType,
-    required Function(FavoriteType) onFavoriteTypeChanged,
   }) =>
       showDialog<FavoriteType>(
         context: context,
         builder: (context) => FavoriteTypeSelectDialog(
           userId: userId,
           favoriteType: favoriteType,
-          onFavoriteTypeChanged: onFavoriteTypeChanged,
         ),
       );
 }
