@@ -4,8 +4,8 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final recommendedProfileRepositoryProvider =
-    Provider<RecommendProfileRepository>(
-  (ref) => RecommendProfileRepository(ref),
+    Provider<RecommendedProfileRepository>(
+  (ref) => RecommendedProfileRepository(ref),
 );
 
 // TODO(jh): 추후 extends BaseRepository 변경
@@ -61,8 +61,8 @@ class RecommendedProfileRepositoryImpl {
   }
 }
 
-class RecommendProfileRepository extends BaseRepository {
-  RecommendProfileRepository(Ref ref) : super(ref, '/member/introduction');
+class RecommendedProfileRepository extends BaseRepository {
+  RecommendedProfileRepository(Ref ref) : super(ref, '/member/introduction');
 
   Future<List<IntroducedProfileDto>> getProfiles() async {
     final res = await apiService.postJson(
