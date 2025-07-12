@@ -24,7 +24,7 @@ class FetchRecommendedProfileUseCase {
       return profiles.map(
         (profile) {
           final allTags = [
-            ...profile.hobbies.map((e) => Hobby.parseFromData(e).label),
+            ...profile.hobbies.map((e) => Hobby.parse(e).label),
             Religion.parse(profile.religion).label,
             profile.mbti,
           ];
