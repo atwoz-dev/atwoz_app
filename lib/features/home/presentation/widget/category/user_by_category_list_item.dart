@@ -64,7 +64,7 @@ class UserByCategoryListItem extends ConsumerWidget {
                       ),
                       const Gap(8),
                       SizedBox(
-                        height: context.screenHeight * 0.1,
+                        height: context.screenHeight * 0.05,
                         child: Text(
                           profile.interviewContent,
                           maxLines: 2,
