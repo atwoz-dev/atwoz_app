@@ -1,6 +1,9 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -24,45 +27,71 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
       body: introducedProfilesAsync.when(
-        data: (profiles) {
-          List<bool> blurredList =
-              profiles.map((e) => !e.isIntroduced).toList();
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: ListView.separated(
-              itemCount: profiles.length,
-              separatorBuilder: (context, index) => const Gap(8),
-              itemBuilder: (context, index) {
-                return UserByCategoryListItem(
-                  isBlurred: blurredList[index],
-                  onTap: () async {
-                    // true면 소개받지 않은 프로필
-                    if (blurredList[index]) {
-                      final pressed = await showDialog<bool>(
-                        context: context,
-                        builder: (context) => const UnlockWithHeartDialog(),
-                      );
+        data: (profiles) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: ListView.separated(
+            itemCount: profiles.length,
+            separatorBuilder: (_, __) => const Gap(8),
+            itemBuilder: (context, index) {
+              final profile = profiles[index];
+              final isBlurred = !profile.isIntroduced;
 
-                      // 하트 소모 다이얼로그에서 확인을 누른 경우
-                      if (pressed!) {
-                        final selectedId = profiles[index].id;
-                        introducedProfilesNotifier.openProfile(selectedId);
-                      }
-                    }
-                  },
-                  profile: profiles[index],
-                );
-              },
-            ),
-          );
-        },
-        error: (error, stackTrace) => Center(
-          child: Text('Error: $error'),
+              return UserByCategoryListItem(
+                isBlurred: isBlurred,
+                onTap: () => _handleProfileTap(context, profile, index,
+                    isBlurred, introducedProfilesNotifier, profiles),
+                profile: profile,
+                category: widget.category,
+              );
+            },
+          ),
         ),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        error: (error, _) => Center(child: Text('Error: $error')),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
+    );
+  }
+
+  Future<void> _handleProfileTap(
+    BuildContext context,
+    IntroducedProfile profile,
+    int index,
+    bool isBlurred,
+    IntroducedProfilesNotifier introducedProfilesNotifier,
+    List<IntroducedProfile> profiles,
+  ) async {
+    if (isBlurred) {
+      final pressed = await showDialog<bool>(
+        context: context,
+        builder: (context) => const UnlockWithHeartDialog(),
+      );
+
+      if (pressed == true) {
+        await introducedProfilesNotifier.openProfile(
+          memberId: profile.memberId,
+          category: widget.category,
+        );
+        if (!context.mounted) return;
+        _navigateToProfile(context, profile);
+      }
+    } else {
+      final result = await _navigateToProfile(context, profile);
+      if (result is UserProfile) {
+        introducedProfilesNotifier.updateProfile(
+          index: index,
+          detailProfile: result,
+          category: widget.category,
+        );
+      }
+    }
+  }
+
+  Future<dynamic> _navigateToProfile(
+      BuildContext context, IntroducedProfile profile) {
+    return navigate(
+      context,
+      route: AppRoute.profile,
+      extra: ProfileDetailArguments(userId: profile.memberId),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
+import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

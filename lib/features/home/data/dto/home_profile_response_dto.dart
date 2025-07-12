@@ -45,7 +45,7 @@ class BasicInfoDto {
   final String nickname;
   final String gender;
   final String? kakaoId;
-  final int yearOfBirth;
+  final int age;
   final int height;
   final String phoneNumber;
 
@@ -53,7 +53,7 @@ class BasicInfoDto {
     required this.nickname,
     required this.gender,
     this.kakaoId,
-    required this.yearOfBirth,
+    required this.age,
     required this.height,
     required this.phoneNumber,
   });
