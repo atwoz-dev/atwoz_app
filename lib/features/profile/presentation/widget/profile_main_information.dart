@@ -104,7 +104,7 @@ class _MainHobbyBadge extends StatelessWidget {
   }
 }
 
-class _InteractionButtons extends ConsumerWidget {
+class _InteractionButtons extends ConsumerStatefulWidget {
   const _InteractionButtons({
     required this.userId,
     required this.isFavoriteUser,
@@ -116,7 +116,22 @@ class _InteractionButtons extends ConsumerWidget {
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_InteractionButtons> createState() =>
+      _InteractionButtonsState();
+}
+
+class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
+  FavoriteType? _selectedType;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedType =
+        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -124,9 +139,9 @@ class _InteractionButtons extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             onPressed: () => MessageSendBottomSheet.open(
               context,
-              userId: userId,
+              userId: widget.userId,
               onSubmit: () => ref
-                  .read(profileNotifierProvider(userId).notifier)
+                  .read(profileNotifierProvider(widget.userId).notifier)
                   .requestMatch(),
             ),
             child: Row(
@@ -150,17 +165,18 @@ class _InteractionButtons extends ConsumerWidget {
           ),
         ),
         const Gap(8.0),
-        _FavoriteButton(
-          isFavoriteUser: isFavoriteUser,
+        FavoriteButton.icon(
+          isFavoriteUser: widget.isFavoriteUser,
           onTap: () async {
-            if (isFavoriteUser) return;
+            if (widget.isFavoriteUser) return;
+
             final favoriteType = await FavoriteTypeSelectDialog.open(
               context,
-              userId: userId,
-              favoriteType: null,
+              userId: widget.userId,
+              favoriteType: _selectedType,
             );
             if (favoriteType == null) return;
-            onFavoriteTypeChanged(favoriteType);
+            widget.onFavoriteTypeChanged(favoriteType);
           },
         ),
       ],
@@ -168,26 +184,44 @@ class _InteractionButtons extends ConsumerWidget {
   }
 }
 
-class _FavoriteButton extends StatefulWidget {
-  const _FavoriteButton({
+class FavoriteButton extends StatefulWidget {
+  /// 아이콘만
+  const FavoriteButton.icon({
+    super.key,
     required this.isFavoriteUser,
     required this.onTap,
+    this.size = 20.0,
+    this.icon,
+  }) : text = null;
+
+  /// 아이콘 + 텍스트
+  const FavoriteButton.text({
+    super.key,
+    required this.isFavoriteUser,
+    required this.onTap,
+    this.size = 24.0,
+    required this.text,
+    this.icon,
   });
 
   final bool isFavoriteUser;
   final VoidCallback onTap;
+  final double size;
+  final String? text;
+  final String? icon;
 
   @override
-  State<_FavoriteButton> createState() => _FavoriteButtonState();
+  State<FavoriteButton> createState() => _FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<_FavoriteButton> {
+class _FavoriteButtonState extends State<FavoriteButton> {
   bool _enabled = true;
   Timer? _timer;
 
   static const _transDuration = 1000;
 
   static const _grayColor = Color(0xFFDCDEE3);
+  static const _primaryColor = Palette.colorPrimary500;
   static const _gradientStart = Color(0xFFBCD5F3);
   static const _gradientEnd = Color(0xFF4F37E2);
   static const _transitionGradientStart = Color(0xA1BCD5F3);
@@ -198,10 +232,12 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
 
     if (!widget.isFavoriteUser) {
       return baseDecoration.copyWith(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: [_grayColor, _grayColor],
+          colors: widget.text != null
+              ? [_primaryColor, _primaryColor]
+              : [_grayColor, _grayColor],
         ),
       );
     }
@@ -225,7 +261,7 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
   }
 
   @override
-  void didUpdateWidget(covariant _FavoriteButton oldWidget) {
+  void didUpdateWidget(covariant FavoriteButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isFavoriteUser || !widget.isFavoriteUser) {
       return;
@@ -244,17 +280,46 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
 
   @override
   Widget build(BuildContext context) {
+    Widget iconWidget = DefaultIcon(
+      widget.isFavoriteUser
+          ? (widget.icon ?? IconPath.heartFill)
+          : (widget.icon ?? IconPath.heart),
+      size: widget.size,
+      colorFilter: DefaultIcon.fillColor(Colors.white),
+    );
+
+    Widget child;
+    if (widget.text != null) {
+      child = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          iconWidget,
+          const SizedBox(width: 8),
+          Text(
+            widget.text!,
+            style: Fonts.body01Regular().copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ],
+      );
+    } else {
+      child = iconWidget;
+    }
+
     return GestureDetector(
       onTap: widget.onTap,
       child: AnimatedContainer(
         duration: Params.animationDurationLow,
         decoration: _currentDecoration,
-        padding: const EdgeInsets.all(12.0),
-        child: DefaultIcon(
-          widget.isFavoriteUser ? IconPath.heartFill : IconPath.heart,
-          size: 20.0,
-          colorFilter: DefaultIcon.fillColor(Colors.white),
-        ),
+        padding: widget.text != null
+            ? const EdgeInsets.symmetric(horizontal: 20, vertical: 12.5)
+            : const EdgeInsets.all(12.0),
+        margin: widget.text != null
+            ? const EdgeInsets.symmetric(horizontal: 54)
+            : EdgeInsets.zero,
+        child: child,
       ),
     );
   }
