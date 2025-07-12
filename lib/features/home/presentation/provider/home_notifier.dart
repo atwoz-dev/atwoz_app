@@ -3,7 +3,7 @@ import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
-import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
+import 'package:atwoz_app/features/home/presentation/provider/controller.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

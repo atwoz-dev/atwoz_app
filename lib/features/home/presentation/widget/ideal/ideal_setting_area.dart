@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
-import 'package:atwoz_app/features/home/presentation/controller/controller.dart';
+import 'package:atwoz_app/features/home/presentation/provider/controller.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';

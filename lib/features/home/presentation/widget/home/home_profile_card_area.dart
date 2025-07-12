@@ -6,7 +6,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
-import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
+import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/widget.dart';
