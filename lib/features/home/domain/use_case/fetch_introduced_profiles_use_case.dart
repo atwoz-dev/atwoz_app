@@ -71,7 +71,7 @@ class FetchIntroducedProfilesUseCase {
     return dtos.map(
       (dto) {
         final tags = [
-          ...dto.hobbies.map((e) => Hobby.parseFromData(e).label),
+          ...dto.hobbies.map((e) => Hobby.parse(e).label),
           dto.mbti,
           if (dto.religion != null) Religion.parse(dto.religion).label
         ].whereType<String>().toList()
