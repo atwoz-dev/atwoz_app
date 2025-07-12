@@ -163,7 +163,7 @@ class _ProfileCardWidget extends StatelessWidget {
                 height: 100,
                 child: CircleAvatar(
                   radius: 999,
-                  backgroundImage: AssetImage(
+                  backgroundImage: NetworkImage(
                     profile.profileImageUrl,
                   ), // 추후 api 연동 시 NetworkImage로 변경
                 ),
