@@ -16,7 +16,9 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/my_profile_image_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
+import 'package:atwoz_app/features/my/presentation/page/profile_preview_page.dart';
 import 'package:atwoz_app/features/navigation/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/notification/presentation/page/notification_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
@@ -25,8 +27,8 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
+import 'package:atwoz_app/features/store/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
-import 'package:atwoz_app/features/store/presentation/page/store_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,7 +75,7 @@ enum AppRoute {
   // Store
   store('store'),
   storeNavigation('store-navigation'),
-  storeHistory('store-history'),
+  heartHistory('heart-history'),
 
   // Notification
   notification('notification'),
@@ -109,10 +111,11 @@ enum AppRoute {
   serviceWithdraw('service-withdraw'),
   withdrawReason('withdraw-reason'),
   privacyPolicy('privacy-policy'),
-  termsOfUse('terms-of-use');
+  termsOfUse('terms-of-use'),
+  myProfileImageUpdate('my-profile-image-update'),
+  profilePreview('profile-preview');
 
   final String name;
-
   const AppRoute(this.name);
 }
 
@@ -222,8 +225,8 @@ final allRoutes = [
             builder: (context, state) => const StoreNavigationPage(),
           ),
           NamedGoRoute(
-            name: AppRoute.storeHistory.name,
-            builder: (context, state) => const StoreHistoryPage(),
+            name: AppRoute.heartHistory.name,
+            builder: (context, state) => const HeartHistoryPage(),
           ),
         ],
       ),
@@ -296,7 +299,34 @@ final allRoutes = [
               return ProfileUpdatePage(profileType: args.profileType);
             },
           ),
+          NamedGoRoute(
+            name: AppRoute.myProfileImageUpdate.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! MyProfileImageUpdateArguments) {
+                return const SizedBox.shrink();
+              }
+              return MyProfileImageUpdatePage(
+                profileImages: args.profileImages,
+              );
+            },
+          ),
+          NamedGoRoute(
+            name: AppRoute.profilePreview.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! ProfilePreviewArguments) {
+                return const SizedBox.shrink();
+              }
+              return ProfilePreviewPage(profile: args.profile);
+            },
+          ),
         ],
+      ),
+      // TODO: 추후 삭제
+      NamedGoRoute(
+        name: AppRoute.navigation.name,
+        builder: (context, state) => const NavigationPage(),
       ),
       NamedGoRoute(
         name: AppRoute.idealSetting.name,

@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:flutter/material.dart';
+import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/store/data/dto/heart_list_response.dart';
+import 'package:atwoz_app/features/store/domain/provider/heart_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final storeRepositoryProvider = Provider<StoreRepository>((ref) {
@@ -10,41 +9,29 @@ final storeRepositoryProvider = Provider<StoreRepository>((ref) {
 });
 
 class StoreRepository extends BaseRepository {
-  StoreRepository(Ref ref) : super(ref, '/admin');
+  StoreRepository(Ref ref) : super(ref, '/heart-transactions');
 
-// 상점 하트 사용내역
-  Future storeHistory() async {
-    try {
-      Map<String, dynamic> queryParameters = {
-        'condition': jsonEncode({
-          "productId": "string",
-          "name": "string",
-          "createdDateGoe": "2025-06-03",
-          "createdDateLoe": "2025-06-03"
-        }),
-        'pageable': jsonEncode({
-          "page": 0,
-          "size": 1,
-          "sort": ["string"]
-        })
-      };
+  Future<HeartListData> getHeartTransactionList([
+    int? lastId,
+  ]) async {
+    final res = await apiService.getJson(
+      path,
+      queryParameters: lastId != null ? {'lastId': lastId} : null,
+    );
+    return _parseHeartList(res);
+  }
 
-      final res = await apiService.getJson(
-        '$path/heart-purchase-options',
-        queryParameters: queryParameters,
-        requiresAuthToken: true,
-      );
-
-      debugPrint("데이터 체킹 ::: $res");
-
-      return res;
-    } catch (error) {
-      debugPrint('하트 사용내역 api 에러 : $error');
+  HeartListData _parseHeartList(dynamic res) {
+    if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
+      Log.e(
+          'Invalid response format: expected Map<String, dynamic> with data key, got $res');
+      throw Exception('Invalid heart transaction response format');
     }
+
+    final response = HeartListResponse.fromJson(res['data']);
+    return HeartListData(
+      transactions: response.transactions.map((e) => e.toModel()).toList(),
+      hasMore: response.hasMore,
+    );
   }
 }
-
-final storeHistoryProvider = FutureProvider((ref) async {
-  final repository = ref.watch(storeRepositoryProvider);
-  return await repository.storeHistory();
-});

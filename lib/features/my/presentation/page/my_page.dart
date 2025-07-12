@@ -72,14 +72,17 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
       body: Column(
         children: _menuItems
             .map(
-              (item) => _MyPageListItem(
-                title: item.title,
-                iconPath: item.iconPath,
-                onTapMove: () {
+              (item) => GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
                   if (item.route != null) {
                     navigate(context, route: item.route!);
                   }
                 },
+                child: _MyPageListItem(
+                  title: item.title,
+                  iconPath: item.iconPath,
+                ),
               ),
             )
             .toList(),
@@ -91,11 +94,9 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 class _MyPageListItem extends StatelessWidget {
   final String title;
   final String iconPath;
-  final VoidCallback onTapMove;
   const _MyPageListItem({
     required this.title,
     required this.iconPath,
-    required this.onTapMove,
   });
 
   @override
@@ -123,13 +124,10 @@ class _MyPageListItem extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: onTapMove,
-            child: const DefaultIcon(
-              IconPath.chevronRight,
-              size: 24,
-            ),
-          )
+          const DefaultIcon(
+            IconPath.chevronRight,
+            size: 24,
+          ),
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/my/my.dart';
 
 sealed class RouteArguments {
   const RouteArguments();
@@ -36,4 +38,20 @@ class MyProfileUpdateArguments extends RouteArguments {
   });
 
   final String profileType;
+}
+
+class MyProfileImageUpdateArguments extends RouteArguments {
+  const MyProfileImageUpdateArguments({
+    required this.profileImages,
+  });
+
+  final List<EditableProfileImage?> profileImages;
+}
+
+class ProfilePreviewArguments extends RouteArguments {
+  const ProfilePreviewArguments({
+    required this.profile,
+  });
+
+  final MyProfile profile;
 }

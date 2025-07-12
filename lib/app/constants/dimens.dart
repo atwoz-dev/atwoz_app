@@ -44,4 +44,6 @@ class Dimens {
   static const double cardGap = 12.0;
 
   static const double navigationBarHeight = 10.0;
+
+  static const int profileImageMaxCount = 6;
 }

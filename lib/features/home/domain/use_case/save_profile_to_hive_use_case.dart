@@ -24,25 +24,26 @@ class SaveProfileToHiveUseCase {
         _secureStorage = secureStorage;
 
   Future<void> execute() async {
-    final homeProfileDto = await _repository.getProfile();
-
-    final globalUserProfile = homeProfileDto.toGlobalUserProfile();
-
-    final box = await Hive.openBox<GlobalUserProfile>(
-      GlobalUserProfile.boxName,
-    );
-
-    await box.put('profile', globalUserProfile);
-
-    // SecureStorage 저장
     try {
+      final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
+
+      final globalUserProfile =
+          homeProfileDto.toGlobalUserProfile(); // Hive에 저장할 프로필
+
+      final box = await Hive.openBox<GlobalUserProfile>(
+        GlobalUserProfile.boxName,
+      ); // Hive Box 가져오기
+
+      await box.put('profile', globalUserProfile); // Hive에 저장
+
+      // SecureStorage 저장
+
       await _secureStorage.write(
           key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
       await _secureStorage.write(
           key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
     } catch (e) {
-      // SecureStorage 실패 시 로깅 처리
-      Log.e('SecureStorage 저장 실패: $e');
+      Log.e('Hive에 프로필 저장 실패: $e');
     }
   }
 }

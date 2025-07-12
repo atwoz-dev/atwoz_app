@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/app/enum/education.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,6 @@ import 'package:gap/gap.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/temp.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
@@ -55,7 +55,7 @@ class _ProfileUpdateInfoSelectorState
         initialValue: widget.profile.job.label,
         onSelected: (value) {
           _tempProfile.value =
-              _tempProfile.value.copyWith(job: Job.parse(value));
+              _tempProfile.value.copyWith(job: Job.fromLabel(value));
           widget.onProfileUpdated(
               _tempProfile.value, value != widget.profile.job.label);
         },
@@ -69,11 +69,11 @@ class _ProfileUpdateInfoSelectorState
         },
       ),
       '학력': _SingleButtonTypeSelector(
-        options: educationMap.values.toList(),
-        initialValue: educationMap[widget.profile.education] ?? '',
+        options: Education.values.map((e) => e.label).toList(),
+        initialValue: widget.profile.education.label,
         onSelected: (value) {
           final education =
-              educationMap.entries.firstWhere((e) => e.value == value).key;
+              Education.values.firstWhere((e) => e.label == value);
           _tempProfile.value =
               _tempProfile.value.copyWith(education: education);
           widget.onProfileUpdated(
@@ -107,7 +107,7 @@ class _ProfileUpdateInfoSelectorState
         },
       ),
       '종교': _SingleButtonTypeSelector(
-        options: religionMap.values.toList(),
+        options: Religion.values.map((e) => e.label).toList(),
         initialValue: widget.profile.religion.label,
         onSelected: (value) {
           final newReligion = Religion.values
@@ -131,7 +131,7 @@ class _ProfileUpdateInfoSelectorState
         initialValues: widget.profile.hobbies.map((e) => e.label).toList(),
         onSelected: (value, isChanged) {
           _tempProfile.value = _tempProfile.value.copyWith(
-            hobbies: value.map((e) => Hobby.parse(e)).toList(),
+            hobbies: value.map((e) => Hobby.fromLabel(e)).toList(),
           );
           widget.onProfileUpdated(
               _tempProfile.value, isChanged && value.isNotEmpty);
@@ -211,7 +211,8 @@ class _SingleButtonTypeSelectorState extends State<_SingleButtonTypeSelector> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.options.indexOf(widget.initialValue);
+    final idx = widget.options.indexOf(widget.initialValue);
+    _selectedIndex = idx >= 0 ? idx : 0;
   }
 
   @override

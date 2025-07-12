@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
@@ -71,7 +73,7 @@ class ProfileMainInformation extends StatelessWidget {
           if (chatEnabled)
             _InteractionButtons(
               userId: userId,
-              favoriteUser: favoriteType != null,
+              isFavoriteUser: favoriteType != null,
               onFavoriteTypeChanged: onFavoriteTypeChanged,
             ),
         ],
@@ -102,34 +104,19 @@ class _MainHobbyBadge extends StatelessWidget {
   }
 }
 
-class _InteractionButtons extends ConsumerStatefulWidget {
+class _InteractionButtons extends ConsumerWidget {
   const _InteractionButtons({
     required this.userId,
-    required this.favoriteUser,
+    required this.isFavoriteUser,
     required this.onFavoriteTypeChanged,
   });
 
   final int userId;
-  final bool favoriteUser;
+  final bool isFavoriteUser;
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
-  ConsumerState<_InteractionButtons> createState() =>
-      _InteractionButtonsState();
-}
-
-class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
-  FavoriteType? _selectedType;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedType =
-        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         Expanded(
@@ -137,9 +124,9 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             onPressed: () => MessageSendBottomSheet.open(
               context,
-              userId: widget.userId,
+              userId: userId,
               onSubmit: () => ref
-                  .read(profileNotifierProvider(widget.userId).notifier)
+                  .read(profileNotifierProvider(userId).notifier)
                   .requestMatch(),
             ),
             child: Row(
@@ -163,48 +150,112 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           ),
         ),
         const Gap(8.0),
-        GestureDetector(
+        _FavoriteButton(
+          isFavoriteUser: isFavoriteUser,
           onTap: () async {
-            if (widget.favoriteUser) return;
+            if (isFavoriteUser) return;
             final favoriteType = await FavoriteTypeSelectDialog.open(
               context,
-              userId: widget.userId,
-              favoriteType: _selectedType,
+              userId: userId,
+              favoriteType: null,
             );
             if (favoriteType == null) return;
-            widget.onFavoriteTypeChanged(favoriteType);
+            onFavoriteTypeChanged(favoriteType);
           },
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFFDCDEE3),
-              borderRadius: Dimens.buttonRadius,
-            ),
-            padding: const EdgeInsets.all(12.0),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                DefaultIcon(
-                  IconPath.heart,
-                  size: 20.0,
-                  colorFilter: DefaultIcon.fillColor(Colors.white),
-                ),
-                AnimatedScale(
-                  scale: widget.favoriteUser ? 1 : 0,
-                  duration: Params.animationDurationLow,
-                  curve: Curves.elasticInOut,
-                  child: DefaultIcon(
-                    IconPath.heart,
-                    size: null,
-                    colorFilter: DefaultIcon.fillColor(
-                      context.colorScheme.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ],
+    );
+  }
+}
+
+class _FavoriteButton extends StatefulWidget {
+  const _FavoriteButton({
+    required this.isFavoriteUser,
+    required this.onTap,
+  });
+
+  final bool isFavoriteUser;
+  final VoidCallback onTap;
+
+  @override
+  State<_FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<_FavoriteButton> {
+  bool _enabled = true;
+  Timer? _timer;
+
+  static const _transDuration = 1000;
+
+  static const _grayColor = Color(0xFFDCDEE3);
+  static const _gradientStart = Color(0xFFBCD5F3);
+  static const _gradientEnd = Color(0xFF4F37E2);
+  static const _transitionGradientStart = Color(0xA1BCD5F3);
+  static const _transitionGradientEnd = Color(0xA14F37E2);
+
+  BoxDecoration get _currentDecoration {
+    const baseDecoration = BoxDecoration(borderRadius: Dimens.buttonRadius);
+
+    if (!widget.isFavoriteUser) {
+      return baseDecoration.copyWith(
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [_grayColor, _grayColor],
+        ),
+      );
+    }
+    if (!_enabled) {
+      return baseDecoration.copyWith(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [_transitionGradientStart, _transitionGradientEnd],
+          stops: [.0, .9],
+        ),
+      );
+    }
+    return baseDecoration.copyWith(
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [_gradientStart, _gradientEnd],
+      ),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant _FavoriteButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isFavoriteUser || !widget.isFavoriteUser) {
+      return;
+    }
+
+    _timer = Timer(const Duration(milliseconds: _transDuration), () {
+      setState(() => _enabled = false);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: AnimatedContainer(
+        duration: Params.animationDurationLow,
+        decoration: _currentDecoration,
+        padding: const EdgeInsets.all(12.0),
+        child: DefaultIcon(
+          widget.isFavoriteUser ? IconPath.heartFill : IconPath.heart,
+          size: 20.0,
+          colorFilter: DefaultIcon.fillColor(Colors.white),
+        ),
+      ),
     );
   }
 }

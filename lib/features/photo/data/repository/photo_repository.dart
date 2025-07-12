@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,6 +113,61 @@ class PhotoRepository extends BaseRepository {
     } catch (e) {
       Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
       return null;
+    }
+  }
+
+  // 프로필 이미지 업데이트
+  Future<void> updateProfilePhotos(List<EditableProfileImage> photos) async {
+    final formData = FormData();
+
+    int reqIdx = 0; // 요청 인덱스
+
+    for (final photo in photos) {
+      if (photo.imageFile == null) continue; // imageFile이 null이면 건너뜀
+
+      final multipartFile = await _convertToMultipartFile(
+          photo.imageFile!); // XFile → MultipartFile 변환
+      if (multipartFile == null) continue; // multipartFile이 null이면 건너뜀
+
+      formData.files.add(
+        MapEntry(
+          "requests[$reqIdx].image",
+          multipartFile,
+        ),
+      ); // 요청 이미지 추가
+
+      formData.fields.add(
+        MapEntry(
+          "requests[$reqIdx].order",
+          photo.order.toString(),
+        ),
+      ); // 요청 order 추가
+
+      formData.fields.add(
+        MapEntry(
+          "requests[$reqIdx].isPrimary",
+          photo.isPrimary.toString(),
+        ),
+      ); // 요청 isPrimary 추가
+
+      if (photo.id != null) {
+        // id가 null이 아니면 이미지 변경
+        formData.fields.add(
+          MapEntry(
+            "requests[$reqIdx].id",
+            photo.id.toString(),
+          ),
+        ); // 요청 id 추가
+      }
+
+      reqIdx++;
+    }
+
+    try {
+      await apiService.postFormData(path,
+          data: formData, requiresAuthToken: true);
+    } catch (e) {
+      Log.d("❌ 프로필 사진 업데이트 중 오류 발생: $e");
     }
   }
 }
