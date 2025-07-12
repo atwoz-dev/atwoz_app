@@ -1,11 +1,15 @@
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/icon_path.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
+import 'dart:async';
+
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/presentation/controller/home_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -29,6 +33,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
         (value) => value.whenData((data) => data.recommendedProfiles),
       ),
     ); // 소개받은 프로필 정보들
+    final homeNotifier = ref.read(homeNotifierProvider.notifier);
 
     return homeStateAsync.when(
       data: (profiles) {
@@ -47,7 +52,31 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                   () => _currentPage = value,
                 ),
                 itemBuilder: (context, index) {
-                  return _ProfileCardWidget(profile: profiles[index]);
+                  final profile = profiles[index];
+                  return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => navigate(
+                      context,
+                      route: AppRoute.profile,
+                      extra: ProfileDetailArguments(userId: profile.memberId),
+                    ),
+                    child: _ProfileCardWidget(
+                      profile: profile,
+                      onTapFavorite: () async {
+                        final favoriteType =
+                            await FavoriteTypeSelectDialog.open(
+                          context,
+                          userId: profile.memberId,
+                          favoriteType: profile.favoriteType,
+                        );
+                        if (favoriteType == null) return;
+                        await homeNotifier.setFavoriteType(
+                          profile.memberId,
+                          favoriteType,
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
             ),
@@ -135,9 +164,11 @@ class _EmptyProfileCard extends StatelessWidget {
 class _ProfileCardWidget extends StatelessWidget {
   const _ProfileCardWidget({
     required this.profile,
+    required this.onTapFavorite,
   });
 
   final IntroducedProfile profile;
+  final VoidCallback onTapFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -183,49 +214,23 @@ class _ProfileCardWidget extends StatelessWidget {
                 child: HashtagWrap(tags: profile.tags),
               ),
               const Gap(8),
-              Text(
-                profile.interviewContent,
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Palette.colorGrey600,
+              SizedBox(
+                height: 40,
+                child: Text(
+                  profile.interviewContent,
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Palette.colorGrey600,
+                  ),
+                  maxLines: 2,
                 ),
-                maxLines: 2,
               ),
               const Gap(24),
-              GestureDetector(
-                onTap: () {
-                  // 좋아요 버튼 클릭 로직
-                },
-                child: Container(
-                  // 좋아요 버튼
-                  margin: const EdgeInsets.symmetric(horizontal: 54),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 12.5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Palette.colorPrimary500,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const DefaultIcon(
-                        IconPath.heart,
-                        size: 24,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "좋아요",
-                        style: Fonts.body01Regular().copyWith(
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
+              FavoriteButton.text(
+                isFavoriteUser: profile.favoriteType != null,
+                onTap: onTapFavorite,
+                text: '좋아요',
+              ),
             ],
           )
         ],

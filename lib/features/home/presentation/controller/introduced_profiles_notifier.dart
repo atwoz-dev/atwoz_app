@@ -1,6 +1,4 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
@@ -9,8 +7,6 @@ import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profil
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../profile/domain/common/enum.dart';
 
 part 'introduced_profiles_notifier.g.dart';
 
@@ -46,31 +42,8 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
     state = AsyncData(updatedProfiles);
 
     // 캐시된 데이터 삭제
-    await _deleteIntroducedProfilesFromHive(category.name);
-  }
-
-  /// 좋아요 설정
-  Future<void> setFavoriteType(int memberId, FavoriteType type) async {
-    if (!state.hasValue) return;
-    try {
-      await ref.read(favoriteRepositoryProvider).requestFavorite(
-            memberId,
-            type: type,
-          );
-
-      final updatedProfiles = [...state.requireValue]
-          .map(
-            (e) => e.memberId == memberId ? e.copyWith(favoriteType: type) : e,
-          )
-          .toList();
-
-      state = AsyncData(updatedProfiles);
-
-      // 캐시된 데이터 삭제
-      await _deleteIntroducedProfilesFromHive(category.name);
-    } catch (e) {
-      Log.e(e);
-    }
+    final box = await Hive.openBox(IntroducedProfileDto.boxName);
+    await box.delete(category);
   }
 
   /// 프로필 업데이트
@@ -90,11 +63,5 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
         .read(fetchIntroducedProfilesUseCaseProvider)
         .execute(category);
     state = AsyncData(profiles);
-  }
-
-  /// 카테고리별 소개받은 프로필 캐시 삭제
-  Future<void> _deleteIntroducedProfilesFromHive(String category) async {
-    final box = await Hive.openBox(IntroducedProfileDto.boxName);
-    await box.delete(category);
   }
 }
