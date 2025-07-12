@@ -1,8 +1,10 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/data/mapper/introduced_profile_mapper.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
@@ -68,9 +70,11 @@ class FetchIntroducedProfilesUseCase {
       List<IntroducedProfileDto> dtos) {
     return dtos.map(
       (dto) {
-        final tags = [dto.hobbies, dto.mbti, dto.religion]
-            .whereType<String>()
-            .toList()
+        final tags = [
+          ...dto.hobbies.map((e) => Hobby.parseFromData(e).label),
+          dto.mbti,
+          if (dto.religion != null) Religion.parse(dto.religion).label
+        ].whereType<String>().toList()
           ..sort((a, b) => a.length.compareTo(b.length));
         return dto.toIntroducedProfile(tags);
       },
