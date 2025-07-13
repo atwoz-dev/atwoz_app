@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/shared_preference/shared_preference.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ void main() {
 
     /// Hive - 로컬 데이터베이스 초기화
     await Hive.initFlutter();
+    await SharedPreferenceManager.initialize();
     Hive.registerAdapter<UserResponse>(UserResponseAdapter());
     Hive.registerAdapter<GlobalUserProfile>(GlobalUserProfileAdapter());
     Hive.registerAdapter<InterviewInfo>(InterviewInfoAdapter());
