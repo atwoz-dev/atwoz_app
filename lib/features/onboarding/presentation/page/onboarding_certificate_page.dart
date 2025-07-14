@@ -34,7 +34,7 @@ class OnboardingCertificationPageState
     with ToastMixin {
   OnboardingCertificationPageState();
 
-  final TextEditingController _codeController = TextEditingController();
+  final _codeController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   bool isButtonEnabled = false;
   String? validationError; // 유효성 검사 결과를 저장
