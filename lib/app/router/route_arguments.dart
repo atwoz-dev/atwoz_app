@@ -55,3 +55,9 @@ class ProfilePreviewArguments extends RouteArguments {
 
   final MyProfile profile;
 }
+
+class InterviewRegisterArguments extends RouteArguments {
+  const InterviewRegisterArguments({required this.question});
+
+  final String question;
+}
