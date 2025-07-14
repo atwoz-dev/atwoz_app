@@ -95,7 +95,6 @@ class PhotoRepository extends BaseRepository {
     try {
       await apiService.deleteJson(
         '$path/$id',
-        requiresAccessToken: true,
       );
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
