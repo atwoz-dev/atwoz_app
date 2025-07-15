@@ -30,22 +30,28 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   }) async {
     if (!state.hasValue) return;
 
-    await ref.read(introducedProfileRepositoryProvider).removeBlur(
-          category: category.name,
-          memberId: memberId,
-        );
+    try {
+      await ref.read(introducedProfileRepositoryProvider).removeBlur(
+            category: category.name,
+            memberId: memberId,
+          );
 
-    // 해당 memberId의 isIntroduced만 true로 변경
-    final updatedProfiles = [...state.requireValue]
-        .map((e) => e.memberId == memberId ? e.copyWith(isIntroduced: true) : e)
-        .toList();
+      // 해당 memberId의 isIntroduced만 true로 변경
+      final updatedProfiles = [...state.requireValue]
+          .map((e) =>
+              e.memberId == memberId ? e.copyWith(isIntroduced: true) : e)
+          .toList();
 
-    // 상태 즉시 갱신 (UI 즉시 반영)
-    state = AsyncData(updatedProfiles);
+      // 상태 즉시 갱신 (UI 즉시 반영)
+      state = AsyncData(updatedProfiles);
 
-    // 캐시된 데이터 삭제
-    final box = await Hive.openBox(IntroducedProfileDto.boxName);
-    await box.delete(category);
+      // 캐시된 데이터 삭제
+      final box = await Hive.openBox(IntroducedProfileDto.boxName);
+      await box.delete(category);
+    } catch (e, stackTrace) {
+      Log.e('소개 프로필 블러 제거 실패: $e');
+      state = AsyncError(e, stackTrace);
+    }
   }
 
   /// 프로필 업데이트
@@ -55,16 +61,21 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
     required IntroducedCategory category,
   }) async {
     if (!state.hasValue) return;
-    await ref.read(updateIntroducedProfileUseCaseProvider).execute(
-          index: index,
-          detailProfile: detailProfile,
-          category: category,
-        );
+    try {
+      await ref.read(updateIntroducedProfileUseCaseProvider).execute(
+            index: index,
+            detailProfile: detailProfile,
+            category: category,
+          );
 
-    final profiles = await ref
-        .read(fetchIntroducedProfilesUseCaseProvider)
-        .execute(category);
-    state = AsyncData(profiles);
+      final profiles = await ref
+          .read(fetchIntroducedProfilesUseCaseProvider)
+          .execute(category);
+      state = AsyncData(profiles);
+    } catch (e, stackTrace) {
+      Log.e('소개 프로필 업데이트 실패: $e');
+      state = AsyncError(e, stackTrace);
+    }
   }
 
   /// 보유 하트수 조회

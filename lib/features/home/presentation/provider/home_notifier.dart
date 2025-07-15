@@ -41,8 +41,9 @@ class HomeNotifier extends _$HomeNotifier {
               .toList(),
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       Log.e('좋아요 설정 실패: $e');
+      state = AsyncError(e, stackTrace);
     }
   }
 

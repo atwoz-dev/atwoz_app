@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,7 @@ class IntroducedProfileRepository extends BaseRepository {
         requiresAuthToken: true);
 
     if (res is! Map<String, dynamic> || res['data'] is! List) {
-      throw Exception();
+      throw const NetworkException.formatException();
     }
 
     return (res['data'] as List)
@@ -40,6 +41,11 @@ class IntroducedProfileRepository extends BaseRepository {
       '$path/heartbalance',
       requiresAuthToken: true,
     );
+
+    if (response is! Map<String, dynamic> ||
+        response['data'] is! Map<String, dynamic>) {
+      throw const NetworkException.formatException();
+    }
 
     return HeartBalance.fromJson(response['data']);
   }

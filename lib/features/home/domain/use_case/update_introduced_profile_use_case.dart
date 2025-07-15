@@ -14,36 +14,45 @@ class UpdateIntroducedProfileUseCase {
     required UserProfile detailProfile,
     required IntroducedCategory category,
   }) async {
-    final box = await Hive.openBox(IntroducedProfileDto.boxName);
-    final oldMap = box.get(category.name) as Map?;
+    try {
+      final box = await Hive.openBox(IntroducedProfileDto.boxName);
+      final oldMap = box.get(category.name) as Map?;
 
-    if (oldMap != null &&
-        oldMap['profiles'] is List<IntroducedProfileDto> &&
-        oldMap['expiresAt'] is DateTime) {
-      final updatedProfiles = oldMap['profiles'] as List<IntroducedProfileDto>;
+      if (oldMap != null &&
+          oldMap['profiles'] is List<IntroducedProfileDto> &&
+          oldMap['expiresAt'] is DateTime) {
+        final updatedProfiles =
+            oldMap['profiles'] as List<IntroducedProfileDto>;
 
-      updatedProfiles[index] = IntroducedProfileDto(
-        memberId: detailProfile.id,
-        profileImageUrl: detailProfile.profileUri,
-        hobbies: category == IntroducedCategory.hobby
-            ? []
-            : detailProfile.hobbies, // 취미가 같아요이면 빈 리스트 저장
-        mbti: detailProfile.mbti,
-        religion: category == IntroducedCategory.religion
-            ? null
-            : detailProfile.religion.name, // 종교가 같아요이면 null 저장
-        interviewAnswerContent:
-            detailProfile.selfIntroductionItems.first.content,
-        isIntroduced: true,
-      );
+        if (index < 0 || index >= updatedProfiles.length) {
+          throw ArgumentError('인덱스 $index는 범위를 벗어났습니다');
+        }
 
-      await box.put(
-        category.name,
-        {
-          'profiles': updatedProfiles,
-          'expiresAt': oldMap['expiresAt'],
-        },
-      );
+        updatedProfiles[index] = IntroducedProfileDto(
+          memberId: detailProfile.id,
+          profileImageUrl: detailProfile.profileUri,
+          hobbies: category == IntroducedCategory.hobby
+              ? []
+              : detailProfile.hobbies, // 취미가 같아요이면 빈 리스트 저장
+          mbti: detailProfile.mbti,
+          religion: category == IntroducedCategory.religion
+              ? null
+              : detailProfile.religion.name, // 종교가 같아요이면 null 저장
+          interviewAnswerContent:
+              detailProfile.selfIntroductionItems.first.content,
+          isIntroduced: true,
+        );
+
+        await box.put(
+          category.name,
+          {
+            'profiles': updatedProfiles,
+            'expiresAt': oldMap['expiresAt'],
+          },
+        );
+      }
+    } catch (e) {
+      throw Exception('소개 프로필 업데이트 실패: $e');
     }
   }
 }
