@@ -32,7 +32,7 @@ class ProfileFetchUseCase {
         height: 165.0,
         job: '직장인',
         matchStatus: designInspectionPresetData,
-        favoriteType: FavoriteType.interest,
+        favoriteType: FavoriteType.interested,
       );
     }
     final response =
@@ -44,7 +44,7 @@ class ProfileFetchUseCase {
 
 extension ProfileDetailResponseX on ProfileDetailResponse {
   UserProfile toModel(int myUserId) {
-    final basic = basicMemberInfo;
+    final basic = memberInfo;
     return UserProfile(
       id: basic.id,
       name: basic.nickname,

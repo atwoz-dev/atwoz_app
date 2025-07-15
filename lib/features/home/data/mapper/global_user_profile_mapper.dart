@@ -10,7 +10,7 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
       nickname: basicInfo.nickname,
       gender: basicInfo.gender,
       kakaoId: null, // Hive 저장 x
-      yearOfBirth: basicInfo.yearOfBirth,
+      age: basicInfo.age,
       height: basicInfo.height,
       phoneNumber: '', // Hive 저장 x
       job: profileInfo.job,

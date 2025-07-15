@@ -21,13 +21,9 @@ extension MyProfileMapper on GlobalUserProfile {
       mbti: mbti,
       hobbies: hobbies.map((e) => Hobby.parse(e)).toList(),
       nickname: nickname,
-      age: DateTime.now().year - yearOfBirth + 1,
+      age: age,
       height: height,
-      gender: switch (gender) {
-        'male' => GenderEnum.male,
-        'female' => GenderEnum.female,
-        _ => GenderEnum.male,
-      },
+      gender: Gender.parse(gender),
       phoneNum: const PhoneNumberTextFormatter().formatPhoneNumber(phoneNumber),
     );
   }
@@ -36,7 +32,7 @@ extension MyProfileMapper on GlobalUserProfile {
 extension ProfileUpdateRequestDtoMapper on MyProfile {
   ProfileUpdateRequestDto toProfileUpdateRequestDto() {
     return ProfileUpdateRequestDto(
-      nickName: nickname,
+      nickname: nickname,
       gender: gender.name.toUpperCase(),
       yearOfBirth: DateTime.now().year - age + 1,
       height: height,

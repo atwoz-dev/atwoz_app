@@ -1,18 +1,28 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class UnlockWithHeartDialog extends StatelessWidget {
+class UnlockWithHeartDialog extends ConsumerWidget {
   const UnlockWithHeartDialog({
     super.key,
+    required this.heartBalance,
   });
 
+  final int heartBalance;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userProfile = ref.watch(globalUserProfileNotifierProvider);
+
+    bool isMale = Gender.parse(userProfile.gender) == Gender.male;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -34,7 +44,7 @@ class UnlockWithHeartDialog extends StatelessWidget {
               ),
               const Gap(12),
               Text(
-                "보유한 하트:10", // TODO: 하트 개수 가져오기
+                "보유한 하트: $heartBalance", // TODO: 하트 개수 가져오기
                 style: Fonts.body02Medium().copyWith(
                   fontWeight: FontWeight.w400,
                   color: const Color(0xff7E7E7E),
@@ -71,12 +81,12 @@ class UnlockWithHeartDialog extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const DefaultIcon(
-                            IconPath.homeHeart,
-                            size: 16,
+                            IconPath.heart,
+                            size: 20,
                           ),
                           const Gap(4),
                           Text(
-                            "8",
+                            isMale ? "10" : "4",
                             style: Fonts.body02Medium().copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

@@ -18,12 +18,12 @@ class ExtendedHomeEnum<T extends Enum> {
     required String Function(T) valueToLabel,
   }) {
     return [
+      const ExtendedHomeEnum._(null, "상관없음"),
       for (final value in enumValues)
         ExtendedHomeEnum._(
           value,
           valueToLabel(value),
         ),
-      const ExtendedHomeEnum._(null, "상관없음"),
     ];
   }
 
