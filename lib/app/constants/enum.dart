@@ -25,11 +25,24 @@ extension StringToEnum on String {
 }
 
 // 성별
-enum GenderEnum { female, male }
+enum Gender {
+  male('남자'),
+  female('여자');
 
-const Map<GenderEnum, String> genderMap = {
-  GenderEnum.female: "여자",
-  GenderEnum.male: "남자",
+  final String label;
+  const Gender(this.label);
+
+  static final Map<String, Gender> _byValue = {
+    for (final value in Gender.values) value.name.toUpperCase(): value,
+  };
+
+  static Gender parse(String value) =>
+      _byValue[value.toUpperCase()] ?? Gender.male;
+}
+
+const Map<Gender, String> genderMap = {
+  Gender.female: "여자",
+  Gender.male: "남자",
 };
 
 // 학력

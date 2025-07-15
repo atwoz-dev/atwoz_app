@@ -23,11 +23,7 @@ extension MyProfileMapper on GlobalUserProfile {
       nickname: nickname,
       age: age,
       height: height,
-      gender: switch (gender) {
-        'male' => GenderEnum.male,
-        'female' => GenderEnum.female,
-        _ => GenderEnum.male,
-      },
+      gender: Gender.parse(gender),
       phoneNum: const PhoneNumberTextFormatter().formatPhoneNumber(phoneNumber),
     );
   }
