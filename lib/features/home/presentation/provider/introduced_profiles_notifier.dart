@@ -1,8 +1,10 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
+import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:hive/hive.dart';
@@ -63,5 +65,15 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
         .read(fetchIntroducedProfilesUseCaseProvider)
         .execute(category);
     state = AsyncData(profiles);
+  }
+
+  /// 보유 하트수 조회
+  Future<int> fetchUserHeartBalance() async {
+    try {
+      return await ref.read(fetchUserHeartBalanceUseCaseProvider).execute();
+    } catch (e) {
+      Log.e('보유 하트수 조회 실패: $e');
+      return 0;
+    }
   }
 }

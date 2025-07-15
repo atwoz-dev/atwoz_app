@@ -38,8 +38,14 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
               return UserByCategoryListItem(
                 isBlurred: isBlurred,
-                onTap: () => _handleProfileTap(context, profile, index,
-                    isBlurred, introducedProfilesNotifier, profiles),
+                onTap: () => _handleProfileTap(
+                  context: context,
+                  profile: profile,
+                  index: index,
+                  isBlurred: isBlurred,
+                  introducedProfilesNotifier: introducedProfilesNotifier,
+                  profiles: profiles,
+                ),
                 profile: profile,
                 category: widget.category,
               );
@@ -52,18 +58,25 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     );
   }
 
-  Future<void> _handleProfileTap(
-    BuildContext context,
-    IntroducedProfile profile,
-    int index,
-    bool isBlurred,
-    IntroducedProfilesNotifier introducedProfilesNotifier,
-    List<IntroducedProfile> profiles,
-  ) async {
+  Future<void> _handleProfileTap({
+    required BuildContext context,
+    required IntroducedProfile profile,
+    required int index,
+    required bool isBlurred,
+    required IntroducedProfilesNotifier introducedProfilesNotifier,
+    required List<IntroducedProfile> profiles,
+  }) async {
     if (isBlurred) {
+      final heartBalance =
+          await introducedProfilesNotifier.fetchUserHeartBalance();
+
+      if (!context.mounted) return;
+
       final pressed = await showDialog<bool>(
         context: context,
-        builder: (context) => const UnlockWithHeartDialog(),
+        builder: (context) => UnlockWithHeartDialog(
+          heartBalance: heartBalance,
+        ),
       );
 
       if (pressed == true) {
