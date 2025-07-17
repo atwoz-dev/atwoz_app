@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
   const FavoriteTypeSelectDialog({
     required this.userId,
-    this.favoriteType,
+    required this.favoriteType,
     super.key,
   });
 
