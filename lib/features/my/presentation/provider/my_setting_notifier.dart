@@ -1,3 +1,6 @@
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/my/data/repository/my_profile_repository.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,9 +24,31 @@ class MySettingNotifier extends _$MySettingNotifier {
     return await ref.read(myProfileRepositoryProvider).withdrawAccount();
   }
 
-  Future<bool> switchDormantAccount(bool dormant) async {
-    return await ref
-        .read(myProfileRepositoryProvider)
-        .switchDormantAccount(dormant);
+  Future<bool> deactiveAccount() async {
+    return await ref.read(myProfileRepositoryProvider).deactiveAccount();
+  }
+
+  Future<bool> activeAccount() async {
+    try {
+      final phoneNumber =
+          ref.read(globalUserProfileNotifierProvider).phoneNumber;
+
+      final accessToken = await ref
+          .read(myProfileRepositoryProvider)
+          .activeAccount(phoneNumber);
+      if (accessToken == null) {
+        Log.e('계정 활성화 실패: accessToken is null');
+        return false;
+      }
+
+      ref.read(authUsecaseProvider).setAccessToken(accessToken);
+      await ref
+          .read(globalUserProfileNotifierProvider.notifier)
+          .initializeProfile();
+      return true;
+    } catch (e) {
+      Log.e('계정 활성화 실패: $e');
+      return false;
+    }
   }
 }

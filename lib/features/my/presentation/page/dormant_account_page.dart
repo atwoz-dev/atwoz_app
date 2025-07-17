@@ -2,7 +2,6 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
@@ -57,19 +56,19 @@ class DormantAccountPage extends ConsumerWidget {
               DefaultElevatedButton(
                 child: const Text('휴면 해제하기'),
                 onPressed: () async {
-                  // final success = await ref
-                  //     .read(mySettingNotifierProvider.notifier)
-                  //     .switchDormantAccount(false);
+                  final success = await ref
+                      .read(mySettingNotifierProvider.notifier)
+                      .activeAccount();
 
-                  // if (!context.mounted) return;
-                  // if (!success) {
-                  //   ErrorDialog.open(
-                  //     context,
-                  //     error: DialogueErrorType.unknown,
-                  //     onConfirm: context.pop,
-                  //   );
-                  //   return;
-                  // }
+                  if (!context.mounted) return;
+                  if (!success) {
+                    ErrorDialog.open(
+                      context,
+                      error: DialogueErrorType.unknown,
+                      onConfirm: context.pop,
+                    );
+                    return;
+                  }
 
                   showToastMessage('휴면이 해제되었습니다.');
 

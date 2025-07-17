@@ -40,14 +40,26 @@ class MyProfileRepository extends BaseRepository {
     }
   }
 
-  Future<bool> switchDormantAccount(bool dormant) async {
+  Future<bool> deactiveAccount() async {
     try {
-      // TODO(Han): delete api call + clear user information in local/memory
-      await apiService.deleteJson(path, requiresAuthToken: true);
+      await apiService.postJson('$path/profile/dormant', data: {});
       return true;
     } on NetworkException catch (e) {
       Log.e('네트워크 오류입니다: $e');
       return false;
+    }
+  }
+
+  Future<String?> activeAccount(String phoneNumber) async {
+    try {
+      // TODO(Han): Implement the logic to convert accessToken parsing after server ready.
+      return await apiService.postJson(
+        '$path/profile/active',
+        data: {'phoneNumber': phoneNumber},
+      );
+    } on NetworkException catch (e) {
+      Log.e('네트워크 오류입니다: $e');
+      return null;
     }
   }
 }

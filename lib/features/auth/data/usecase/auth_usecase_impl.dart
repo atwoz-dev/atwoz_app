@@ -96,6 +96,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   }
 
   @override
+  void setAccessToken(String accessToken) {
+    _localStorage.saveEncrypted(_accessToken, accessToken);
+  }
+
+  @override
   Future<String?> getRefreshToken() async {
     return _localStorage.getEncrypted(_refreshToken);
   }

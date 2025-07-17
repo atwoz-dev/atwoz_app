@@ -96,7 +96,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
       onDormantChanged: () async {
         final success = await ref
             .read(mySettingNotifierProvider.notifier)
-            .switchDormantAccount(value);
+            .deactiveAccount();
         if (!mounted) return;
         context.pop(success);
       },
