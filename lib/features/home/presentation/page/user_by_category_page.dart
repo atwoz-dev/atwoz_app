@@ -79,23 +79,25 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
         ),
       );
 
-      if (pressed == true) {
-        await introducedProfilesNotifier.openProfile(
-          memberId: profile.memberId,
-          category: widget.category,
-        );
-        if (!context.mounted) return;
-        _navigateToProfile(context, profile);
-      }
-    } else {
-      final result = await _navigateToProfile(context, profile);
-      if (result is UserProfile) {
-        introducedProfilesNotifier.updateProfile(
-          index: index,
-          detailProfile: result,
-          category: widget.category,
-        );
-      }
+      if (pressed != true) return;
+
+      await introducedProfilesNotifier.openProfile(
+        memberId: profile.memberId,
+        category: widget.category,
+      );
+      if (!context.mounted) return;
+      _navigateToProfile(context, profile);
+      return;
+    }
+
+    // isBlurred == false일 때만 아래 실행
+    final result = await _navigateToProfile(context, profile);
+    if (result is UserProfile) {
+      introducedProfilesNotifier.updateProfile(
+        index: index,
+        detailProfile: result,
+        category: widget.category,
+      );
     }
   }
 
