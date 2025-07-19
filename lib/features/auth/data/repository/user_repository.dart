@@ -47,7 +47,6 @@ class UserRepository extends BaseRepository {
       await apiService.putJson(
         '$path/profile',
         data: requestData.toJson(),
-        requiresAccessToken: true,
       );
 
       Log.d("프로필 업데이트 성공");

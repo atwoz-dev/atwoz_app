@@ -34,9 +34,9 @@ class OnboardingCertificationPageState
     with ToastMixin {
   OnboardingCertificationPageState();
 
-  final TextEditingController _codeController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
-  bool isButtonEnabled = false;
+  final _codeController = TextEditingController();
+  final _focusNode = FocusNode();
+  bool _isButtonEnabled = false;
   String? validationError; // 유효성 검사 결과를 저장
 
   @override
@@ -55,8 +55,8 @@ class OnboardingCertificationPageState
       }
     });
 
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
         _validateInput(_codeController.text); // 포커스 아웃 시 유효성 검사
       }
     });
@@ -68,7 +68,7 @@ class OnboardingCertificationPageState
       } else {
         safeSetState(() {
           validationError = null;
-          isButtonEnabled = false;
+          _isButtonEnabled = false;
         });
       }
     });
@@ -77,7 +77,7 @@ class OnboardingCertificationPageState
   @override
   void dispose() {
     _codeController.dispose();
-    focusNode.dispose(); // FocusNode도 해제
+    _focusNode.dispose(); // FocusNode도 해제
     super.dispose();
   }
 
@@ -85,14 +85,14 @@ class OnboardingCertificationPageState
     if (input.isEmpty) {
       setState(() {
         validationError = null; // 빈 값일 경우 에러 메시지 제거
-        isButtonEnabled = false;
+        _isButtonEnabled = false;
       });
       return;
     }
     final isValid = Validation.sixDigitNumber.hasMatch(input);
     safeSetState(() {
       validationError = isValid ? null : '인증번호를 확인해 주세요.';
-      isButtonEnabled = isValid;
+      _isButtonEnabled = isValid;
     });
   }
 
@@ -130,7 +130,7 @@ class OnboardingCertificationPageState
                             Expanded(
                               flex: 7,
                               child: DefaultTextFormField(
-                                focusNode: focusNode,
+                                focusNode: _focusNode,
                                 autofocus: false,
                                 controller: _codeController,
                                 keyboardType: TextInputType.number,
@@ -188,14 +188,14 @@ class OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed: isButtonEnabled
+              onPressed: _isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
                       final inputCode = _codeController.text;
 
                       try {
                         // 1. 인증번호 검증
-                        UserData userData = await authUseCase.signIn(
+                        final userData = await authUseCase.signIn(
                             UserSignInRequest(
                                 phoneNumber: widget.phoneNumber,
                                 code: inputCode));
@@ -226,7 +226,7 @@ class OnboardingCertificationPageState
                   : null,
               child: Text(
                 '인증하기',
-                style: Fonts.body01Medium(isButtonEnabled
+                style: Fonts.body01Medium(_isButtonEnabled
                         ? palette.onPrimary
                         : Palette.colorGrey400)
                     .copyWith(fontWeight: FontWeight.w900),
