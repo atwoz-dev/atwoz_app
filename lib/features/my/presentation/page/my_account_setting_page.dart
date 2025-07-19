@@ -42,7 +42,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           _AccountSettingItem(
             children: [
               Text(
-                "휴면면 회원 전환",
+                "휴면 회원 전환",
                 style: Fonts.body02Medium().copyWith(
                   fontWeight: FontWeight.w500,
                   color: Palette.colorBlack,

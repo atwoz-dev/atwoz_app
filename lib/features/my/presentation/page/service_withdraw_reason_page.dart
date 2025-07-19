@@ -74,7 +74,6 @@ class _ServiceWithdrawReasonPageState
                           submit: DialogButton(
                             label: '탈퇴',
                             onTap: () async {
-                              // TODO(Han): 성공 실패 핸들링
                               final success = await ref
                                   .read(mySettingNotifierProvider.notifier)
                                   .withdrawAccount();
