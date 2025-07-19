@@ -7,6 +7,7 @@ part 'user_sign_in_request.g.dart';
 class UserSignInRequest with _$UserSignInRequest {
   const factory UserSignInRequest({
     required String phoneNumber,
+    required String code,
   }) = _UserSignInRequest;
 
   factory UserSignInRequest.fromJson(Map<String, dynamic> json) =>
