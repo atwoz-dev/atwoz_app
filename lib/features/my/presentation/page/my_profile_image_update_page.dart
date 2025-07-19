@@ -8,7 +8,7 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
 import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
-import 'package:atwoz_app/features/my/presentation/controller/profile_image_update_notifier.dart';
+import 'package:atwoz_app/features/my/presentation/provider/profile_image_update_notifier.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

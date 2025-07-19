@@ -1,6 +1,6 @@
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/store/presentation/widget/heart_history_card.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/features/store/domain/provider/domain.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +12,7 @@ class HeartHistoryPage extends ConsumerStatefulWidget {
   ConsumerState<HeartHistoryPage> createState() => _HeartHistoryPageState();
 }
 
-class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage>
-    with ToastMixin {
+class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
   bool _isLoadingMore = false;
   final _scrollController = ScrollController();
 
@@ -44,7 +43,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage>
           .read(heartListNotifierProvider.notifier)
           .loadMoreHeartTractions();
     } catch (e) {
-      addToastMessage('표시할 항목이 더 이상 없습니다.');
+      showToastMessage('표시할 항목이 더 이상 없습니다.');
     } finally {
       if (mounted) {
         setState(() {
@@ -73,7 +72,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage>
     final transactions = state.heartTractions.transactions;
 
     return Scaffold(
-      appBar: DefaultAppBar(title: '하트 사용 내역'),
+      appBar: const DefaultAppBar(title: '하트 사용 내역'),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
         child: ListView.builder(

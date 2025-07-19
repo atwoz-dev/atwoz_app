@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/common/model.dart';
 import '../widget/widget.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/error_dialog.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({
@@ -115,7 +116,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
   }
 
-  void _handleErrorChanged(ProfileErrorType? error) {
+  void _handleErrorChanged(DialogueErrorType? error) {
     if (error == null) return;
 
     ErrorDialog.open(
