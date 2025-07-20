@@ -31,11 +31,8 @@ class HomeNotifier extends _$HomeNotifier {
       profile = await profileNotifier.getProfileFromHive();
 
       if (profile.isDefault) {
-        // Hive에도 데이터가 없으면 서버에서 가져와서 Hive에 저장
         profile = await profileNotifier.fetchProfileToHiveFromServer();
       }
-
-      profileNotifier.profile = profile;
     }
 
     state = AsyncData(state.value!.copyWith(nickname: profile.nickname));

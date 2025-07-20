@@ -151,10 +151,17 @@ class OnboardingCertificationPageState
               onPressed: isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
-                      await authUseCase.signIn(UserSignInRequest(
+                      final result = await authUseCase.signIn(UserSignInRequest(
                         phoneNumber: widget.phoneNumber,
                       ));
-                      navigate(context, route: AppRoute.signUp);
+                      if (!context.mounted) return;
+                      navigate(
+                        context,
+                        route: result.isProfileSettingNeeded
+                            ? AppRoute.signUp
+                            : AppRoute.home,
+                        method: NavigationMethod.go,
+                      );
                     }
                   : null,
               child: Text(

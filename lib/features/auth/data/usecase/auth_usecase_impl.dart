@@ -1,3 +1,8 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:android_id/android_id.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/mixin/toast_mixin.dart';
@@ -11,9 +16,12 @@ import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../core/util/shared_preference/shared_preference.dart';
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
@@ -42,10 +50,11 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<UserResponse> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
+    log('QQQ::: user response $userResponse');
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
       await _localStorage.saveItem<UserResponse>(_user, userResponse);
-
+      log('QQQ::: save access token ${userResponse.accessToken}');
       return userResponse;
     } catch (e) {
       logD('유저 데이터 저장 실패: $e');
@@ -58,6 +67,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
     final cookieJar = await _apiService.cookieJar;
+    // TODO(Han): notification 초기화 필요
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
@@ -98,6 +108,52 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<String?> getRefreshToken() async {
     return _localStorage.getEncrypted(_refreshToken);
+  }
+
+  @override
+  Future<void> initializeFcmToken() async {
+    final fcmToken = await FirebaseManager().getFcmToken();
+    if (fcmToken == null) {
+      Log.e('FCM 토큰을 가져오지 못했습니다.');
+      return;
+    }
+
+    final existFcmToken =
+        SharedPreferenceManager.getValue(SharedPreferenceKeys.fcmToken);
+    if (existFcmToken == fcmToken) return;
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.fcmToken,
+      fcmToken,
+    );
+
+    await _registerDeviceToServer(fcmToken);
+  }
+
+  Future<void> _registerDeviceToServer(String token) async {
+    try {
+      final deviceId = await _getDeviceId();
+      await _apiService.postJson(
+        '/notifications/device-registration',
+        requiresAuthToken: true,
+        data: {
+          'deviceId': deviceId ?? '',
+          'registrationToken': token,
+        },
+      );
+    } catch (e) {
+      Log.e('기기 등록 실패: $e');
+    }
+  }
+
+  Future<String?> _getDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      final iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor;
+    } else if (Platform.isAndroid) {
+      return await const AndroidId().getId();
+    }
+    return null;
   }
 
   @override

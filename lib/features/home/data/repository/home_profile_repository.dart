@@ -7,11 +7,11 @@ final homeProfileRepositoryProvider = Provider<HomeProfileRepository>((ref) {
 });
 
 class HomeProfileRepository extends BaseRepository {
-  HomeProfileRepository(Ref ref) : super(ref, '/member');
+  HomeProfileRepository(Ref ref) : super(ref, '');
 
   Future<HomeProfileResponseDto> getProfile() async {
     final response = await apiService.getJson(
-      '$path/cache',
+      '$path/member/cache',
       requiresAuthToken: true,
     );
 

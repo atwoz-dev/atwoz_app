@@ -1,6 +1,5 @@
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
@@ -17,7 +16,7 @@ class UserRepository extends BaseRepository {
   // 회원가입 및 로그인
   Future<UserResponse> signIn(UserSignInRequest data) async {
     final response = await apiService.postJson(
-      '$path/login',
+      '$path/login/test',
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
       },
