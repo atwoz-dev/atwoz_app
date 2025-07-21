@@ -152,7 +152,7 @@ Future<bool?> _showUpdateDormantStatus(
             const Gap(16),
             Text(
               '프로필이 상대방에게 노출되지 않고\n'
-              '받은 호감과 메시지가 모두 사라집니다\n'
+              '휴면 회원 전환 시 매칭 포함 모든 활동이 제한됩니다\n'
               '휴면회원으로 전환하시겠습니까?\n',
               style: Fonts.body02Medium().copyWith(
                 fontWeight: FontWeight.w400,
