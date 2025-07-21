@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -7,6 +8,7 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
@@ -28,28 +30,54 @@ class OnboardingCertificationPage extends ConsumerStatefulWidget {
 }
 
 class OnboardingCertificationPageState
-    extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
+    extends BaseConsumerStatefulPageState<OnboardingCertificationPage>
+    with ToastMixin {
   OnboardingCertificationPageState();
 
-  final TextEditingController _phoneController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
+  final _codeController = TextEditingController();
+  final _focusNode = FocusNode();
+  bool _isButtonEnabled = false;
   String? validationError; // 유효성 검사 결과를 저장
 
   @override
   void initState() {
     super.initState();
 
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        _validateInput(_phoneController.text); // 포커스 아웃 시 유효성 검사
+    // 인증번호 자동 전송
+    Future.microtask(() async {
+      try {
+        final authUseCase = ref.read(authUsecaseProvider);
+        await authUseCase.sendSmsVerificationCode(widget.phoneNumber);
+        addToastMessage('인증번호가 발송되었습니다.');
+      } catch (e) {
+        Log.e('SMS 발송 실패', errorObject: e);
+        addToastMessage('인증번호 발송에 실패했습니다.');
+      }
+    });
+
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        _validateInput(_codeController.text); // 포커스 아웃 시 유효성 검사
+      }
+    });
+
+    _codeController.addListener(() {
+      final codeNumber = _codeController.text.replaceAll(RegExp(r'\D'), '');
+      if (codeNumber.length >= 6) {
+        _validateInput(codeNumber); // 6자리 이상일 때만 유효성 검사
+      } else {
+        safeSetState(() {
+          validationError = null;
+          _isButtonEnabled = false;
+        });
       }
     });
   }
 
   @override
   void dispose() {
-    _phoneController.dispose();
-    focusNode.dispose(); // FocusNode도 해제
+    _codeController.dispose();
+    _focusNode.dispose(); // FocusNode도 해제
     super.dispose();
   }
 
@@ -57,20 +85,19 @@ class OnboardingCertificationPageState
     if (input.isEmpty) {
       setState(() {
         validationError = null; // 빈 값일 경우 에러 메시지 제거
+        _isButtonEnabled = false;
       });
       return;
     }
     final isValid = Validation.sixDigitNumber.hasMatch(input);
     safeSetState(() {
       validationError = isValid ? null : '인증번호를 확인해 주세요.';
+      _isButtonEnabled = isValid;
     });
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    final bool isButtonEnabled =
-        _phoneController.text.isNotEmpty && validationError == null;
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
       onTap: () {
@@ -103,12 +130,13 @@ class OnboardingCertificationPageState
                             Expanded(
                               flex: 7,
                               child: DefaultTextFormField(
-                                focusNode: focusNode,
+                                focusNode: _focusNode,
                                 autofocus: false,
-                                controller: _phoneController,
-                                keyboardType: TextInputType.phone,
+                                controller: _codeController,
+                                keyboardType: TextInputType.number,
                                 hintText: '000000',
                                 fillColor: Palette.colorGrey100,
+                                // errorText: validationError,
                                 onFieldSubmitted: _validateInput,
                               ),
                             ),
@@ -123,9 +151,21 @@ class OnboardingCertificationPageState
                                   textStyle: Fonts.body02Regular()
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
-                                  onPressed: () {
-                                    Log.d("인증번호 재발송");
-                                    // TODO: 재발송 로직 추가
+                                  onPressed: () async {
+                                    try {
+                                      final authUseCase =
+                                          ref.read(authUsecaseProvider);
+                                      await authUseCase.sendSmsVerificationCode(
+                                          widget.phoneNumber);
+                                      safeSetState(() {
+                                        validationError = null; // 기존 오류 메시지 제거
+                                      });
+                                      _codeController.clear();
+                                      addToastMessage('인증번호가 재전송되었습니다.');
+                                    } catch (e) {
+                                      Log.e('재발송 실패', errorObject: e);
+                                      addToastMessage('인증번호 재발송에 실패했습니다.');
+                                    }
                                   },
                                   child: const Text('재발송'),
                                 ),
@@ -148,18 +188,45 @@ class OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed: isButtonEnabled
+              onPressed: _isButtonEnabled
                   ? () async {
                       final authUseCase = ref.read(authUsecaseProvider);
-                      await authUseCase.signIn(UserSignInRequest(
-                        phoneNumber: widget.phoneNumber,
-                      ));
-                      navigate(context, route: AppRoute.signUp);
+                      final inputCode = _codeController.text;
+
+                      try {
+                        // 1. 인증번호 검증
+                        final userData = await authUseCase.signIn(
+                            UserSignInRequest(
+                                phoneNumber: widget.phoneNumber,
+                                code: inputCode));
+
+                        if (userData.isProfileSettingNeeded) {
+                          navigate(context, route: AppRoute.signUp);
+                        } else {
+                          // 프로필 설정이 필요하지 않은 경우
+                          navigate(context,
+                              route: AppRoute.home,
+                              method: NavigationMethod.go);
+                        }
+                      } catch (e) {
+                        // TODO(mh): 인증번호 불일치 시 처리되어야함
+                        // 400  : 인증번호가 일치하지 않는 경우.
+                        // 404 : 인증번호가 존재하지 않는 경우.
+                        // setState(() {
+                        //   validationError = '인증번호가 일치하지 않습니다.';
+                        // });
+
+                        Log.e('인증 실패', errorObject: e);
+                        _codeController.clear();
+                        safeSetState(() {
+                          validationError = '인증에 실패했습니다.';
+                        });
+                      }
                     }
                   : null,
               child: Text(
                 '인증하기',
-                style: Fonts.body01Medium(isButtonEnabled
+                style: Fonts.body01Medium(_isButtonEnabled
                         ? palette.onPrimary
                         : Palette.colorGrey400)
                     .copyWith(fontWeight: FontWeight.w900),

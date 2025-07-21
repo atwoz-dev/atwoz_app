@@ -13,7 +13,7 @@ class IntroducedProfileRepository extends BaseRepository {
 
   Future<List<IntroducedProfileDto>> getProfiles(String category) async {
     final res =
-        await apiService.getJson('$path/$category', requiresAuthToken: true);
+        await apiService.getJson('$path/$category', requiresAccessToken: true);
 
     final data = res['data'];
     if (data is! List<Map<String, dynamic>>) {
