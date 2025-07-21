@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -33,7 +36,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       Log.e(e);
       state = state.copyWith(
         isLoaded: true,
-        error: ProfileErrorType.network,
+        error: DialogueErrorType.network,
       );
     }
   }
@@ -63,7 +66,7 @@ class ProfileNotifier extends _$ProfileNotifier {
           );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: ProfileErrorType.network);
+      state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 
@@ -86,7 +89,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: ProfileErrorType.network);
+      state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 
@@ -105,7 +108,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: ProfileErrorType.network);
+      state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 
@@ -122,7 +125,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: ProfileErrorType.network);
+      state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 
@@ -138,7 +141,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       _initializeProfileState(userId);
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: ProfileErrorType.network);
+      state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 

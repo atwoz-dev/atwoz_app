@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,7 +13,7 @@ class ProfileState with _$ProfileState {
     required int heartPoint,
     required String message,
     required bool isLoaded,
-    required ProfileErrorType? error,
+    required DialogueErrorType? error,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
