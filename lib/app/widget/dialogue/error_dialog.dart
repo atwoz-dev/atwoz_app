@@ -1,8 +1,8 @@
 import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:gap/gap.dart';
 
 class ErrorDialog extends StatelessWidget {
@@ -12,7 +12,7 @@ class ErrorDialog extends StatelessWidget {
     required this.onConfirm,
   });
 
-  final ProfileErrorType error;
+  final DialogueErrorType error;
   final VoidCallback onConfirm;
 
   @override
@@ -53,7 +53,7 @@ class ErrorDialog extends StatelessWidget {
 
   static Future<void> open(
     BuildContext context, {
-    required ProfileErrorType error,
+    required DialogueErrorType error,
     required VoidCallback onConfirm,
   }) =>
       showDialog<bool>(

@@ -16,6 +16,7 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/dormant_account_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/my_profile_image_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/profile_preview_page.dart';
@@ -27,6 +28,7 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
+import 'package:atwoz_app/features/store/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +76,7 @@ enum AppRoute {
   // Store
   store('store'),
   storeNavigation('store-navigation'),
+  heartHistory('heart-history'),
 
   // Notification
   notification('notification'),
@@ -111,7 +114,8 @@ enum AppRoute {
   privacyPolicy('privacy-policy'),
   termsOfUse('terms-of-use'),
   myProfileImageUpdate('my-profile-image-update'),
-  profilePreview('profile-preview');
+  profilePreview('profile-preview'),
+  dormantAccount('dormant-account');
 
   final String name;
   const AppRoute(this.name);
@@ -222,6 +226,10 @@ final allRoutes = [
             name: AppRoute.storeNavigation.name,
             builder: (context, state) => const StoreNavigationPage(),
           ),
+          NamedGoRoute(
+            name: AppRoute.heartHistory.name,
+            builder: (context, state) => const HeartHistoryPage(),
+          ),
         ],
       ),
       // Onboard routes
@@ -315,7 +323,16 @@ final allRoutes = [
               return ProfilePreviewPage(profile: args.profile);
             },
           ),
+          NamedGoRoute(
+            name: AppRoute.dormantAccount.name,
+            builder: (_, __) => const DormantAccountPage(),
+          ),
         ],
+      ),
+      // TODO: 추후 삭제
+      NamedGoRoute(
+        name: AppRoute.navigation.name,
+        builder: (context, state) => const NavigationPage(),
       ),
       NamedGoRoute(
         name: AppRoute.idealSetting.name,
