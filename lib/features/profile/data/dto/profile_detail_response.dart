@@ -6,7 +6,7 @@ part 'profile_detail_response.g.dart';
 @freezed
 class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
-    required BasicMemberInformation basicMemberInfo,
+    required BasicMemberInformation memberInfo,
     required MatchInformation? matchInfo,
     @Default([]) List<ProfileInterview> interviews,
   }) = _ProfileDetailResponse;

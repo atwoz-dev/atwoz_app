@@ -23,7 +23,7 @@ class MyProfile with _$MyProfile {
     required String nickname,
     required int age,
     required int height,
-    required GenderEnum gender, // constants/enum 재사용
+    required Gender gender, // constants/enum 재사용
     required String phoneNum,
   }) = _MyProfile;
 }

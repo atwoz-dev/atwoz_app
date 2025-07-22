@@ -19,7 +19,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
     @HiveField(3) required String nickname,
     @HiveField(4) required String gender,
     @HiveField(5) String? kakaoId,
-    @HiveField(6) required int yearOfBirth,
+    @HiveField(6) required int age,
     @HiveField(7) required int height,
     @HiveField(8) required String phoneNumber,
 
@@ -54,7 +54,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
     isVip: false,
     nickname: '',
     gender: '',
-    yearOfBirth: 0,
+    age: 0,
     height: 0,
     phoneNumber: '',
     job: '',
