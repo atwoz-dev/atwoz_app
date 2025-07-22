@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class AuthUseCase {
-  Future<UserData> signIn(UserSignInRequest user);
+  Future<UserResponse> signIn(UserSignInRequest user);
   Future<void> signOut();
   Future<String?> getAccessToken();
   void setAccessToken(String accessToken);
@@ -17,5 +17,4 @@ abstract class AuthUseCase {
   Future<void> deleteProfilePhoto(int index);
   Future<void> uploadProfile(ProfileUploadRequest profileData);
   Future<ProfileImageResponse?> fetchProfileImages();
-  Future<void> sendSmsVerificationCode(String phoneNumber);
 }
