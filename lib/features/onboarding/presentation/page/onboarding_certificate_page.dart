@@ -1,8 +1,8 @@
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/validation.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
@@ -30,8 +30,7 @@ class OnboardingCertificationPage extends ConsumerStatefulWidget {
 }
 
 class OnboardingCertificationPageState
-    extends BaseConsumerStatefulPageState<OnboardingCertificationPage>
-    with ToastMixin {
+    extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
   OnboardingCertificationPageState();
 
   final _codeController = TextEditingController();
@@ -48,10 +47,10 @@ class OnboardingCertificationPageState
       try {
         final authUseCase = ref.read(authUsecaseProvider);
         await authUseCase.sendSmsVerificationCode(widget.phoneNumber);
-        addToastMessage('인증번호가 발송되었습니다.');
+        showToastMessage('인증번호가 발송되었습니다.');
       } catch (e) {
         Log.e('SMS 발송 실패', errorObject: e);
-        addToastMessage('인증번호 발송에 실패했습니다.');
+        showToastMessage('인증번호 발송에 실패했습니다.');
       }
     });
 
@@ -161,10 +160,10 @@ class OnboardingCertificationPageState
                                         validationError = null; // 기존 오류 메시지 제거
                                       });
                                       _codeController.clear();
-                                      addToastMessage('인증번호가 재전송되었습니다.');
+                                      showToastMessage('인증번호가 재전송되었습니다.');
                                     } catch (e) {
                                       Log.e('재발송 실패', errorObject: e);
-                                      addToastMessage('인증번호 재발송에 실패했습니다.');
+                                      showToastMessage('인증번호 재발송에 실패했습니다.');
                                     }
                                   },
                                   child: const Text('재발송'),
