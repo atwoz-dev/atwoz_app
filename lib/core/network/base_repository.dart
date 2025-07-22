@@ -30,10 +30,9 @@ abstract class BaseRepository {
     String? contentType,
     void Function()? onStart,
     void Function()? onEnd,
-    bool requiresAccessToken = true,
-    bool requiresRefreshToken = false,
-    bool requiresRefreshCookie = false,
+    bool requiresAuthToken = true,
     Json? queryParameters,
+    String? business,
   }) async {
     Stopwatch stopwatch = Stopwatch()..start();
     onStart?.call();
@@ -42,9 +41,7 @@ abstract class BaseRepository {
         endpoint,
         headers: customHeaders,
         contentType: contentType,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
+        requiresAuthToken: requiresAuthToken,
         queryParameters: queryParameters,
         converter: converter,
       );

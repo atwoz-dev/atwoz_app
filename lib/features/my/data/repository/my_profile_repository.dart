@@ -15,6 +15,7 @@ class MyProfileRepository extends BaseRepository {
     try {
       await apiService.putJson(
         '$path/profile',
+        requiresAuthToken: true,
         data: profile.toJson(),
       );
 

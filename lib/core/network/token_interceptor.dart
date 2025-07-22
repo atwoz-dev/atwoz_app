@@ -14,14 +14,14 @@ class TokenInterceptor extends Interceptor with LogMixin {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (options.headers.containsKey('requiresAccessToken')) {
-      if (options.headers['requiresAccessToken'] == true) {
+    if (options.headers.containsKey('requiresAuthToken')) {
+      if (options.headers['requiresAuthToken'] == true) {
         final String? token =
             await ref.read(authUsecaseProvider).getAccessToken();
         options.headers.addAll(<String, Object?>{'Authorization': token});
       }
 
-      options.headers.remove('requiresAccessToken');
+      options.headers.remove('requiresAuthToken');
     }
     return handler.next(options);
   }
@@ -48,8 +48,31 @@ class TokenInterceptor extends Interceptor with LogMixin {
         final clonedRequest = await Dio().fetch(err.requestOptions);
         return handler.resolve(clonedRequest);
       }
+      // // 401 중에서도 토큰 만료인 경우에만 토큰 재발급 시도
+      // // TODO: 토큰 만료 아닐때는 어케 함?
+      // try {
+      //   // 토큰 재발급
+      //   final Map<String, dynamic>? newToken = await authService.refreshToken();
 
-      // TODO: 토큰 만료 아닐때는 어케 함?
+      //   if (newToken != null) {
+      //     // 새로 받아 온 토큰으로 Authorization 헤더 갱신
+      //     options.headers['Authorization'] = newToken['accessToken'];
+      //     options.headers['Refresh-Token'] = newToken['refreshToken'];
+
+      //     // 새로운 토큰으로 원래 요청 재시도
+      //     final clonedRequest = await Dio().fetch(options);
+      //     return handler.resolve(clonedRequest);
+      //   }
+      // } catch (refreshError) {
+      //   if (refreshError is DioException) {
+      //     // 토큰 재발급 실패 시 로그아웃
+      //     WidgetsBinding.instance.addPostFrameCallback((_) {
+      //       authService.signOut().then((_) {
+      //         router.go('/auth'); // 인증 페이지로 이동
+      //       });
+      //     });
+      //   }
+      // }
     }
 
     super.onError(err, handler);
