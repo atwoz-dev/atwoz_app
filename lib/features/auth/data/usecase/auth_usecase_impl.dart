@@ -40,11 +40,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   static const String _user = 'AuthProvider.user';
 
   @override
-  Future<UserData> signIn(UserSignInRequest user) async {
+  Future<UserResponse> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
-      await _localStorage.saveItem<UserData>(_user, userResponse);
+      await _localStorage.saveItem<UserResponse>(_user, userResponse);
 
       return userResponse;
     } catch (e) {
@@ -124,12 +124,5 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
       Log.e("❌ 프로필 업로드 실패: $e");
       rethrow;
     }
-  }
-
-  @override
-  Future<void> sendSmsVerificationCode(String phoneNumber) async {
-    await _userRepository.sendVerificationCode(
-      phoneNumber: phoneNumber,
-    );
   }
 }

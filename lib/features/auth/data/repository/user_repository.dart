@@ -15,54 +15,33 @@ class UserRepository extends BaseRepository {
   UserRepository(Ref ref) : super(ref, '/member');
 
   // 회원가입 및 로그인
-  Future<UserData> signIn(UserSignInRequest data) async {
-    // 이건 Map<String, dynamic>으로 받아야 함
-    final Map<String, dynamic> json = await apiService.postJson(
+  Future<UserResponse> signIn(UserSignInRequest data) async {
+    final response = await apiService.postJson(
       '$path/login',
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
-        "code": data.code
       },
-      requiresAccessToken: false,
+      requiresAuthToken: false,
     );
 
     await ref.read(authUsecaseProvider).getRefreshToken();
 
-    // 전체 응답 파싱
-    final UserResponse userResponse = UserResponse.fromJson(json);
-
-    // data만 리턴
-    return userResponse.data;
+    final userResponse = UserResponse.fromJson(response['data']);
+    return userResponse;
   }
 
   // 로그아웃
   Future<void> signOut() => apiService.getJson(
         '$path/logout',
-        requiresRefreshCookie: true,
+        requiresAuthToken: true,
       );
 
   // 프로필 업데이트
   Future<void> updateProfile(ProfileUploadRequest requestData) async {
-    try {
-      await apiService.putJson(
-        '$path/profile',
-        data: requestData.toJson(),
-      );
-
-      Log.d("프로필 업데이트 성공");
-    } catch (e, st) {
-      Log.e("프로필 업데이트 실패", errorObject: e, stackTrace: st);
-      rethrow;
-    }
-  }
-
-  // 인증코드 발송
-  Future<void> sendVerificationCode({
-    required String phoneNumber,
-  }) async {
-    await apiService.getJson(
-      '$path/code?phoneNumber=${phoneNumber.removePhoneFormat}',
-      requiresAccessToken: false,
+    await apiService.putJson(
+      '$path/profile',
+      data: requestData.toJson(),
+      requiresAuthToken: true,
     );
   }
 }
