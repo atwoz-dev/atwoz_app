@@ -192,6 +192,19 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),
+                  DefaultElevatedButton(
+                    primary: palette.primary,
+                    onPressed: () async {
+                      navigate(
+                        context,
+                        route: AppRoute.dormantAccount,
+                      );
+                    },
+                    child: Text(
+                      '휴면 회원',
+                      style: Fonts.body01Regular(palette.onPrimary),
+                    ),
+                  ),
                 ],
               ),
             )));

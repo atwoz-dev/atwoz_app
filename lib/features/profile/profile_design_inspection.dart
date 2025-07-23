@@ -117,5 +117,5 @@ enum ProfileDesignInspectionType {
 
 ProfileDesignInspectionType? kDebugPageType;
 
-const targetUserId = 9;
-const myUserId = 1;
+const targetUserId = 10;
+const myUserId = 11;

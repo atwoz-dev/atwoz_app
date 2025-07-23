@@ -1,9 +1,9 @@
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
-import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
@@ -26,7 +26,7 @@ final authUsecaseProvider = Provider<AuthUseCase>((ref) {
 });
 
 /// AuthUseCaseImpl에서 필요한 의존성을 명확하게 주입
-class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
+class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   final UserRepository _userRepository;
   final LocalStorage _localStorage;
   final ApiServiceImpl _apiService;
@@ -49,7 +49,7 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
       return userResponse;
     } catch (e) {
       logD('유저 데이터 저장 실패: $e');
-      addToastMessage('로그인 실패');
+      showToastMessage('로그인 실패');
       rethrow;
     }
   }
@@ -93,6 +93,11 @@ class AuthUseCaseImpl with ToastMixin, LogMixin implements AuthUseCase {
   @override
   Future<String?> getAccessToken() async {
     return _localStorage.getEncrypted(_accessToken);
+  }
+
+  @override
+  void setAccessToken(String accessToken) {
+    _localStorage.saveEncrypted(_accessToken, accessToken);
   }
 
   @override

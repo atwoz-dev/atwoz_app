@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
-import 'package:atwoz_app/features/my/domain/use_case/fetch_profile_images_use_case.dart';
-import 'package:atwoz_app/features/my/domain/use_case/update_my_profile_use_case.dart';
+import 'package:atwoz_app/features/my/domain/usecase/fetch_profile_images_use_case.dart';
+import 'package:atwoz_app/features/my/domain/usecase/update_my_profile_use_case.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
