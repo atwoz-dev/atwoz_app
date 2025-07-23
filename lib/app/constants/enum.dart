@@ -36,14 +36,16 @@ enum Gender {
     for (final value in Gender.values) value.name.toUpperCase(): value,
   };
 
+  static final Map<String, Gender> _byLabel = {
+    for (final value in Gender.values) value.label.toUpperCase(): value,
+  };
+
   static Gender parse(String value) =>
       _byValue[value.toUpperCase()] ?? Gender.male;
-}
 
-const Map<Gender, String> genderMap = {
-  Gender.female: "여자",
-  Gender.male: "남자",
-};
+  static Gender fromLabel(String value) =>
+      _byLabel[value.toUpperCase()] ?? Gender.male;
+}
 
 // 학력
 enum HighestEducationEnum {

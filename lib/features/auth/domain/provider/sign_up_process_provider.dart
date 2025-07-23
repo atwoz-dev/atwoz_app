@@ -92,11 +92,7 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateGender(String gender) {
-    final selectedEnum = genderMap.entries
-        .firstWhere(
-          (entry) => entry.value == gender,
-        )
-        .key;
+    final selectedEnum = Gender.fromLabel(gender);
 
     state = state.copyWith(selectedGender: selectedEnum);
   }
@@ -106,7 +102,8 @@ class SignUpProcess extends _$SignUpProcess {
     final selectedEnum = educationMap.entries
         .firstWhere(
           (entry) => entry.value == education,
-          orElse: () => MapEntry(HighestEducationEnum.other, "기타"), // 기본값 설정
+          orElse: () =>
+              const MapEntry(HighestEducationEnum.other, "기타"), // 기본값 설정
         )
         .key; // 키값(Enum) 가져오기
 
