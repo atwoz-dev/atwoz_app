@@ -1,7 +1,9 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/temp.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/core/util/date_time_util.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sign_up_process_state.freezed.dart';
@@ -20,14 +22,14 @@ class SignUpProcessState with _$SignUpProcessState {
     @Default(null) int? selectedHeight,
     @Default(null) String? selectedJob,
     @Default(null) String? selectedLocation,
-    @Default(null) HighestEducationEnum? selectedEducation, // 변경: Enum 타입 적용
+    @Default(null) Education? selectedEducation, // 변경: Enum 타입 적용
     @Default(null) String? selectedFirstMbtiLetter,
     @Default(null) String? selectedSecondMbtiLetter,
     @Default(null) String? selectedThirdMbtiLetter,
     @Default(null) String? selectedFourthMbtiLetter,
-    @Default(null) SmokingStatusEnum? selectedSmoking, // 변경: Enum 타입 적용
-    @Default(null) DrinkingStatusEnum? selectedDrinking, // 변경: Enum 타입 적용
-    @Default(null) ReligionEnum? selectedReligion, // 변경: Enum 타입 적용
+    @Default(null) SmokingStatus? selectedSmoking, // 변경: Enum 타입 적용
+    @Default(null) DrinkingStatus? selectedDrinking, // 변경: Enum 타입 적용
+    @Default(null) Religion? selectedReligion, // 변경: Enum 타입 적용
     @Default(<String>[]) List<String> selectedHobbies,
   }) = _SignUpProcessState;
 
