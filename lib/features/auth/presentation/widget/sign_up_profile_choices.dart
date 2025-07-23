@@ -1,11 +1,7 @@
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/constants/temp.dart';
-import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/app/widget/input/auto_complete.dart';
+import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/app/widget/input/list_wheel_input.dart';
 import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
@@ -13,17 +9,19 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget buildSelectInput<T>({
-  required T? selectedValue,
-  required Map<T, String> valueMap,
+Widget buildSelectInput({
+  required String? selectedValue,
+  required List<String> options,
   required void Function(String?) onValueChanged,
 }) {
   return SingleSelectListChip(
-    options: valueMap.values.toList(),
-    selectedOption: selectedValue != null ? valueMap[selectedValue] : null,
+    options: options,
+    selectedOption: selectedValue,
     onSelectionChanged: onValueChanged,
   );
 }
@@ -64,13 +62,13 @@ Widget buildJobInput({
   required SignUpProcess signUpNotifier,
 }) {
   return SingleSelectListChip(
-    options: jobOptions,
+    options: Job.values.map((e) => e.label).toList(),
     selectedOption: selectedJob,
     onSelectionChanged: signUpNotifier.updateSelectedJob,
   );
 }
 
-class LocationInputWidget extends StatefulWidget {
+class LocationInputWidget extends ConsumerStatefulWidget {
   final String? selectedLocation;
   final Function(String?) onLocationUpdated;
 
@@ -81,163 +79,139 @@ class LocationInputWidget extends StatefulWidget {
   });
 
   @override
-  State<LocationInputWidget> createState() => _LocationInputWidgetState();
+  ConsumerState<LocationInputWidget> createState() =>
+      _LocationInputWidgetState();
 }
 
-class _LocationInputWidgetState extends State<LocationInputWidget> {
-  late final TextEditingController locationController;
-  late final FocusNode locationFocusNode;
+class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
+  late final TextEditingController _controller;
+
+  List<String> _filteredLocations = [];
 
   @override
   void initState() {
     super.initState();
-    locationController = TextEditingController(text: widget.selectedLocation);
-    locationFocusNode = FocusNode();
-
-    locationController.addListener(() {
-      if (mounted) setState(() {});
-    });
+    _controller = TextEditingController(text: widget.selectedLocation);
   }
 
   @override
   void dispose() {
-    locationController.dispose();
-    locationFocusNode.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  String extractInitialConsonant(String input) {
-    const int baseCode = 0xAC00; // "가"의 유니코드
-    const List<String> initialConsonants = [
-      "ㄱ",
-      "ㄲ",
-      "ㄴ",
-      "ㄷ",
-      "ㄸ",
-      "ㄹ",
-      "ㅁ",
-      "ㅂ",
-      "ㅃ",
-      "ㅅ",
-      "ㅆ",
-      "ㅇ",
-      "ㅈ",
-      "ㅉ",
-      "ㅊ",
-      "ㅋ",
-      "ㅌ",
-      "ㅍ",
-      "ㅎ"
-    ];
-
-    final buffer = StringBuffer();
-
-    for (final char in input.runes) {
-      if (char >= baseCode && char <= 0xD7A3) {
-        final index = ((char - baseCode) / (21 * 28)).floor();
-        buffer.write(initialConsonants[index]);
-      } else {
-        buffer.write(String.fromCharCode(char)); // 한글이 아닌 경우 그대로 추가
-      }
-    }
-
-    return buffer.toString();
-  }
-
-  List<String> getCityAndRegions(String city) {
-    final cityData = cityRegionMap.firstWhere(
-      (e) => e['city'] == city,
-      orElse: () => {'regions': []},
-    );
-    return [...cityData['regions'].map((region) => '$city $region')];
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> cityOptions =
-        cityRegionMap.map((e) => e['city'] as String).toList();
+    final notifier = ref.read(signUpProcessProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoComplete<String>(
-          suffix: DefaultIcon.button(
-            colorFilter: DefaultIcon.fillColor(Palette.colorGrey500),
-            IconPath.closeCircle,
-            size: 20,
-            onPressed: () {
-              if (mounted) {
-                locationController.clear();
-                widget.onLocationUpdated(null);
-              }
-            },
-          ),
-          textEditingController: locationController,
-          focusNode: locationFocusNode,
-          optionsBuilder: (String query) {
-            if (query.isEmpty) {
-              return cityOptions; // 입력값이 없으면 모든 city 반환
-            }
-
-            final List<String> matchingCities = [];
-            final queryInitial = extractInitialConsonant(query);
-
-            for (final city in cityOptions) {
-              final cityInitial = extractInitialConsonant(city);
-              if (city.contains(query) ||
-                  cityInitial.startsWith(queryInitial)) {
-                matchingCities.add(city);
-              }
-            }
-
-            if (matchingCities.contains(query)) {
-              final cityAndRegions = getCityAndRegions(query);
-              return cityAndRegions;
-            }
-
-            return matchingCities;
+        TextFormField(
+          controller: _controller,
+          onChanged: (value) {
+            setState(() {
+              _filteredLocations = addressData.searchLocations(value);
+            });
           },
-          onSubmitted: (String value) {
-            if (mounted) {
-              widget.onLocationUpdated(value);
-              locationController.text = value;
-            }
-          },
-          hintText: '예: 서울특별시, 서울특별시 강남구',
-        ),
-        if (locationController.text.isEmpty)
-          Padding(
-            padding: EdgeInsets.only(top: 8.h),
-            child: DefaultOutlinedButton(
-              padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
-              primary: Palette.colorGrey100,
-              textColor: Palette.colorGrey800,
-              expandedWidth: true,
-              onPressed: () {
-                if (mounted) {
-                  const currentLocation = '현재 위치';
-                  widget.onLocationUpdated(currentLocation);
-                  locationController.text = currentLocation;
-                }
-              },
-              child: const Text('현재 위치로 설정하기'),
+          decoration: InputDecoration(
+            hintText: '지역을 입력하세요',
+            hintStyle: Fonts.body02Medium().copyWith(
+              fontWeight: FontWeight.w400,
+              color: const Color(0xff8D92A0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Color(0xffEDEEF0),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Palette.colorBlack,
+              ),
             ),
           ),
+        ),
+        const SizedBox(height: 8),
+        if (_controller.text.isEmpty)
+          GestureDetector(
+            onTap: () {
+              notifier.updateLocation();
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xffDCDEE3),
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  '현재 위치로 설정하기',
+                  style: Fonts.body02Medium(Palette.colorBlack),
+                ),
+              ),
+            ),
+          ),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: context.screenHeight * 0.4, // 스크롤 가능한 최대 높이 설정
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: _filteredLocations.map((location) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _controller.text = location;
+                      widget.onLocationUpdated(location);
+                      _filteredLocations.clear(); // 검색 후 결과 초기화
+                    });
+
+                    FocusScope.of(context).unfocus(); // 키보드 내리기
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 14,
+                      horizontal: 16,
+                    ),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Palette.colorGrey50,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      location,
+                      style: Fonts.body02Medium(Palette.colorGrey800),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
       ],
     );
   }
 }
 
 Widget buildEducationInput({
-  required HighestEducationEnum? selectedEducation,
+  required Education? selectedEducation,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = [...educationMap.values];
+  final options = [...Education.values.map((e) => e.label)];
 
   return SingleSelectListChip(
     options: options,
-    selectedOption:
-        selectedEducation != null ? educationMap[selectedEducation] : null,
+    selectedOption: selectedEducation?.label,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateEducation(updatedSelection);
     },
@@ -288,7 +262,7 @@ Widget buildMbtiInput({
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, // 각 행에 4개의 카드
             mainAxisSpacing: 8.0, // 카드 간 세로 간격
             crossAxisSpacing: 8.0, // 카드 간 가로 간격
@@ -328,32 +302,32 @@ Widget buildMbtiInput({
 }
 
 Widget buildSmokingInput({
-  required SmokingStatusEnum? selectedSmoking,
+  required SmokingStatus? selectedSmoking,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedSmoking,
-      valueMap: smokingMap,
+      selectedValue: selectedSmoking?.label,
+      options: SmokingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateSmoking,
     );
 
 Widget buildDrinkingInput({
-  required DrinkingStatusEnum? selectedDrinking,
+  required DrinkingStatus? selectedDrinking,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedDrinking,
-      valueMap: drinkingMap,
+      selectedValue: selectedDrinking?.label,
+      options: DrinkingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateDrinking,
     );
 
 Widget buildReligionInput({
-  required ReligionEnum? selectedReligion,
+  required Religion? selectedReligion,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedReligion,
-      valueMap: religionMap,
+      selectedValue: selectedReligion?.label,
+      options: Religion.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateReligion,
     );
 
