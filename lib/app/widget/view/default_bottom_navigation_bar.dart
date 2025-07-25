@@ -36,7 +36,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         icon: IconPath.interview,
         iconFill: IconPath.interviewFill,
         label: '인터뷰',
-        route: AppRoute.introduce),
+        route: AppRoute.interview),
     _NavItem(
         icon: IconPath.mypage,
         iconFill: IconPath.mypageFill,
