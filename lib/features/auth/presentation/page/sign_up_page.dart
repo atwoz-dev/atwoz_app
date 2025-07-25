@@ -43,7 +43,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
     _nicknameController.addListener(() {
       final nickname = _nicknameController.text.trim();
       final isValid = Validation.nickname.hasMatch(nickname);
-      if (nickname.length >= 2 && nickname.length < 10 && isValid) {
+      if (nickname.length >= 2 && nickname.length <= 10 && isValid) {
         safeSetState(() {
           isButtonEnabled = true;
         });
