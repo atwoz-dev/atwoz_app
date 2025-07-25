@@ -64,6 +64,7 @@ class ApiServiceImpl implements ApiService {
           connectTimeout: timeout,
           receiveTimeout: timeout,
         ),
+        // TODO(mh): 에러가 나서 임시 주석처리함
         // [
         //   if (enableAuth) TokenInterceptor(ref),
         //   if (Config.enableLogRequestInfo) LoggingInterceptor(),
