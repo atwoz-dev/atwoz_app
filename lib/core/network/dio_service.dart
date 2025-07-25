@@ -10,7 +10,7 @@ class DioService extends DioForNative {
 
     interceptors = [
       ...interceptors,
-      LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
+      //LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
     ];
     this.interceptors.addAll(interceptors);
   }

@@ -64,11 +64,11 @@ class ApiServiceImpl implements ApiService {
           connectTimeout: timeout,
           receiveTimeout: timeout,
         ),
-        [
-          if (enableAuth) TokenInterceptor(ref),
-          if (Config.enableLogRequestInfo) LoggingInterceptor(),
-          CookieManager(_cookieJar),
-        ],
+        // [
+        //   if (enableAuth) TokenInterceptor(ref),
+        //   if (Config.enableLogRequestInfo) LoggingInterceptor(),
+        //   CookieManager(_cookieJar),
+        // ],
       );
     } catch (e, st) {
       Log.e('초기화 실패: $e', stackTrace: st);
