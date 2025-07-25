@@ -123,8 +123,6 @@ class ApiServiceImpl implements ApiService {
     await ref
         .read(localStorageProvider)
         .saveEncrypted('_refreshToken', refreshToken);
-
-    Log.d("✅ Refresh Token 로컬 스토리지에 저장 완료: $refreshToken");
   }
 
   String? _extractRefreshToken(List<String> cookies) {
