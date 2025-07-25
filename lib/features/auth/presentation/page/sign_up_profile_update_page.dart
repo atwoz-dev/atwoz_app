@@ -37,7 +37,7 @@ class SignUpProfileUpdatePageState
           context: context,
           label: label,
           child: DefaultTextFormField(
-            controller: TextEditingController(text: initialValue),
+            initialValue: initialValue,
             onTap: () {
               signUpProcess.updateCurrentStep(step);
               navigate(context, route: route);
