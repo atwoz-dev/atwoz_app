@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 class Validation {
   const Validation._();
 
-  // 닉네임은 특수문자를 제외한 한글, 영문, 숫자를 포함해야 함.
-  static final RegExp nickname = RegExp(r'^[a-zA-Z0-9ㄱ-ㅎ가-힣]+$');
+  // 닉네임은 2-10자리 특수문자를 제외한 한글, 영문, 숫자를 포함해야 함.
+  static final RegExp nickname = RegExp(r'^[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$');
   // 비밀번호가 숫자, 소문자, 대문자, 특수문자를 포함해야 함.
   static final RegExp password =
       RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)');
