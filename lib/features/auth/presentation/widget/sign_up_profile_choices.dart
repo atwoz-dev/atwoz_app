@@ -33,12 +33,19 @@ Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultYear = 1997;
+  // selectedYear가 없으면 초기 세팅
+  if (selectedYear == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedYear(defaultYear);
+    });
+  }
+
   return ListWheelInput(
-    key: const Key('birthInput'),
-    selectedValue: selectedYear,
-    minValue: 1960,
-    maxValue: 2022,
-    defaultValue: 1997,
+    selectedValue: selectedYear ?? defaultYear,
+    minValue: DateTime.now().year - 46,
+    maxValue: DateTime.now().year - 20,
+    defaultValue: defaultYear,
     unit: '년',
     onValueChanged: signUpNotifier.updateSelectedYear,
   );
@@ -48,12 +55,20 @@ Widget buildHeightInput({
   required int? selectedHeight,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultHeight = 170;
+
+  if (selectedHeight == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedHeight(defaultHeight);
+    });
+  }
+
   return ListWheelInput(
     key: const Key('heightInput'),
-    selectedValue: selectedHeight,
+    selectedValue: selectedHeight ?? defaultHeight,
     minValue: 130,
     maxValue: 200,
-    defaultValue: 170,
+    defaultValue: defaultHeight,
     unit: 'cm',
     onValueChanged: signUpNotifier.updateSelectedHeight,
   );

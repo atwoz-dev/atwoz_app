@@ -12,8 +12,7 @@ class IntroducedProfileRepository extends BaseRepository {
   IntroducedProfileRepository(Ref ref) : super(ref, '/member/introduction');
 
   Future<List<IntroducedProfileDto>> getProfiles(String category) async {
-    final res =
-        await apiService.getJson('$path/$category', requiresAuthToken: true);
+    final res = await apiService.getJson('$path/$category');
 
     final data = res['data'];
     if (data is! List<Map<String, dynamic>>) {

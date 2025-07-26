@@ -10,7 +10,8 @@ class DioService extends DioForNative {
 
     interceptors = [
       ...interceptors,
-      LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
+      // TODO(mh): 에러가 나서 임시 주석처리함
+      //LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
     ];
     this.interceptors.addAll(interceptors);
   }

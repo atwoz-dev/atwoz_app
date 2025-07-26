@@ -71,8 +71,11 @@ class SignUpProcess extends _$SignUpProcess {
         nickname,
         copy: (s, v) => s.copyWith(
           nickname: v,
-          error:
-              v.isEmpty ? null : (v.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
+          error: v.isEmpty
+              ? null
+              : (v.runes.length < 2
+                  ? '닉네임은 2자 이상이어야 합니다.'
+                  : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
         ),
       );
   void updateSelectedYear(int year) =>
