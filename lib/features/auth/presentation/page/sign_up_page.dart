@@ -37,20 +37,15 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
       if (!focusNode.hasFocus) {
         final signUpProcess = ref.read(signUpProcessProvider.notifier);
         signUpProcess.updateNickname(_nicknameController.text);
+        _validateNickname(_nicknameController.text);
       }
     });
 
     _nicknameController.addListener(() {
       final nickname = _nicknameController.text.trim();
-      final isValid = Validation.nickname.hasMatch(nickname);
-      if (nickname.length >= 2 && nickname.length <= 10 && isValid) {
-        safeSetState(() {
-          isButtonEnabled = true;
-        });
-      } else {
-        safeSetState(() {
-          isButtonEnabled = false;
-        });
+
+      if (nickname.length >= 2) {
+        _validateNickname(_nicknameController.text);
       }
     });
   }
@@ -60,6 +55,19 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
     _nicknameController.dispose();
     focusNode.dispose(); // FocusNode 해제
     super.dispose();
+  }
+
+  void _validateNickname(String nickname) {
+    if (nickname.isEmpty) {
+      safeSetState(() {
+        isButtonEnabled = false;
+      });
+      return;
+    }
+    final isValid = Validation.nickname.hasMatch(nickname);
+    safeSetState(() {
+      isButtonEnabled = isValid;
+    });
   }
 
   @override

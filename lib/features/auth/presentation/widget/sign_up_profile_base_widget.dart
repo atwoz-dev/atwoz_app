@@ -37,7 +37,7 @@ class _SignUpProfileBaseWidgetState
     return Scaffold(
       appBar: DefaultAppBar(
         title: '프로필 정보',
-        leadingAction: () => navigate(
+        leadingAction: (context) => navigate(
           context,
           route: AppRoute.signUpProfileUpdate,
         ),
