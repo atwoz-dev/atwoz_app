@@ -1,11 +1,20 @@
 import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/core/util/string_extension.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+part 'enum.g.dart';
+
+@HiveType(typeId: 11, adapterName: 'SmokingStatusAdapter')
 enum SmokingStatus {
+  @HiveField(0)
   none("비흡연"),
+  @HiveField(1)
   quit("금연"),
+  @HiveField(2)
   occasional("가끔 피움"),
+  @HiveField(3)
   daily("매일 피움"),
+  @HiveField(4)
   vape("전자담배");
 
   final String label;
@@ -28,11 +37,17 @@ enum SmokingStatus {
       _byLabel[label?.toUpperCase()] ?? SmokingStatus.none;
 }
 
+@HiveType(typeId: 12, adapterName: 'DrinkingStatusAdapter')
 enum DrinkingStatus {
+  @HiveField(0)
   none("전혀 마시지 않음"),
+  @HiveField(1)
   quit("금주"),
+  @HiveField(2)
   social("사회적 음주"),
+  @HiveField(3)
   occasional("가끔 마심"),
+  @HiveField(4)
   frequent("술자리를 즐김");
 
   final String label;
@@ -78,11 +93,17 @@ enum EducationLevel {
       _byValue[value?.toUpperCase()] ?? EducationLevel.other;
 }
 
+@HiveType(typeId: 13, adapterName: 'ReligionAdapter')
 enum Religion {
+  @HiveField(0)
   none("무교"),
+  @HiveField(1)
   christian("기독교"),
+  @HiveField(2)
   catholic("천주교"),
+  @HiveField(3)
   buddhist("불교"),
+  @HiveField(4)
   other("기타");
 
   final String label;
