@@ -14,14 +14,15 @@ class TokenInterceptor extends Interceptor with LogMixin {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (options.headers.containsKey('requiresAuthToken')) {
-      if (options.headers['requiresAuthToken'] == true) {
+    if (options.headers.containsKey('requiresAccessToken')) {
+      if (options.headers['requiresAccessToken'] == true) {
         final String? token =
             await ref.read(authUsecaseProvider).getAccessToken();
-        options.headers.addAll(<String, Object?>{'Authorization': token});
+        options.headers
+            .addAll(<String, Object?>{'Authorization': 'Bearer $token'});
       }
 
-      options.headers.remove('requiresAuthToken');
+      options.headers.remove('requiresAccessToken');
     }
     return handler.next(options);
   }

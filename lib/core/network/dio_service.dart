@@ -1,4 +1,3 @@
-import 'package:atwoz_app/core/network/logging_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
