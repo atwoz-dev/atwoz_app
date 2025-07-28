@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/features/home/domain/model/ideal_type.dart';
-import 'package:atwoz_app/features/home/presentation/provider/controller.dart';
+import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
