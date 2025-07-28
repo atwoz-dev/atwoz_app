@@ -51,7 +51,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
 
-    // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료
+    // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료(성별 기본값 남성)
     final bool isButtonEnabled = signUpState.nickname != null;
 
     return GestureDetector(
