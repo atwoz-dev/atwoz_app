@@ -12,7 +12,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'api_service.dart';
 import 'dio_service.dart';
-import 'logging_interceptor.dart';
 import 'network_exception.dart';
 import 'token_interceptor.dart';
 
@@ -64,12 +63,10 @@ class ApiServiceImpl implements ApiService {
           connectTimeout: timeout,
           receiveTimeout: timeout,
         ),
-        // TODO(mh): 에러가 나서 임시 주석처리함
-        // [
-        //   if (enableAuth) TokenInterceptor(ref),
-        //   if (Config.enableLogRequestInfo) LoggingInterceptor(),
-        //   CookieManager(_cookieJar),
-        // ],
+        [
+          if (enableAuth) TokenInterceptor(ref),
+          CookieManager(_cookieJar),
+        ],
       );
     } catch (e, st) {
       Log.e('초기화 실패: $e', stackTrace: st);
