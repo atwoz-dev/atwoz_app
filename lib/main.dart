@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
@@ -33,8 +34,12 @@ void main() {
     Hive.registerAdapter<UserResponse>(UserResponseAdapter());
     Hive.registerAdapter<GlobalUserProfile>(GlobalUserProfileAdapter());
     Hive.registerAdapter<InterviewInfo>(InterviewInfoAdapter());
-    Hive.registerAdapter<IntroducedProfileDto>(IntroducedProfileDtoAdapter());
     Hive.registerAdapter<MyProfileImage>(MyProfileImageAdapter());
+    Hive.registerAdapter<IntroducedProfileDto>(IntroducedProfileDtoAdapter());
+    Hive.registerAdapter<Gender>(GenderAdapter());
+    Hive.registerAdapter<Education>(EducationAdapter());
+    Hive.registerAdapter<Hobby>(HobbyAdapter());
+    Hive.registerAdapter<Job>(JobAdapter());
 
     /// 앱 실행
     runApp(

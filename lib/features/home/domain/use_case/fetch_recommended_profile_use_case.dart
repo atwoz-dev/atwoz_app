@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/mapper/introduced_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/recommended_profile_repository_impl.dart';

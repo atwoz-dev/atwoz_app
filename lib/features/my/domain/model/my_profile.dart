@@ -1,10 +1,7 @@
-import 'package:atwoz_app/app/enum/education.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../../app/constants/enum.dart';
 
 part 'my_profile.freezed.dart';
 

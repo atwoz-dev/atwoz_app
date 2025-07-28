@@ -226,10 +226,10 @@ class _ProfileCardWidget extends StatelessWidget {
                 ),
               ),
               const Gap(24),
-              FavoriteButton.text(
+              FavoriteButton(
                 isFavoriteUser: profile.favoriteType != null,
                 onTap: onTapFavorite,
-                text: '좋아요',
+                label: '좋아요',
               ),
             ],
           )

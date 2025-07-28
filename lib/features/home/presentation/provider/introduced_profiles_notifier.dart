@@ -47,7 +47,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
 
       // 캐시된 데이터 삭제
       final box = await Hive.openBox(IntroducedProfileDto.boxName);
-      await box.delete(category);
+      await box.delete(category.name);
     } catch (e, stackTrace) {
       Log.e('소개 프로필 블러 제거 실패: $e');
       state = AsyncError(e, stackTrace);
@@ -73,7 +73,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
           .execute(category);
       state = AsyncData(profiles);
     } catch (e, stackTrace) {
-      Log.e('소개 프로필 업데이트 실패: $e');
+      Log.e('2 소개 프로필 업데이트 실패: $e, $stackTrace');
       state = AsyncError(e, stackTrace);
     }
   }

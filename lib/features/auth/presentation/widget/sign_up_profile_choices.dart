@@ -13,17 +13,18 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget buildSelectInput<T>({
-  required T? selectedValue,
-  required Map<T, String> valueMap,
+Widget buildSelectInput({
+  required String? selectedValue,
+  required List<String> values,
   required void Function(String?) onValueChanged,
 }) {
   return SingleSelectListChip(
-    options: valueMap.values.toList(),
-    selectedOption: selectedValue != null ? valueMap[selectedValue] : null,
+    options: values,
+    selectedOption: selectedValue,
     onSelectionChanged: onValueChanged,
   );
 }
@@ -229,15 +230,14 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
 }
 
 Widget buildEducationInput({
-  required HighestEducationEnum? selectedEducation,
+  required Education? selectedEducation,
   required SignUpProcess signUpNotifier,
 }) {
-  final options = [...educationMap.values];
+  final options = [...Education.values.map((e) => e.label)];
 
   return SingleSelectListChip(
     options: options,
-    selectedOption:
-        selectedEducation != null ? educationMap[selectedEducation] : null,
+    selectedOption: selectedEducation?.label,
     onSelectionChanged: (updatedSelection) {
       signUpNotifier.updateEducation(updatedSelection);
     },
@@ -288,7 +288,7 @@ Widget buildMbtiInput({
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, // 각 행에 4개의 카드
             mainAxisSpacing: 8.0, // 카드 간 세로 간격
             crossAxisSpacing: 8.0, // 카드 간 가로 간격
@@ -328,32 +328,32 @@ Widget buildMbtiInput({
 }
 
 Widget buildSmokingInput({
-  required SmokingStatusEnum? selectedSmoking,
+  required SmokingStatus? selectedSmoking,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedSmoking,
-      valueMap: smokingMap,
+      selectedValue: selectedSmoking?.label,
+      values: SmokingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateSmoking,
     );
 
 Widget buildDrinkingInput({
-  required DrinkingStatusEnum? selectedDrinking,
+  required DrinkingStatus? selectedDrinking,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedDrinking,
-      valueMap: drinkingMap,
+      selectedValue: selectedDrinking?.label,
+      values: DrinkingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateDrinking,
     );
 
 Widget buildReligionInput({
-  required ReligionEnum? selectedReligion,
+  required Religion? selectedReligion,
   required SignUpProcess signUpNotifier,
 }) =>
     buildSelectInput(
-      selectedValue: selectedReligion,
-      valueMap: religionMap,
+      selectedValue: selectedReligion?.label,
+      values: Religion.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateReligion,
     );
 

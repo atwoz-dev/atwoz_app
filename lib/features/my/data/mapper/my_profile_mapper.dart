@@ -1,29 +1,26 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/app/enum/education.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/my/data/dto/profile_update_request_dto.dart';
 import 'package:atwoz_app/features/my/domain/domain.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 
 extension MyProfileMapper on GlobalUserProfile {
   MyProfile toMyProfile() {
     return MyProfile(
       profileImages: [],
-      job: Job.parse(job),
+      job: job,
       region: addressData.getLocationString(city, district),
-      education: Education.parse(highestEducation),
-      smokingStatus: SmokingStatus.parse(smokingStatus),
-      drinkingStatus: DrinkingStatus.parse(drinkingStatus),
-      religion: Religion.parse(religion),
+      education: education,
+      smokingStatus: smokingStatus,
+      drinkingStatus: drinkingStatus,
+      religion: religion,
       mbti: mbti,
-      hobbies: hobbies.map((e) => Hobby.parse(e)).toList(),
+      hobbies: hobbies,
       nickname: nickname,
       age: age,
       height: height,
-      gender: Gender.parse(gender),
+      gender: gender,
       phoneNum: const PhoneNumberTextFormatter().formatPhoneNumber(phoneNumber),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
@@ -20,8 +19,6 @@ class UnlockWithHeartDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userProfile = ref.watch(globalUserProfileNotifierProvider);
-
-    bool isMale = Gender.parse(userProfile.gender) == Gender.male;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +83,7 @@ class UnlockWithHeartDialog extends ConsumerWidget {
                           ),
                           const Gap(4),
                           Text(
-                            isMale ? "10" : "4",
+                            userProfile.isMale ? "10" : "4",
                             style: Fonts.body02Medium().copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

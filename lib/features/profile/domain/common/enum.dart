@@ -16,8 +16,16 @@ enum SmokingStatus {
       status.name.toUpperCase(): status,
   };
 
+  static final Map<String, SmokingStatus> _byLabel = {
+    for (final status in SmokingStatus.values)
+      status.label.toUpperCase(): status,
+  };
+
   static SmokingStatus parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? SmokingStatus.none;
+
+  static SmokingStatus fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? SmokingStatus.none;
 }
 
 enum DrinkingStatus {
@@ -35,8 +43,16 @@ enum DrinkingStatus {
       status.name.toUpperCase(): status,
   };
 
+  static final Map<String, DrinkingStatus> _byLabel = {
+    for (final status in DrinkingStatus.values)
+      status.label.toUpperCase(): status,
+  };
+
   static DrinkingStatus parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? DrinkingStatus.none;
+
+  static DrinkingStatus fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? DrinkingStatus.none;
 }
 
 enum EducationLevel {
@@ -77,8 +93,16 @@ enum Religion {
       religion.name.toUpperCase(): religion,
   };
 
+  static final Map<String, Religion> _byLabel = {
+    for (final religion in Religion.values)
+      religion.label.toUpperCase(): religion,
+  };
+
   static Religion parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? Religion.none;
+
+  static Religion fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? Religion.none;
 }
 
 enum Region {
