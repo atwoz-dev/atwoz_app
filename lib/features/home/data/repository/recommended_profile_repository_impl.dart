@@ -67,7 +67,6 @@ class RecommendedProfileRepository extends BaseRepository {
   Future<List<IntroducedProfileDto>> getProfiles() async {
     final res = await apiService.postJson(
       '$path/today-card',
-      requiresAuthToken: true,
       data: {},
     );
 
