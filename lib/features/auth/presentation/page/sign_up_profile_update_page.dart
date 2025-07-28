@@ -19,7 +19,12 @@ class SignUpProfileUpdatePage extends ConsumerStatefulWidget {
 
 class SignUpProfileUpdatePageState
     extends BaseConsumerStatefulPageState<SignUpProfileUpdatePage> {
-  SignUpProfileUpdatePageState() : super(defaultAppBarTitle: '프로필 정보');
+  SignUpProfileUpdatePageState()
+      : super(
+          defaultAppBarTitle: '프로필 정보',
+          defaultAppBarLeadingAction: (context) =>
+              navigate(context, route: AppRoute.signUp),
+        );
 
   Widget buildDefaultTextFormFieldRow({
     required String label,
@@ -36,7 +41,7 @@ class SignUpProfileUpdatePageState
           context: context,
           label: label,
           child: DefaultTextFormField(
-            controller: TextEditingController(text: initialValue),
+            initialValue: initialValue,
             onTap: () {
               signUpProcess.updateCurrentStep(step);
               navigate(context, route: route);

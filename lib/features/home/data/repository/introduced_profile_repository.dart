@@ -13,8 +13,7 @@ class IntroducedProfileRepository extends BaseRepository {
   IntroducedProfileRepository(Ref ref) : super(ref, '/member');
 
   Future<List<IntroducedProfileDto>> getProfiles(String category) async {
-    final res = await apiService.getJson('$path/introduction/$category',
-        requiresAuthToken: true);
+    final res = await apiService.getJson('$path/introduction/$category');
 
     if (res is! Map<String, dynamic> || res['data'] is! List) {
       throw const NetworkException.formatException();
@@ -31,7 +30,6 @@ class IntroducedProfileRepository extends BaseRepository {
   }) async {
     await apiService.postJson(
       '$path/introduction/$category',
-      requiresAuthToken: true,
       data: {'introducedMemberId': memberId},
     );
   }
@@ -39,7 +37,6 @@ class IntroducedProfileRepository extends BaseRepository {
   Future<HeartBalance> getHeartBalance() async {
     final response = await apiService.getJson(
       '$path/heartbalance',
-      requiresAuthToken: true,
     );
 
     if (response is! Map<String, dynamic> ||

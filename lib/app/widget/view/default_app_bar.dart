@@ -22,7 +22,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
   final bool isDivider;
   final Widget? leading;
-  final VoidCallback? leadingAction;
+  final void Function(BuildContext context)? leadingAction;
 
   @override
   Size get preferredSize =>
@@ -84,7 +84,13 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
         icon: leading ?? const Icon(Icons.arrow_back_ios_new),
         color: context.palette.onSurface,
         iconSize: 24.0,
-        onPressed: leadingAction ?? () => Navigator.of(context).pop(),
+        onPressed: () {
+          if (leadingAction != null) {
+            leadingAction!(context);
+          } else {
+            Navigator.of(context).pop();
+          }
+        },
       ),
     );
   }
