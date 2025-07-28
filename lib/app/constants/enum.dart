@@ -205,7 +205,7 @@ enum Job {
   @HiveField(13)
   tradeAndDistribution('무역/유통'),
   @HiveField(14)
-  mediaAndEntertainment('방송언론/연애'),
+  mediaAndEntertainment('방송언론/연예'),
   @HiveField(15)
   legalAndPublic('법률/공공'),
   @HiveField(16)
