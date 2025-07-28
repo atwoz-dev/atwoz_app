@@ -15,7 +15,6 @@ class MyProfileRepository extends BaseRepository {
     try {
       await apiService.putJson(
         '$path/profile',
-        requiresAuthToken: true,
         data: profile.toJson(),
       );
 
@@ -32,7 +31,7 @@ class MyProfileRepository extends BaseRepository {
   Future<bool> withdrawAccount() async {
     try {
       // TODO(Han): delete api call + clear user information in local/memory
-      await apiService.deleteJson(path, requiresAuthToken: true);
+      await apiService.deleteJson(path);
       return true;
     } on NetworkException catch (e) {
       Log.e('네트워크 오류입니다: $e');
