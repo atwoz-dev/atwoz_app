@@ -1,11 +1,10 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/app/enum/education.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/temp.dart';

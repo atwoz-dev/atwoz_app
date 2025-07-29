@@ -4,7 +4,7 @@ part 'profile_update_request_dto.g.dart';
 
 @JsonSerializable()
 class ProfileUpdateRequestDto {
-  final String nickName;
+  final String nickname;
   final String gender;
   final int yearOfBirth;
   final int height;
@@ -18,7 +18,7 @@ class ProfileUpdateRequestDto {
   final String job;
 
   const ProfileUpdateRequestDto({
-    required this.nickName,
+    required this.nickname,
     required this.gender,
     required this.yearOfBirth,
     required this.height,

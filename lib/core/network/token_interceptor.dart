@@ -1,5 +1,4 @@
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
-import 'package:atwoz_app/core/mixin/toast_mixin.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/app/router/routing.dart';
@@ -7,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Add token in header call API
-class TokenInterceptor extends Interceptor with LogMixin, ToastMixin {
+class TokenInterceptor extends Interceptor with LogMixin {
   final Ref ref;
 
   TokenInterceptor(this.ref) : super();
@@ -15,14 +14,15 @@ class TokenInterceptor extends Interceptor with LogMixin, ToastMixin {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (options.headers.containsKey('requiresAuthToken')) {
-      if (options.headers['requiresAuthToken'] == true) {
+    if (options.headers.containsKey('requiresAccessToken')) {
+      if (options.headers['requiresAccessToken'] == true) {
         final String? token =
             await ref.read(authUsecaseProvider).getAccessToken();
-        options.headers.addAll(<String, Object?>{'Authorization': token});
+        options.headers
+            .addAll(<String, Object?>{'Authorization': 'Bearer $token'});
       }
 
-      options.headers.remove('requiresAuthToken');
+      options.headers.remove('requiresAccessToken');
     }
     return handler.next(options);
   }

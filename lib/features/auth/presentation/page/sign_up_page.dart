@@ -7,6 +7,7 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/validation.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +27,25 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
 
   final TextEditingController _nicknameController = TextEditingController();
   final FocusNode focusNode = FocusNode();
+  bool isButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
+
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         final signUpProcess = ref.read(signUpProcessProvider.notifier);
-        signUpProcess
-            .updateNickname(_nicknameController.text); // 포커스 아웃 시 닉네임 유효성 검사
+        signUpProcess.updateNickname(_nicknameController.text);
+        _validateNickname(_nicknameController.text);
+      }
+    });
+
+    _nicknameController.addListener(() {
+      final nickname = _nicknameController.text.trim();
+
+      if (nickname.length >= 2) {
+        _validateNickname(_nicknameController.text);
       }
     });
   }
@@ -46,15 +57,23 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
     super.dispose();
   }
 
+  void _validateNickname(String nickname) {
+    if (nickname.isEmpty) {
+      safeSetState(() {
+        isButtonEnabled = false;
+      });
+      return;
+    }
+    final isValid = Validation.nickname.hasMatch(nickname);
+    safeSetState(() {
+      isButtonEnabled = isValid;
+    });
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     final signUpState = ref.watch(signUpProcessProvider);
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
-
-    // 버튼 활성화 조건: 닉네임 입력과 성별 선택 모두 완료
-    final bool isButtonEnabled = signUpState.nickname != null &&
-        // signUpState.error == null &&
-        signUpState.selectedGender != null;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
@@ -68,12 +87,12 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AuthStepIndicatorWidget(
+                const AuthStepIndicatorWidget(
                   totalSteps: 4,
                   currentStep: 1,
                 ),
                 Gap(16.h),
-                TitleText(title: '닉네임을 입력해주세요'),
+                const TitleText(title: '닉네임을 입력해주세요'),
                 Gap(5.h),
                 Text(
                   '다른 사용자에게 보여질 이름입니다',
@@ -101,7 +120,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                   context: context,
                   label: '성별',
                   child: SelectionWidget(
-                    options: genderMap.values.toList(),
+                    options: Gender.values.map((e) => e.label).toList(),
                     onChange: (value) {
                       signUpProcess.updateGender(value);
                     },
@@ -115,8 +134,6 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: DefaultElevatedButton(
               onPressed: isButtonEnabled
                   ? () {
-                      // TODO: 나중에 API 연결하기
-                      Log.d("인증번호 요청"); // 성공 시 동작
                       navigate(
                         context,
                         route: AppRoute.signUpProfileChoice,

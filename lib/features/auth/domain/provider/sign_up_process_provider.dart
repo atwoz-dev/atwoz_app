@@ -1,5 +1,4 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/auth/data/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -73,8 +72,11 @@ class SignUpProcess extends _$SignUpProcess {
         nickname,
         copy: (s, v) => s.copyWith(
           nickname: v,
-          error:
-              v.isEmpty ? null : (v.length > 10 ? '닉네임은 10자 이하여야 합니다.' : null),
+          error: v.isEmpty
+              ? null
+              : (v.runes.length < 2
+                  ? '닉네임은 2자 이상이어야 합니다.'
+                  : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
         ),
       );
   void updateSelectedYear(int year) =>
@@ -94,11 +96,7 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateGender(String gender) {
-    final selectedEnum = genderMap.entries
-        .firstWhere(
-          (entry) => entry.value == gender,
-        )
-        .key;
+    final selectedEnum = Gender.fromLabel(gender);
 
     state = state.copyWith(selectedGender: selectedEnum);
   }
@@ -106,7 +104,6 @@ class SignUpProcess extends _$SignUpProcess {
   void updateEducation(String? education) {
     // String(한글) 값을 Enum으로 변환
     final selectedEnum = Education.fromLabel(education);
-
     state = state.copyWith(selectedEducation: selectedEnum);
   }
 
@@ -127,28 +124,18 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateSmoking(String? smoking) {
-    final selectedEnum = SmokingStatus.values.firstWhere(
-      (e) => e.label == smoking,
-      orElse: () => SmokingStatus.none,
-    );
-
+    final selectedEnum = SmokingStatus.fromLabel(smoking);
     state = state.copyWith(selectedSmoking: selectedEnum);
   }
 
   void updateDrinking(String? drinking) {
-    final selectedEnum = DrinkingStatus.values.firstWhere(
-      (e) => e.label == drinking,
-      orElse: () => DrinkingStatus.none,
-    );
+    final selectedEnum = DrinkingStatus.fromLabel(drinking);
 
     state = state.copyWith(selectedDrinking: selectedEnum);
   }
 
   void updateReligion(String? religion) {
-    final selectedEnum = Religion.values.firstWhere(
-      (e) => e.label == religion,
-      orElse: () => Religion.none,
-    );
+    final selectedEnum = Religion.fromLabel(religion);
 
     state = state.copyWith(selectedReligion: selectedEnum);
   }

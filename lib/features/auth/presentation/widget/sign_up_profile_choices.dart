@@ -1,7 +1,7 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/constants/temp.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/app/widget/input/list_wheel_input.dart';
 import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
@@ -16,11 +16,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget buildSelectInput({
   required String? selectedValue,
-  required List<String> options,
+  required List<String> values,
   required void Function(String?) onValueChanged,
 }) {
   return SingleSelectListChip(
-    options: options,
+    options: values,
     selectedOption: selectedValue,
     onSelectionChanged: onValueChanged,
   );
@@ -31,12 +31,19 @@ Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultYear = 1997;
+  // selectedYear가 없으면 초기 세팅
+  if (selectedYear == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedYear(defaultYear);
+    });
+  }
+
   return ListWheelInput(
-    key: const Key('birthInput'),
-    selectedValue: selectedYear,
-    minValue: 1960,
-    maxValue: 2022,
-    defaultValue: 1997,
+    selectedValue: selectedYear ?? defaultYear,
+    minValue: DateTime.now().year - 46,
+    maxValue: DateTime.now().year - 20,
+    defaultValue: defaultYear,
     unit: '년',
     onValueChanged: signUpNotifier.updateSelectedYear,
   );
@@ -46,12 +53,20 @@ Widget buildHeightInput({
   required int? selectedHeight,
   required SignUpProcess signUpNotifier,
 }) {
+  const defaultHeight = 170;
+
+  if (selectedHeight == null) {
+    Future.microtask(() {
+      signUpNotifier.updateSelectedHeight(defaultHeight);
+    });
+  }
+
   return ListWheelInput(
     key: const Key('heightInput'),
-    selectedValue: selectedHeight,
+    selectedValue: selectedHeight ?? defaultHeight,
     minValue: 130,
     maxValue: 200,
-    defaultValue: 170,
+    defaultValue: defaultHeight,
     unit: 'cm',
     onValueChanged: signUpNotifier.updateSelectedHeight,
   );
@@ -307,7 +322,7 @@ Widget buildSmokingInput({
 }) =>
     buildSelectInput(
       selectedValue: selectedSmoking?.label,
-      options: SmokingStatus.values.map((e) => e.label).toList(),
+      values: SmokingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateSmoking,
     );
 
@@ -317,7 +332,7 @@ Widget buildDrinkingInput({
 }) =>
     buildSelectInput(
       selectedValue: selectedDrinking?.label,
-      options: DrinkingStatus.values.map((e) => e.label).toList(),
+      values: DrinkingStatus.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateDrinking,
     );
 
@@ -327,7 +342,7 @@ Widget buildReligionInput({
 }) =>
     buildSelectInput(
       selectedValue: selectedReligion?.label,
-      options: Religion.values.map((e) => e.label).toList(),
+      values: Religion.values.map((e) => e.label).toList(),
       onValueChanged: signUpNotifier.updateReligion,
     );
 
