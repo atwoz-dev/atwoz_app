@@ -104,7 +104,7 @@ class _MainHobbyBadge extends StatelessWidget {
   }
 }
 
-class _InteractionButtons extends ConsumerWidget {
+class _InteractionButtons extends ConsumerStatefulWidget {
   const _InteractionButtons({
     required this.userId,
     required this.isFavoriteUser,
@@ -116,7 +116,22 @@ class _InteractionButtons extends ConsumerWidget {
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_InteractionButtons> createState() =>
+      _InteractionButtonsState();
+}
+
+class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
+  FavoriteType? _selectedType;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedType =
+        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -124,9 +139,9 @@ class _InteractionButtons extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             onPressed: () => MessageSendBottomSheet.open(
               context,
-              userId: userId,
+              userId: widget.userId,
               onSubmit: () => ref
-                  .read(profileNotifierProvider(userId).notifier)
+                  .read(profileNotifierProvider(widget.userId).notifier)
                   .requestMatch(),
             ),
             child: Row(
@@ -150,16 +165,18 @@ class _InteractionButtons extends ConsumerWidget {
           ),
         ),
         const Gap(8.0),
-        _FavoriteButton(
-          isFavoriteUser: isFavoriteUser,
+        FavoriteButton(
+          isFavoriteUser: widget.isFavoriteUser,
           onTap: () async {
-            if (isFavoriteUser) return;
+            if (widget.isFavoriteUser) return;
+
             final favoriteType = await FavoriteTypeSelectDialog.open(
               context,
-              userId: userId,
+              userId: widget.userId,
+              favoriteType: _selectedType,
             );
             if (favoriteType == null) return;
-            onFavoriteTypeChanged(favoriteType);
+            widget.onFavoriteTypeChanged(favoriteType);
           },
         ),
       ],
@@ -167,40 +184,42 @@ class _InteractionButtons extends ConsumerWidget {
   }
 }
 
-class _FavoriteButton extends StatefulWidget {
-  const _FavoriteButton({
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({
+    super.key,
     required this.isFavoriteUser,
     required this.onTap,
+    this.disabledColor,
+    this.label,
   });
-
   final bool isFavoriteUser;
   final VoidCallback onTap;
-
+  final Color? disabledColor;
+  final String? label;
   @override
-  State<_FavoriteButton> createState() => _FavoriteButtonState();
+  State<FavoriteButton> createState() => _FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<_FavoriteButton> {
+class _FavoriteButtonState extends State<FavoriteButton> {
   bool _enabled = true;
   Timer? _timer;
-
   static const _transDuration = 1000;
-
-  static const _grayColor = Color(0xFFDCDEE3);
+  Color get _disabledColor => widget.disabledColor ?? const Color(0xFFDCDEE3);
   static const _gradientStart = Color(0xFFBCD5F3);
   static const _gradientEnd = Color(0xFF4F37E2);
   static const _transitionGradientStart = Color(0xA1BCD5F3);
   static const _transitionGradientEnd = Color(0xA14F37E2);
-
   BoxDecoration get _currentDecoration {
     const baseDecoration = BoxDecoration(borderRadius: Dimens.buttonRadius);
-
     if (!widget.isFavoriteUser) {
       return baseDecoration.copyWith(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: [_grayColor, _grayColor],
+          colors: [
+            _disabledColor,
+            _disabledColor,
+          ],
         ),
       );
     }
@@ -224,12 +243,11 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
   }
 
   @override
-  void didUpdateWidget(covariant _FavoriteButton oldWidget) {
+  void didUpdateWidget(covariant FavoriteButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isFavoriteUser || !widget.isFavoriteUser) {
       return;
     }
-
     _timer = Timer(const Duration(milliseconds: _transDuration), () {
       setState(() => _enabled = false);
     });
@@ -249,10 +267,22 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
         duration: Params.animationDurationLow,
         decoration: _currentDecoration,
         padding: const EdgeInsets.all(12.0),
-        child: DefaultIcon(
-          widget.isFavoriteUser ? IconPath.heartFill : IconPath.heart,
-          size: 20.0,
-          colorFilter: DefaultIcon.fillColor(Colors.white),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.label != null)
+              Text(
+                widget.label!,
+                style: Fonts.body01Regular().copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            DefaultIcon(
+              widget.isFavoriteUser ? IconPath.heartFill : IconPath.heart,
+              size: 20.0,
+              colorFilter: DefaultIcon.fillColor(Colors.white),
+            ),
+          ],
         ),
       ),
     );

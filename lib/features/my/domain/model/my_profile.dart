@@ -1,10 +1,7 @@
-import 'package:atwoz_app/app/enum/education.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../../app/constants/enum.dart';
 
 part 'my_profile.freezed.dart';
 
@@ -23,7 +20,7 @@ class MyProfile with _$MyProfile {
     required String nickname,
     required int age,
     required int height,
-    required GenderEnum gender, // constants/enum 재사용
+    required Gender gender, // constants/enum 재사용
     required String phoneNum,
   }) = _MyProfile;
 }

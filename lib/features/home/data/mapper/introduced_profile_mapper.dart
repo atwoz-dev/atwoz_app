@@ -3,14 +3,14 @@ import 'package:atwoz_app/features/home/home.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 
 extension IntroducedProfileMapper on IntroducedProfileDto {
-  IntroducedProfile toIntroducedProfile({required bool isFavorite}) {
+  IntroducedProfile toIntroducedProfile(List<String> tags) {
     return IntroducedProfile(
-      id: memberId,
-      imageUrl: profileImageUrl,
-      hashTags: [...hobbies, mbti, Religion.parse(religion).label],
+      memberId: memberId,
+      profileImageUrl: profileImageUrl,
+      tags: tags,
       interviewContent: interviewAnswerContent,
       isIntroduced: isIntroduced,
-      isFavorite: isFavorite,
+      favoriteType: FavoriteType.tryParse(likeLevel),
     );
   }
 }

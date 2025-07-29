@@ -48,7 +48,7 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
                 '닉네임' => profile.nickname,
                 '나이' => profile.age.toString(),
                 '키' => "${profile.height}cm",
-                '성별' => genderMap[profile.gender] ?? '',
+                '성별' => profile.gender.label,
                 '연락처' => profile.phoneNum,
                 _ => '',
               };

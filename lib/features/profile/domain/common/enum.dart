@@ -1,11 +1,20 @@
 import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/core/util/string_extension.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+part 'enum.g.dart';
+
+@HiveType(typeId: 11, adapterName: 'SmokingStatusAdapter')
 enum SmokingStatus {
+  @HiveField(0)
   none("비흡연"),
+  @HiveField(1)
   quit("금연"),
+  @HiveField(2)
   occasional("가끔 피움"),
+  @HiveField(3)
   daily("매일 피움"),
+  @HiveField(4)
   vape("전자담배");
 
   final String label;
@@ -16,15 +25,29 @@ enum SmokingStatus {
       status.name.toUpperCase(): status,
   };
 
+  static final Map<String, SmokingStatus> _byLabel = {
+    for (final status in SmokingStatus.values)
+      status.label.toUpperCase(): status,
+  };
+
   static SmokingStatus parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? SmokingStatus.none;
+
+  static SmokingStatus fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? SmokingStatus.none;
 }
 
+@HiveType(typeId: 12, adapterName: 'DrinkingStatusAdapter')
 enum DrinkingStatus {
+  @HiveField(0)
   none("전혀 마시지 않음"),
+  @HiveField(1)
   quit("금주"),
+  @HiveField(2)
   social("사회적 음주"),
+  @HiveField(3)
   occasional("가끔 마심"),
+  @HiveField(4)
   frequent("술자리를 즐김");
 
   final String label;
@@ -35,8 +58,16 @@ enum DrinkingStatus {
       status.name.toUpperCase(): status,
   };
 
+  static final Map<String, DrinkingStatus> _byLabel = {
+    for (final status in DrinkingStatus.values)
+      status.label.toUpperCase(): status,
+  };
+
   static DrinkingStatus parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? DrinkingStatus.none;
+
+  static DrinkingStatus fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? DrinkingStatus.none;
 }
 
 enum EducationLevel {
@@ -62,11 +93,17 @@ enum EducationLevel {
       _byValue[value?.toUpperCase()] ?? EducationLevel.other;
 }
 
+@HiveType(typeId: 13, adapterName: 'ReligionAdapter')
 enum Religion {
+  @HiveField(0)
   none("무교"),
+  @HiveField(1)
   christian("기독교"),
+  @HiveField(2)
   catholic("천주교"),
+  @HiveField(3)
   buddhist("불교"),
+  @HiveField(4)
   other("기타");
 
   final String label;
@@ -77,8 +114,16 @@ enum Religion {
       religion.name.toUpperCase(): religion,
   };
 
+  static final Map<String, Religion> _byLabel = {
+    for (final religion in Religion.values)
+      religion.label.toUpperCase(): religion,
+  };
+
   static Religion parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? Religion.none;
+
+  static Religion fromLabel(String? label) =>
+      _byLabel[label?.toUpperCase()] ?? Religion.none;
 }
 
 enum Region {
@@ -97,7 +142,8 @@ enum Region {
 }
 
 enum FavoriteType {
-  interest(IconPath.generalFavorite, '관심있어요'),
+  interested(IconPath.generalFavorite, '관심있어요'),
+
   highlyInterested(IconPath.strongFavorite, '매우 관심있어요');
 
   final String iconPath;

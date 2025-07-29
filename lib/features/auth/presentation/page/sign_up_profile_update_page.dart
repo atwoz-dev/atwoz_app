@@ -1,4 +1,3 @@
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
@@ -75,7 +74,7 @@ class SignUpProfileUpdatePageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AuthStepIndicatorWidget(
+                const AuthStepIndicatorWidget(
                   totalSteps: 4,
                   currentStep: 2,
                 ),
@@ -121,9 +120,7 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '최종학력',
                   hintText: '최종학력을 선택해주세요.',
-                  initialValue: signUpState.selectedEducation != null
-                      ? educationMap[signUpState.selectedEducation]
-                      : null,
+                  initialValue: signUpState.selectedEducation?.label,
                   route: AppRoute.signUpProfileChoice,
                   step: 5,
                 ),
@@ -137,27 +134,21 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '흡연',
                   hintText: '흡연여부를 선택해주세요.',
-                  initialValue: signUpState.selectedSmoking != null
-                      ? smokingMap[signUpState.selectedSmoking]
-                      : null,
+                  initialValue: signUpState.selectedSmoking?.label,
                   route: AppRoute.signUpProfileChoice,
                   step: 7,
                 ),
                 buildDefaultTextFormFieldRow(
                   label: '음주',
                   hintText: '음주여부를 선택해주세요.',
-                  initialValue: signUpState.selectedDrinking != null
-                      ? drinkingMap[signUpState.selectedDrinking]
-                      : null,
+                  initialValue: signUpState.selectedDrinking?.label,
                   route: AppRoute.signUpProfileChoice,
                   step: 8,
                 ),
                 buildDefaultTextFormFieldRow(
                   label: '종교',
                   hintText: '종교를 선택해주세요.',
-                  initialValue: signUpState.selectedReligion != null
-                      ? religionMap[signUpState.selectedReligion]
-                      : null,
+                  initialValue: signUpState.selectedReligion?.label,
                   route: AppRoute.signUpProfileChoice,
                   step: 9,
                 ),

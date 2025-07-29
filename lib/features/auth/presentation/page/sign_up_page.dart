@@ -87,12 +87,12 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AuthStepIndicatorWidget(
+                const AuthStepIndicatorWidget(
                   totalSteps: 4,
                   currentStep: 1,
                 ),
                 Gap(16.h),
-                TitleText(title: '닉네임을 입력해주세요'),
+                const TitleText(title: '닉네임을 입력해주세요'),
                 Gap(5.h),
                 Text(
                   '다른 사용자에게 보여질 이름입니다',
@@ -120,7 +120,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                   context: context,
                   label: '성별',
                   child: SelectionWidget(
-                    options: genderMap.values.toList(),
+                    options: Gender.values.map((e) => e.label).toList(),
                     onChange: (value) {
                       signUpProcess.updateGender(value);
                     },
