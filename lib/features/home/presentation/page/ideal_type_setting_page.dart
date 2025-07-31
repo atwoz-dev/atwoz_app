@@ -1,5 +1,5 @@
 import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/home/presentation/controller/ideal_type_notifier.dart';
+import 'package:atwoz_app/features/home/presentation/provider/ideal_type_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_age_setting_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_setting_area.dart';
 import 'package:flutter/material.dart';

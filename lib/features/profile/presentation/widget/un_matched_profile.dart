@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'widget.dart';
 
 class UnMatchedProfile extends StatelessWidget {
@@ -54,7 +55,11 @@ class _ProfileHeadInformation extends ConsumerWidget {
           Positioned.fill(
             child: ProfileMainImage(profileUri: userInfo.profileUri),
           ),
-          const ProfileAppbar(),
+          ProfileAppbar(onBackButtonPressed: () {
+            final profile = ref.read(profileNotifierProvider(userId)).profile;
+            if (profile == null) return;
+            context.pop(profile);
+          }),
           Positioned(
             left: 0,
             bottom: 0,

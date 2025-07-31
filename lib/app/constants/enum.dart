@@ -1,3 +1,7 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'enum.g.dart';
+
 // Enum → 백엔드 대문자 스네이크_CASE 변환
 extension EnumToJson on Enum {
   String toJson() {
@@ -25,70 +29,211 @@ extension StringToEnum on String {
 }
 
 // 성별
-enum GenderEnum { female, male }
+@HiveType(typeId: 7, adapterName: 'GenderAdapter')
+enum Gender {
+  @HiveField(0)
+  male('남자'),
+  @HiveField(1)
+  female('여자');
 
-const Map<GenderEnum, String> genderMap = {
-  GenderEnum.female: "여자",
-  GenderEnum.male: "남자",
-};
+  final String label;
+  const Gender(this.label);
 
-// 학력
-enum HighestEducationEnum {
-  highSchool,
-  associate,
-  bachelorsLocal,
-  bachelorsSeoul,
-  bachelorsOverseas,
-  lawSchool,
-  masters,
-  doctorate,
-  other
+  static final Map<String, Gender> _byValue = {
+    for (final value in Gender.values) value.name.toUpperCase(): value,
+  };
+
+  static final Map<String, Gender> _byLabel = {
+    for (final value in Gender.values) value.label.toUpperCase(): value,
+  };
+
+  static Gender parse(String value) =>
+      _byValue[value.toUpperCase()] ?? Gender.male;
+
+  static Gender fromLabel(String value) =>
+      _byLabel[value.toUpperCase()] ?? Gender.male;
 }
 
-const Map<HighestEducationEnum, String> educationMap = {
-  HighestEducationEnum.highSchool: "고등학교 졸업",
-  HighestEducationEnum.associate: "전문대",
-  HighestEducationEnum.bachelorsLocal: "지방 4년제",
-  HighestEducationEnum.bachelorsSeoul: "서울 4년제",
-  HighestEducationEnum.bachelorsOverseas: "해외대",
-  HighestEducationEnum.lawSchool: "로스쿨",
-  HighestEducationEnum.masters: "석사",
-  HighestEducationEnum.doctorate: "박사",
-  HighestEducationEnum.other: "기타",
-};
+@HiveType(typeId: 8, adapterName: 'EducationAdapter')
+enum Education {
+  @HiveField(0)
+  highSchool("고등학교 졸업"),
+  @HiveField(1)
+  associate("전문대"),
+  @HiveField(2)
+  bachelorsLocal("지방 4년제 대학"),
+  @HiveField(3)
+  bachelorsSeoul("서울 4년제 대학"),
+  @HiveField(4)
+  bachelorsOverseas("해외 4년제 대학"),
+  @HiveField(5)
+  lawSchool("로스쿨"),
+  @HiveField(6)
+  masters("석사"),
+  @HiveField(7)
+  doctorate("박사"),
+  @HiveField(8)
+  other("기타");
 
-// 흡연
-enum SmokingStatusEnum { none, quit, occasional, daily, vape }
+  final String label;
+  const Education(this.label);
 
-const Map<SmokingStatusEnum, String> smokingMap = {
-  SmokingStatusEnum.none: "비흡연",
-  SmokingStatusEnum.quit: "금연 중",
-  SmokingStatusEnum.occasional: "가끔 피움",
-  SmokingStatusEnum.daily: "매일 피움",
-  SmokingStatusEnum.vape: "전자담배",
-};
+  static final Map<String, Education> _byLabel = {
+    for (final value in Education.values) value.label: value,
+  };
 
-// 음주
-enum DrinkingStatusEnum { none, quit, social, occasional, frequent }
+  // label을 enum으로 변환
+  static Education fromLabel(String? value) =>
+      _byLabel[value] ?? Education.other;
 
-const Map<DrinkingStatusEnum, String> drinkingMap = {
-  DrinkingStatusEnum.none: "전혀 마시지 않음",
-  DrinkingStatusEnum.quit: "금주 중",
-  DrinkingStatusEnum.social: "사회적 음주",
-  DrinkingStatusEnum.occasional: "가끔 마심",
-  DrinkingStatusEnum.frequent: "술자리를 즐김",
-};
+  // 서버 데이터를 enum으로 변환
+  static final Map<String, Education> _byServerData = {
+    for (final value in Education.values) value.toJson(): value,
+  };
 
-// 종교
-enum ReligionEnum { none, christian, catholic, buddhist, other }
+  static Education parse(String? value) =>
+      _byServerData[value] ?? Education.other;
+}
 
-const Map<ReligionEnum, String> religionMap = {
-  ReligionEnum.none: "무교",
-  ReligionEnum.christian: "기독교",
-  ReligionEnum.catholic: "천주교",
-  ReligionEnum.buddhist: "불교",
-  ReligionEnum.other: "기타",
-};
+@HiveType(typeId: 9, adapterName: 'HobbyAdapter')
+enum Hobby {
+  @HiveField(0)
+  travel('국내여행/해외여행'),
+  @HiveField(1)
+  performanceAndExhibition('공연/전시회관람'),
+  @HiveField(2)
+  webtoonAndComics('웹툰/만화'),
+  @HiveField(3)
+  dramaAndEntertainment('드라마/예능보기'),
+  @HiveField(4)
+  pcAndMobileGames('PC/모바일게임'),
+  @HiveField(5)
+  animation('애니메이션'),
+  @HiveField(6)
+  golf('골프'),
+  @HiveField(7)
+  theaterAndMovies('연극/영화'),
+  @HiveField(8)
+  writing('글쓰기'),
+  @HiveField(9)
+  boardGames('보드게임'),
+  @HiveField(10)
+  photography('사진촬영'),
+  @HiveField(11)
+  singing('노래'),
+  @HiveField(12)
+  badmintonAndTennis('배드민턴/테니스'),
+  @HiveField(13)
+  dance('댄스'),
+  @HiveField(14)
+  driving('드라이브'),
+  @HiveField(15)
+  hikingAndClimbing('등산/클라이밍'),
+  @HiveField(16)
+  walking('산책'),
+  @HiveField(17)
+  foodHunt('맛집탐방'),
+  @HiveField(18)
+  shopping('쇼핑'),
+  @HiveField(19)
+  skiAndSnowboard('스키/스노우보드'),
+  @HiveField(20)
+  playingInstruments('악기연주'),
+  @HiveField(21)
+  wine('와인'),
+  @HiveField(22)
+  workout('운동/헬스'),
+  @HiveField(23)
+  yogaAndPilates('요가/필라테스'),
+  @HiveField(24)
+  cooking('요리'),
+  @HiveField(25)
+  interiorDesign('인테리어'),
+  @HiveField(26)
+  cycling('자전거'),
+  @HiveField(27)
+  camping('캠핑'),
+  @HiveField(28)
+  others('기타');
+
+  final String label;
+  const Hobby(this.label);
+
+  static final Map<String, Hobby> _byLabel = {
+    for (final value in Hobby.values) value.label: value,
+  };
+
+  // label을 enum으로 변환
+  static Hobby fromLabel(String? value) => _byLabel[value] ?? Hobby.others;
+
+  // 서버 데이터를 enum으로 변환
+  static final Map<String, Hobby> _byServerData = {
+    for (final value in Hobby.values) value.toJson(): value,
+  };
+
+  static Hobby parse(String? value) => _byServerData[value] ?? Hobby.others;
+}
+
+@HiveType(typeId: 10, adapterName: 'JobAdapter')
+enum Job {
+  @HiveField(0)
+  researchAndEngineering('연구개발/엔지니어'),
+  @HiveField(1)
+  selfEmployment('개인사업/자영업'),
+  @HiveField(2)
+  sales('영업/판매'),
+  @HiveField(3)
+  managementAndPlanning('경영/기획'),
+  @HiveField(4)
+  studyingForFuture('미래를 위한 공부중'),
+  @HiveField(5)
+  jobSearching('취업 준비중'),
+  @HiveField(6)
+  education('교육'),
+  @HiveField(7)
+  artsAndSports('예술/체육'),
+  @HiveField(8)
+  foodService('요식업'),
+  @HiveField(9)
+  medicalAndHealth('의료/보건'),
+  @HiveField(10)
+  mechanicalAndConstruction('기계/건설'),
+  @HiveField(11)
+  design('디자인'),
+  @HiveField(12)
+  marketingAndAdvertising('마케팅/광고'),
+  @HiveField(13)
+  tradeAndDistribution('무역/유통'),
+  @HiveField(14)
+  mediaAndEntertainment('방송언론/연예'),
+  @HiveField(15)
+  legalAndPublic('법률/공공'),
+  @HiveField(16)
+  productionAndManufacturing('생산/제조'),
+  @HiveField(17)
+  customerService('서비스'),
+  @HiveField(18)
+  travelAndTransport('여행/운송'),
+  @HiveField(19)
+  others('기타');
+
+  final String label;
+  const Job(this.label);
+
+  static final Map<String, Job> _byLabel = {
+    for (final value in Job.values) value.label: value,
+  };
+
+  // label을 enum으로 변환
+  static Job fromLabel(String? value) => _byLabel[value] ?? Job.others;
+
+  // 서버 데이터를 enum으로 변환
+  static final Map<String, Job> _byServerData = {
+    for (final value in Job.values) value.toJson(): value,
+  };
+
+  static Job parse(String? value) => _byServerData[value] ?? Job.others;
+}
 
 enum IntroducedCategory {
   grade('상위 5%'),

@@ -1,20 +1,24 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
+import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class MyAccountSettingPage extends StatefulWidget {
+class MyAccountSettingPage extends ConsumerStatefulWidget {
   const MyAccountSettingPage({super.key});
 
   @override
-  State<MyAccountSettingPage> createState() => _MyAccountSettingPageState();
+  ConsumerState<MyAccountSettingPage> createState() =>
+      _MyAccountSettingPageState();
 }
 
-class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
-  final bool _isSwitched = false;
+class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
+  bool _isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
           _AccountSettingItem(
             children: [
               Text(
-                "휴먼 회원 전환",
+                "휴면 회원 전환",
                 style: Fonts.body02Medium().copyWith(
                   fontWeight: FontWeight.w500,
                   color: Palette.colorBlack,
@@ -47,21 +51,9 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
               const Spacer(),
               Switch(
                 value: _isSwitched,
-                inactiveThumbImage:
-                    const AssetImage("assets/images/inactive_thumb.png"),
                 inactiveTrackColor: const Color(0xffDEDEDE),
-                onChanged: (value) {
-                  // setState(() {
-                  //   isSwitched = !isSwitched;
-                  // });
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const _HumanUserChangeDialog();
-                    },
-                  );
-                },
-              )
+                onChanged: _handleDormantChange,
+              ),
             ],
           ),
           _AccountSettingItem(
@@ -93,6 +85,26 @@ class _MyAccountSettingPageState extends State<MyAccountSettingPage> {
       ),
     );
   }
+
+  void _handleDormantChange(bool value) async {
+    // TODO(Han): 휴면 상태에서 해당 동작이 가능한지 확인 필요
+    if (!value) return;
+
+    setState(() => _isSwitched = value);
+    final isUpdated = await _showUpdateDormantStatus(
+      context,
+      onDormantChanged: () async {
+        final success = await ref
+            .read(mySettingNotifierProvider.notifier)
+            .deactiveAccount();
+        if (!mounted) return;
+        context.pop(success);
+      },
+    );
+
+    if (isUpdated != null && isUpdated) return;
+    setState(() => _isSwitched = false);
+  }
 }
 
 class _AccountSettingItem extends StatelessWidget {
@@ -120,84 +132,35 @@ class _AccountSettingItem extends StatelessWidget {
   }
 }
 
-class _HumanUserChangeDialog extends StatelessWidget {
-  const _HumanUserChangeDialog();
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+Future<bool?> _showUpdateDormantStatus(
+  BuildContext context, {
+  required VoidCallback onDormantChanged,
+}) async =>
+    context.showConfirmDialog<bool>(
+      submit: DialogButton(label: '확인', onTap: onDormantChanged),
+      enableCloseButton: false,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(top: 16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
-              child: Column(
-                children: [
-                  const Gap(32),
-                  Text(
-                    "휴먼회원 전환",
-                    style: Fonts.header02().copyWith(
-                        fontWeight: FontWeight.w700, color: Palette.colorBlack),
-                    textAlign: TextAlign.center,
-                  ),
-                  const Gap(16),
-                  Text(
-                    "프로필이 상대방에게 노출되지 않고\n받은 호감과 메시지가 모두 사라집니다\n휴면회원으로 전환하시겠습니까?",
-                    style: Fonts.body02Medium().copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff515151),
-                        height: 1.5),
-                    textAlign: TextAlign.center,
-                  ),
-                  const Gap(24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DefaultElevatedButton(
-                          onPressed: context.pop,
-                          primary: Colors.white,
-                          border: const BorderSide(color: Color(0xffE1E1E1)),
-                          child: Text(
-                            "취소",
-                            style: Fonts.body02Medium().copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: Palette.colorBlack),
-                          ),
-                        ),
-                      ),
-                      const Gap(8),
-                      Expanded(
-                        child: DefaultElevatedButton(
-                          onPressed: context.pop,
-                          primary: Palette.colorPrimary500,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "확인",
-                                style: Fonts.body02Medium().copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(16)
-                ],
+            Text(
+              '휴면 회원 전환',
+              style: Fonts.header02().copyWith(
+                fontWeight: FontWeight.w700,
               ),
             ),
+            const Gap(16),
+            Text(
+              '프로필이 상대방에게 노출되지 않고\n'
+              '휴면 회원 전환 시 매칭 포함 모든 활동이 제한됩니다\n'
+              '휴면회원으로 전환하시겠습니까?\n',
+              style: Fonts.body02Medium().copyWith(
+                fontWeight: FontWeight.w400,
+                color: const Color(0xff515151),
+              ),
+              textAlign: TextAlign.center,
+            )
           ],
         ),
       ),
     );
-  }
-}

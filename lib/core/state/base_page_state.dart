@@ -46,7 +46,7 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
   final PreferredSizeWidget? defaultAppBarBottom;
   final bool isDefaultAppBarDivider;
   final Widget? defaultAppBarLeadingIcon;
-  final VoidCallback? defaultAppBarLeadingAction;
+  final void Function(BuildContext context)? defaultAppBarLeadingAction;
 
   // 바텀 네비게이션 바
   final Widget? bottomNavigationBar;

@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -17,22 +19,22 @@ class GlobalUserProfile with _$GlobalUserProfile {
 
     // basicInfo
     @HiveField(3) required String nickname,
-    @HiveField(4) required String gender,
+    @HiveField(4) required Gender gender,
     @HiveField(5) String? kakaoId,
-    @HiveField(6) required int yearOfBirth,
+    @HiveField(6) required int age,
     @HiveField(7) required int height,
     @HiveField(8) required String phoneNumber,
 
     // profileInfo
-    @HiveField(9) required String job,
-    @HiveField(10) required String highestEducation,
+    @HiveField(9) required Job job,
+    @HiveField(10) required Education education,
     @HiveField(11) required String city,
     @HiveField(12) required String district,
     @HiveField(13) required String mbti,
-    @HiveField(14) required String smokingStatus,
-    @HiveField(15) required String drinkingStatus,
-    @HiveField(16) required String religion,
-    @HiveField(17) required List<String> hobbies,
+    @HiveField(14) required SmokingStatus smokingStatus,
+    @HiveField(15) required DrinkingStatus drinkingStatus,
+    @HiveField(16) required Religion religion,
+    @HiveField(17) required List<Hobby> hobbies,
 
     // interviewInfo
     @HiveField(18) required List<InterviewInfo> interviewInfoView,
@@ -53,23 +55,25 @@ class GlobalUserProfile with _$GlobalUserProfile {
     activityStatus: '',
     isVip: false,
     nickname: '',
-    gender: '',
-    yearOfBirth: 0,
+    gender: Gender.male,
+    age: 0,
     height: 0,
     phoneNumber: '',
-    job: '',
-    highestEducation: '',
+    job: Job.others,
+    education: Education.other,
     city: '',
     district: '',
     mbti: '',
-    smokingStatus: '',
-    drinkingStatus: '',
-    religion: '',
+    smokingStatus: SmokingStatus.none,
+    drinkingStatus: DrinkingStatus.none,
+    religion: Religion.none,
     hobbies: [],
     interviewInfoView: [],
   );
 
   bool get isDefault => this == _default;
+
+  bool get isMale => gender == Gender.male;
 }
 
 @freezed

@@ -1,4 +1,3 @@
-import 'package:atwoz_app/core/network/logging_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
@@ -10,7 +9,6 @@ class DioService extends DioForNative {
 
     interceptors = [
       ...interceptors,
-      LoggingInterceptor(), // LoggingInterceptor 추가 (요청 로깅)
     ];
     this.interceptors.addAll(interceptors);
   }

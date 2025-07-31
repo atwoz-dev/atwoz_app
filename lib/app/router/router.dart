@@ -17,6 +17,7 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/dormant_account_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/my_profile_image_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
 import 'package:atwoz_app/features/my/presentation/page/profile_preview_page.dart';
@@ -115,7 +116,8 @@ enum AppRoute {
   privacyPolicy('privacy-policy'),
   termsOfUse('terms-of-use'),
   myProfileImageUpdate('my-profile-image-update'),
-  profilePreview('profile-preview');
+  profilePreview('profile-preview'),
+  dormantAccount('dormant-account');
 
   final String name;
   const AppRoute(this.name);
@@ -333,6 +335,10 @@ final allRoutes = [
               }
               return ProfilePreviewPage(profile: args.profile);
             },
+          ),
+          NamedGoRoute(
+            name: AppRoute.dormantAccount.name,
+            builder: (_, __) => const DormantAccountPage(),
           ),
         ],
       ),
