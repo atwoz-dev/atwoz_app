@@ -2,10 +2,8 @@ import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_widget_state.dart';
 import 'package:atwoz_app/features/interview/data/data.dart';
-import 'package:atwoz_app/features/interview/presentation/widget/interview_answer_dialogue_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:atwoz_app/features/interview/presentation/widget/interview_answer_tag_widget.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -64,40 +62,17 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
               spacing: widget.tagSpacing,
               runSpacing: widget.tagSpacing - 4,
               children: questionList.map((question) {
-                final controller = _controllers.putIfAbsent(
-                  question.questionId.toString(),
-                  () => TextEditingController(text: question.answerContent),
-                );
-
                 return GestureDetector(
                   onTap: () {
-                    InterviewAnswerDialogueWidget.showAnswerFormDialog(
-                      initialValue: controller.text,
-                      title: '인터뷰 답변',
-                      hintText: '답변을 입력해주세요',
-                      context: context,
-                      questionTitle: question.questionContent,
-                      answerController: controller,
-                      onSave: () async {
-                        final content = controller.text.trim();
-                        // if (question.isAnswered) {
-                        //   await ref
-                        //       .read(updateInterviewAnswerUseCaseProvider)
-                        //       .call(
-                        //           answerId: question.answerId!,
-                        //           answerContent: content);
-                        // } else {
-                        //   await ref
-                        //       .read(submitInterviewAnswerUseCaseProvider)
-                        //       .call(
-                        //           questionId: question.questionId,
-                        //           answerContent: content);
-                        // }
-
-                        // 다시 불러오기 (강제 리빌드 또는 invalidate 필요)
-                        setState(() {});
-                        Navigator.of(context).pop();
-                      },
+                    navigate(
+                      context,
+                      route: AppRoute.interviewRegister,
+                      extra: InterviewRegisterArguments(
+                          question: question.questionContent,
+                          answer: question.answerContent ?? '',
+                          answerId: question.answerId,
+                          questionId: question.questionId,
+                          isAnswered: question.isAnswered),
                     );
                   },
                   child: _buildQuestionCard(
