@@ -90,7 +90,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
               child: DefaultDivider()),
           Expanded(
             child: DefaultTextFormField(
-              autofocus: false,
+              autofocus: true,
               initialValue: widget.answer,
               controller: _inputContentController,
               keyboardType: TextInputType.multiline,
