@@ -28,6 +28,27 @@ class QuestionCard extends ConsumerStatefulWidget {
 
 class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
   final Map<String, TextEditingController> _controllers = {};
+  late Future<List<InterviewQuestionItem>> _questionsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadQuestions();
+  }
+
+  @override
+  void didUpdateWidget(QuestionCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentTabIndex != widget.currentTabIndex) {
+      _loadQuestions();
+    }
+  }
+
+  void _loadQuestions() {
+    final category = InterviewCategory.values[widget.currentTabIndex];
+    final provider = ref.read(interviewRepositoryProvider);
+    _questionsFuture = provider.getQuestionList(category: category);
+  }
 
   @override
   void dispose() {
@@ -39,11 +60,8 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
 
   @override
   Widget build(BuildContext context) {
-    final category = InterviewCategory.values[widget.currentTabIndex];
-    final provider = ref.watch(interviewRepositoryProvider);
-
     return FutureBuilder<List<InterviewQuestionItem>>(
-      future: provider.getQuestionList(category: category),
+      future: _questionsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
