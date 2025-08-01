@@ -33,6 +33,12 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
   final TextEditingController _inputContentController = TextEditingController();
 
   @override
+  void dispose() {
+    _inputContentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = ref.watch(interviewRepositoryProvider);
 
