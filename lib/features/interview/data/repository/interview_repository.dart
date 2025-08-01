@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_answer_request.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_answer_update_request.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_question_response.dart';
@@ -15,16 +16,21 @@ class InterviewRepository extends BaseRepository {
   Future<List<InterviewQuestionItem>> getQuestionList({
     required InterviewCategory category,
   }) async {
-    final response = await apiService.getJson<Map<String, dynamic>>(
-      '$path/question',
-      queryParameters: {
-        'category': category.name.toUpperCase(),
-      },
-    );
+    try {
+      final response = await apiService.getJson<Map<String, dynamic>>(
+        '$path/question',
+        queryParameters: {
+          'category': category.name.toUpperCase(),
+        },
+      );
 
-    final result = InterviewQuestionResponse.fromJson(response);
+      final result = InterviewQuestionResponse.fromJson(response);
 
-    return result.data;
+      return result.data;
+    } catch (e) {
+      Log.e(e);
+      return [];
+    }
   }
 
   /// 인터뷰 답변 등록 API
