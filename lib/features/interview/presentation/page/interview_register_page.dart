@@ -3,12 +3,12 @@ import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/interview/interview.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:gap/gap.dart';
 
 class InterviewRegisterPage extends ConsumerStatefulWidget {
   final String question;
@@ -55,16 +55,20 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                   content: '작성된 내용을 저장합니다',
                   elevatedButtonText: '확인',
                   onElevatedButtonPressed: () async {
-                    if (widget.isAnswered) {
-                      await provider.updateAnswer(
-                          answerId: widget.answerId ?? 0,
-                          answerContent: _inputContentController.text.trim());
-                    } else {
-                      await provider.addAnswer(
-                          questionId: widget.questionId ?? 0,
-                          answerContent: _inputContentController.text.trim());
+                    try {
+                      if (widget.isAnswered) {
+                        await provider.updateAnswer(
+                            answerId: widget.answerId ?? 0,
+                            answerContent: _inputContentController.text.trim());
+                      } else {
+                        await provider.addAnswer(
+                            questionId: widget.questionId ?? 0,
+                            answerContent: _inputContentController.text.trim());
+                      }
+                      navigate(context, route: AppRoute.interview);
+                    } catch (e) {
+                      showToastMessage('저장에 실패했습니다.');
                     }
-                    navigate(context, route: AppRoute.interview);
                   });
             },
           )
