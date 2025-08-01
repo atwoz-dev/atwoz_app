@@ -198,7 +198,13 @@ final allRoutes = [
                 if (args is! InterviewRegisterArguments) {
                   return const SizedBox.shrink();
                 }
-                return InterviewRegisterPage(question: args.question);
+                return InterviewRegisterPage(
+                  question: args.question,
+                  answer: args.answer,
+                  answerId: args.answerId,
+                  questionId: args.questionId,
+                  isAnswered: args.isAnswered,
+                );
               },
             ),
           ]),

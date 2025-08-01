@@ -57,7 +57,17 @@ class ProfilePreviewArguments extends RouteArguments {
 }
 
 class InterviewRegisterArguments extends RouteArguments {
-  const InterviewRegisterArguments({required this.question});
+  const InterviewRegisterArguments({
+    required this.question,
+    required this.answer,
+    required this.answerId,
+    required this.questionId,
+    required this.isAnswered,
+  });
 
   final String question;
+  final String answer;
+  final int? answerId;
+  final int? questionId;
+  final bool isAnswered;
 }
