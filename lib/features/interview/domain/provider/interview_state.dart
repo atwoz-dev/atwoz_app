@@ -20,18 +20,9 @@ class InterviewState with _$InterviewState {
   factory InterviewState.initial() => const InterviewState();
 }
 
-class InterviewData {
-  const InterviewData({
-    this.questionList = const [],
-  });
-
-  final List<InterviewQuestionItem> questionList;
-
-  InterviewData copyWith({
-    List<InterviewQuestionItem>? questionList,
-  }) {
-    return InterviewData(
-      questionList: questionList ?? this.questionList,
-    );
-  }
+@freezed
+class InterviewData with _$InterviewData {
+  const factory InterviewData({
+    @Default([]) List<InterviewQuestionItem> questionList,
+  }) = _InterviewData;
 }
