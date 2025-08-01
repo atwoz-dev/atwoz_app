@@ -71,7 +71,6 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
         }
 
         final questionList = snapshot.data!;
-        print(questionList);
 
         return Padding(
           padding: widget.contentPadding,
