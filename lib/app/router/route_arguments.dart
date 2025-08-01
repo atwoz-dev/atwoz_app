@@ -56,10 +56,19 @@ class ProfilePreviewArguments extends RouteArguments {
   final MyProfile profile;
 }
 
+class InterviewArguments extends RouteArguments {
+  const InterviewArguments({
+    required this.currentTabIndex,
+  });
+
+  final int currentTabIndex;
+}
+
 class InterviewRegisterArguments extends RouteArguments {
   const InterviewRegisterArguments({
     required this.question,
     required this.answer,
+    required this.currentTabIndex,
     required this.answerId,
     required this.questionId,
     required this.isAnswered,
@@ -67,6 +76,7 @@ class InterviewRegisterArguments extends RouteArguments {
 
   final String question;
   final String answer;
+  final int currentTabIndex;
   final int? answerId;
   final int? questionId;
   final bool isAnswered;

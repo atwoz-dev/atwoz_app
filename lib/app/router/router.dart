@@ -189,7 +189,15 @@ final allRoutes = [
       ),
       NamedGoRoute(
           name: AppRoute.interview.name,
-          builder: (context, state) => const InterviewPage(),
+          builder: (context, state) {
+            final args = state.extra;
+            final tabIndex =
+                args is InterviewArguments ? args.currentTabIndex : 0;
+
+            return InterviewPage(
+              currentTabIndex: tabIndex,
+            );
+          },
           routes: [
             NamedGoRoute(
               name: AppRoute.interviewRegister.name,
@@ -201,6 +209,7 @@ final allRoutes = [
                 return InterviewRegisterPage(
                   question: args.question,
                   answer: args.answer,
+                  currentTabIndex: args.currentTabIndex,
                   answerId: args.answerId,
                   questionId: args.questionId,
                   isAnswered: args.isAnswered,

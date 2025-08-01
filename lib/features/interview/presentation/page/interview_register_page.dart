@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
@@ -13,6 +14,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 class InterviewRegisterPage extends ConsumerStatefulWidget {
   final String question;
   final String answer;
+  final int currentTabIndex;
   final int? answerId;
   final int? questionId;
   final bool isAnswered;
@@ -20,6 +22,7 @@ class InterviewRegisterPage extends ConsumerStatefulWidget {
     super.key,
     required this.question,
     required this.answer,
+    required this.currentTabIndex,
     required this.answerId,
     required this.questionId,
     required this.isAnswered,
@@ -65,7 +68,10 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                             questionId: widget.questionId ?? 0,
                             answerContent: _inputContentController.text.trim());
                       }
-                      navigate(context, route: AppRoute.interview);
+                      navigate(context,
+                          route: AppRoute.interview,
+                          extra: InterviewArguments(
+                              currentTabIndex: widget.currentTabIndex));
                     } catch (e) {
                       showToastMessage('저장에 실패했습니다.');
                     }

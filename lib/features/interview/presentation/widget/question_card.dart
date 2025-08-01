@@ -87,6 +87,7 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
                       extra: InterviewRegisterArguments(
                           question: question.questionContent,
                           answer: question.answerContent ?? '',
+                          currentTabIndex: widget.currentTabIndex,
                           answerId: question.answerId,
                           questionId: question.questionId,
                           isAnswered: question.isAnswered),
