@@ -1,4 +1,4 @@
-package com.example.atwoz_app
+package com.atwoz_app
 
 import io.flutter.embedding.android.FlutterActivity
 

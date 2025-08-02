@@ -5,3 +5,4 @@ export 'hash.dart';
 export 'log.dart';
 export 'string_util.dart';
 export 'validation.dart';
+export 'collection_util.dart';
