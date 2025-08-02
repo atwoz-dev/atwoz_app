@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:atwoz_app/app/state/global_user_profile.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
@@ -38,5 +43,27 @@ class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
   Future<GlobalUserProfile> fetchProfileToHiveFromServer() async {
     await ref.read(saveProfileToHiveUseCaseProvider).execute();
     return await getProfileFromHive();
+  }
+
+  Future<void> initialize() async {
+    if (!state.isDefault) {
+      log('global user profile notifier already initialized');
+      return;
+    }
+    log('global user profile notifier initialize executed');
+    await FirebaseManager().initialize();
+
+    final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
+    log('accessToken $accessToken');
+    if (accessToken?.isEmpty ?? true) {
+      state = await getProfileFromHive();
+      return;
+    }
+    try {
+      state = await fetchProfileToHiveFromServer();
+    } catch (e) {
+      Log.e('Failed to fetch profile from server: $e');
+    }
+    await ref.read(authUsecaseProvider).initializeFcmToken();
   }
 }

@@ -42,8 +42,8 @@ class SaveProfileToHiveUseCase {
           key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
       await _secureStorage.write(
           key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
-    } catch (e) {
-      Log.e('Hive에 프로필 저장 실패: $e');
+    } catch (e, stacktrace) {
+      Log.e('Hive에 프로필 저장 실패: $e $stacktrace');
     }
   }
 }
