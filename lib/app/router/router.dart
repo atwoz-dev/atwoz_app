@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
@@ -10,6 +11,7 @@ import 'package:atwoz_app/features/contact_setting/presentation/page/contact_set
 import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
+import 'package:atwoz_app/features/interview/presentation/page/interview_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
@@ -83,6 +85,7 @@ enum AppRoute {
 
   // Interview
   interview('interview'),
+  interviewRegister('interview-register'),
 
   // Onboard
   onboard('onboard'),
@@ -126,31 +129,100 @@ final allRoutes = [
     name: '/',
     builder: (context, state) => const NavigationPage(),
     routes: [
-      // Home routes
-      NamedGoRoute(
-        name: AppRoute.homeNavigation.name,
-        builder: (context, state) => const HomeNavigationPage(),
-        routes: [
-          NamedGoRoute(
-            name: AppRoute.home.name,
-            builder: (context, state) => const HomePage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.ideal.name,
-            builder: (context, state) => const IdealTypeSettingPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.userByCategory.name,
-            builder: (context, state) {
-              final args = state.extra;
-              if (args is! UserByCategoryArguments) {
-                return const SizedBox.shrink();
-              }
-              return UserByCategoryPage(category: args.category);
-            },
-          ),
-        ],
-      ),
+      ShellRoute(
+          navigatorKey: homeNavigatorKey,
+          builder: (context, state, child) {
+            final String location = GoRouterState.of(context).uri.toString();
+
+            return Scaffold(
+              body: child,
+              bottomNavigationBar: DefaultBottomNavigationBar(
+                location: location,
+              ), // 고정 바텀바
+            );
+          },
+          routes: [
+            NamedGoRoute(
+              name: AppRoute.homeNavigation.name,
+              builder: (context, state) => const HomeNavigationPage(),
+              routes: [
+                NamedGoRoute(
+                  name: AppRoute.home.name,
+                  builder: (context, state) => const HomePage(),
+                ),
+              ],
+            ),
+            NamedGoRoute(
+              name: AppRoute.favoriteList.name,
+              builder: (context, state) => const FavoriteListPage(),
+            ),
+            NamedGoRoute(
+              name: AppRoute.notification.name,
+              builder: (context, state) => const NotificationPage(),
+            ),
+            NamedGoRoute(
+              name: AppRoute.introduce.name,
+              builder: (context, state) => const IntroducePage(),
+              routes: [
+                NamedGoRoute(
+                  name: AppRoute.introduceRegister.name,
+                  builder: (context, state) => const IntroduceRegisterPage(),
+                ),
+                NamedGoRoute(
+                  name: AppRoute.introduceEdit.name,
+                  builder: (context, state) => const IntroduceEditPage(),
+                ),
+                NamedGoRoute(
+                  name: AppRoute.introduceDetail.name,
+                  builder: (context, state) => const IntroduceDetailPage(),
+                ),
+                NamedGoRoute(
+                  name: AppRoute.introduceFilter.name,
+                  builder: (context, state) => const IntroduceFilterPage(),
+                ),
+                NamedGoRoute(
+                  name: AppRoute.introduceNavigation.name,
+                  builder: (context, state) => const IntroduceNavigationPage(),
+                ),
+              ],
+            ),
+            // My routes
+            NamedGoRoute(
+              name: AppRoute.myPage.name,
+              builder: (context, state) => const MyPage(),
+            ),
+            NamedGoRoute(
+                name: AppRoute.interview.name,
+                builder: (context, state) {
+                  final args = state.extra;
+                  final tabIndex =
+                      args is InterviewArguments ? args.currentTabIndex : 0;
+
+                  return InterviewPage(
+                    currentTabIndex: tabIndex,
+                  );
+                },
+                routes: [
+                  NamedGoRoute(
+                    name: AppRoute.interviewRegister.name,
+                    builder: (context, state) {
+                      final args = state.extra;
+                      if (args is! InterviewRegisterArguments) {
+                        return const SizedBox.shrink();
+                      }
+                      return InterviewRegisterPage(
+                        question: args.question,
+                        answer: args.answer,
+                        currentTabIndex: args.currentTabIndex,
+                        answerId: args.answerId,
+                        questionId: args.questionId,
+                        isAnswered: args.isAnswered,
+                      );
+                    },
+                  ),
+                  // Home routes
+                ]),
+          ]),
       NamedGoRoute(
         name: AppRoute.myNavigation.name,
         builder: (context, state) => const MyNavigationPage(),
@@ -160,34 +232,18 @@ final allRoutes = [
         builder: (context, state) => const ReportPage(),
       ),
       NamedGoRoute(
-        name: AppRoute.introduce.name,
-        builder: (context, state) => const IntroducePage(),
-        routes: [
-          NamedGoRoute(
-            name: AppRoute.introduceRegister.name,
-            builder: (context, state) => const IntroduceRegisterPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.introduceEdit.name,
-            builder: (context, state) => const IntroduceEditPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.introduceDetail.name,
-            builder: (context, state) => const IntroduceDetailPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.introduceFilter.name,
-            builder: (context, state) => const IntroduceFilterPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.introduceNavigation.name,
-            builder: (context, state) => const IntroduceNavigationPage(),
-          ),
-        ],
+        name: AppRoute.ideal.name,
+        builder: (context, state) => const IdealTypeSettingPage(),
       ),
       NamedGoRoute(
-        name: AppRoute.interview.name,
-        builder: (context, state) => const InterviewPage(),
+        name: AppRoute.userByCategory.name,
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! UserByCategoryArguments) {
+            return const SizedBox.shrink();
+          }
+          return UserByCategoryPage(category: args.category);
+        },
       ),
       NamedGoRoute(
         name: AppRoute.profile.name,
@@ -209,14 +265,6 @@ final allRoutes = [
             builder: (context, state) => const ContactSettingPage(),
           ),
         ],
-      ),
-      NamedGoRoute(
-        name: AppRoute.favoriteList.name,
-        builder: (_, __) => const FavoriteListPage(),
-      ),
-      NamedGoRoute(
-        name: AppRoute.notification.name,
-        builder: (context, state) => const NotificationPage(),
       ),
       NamedGoRoute(
         name: AppRoute.store.name,
@@ -282,11 +330,7 @@ final allRoutes = [
           ),
         ],
       ),
-      // My routes
-      NamedGoRoute(
-        name: AppRoute.myPage.name,
-        builder: (context, state) => const MyPage(),
-      ),
+
       NamedGoRoute(
         name: AppRoute.profileManage.name,
         builder: (context, state) => const ProfileManagePage(),

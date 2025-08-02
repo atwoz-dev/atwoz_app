@@ -22,8 +22,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       : super(
           isAppBar: false,
           isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 2,
         );
   int _currentTabIndex = 0;
 

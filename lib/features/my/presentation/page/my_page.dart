@@ -59,8 +59,6 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
       : super(
           isAppBar: false,
           isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 4,
         );
 
   @override

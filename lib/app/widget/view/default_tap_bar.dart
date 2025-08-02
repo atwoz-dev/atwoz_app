@@ -30,6 +30,7 @@ class DefaultTabBar extends StatelessWidget {
             final String label = entry.value;
 
             return GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => onTap(index),
               child: Container(
                 width: tabWidth,
