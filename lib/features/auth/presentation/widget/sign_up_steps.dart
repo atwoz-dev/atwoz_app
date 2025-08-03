@@ -36,7 +36,7 @@ final List<SignUpProfileChoices> signUpSteps = [
   SignUpProfileChoices(
     question: '직업이 어떻게 되세요?',
     buildWidget: (signUpNotifier, signUpState) => buildJobInput(
-      selectedJob: signUpState.selectedJob,
+      selectedJob: signUpState.selectedJob?.label,
       signUpNotifier: signUpNotifier,
     ),
   ),
@@ -87,7 +87,7 @@ final List<SignUpProfileChoices> signUpSteps = [
   SignUpProfileChoices(
     question: '취미가 어떻게 되세요?',
     buildWidget: (signUpNotifier, signUpState) => buildHobbiesInput(
-      selectedHobbies: signUpState.selectedHobbies,
+      selectedHobbies: signUpState.selectedHobbies.map((e) => e.label).toList(),
       signUpNotifier: signUpNotifier,
     ),
   ),

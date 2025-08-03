@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/temp.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/core/util/date_time_util.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -20,7 +19,7 @@ class SignUpProcessState with _$SignUpProcessState {
     @Default(null) String? error,
     @Default(null) int? selectedYear,
     @Default(null) int? selectedHeight,
-    @Default(null) String? selectedJob,
+    @Default(null) Job? selectedJob,
     @Default(null) String? selectedLocation,
     @Default(null) Education? selectedEducation, // 변경: Enum 타입 적용
     @Default(null) String? selectedFirstMbtiLetter,
@@ -30,7 +29,7 @@ class SignUpProcessState with _$SignUpProcessState {
     @Default(null) SmokingStatus? selectedSmoking, // 변경: Enum 타입 적용
     @Default(null) DrinkingStatus? selectedDrinking, // 변경: Enum 타입 적용
     @Default(null) Religion? selectedReligion, // 변경: Enum 타입 적용
-    @Default(<String>[]) List<String> selectedHobbies,
+    @Default(<Hobby>[]) List<Hobby> selectedHobbies,
   }) = _SignUpProcessState;
 
   const SignUpProcessState._();
@@ -110,26 +109,21 @@ class SignUpProcessState with _$SignUpProcessState {
     }
   }
 
-  // TODO(gb): 추후 백엔드 api 나오면 연동 후 수정해야 할 값들이 존재함
   // ProfileUploadRequest로 변환할 때 인덱스로 변환
   ProfileUploadRequest toProfileUploadRequest() {
     return ProfileUploadRequest(
       nickname: nickname ?? "",
-      selectedGender: selectedGender.toJson(), // Enum → 백엔드 변환
-      age: selectedYear ?? 0,
-      selectedHeight: selectedHeight ?? 0,
-      jobId: jobOptions.indexOf(selectedJob!) + 1,
-      // region: selectedLocation ?? "",
-      region: "SEOUL", // TODO(gb): 교체 필요
-      selectedEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
+      gender: selectedGender.toJson(), // Enum → 백엔드 변환
+      yearOfBirth: selectedYear ?? 0,
+      height: selectedHeight ?? 0,
+      job: selectedJob?.toJson() ?? "",
+      district: addressData.getDistrictValue(selectedLocation ?? ''), //
+      highestEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
       mbti: mbti ?? "",
-      selectedSmoking: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환
-      selectedDrinking: selectedDrinking?.toJson() ?? "", // Enum → 백엔드 변환
-      selectedReligion: selectedReligion?.toJson() ?? "", // Enum → 백엔드 변환
-      selectedHobbies: selectedHobbies
-          .map((hobby) => hobbies.indexOf(hobby) + 1)
-          .where((index) => index != -1)
-          .toList(),
+      smokingStatus: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환
+      drinkingStatus: selectedDrinking?.toJson() ?? "", // Enum → 백엔드 변환
+      religion: selectedReligion?.toJson() ?? "", // Enum → 백엔드 변환
+      hobbies: selectedHobbies.map((e) => e.toJson()).toList(),
     );
   }
 

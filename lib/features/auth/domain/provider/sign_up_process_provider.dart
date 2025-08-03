@@ -85,8 +85,10 @@ class SignUpProcess extends _$SignUpProcess {
   void updateSelectedHeight(int height) =>
       updateField(height, copy: (s, v) => s.copyWith(selectedHeight: v));
 
-  void updateSelectedJob(String? job) =>
-      updateField(job, copy: (s, v) => s.copyWith(selectedJob: v));
+  void updateSelectedJob(String? job) {
+    final selectedEnum = Job.fromLabel(job);
+    state = state.copyWith(selectedJob: selectedEnum);
+  }
 
   void updateSelectedLocation(String? location) =>
       updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
@@ -141,7 +143,13 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateHobbies(List<String> hobbies) {
-    state = state.copyWith(selectedHobbies: hobbies);
+    state = state.copyWith(
+      selectedHobbies: hobbies
+          .map(
+            (e) => Hobby.fromLabel(e),
+          )
+          .toList(),
+    );
   }
 
   void reset() => state = const SignUpProcessState();

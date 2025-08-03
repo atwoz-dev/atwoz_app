@@ -106,7 +106,7 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '직업',
                   hintText: '직업을 선택해주세요.',
-                  initialValue: signUpState.selectedJob,
+                  initialValue: signUpState.selectedJob?.label,
                   route: AppRoute.signUpProfileChoice,
                   step: 3,
                 ),
@@ -155,7 +155,9 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '취미',
                   hintText: '취미를 선택해주세요.',
-                  initialValue: signUpState.selectedHobbies.join(', '),
+                  initialValue: signUpState.selectedHobbies
+                      .map((e) => e.label)
+                      .join(', '),
                   route: AppRoute.signUpProfileChoice,
                   step: 10,
                 )
