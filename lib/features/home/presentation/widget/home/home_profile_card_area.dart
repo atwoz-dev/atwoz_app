@@ -63,6 +63,8 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                     child: _ProfileCardWidget(
                       profile: profile,
                       onTapFavorite: () async {
+                        if (profile.favoriteType != null) return;
+
                         final favoriteType =
                             await FavoriteTypeSelectDialog.open(
                           context,
