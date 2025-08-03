@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -8,7 +6,6 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -196,6 +193,7 @@ class _ProfileCardWidget extends StatelessWidget {
                 height: 100,
                 child: CircleAvatar(
                   radius: 50.0,
+                  backgroundColor: Colors.transparent,
                   backgroundImage: NetworkImage(
                     profile.profileImageUrl,
                   ), // 추후 api 연동 시 NetworkImage로 변경
