@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
