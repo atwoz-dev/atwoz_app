@@ -146,7 +146,7 @@ class _EmptyIntroducedListView extends StatelessWidget {
         ),
         const Gap(32),
         DefaultOutlinedButton(
-          onPressed: () {},
+          onPressed: () => navigate(context, route: AppRoute.introduce),
           textColor: Palette.colorPrimary500,
           textStyle: Fonts.body01Medium().copyWith(
             fontWeight: FontWeight.w500,
