@@ -192,36 +192,37 @@ final allRoutes = [
               builder: (context, state) => const MyPage(),
             ),
             NamedGoRoute(
-                name: AppRoute.interview.name,
-                builder: (context, state) {
-                  final args = state.extra;
-                  final tabIndex =
-                      args is InterviewArguments ? args.currentTabIndex : 0;
+              name: AppRoute.interview.name,
+              builder: (context, state) {
+                final args = state.extra;
+                final tabIndex =
+                    args is InterviewArguments ? args.currentTabIndex : 0;
 
-                  return InterviewPage(
-                    currentTabIndex: tabIndex,
-                  );
-                },
-                routes: [
-                  NamedGoRoute(
-                    name: AppRoute.interviewRegister.name,
-                    builder: (context, state) {
-                      final args = state.extra;
-                      if (args is! InterviewRegisterArguments) {
-                        return const SizedBox.shrink();
-                      }
-                      return InterviewRegisterPage(
-                        question: args.question,
-                        answer: args.answer,
-                        currentTabIndex: args.currentTabIndex,
-                        answerId: args.answerId,
-                        questionId: args.questionId,
-                        isAnswered: args.isAnswered,
-                      );
-                    },
-                  ),
-                  // Home routes
-                ]),
+                return InterviewPage(
+                  currentTabIndex: tabIndex,
+                );
+              },
+              routes: [
+                NamedGoRoute(
+                  name: AppRoute.interviewRegister.name,
+                  builder: (context, state) {
+                    final args = state.extra;
+                    if (args is! InterviewRegisterArguments) {
+                      return const SizedBox.shrink();
+                    }
+                    return InterviewRegisterPage(
+                      question: args.question,
+                      answer: args.answer,
+                      currentTabIndex: args.currentTabIndex,
+                      answerId: args.answerId,
+                      questionId: args.questionId,
+                      isAnswered: args.isAnswered,
+                    );
+                  },
+                ),
+                // Home routes
+              ],
+            ),
           ]),
       NamedGoRoute(
         name: AppRoute.myNavigation.name,

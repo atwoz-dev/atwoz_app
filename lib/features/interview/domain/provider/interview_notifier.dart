@@ -18,7 +18,8 @@ class InterviewNotifier extends _$InterviewNotifier {
     try {
       final repository = ref.read(interviewRepositoryProvider);
       final questionList = await repository.getQuestionList(
-          category: InterviewCategory.personal);
+        category: InterviewCategory.personal,
+      );
 
       state = state.copyWith(
         questionList: InterviewData(questionList: questionList),

@@ -61,17 +61,20 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                     try {
                       if (widget.isAnswered) {
                         await provider.updateAnswer(
-                            answerId: widget.answerId ?? 0,
-                            answerContent: _inputContentController.text.trim());
+                          answerId: widget.answerId ?? 0,
+                          answerContent: _inputContentController.text.trim(),
+                        );
                       } else {
                         await provider.addAnswer(
-                            questionId: widget.questionId ?? 0,
-                            answerContent: _inputContentController.text.trim());
+                          questionId: widget.questionId ?? 0,
+                          answerContent: _inputContentController.text.trim(),
+                        );
                       }
                       navigate(context,
                           route: AppRoute.interview,
                           extra: InterviewArguments(
-                              currentTabIndex: widget.currentTabIndex));
+                            currentTabIndex: widget.currentTabIndex,
+                          ));
                     } catch (e) {
                       showToastMessage('저장에 실패했습니다.');
                     }
@@ -95,7 +98,10 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
             child: Text(
               widget.question,
               style: Fonts.body01Medium(),
