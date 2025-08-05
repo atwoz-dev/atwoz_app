@@ -60,15 +60,19 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                   onElevatedButtonPressed: () async {
                     try {
                       if (widget.isAnswered) {
-                        await provider.updateAnswer(
-                          answerId: widget.answerId ?? 0,
-                          answerContent: _inputContentController.text.trim(),
-                        );
+                        await ref
+                            .read(interviewNotifierProvider.notifier)
+                            .addAnswer(
+                              widget.answerId ?? 0,
+                              _inputContentController.text.trim(),
+                            );
                       } else {
-                        await provider.addAnswer(
-                          questionId: widget.questionId ?? 0,
-                          answerContent: _inputContentController.text.trim(),
-                        );
+                        await ref
+                            .read(interviewNotifierProvider.notifier)
+                            .addAnswer(
+                              widget.questionId ?? 0,
+                              _inputContentController.text.trim(),
+                            );
                       }
                       navigate(context,
                           route: AppRoute.interview,
