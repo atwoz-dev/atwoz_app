@@ -11,7 +11,7 @@ class InterviewPage extends ConsumerStatefulWidget {
   final int currentTabIndex;
   const InterviewPage({
     super.key,
-    this.currentTabIndex = 0,
+    required this.currentTabIndex,
   });
 
   @override
