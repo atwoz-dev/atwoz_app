@@ -7,11 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class DefaultBottomNavigationBar extends StatelessWidget {
-  String location;
+  final int? currentIndex;
+  final bool isHighlighted;
 
   DefaultBottomNavigationBar({
     super.key,
-    required this.location,
+    this.currentIndex,
+    this.isHighlighted = true, // 기본값은 강조 활성화
   });
 
   final List<_NavItem> _items = [
@@ -42,21 +44,10 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         route: AppRoute.myPage),
   ];
 
-  int _calculateCurrentIndex(String location) {
-    if (location.startsWith('/${AppRoute.home.name}')) return 0;
-    if (location.startsWith('/${AppRoute.favoriteList.name}')) return 1;
-    if (location.startsWith('/${AppRoute.introduce.name}')) return 2;
-    if (location.startsWith('/${AppRoute.interview.name}')) return 3;
-    if (location.startsWith('/${AppRoute.myPage.name}')) return 4;
-    return -1;
-  }
-
   @override
   Widget build(BuildContext context) {
     final defaultTextStyle =
         Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 11.sp);
-    final int currentIndex = _calculateCurrentIndex(location);
-    final bool isIndexValid = currentIndex >= 0 && currentIndex < _items.length;
 
     return Container(
       decoration: BoxDecoration(
@@ -68,7 +59,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         ),
       ),
       child: BottomNavigationBar(
-        currentIndex: isIndexValid ? currentIndex : 0,
+        currentIndex: currentIndex ?? 0,
         onTap: (index) {
           navigate(
             context,
@@ -77,15 +68,17 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           );
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            currentIndex >= 0 ? context.palette.primary : Palette.colorGrey400,
+        selectedItemColor: (isHighlighted && currentIndex != null)
+            ? context.palette.primary
+            : Palette.colorGrey400,
         unselectedItemColor: Palette.colorGrey500,
-        selectedLabelStyle: currentIndex >= 0
+        selectedLabelStyle: (isHighlighted && currentIndex != null)
             ? defaultTextStyle.copyWith(color: context.palette.primary)
             : defaultTextStyle,
         unselectedLabelStyle: defaultTextStyle,
         items: _items.map((item) {
-          final isSelected = _items.indexOf(item) == currentIndex;
+          final isSelected =
+              isHighlighted && _items.indexOf(item) == currentIndex;
           return BottomNavigationBarItem(
             icon: Padding(
               padding: const EdgeInsets.only(top: 15),

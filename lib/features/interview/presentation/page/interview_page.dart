@@ -23,6 +23,8 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
       : super(
           isAppBar: false,
           isHorizontalMargin: false,
+          isDefaultBottomNavigationBar: true,
+          defaultBottomNavigationBarIndex: 3,
         );
   int _currentTabIndex = 0;
   bool _isBannerVisible = true;

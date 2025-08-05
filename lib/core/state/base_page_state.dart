@@ -48,6 +48,13 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
   final Widget? defaultAppBarLeadingIcon;
   final void Function(BuildContext context)? defaultAppBarLeadingAction;
 
+  // 바텀 네비게이션 바
+  final Widget? bottomNavigationBar;
+  final bool isDefaultBottomNavigationBar;
+  final Key? defaultBottomNavigationBarKey;
+  final int? defaultBottomNavigationBarIndex;
+  final bool isHighlightedDefaultBottomNavigationBar;
+
   // 기타
   final bool isResizeToAvoidBottomInset;
 
@@ -66,6 +73,13 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
     this.isDefaultAppBarDivider = false,
     this.defaultAppBarLeadingIcon,
     this.defaultAppBarLeadingAction,
+
+    // 바텀 네비게이션 바
+    this.bottomNavigationBar,
+    this.isDefaultBottomNavigationBar = false,
+    this.defaultBottomNavigationBarKey,
+    this.defaultBottomNavigationBarIndex,
+    this.isHighlightedDefaultBottomNavigationBar = true,
 
     // 기타
     this.isResizeToAvoidBottomInset = true,
@@ -102,6 +116,13 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
                 : EdgeInsets.zero,
             child: buildPage(context),
           ),
+          bottomNavigationBar: bottomNavigationBar ??
+              (isDefaultBottomNavigationBar
+                  ? DefaultBottomNavigationBar(
+                      key: defaultBottomNavigationBarKey,
+                      isHighlighted: isHighlightedDefaultBottomNavigationBar,
+                    )
+                  : null),
         ),
         if (state.isLoading) const DefaultCircularProgressIndicator(),
       ],
