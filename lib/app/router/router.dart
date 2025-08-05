@@ -10,6 +10,7 @@ import 'package:atwoz_app/features/contact_setting/presentation/page/contact_set
 import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
+import 'package:atwoz_app/features/interview/presentation/page/interview_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
@@ -83,6 +84,7 @@ enum AppRoute {
 
   // Interview
   interview('interview'),
+  interviewRegister('interview-register'),
 
   // Onboard
   onboard('onboard'),
@@ -187,7 +189,35 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.interview.name,
-        builder: (context, state) => const InterviewPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          final tabIndex =
+              args is InterviewArguments ? args.currentTabIndex : 0;
+
+          return InterviewPage(
+            currentTabIndex: tabIndex,
+          );
+        },
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.interviewRegister.name,
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! InterviewRegisterArguments) {
+                return const SizedBox.shrink();
+              }
+              return InterviewRegisterPage(
+                question: args.question,
+                answer: args.answer,
+                currentTabIndex: args.currentTabIndex,
+                answerId: args.answerId,
+                questionId: args.questionId,
+                isAnswered: args.isAnswered,
+              );
+            },
+          ),
+          // Home routes
+        ],
       ),
       NamedGoRoute(
         name: AppRoute.profile.name,
