@@ -66,6 +66,7 @@ class HashtagWrap extends StatelessWidget {
         }
 
         return Wrap(
+          alignment: WrapAlignment.center,
           spacing: spacing,
           runSpacing: 4,
           children: visibleTags,
