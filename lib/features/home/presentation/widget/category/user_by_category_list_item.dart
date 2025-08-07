@@ -59,6 +59,7 @@ class UserByCategoryListItem extends ConsumerWidget {
                         height: 18,
                         child: HashtagWrap(
                           tags: profile.tags,
+                          isCenter: false,
                         ),
                       ),
                       const Gap(8),

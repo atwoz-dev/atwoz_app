@@ -210,7 +210,10 @@ class _ProfileCardWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 18,
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: HashtagWrap(tags: profile.tags),
+                child: HashtagWrap(
+                  tags: profile.tags,
+                  isCenter: true,
+                ),
               ),
               const Gap(8),
               SizedBox(
