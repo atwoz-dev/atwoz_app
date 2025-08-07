@@ -26,7 +26,7 @@ class HomeNotifier extends _$HomeNotifier {
 
   /// 좋아요 설정
   Future<void> setFavoriteType(int memberId, FavoriteType type) async {
-    if (!state.hasValue) return;
+    if (!state.hasValue || state.value!.recommendedProfiles == null) return;
     try {
       await ref.read(favoriteRepositoryProvider).requestFavorite(
             memberId,
@@ -35,7 +35,7 @@ class HomeNotifier extends _$HomeNotifier {
 
       state = AsyncData(
         state.value!.copyWith(
-          recommendedProfiles: state.value!.recommendedProfiles
+          recommendedProfiles: state.value!.recommendedProfiles!
               .map((e) =>
                   e.memberId == memberId ? e.copyWith(favoriteType: type) : e)
               .toList(),

@@ -7,6 +7,7 @@ import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -34,9 +35,22 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
 
     return homeStateAsync.when(
       data: (profiles) {
-        if (profiles.isEmpty) {
-          return const _EmptyProfileCard();
+        if (profiles == null) {
+          // 로딩 시 보여주는 빈 박스
+          return Container(
+            width: context.screenWidth,
+            height: context.screenHeight * 0.41,
+            decoration: BoxDecoration(
+              color: Palette.colorGrey50,
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ); // 프로필이 없을 때
         }
+
+        if (profiles.isEmpty) {
+          return const _EmptyProfileCard(); // 빈 리스트인 경우
+        }
+
         return Column(
           children: [
             SizedBox(
@@ -50,6 +64,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                 ),
                 itemBuilder: (context, index) {
                   final profile = profiles[index];
+
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => navigate(
@@ -80,23 +95,9 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
               ),
             ),
             const Gap(16),
-            Row(
-              // 페이지 번호 상태 바
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(profiles.length, (index) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: _currentPage == index
-                        ? Palette.colorPrimary500
-                        : Palette.colorGrey100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                );
-              }),
+            _PageCardIndicator(
+              totalPages: profiles.length,
+              currentPage: _currentPage,
             ),
           ],
         );
@@ -113,9 +114,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
         );
       },
       loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -128,9 +127,9 @@ class _EmptyProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.screenWidth,
+      height: context.screenHeight * 0.41,
       padding: const EdgeInsets.symmetric(
         horizontal: 32,
-        vertical: 122,
       ),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
@@ -138,6 +137,7 @@ class _EmptyProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const DefaultIcon(
             IconPath.sadEmotion,
@@ -191,11 +191,10 @@ class _ProfileCardWidget extends StatelessWidget {
                 // 상단 프로필 사진
                 width: 100,
                 height: 100,
-                child: CircleAvatar(
-                  radius: 50.0,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: NetworkImage(
-                    profile.profileImageUrl,
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: profile.profileImageUrl,
+                    fit: BoxFit.cover,
                   ), // 추후 api 연동 시 NetworkImage로 변경
                 ),
               ),
@@ -235,6 +234,35 @@ class _ProfileCardWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _PageCardIndicator extends StatelessWidget {
+  final int totalPages;
+  final int currentPage;
+  const _PageCardIndicator(
+      {required this.totalPages, required this.currentPage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      // 페이지 번호 상태 바
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(totalPages, (index) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(
+            color: currentPage == index
+                ? Palette.colorPrimary500
+                : Palette.colorGrey100,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        );
+      }),
     );
   }
 }
