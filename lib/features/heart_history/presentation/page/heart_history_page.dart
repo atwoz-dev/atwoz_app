@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/store/presentation/widget/heart_history_card.dart';
+import 'package:atwoz_app/features/heart_history/presentation/widget/heart_history_card.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/features/store/domain/provider/domain.dart';
+import 'package:atwoz_app/features/heart_history/domain/provider/domain.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,7 +40,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
     try {
       await ref
-          .read(heartListNotifierProvider.notifier)
+          .read(heartHistoryNotifierProvider.notifier)
           .loadMoreHeartTractions();
     } catch (e) {
       showToastMessage('표시할 항목이 더 이상 없습니다.');
@@ -61,7 +61,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(heartListNotifierProvider);
+    final state = ref.watch(heartHistoryNotifierProvider);
 
     if (!state.isLoaded && state.error == null) {
       return const Scaffold(

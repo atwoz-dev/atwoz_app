@@ -1,22 +1,22 @@
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/store/data/repository/store_repository.dart';
+import 'package:atwoz_app/features/heart_history/data/repository/heart_history_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'heart_list_state.dart';
+import 'heart_history_state.dart';
 
-part 'heart_list_notifier.g.dart';
+part 'heart_history_notifier.g.dart';
 
 @riverpod
-class HeartListNotifier extends _$HeartListNotifier {
+class HeartHistoryNotifier extends _$HeartHistoryNotifier {
   @override
-  HeartListState build() {
-    _initializeHeartLists();
-    return HeartListState.initial();
+  HeartHistoryState build() {
+    _initializeHeartHistorys();
+    return HeartHistoryState.initial();
   }
 
-  Future<void> _initializeHeartLists() async {
+  Future<void> _initializeHeartHistorys() async {
     try {
-      final repository = ref.read(storeRepositoryProvider);
+      final repository = ref.read(heartHistoryRepositoryProvider);
       final heart = await repository.getHeartTransactionList();
 
       state = state.copyWith(
@@ -28,7 +28,7 @@ class HeartListNotifier extends _$HeartListNotifier {
       Log.e(e);
       state = state.copyWith(
         isLoaded: true,
-        error: HeartListErrorType.network,
+        error: HeartHistoryErrorType.network,
       );
     }
   }
@@ -43,22 +43,22 @@ class HeartListNotifier extends _$HeartListNotifier {
         return;
       }
       final lastId = state.heartTractions.transactions.last.id;
-      final heartListData = await ref
-          .read(storeRepositoryProvider)
+      final heartHistoryData = await ref
+          .read(heartHistoryRepositoryProvider)
           .getHeartTransactionList(lastId);
 
       state = state.copyWith(
         heartTractions: state.heartTractions.copyWith(
           transactions: [
             ...state.heartTractions.transactions,
-            ...heartListData.transactions
+            ...heartHistoryData.transactions
           ],
-          hasMore: heartListData.hasMore,
+          hasMore: heartHistoryData.hasMore,
         ),
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(error: HeartListErrorType.network);
+      state = state.copyWith(error: HeartHistoryErrorType.network);
     }
   }
 

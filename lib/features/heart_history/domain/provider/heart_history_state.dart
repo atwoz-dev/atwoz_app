@@ -1,26 +1,26 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'heart_list_state.freezed.dart';
+part 'heart_history_state.freezed.dart';
 
-enum HeartListErrorType {
+enum HeartHistoryErrorType {
   network,
 }
 
 @freezed
-class HeartListState with _$HeartListState {
-  const factory HeartListState({
-    @Default(HeartListData()) HeartListData heartTractions,
+class HeartHistoryState with _$HeartHistoryState {
+  const factory HeartHistoryState({
+    @Default(HeartHistoryData()) HeartHistoryData heartTractions,
     @Default(false) bool isLoaded,
-    HeartListErrorType? error,
-  }) = _HeartListState;
+    HeartHistoryErrorType? error,
+  }) = _HeartHistoryState;
 
-  const HeartListState._();
+  const HeartHistoryState._();
 
-  factory HeartListState.initial() => const HeartListState();
+  factory HeartHistoryState.initial() => const HeartHistoryState();
 }
 
-class HeartListData {
-  const HeartListData({
+class HeartHistoryData {
+  const HeartHistoryData({
     this.transactions = const [],
     this.hasMore = false,
   });
@@ -28,11 +28,11 @@ class HeartListData {
   final List<HeartTransactionSummary> transactions;
   final bool hasMore;
 
-  HeartListData copyWith({
+  HeartHistoryData copyWith({
     List<HeartTransactionSummary>? transactions,
     bool? hasMore,
   }) {
-    return HeartListData(
+    return HeartHistoryData(
       transactions: transactions ?? this.transactions,
       hasMore: hasMore ?? this.hasMore,
     );
