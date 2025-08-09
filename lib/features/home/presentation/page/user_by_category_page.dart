@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -27,31 +28,35 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
       body: introducedProfilesAsync.when(
-        data: (profiles) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: ListView.separated(
-            itemCount: profiles.length,
-            separatorBuilder: (_, __) => const Gap(8),
-            itemBuilder: (context, index) {
-              final profile = profiles[index];
-              final isBlurred = !profile.isIntroduced;
+        data: (profiles) {
+          if (profiles.isEmpty) {
+            return const _EmptyIntroducedListView();
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: ListView.separated(
+              itemCount: profiles.length,
+              separatorBuilder: (_, __) => const Gap(8),
+              itemBuilder: (context, index) {
+                final profile = profiles[index];
+                final isBlurred = !profile.isIntroduced;
 
-              return UserByCategoryListItem(
-                isBlurred: isBlurred,
-                onTap: () => _handleProfileTap(
-                  context: context,
-                  profile: profile,
-                  index: index,
+                return UserByCategoryListItem(
                   isBlurred: isBlurred,
-                  introducedProfilesNotifier: introducedProfilesNotifier,
-                  profiles: profiles,
-                ),
-                profile: profile,
-                category: widget.category,
-              );
-            },
-          ),
-        ),
+                  onTap: () => _handleProfileTap(
+                    context: context,
+                    profile: profile,
+                    index: index,
+                    isBlurred: isBlurred,
+                    introducedProfilesNotifier: introducedProfilesNotifier,
+                  ),
+                  profile: profile,
+                  category: widget.category,
+                );
+              },
+            ),
+          );
+        },
         error: (error, _) => Center(child: Text('Error: $error')),
         loading: () => const Center(child: CircularProgressIndicator()),
       ),
@@ -64,7 +69,6 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required int index,
     required bool isBlurred,
     required IntroducedProfilesNotifier introducedProfilesNotifier,
-    required List<IntroducedProfile> profiles,
   }) async {
     if (isBlurred) {
       final heartBalance =
@@ -107,6 +111,51 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
       context,
       route: AppRoute.profile,
       extra: ProfileDetailArguments(userId: profile.memberId),
+    );
+  }
+}
+
+class _EmptyIntroducedListView extends StatelessWidget {
+  const _EmptyIntroducedListView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const DefaultIcon(
+            IconPath.sadEmotion,
+            size: 48,
+          ),
+          const Gap(8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '조건에 맞는 이성을 찾지 못했어요\n대신, 직접 자신을 소개한 분들을 확인해보시겠어요?',
+                textAlign: TextAlign.center,
+                style: Fonts.body02Medium().copyWith(
+                  color: Palette.colorBlack,
+                  fontWeight: FontWeight.w400,
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
+          const Gap(32),
+          DefaultOutlinedButton(
+            onPressed: () => navigate(context, route: AppRoute.introduce),
+            textColor: Palette.colorPrimary500,
+            textStyle: Fonts.body01Medium().copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+            child: const Text(
+              '셀프소개 보러 가기',
+            ),
+          )
+        ],
+      ),
     );
   }
 }

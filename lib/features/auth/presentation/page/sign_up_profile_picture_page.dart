@@ -24,7 +24,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: DefaultAppBar(
+        appBar: const DefaultAppBar(
           title: '프로필 사진',
         ),
         body: SingleChildScrollView(
@@ -40,7 +40,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AuthStepIndicatorWidget(
+                      const AuthStepIndicatorWidget(
                         totalSteps: 4,
                         currentStep: 3,
                       ),
@@ -118,7 +118,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AuthPhotoGuideWidget(
+                      const AuthPhotoGuideWidget(
                         title: '이성에게 좋은 인상을 주는 사진',
                         imagePathsWithText: [
                           {
@@ -140,7 +140,7 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                         ],
                       ),
                       const Gap(24),
-                      AuthPhotoGuideWidget(
+                      const AuthPhotoGuideWidget(
                         title: '이성에게 부정적인 인상을 주는 사진',
                         imagePathsWithText: [
                           {

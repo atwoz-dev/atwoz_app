@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -58,9 +57,7 @@ class UserByCategoryListItem extends ConsumerWidget {
                         // 해시태그 리스트 뷰
                         width: context.screenHeight,
                         height: 18,
-                        child: HashtagWrap(
-                          tags: profile.tags,
-                        ),
+                        child: HashtagWrap(tags: profile.tags),
                       ),
                       const Gap(8),
                       SizedBox(

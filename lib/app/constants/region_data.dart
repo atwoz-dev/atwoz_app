@@ -627,20 +627,24 @@ class AddressData {
   }
 
   /// 화면 표시용 문자열을 서버 데이터로 변환 (district value만 반환)
-  String getDistrictValue(String locationString) {
-    final parts = locationString.split(' ');
+  String? getDistrictValue(String locationString) {
+    try {
+      final parts = locationString.split(' ');
 
-    // 도시 찾기
-    final city = _cityByLabel[parts.first];
+      // 도시 찾기
+      final city = _cityByLabel[parts.first];
 
-    // district가 없는 도시(예: 세종특별자치시)의 경우 city value를 반환
-    if (city!.districts.isEmpty) {
-      return city.value;
+      // district가 없는 도시(예: 세종특별자치시)의 경우 null 반환
+      if (city!.districts.isEmpty) {
+        return city.value;
+      }
+
+      // 구/군 찾기
+      final district = _districtByLabel[city.label]![parts[1]];
+      return district!.value;
+    } catch (e) {
+      return null; // 예외 발생 시 null 반환
     }
-
-    // 구/군 찾기
-    final district = _districtByLabel[city.label]![parts[1]];
-    return district!.value;
   }
 
   /// 검색어로 지역 검색하기

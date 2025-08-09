@@ -1,6 +1,8 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-// import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -85,11 +87,18 @@ class SignUpProcess extends _$SignUpProcess {
   void updateSelectedHeight(int height) =>
       updateField(height, copy: (s, v) => s.copyWith(selectedHeight: v));
 
-  void updateSelectedJob(String? job) =>
-      updateField(job, copy: (s, v) => s.copyWith(selectedJob: v));
+  void updateSelectedJob(String? job) {
+    final selectedEnum = Job.fromLabel(job);
+    state = state.copyWith(selectedJob: selectedEnum);
+  }
 
-  void updateSelectedLocation(String? location) =>
-      updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
+  void updateSelectedLocation(String? location) {
+    updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
+    if (!state.isButtonEnabled()) {
+      // 입력한 지역이 목록에 없으면 초기화
+      state = state.copyWith(selectedLocation: null);
+    }
+  }
 
   void updateCurrentStep(int step) {
     state = state.copyWith(currentStep: step);
@@ -125,7 +134,6 @@ class SignUpProcess extends _$SignUpProcess {
 
   void updateSmoking(String? smoking) {
     final selectedEnum = SmokingStatus.fromLabel(smoking);
-
     state = state.copyWith(selectedSmoking: selectedEnum);
   }
 
@@ -142,8 +150,26 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   void updateHobbies(List<String> hobbies) {
-    state = state.copyWith(selectedHobbies: hobbies);
+    state = state.copyWith(
+      selectedHobbies: hobbies
+          .map(
+            (e) => Hobby.fromLabel(e),
+          )
+          .toList(),
+    );
   }
 
   void reset() => state = const SignUpProcessState();
+
+  Future<String> updateLocation() async {
+    final location =
+        await ref.read(getCurrentLocationUseCaseProvider).execute();
+
+    Log.d('현재 위치: $location');
+    state = state.copyWith(
+      selectedLocation: location,
+    );
+
+    return location;
+  }
 }

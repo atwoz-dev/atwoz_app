@@ -133,7 +133,6 @@ class _MyProfileImageUpdatePageState
                                   .deleteEditableProfileImage(index: index);
                             },
                             isRepresentative: index == 0,
-                            isUpdate: index == 0,
                           );
                         },
                       ),

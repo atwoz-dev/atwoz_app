@@ -1,4 +1,3 @@
-import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/model/auth_process_state.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
