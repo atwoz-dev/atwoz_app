@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/store/data/dto/heart_balance_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 part 'store_state.freezed.dart';
 
@@ -11,7 +12,9 @@ enum HeartBalanceErrorType {
 class StoreState with _$StoreState {
   const factory StoreState({
     @Default(StoreData()) StoreData heartBalance,
+    @Default([]) List<ProductDetails> products,
     @Default(false) bool isLoaded,
+    @Default(false) bool isPurchasePending,
     HeartBalanceErrorType? error,
   }) = _StoreState;
 
