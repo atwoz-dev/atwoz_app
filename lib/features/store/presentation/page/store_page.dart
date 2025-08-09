@@ -78,8 +78,14 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
     for (final purchase in purchases) {
       if (purchase.status == PurchaseStatus.purchased) {
         debugPrint('✅ 구매 성공: ${purchase.productID}');
-        debugPrint(
-            '📦 App Store Receipt (Base64): ${purchase.verificationData.serverVerificationData}');
+
+        // 영수증 서버 검증
+        await ref
+            .read(storeNotifierProvider.notifier)
+            .verifyReceipt(purchase.verificationData.serverVerificationData);
+
+        // 보유하트 재조회
+        await ref.read(storeNotifierProvider.notifier).fetchHeartBalance();
 
         if (purchase.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchase);

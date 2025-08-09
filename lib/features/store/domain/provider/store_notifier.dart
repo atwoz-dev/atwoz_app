@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
+import 'package:atwoz_app/features/store/domain/usecase/verify_receipt_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'store_state.dart';
@@ -34,5 +35,17 @@ class StoreNotifier extends _$StoreNotifier {
 
   Future<void> fetchHeartBalance() async {
     await _initializeHeartBalanceItem();
+  }
+
+  Future<void> verifyReceipt(
+    String appReceipt,
+  ) async {
+    try {
+      await VerifyReceiptUseCase(ref).call(
+        appReceipt: appReceipt,
+      );
+    } catch (e) {
+      Log.e(e);
+    }
   }
 }
