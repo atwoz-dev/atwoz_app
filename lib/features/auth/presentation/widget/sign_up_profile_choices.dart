@@ -26,7 +26,6 @@ Widget buildSelectInput({
   );
 }
 
-// TODO: api 나오면 options들 백엔드에서 받아오게 수정해야 함
 Widget buildBirthInput({
   required int? selectedYear,
   required SignUpProcess signUpNotifier,
@@ -85,12 +84,10 @@ Widget buildJobInput({
 
 class LocationInputWidget extends ConsumerStatefulWidget {
   final String? selectedLocation;
-  final Function(String?) onLocationUpdated;
 
   const LocationInputWidget({
     super.key,
     required this.selectedLocation,
-    required this.onLocationUpdated,
   });
 
   @override
@@ -100,6 +97,7 @@ class LocationInputWidget extends ConsumerStatefulWidget {
 
 class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
   late final TextEditingController _controller;
+  late final ScrollController _scrollController;
 
   List<String> _filteredLocations = [];
 
@@ -107,27 +105,39 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.selectedLocation);
+
+    _scrollController = ScrollController();
+
+    // 스크롤 시 키보드 내리기
+    _scrollController.addListener(() {
+      if (_scrollController.position.isScrollingNotifier.value) {
+        if (_scrollController.position.isScrollingNotifier.value) {
+          FocusScope.of(context).unfocus();
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.read(signUpProcessProvider.notifier);
+    final signUpProcessNotifier = ref.read(signUpProcessProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
+        TextField(
           controller: _controller,
           onChanged: (value) {
-            setState(() {
-              _filteredLocations = addressData.searchLocations(value);
-            });
+            _controller.text = value;
+            _filteredLocations = addressData.searchLocations(value);
+            signUpProcessNotifier.updateSelectedLocation(value);
           },
           decoration: InputDecoration(
             hintText: '지역을 입력하세요',
@@ -152,11 +162,13 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
         const SizedBox(height: 8),
         if (_controller.text.isEmpty)
           GestureDetector(
-            onTap: () {
-              notifier.updateLocation();
-            },
+            onTap: () async =>
+                _controller.text = await signUpProcessNotifier.updateLocation(),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              padding: const EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color(0xffDCDEE3),
@@ -176,17 +188,16 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             maxHeight: context.screenHeight * 0.4, // 스크롤 가능한 최대 높이 설정
           ),
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: _filteredLocations.map((location) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _controller.text = location;
-                      widget.onLocationUpdated(location);
-                      _filteredLocations.clear(); // 검색 후 결과 초기화
-                    });
-
+                    _controller.text = location;
+                    signUpProcessNotifier
+                        .updateSelectedLocation(location); // 선택한 지역으로 설정
+                    _filteredLocations.clear(); // 검색 후 결과 초기화
                     FocusScope.of(context).unfocus(); // 키보드 내리기
                   },
                   child: Container(

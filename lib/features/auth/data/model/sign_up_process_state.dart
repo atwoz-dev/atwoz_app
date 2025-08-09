@@ -88,7 +88,8 @@ class SignUpProcessState with _$SignUpProcessState {
       case 3: // 직업 선택
         return selectedJob != null;
       case 4: // 지역 선택
-        return selectedLocation != null;
+        return selectedLocation != null &&
+            addressData.getDistrictValue(selectedLocation ?? '') != null;
       case 5: // 학력 선택
         return selectedEducation != null;
       case 6: // Mbti 선택
@@ -117,7 +118,7 @@ class SignUpProcessState with _$SignUpProcessState {
       yearOfBirth: selectedYear ?? 0,
       height: selectedHeight ?? 0,
       job: selectedJob?.toJson() ?? "",
-      district: addressData.getDistrictValue(selectedLocation ?? ''), //
+      district: addressData.getDistrictValue(selectedLocation ?? '') ?? "", //
       highestEducation: selectedEducation?.toJson() ?? "", // Enum → 백엔드 변환
       mbti: mbti ?? "",
       smokingStatus: selectedSmoking?.toJson() ?? "", // Enum → 백엔드 변환

@@ -1,4 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -90,8 +92,13 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedJob: selectedEnum);
   }
 
-  void updateSelectedLocation(String? location) =>
-      updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
+  void updateSelectedLocation(String? location) {
+    updateField(location, copy: (s, v) => s.copyWith(selectedLocation: v));
+    if (!state.isButtonEnabled()) {
+      // 입력한 지역이 목록에 없으면 초기화
+      state = state.copyWith(selectedLocation: null);
+    }
+  }
 
   void updateCurrentStep(int step) {
     state = state.copyWith(currentStep: step);
@@ -154,9 +161,15 @@ class SignUpProcess extends _$SignUpProcess {
 
   void reset() => state = const SignUpProcessState();
 
-  Future<void> updateLocation() async {
+  Future<String> updateLocation() async {
     final location =
         await ref.read(getCurrentLocationUseCaseProvider).execute();
-    state = state.copyWith(selectedLocation: location);
+
+    Log.d('현재 위치: $location');
+    state = state.copyWith(
+      selectedLocation: location,
+    );
+
+    return location;
   }
 }

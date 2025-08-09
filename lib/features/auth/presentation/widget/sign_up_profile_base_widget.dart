@@ -35,6 +35,7 @@ class _SignUpProfileBaseWidgetState
     final signUpProcess = ref.read(signUpProcessProvider.notifier);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: DefaultAppBar(
         title: '프로필 정보',
         leadingAction: (context) => navigate(
