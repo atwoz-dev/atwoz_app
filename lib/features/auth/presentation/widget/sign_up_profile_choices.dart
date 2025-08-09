@@ -135,7 +135,6 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
         TextField(
           controller: _controller,
           onChanged: (value) {
-            _controller.text = value;
             _filteredLocations = addressData.searchLocations(value);
             signUpProcessNotifier.updateSelectedLocation(value);
           },

@@ -49,7 +49,6 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
                     index: index,
                     isBlurred: isBlurred,
                     introducedProfilesNotifier: introducedProfilesNotifier,
-                    profiles: profiles,
                   ),
                   profile: profile,
                   category: widget.category,
@@ -70,7 +69,6 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required int index,
     required bool isBlurred,
     required IntroducedProfilesNotifier introducedProfilesNotifier,
-    required List<IntroducedProfile> profiles,
   }) async {
     if (isBlurred) {
       final heartBalance =
@@ -122,40 +120,42 @@ class _EmptyIntroducedListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const DefaultIcon(
-          IconPath.sadEmotion,
-          size: 48,
-        ),
-        const Gap(8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '조건에 맞는 이성을 찾지 못했어요\n대신, 직접 자신을 소개한 분들을 확인해보시겠어요?',
-              textAlign: TextAlign.center,
-              style: Fonts.body02Medium().copyWith(
-                color: Palette.colorBlack,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const DefaultIcon(
+            IconPath.sadEmotion,
+            size: 48,
+          ),
+          const Gap(8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '조건에 맞는 이성을 찾지 못했어요\n대신, 직접 자신을 소개한 분들을 확인해보시겠어요?',
+                textAlign: TextAlign.center,
+                style: Fonts.body02Medium().copyWith(
+                  color: Palette.colorBlack,
+                  fontWeight: FontWeight.w400,
+                  height: 1.5,
+                ),
               ),
+            ],
+          ),
+          const Gap(32),
+          DefaultOutlinedButton(
+            onPressed: () => navigate(context, route: AppRoute.introduce),
+            textColor: Palette.colorPrimary500,
+            textStyle: Fonts.body01Medium().copyWith(
+              fontWeight: FontWeight.w500,
             ),
-          ],
-        ),
-        const Gap(32),
-        DefaultOutlinedButton(
-          onPressed: () => navigate(context, route: AppRoute.introduce),
-          textColor: Palette.colorPrimary500,
-          textStyle: Fonts.body01Medium().copyWith(
-            fontWeight: FontWeight.w500,
-          ),
-          child: const Text(
-            '셀프소개 보러 가기',
-          ),
-        )
-      ],
+            child: const Text(
+              '셀프소개 보러 가기',
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -9,7 +9,7 @@ class HashtagWrap extends StatelessWidget {
   const HashtagWrap({
     super.key,
     required this.tags,
-    required this.isCenter,
+    this.isCenter = false,
   });
 
   static const double horizontalPadding =

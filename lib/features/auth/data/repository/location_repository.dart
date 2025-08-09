@@ -6,12 +6,18 @@ import 'package:geocoding/geocoding.dart';
 // 위치 관련 예외 클래스들
 class LocationPermissionDeniedException implements Exception {
   final String message;
-  LocationPermissionDeniedException([this.message = '위치 권한이 필요합니다.']);
+  const LocationPermissionDeniedException([this.message = '위치 권한이 필요합니다.']);
 }
 
 class LocationNotFoundException implements Exception {
   final String message;
-  LocationNotFoundException([this.message = '위치 정보를 찾을 수 없습니다.']);
+  const LocationNotFoundException([this.message = '위치 정보를 찾을 수 없습니다.']);
+}
+
+class LocationServiceDisabledException implements Exception {
+  final String message;
+  const LocationServiceDisabledException(
+      [this.message = '위치 서비스가 비활성화되어 있습니다.']);
 }
 
 class LocationRepository {
@@ -25,7 +31,12 @@ class LocationRepository {
 
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      throw LocationPermissionDeniedException();
+      throw const LocationPermissionDeniedException();
+    }
+
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw const LocationServiceDisabledException();
     }
 
     return await Geolocator.getCurrentPosition(
@@ -51,7 +62,7 @@ class LocationRepository {
       );
 
       if (placemarks.isEmpty) {
-        throw LocationNotFoundException();
+        throw const LocationNotFoundException();
       }
 
       return _formatAddress(placemarks.first);

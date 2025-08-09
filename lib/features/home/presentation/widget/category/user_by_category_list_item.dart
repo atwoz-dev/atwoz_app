@@ -57,10 +57,7 @@ class UserByCategoryListItem extends ConsumerWidget {
                         // 해시태그 리스트 뷰
                         width: context.screenHeight,
                         height: 18,
-                        child: HashtagWrap(
-                          tags: profile.tags,
-                          isCenter: false,
-                        ),
+                        child: HashtagWrap(tags: profile.tags),
                       ),
                       const Gap(8),
                       SizedBox(

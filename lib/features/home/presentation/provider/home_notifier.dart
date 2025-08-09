@@ -5,6 +5,7 @@ import 'package:atwoz_app/features/favorite_list/data/repository/favorite_reposi
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_notifier.g.dart'; // 코드 생성을 위한 부분
@@ -33,11 +34,20 @@ class HomeNotifier extends _$HomeNotifier {
             type: type,
           );
 
+      final currentState = state.valueOrNull;
+      final profiles = currentState?.recommendedProfiles;
+      if (currentState == null || profiles == null) return;
+
       state = AsyncData(
-        state.value!.copyWith(
-          recommendedProfiles: state.value!.recommendedProfiles!
-              .map((e) =>
-                  e.memberId == memberId ? e.copyWith(favoriteType: type) : e)
+        currentState.copyWith(
+          recommendedProfiles: profiles
+              .map(
+                (e) => e.memberId == memberId
+                    ? e.copyWith(
+                        favoriteType: type,
+                      )
+                    : e,
+              )
               .toList(),
         ),
       );
