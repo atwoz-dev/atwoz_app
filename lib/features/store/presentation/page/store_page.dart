@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:atwoz_app/features/store/domain/provider/store_notifier.dart';
 import 'package:atwoz_app/features/store/presentation/widget/default_heart_card.dart';
 import 'package:atwoz_app/features/store/presentation/widget/event_heart_card.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
@@ -77,6 +78,9 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
     for (final purchase in purchases) {
       if (purchase.status == PurchaseStatus.purchased) {
         debugPrint('✅ 구매 성공: ${purchase.productID}');
+        debugPrint(
+            '📦 App Store Receipt (Base64): ${purchase.verificationData.serverVerificationData}');
+
         if (purchase.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchase);
         }
@@ -106,6 +110,9 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
 
   @override
   Widget buildPage(BuildContext context) {
+    final storeState = ref.watch(storeNotifierProvider);
+    final heartBalance = storeState.heartBalance.heartBalance;
+
     final double tagSpacing = 16;
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
@@ -186,9 +193,8 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                                   size: 16,
                                 ),
                                 const Gap(2),
-                                // TODO(mh): 현재 보유하트 연동 필요함
                                 Text(
-                                  '0',
+                                  heartBalance.totalHeartBalance.toString(),
                                   style:
                                       Fonts.body03Regular(Palette.colorGrey900),
                                 ),
