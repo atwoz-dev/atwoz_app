@@ -254,7 +254,10 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
           child: widget.prefix),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
-      suffix: widget.suffix,
+      suffix: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: widget.suffix,
+      ),
       suffixIcon: widget.suffixIcon,
       suffixIconConstraints: widget.suffixIconConstraints,
       filled: true,

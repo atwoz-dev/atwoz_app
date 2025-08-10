@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 
 class DefaultBottomNavigationBar extends StatelessWidget {
   final int? currentIndex;
-  final bool isHighlighted; // 강조 여부를 제어하는 파라미터
+  final bool isHighlighted;
 
   DefaultBottomNavigationBar({
     super.key,
@@ -50,7 +50,6 @@ class DefaultBottomNavigationBar extends StatelessWidget {
         Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 11.sp);
 
     return Container(
-      padding: const EdgeInsets.only(top: 15),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
@@ -81,15 +80,18 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           final isSelected =
               isHighlighted && _items.indexOf(item) == currentIndex;
           return BottomNavigationBarItem(
-            icon: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DefaultIcon(
-                  size: 20.h,
-                  isSelected ? item.iconFill : item.icon,
-                ),
-                Gap(8.h), // 아이콘과 레이블 사이 간격
-              ],
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DefaultIcon(
+                    size: 20.h,
+                    isSelected ? item.iconFill : item.icon,
+                  ),
+                  Gap(8.h), // 아이콘과 레이블 사이 간격
+                ],
+              ),
             ),
             label: item.label,
           );
