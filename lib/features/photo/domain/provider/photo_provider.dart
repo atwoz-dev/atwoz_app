@@ -103,18 +103,13 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
 
     if (photo != null) {
       // 새 사진을 추가하는 경우
-
       updatedPhotos[index] = photo;
-
-      // 빈 공간을 뒤로 밀어내기
-      _compactPhotos(updatedPhotos);
     } else {
       // 사진을 삭제하는 경우 (null로 설정)
       updatedPhotos[index] = null;
-
-      // 빈 공간을 뒤로 밀어내기
-      _compactPhotos(updatedPhotos);
     }
+    // 빈 공간을 뒤로 밀어내기
+    _compactPhotos(updatedPhotos);
 
     state = updatedPhotos;
   }
