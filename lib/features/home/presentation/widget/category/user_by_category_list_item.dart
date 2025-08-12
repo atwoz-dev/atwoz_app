@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,9 +41,11 @@ class UserByCategoryListItem extends ConsumerWidget {
                   children: [
                     SizedBox.square(
                       dimension: 54,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(profile.profileImageUrl),
-                        radius: 50,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: profile.profileImageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     if (isBlurred) const BlurCoverWidget(),
