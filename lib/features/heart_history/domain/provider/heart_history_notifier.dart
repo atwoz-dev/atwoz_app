@@ -1,7 +1,6 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/heart_history/data/repository/heart_history_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 import 'heart_history_state.dart';
 
 part 'heart_history_notifier.g.dart';
@@ -10,22 +9,22 @@ part 'heart_history_notifier.g.dart';
 class HeartHistoryNotifier extends _$HeartHistoryNotifier {
   @override
   HeartHistoryState build() {
-    _initializeHeartHistorys();
+    _initializeHeartTransactions();
     return HeartHistoryState.initial();
   }
 
-  Future<void> _initializeHeartHistorys() async {
+  Future<void> _initializeHeartTransactions() async {
     try {
       final repository = ref.read(heartHistoryRepositoryProvider);
-      final heart = await repository.getHeartTransactionList();
+      final heartHistoryData = await repository.getHeartTransactionList();
 
       state = state.copyWith(
-        heartTractions: heart,
+        heartTractions: heartHistoryData,
         isLoaded: true,
         error: null,
       );
-    } catch (e) {
-      Log.e(e);
+    } catch (e, stack) {
+      Log.e('Failed to fetch initial heart transactions: $e\n$stack');
       state = state.copyWith(
         isLoaded: true,
         error: HeartHistoryErrorType.network,
@@ -33,31 +32,27 @@ class HeartHistoryNotifier extends _$HeartHistoryNotifier {
     }
   }
 
-  Future<void> loadMoreHeartTractions() async {
-    if (!state.heartTractions.hasMore) {
+  Future<void> loadMoreHeartTransactions() async {
+    final currentData = state.heartTractions;
+
+    if (!currentData.hasMore || currentData.transactions.isEmpty) {
       return;
     }
 
     try {
-      if (state.heartTractions.transactions.isEmpty) {
-        return;
-      }
-      final lastId = state.heartTractions.transactions.last.id;
-      final heartHistoryData = await ref
+      final lastId = currentData.transactions.last.id;
+      final moreData = await ref
           .read(heartHistoryRepositoryProvider)
           .getHeartTransactionList(lastId);
 
       state = state.copyWith(
-        heartTractions: state.heartTractions.copyWith(
-          transactions: [
-            ...state.heartTractions.transactions,
-            ...heartHistoryData.transactions
-          ],
-          hasMore: heartHistoryData.hasMore,
+        heartTractions: currentData.copyWith(
+          transactions: [...currentData.transactions, ...moreData.transactions],
+          hasMore: moreData.hasMore,
         ),
       );
-    } catch (e) {
-      Log.e(e);
+    } catch (e, stack) {
+      Log.e('Failed to load more heart transactions: $e\n$stack');
       state = state.copyWith(error: HeartHistoryErrorType.network);
     }
   }

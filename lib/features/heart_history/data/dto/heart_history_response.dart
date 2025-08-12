@@ -1,4 +1,3 @@
-import 'package:atwoz_app/features/heart_history/domain/provider/heart_history_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'heart_history_response.freezed.dart';
@@ -15,15 +14,6 @@ class HeartHistoryItemResponse with _$HeartHistoryItemResponse {
 
   factory HeartHistoryItemResponse.fromJson(Map<String, dynamic> json) =>
       _$HeartHistoryItemResponseFromJson(json);
-
-  const HeartHistoryItemResponse._();
-
-  HeartTransactionSummary toModel() => HeartTransactionSummary(
-        id: id,
-        createdAt: createdAt,
-        content: content,
-        heartAmount: heartAmount,
-      );
 }
 
 @freezed

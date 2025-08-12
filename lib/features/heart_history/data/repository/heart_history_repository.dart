@@ -1,7 +1,8 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/heart_history/data/dto/heart_history_response.dart';
-import 'package:atwoz_app/features/heart_history/domain/provider/heart_history_state.dart';
+import 'package:atwoz_app/features/heart_history/domain/model/heart_history_data.dart';
+import 'package:atwoz_app/features/heart_history/data/mapper/heart_history_mapper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final heartHistoryRepositoryProvider = Provider<HeartHistoryRepository>((ref) {
@@ -30,7 +31,7 @@ class HeartHistoryRepository extends BaseRepository {
 
     final response = HeartHistoryResponse.fromJson(res['data']);
     return HeartHistoryData(
-      transactions: response.transactions.map((e) => e.toModel()).toList(),
+      transactions: response.transactions.map((e) => e.toDomain()).toList(),
       hasMore: response.hasMore,
     );
   }

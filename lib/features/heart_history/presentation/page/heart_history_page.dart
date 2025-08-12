@@ -41,7 +41,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
     try {
       await ref
           .read(heartHistoryNotifierProvider.notifier)
-          .loadMoreHeartTractions();
+          .loadMoreHeartTransactions();
     } catch (e) {
       showToastMessage('표시할 항목이 더 이상 없습니다.');
     } finally {
