@@ -11,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:shimmer/shimmer.dart';
 
 // 페이지뷰 + 페이지 번호 상태 바
 class HomeProfileCardArea extends ConsumerStatefulWidget {
@@ -37,14 +38,17 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
       data: (profiles) {
         if (profiles == null) {
           // 로딩 시 보여주는 빈 박스
-          return Container(
-            width: context.screenWidth,
-            height: context.screenHeight * 0.41,
-            decoration: BoxDecoration(
-              color: Palette.colorGrey50,
-              borderRadius: BorderRadius.circular(16),
+          return Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.white,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Palette.colorGrey50,
+              ),
+              height: context.screenHeight * 0.41,
             ),
-          ); // 프로필이 없을 때
+          );
         }
 
         if (profiles.isEmpty) {
