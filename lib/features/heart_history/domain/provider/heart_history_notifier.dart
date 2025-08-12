@@ -19,7 +19,7 @@ class HeartHistoryNotifier extends _$HeartHistoryNotifier {
       final heartHistoryData = await repository.getHeartTransactionList();
 
       state = state.copyWith(
-        heartTractions: heartHistoryData,
+        history: heartHistoryData,
         isLoaded: true,
         error: null,
       );
@@ -33,7 +33,7 @@ class HeartHistoryNotifier extends _$HeartHistoryNotifier {
   }
 
   Future<void> loadMoreHeartTransactions() async {
-    final currentData = state.heartTractions;
+    final currentData = state.history;
 
     if (!currentData.hasMore || currentData.transactions.isEmpty) {
       return;
@@ -46,7 +46,7 @@ class HeartHistoryNotifier extends _$HeartHistoryNotifier {
           .getHeartTransactionList(lastId);
 
       state = state.copyWith(
-        heartTractions: currentData.copyWith(
+        history: currentData.copyWith(
           transactions: [...currentData.transactions, ...moreData.transactions],
           hasMore: moreData.hasMore,
         ),

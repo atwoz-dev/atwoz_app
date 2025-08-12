@@ -26,7 +26,7 @@ class StoreState with _$StoreState {
 @freezed
 class StoreData with _$StoreData {
   const factory StoreData({
-    @Default(HeartBalanceItem(
+    @Default(const HeartBalanceItem(
       purchaseHeartBalance: 0,
       missionHeartBalance: 0,
       totalHeartBalance: 0,

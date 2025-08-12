@@ -69,7 +69,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
       );
     }
 
-    final transactions = state.heartTractions.transactions;
+    final transactions = state.history.transactions;
 
     return Scaffold(
       appBar: const DefaultAppBar(title: '하트 사용 내역'),
@@ -77,7 +77,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
         child: ListView.builder(
           controller: _scrollController,
-          itemCount: state.heartTractions.hasMore
+          itemCount: state.history.hasMore
               ? transactions.length + 1
               : transactions.length,
           itemBuilder: (context, index) {
