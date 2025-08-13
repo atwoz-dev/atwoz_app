@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/store/domain/provider/store_notifier.dart';
+import 'package:atwoz_app/features/store/domain/model/heart_product.dart';
 import 'package:atwoz_app/features/store/presentation/widget/default_heart_card.dart';
 import 'package:atwoz_app/features/store/presentation/widget/event_heart_card.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
@@ -24,6 +25,29 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
+  List<Map<String, String>> get _heartItems => [
+        {
+          'heart': '45',
+          'price': '9000',
+          'code': 'APP_ITEM_HEART_45',
+        },
+        {
+          'heart': '110',
+          'price': '22000',
+          'code': 'APP_ITEM_HEART_110',
+        },
+        {
+          'heart': '350',
+          'price': '59000',
+          'code': 'APP_ITEM_HEART_350',
+        },
+        {
+          'heart': '550',
+          'price': '88000',
+          'code': 'APP_ITEM_HEART_550',
+        },
+      ];
+
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
   @override
@@ -51,28 +75,6 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
         EdgeInsets.symmetric(horizontal: horizontalPadding);
-    final items = [
-      {
-        'heart': '45',
-        'price': '9000',
-        'code': 'APP_ITEM_HEART_45',
-      },
-      {
-        'heart': '110',
-        'price': '22000',
-        'code': 'APP_ITEM_HEART_110',
-      },
-      {
-        'heart': '350',
-        'price': '59000',
-        'code': 'APP_ITEM_HEART_350',
-      },
-      {
-        'heart': '550',
-        'price': '88000',
-        'code': 'APP_ITEM_HEART_550',
-      },
-    ];
 
     return Stack(
       children: [
@@ -154,7 +156,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                   child: Row(
                     children: [
                       EventHeartCard(
-                          code: 'APP_ITEM_HEART_90',
+                          code: HeartProduct.heart90.code,
                           onCreate: (code) => ref
                               .read(storeNotifierProvider.notifier)
                               .buyProduct(code)),
@@ -167,7 +169,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                   child: Wrap(
                     spacing: tagSpacing,
                     runSpacing: tagSpacing - 4,
-                    children: items.map<Widget>((item) {
+                    children: _heartItems.map<Widget>((item) {
                       return SizedBox(
                         width:
                             (screenWidth - horizontalPadding * 2 - tagSpacing) /
