@@ -87,11 +87,10 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
             children: [
               Padding(
                   padding: contentPadding,
-                  child: Expanded(
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -153,7 +152,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                             ),
                           ),
                         ),
-                      ]))),
+                      ])),
               Padding(
                   padding: contentPadding,
                   child: Row(
@@ -165,26 +164,29 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                               .buyProduct(code)),
                     ],
                   )),
-              Padding(
-                padding: contentPadding,
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    spacing: tagSpacing,
-                    runSpacing: tagSpacing - 4,
-                    children: items.map<Widget>((item) {
-                      return SizedBox(
-                        width:
-                            (screenWidth - horizontalPadding * 2 - tagSpacing) /
-                                2,
-                        child: DefaultHeartCard(
-                            heart: '${item['heart']}',
-                            price: '${item['price']}',
-                            code: '${item['code']}',
-                            onCreate: (code) => ref
-                                .read(storeNotifierProvider.notifier)
-                                .buyProduct(code)),
-                      );
-                    }).toList(),
+              Expanded(
+                child: Padding(
+                  padding: contentPadding,
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      spacing: tagSpacing,
+                      runSpacing: tagSpacing - 4,
+                      children: items.map<Widget>((item) {
+                        return SizedBox(
+                          width: (screenWidth -
+                                  horizontalPadding * 2 -
+                                  tagSpacing) /
+                              2,
+                          child: DefaultHeartCard(
+                              heart: '${item['heart']}',
+                              price: '${item['price']}',
+                              code: '${item['code']}',
+                              onCreate: (code) => ref
+                                  .read(storeNotifierProvider.notifier)
+                                  .buyProduct(code)),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ),
