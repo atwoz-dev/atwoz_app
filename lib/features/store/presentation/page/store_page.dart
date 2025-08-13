@@ -165,44 +165,42 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                     ],
                   )),
               Expanded(
-                child: Padding(
+                  child: Column(children: [
+                Padding(
                   padding: contentPadding,
-                  child: SingleChildScrollView(
-                    child: Wrap(
-                      spacing: tagSpacing,
-                      runSpacing: tagSpacing - 4,
-                      children: items.map<Widget>((item) {
-                        return SizedBox(
-                          width: (screenWidth -
-                                  horizontalPadding * 2 -
-                                  tagSpacing) /
-                              2,
-                          child: DefaultHeartCard(
-                              heart: '${item['heart']}',
-                              price: '${item['price']}',
-                              code: '${item['code']}',
-                              onCreate: (code) => ref
-                                  .read(storeNotifierProvider.notifier)
-                                  .buyProduct(code)),
-                        );
-                      }).toList(),
+                  child: Wrap(
+                    spacing: tagSpacing,
+                    runSpacing: tagSpacing - 4,
+                    children: items.map<Widget>((item) {
+                      return SizedBox(
+                        width:
+                            (screenWidth - horizontalPadding * 2 - tagSpacing) /
+                                2,
+                        child: DefaultHeartCard(
+                            heart: '${item['heart']}',
+                            price: '${item['price']}',
+                            code: '${item['code']}',
+                            onCreate: (code) => ref
+                                .read(storeNotifierProvider.notifier)
+                                .buyProduct(code)),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                const Gap(12),
+                Padding(
+                  padding: contentPadding,
+                  child: BulletText(
+                    texts: [
+                      '운영정책 위반으로 계정정지 시 환불이 불가합니다',
+                      '미션으로 받은 하트의 유효기간은 90일간 유효합니다.',
+                    ],
+                    textStyle: Fonts.body03Regular(
+                      const Color.fromRGBO(155, 160, 171, 1),
                     ),
                   ),
-                ),
-              ),
-              const Gap(12),
-              Padding(
-                padding: contentPadding,
-                child: BulletText(
-                  texts: [
-                    '운영정책 위반으로 계정정지 시 환불이 불가합니다',
-                    '미션으로 받은 하트의 유효기간은 90일간 유효합니다.',
-                  ],
-                  textStyle: Fonts.body03Regular(
-                    const Color.fromRGBO(155, 160, 171, 1),
-                  ),
-                ),
-              )
+                )
+              ])),
             ],
           ),
         ),
