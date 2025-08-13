@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
@@ -25,24 +24,21 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
-  late StreamSubscription<List<PurchaseDetails>> _subscription;
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
 
   @override
   void initState() {
     super.initState();
 
-    if (Platform.isIOS) {
-      _subscription = InAppPurchase.instance.purchaseStream.listen(
-        (purchases) => ref
-            .read(storeNotifierProvider.notifier)
-            .onPurchaseUpdated(purchases),
-      );
-    }
+    _subscription = InAppPurchase.instance.purchaseStream.listen(
+      (purchases) =>
+          ref.read(storeNotifierProvider.notifier).onPurchaseUpdated(purchases),
+    );
   }
 
   @override
   void dispose() {
-    _subscription.cancel();
+    _subscription?.cancel();
     super.dispose();
   }
 
