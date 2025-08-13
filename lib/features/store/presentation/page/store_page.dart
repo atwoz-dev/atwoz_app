@@ -25,27 +25,11 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
-  List<Map<String, String>> get _heartItems => [
-        {
-          'heart': '45',
-          'price': '9000',
-          'code': 'APP_ITEM_HEART_45',
-        },
-        {
-          'heart': '110',
-          'price': '22000',
-          'code': 'APP_ITEM_HEART_110',
-        },
-        {
-          'heart': '350',
-          'price': '59000',
-          'code': 'APP_ITEM_HEART_350',
-        },
-        {
-          'heart': '550',
-          'price': '88000',
-          'code': 'APP_ITEM_HEART_550',
-        },
+  List<HeartProduct> get _heartItems => [
+        HeartProduct.heart45,
+        HeartProduct.heart110,
+        HeartProduct.heart350,
+        HeartProduct.heart550,
       ];
 
   StreamSubscription<List<PurchaseDetails>>? _subscription;
@@ -53,7 +37,12 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
   @override
   void initState() {
     super.initState();
+    _initInAppPurchase();
+  }
 
+  Future<void> _initInAppPurchase() async {
+    final available = await InAppPurchase.instance.isAvailable();
+    if (!available) return;
     _subscription = InAppPurchase.instance.purchaseStream.listen(
       (purchases) =>
           ref.read(storeNotifierProvider.notifier).onPurchaseUpdated(purchases),
@@ -169,15 +158,15 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                   child: Wrap(
                     spacing: tagSpacing,
                     runSpacing: tagSpacing - 4,
-                    children: _heartItems.map<Widget>((item) {
+                    children: _heartItems.map<Widget>((product) {
                       return SizedBox(
                         width:
                             (screenWidth - horizontalPadding * 2 - tagSpacing) /
                                 2,
                         child: DefaultHeartCard(
-                            heart: '${item['heart']}',
-                            price: '${item['price']}',
-                            code: '${item['code']}',
+                            heart: product.heartAmount.toString(),
+                            price: product.price.toString(),
+                            code: product.code,
                             onCreate: (code) => ref
                                 .read(storeNotifierProvider.notifier)
                                 .buyProduct(code)),
