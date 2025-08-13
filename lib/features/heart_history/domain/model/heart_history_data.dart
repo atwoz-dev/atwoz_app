@@ -1,21 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'heart_transaction_summary.dart';
 
-class HeartHistoryData {
-  const HeartHistoryData({
-    this.transactions = const [],
-    this.hasMore = false,
-  });
+part 'heart_history_data.freezed.dart';
 
-  final List<HeartTransactionSummary> transactions;
-  final bool hasMore;
-
-  HeartHistoryData copyWith({
-    List<HeartTransactionSummary>? transactions,
-    bool? hasMore,
-  }) {
-    return HeartHistoryData(
-      transactions: transactions ?? this.transactions,
-      hasMore: hasMore ?? this.hasMore,
-    );
-  }
+@freezed
+class HeartHistoryData with _$HeartHistoryData {
+  const factory HeartHistoryData({
+    @Default(<HeartTransactionSummary>[])
+    List<HeartTransactionSummary> transactions,
+    @Default(false) bool hasMore,
+  }) = _HeartHistoryData;
 }
