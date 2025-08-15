@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/store/domain/provider/usecase_providers.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:atwoz_app/features/store/domain/usecase/verify_receipt_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -103,15 +104,13 @@ class StoreNotifier extends _$StoreNotifier {
     await _initializeHeartBalanceItem();
   }
 
-  Future<void> verifyReceipt(
-    String appReceipt,
-  ) async {
+  Future<void> verifyReceipt(String appReceipt) async {
+    final useCase = ref.read(verifyReceiptUseCaseProvider);
+
     try {
-      await VerifyReceiptUseCase(ref).call(
-        appReceipt: appReceipt,
-      );
+      await useCase.call(appReceipt: appReceipt);
     } catch (e) {
-      Log.e(e);
+      Log.e('영수증 검증 실패: $e');
     }
   }
 }

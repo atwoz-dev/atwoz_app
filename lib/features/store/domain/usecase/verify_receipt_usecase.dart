@@ -1,16 +1,10 @@
 import 'package:atwoz_app/features/store/data/repository/store_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class VerifyReceiptUseCase {
-  final Ref ref;
+  final StoreRepository _repository;
+  const VerifyReceiptUseCase(this._repository);
 
-  const VerifyReceiptUseCase(this.ref);
-
-  Future<void> call({
-    required String appReceipt,
-  }) async {
-    await ref.read(storeRepositoryProvider).verifyReceipt(
-          appReceipt: appReceipt,
-        );
+  Future<void> call({required String appReceipt}) {
+    return _repository.verifyReceipt(appReceipt: appReceipt);
   }
 }
