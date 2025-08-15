@@ -67,6 +67,9 @@ class StoreNotifier extends _$StoreNotifier {
             .read(storeNotifierProvider.notifier)
             .verifyReceipt(purchase.verificationData.serverVerificationData);
 
+        // 서버 반영 기다리기
+        await Future.delayed(const Duration(seconds: 1));
+
         // 보유하트 재조회
         await ref.read(storeNotifierProvider.notifier).fetchHeartBalance();
 
