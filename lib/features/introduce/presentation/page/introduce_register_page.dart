@@ -47,7 +47,8 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
               onElevatedButtonPressed: () {
                 navigate(
                   context,
-                  route: AppRoute.introduce,
+                  route: AppRoute.mainTab,
+                  method: NavigationMethod.go,
                 );
               })
         },

@@ -23,9 +23,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
   HomePageState()
       : super(
           isAppBar: false,
-          isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 0,
+          isHorizontalMargin: false
         );
 
   @override

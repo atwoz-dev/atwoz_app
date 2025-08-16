@@ -25,7 +25,8 @@ class IntroduceNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.introduce,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
                       );
                     },
                     child: Text(
@@ -95,7 +96,8 @@ class IntroduceNavigationPage extends StatelessWidget {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.introduce,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
                       );
                     },
                     child: Text(
