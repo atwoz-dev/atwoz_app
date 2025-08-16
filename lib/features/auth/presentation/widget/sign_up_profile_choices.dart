@@ -111,9 +111,7 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
     // 스크롤 시 키보드 내리기
     _scrollController.addListener(() {
       if (_scrollController.position.isScrollingNotifier.value) {
-        if (_scrollController.position.isScrollingNotifier.value) {
-          FocusScope.of(context).unfocus();
-        }
+        FocusScope.of(context).unfocus();
       }
     });
   }

@@ -21,7 +21,7 @@ class ProfileImageWidget extends StatelessWidget {
     super.key,
     this.imageFile,
     required this.onPickImage,
-    this.onRemoveImage, // 콜백 초기화
+    this.onRemoveImage,
     this.isRepresentative = false,
   });
 
@@ -36,84 +36,149 @@ class ProfileImageWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: Container(
               color: Colors.grey[200],
-              child: switch (imageFile?.sourceType) {
-                ImageSourceType.network => DefaultImage(
-                    imageURL: imageFile!.path, // 네트워크 이미지 URL 표시
-                    fit: BoxFit.cover,
-                  ),
-                ImageSourceType.file => Image.file(
-                    File(imageFile!.path), // 로컬 파일 이미지
-                    fit: BoxFit.cover,
-                  ),
-                ImageSourceType.memory => Image.memory(
-                    base64Decode(imageFile!.path), // Base64 디코딩
-                    fit: BoxFit.cover,
-                  ),
-                _ => isRepresentative
-                    ? const DefaultIcon(
-                        IconPath.emptyProfileImage,
-                        size: 100,
-                        fit: BoxFit.contain,
-                        padding: EdgeInsets.only(top: 14),
-                      )
-                    : const SizedBox.shrink(), // 대표 아니면 아무것도 안 보임
-              },
+              child: _ProfileImageContent(
+                imageFile: imageFile,
+                isRepresentative: isRepresentative,
+              ),
             ),
           ),
         ),
         if (isRepresentative)
-          Positioned(
+          const Positioned(
             top: 8,
             left: 8,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: context.palette.primary,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                '대표',
-                style: Fonts.body03Regular(context.palette.onPrimary),
-              ),
-            ),
+            child: _RepresentativeBadge(),
           ),
         Positioned(
           bottom: 8,
           right: 8,
-          child: _buildProfileImageActionButton(),
+          child: _ProfileImageActionButton(
+            imageFile: imageFile,
+            isRepresentative: isRepresentative,
+            onPickImage: onPickImage,
+            onRemoveImage: onRemoveImage,
+          ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildProfileImageActionButton() {
-    if (isRepresentative) {
-      if (imageFile == null) {
-        return _IconButton(iconPath: IconPath.add, onTap: onPickImage);
-      } else {
-        return const SizedBox.shrink();
-      }
-    } else {
-      if (imageFile == null) {
-        return _IconButton(iconPath: IconPath.add, onTap: onPickImage);
-      } else {
-        return _IconButton(
-          iconPath: IconPath.close,
-          onTap: onRemoveImage ?? () {},
+/// 프로필 이미지 콘텐츠를 표시하는 위젯
+class _ProfileImageContent extends StatelessWidget {
+  final XFile? imageFile;
+  final bool isRepresentative;
+
+  const _ProfileImageContent({
+    required this.imageFile,
+    required this.isRepresentative,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (imageFile == null) {
+      return isRepresentative
+          ? const DefaultIcon(
+              IconPath.emptyProfileImage,
+              size: 100,
+              fit: BoxFit.contain,
+              padding: EdgeInsets.only(top: 14),
+            )
+          : const SizedBox.shrink();
+    }
+
+    switch (imageFile!.sourceType) {
+      case ImageSourceType.network:
+        return DefaultImage(
+          imageURL: imageFile!.path,
+          fit: BoxFit.cover,
         );
-      }
+      case ImageSourceType.file:
+        return Image.file(
+          File(imageFile!.path),
+          fit: BoxFit.cover,
+        );
+      case ImageSourceType.memory:
+        return Image.memory(
+          base64Decode(imageFile!.path),
+          fit: BoxFit.cover,
+        );
+      default:
+        return isRepresentative
+            ? const DefaultIcon(
+                IconPath.emptyProfileImage,
+                size: 100,
+                fit: BoxFit.contain,
+                padding: EdgeInsets.only(top: 14),
+              )
+            : const SizedBox.shrink();
     }
   }
 }
 
-class _IconButton extends StatelessWidget {
-  const _IconButton({
-    required this.onTap,
-    required this.iconPath,
+/// 대표 이미지 배지를 표시하는 위젯
+class _RepresentativeBadge extends StatelessWidget {
+  const _RepresentativeBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: context.palette.primary,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        '대표',
+        style: Fonts.body03Regular(context.palette.onPrimary),
+      ),
+    );
+  }
+}
+
+/// 프로필 이미지 액션 버튼을 표시하는 위젯
+class _ProfileImageActionButton extends StatelessWidget {
+  final XFile? imageFile;
+  final bool isRepresentative;
+  final VoidCallback onPickImage;
+  final VoidCallback? onRemoveImage;
+
+  const _ProfileImageActionButton({
+    required this.imageFile,
+    required this.isRepresentative,
+    required this.onPickImage,
+    this.onRemoveImage,
   });
 
+  @override
+  Widget build(BuildContext context) {
+    if (imageFile == null) {
+      return _CircleIconButton(
+        iconPath: IconPath.add,
+        onTap: onPickImage,
+      );
+    }
+
+    if (!isRepresentative) {
+      return _CircleIconButton(
+        iconPath: IconPath.close,
+        onTap: onRemoveImage ?? () {},
+      );
+    }
+
+    return const SizedBox.shrink();
+  }
+}
+
+/// 원형 아이콘 버튼 위젯
+class _CircleIconButton extends StatelessWidget {
   final String iconPath;
   final VoidCallback onTap;
+
+  const _CircleIconButton({
+    required this.iconPath,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

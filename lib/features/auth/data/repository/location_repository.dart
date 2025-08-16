@@ -4,20 +4,23 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 // 위치 관련 예외 클래스들
-class LocationPermissionDeniedException implements Exception {
+
+abstract class LocationException implements Exception {
+  const LocationException(this.message);
   final String message;
-  const LocationPermissionDeniedException([this.message = '위치 권한이 필요합니다.']);
 }
 
-class LocationNotFoundException implements Exception {
-  final String message;
-  const LocationNotFoundException([this.message = '위치 정보를 찾을 수 없습니다.']);
+class LocationPermissionDeniedException extends LocationException {
+  const LocationPermissionDeniedException([super.message = '위치 권한이 필요합니다.']);
 }
 
-class LocationServiceDisabledException implements Exception {
-  final String message;
+class LocationNotFoundException extends LocationException {
+  const LocationNotFoundException([super.message = '위치 정보를 찾을 수 없습니다.']);
+}
+
+class LocationServiceDisabledException extends LocationException {
   const LocationServiceDisabledException(
-      [this.message = '위치 서비스가 비활성화되어 있습니다.']);
+      [super.message = '위치 서비스가 비활성화되어 있습니다.']);
 }
 
 class LocationRepository {
@@ -45,10 +48,10 @@ class LocationRepository {
   }
 
   Future<LocationPermission> _checkAndRequestPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
+    final permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      return await Geolocator.requestPermission();
     }
 
     return permission;
@@ -136,52 +139,52 @@ class CityConverter {
 // 우편번호-구 매핑 클래스
 class DistrictMapper {
   // 서울 우편번호 매핑 (5자리 신 우편번호 기준)
-  static const Map<String, List<Range>> _seoulDistrictRanges = {
-    '종로구': [Range(03000, 03199)],
-    '중구': [Range(04500, 04639)],
-    '용산구': [Range(04300, 04449)],
-    '성동구': [Range(04700, 04799)],
-    '광진구': [Range(04900, 05199)],
-    '동대문구': [Range(02400, 02699)],
-    '중랑구': [Range(02000, 02299)],
-    '성북구': [Range(02700, 02899)],
-    '강북구': [Range(01000, 01299)],
-    '도봉구': [Range(01300, 01499)],
-    '노원구': [Range(01600, 01999)],
-    '은평구': [Range(03300, 03599)],
-    '서대문구': [Range(03600, 03799)],
-    '마포구': [Range(03900, 04299)],
-    '양천구': [Range(07900, 08199)],
-    '강서구': [Range(07500, 07799)],
-    '구로구': [Range(08200, 08499)],
-    '금천구': [Range(08500, 08699)],
-    '영등포구': [Range(07200, 07499)],
-    '동작구': [Range(06900, 07199)],
-    '관악구': [Range(08700, 08899)],
-    '서초구': [Range(06500, 06799)],
-    '강남구': [Range(06000, 06499)],
-    '송파구': [Range(05500, 05999)],
-    '강동구': [Range(05200, 05499)],
+  static const Map<String, Range> _seoulDistrictRanges = {
+    '종로구': Range(03000, 03199),
+    '중구': Range(04500, 04639),
+    '용산구': Range(04300, 04449),
+    '성동구': Range(04700, 04799),
+    '광진구': Range(04900, 05199),
+    '동대문구': Range(02400, 02699),
+    '중랑구': Range(02000, 02299),
+    '성북구': Range(02700, 02899),
+    '강북구': Range(01000, 01299),
+    '도봉구': Range(01300, 01499),
+    '노원구': Range(01600, 01999),
+    '은평구': Range(03300, 03599),
+    '서대문구': Range(03600, 03799),
+    '마포구': Range(03900, 04299),
+    '양천구': Range(07900, 08199),
+    '강서구': Range(07500, 07799),
+    '구로구': Range(08200, 08499),
+    '금천구': Range(08500, 08699),
+    '영등포구': Range(07200, 07499),
+    '동작구': Range(06900, 07199),
+    '관악구': Range(08700, 08899),
+    '서초구': Range(06500, 06799),
+    '강남구': Range(06000, 06499),
+    '송파구': Range(05500, 05999),
+    '강동구': Range(05200, 05499),
   };
 
-  // 부산 우편번호 매핑
-  static const Map<String, List<Range>> _busanDistrictRanges = {
-    '중구': [Range(48900, 49099)],
-    '서구': [Range(49200, 49299)],
-    '동구': [Range(48700, 48799)],
-    '영도구': [Range(49000, 49199)],
-    '부산진구': [Range(47100, 47399)],
-    '동래구': [Range(47700, 47899)],
-    '남구': [Range(48400, 48699)],
-    '북구': [Range(46500, 46699)],
-    '해운대구': [Range(48000, 48199)],
-    '사하구': [Range(49300, 49599)],
-    '금정구': [Range(46200, 46399)],
-    '강서구': [Range(46700, 46799)],
-    '연제구': [Range(47500, 47699)],
-    '수영구': [Range(48200, 48299)],
-    '사상구': [Range(46900, 47099)],
-    '기장군': [Range(46000, 46199)],
+  // 부산 우편번호 매핑 - List 제거
+  static const Map<String, Range> _busanDistrictRanges = {
+    '중구': Range(48900, 49099),
+    '서구': Range(49200, 49299),
+    '동구': Range(48700, 48799),
+    '영도구': Range(49000, 49199),
+    '부산진구': Range(47100, 47399),
+    '동래구': Range(47700, 47899),
+    '남구': Range(48400, 48699),
+    '북구': Range(46500, 46699),
+    '해운대구': Range(48000, 48199),
+    '사하구': Range(49300, 49599),
+    '금정구': Range(46200, 46399),
+    '강서구': Range(46700, 46799),
+    '연제구': Range(47500, 47699),
+    '수영구': Range(48200, 48299),
+    '사상구': Range(46900, 47099),
+    '기장군': Range(46000, 46199),
   };
 
   static String getDistrictByPostalCode(String city, String? postalCode) {
@@ -200,12 +203,10 @@ class DistrictMapper {
     return '';
   }
 
-  static String _findDistrict(int code, Map<String, List<Range>> ranges) {
+  static String _findDistrict(int code, Map<String, Range> ranges) {
     for (final entry in ranges.entries) {
-      for (final range in entry.value) {
-        if (range.contains(code)) {
-          return entry.key;
-        }
+      if (entry.value.contains(code)) {
+        return entry.key;
       }
     }
     return '';

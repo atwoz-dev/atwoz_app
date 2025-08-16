@@ -46,4 +46,10 @@ class Dimens {
   static const double navigationBarHeight = 10.0;
 
   static const int profileImageMaxCount = 6;
+
+  // 남성 소개 프로필 오픈 하트 수
+  static const int maleIntroducedProfileOpenHeartCount = 10;
+
+  // 여성 소개 프로필 오픈 하트 수
+  static const int femaleIntroducedProfileOpenHeartCount = 4;
 }

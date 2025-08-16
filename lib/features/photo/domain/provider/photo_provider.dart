@@ -100,33 +100,19 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   // UI만 업데이트 (빈 공간이 있으면 앞으로 당기기)
   void updateState(int index, XFile? photo) {
     final updatedPhotos = [...state];
+    updatedPhotos[index] = photo;
 
-    if (photo != null) {
-      // 새 사진을 추가하는 경우
-      updatedPhotos[index] = photo;
-    } else {
-      // 사진을 삭제하는 경우 (null로 설정)
-      updatedPhotos[index] = null;
-    }
-    // 빈 공간을 뒤로 밀어내기
-    _compactPhotos(updatedPhotos);
-
-    state = updatedPhotos;
+    state = _compactPhotos(updatedPhotos);
   }
 
-  // 빈 공간을 뒤로 밀어내기
-  void _compactPhotos(List<XFile?> photos) {
-    // null이 아닌 사진들만 추출
-    final existPhotos = photos.where((photo) => photo != null).toList();
+  // 빈 공간을 뒤 로 밀어내기
+  List<XFile?> _compactPhotos(List<XFile?> photos) {
+    final nonNullPhotos = photos.where((photo) => photo != null).toList();
+    final nullCount = photos.length - nonNullPhotos.length;
 
-    // 리스트 초기화 (모든 요소를 null로)
-    for (int i = 0; i < photos.length; i++) {
-      photos[i] = null;
-    }
-
-    // 앞쪽부터 채우기
-    for (int i = 0; i < existPhotos.length; i++) {
-      photos[i] = existPhotos[i];
-    }
+    return [
+      ...nonNullPhotos,
+      ...List.filled(nullCount, null),
+    ];
   }
 }
