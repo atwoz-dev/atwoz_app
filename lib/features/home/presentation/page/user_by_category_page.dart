@@ -1,9 +1,11 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +26,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
         ref.watch(introducedProfilesNotifierProvider(widget.category));
     final introducedProfilesNotifier =
         ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
+    final userProfile = ref.watch(globalUserProfileNotifierProvider);
 
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
@@ -32,29 +35,28 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
           if (profiles.isEmpty) {
             return const _EmptyIntroducedListView();
           }
-          return Padding(
+          return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: ListView.separated(
-              itemCount: profiles.length,
-              separatorBuilder: (_, __) => const Gap(8),
-              itemBuilder: (context, index) {
-                final profile = profiles[index];
-                final isBlurred = !profile.isIntroduced;
+            itemCount: profiles.length,
+            separatorBuilder: (_, __) => const Gap(8),
+            itemBuilder: (context, index) {
+              final profile = profiles[index];
+              final isBlurred = !profile.isIntroduced;
 
-                return UserByCategoryListItem(
-                  isBlurred: isBlurred,
-                  onTap: () => _handleProfileTap(
-                    context: context,
-                    profile: profile,
-                    index: index,
-                    isBlurred: isBlurred,
-                    introducedProfilesNotifier: introducedProfilesNotifier,
-                  ),
+              return UserByCategoryListItem(
+                isBlurred: isBlurred,
+                onTap: () => _handleProfileTap(
+                  context: context,
                   profile: profile,
-                  category: widget.category,
-                );
-              },
-            ),
+                  index: index,
+                  isBlurred: isBlurred,
+                  introducedProfilesNotifier: introducedProfilesNotifier,
+                  isMale: userProfile.isMale,
+                ),
+                profile: profile,
+                category: widget.category,
+              );
+            },
           );
         },
         error: (error, _) => Center(child: Text('Error: $error')),
@@ -69,6 +71,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required int index,
     required bool isBlurred,
     required IntroducedProfilesNotifier introducedProfilesNotifier,
+    required bool isMale,
   }) async {
     if (isBlurred) {
       final heartBalance =
@@ -76,10 +79,25 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       if (!context.mounted) return;
 
+      final openProfileHeartCount = isMale
+          ? Dimens.maleIntroducedProfileOpenHeartCount
+          : Dimens.femaleIntroducedProfileOpenHeartCount;
+
+      if (heartBalance < openProfileHeartCount) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return HeartShortageDialog(heartBalance: heartBalance);
+          },
+        );
+        return;
+      }
+
       final pressed = await showDialog<bool>(
         context: context,
         builder: (context) => UnlockWithHeartDialog(
           heartBalance: heartBalance,
+          isMale: isMale,
         ),
       );
 
