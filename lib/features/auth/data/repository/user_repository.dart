@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository {
   Future<UserData> signIn(UserSignInRequest data) async {
     // 이건 Map<String, dynamic>으로 받아야 함
     final Map<String, dynamic> json = await apiService.postJson(
-      '$path/login/test',
+      '$path/login',
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
         "code": data.code

@@ -135,10 +135,6 @@ final allRoutes = [
         name: AppRoute.homeNavigation.name,
         builder: (context, state) => const HomeNavigationPage(),
         routes: [
-          // NamedGoRoute(
-          //   name: AppRoute.home.name,
-          //   builder: (context, state) => const HomePage(),
-          // ),
           NamedGoRoute(
             name: AppRoute.ideal.name,
             builder: (context, state) => const IdealTypeSettingPage(),

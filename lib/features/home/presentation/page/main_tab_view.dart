@@ -38,18 +38,15 @@ class _MainTabViewState extends State<MainTabView>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: _tabs.length,
-      child: Scaffold(
-        extendBodyBehindAppBar: false,
-        body: TabBarView(
-          controller: _controller,
-          children: _tabs.map((item) => item.container).toList(),
-        ),
-        bottomNavigationBar: DefaultBottomNavigationBar(
-          controller: _controller,
-          tabs: _tabs,
-        ),
+    return Scaffold(
+      extendBodyBehindAppBar: false,
+      body: TabBarView(
+        controller: _controller,
+        children: _tabs.map((item) => item.container).toList(),
+      ),
+      bottomNavigationBar: DefaultBottomNavigationBar(
+        controller: _controller,
+        tabs: _tabs,
       ),
     );
   }
