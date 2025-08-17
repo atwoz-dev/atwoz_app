@@ -56,14 +56,6 @@ class ProfilePreviewArguments extends RouteArguments {
   final MyProfile profile;
 }
 
-class InterviewArguments extends RouteArguments {
-  const InterviewArguments({
-    required this.currentTabIndex,
-  });
-
-  final int currentTabIndex;
-}
-
 class InterviewRegisterArguments extends RouteArguments {
   const InterviewRegisterArguments({
     required this.question,

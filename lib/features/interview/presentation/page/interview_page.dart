@@ -8,11 +8,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:gap/gap.dart';
 
 class InterviewPage extends ConsumerStatefulWidget {
-  final int currentTabIndex;
-  const InterviewPage({
-    super.key,
-    required this.currentTabIndex,
-  });
+  const InterviewPage({super.key});
 
   @override
   InterviewPageState createState() => InterviewPageState();
@@ -23,17 +19,9 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
       : super(
           isAppBar: false,
           isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 3,
         );
-  int _currentTabIndex = 0;
   bool _isBannerVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentTabIndex = widget.currentTabIndex;
-  }
+  int _currentTabIndex = 0;
 
   void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
 

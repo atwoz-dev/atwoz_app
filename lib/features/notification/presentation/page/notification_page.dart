@@ -38,10 +38,6 @@ class NotificationPage extends ConsumerWidget with LogMixin {
         loading: () => _buildLoadingView(),
         error: (e, stackTrace) => _buildErrorView(e, stackTrace),
       ),
-      bottomNavigationBar: DefaultBottomNavigationBar(
-        currentIndex: 0,
-        isHighlighted: false,
-      ),
     );
   }
 

@@ -80,7 +80,8 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.interview,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
                       );
                     },
                     child: Text(
@@ -184,7 +185,8 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.favoriteList,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
                       );
                     },
                     child: Text(

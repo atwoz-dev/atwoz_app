@@ -74,7 +74,7 @@ class DormantAccountPage extends ConsumerWidget {
 
                   navigate(
                     context,
-                    route: AppRoute.myPage,
+                    route: AppRoute.mainTab,
                     method: NavigationMethod.go,
                   );
                 },

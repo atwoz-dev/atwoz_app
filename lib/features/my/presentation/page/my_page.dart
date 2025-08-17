@@ -55,19 +55,18 @@ class MyPage extends ConsumerStatefulWidget {
 }
 
 class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
-  MyPageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 4,
-        );
+  MyPageState() : super(isAppBar: false, isHorizontalMargin: false);
 
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: "마이페이지",
+      appBar: AppBar(
+        title: Text(
+          '마이페이지',
+          style: Fonts.body01Medium(),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: _menuItems
@@ -94,6 +93,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 class _MyPageListItem extends StatelessWidget {
   final String title;
   final String iconPath;
+
   const _MyPageListItem({
     required this.title,
     required this.iconPath,
