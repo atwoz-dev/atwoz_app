@@ -97,10 +97,22 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     state = await ref.read(fetchPhotoUsecaseProvider).execute();
   }
 
-  // UI만 업데이트
+  // UI만 업데이트 (빈 공간이 있으면 앞으로 당기기)
   void updateState(int index, XFile? photo) {
-    final updatedPhotos = [...state]..[index] = photo;
+    final updatedPhotos = [...state];
+    updatedPhotos[index] = photo;
 
-    state = updatedPhotos;
+    state = _compactPhotos(updatedPhotos);
+  }
+
+  // 빈 공간을 뒤 로 밀어내기
+  List<XFile?> _compactPhotos(List<XFile?> photos) {
+    final nonNullPhotos = photos.where((photo) => photo != null).toList();
+    final nullCount = photos.length - nonNullPhotos.length;
+
+    return [
+      ...nonNullPhotos,
+      ...List.filled(nullCount, null),
+    ];
   }
 }

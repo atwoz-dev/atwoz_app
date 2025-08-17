@@ -39,13 +39,6 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
               const Gap(16),
               const HomeProfileCardArea(), // 소개받은 프로필 부분
               const Gap(16),
-              Image.asset(
-                ImagePath.homeTest,
-                fit: BoxFit.cover,
-                width: context.screenWidth,
-                height: 89,
-              ),
-              const Gap(24),
               HomeCategoryButtonsArea(
                 // 카테고리 버튼 영역
                 onTapButton: (category) {
@@ -57,7 +50,14 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                     ),
                   );
                 },
-              )
+              ),
+              const Gap(24),
+              Image.asset(
+                ImagePath.homeTest,
+                fit: BoxFit.cover,
+                width: context.screenWidth,
+                height: 89,
+              ),
             ],
           ),
         ),

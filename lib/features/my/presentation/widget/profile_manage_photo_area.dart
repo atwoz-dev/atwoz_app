@@ -70,12 +70,7 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                                 imageURL: profileImages[index]!.imageUrl,
                                 fit: BoxFit.cover,
                               )
-                            : const DefaultIcon(
-                                IconPath.emptyProfileImage,
-                                size: 24,
-                                fit: BoxFit.contain,
-                                padding: EdgeInsets.only(top: 14),
-                              ),
+                            : null,
                       ),
                     ),
                     if (index == 0)

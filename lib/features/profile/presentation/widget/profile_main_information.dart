@@ -270,18 +270,21 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.label != null)
-              Text(
-                widget.label!,
-                style: Fonts.body01Regular().copyWith(
-                  color: Colors.white,
-                ),
-              ),
             DefaultIcon(
               widget.isFavoriteUser ? IconPath.heartFill : IconPath.heart,
               size: 20.0,
               colorFilter: DefaultIcon.fillColor(Colors.white),
             ),
+            if (widget.label != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  widget.label!,
+                  style: Fonts.body01Regular().copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
