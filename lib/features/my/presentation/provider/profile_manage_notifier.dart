@@ -1,4 +1,3 @@
-import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
@@ -24,14 +23,14 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
   void updateLocation(String location) {
     if (!state.hasValue) return;
 
-    final isValidLocation = location != state.value!.profile.region &&
-        addressData.getDistrictValue(location) != null;
-
     final updatedProfile = state.requireValue.profile.copyWith(
       region: location,
     );
 
-    updateProfile(profile: updatedProfile, isChanged: isValidLocation);
+    updateProfile(
+      profile: updatedProfile,
+      isChanged: state.requireValue.isValidLocation(location),
+    );
   }
 
   Future<String> setCurrentLocation() async {
@@ -42,25 +41,28 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
 
     if (!state.hasValue) return "";
 
-    final isValidLocation = location != state.value!.profile.region &&
-        addressData.getDistrictValue(location) != null;
-
     final updatedProfile = state.requireValue.profile.copyWith(
       region: location,
     );
 
-    updateProfile(profile: updatedProfile, isChanged: isValidLocation);
+    updateProfile(
+      profile: updatedProfile,
+      isChanged: state.requireValue.isValidLocation(location),
+    );
 
     return location;
   }
 
-  void updateProfile({required MyProfile profile, required bool? isChanged}) {
+  void updateProfile({
+    required MyProfile profile,
+    required bool isChanged,
+  }) {
     if (!state.hasValue) return;
 
     state = AsyncValue.data(
       state.requireValue.copyWith(
         updatedProfile: profile,
-        isChanged: isChanged ?? false,
+        isChanged: isChanged,
       ),
     );
   }
