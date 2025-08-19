@@ -127,7 +127,8 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                           )),
                     ])),
             DefaultElevatedButton(
-              onPressed: () => navigate(context, route: AppRoute.examQuestion),
+              onPressed: () =>
+                  navigate(context, route: AppRoute.examRequiredQuestion),
               child: Text(
                 '연애 모의고사 시작하기',
                 style: Fonts.body01Medium(palette.onPrimary)
