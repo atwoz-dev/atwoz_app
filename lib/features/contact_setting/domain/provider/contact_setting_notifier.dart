@@ -23,8 +23,4 @@ class ContactSettingNotifier extends _$ContactSettingNotifier {
   Future<void> registerContactInformation() async {
     // TODO(Han): db or api call
   }
-
-  Future<void> updatePhoneNumber() async {
-    // TODO(Han): db or api call 수정 버튼 요구사항 확인
-  }
 }

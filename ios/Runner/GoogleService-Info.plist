@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.atwoz.app</string>
+	<string>com.goodmeet.atwoz</string>
 	<key>PROJECT_ID</key>
 	<string>atwoz-d63ef</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1049288044004:ios:c9da2ef7849de153ac2bf1</string>
+	<string>1:1049288044004:ios:4abae1a3562a001dac2bf1</string>
 </dict>
 </plist>

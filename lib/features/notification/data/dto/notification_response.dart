@@ -4,18 +4,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'notification_response.freezed.dart';
 part 'notification_response.g.dart';
 
-// NotificationType을 union으로 변경
+// NotifiactionListItemType을 union으로 변경
 @freezed
-class NotificationType with _$NotificationType {
-  const factory NotificationType.request() = RequestType;
-  const factory NotificationType.message() = MessageType;
-  const factory NotificationType.rejectHeart() = RejectHeartType;
-  const factory NotificationType.rejectProfile() = RejectProfileType;
-  const factory NotificationType.match() = MatchType;
-  const factory NotificationType.notification() = GeneralNotificationType;
+class NotifiactionListItemType with _$NotifiactionListItemType {
+  const factory NotifiactionListItemType.request() = RequestType;
+  const factory NotifiactionListItemType.message() = MessageType;
+  const factory NotifiactionListItemType.rejectHeart() = RejectHeartType;
+  const factory NotifiactionListItemType.rejectProfile() = RejectProfileType;
+  const factory NotifiactionListItemType.match() = MatchType;
+  const factory NotifiactionListItemType.notification() =
+      GeneralNotifiactionListItemType;
 
-  factory NotificationType.fromJson(Map<String, dynamic> json) =>
-      _$NotificationTypeFromJson(json);
+  factory NotifiactionListItemType.fromJson(Map<String, dynamic> json) =>
+      _$NotifiactionListItemTypeFromJson(json);
 }
 
 @freezed
@@ -27,7 +28,7 @@ class NotificationModel with _$NotificationModel {
     required int notificationId,
     required int recipientId,
     required DateTime date,
-    required NotificationType type,
+    required NotifiactionListItemType type,
     String? senderName, // senderName은 타입이 notification이 아닌 경우 필수
     String? content, // content는 타입이 notification인 경우 필수
     @Default(false) bool isRead,
@@ -42,7 +43,7 @@ class NotificationModel with _$NotificationModel {
     required int notificationId,
     required int recipientId,
     required DateTime date,
-    required NotificationType type,
+    required NotifiactionListItemType type,
     String? senderName,
     String? content,
     bool isRead = false,

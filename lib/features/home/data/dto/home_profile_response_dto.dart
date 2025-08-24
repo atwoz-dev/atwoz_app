@@ -24,11 +24,13 @@ class HomeProfileResponseDto {
 
 @JsonSerializable()
 class StatusInfoDto {
+  final int memberId;
   final String activityStatus;
   final bool isVip;
   final String? primaryContactType;
 
   StatusInfoDto({
+    required this.memberId,
     required this.activityStatus,
     required this.isVip,
     required this.primaryContactType,

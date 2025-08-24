@@ -38,6 +38,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
 
     // interviewInfo
     @HiveField(18) required List<InterviewInfo> interviewInfoView,
+    @HiveField(19) required int myUserId,
   }) = _GlobalUserProfile;
 
   factory GlobalUserProfile.fromJson(Map<String, dynamic> json) =>
@@ -69,6 +70,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
     religion: Religion.none,
     hobbies: [],
     interviewInfoView: [],
+    myUserId: 0,
   );
 
   bool get isDefault => this == _default;
