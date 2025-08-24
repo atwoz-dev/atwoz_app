@@ -38,7 +38,7 @@ class GlobalUserProfile with _$GlobalUserProfile {
 
     // interviewInfo
     @HiveField(18) required List<InterviewInfo> interviewInfoView,
-    @HiveField(19) required int myUserId,
+    @HiveField(19) @Default(0) int myUserId,
   }) = _GlobalUserProfile;
 
   factory GlobalUserProfile.fromJson(Map<String, dynamic> json) =>

@@ -182,23 +182,22 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
   }
 
   void _profileExchangeHandler() async {
-    final notifier = ref
-        .read(profileNotifierProvider(widget.userId).notifier);
+    final notifier = ref.read(profileNotifierProvider(widget.userId).notifier);
     context.showConfirmDialog(
       submit: DialogButton(
         label: '수락하기',
-        onTap: () {
-          notifier.approveProfileExchange();
+        onTap: () async {
+          await notifier.approveProfileExchange();
           showToastMessage('프로필 교환을 수락하였습니다.');
-          context.pop();
+          if (mounted) context.pop();
         },
       ),
       cancel: DialogButton(
         label: '거절',
-        onTap: () {
-          notifier.rejectProfileExchange();
+        onTap: () async {
+          await notifier.rejectProfileExchange();
           showToastMessage('프로필 교환을 거절하였습니다.');
-          context.pop();
+          if (mounted) context.pop();
         },
       ),
       enableCloseButton: false,

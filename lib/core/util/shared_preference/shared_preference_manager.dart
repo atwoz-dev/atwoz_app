@@ -20,7 +20,7 @@ class SharedPreferenceManager {
       case SharedPreferencePrimitiveKey<bool>():
         _instance?.setBool(key.key, value as bool);
       case SharedPreferenceKey<T>():
-        _instance?.setString(key.key, json.encode(key.toJson(value)));
+        _instance?.setString(key.key, key.toJson(value));
       default:
         _instance?.setString(key.key, value.toString());
     }

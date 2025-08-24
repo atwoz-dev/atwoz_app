@@ -4,19 +4,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'notification_response.freezed.dart';
 part 'notification_response.g.dart';
 
-// NotifiactionListItemType을 union으로 변경
+// NotificationListItemType을 union으로 변경
 @freezed
-class NotifiactionListItemType with _$NotifiactionListItemType {
-  const factory NotifiactionListItemType.request() = RequestType;
-  const factory NotifiactionListItemType.message() = MessageType;
-  const factory NotifiactionListItemType.rejectHeart() = RejectHeartType;
-  const factory NotifiactionListItemType.rejectProfile() = RejectProfileType;
-  const factory NotifiactionListItemType.match() = MatchType;
-  const factory NotifiactionListItemType.notification() =
-      GeneralNotifiactionListItemType;
+class NotificationListItemType with _$NotificationListItemType {
+  const factory NotificationListItemType.request() = RequestType;
+  const factory NotificationListItemType.message() = MessageType;
+  const factory NotificationListItemType.rejectHeart() = RejectHeartType;
+  const factory NotificationListItemType.rejectProfile() = RejectProfileType;
+  const factory NotificationListItemType.match() = MatchType;
+  const factory NotificationListItemType.notification() =
+      GeneralNotificationListItemType;
 
-  factory NotifiactionListItemType.fromJson(Map<String, dynamic> json) =>
-      _$NotifiactionListItemTypeFromJson(json);
+  factory NotificationListItemType.fromJson(Map<String, dynamic> json) =>
+      _$NotificationListItemTypeFromJson(json);
 }
 
 @freezed
@@ -28,7 +28,7 @@ class NotificationModel with _$NotificationModel {
     required int notificationId,
     required int recipientId,
     required DateTime date,
-    required NotifiactionListItemType type,
+    required NotificationListItemType type,
     String? senderName, // senderName은 타입이 notification이 아닌 경우 필수
     String? content, // content는 타입이 notification인 경우 필수
     @Default(false) bool isRead,
@@ -43,7 +43,7 @@ class NotificationModel with _$NotificationModel {
     required int notificationId,
     required int recipientId,
     required DateTime date,
-    required NotifiactionListItemType type,
+    required NotificationListItemType type,
     String? senderName,
     String? content,
     bool isRead = false,

@@ -42,7 +42,6 @@ class ProfileFetchUseCase {
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
     final myUserId = ref.read(globalUserProfileNotifierProvider).myUserId;
 
-    // TODO(Han): 실패 처리 필요 + my user id 받아오기
     return response.toModel(myUserId);
   }
 }

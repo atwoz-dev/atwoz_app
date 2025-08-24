@@ -37,7 +37,7 @@ class SaveProfileToHiveUseCase {
           GlobalUserProfile.boxName,
         );
       } catch(e) {
-        Hive.deleteBoxFromDisk(GlobalUserProfile.boxName);
+        await Hive.deleteBoxFromDisk(GlobalUserProfile.boxName);
         box = await Hive.openBox<GlobalUserProfile>(
           GlobalUserProfile.boxName,
         );

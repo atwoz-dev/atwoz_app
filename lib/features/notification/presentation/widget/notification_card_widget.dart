@@ -23,7 +23,7 @@ class NotificationCardWidget extends StatelessWidget {
               text: TextSpan(
                 children: [
                   if (notification.type
-                      is! GeneralNotifiactionListItemType) ...[
+                      is! GeneralNotificationListItemType) ...[
                     TextSpan(
                       text: '${notification.senderName} ',
                       style: Fonts.body02Regular(context.palette.primary)

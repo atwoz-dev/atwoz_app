@@ -94,11 +94,13 @@ Future<void> initializeFirebase() async {
   FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
 }
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // Handle background message
   debugPrint('Handling a background message: ${message.messageId}');
 }
 
+@pragma('vm:entry-point')
 void _firebaseMessagingForegroundHandler(RemoteMessage message) {
   // Handle foreground message
   debugPrint('Handling a foreground message: ${message.messageId}');
