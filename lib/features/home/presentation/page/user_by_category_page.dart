@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
@@ -26,7 +26,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
         ref.watch(introducedProfilesNotifierProvider(widget.category));
     final introducedProfilesNotifier =
         ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
-    final userProfile = ref.watch(globalUserProfileNotifierProvider);
+    final userProfile = ref.watch(globalNotifierProvider).profile;
 
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
