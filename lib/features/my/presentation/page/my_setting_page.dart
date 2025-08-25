@@ -26,10 +26,7 @@ class MySettingPage extends StatelessWidget {
             title: '계정 설정',
             onTapMove: () => navigate(context, route: AppRoute.accountSetting),
           ),
-          _MySettingListItem(
-            title: '버전 정보',
-            onTapMove: () {},
-          ),
+          const _MySettingListItem(title: '버전 정보'),
           _MySettingListItem(
             title: '연락처 설정',
             onTapMove: () => navigate(context, route: AppRoute.contactSetting),
@@ -44,7 +41,7 @@ class MySettingPage extends StatelessWidget {
           ),
           _MySettingListItem(
             title: 'FAQ',
-            onTapMove: () {},
+            onTapMove: () {}, // TODO: 추후 FAQ 화면 생성 시 navigate 추가
           ),
         ],
       ),
@@ -54,10 +51,10 @@ class MySettingPage extends StatelessWidget {
 
 class _MySettingListItem extends ConsumerWidget {
   final String title;
-  final VoidCallback onTapMove;
+  final VoidCallback? onTapMove;
   const _MySettingListItem({
     required this.title,
-    required this.onTapMove,
+    this.onTapMove,
   });
 
   @override
@@ -77,31 +74,32 @@ class _MySettingListItem extends ConsumerWidget {
           ),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: Fonts.body02Medium().copyWith(
-              fontWeight: FontWeight.w500,
-              color: Palette.colorBlack,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTapMove,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Fonts.body02Medium().copyWith(
+                fontWeight: FontWeight.w500,
+                color: Palette.colorBlack,
+              ),
             ),
-          ),
-          if (title == '버전 정보')
-            mySettingAsync.when(
-              data: (data) => Text("V$data"),
-              loading: () => const CircularProgressIndicator(),
-              error: (error, stackTrace) => const Text("버전 정보 없음"),
-            )
-          else
-            GestureDetector(
-              onTap: onTapMove,
-              child: const DefaultIcon(
+            if (title == '버전 정보')
+              mySettingAsync.when(
+                data: (data) => Text("V$data"),
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stackTrace) => const Text("버전 정보 없음"),
+              )
+            else
+              const DefaultIcon(
                 IconPath.chevronRight2,
                 size: 24,
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
