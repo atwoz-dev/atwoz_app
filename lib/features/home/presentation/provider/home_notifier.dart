@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
+import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -13,15 +13,19 @@ part 'home_notifier.g.dart'; // 코드 생성을 위한 부분
 class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
-    state = const AsyncData(HomeState(nickname: ''));
     try {
-      await _fetchHomeProfile();
-      await _fetchRecommendedProfiles();
+      const initialState = HomeState();
+
+      // 추천 프로필 가져오기
+      final profiles =
+          await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+
+      // 최종 상태 반환
+      return initialState.copyWith(recommendedProfiles: profiles);
     } catch (e, stackTrace) {
       state = AsyncError(e, stackTrace);
       rethrow;
     }
-    return state.value!;
   }
 
   /// 좋아요 설정
@@ -56,22 +60,39 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
-  Future<void> _fetchHomeProfile() async {
-    CachedUserProfile profile = ref.read(globalNotifierProvider).profile;
+  Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {
+    // 로딩 시작
+    if (state.hasValue) {
+      state = AsyncData(
+        state.requireValue.copyWith(isCheckingIntroducedProfiles: true),
+      );
+    }
 
-    state = AsyncData(state.value!.copyWith(nickname: profile.nickname));
-  }
+    try {
+      // 프로필 데이터 로드
+      final profiles = await ref
+          .read(saveIntroducedProfilesUseCaseProvider)
+          .execute(category);
 
-  Future<void> _fetchRecommendedProfiles() async {
-    final profiles =
-        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+      // 로딩 완료
+      if (state.hasValue) {
+        state = AsyncData(
+          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
+        );
+      }
 
-    if (!state.hasValue) return;
+      return profiles.isNotEmpty;
+    } catch (e) {
+      Log.e('소개 프로필 확인 실패: $e');
 
-    state = AsyncData(
-      state.requireValue.copyWith(
-        recommendedProfiles: profiles,
-      ),
-    );
+      // 에러 발생 시에도 로딩 플래그 해제
+      if (state.hasValue) {
+        state = AsyncData(
+          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
+        );
+      }
+
+      return false;
+    }
   }
 }
