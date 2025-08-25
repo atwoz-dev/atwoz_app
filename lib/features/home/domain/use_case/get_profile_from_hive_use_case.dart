@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,13 +17,13 @@ class GetProfileFromHiveUseCase {
     required FlutterSecureStorage secureStorage,
   }) : _secureStorage = secureStorage;
 
-  Future<GlobalUserProfile> execute() async {
-    final box = await Hive.openBox<GlobalUserProfile>(
-      GlobalUserProfile.boxName,
+  Future<CachedUserProfile> execute() async {
+    final box = await Hive.openBox<CachedUserProfile>(
+      CachedUserProfile.boxName,
     );
     final profile = box.get('profile');
 
-    if (profile == null) return GlobalUserProfile.init();
+    if (profile == null) return CachedUserProfile.init();
 
     // secureStorage에서 민감 정보 복원
     final kakaoId = await _secureStorage.read(key: 'kakaoId');

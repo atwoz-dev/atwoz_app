@@ -1,1 +1,1 @@
-export 'global_provider.dart';
+export 'global_notifier.dart';

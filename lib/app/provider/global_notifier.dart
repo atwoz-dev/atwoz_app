@@ -1,22 +1,22 @@
-import 'package:atwoz_app/app/state/global_user_profile.dart';
-import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
+import 'package:atwoz_app/app/state/global_state.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'global_user_profile_notifier.g.dart';
+part 'global_notifier.g.dart';
 
 @Riverpod(keepAlive: true)
-class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
+class GlobalNotifier extends _$GlobalNotifier {
   @override
-  GlobalUserProfile build() {
+  AppGlobalState build() {
     initializeProfile();
-    return GlobalUserProfile.init();
+    return AppGlobalState(profile: CachedUserProfile.init());
   }
 
-  set profile(GlobalUserProfile profile) {
-    state = profile;
+  set profile(CachedUserProfile profile) {
+    state = state.copyWith(profile: profile);
   }
 
   // Hive에서 프로필 가져오기
@@ -26,16 +26,21 @@ class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
       return;
     }
 
-    state = await fetchProfileToHiveFromServer();
+    CachedUserProfile profile = await getProfileFromHive();
+
+    if (profile.isDefault) {
+      profile = await fetchProfileToHiveFromServer();
+    }
+
+    state = state.copyWith(profile: profile);
   }
 
-  // Hive에서 프로필 가져오기
-  Future<GlobalUserProfile> getProfileFromHive() async {
+  // 기존 UseCase 사용
+  Future<CachedUserProfile> getProfileFromHive() async {
     return await ref.read(getProfileFromHiveUseCaseProvider).execute();
   }
 
-  // 서버에서 프로필 가져오고 Hive에 저장
-  Future<GlobalUserProfile> fetchProfileToHiveFromServer() async {
+  Future<CachedUserProfile> fetchProfileToHiveFromServer() async {
     await ref.read(saveProfileToHiveUseCaseProvider).execute();
     return await getProfileFromHive();
   }

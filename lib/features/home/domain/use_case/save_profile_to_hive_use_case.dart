@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
@@ -30,8 +30,8 @@ class SaveProfileToHiveUseCase {
       final globalUserProfile =
           homeProfileDto.toGlobalUserProfile(); // Hive에 저장할 프로필
 
-      final box = await Hive.openBox<GlobalUserProfile>(
-        GlobalUserProfile.boxName,
+      final box = await Hive.openBox<CachedUserProfile>(
+        CachedUserProfile.boxName,
       ); // Hive Box 가져오기
 
       await box.put('profile', globalUserProfile); // Hive에 저장

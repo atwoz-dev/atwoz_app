@@ -4,6 +4,7 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
+import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
@@ -16,9 +17,8 @@ part 'introduced_profiles_notifier.g.dart';
 class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   @override
   Future<List<IntroducedProfile>> build(IntroducedCategory category) async {
-    final profiles = await ref
-        .watch(fetchIntroducedProfilesUseCaseProvider)
-        .execute(category);
+    final profiles =
+        await ref.watch(fetchIntroducedProfilesUseCase).execute(category);
 
     return profiles;
   }
@@ -69,7 +69,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
           );
 
       final profiles = await ref
-          .read(fetchIntroducedProfilesUseCaseProvider)
+          .read(saveIntroducedProfilesUseCaseProvider)
           .execute(category);
       state = AsyncData(profiles);
     } catch (e, stackTrace) {

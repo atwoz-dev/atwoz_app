@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/model/my_profile.dart';
@@ -13,4 +14,9 @@ class ProfileManageState with _$ProfileManageState {
   }) = _ProfileManageState;
 
   const ProfileManageState._();
+
+  bool isValidLocation(String newLocation) {
+    return newLocation != profile.region &&
+        addressData.getDistrictValue(newLocation) != null;
+  }
 }

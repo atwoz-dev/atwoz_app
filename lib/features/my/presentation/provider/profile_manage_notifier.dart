@@ -1,10 +1,11 @@
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
 import 'package:atwoz_app/features/my/domain/usecase/fetch_profile_images_use_case.dart';
 import 'package:atwoz_app/features/my/domain/usecase/update_my_profile_use_case.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 
 part 'profile_manage_notifier.g.dart';
 
@@ -12,27 +13,62 @@ part 'profile_manage_notifier.g.dart';
 class ProfileManageNotifier extends _$ProfileManageNotifier {
   @override
   Future<ProfileManageState> build() async {
-    final profile = ref.watch(globalUserProfileNotifierProvider);
+    final profile = ref.watch(globalNotifierProvider).profile;
     final profileImages = await _fetchProfileImages();
     return ProfileManageState(
       profile: profile.toMyProfile().copyWith(profileImages: profileImages),
     );
   }
 
-  void updateProfile(MyProfile profile, bool? isChanged) {
+  void updateLocation(String location) {
+    if (!state.hasValue) return;
+
+    final updatedProfile = state.requireValue.profile.copyWith(
+      region: location,
+    );
+
+    updateProfile(
+      profile: updatedProfile,
+      isChanged: state.requireValue.isValidLocation(location),
+    );
+  }
+
+  Future<String> setCurrentLocation() async {
+    final location =
+        await ref.read(getCurrentLocationUseCaseProvider).execute();
+
+    Log.d('현재 위치: $location');
+
+    if (!state.hasValue) return "";
+
+    final updatedProfile = state.requireValue.profile.copyWith(
+      region: location,
+    );
+
+    updateProfile(
+      profile: updatedProfile,
+      isChanged: state.requireValue.isValidLocation(location),
+    );
+
+    return location;
+  }
+
+  void updateProfile({
+    required MyProfile profile,
+    required bool isChanged,
+  }) {
     if (!state.hasValue) return;
 
     state = AsyncValue.data(
       state.requireValue.copyWith(
         updatedProfile: profile,
-        isChanged: isChanged ?? false,
+        isChanged: isChanged,
       ),
     );
   }
 
   Future<bool> saveProfile() async {
-    final profileNotifier =
-        ref.read(globalUserProfileNotifierProvider.notifier);
+    final profileNotifier = ref.read(globalNotifierProvider.notifier);
 
     if (state.value?.updatedProfile == null) return false;
 

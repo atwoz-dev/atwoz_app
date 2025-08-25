@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -33,7 +33,7 @@ void main() {
     /// Hive - 로컬 데이터베이스 초기화
     await Hive.initFlutter();
     Hive.registerAdapter<UserData>(UserDataAdapter());
-    Hive.registerAdapter<GlobalUserProfile>(GlobalUserProfileAdapter());
+    Hive.registerAdapter<CachedUserProfile>(CachedUserProfileAdapter());
     Hive.registerAdapter<InterviewInfo>(InterviewInfoAdapter());
     Hive.registerAdapter<MyProfileImage>(MyProfileImageAdapter());
     Hive.registerAdapter<IntroducedProfileDto>(IntroducedProfileDtoAdapter());
