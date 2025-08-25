@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
@@ -25,6 +26,12 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
           isAppBar: false,
           isHorizontalMargin: false
         );
+
+  @override
+  void initState() {
+    ref.read(globalUserProfileNotifierProvider.notifier).initialize();
+    super.initState();
+  }
 
   @override
   Widget buildPage(BuildContext context) {

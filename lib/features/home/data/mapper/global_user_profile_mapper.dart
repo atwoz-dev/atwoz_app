@@ -6,6 +6,7 @@ import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 extension GlobalUserProfileMapper on HomeProfileResponseDto {
   GlobalUserProfile toGlobalUserProfile() {
     return GlobalUserProfile(
+      myUserId: statusInfo.memberId,
       activityStatus: statusInfo.activityStatus,
       isVip: statusInfo.isVip,
       primaryContactType: statusInfo.primaryContactType,

@@ -89,7 +89,7 @@ class _MySettingListItem extends ConsumerWidget {
           ),
           if (title == '버전 정보')
             mySettingAsync.when(
-              data: (data) => Text("V$data"),
+              data: (data) => Text("V${data.version}"),
               loading: () => const CircularProgressIndicator(),
               error: (error, stackTrace) => const Text("버전 정보 없음"),
             )
