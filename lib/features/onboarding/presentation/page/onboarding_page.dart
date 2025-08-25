@@ -60,12 +60,14 @@ class _OnBoardPageState extends AppBaseStatefulPageBase<OnBoardPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      bubbleWidget(
-                        comment: '회원가입하고 포인트 선물받기',
-                        boldText: '포인트 선물',
-                        width: screenWidth * 0.5,
-                        textStyle: Fonts.body03Regular(),
-                        shadowColor: Palette.colorGrey200,
+                      Flexible(
+                        child: bubbleWidget(
+                          comment: '회원가입하고 포인트 선물받기',
+                          boldText: '포인트 선물',
+                          width: screenWidth * 0.5,
+                          textStyle: Fonts.body03Regular(),
+                          shadowColor: Palette.colorGrey200,
+                        ),
                       ),
                       DefaultElevatedButton(
                         primary: palette.primary,
