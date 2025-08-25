@@ -34,9 +34,8 @@ class App extends ConsumerStatefulWidget {
 class _AppState extends ConsumerState<App> {
   @override
   void initState() {
-    _initialize();
-
     super.initState();
+    _initialize();
   }
 
   Future<void> _initialize() async {
@@ -68,7 +67,7 @@ class _AppState extends ConsumerState<App> {
         themeMode: ThemeMode.light,
         theme: createThemeData(Palette.lightScheme),
         darkTheme: createThemeData(Palette.darkScheme),
-        routerConfig: ref.read(routerProvider),
+        routerConfig: ref.watch(routerProvider),
       ),
     );
   }
