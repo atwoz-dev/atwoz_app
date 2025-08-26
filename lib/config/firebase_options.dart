@@ -52,6 +52,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1049288044004',
     projectId: 'atwoz-d63ef',
     storageBucket: 'atwoz-d63ef.firebasestorage.app',
-    iosBundleId: 'com.gooemeet.atwoz',
+    iosBundleId: 'com.goodmeet.atwoz',
   );
 }
