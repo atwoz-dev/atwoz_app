@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:android_id/android_id.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
@@ -11,9 +15,12 @@ import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../core/util/shared_preference/shared_preference.dart';
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
@@ -58,6 +65,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
     final cookieJar = await _apiService.cookieJar;
+    // TODO(Han): notification 초기화 필요
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
@@ -103,6 +111,61 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   @override
   Future<String?> getRefreshToken() async {
     return _localStorage.getEncrypted(_refreshToken);
+  }
+
+  @override
+  Future<bool> initializeFcmToken() async {
+    final fcmToken = await FirebaseManager().getFcmToken();
+    if (fcmToken == null) {
+      Log.e('FCM 토큰을 가져오지 못했습니다.');
+      return false;
+    }
+
+    final existFcmToken =
+        SharedPreferenceManager.getValue(SharedPreferenceKeys.fcmToken);
+
+    if (existFcmToken == fcmToken) return true;
+
+    final success = await _registerDeviceToServer(fcmToken);
+    if (!success) {
+      Log.e('기기 등록에 실패했습니다.');
+      SharedPreferenceManager.setValue(SharedPreferenceKeys.fcmToken, '');
+      return false;
+    }
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.fcmToken,
+      fcmToken,
+    );
+    return true;
+  }
+
+  Future<bool> _registerDeviceToServer(String token) async {
+    try {
+      final deviceId = await _getDeviceId();
+
+      await _apiService.postJson(
+        '/notifications/device-registration',
+        data: {
+          'deviceId': deviceId ?? '',
+          'registrationToken': token,
+        },
+      );
+      return true;
+    } catch (e) {
+      Log.e('기기 등록 실패: $e');
+      return false;
+    }
+  }
+
+  Future<String?> _getDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      final iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor;
+    } else if (Platform.isAndroid) {
+      return await const AndroidId().getId();
+    }
+    return null;
   }
 
   @override

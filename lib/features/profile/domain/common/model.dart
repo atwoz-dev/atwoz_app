@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,8 +24,9 @@ class UserProfile with _$UserProfile {
     required Religion religion,
     required Region region,
     required double height,
-    required String job,
+    required Job job,
     required MatchStatus matchStatus,
+    required ProfileExchangeStatus profileExchangeStatus,
     required FavoriteType? favoriteType,
   }) = _UserProfile;
 }

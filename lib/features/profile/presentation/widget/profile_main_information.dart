@@ -1,15 +1,18 @@
 import 'dart:async';
 
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import 'message_send_bottomsheet.dart';
 
@@ -132,37 +135,32 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final isWaitingProfileExchange = ref
+            .watch(profileNotifierProvider(widget.userId))
+            .profile
+            ?.profileExchangeStatus
+            .isWaiting ??
+        false;
+
     return Row(
       children: [
         Expanded(
-          child: DefaultElevatedButton(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            onPressed: () => MessageSendBottomSheet.open(
-              context,
-              userId: widget.userId,
-              onSubmit: () => ref
-                  .read(profileNotifierProvider(widget.userId).notifier)
-                  .requestMatch(),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DefaultIcon(
-                  IconPath.letter,
-                  size: 20.0,
-                  colorFilter: DefaultIcon.fillColor(
-                    Colors.white,
+          child: isWaitingProfileExchange
+              ? _PrimaryButton(
+                  onTap: _profileExchangeHandler,
+                  label: '프로필 교환 요청 수락하기',
+                )
+              : _PrimaryButton(
+                  onTap: () => MessageSendBottomSheet.open(
+                    context,
+                    userId: widget.userId,
+                    onSubmit: () => ref
+                        .read(profileNotifierProvider(widget.userId).notifier)
+                        .requestMatch(),
                   ),
+                  label: '대화 해볼래요',
+                  iconPath: IconPath.letter,
                 ),
-                const Gap(8.0),
-                Text(
-                  '대화 해볼래요',
-                  style: Fonts.body02Medium(Colors.white),
-                ),
-              ],
-            ),
-          ),
         ),
         const Gap(8.0),
         FavoriteButton(
@@ -182,6 +180,72 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
       ],
     );
   }
+
+  void _profileExchangeHandler() async {
+    final notifier = ref.read(profileNotifierProvider(widget.userId).notifier);
+    context.showConfirmDialog(
+      submit: DialogButton(
+        label: '수락하기',
+        onTap: () async {
+          await notifier.approveProfileExchange();
+          showToastMessage('프로필 교환을 수락하였습니다.');
+          if (mounted) context.pop();
+        },
+      ),
+      cancel: DialogButton(
+        label: '거절',
+        onTap: () async {
+          await notifier.rejectProfileExchange();
+          showToastMessage('프로필 교환을 거절하였습니다.');
+          if (mounted) context.pop();
+        },
+      ),
+      enableCloseButton: false,
+      child: const Text(
+        '요청을 수락하시겠어요?\n'
+        '상대방과 메시지를 주고받을 수 있어요!',
+      ),
+    );
+  }
+}
+
+class _PrimaryButton extends StatelessWidget {
+  const _PrimaryButton({
+    required this.onTap,
+    required this.label,
+    this.iconPath,
+  });
+
+  final VoidCallback onTap;
+  final String label;
+  final String? iconPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultElevatedButton(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      onPressed: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        spacing: 8.0,
+        children: [
+          if (iconPath != null)
+            DefaultIcon(
+              iconPath,
+              size: 20.0,
+              colorFilter: DefaultIcon.fillColor(
+                Colors.white,
+              ),
+            ),
+          Text(
+            label,
+            style: Fonts.body02Medium(Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class FavoriteButton extends StatefulWidget {
@@ -192,10 +256,12 @@ class FavoriteButton extends StatefulWidget {
     this.disabledColor,
     this.label,
   });
+
   final bool isFavoriteUser;
   final VoidCallback onTap;
   final Color? disabledColor;
   final String? label;
+
   @override
   State<FavoriteButton> createState() => _FavoriteButtonState();
 }
@@ -204,11 +270,13 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   bool _enabled = true;
   Timer? _timer;
   static const _transDuration = 1000;
+
   Color get _disabledColor => widget.disabledColor ?? const Color(0xFFDCDEE3);
   static const _gradientStart = Color(0xFFBCD5F3);
   static const _gradientEnd = Color(0xFF4F37E2);
   static const _transitionGradientStart = Color(0xA1BCD5F3);
   static const _transitionGradientEnd = Color(0xA14F37E2);
+
   BoxDecoration get _currentDecoration {
     const baseDecoration = BoxDecoration(borderRadius: Dimens.buttonRadius);
     if (!widget.isFavoriteUser) {

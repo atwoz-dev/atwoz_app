@@ -1,6 +1,8 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile_detail_response.freezed.dart';
+
 part 'profile_detail_response.g.dart';
 
 @freezed
@@ -8,6 +10,7 @@ class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
     required BasicMemberInformation memberInfo,
     required MatchInformation? matchInfo,
+    required ProfileExchangeInfo? profileExchangeInfo,
     @Default([]) List<ProfileInterview> interviews,
   }) = _ProfileDetailResponse;
 
@@ -56,6 +59,19 @@ class MatchInformation with _$MatchInformation {
 
   factory MatchInformation.fromJson(Map<String, dynamic> json) =>
       _$MatchInformationFromJson(json);
+}
+
+@freezed
+class ProfileExchangeInfo with _$ProfileExchangeInfo {
+  const factory ProfileExchangeInfo({
+    required int profileExchangeId,
+    required int requesterId,
+    required int responderId,
+    required ProfileExchangeStatus profileExchangeStatus,
+  }) = _ProfileExchangeInfo;
+
+  factory ProfileExchangeInfo.fromJson(Map<String, dynamic> json) =>
+      _$ProfileExchangeInfoFromJson(json);
 }
 
 @freezed

@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,15 +28,21 @@ class LocalStorage {
   static Box? _hiveStorage;
   static FlutterSecureStorage? _secureStorage;
 
+  final _initCompleter = Completer();
+
   /// `Hive` 및 `FlutterSecureStorage` 초기화
   Future<void> initialize() async {
+    if (_initCompleter.isCompleted) return;
     _hiveStorage ??= await Hive.openBox('LocalStorage');
     _secureStorage ??= const FlutterSecureStorage();
+
+    _initCompleter.complete();
   }
 
   /* ------------------ SECURE STORAGE ----------------------- */
 
   Future<String?> getEncrypted(String key) async {
+    await _initCompleter.future;
     try {
       return _secureStorage?.read(key: key);
     } on PlatformException {
@@ -43,6 +51,7 @@ class LocalStorage {
   }
 
   Future<bool> saveEncrypted(String key, String value) async {
+    await _initCompleter.future;
     try {
       await _secureStorage!.write(key: key, value: value);
       return Future<bool>.value(true);
@@ -69,7 +78,8 @@ class LocalStorage {
     }
   }
 
-  Future<void> saveItem<T>(Object key, T? value) {
+  Future<void> saveItem<T>(Object key, T? value) async {
+    await _initCompleter.future;
     if (value != null) {
       return _hiveStorage!.put(key, value);
     } else {
