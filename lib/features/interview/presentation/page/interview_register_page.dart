@@ -76,6 +76,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                       }
                       navigate(context,
                           route: AppRoute.interview,
+                          method: NavigationMethod.go,
                           extra: InterviewArguments(
                             currentTabIndex: widget.currentTabIndex,
                           ));
@@ -94,6 +95,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                 navigate(
                   context,
                   route: AppRoute.interview,
+                  method: NavigationMethod.go,
                 );
               })
         },
