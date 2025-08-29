@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/store/presentation/widget/heart_history_card.dart';
+import 'package:atwoz_app/features/heart_history/presentation/widget/heart_history_card.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/features/store/domain/provider/domain.dart';
+import 'package:atwoz_app/features/heart_history/domain/provider/domain.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,8 +40,8 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
     try {
       await ref
-          .read(heartListNotifierProvider.notifier)
-          .loadMoreHeartTractions();
+          .read(heartHistoryNotifierProvider.notifier)
+          .loadMoreHeartTransactions();
     } catch (e) {
       showToastMessage('표시할 항목이 더 이상 없습니다.');
     } finally {
@@ -61,7 +61,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(heartListNotifierProvider);
+    final state = ref.watch(heartHistoryNotifierProvider);
 
     if (!state.isLoaded && state.error == null) {
       return const Scaffold(
@@ -69,7 +69,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
       );
     }
 
-    final transactions = state.heartTractions.transactions;
+    final transactions = state.history.transactions;
 
     return Scaffold(
       appBar: const DefaultAppBar(title: '하트 사용 내역'),
@@ -77,7 +77,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
         child: ListView.builder(
           controller: _scrollController,
-          itemCount: state.heartTractions.hasMore
+          itemCount: state.history.hasMore
               ? transactions.length + 1
               : transactions.length,
           itemBuilder: (context, index) {

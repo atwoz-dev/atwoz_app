@@ -39,16 +39,10 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           final isSelected = controller.index == index;
           return BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  DefaultIcon(
-                    size: 20.h,
-                    isSelected ? item.iconFill : item.icon,
-                  ),
-                  Gap(8.h), // 아이콘과 레이블 사이 간격
-                ],
+              padding: const EdgeInsets.only(top: 15, bottom: 8),
+              child: DefaultIcon(
+                size: 20.h,
+                isSelected ? item.iconFill : item.icon,
               ),
             ),
             label: item.label,
