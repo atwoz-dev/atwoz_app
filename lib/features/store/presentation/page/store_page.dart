@@ -25,34 +25,16 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
-  List<HeartProduct> get _heartItems => [
-        HeartProduct.heart45,
-        HeartProduct.heart110,
-        HeartProduct.heart350,
-        HeartProduct.heart550,
-      ];
-
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
+  static final List<HeartProduct> _heartItems = [
+    HeartProduct.heart45,
+    HeartProduct.heart110,
+    HeartProduct.heart350,
+    HeartProduct.heart550,
+  ];
 
   @override
   void initState() {
     super.initState();
-    _initInAppPurchase();
-  }
-
-  Future<void> _initInAppPurchase() async {
-    final available = await InAppPurchase.instance.isAvailable();
-    if (!available) return;
-    _subscription = InAppPurchase.instance.purchaseStream.listen(
-      (purchases) =>
-          ref.read(storeNotifierProvider.notifier).onPurchaseUpdated(purchases),
-    );
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
   }
 
   @override
