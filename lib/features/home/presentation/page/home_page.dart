@@ -41,11 +41,14 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
               const Gap(16),
               const HomeProfileCardArea(), // 소개받은 프로필 부분
               const Gap(16),
-              Image.asset(
-                ImagePath.homeTest,
-                fit: BoxFit.cover,
-                width: context.screenWidth,
-                height: 89,
+              GestureDetector(
+                onTap: () => navigate(context, route: AppRoute.exam),
+                child: Image.asset(
+                  ImagePath.homeTest,
+                  fit: BoxFit.cover,
+                  width: context.screenWidth,
+                  height: 89,
+                ),
               ),
               const Gap(24),
               HomeCategoryButtonsArea(
