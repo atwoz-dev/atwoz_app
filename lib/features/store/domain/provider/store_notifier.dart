@@ -49,7 +49,10 @@ class StoreNotifier extends _$StoreNotifier {
     final product = state.products.firstWhere((p) => p.id == productId);
     final param = PurchaseParam(productDetails: product);
 
-    inAppPurchase.buyConsumable(purchaseParam: param, autoConsume: true);
+    inAppPurchase.buyConsumable(
+      purchaseParam: param,
+      autoConsume: true,
+    );
 
     state = state.copyWith(isPurchasePending: true);
   }
