@@ -18,6 +18,7 @@ class InterviewRegisterPage extends ConsumerStatefulWidget {
   final int? answerId;
   final int? questionId;
   final bool isAnswered;
+
   const InterviewRegisterPage({
     super.key,
     required this.question,
@@ -74,12 +75,11 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                               _inputContentController.text.trim(),
                             );
                       }
-                      navigate(context,
-                          route: AppRoute.interview,
-                          method: NavigationMethod.go,
-                          extra: InterviewArguments(
-                            currentTabIndex: widget.currentTabIndex,
-                          ));
+                      navigate(
+                        context,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
+                      );
                     } catch (e) {
                       showToastMessage('저장에 실패했습니다.');
                     }
@@ -94,7 +94,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
               onElevatedButtonPressed: () {
                 navigate(
                   context,
-                  route: AppRoute.interview,
+                  route: AppRoute.mainTab,
                   method: NavigationMethod.go,
                 );
               });

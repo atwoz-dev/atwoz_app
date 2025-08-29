@@ -15,6 +15,8 @@ import 'dio_service.dart';
 import 'network_exception.dart';
 import 'token_interceptor.dart';
 
+const _refreshTokenKey = 'refresh_token';
+
 final apiServiceProvider = Provider<ApiServiceImpl>((ref) {
   return ApiServiceImpl(
     ref: ref,
@@ -92,7 +94,7 @@ class ApiServiceImpl implements ApiService {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
       await ref.read(localStorageProvider.notifier).initialize();
       final refreshToken =
-          await ref.read(localStorageProvider).getEncrypted('_refreshToken');
+          await ref.read(localStorageProvider).getEncrypted(_refreshTokenKey);
 
       if (accessToken != null) {
         finalHeaders['Authorization'] = "Bearer $accessToken";
@@ -114,12 +116,12 @@ class ApiServiceImpl implements ApiService {
     if (refreshToken == null) return;
 
     final uri = Uri.parse(_baseUrl);
-    _cookieJar.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
+    _cookieJar.saveFromResponse(uri, [Cookie(_refreshTokenKey, refreshToken)]);
 
     await ref.read(localStorageProvider.notifier).initialize();
     await ref
         .read(localStorageProvider)
-        .saveEncrypted('_refreshToken', refreshToken);
+        .saveEncrypted(_refreshTokenKey, refreshToken);
   }
 
   String? _extractRefreshToken(List<String> cookies) {

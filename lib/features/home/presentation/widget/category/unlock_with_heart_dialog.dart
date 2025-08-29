@@ -12,9 +12,11 @@ class UnlockWithHeartDialog extends ConsumerWidget {
   const UnlockWithHeartDialog({
     super.key,
     required this.heartBalance,
+    required this.isMale,
   });
 
   final int heartBalance;
+  final bool isMale;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,7 +85,9 @@ class UnlockWithHeartDialog extends ConsumerWidget {
                           ),
                           const Gap(4),
                           Text(
-                            userProfile.isMale ? "10" : "4",
+                            userProfile.isMale
+                                ? "${Dimens.maleIntroducedProfileOpenHeartCount}"
+                                : "${Dimens.femaleIntroducedProfileOpenHeartCount}",
                             style: Fonts.body02Medium().copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

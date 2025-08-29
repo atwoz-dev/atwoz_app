@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
@@ -23,10 +24,14 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
   HomePageState()
       : super(
           isAppBar: false,
-          isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 0,
+          isHorizontalMargin: false
         );
+
+  @override
+  void initState() {
+    ref.read(globalUserProfileNotifierProvider.notifier).initialize();
+    super.initState();
+  }
 
   @override
   Widget buildPage(BuildContext context) {
@@ -41,13 +46,6 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
               const Gap(16),
               const HomeProfileCardArea(), // 소개받은 프로필 부분
               const Gap(16),
-              Image.asset(
-                ImagePath.homeTest,
-                fit: BoxFit.cover,
-                width: context.screenWidth,
-                height: 89,
-              ),
-              const Gap(24),
               HomeCategoryButtonsArea(
                 // 카테고리 버튼 영역
                 onTapButton: (category) {
@@ -59,7 +57,14 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                     ),
                   );
                 },
-              )
+              ),
+              const Gap(24),
+              Image.asset(
+                ImagePath.homeTest,
+                fit: BoxFit.cover,
+                width: context.screenWidth,
+                height: 89,
+              ),
             ],
           ),
         ),

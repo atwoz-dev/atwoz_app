@@ -61,7 +61,7 @@ class ProfileSubInformation extends ConsumerWidget {
               ),
               SubInfoItem(
                 iconPath: IconPath.business,
-                label: profile.job,
+                label: profile.job.label,
               ),
             ],
           ),

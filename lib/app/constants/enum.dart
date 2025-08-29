@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'enum.g.dart';
@@ -252,4 +253,17 @@ enum IntroducedCategory {
 
   static IntroducedCategory parse(String? value) =>
       _byValue[value?.toUpperCase()] ?? IntroducedCategory.grade;
+}
+
+enum ProfileExchangeStatus {
+  @JsonValue('')
+  none,
+  @JsonValue('WAITING')
+  waiting,
+  @JsonValue('APPROVE')
+  approve,
+  @JsonValue('REJECTED')
+  rejected;
+
+  bool get isWaiting => this == waiting;
 }

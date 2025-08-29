@@ -8,11 +8,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:gap/gap.dart';
 
 class InterviewPage extends ConsumerStatefulWidget {
-  final int currentTabIndex;
-  const InterviewPage({
-    super.key,
-    required this.currentTabIndex,
-  });
+  const InterviewPage({super.key});
 
   @override
   InterviewPageState createState() => InterviewPageState();
@@ -21,19 +17,11 @@ class InterviewPage extends ConsumerStatefulWidget {
 class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   InterviewPageState()
       : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-          isDefaultBottomNavigationBar: true,
-          defaultBottomNavigationBarIndex: 3,
-        );
-  int _currentTabIndex = 0;
+    isAppBar: false,
+    isHorizontalMargin: false,
+  );
   bool _isBannerVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentTabIndex = widget.currentTabIndex;
-  }
+  int _currentTabIndex = 0;
 
   void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
 
@@ -43,7 +31,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
+    EdgeInsets.symmetric(horizontal: horizontalPadding);
     final double tagSpacing = 16;
 
     return Padding(
@@ -60,7 +48,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
               children: [
                 Text('나를 소개해볼까요?',
                     style:
-                        Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
+                    Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
                 const Gap(8),
                 Text(
                   '이성에게 보여 줄 인터뷰예요.',

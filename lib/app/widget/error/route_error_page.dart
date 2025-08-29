@@ -35,7 +35,7 @@ class RouteErrorPage extends ConsumerWidget {
   void goToHome(BuildContext context) {
     navigate(
       context,
-      route: AppRoute.home,
+      route: AppRoute.mainTab,
       method: NavigationMethod.go,
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -8,11 +6,12 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/presentation/provider/home_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/widget.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:shimmer/shimmer.dart';
 
 // 페이지뷰 + 페이지 번호 상태 바
 class HomeProfileCardArea extends ConsumerStatefulWidget {
@@ -37,9 +36,25 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
 
     return homeStateAsync.when(
       data: (profiles) {
-        if (profiles.isEmpty) {
-          return const _EmptyProfileCard();
+        if (profiles == null) {
+          // 로딩 시 보여주는 빈 박스
+          return Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.white,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Palette.colorGrey50,
+              ),
+              height: context.screenHeight * 0.41,
+            ),
+          );
         }
+
+        if (profiles.isEmpty) {
+          return const _EmptyProfileCard(); // 빈 리스트인 경우
+        }
+
         return Column(
           children: [
             SizedBox(
@@ -53,6 +68,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                 ),
                 itemBuilder: (context, index) {
                   final profile = profiles[index];
+
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => navigate(
@@ -63,6 +79,8 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                     child: _ProfileCardWidget(
                       profile: profile,
                       onTapFavorite: () async {
+                        if (profile.favoriteType != null) return;
+
                         final favoriteType =
                             await FavoriteTypeSelectDialog.open(
                           context,
@@ -81,23 +99,9 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
               ),
             ),
             const Gap(16),
-            Row(
-              // 페이지 번호 상태 바
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(profiles.length, (index) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: _currentPage == index
-                        ? Palette.colorPrimary500
-                        : Palette.colorGrey100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                );
-              }),
+            _PageCardIndicator(
+              totalPages: profiles.length,
+              currentPage: _currentPage,
             ),
           ],
         );
@@ -114,9 +118,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
         );
       },
       loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -129,9 +131,9 @@ class _EmptyProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.screenWidth,
+      height: context.screenHeight * 0.41,
       padding: const EdgeInsets.symmetric(
         horizontal: 32,
-        vertical: 122,
       ),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
@@ -139,6 +141,7 @@ class _EmptyProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const DefaultIcon(
             IconPath.sadEmotion,
@@ -192,10 +195,10 @@ class _ProfileCardWidget extends StatelessWidget {
                 // 상단 프로필 사진
                 width: 100,
                 height: 100,
-                child: CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: NetworkImage(
-                    profile.profileImageUrl,
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: profile.profileImageUrl,
+                    fit: BoxFit.cover,
                   ), // 추후 api 연동 시 NetworkImage로 변경
                 ),
               ),
@@ -211,7 +214,10 @@ class _ProfileCardWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 18,
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: HashtagWrap(tags: profile.tags),
+                child: HashtagWrap(
+                  tags: profile.tags,
+                  isCenter: true,
+                ),
               ),
               const Gap(8),
               SizedBox(
@@ -235,6 +241,35 @@ class _ProfileCardWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _PageCardIndicator extends StatelessWidget {
+  final int totalPages;
+  final int currentPage;
+  const _PageCardIndicator(
+      {required this.totalPages, required this.currentPage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      // 페이지 번호 상태 바
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(totalPages, (index) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(
+            color: currentPage == index
+                ? Palette.colorPrimary500
+                : Palette.colorGrey100,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        );
+      }),
     );
   }
 }

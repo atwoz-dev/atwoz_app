@@ -1,69 +1,18 @@
 import 'dart:ui';
-import 'package:atwoz_app/app/provider/global_provider.dart';
+
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
-import 'package:atwoz_app/app/widget/error/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:atwoz_app/core/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class App extends ConsumerWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appNotifierAsync = ref.watch(globalProvider);
-    final router = ref.watch(routerProvider);
-
-    return appNotifierAsync.when(
-      data: (appState) {
-        // Splash 화면 종료
-        removeSplash();
-
-        return ScreenUtilInit(
-          designSize: const Size(360, 800),
-          minTextAdapt: true,
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            scrollBehavior:
-                const MaterialScrollBehavior().copyWith(dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-              PointerDeviceKind.trackpad,
-              PointerDeviceKind.stylus,
-              PointerDeviceKind.unknown,
-            }),
-            themeMode: ThemeMode.values[appState.themeModeIndex],
-            theme: createThemeData(Palette.lightScheme),
-            darkTheme: createThemeData(Palette.darkScheme),
-            // locale: Locale(appState.languageCode),
-            routerConfig: router,
-          ),
-        );
-      },
-      loading: () => const MaterialApp(
-        home: Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        ),
-      ),
-      error: (err, stack) => MaterialApp(
-        home: Config.enableErrorPage
-
-            /// [AppErrorWidget] 존재
-            ? ErrorPage(FlutterErrorDetails(
-                exception: err,
-                stack: stack,
-              ))
-            : Scaffold(
-                body: Center(
-                  child: Text('앱 로딩 실패: $err'),
-                ),
-              ),
-      ),
-    );
-  }
+  ConsumerState<App> createState() => _AppState();
 
   static WidgetsBinding? _widgetsBinding;
 
@@ -75,7 +24,51 @@ class App extends ConsumerWidget {
   static void removeSplash() {
     if (_widgetsBinding == null) return;
     Future.delayed(
-        const Duration(seconds: 1), _widgetsBinding?.allowFirstFrame);
+      const Duration(seconds: 1),
+      _widgetsBinding?.allowFirstFrame,
+    );
     _widgetsBinding = null;
+  }
+}
+
+class _AppState extends ConsumerState<App> {
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    final router = ref.read(routerProvider);
+
+    await ref.read(globalUserProfileNotifierProvider.notifier).initialize();
+    if (ref.read(globalUserProfileNotifierProvider).isDefault) {
+      router.goNamed(AppRoute.onboard.name);
+    } else {
+      router.goNamed(AppRoute.mainTab.name);
+    }
+    App.removeSplash();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(360, 800),
+      minTextAdapt: true,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.trackpad,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown,
+        }),
+        themeMode: ThemeMode.light,
+        theme: createThemeData(Palette.lightScheme),
+        darkTheme: createThemeData(Palette.darkScheme),
+        routerConfig: ref.watch(routerProvider),
+      ),
+    );
   }
 }
