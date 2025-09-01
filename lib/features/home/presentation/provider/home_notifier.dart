@@ -81,6 +81,8 @@ class HomeNotifier extends _$HomeNotifier {
         );
       }
 
+      Log.e('소개 프로필 확인 성공: $profiles');
+
       return profiles.isNotEmpty;
     } catch (e) {
       Log.e('소개 프로필 확인 실패: $e');
@@ -95,41 +97,4 @@ class HomeNotifier extends _$HomeNotifier {
       return false;
     }
   }
-
-  // Future<void> fetchHomeProfile() async {
-  //   GlobalUserProfile profile = ref.read(globalNotifierProvider).profile;
-  //   final profileNotifier = ref.read(globalNotifierProvider.notifier);
-
-  //   // 전역 상태가 Default라면 Hive 또는 서버에서 가져오기
-  //   if (profile.isDefault) {
-  //     profile = await profileNotifier.fetchProfileToHiveFromServer();
-  //   }
-
-  //   try {
-  //     // 프로필 데이터 로드
-  //     final profiles = await ref
-  //         .read(saveIntroducedProfilesUseCaseProvider)
-  //         .execute(category);
-
-  //     // 로딩 완료
-  //     if (state.hasValue) {
-  //       state = AsyncData(
-  //         state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
-  //       );
-  //     }
-
-  //     return profiles.isNotEmpty;
-  //   } catch (e) {
-  //     Log.e('소개 프로필 확인 실패: $e');
-
-  //     // 에러 발생 시에도 로딩 플래그 해제
-  //     if (state.hasValue) {
-  //       state = AsyncData(
-  //         state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
-  //       );
-  //     }
-
-  //     return false;
-  //   }
-  // }
 }
