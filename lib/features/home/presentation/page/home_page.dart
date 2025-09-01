@@ -11,6 +11,7 @@ import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_are
 import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -56,7 +57,10 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                             IntroducedCategory.parse(category),
                           );
                           if (!isNotEmptyList) {
-                            showToastMessage('조건에 맞는 이성을 찾지 못했어요');
+                            showToastMessage(
+                              '조건에 맞는 이성을 찾지 못했어요',
+                              gravity: ToastGravity.TOP,
+                            );
                             return;
                           }
                           if (context.mounted) {
