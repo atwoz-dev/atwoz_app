@@ -149,7 +149,7 @@ class MySettingNotifier extends _$MySettingNotifier {
       }
 
       ref.read(authUsecaseProvider).setAccessToken(accessToken);
-      await ref.read(globalNotifierProvider.notifier).initializeProfile();
+      await ref.read(globalNotifierProvider.notifier).initialize();
       return true;
     } catch (e) {
       Log.e('계정 활성화 실패: $e');

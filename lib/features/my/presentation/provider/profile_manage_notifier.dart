@@ -1,6 +1,7 @@
-import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
+import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
 import 'package:atwoz_app/features/my/domain/usecase/fetch_profile_images_use_case.dart';
 import 'package:atwoz_app/features/my/domain/usecase/update_my_profile_use_case.dart';
 import 'package:atwoz_app/features/my/my.dart';

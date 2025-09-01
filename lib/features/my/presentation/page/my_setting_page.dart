@@ -94,12 +94,9 @@ class _MySettingListItem extends ConsumerWidget {
                 error: (error, stackTrace) => const Text("버전 정보 없음"),
               )
             else
-              GestureDetector(
-                onTap: onTapMove,
-                child: const DefaultIcon(
-                  IconPath.chevronRight2,
-                  size: 24,
-                ),
+              const DefaultIcon(
+                IconPath.chevronRight2,
+                size: 24,
               ),
           ],
         ),

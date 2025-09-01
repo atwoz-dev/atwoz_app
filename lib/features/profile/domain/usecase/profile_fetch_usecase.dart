@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
@@ -40,7 +40,7 @@ class ProfileFetchUseCase {
     }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
-    final myUserId = ref.read(globalUserProfileNotifierProvider).myUserId;
+    final myUserId = ref.read(globalNotifierProvider).profile.myUserId;
 
     return response.toModel(myUserId);
   }

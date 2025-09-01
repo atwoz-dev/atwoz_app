@@ -1,10 +1,8 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
-import 'package:atwoz_app/features/home/domain/model/global_user_profile.dart';
-import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
+import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -68,6 +66,33 @@ class HomeNotifier extends _$HomeNotifier {
       state = AsyncData(
         state.requireValue.copyWith(isCheckingIntroducedProfiles: true),
       );
+    }
+
+    try {
+      // 프로필 데이터 로드
+      final profiles = await ref
+          .read(saveIntroducedProfilesUseCaseProvider)
+          .execute(category);
+
+      // 로딩 완료
+      if (state.hasValue) {
+        state = AsyncData(
+          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
+        );
+      }
+
+      return profiles.isNotEmpty;
+    } catch (e) {
+      Log.e('소개 프로필 확인 실패: $e');
+
+      // 에러 발생 시에도 로딩 플래그 해제
+      if (state.hasValue) {
+        state = AsyncData(
+          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
+        );
+      }
+
+      return false;
     }
   }
 

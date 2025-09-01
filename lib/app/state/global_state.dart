@@ -1,6 +1,5 @@
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../features/home/domain/model/cached_user_profile.dart';
 
 part 'global_state.freezed.dart';
 

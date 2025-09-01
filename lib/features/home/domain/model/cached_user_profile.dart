@@ -41,18 +41,18 @@ class CachedUserProfile with _$CachedUserProfile {
     @HiveField(19) @Default(0) int myUserId,
   }) = _CachedUserProfile;
 
-  CachedUserProfile.fromJson(Map<String, dynamic> json) =>
+  factory CachedUserProfile.fromJson(Map<String, dynamic> json) =>
       _$CachedUserProfileFromJson(json);
 
   bool get hasInterview =>
       interviewInfoView.isNotEmpty &&
       interviewInfoView.any((i) => i.title.isNotEmpty || i.content.isNotEmpty);
 
-  String get boxName => 'CachedUserProfile';
+  static String get boxName => 'CachedUserProfile';
 
-  CachedUserProfile.init() => _default;
+  factory CachedUserProfile.init() => _default;
 
-  const _default = CachedUserProfile(
+  static const _default = CachedUserProfile(
     activityStatus: '',
     isVip: false,
     nickname: '',
