@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
@@ -143,6 +141,18 @@ class ProfileNotifier extends _$ProfileNotifier {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
     }
+  }
+
+  Future<void> approveProfileExchange() async {
+    if (state.profile == null) return;
+
+    // TODO(Han): 구현 필요
+  }
+
+  Future<void> rejectProfileExchange() async {
+    if (state.profile == null) return;
+
+    // TODO(Han): 구현 필요
   }
 
   void resetError() {

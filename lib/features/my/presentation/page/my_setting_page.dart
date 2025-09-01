@@ -89,14 +89,17 @@ class _MySettingListItem extends ConsumerWidget {
             ),
             if (title == '버전 정보')
               mySettingAsync.when(
-                data: (data) => Text("V$data"),
+                data: (data) => Text("V${data.version}"),
                 loading: () => const CircularProgressIndicator(),
                 error: (error, stackTrace) => const Text("버전 정보 없음"),
               )
             else
-              const DefaultIcon(
-                IconPath.chevronRight2,
-                size: 24,
+              GestureDetector(
+                onTap: onTapMove,
+                child: const DefaultIcon(
+                  IconPath.chevronRight2,
+                  size: 24,
+                ),
               ),
           ],
         ),

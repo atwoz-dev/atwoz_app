@@ -13,11 +13,14 @@ Future<bool?> showToastMessage(
 }) {
   return Fluttertoast.showToast(
     msg: message,
-    gravity: gravity = ToastGravity.TOP, // 기본값 = ToastGravity.TOP
-    toastLength: toastLength = Toast.LENGTH_SHORT, // 기본값 = Toast.LENGTH_SHORT
+    gravity: gravity,
+    toastLength: toastLength ?? Toast.LENGTH_SHORT,
+    // 기본값 = Toast.LENGTH_SHORT
     timeInSecForIosWeb: 1,
-    textColor: textColor = Colors.white, // 기본값 = Colors.white
-    backgroundColor: backgroundColor = Colors.black, // 기본값 = Colors.black
+    textColor: textColor ?? Colors.white,
+    // 기본값 = Colors.white
+    backgroundColor: backgroundColor ?? Colors.black,
+    // 기본값 = Colors.black
     fontSize: fontSize ?? 12,
   );
 }
@@ -40,9 +43,9 @@ Future<bool?> showExceptionToast(
     return showToastMessage(
       exception.message ?? exception.toString(),
       gravity: gravity,
-      toastLength: toastLength = Toast.LENGTH_SHORT, // 기본값 = Toast.LENGTH_SHORT
-      textColor: textColor = Colors.white, // 기본값 = Colors.white
-      backgroundColor: backgroundColor = Colors.black, // 기본값 = Colors.black
+      toastLength: toastLength ?? Toast.LENGTH_SHORT,
+      textColor: textColor ?? Colors.white,
+      backgroundColor: backgroundColor ?? Colors.black,
       fontSize: fontSize ?? 12,
     );
   }

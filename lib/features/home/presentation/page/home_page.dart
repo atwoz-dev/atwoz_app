@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
@@ -23,6 +24,12 @@ class HomePage extends ConsumerStatefulWidget {
 
 class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
   HomePageState() : super(isAppBar: false, isHorizontalMargin: false);
+
+  @override
+  void initState() {
+    ref.read(globalNotifierProvider.notifier).initialize();
+    super.initState();
+  }
 
   @override
   Widget buildPage(BuildContext context) {

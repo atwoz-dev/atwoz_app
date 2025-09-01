@@ -17,9 +17,9 @@ class InterviewPage extends ConsumerStatefulWidget {
 class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   InterviewPageState()
       : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-        );
+    isAppBar: false,
+    isHorizontalMargin: false,
+  );
   bool _isBannerVisible = true;
   int _currentTabIndex = 0;
 
@@ -31,7 +31,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
+    EdgeInsets.symmetric(horizontal: horizontalPadding);
     final double tagSpacing = 16;
 
     return Padding(
@@ -48,7 +48,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
               children: [
                 Text('나를 소개해볼까요?',
                     style:
-                        Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
+                    Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
                 const Gap(8),
                 Text(
                   '이성에게 보여 줄 인터뷰예요.',

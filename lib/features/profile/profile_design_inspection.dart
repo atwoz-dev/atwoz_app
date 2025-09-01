@@ -118,4 +118,3 @@ enum ProfileDesignInspectionType {
 ProfileDesignInspectionType? kDebugPageType;
 
 const targetUserId = 10;
-const myUserId = 11;
