@@ -31,7 +31,7 @@ class ProfilePreviewPage extends StatelessWidget {
                       left: 0,
                       right: 0,
                       child: Image.network(
-                        profile.profileImages[1]!.imageUrl,
+                        profile.profileImages[0]!.imageUrl,
                         fit: BoxFit.cover,
                         height: context.screenHeight * 0.5,
                       ),
