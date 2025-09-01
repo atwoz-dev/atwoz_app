@@ -52,11 +52,11 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                       HomeCategoryButtonsArea(
                         // 카테고리 버튼 영역
                         onTapButton: (category) async {
-                          final isNotEmptyList =
+                          final hasProfiles =
                               await homeNotifier.checkIntroducedProfiles(
                             IntroducedCategory.parse(category),
                           );
-                          if (!isNotEmptyList) {
+                          if (!hasProfiles) {
                             showToastMessage(
                               '조건에 맞는 이성을 찾지 못했어요',
                               gravity: ToastGravity.TOP,
@@ -85,10 +85,13 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                   ),
                 ),
               ),
-              if (data.isCheckingIntroducedProfiles)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              if (data.isCheckingIntroducedProfiles) ...[
+                const ModalBarrier(
+                  dismissible: false,
+                  color: Colors.transparent,
+                ), // 로딩 시 배경 클릭 방지
+                const Center(child: CircularProgressIndicator()),
+              ],
             ],
           ),
           error: (error, stackTrace) => const SizedBox.shrink(),

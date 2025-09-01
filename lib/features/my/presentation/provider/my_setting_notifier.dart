@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';

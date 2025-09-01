@@ -4,6 +4,7 @@ import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/profile_sub_information.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePreviewPage extends StatelessWidget {
   final MyProfile profile;
@@ -64,7 +65,7 @@ class ProfilePreviewPage extends StatelessWidget {
                       left: 8,
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back_ios),
-                        onPressed: () {},
+                        onPressed: context.pop,
                         color: Palette.colorBlack,
                       ),
                     ),

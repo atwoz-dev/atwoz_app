@@ -15,21 +15,33 @@ class FetchIntroducedProfilesUseCase {
   /// 소개받고 싶은 이성 화면에서 조회되는 메서드
   /// 즉, 빈 리스트인 경우는 존재하지 않음
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
-    final box = await Hive.openBox(IntroducedProfileDto.boxName);
-    final categoryKey = category.name;
+    try {
+      final box = await Hive.openBox(IntroducedProfileDto.boxName);
+      final categoryKey = category.name;
 
-    final data = await box.get(categoryKey) as Map<String, dynamic>;
+      final data = await box.get(categoryKey) as Map<String, dynamic>?;
 
-    return (data['profiles'] as List<IntroducedProfileDto>).map(
-      (dto) {
-        final tags = [
-          ...dto.hobbies.map((e) => Hobby.parse(e).label),
-          dto.mbti,
-          if (dto.religion != null) Religion.parse(dto.religion).label
-        ].whereType<String>().toList()
-          ..sort((a, b) => a.length.compareTo(b.length));
-        return dto.toIntroducedProfile(tags);
-      },
-    ).toList();
+      if (data is! Map<String, dynamic> ||
+          data['profiles'] == null ||
+          data['profiles'] is! List<IntroducedProfileDto>) {
+        throw const FormatException(
+          'Invalid data format in Hive box for IntroducedProfileDto',
+        );
+      }
+
+      return (data['profiles'] as List<IntroducedProfileDto>).map(
+        (dto) {
+          final tags = [
+            ...dto.hobbies.map((e) => Hobby.parse(e).label),
+            dto.mbti,
+            if (dto.religion != null) Religion.parse(dto.religion).label
+          ].whereType<String>().toList()
+            ..sort((a, b) => a.length.compareTo(b.length));
+          return dto.toIntroducedProfile(tags);
+        },
+      ).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

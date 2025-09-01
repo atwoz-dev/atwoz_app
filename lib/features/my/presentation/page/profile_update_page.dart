@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
 import 'package:flutter/material.dart';
@@ -64,6 +65,8 @@ class ProfileUpdatePage extends ConsumerWidget {
                           profileType: profileType,
                           profile: state.profile,
                           onProfileUpdated: (selectedValue, isChanged) {
+                            Log.d(
+                                'Selected Value: $selectedValue, isChanged: $isChanged');
                             profileManageNotifier.updateProfile(
                               profile: selectedValue,
                               isChanged: isChanged,

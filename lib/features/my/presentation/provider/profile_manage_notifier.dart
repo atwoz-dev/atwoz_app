@@ -34,23 +34,26 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
   }
 
   Future<String> setCurrentLocation() async {
-    final location =
-        await ref.read(getCurrentLocationUseCaseProvider).execute();
+    try {
+      final location =
+          await ref.read(getCurrentLocationUseCaseProvider).execute();
 
-    Log.d('현재 위치: $location');
+      if (!state.hasValue) return "";
 
-    if (!state.hasValue) return "";
+      final updatedProfile = state.requireValue.profile.copyWith(
+        region: location,
+      );
 
-    final updatedProfile = state.requireValue.profile.copyWith(
-      region: location,
-    );
+      updateProfile(
+        profile: updatedProfile,
+        isChanged: state.requireValue.isValidLocation(location),
+      );
 
-    updateProfile(
-      profile: updatedProfile,
-      isChanged: state.requireValue.isValidLocation(location),
-    );
-
-    return location;
+      return location;
+    } catch (e) {
+      Log.e('위치 정보를 가져오는 데 실패했습니다: $e');
+      return '';
+    }
   }
 
   void updateProfile({
@@ -73,6 +76,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     if (state.value?.updatedProfile == null) return false;
 
     try {
+      Log.d('프로필 저장 시작: ${state.value!.updatedProfile}');
       // 서버에 프로필 업데이트 요청
       final success = await ref
           .read(updateMyProfileUseCaseProvider)
@@ -82,8 +86,9 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
         return false;
       }
 
-      // Hive에 프로필 저장
-      await profileNotifier.fetchProfileToHiveFromServer();
+      // 프로필 Hive 재저장 및 글로벌 상태 갱신
+      profileNotifier.profile =
+          await profileNotifier.fetchProfileToHiveFromServer();
 
       // 상태 초기화
       state = AsyncData(

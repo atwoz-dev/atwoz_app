@@ -13,19 +13,14 @@ part 'home_notifier.g.dart'; // 코드 생성을 위한 부분
 class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
-    try {
-      const initialState = HomeState();
+    const initialState = HomeState();
 
-      // 추천 프로필 가져오기
-      final profiles =
-          await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+    // 추천 프로필 가져오기
+    final profiles =
+        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
 
-      // 최종 상태 반환
-      return initialState.copyWith(recommendedProfiles: profiles);
-    } catch (e, stackTrace) {
-      state = AsyncError(e, stackTrace);
-      rethrow;
-    }
+    // 최종 상태 반환
+    return initialState.copyWith(recommendedProfiles: profiles);
   }
 
   /// 좋아요 설정
@@ -61,12 +56,15 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {
-    // 로딩 시작
-    if (state.hasValue) {
-      state = AsyncData(
-        state.requireValue.copyWith(isCheckingIntroducedProfiles: true),
-      );
+    // 재진입 방지
+    if (state.hasValue && state.requireValue.isCheckingIntroducedProfiles) {
+      return false;
     }
+
+    // 로딩 시작
+    state = state.whenData(
+      (s) => s.copyWith(isCheckingIntroducedProfiles: true),
+    );
 
     try {
       // 프로필 데이터 로드
@@ -74,12 +72,9 @@ class HomeNotifier extends _$HomeNotifier {
           .read(saveIntroducedProfilesUseCaseProvider)
           .execute(category);
 
-      // 로딩 완료
-      if (state.hasValue) {
-        state = AsyncData(
-          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
-        );
-      }
+      state = state.whenData(
+        (s) => s.copyWith(isCheckingIntroducedProfiles: false),
+      );
 
       Log.e('소개 프로필 확인 성공: $profiles');
 
@@ -88,11 +83,9 @@ class HomeNotifier extends _$HomeNotifier {
       Log.e('소개 프로필 확인 실패: $e');
 
       // 에러 발생 시에도 로딩 플래그 해제
-      if (state.hasValue) {
-        state = AsyncData(
-          state.requireValue.copyWith(isCheckingIntroducedProfiles: false),
-        );
-      }
+      state = state.whenData(
+        (s) => s.copyWith(isCheckingIntroducedProfiles: false),
+      );
 
       return false;
     }

@@ -43,7 +43,9 @@ class _MyProfileImageUpdatePageState
 
   @override
   Widget build(BuildContext context) {
-    final profileImageUpdateProvider = ref.watch(
+    final imageUpdateState =
+        ref.watch(profileImageUpdateNotifierProvider(widget.profileImages));
+    final imageUpdateNotifier = ref.read(
         profileImageUpdateNotifierProvider(widget.profileImages).notifier);
     final photos = ref.watch(photoProvider);
 
@@ -223,12 +225,12 @@ class _MyProfileImageUpdatePageState
               left: 20,
               right: 20,
               child: DefaultElevatedButton(
-                primary: profileImageUpdateProvider.isSaveEnabled
+                primary: imageUpdateState.isSaveEnabled
                     ? Palette.colorPrimary500
                     : Palette.colorGrey200,
-                onPressed: profileImageUpdateProvider.isSaveEnabled
+                onPressed: imageUpdateState.isSaveEnabled
                     ? () async {
-                        if (await profileImageUpdateProvider.save() &&
+                        if (await imageUpdateNotifier.save() &&
                             context.mounted) {
                           pop(context);
                         }
@@ -237,7 +239,7 @@ class _MyProfileImageUpdatePageState
                 child: Text(
                   '저장',
                   style: Fonts.body01Medium(
-                    profileImageUpdateProvider.isSaveEnabled
+                    imageUpdateState.isSaveEnabled
                         ? context.palette.onPrimary
                         : Palette.colorGrey300,
                   ).copyWith(fontWeight: FontWeight.w900),

@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,6 +56,7 @@ class _ProfileUpdateInfoSelectorState
         onSelected: (value) {
           _tempProfile.value =
               _tempProfile.value.copyWith(job: Job.fromLabel(value));
+          Log.d(_tempProfile);
           widget.onProfileUpdated(
               _tempProfile.value, value != widget.profile.job.label);
         },
@@ -215,6 +217,7 @@ class _SingleButtonTypeSelectorState extends State<_SingleButtonTypeSelector> {
       options: widget.options,
       selectedOption: widget.options[_selectedIndex],
       onSelectionChanged: (value) {
+        Log.d('Selected value: $value');
         if (value != null) {
           setState(() {
             _selectedIndex = widget.options.indexOf(value); // 선택된 인덱스 업데이트
@@ -480,7 +483,9 @@ class _LocationInputWidgetState extends ConsumerState<_LocationInputWidget> {
         TextField(
           controller: _controller,
           onChanged: (value) {
-            _filteredLocations = addressData.searchLocations(value);
+            setState(() {
+              _filteredLocations = addressData.searchLocations(value);
+            });
             profileManageProvider.updateLocation(value);
           },
           decoration: InputDecoration(

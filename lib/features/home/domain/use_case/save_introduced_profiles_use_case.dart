@@ -21,8 +21,6 @@ class SaveIntroducedProfilesUseCase {
       final box = await Hive.openBox(IntroducedProfileDto.boxName);
       final categoryKey = category.name;
 
-      await box.delete(categoryKey);
-
       final cachedProfiles = _getValidCachedProfiles(box, categoryKey);
       if (cachedProfiles != null) return cachedProfiles;
 

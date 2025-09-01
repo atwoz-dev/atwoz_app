@@ -17,10 +17,15 @@ part 'introduced_profiles_notifier.g.dart';
 class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   @override
   Future<List<IntroducedProfile>> build(IntroducedCategory category) async {
-    final profiles =
-        await ref.watch(fetchIntroducedProfilesUseCase).execute(category);
+    try {
+      final profiles =
+          await ref.watch(fetchIntroducedProfilesUseCase).execute(category);
 
-    return profiles;
+      return profiles;
+    } catch (e) {
+      Log.e('소개 프로필 조회 실패: $e');
+      return [];
+    }
   }
 
   /// 프로필 소개받기

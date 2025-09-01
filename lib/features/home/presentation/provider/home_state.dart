@@ -7,6 +7,6 @@ part 'home_state.freezed.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     List<IntroducedProfile>? recommendedProfiles,
-    @Default(false) isCheckingIntroducedProfiles,
+    @Default(false) bool isCheckingIntroducedProfiles,
   }) = _HomeState;
 }

@@ -1,5 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';

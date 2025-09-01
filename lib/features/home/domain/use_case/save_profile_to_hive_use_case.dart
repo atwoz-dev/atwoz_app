@@ -27,7 +27,7 @@ class SaveProfileToHiveUseCase {
     try {
       final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
 
-      final globalUserProfile =
+      final cachedUserProfile =
           homeProfileDto.toCachedUserProfile(); // Hive에 저장할 프로필
 
       Box<CachedUserProfile> box; // Hive Box 가져오기
@@ -43,7 +43,7 @@ class SaveProfileToHiveUseCase {
         );
       }
 
-      await box.put('profile', globalUserProfile); // Hive에 저장
+      await box.put('profile', cachedUserProfile); // Hive에 저장
 
       // SecureStorage 저장
 

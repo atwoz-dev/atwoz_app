@@ -28,14 +28,14 @@ class GlobalNotifier extends _$GlobalNotifier {
       return;
     }
 
-    await FirebaseManager().initialize();
-
-    final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
-    if (accessToken?.isEmpty ?? true) {
-      return;
-    }
-
     try {
+      await FirebaseManager().initialize();
+
+      final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
+      if (accessToken?.isEmpty ?? true) {
+        return;
+      }
+
       CachedUserProfile profile = await getProfileFromHive();
 
       if (profile.isDefault) {
