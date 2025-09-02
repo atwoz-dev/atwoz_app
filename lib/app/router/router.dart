@@ -30,8 +30,7 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
-import 'package:atwoz_app/features/store/presentation/page/heart_history_page.dart';
-import 'package:atwoz_app/features/store/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -225,10 +224,6 @@ final allRoutes = [
         name: AppRoute.store.name,
         builder: (context, state) => const StorePage(),
         routes: [
-          NamedGoRoute(
-            name: AppRoute.storeNavigation.name,
-            builder: (context, state) => const StoreNavigationPage(),
-          ),
           NamedGoRoute(
             name: AppRoute.heartHistory.name,
             builder: (context, state) => const HeartHistoryPage(),

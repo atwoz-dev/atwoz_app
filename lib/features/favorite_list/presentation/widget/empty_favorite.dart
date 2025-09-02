@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -32,7 +33,13 @@ class EmptyFavorite extends StatelessWidget {
         const Gap(22.0),
         DefaultOutlinedButton(
           child: Text(_buttonLabel),
-          onPressed: () {},
+          onPressed: () => switch (type) {
+            FavoriteTabType.received => navigate(
+                context,
+                route: AppRoute.signUpProfileUpdate,
+              ),
+            FavoriteTabType.sent => '프로필 살펴보기',
+          },
         ),
       ],
     );
