@@ -57,7 +57,6 @@ class GlobalUserProfileNotifier extends _$GlobalUserProfileNotifier {
     }
     try {
       state = await fetchProfileToHiveFromServer();
-      await ref.read(authUsecaseProvider).initializeFcmToken();
     } catch (e) {
       Log.e('Failed to fetch profile from server: $e');
     }

@@ -43,7 +43,7 @@ class TokenInterceptor extends Interceptor with LogMixin {
       final newToken = await authService.getAccessToken();
 
       authService.setAccessToken('');
-      router.go('/auth');
+      router.go('/');
     }
 
     super.onError(err, handler);

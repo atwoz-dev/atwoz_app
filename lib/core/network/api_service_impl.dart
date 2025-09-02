@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/network/logging_interceptor.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
@@ -67,6 +68,7 @@ class ApiServiceImpl implements ApiService {
         ),
         [
           if (enableAuth) TokenInterceptor(ref),
+          LoggingInterceptor(),
           CookieManager(_cookieJar),
         ],
       );

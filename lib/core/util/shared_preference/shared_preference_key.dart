@@ -18,9 +18,4 @@ class SharedPreferenceKeys {
     'notificationAllowed',
     defaultValue: false,
   );
-
-  static const fcmToken = SharedPreferencePrimitiveKey<String>(
-    'fcmToken',
-    defaultValue: '',
-  );
 }
