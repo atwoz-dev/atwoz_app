@@ -103,7 +103,10 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
             color: Palette.colorGrey100.withAlpha(100),
             borderRadius: Dimens.buttonRadius,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 15,
+          ),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 60),
             child: Column(
