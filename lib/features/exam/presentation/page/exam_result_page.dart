@@ -63,6 +63,9 @@ class ExamResultPageState extends ConsumerState<ExamResultPage> {
                       ref
                           .read(examNotifierProvider.notifier)
                           .resetCurrentSubjectIndex(),
+                      ref
+                          .read(examNotifierProvider.notifier)
+                          .fetchOptionalQuestionList(),
                       navigate(
                         context,
                         route: AppRoute.examQuestion,

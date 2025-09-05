@@ -30,8 +30,6 @@ class ExamQuestionPageState
   PageController _pageController = PageController();
 
   Map<int, int> _currentAnswerList = {};
-  Map<int, int> _requiredAnswerList = {};
-  Map<int, int> _optionalAnswerList = {};
 
   int _currentPage = 0;
 
@@ -53,42 +51,6 @@ class ExamQuestionPageState
         });
       }
     });
-  }
-
-  Map<String, dynamic> buildFinalPayload({
-    required bool isRequired,
-  }) {
-    final Map<int, int> answerList =
-        isRequired ? _requiredAnswerList : _optionalAnswerList;
-
-    final List<Map<String, dynamic>> subjects = [];
-
-    for (final subject in _subjectList) {
-      final List<Map<String, dynamic>> answers = [];
-
-      for (final question in subject.questions) {
-        final questionId = question.id;
-        final answerId = answerList[questionId];
-
-        if (answerId != null) {
-          answers.add({
-            "questionId": questionId,
-            "answerId": answerId,
-          });
-        }
-      }
-
-      if (answers.isNotEmpty) {
-        subjects.add({
-          "subjectId": subject.id,
-          "answers": answers,
-        });
-      }
-    }
-
-    return {
-      "subjects": subjects,
-    };
   }
 
   void _resetAnswer() {
@@ -150,10 +112,14 @@ class ExamQuestionPageState
   }
 
   void _submit() {
-    final payloadMap = buildFinalPayload(isRequired: true);
-    final payload = ExamAnswerRequest.fromJson(payloadMap);
-    print(payload);
-    //ref.read(examNotifierProvider.notifier).createRequiredAnswerList(payload);
+    final state = ref.watch(examNotifierProvider);
+    final payload = ExamAnswerRequest.fromJson(
+      ref
+          .read(examNotifierProvider.notifier)
+          .buildFinalPayload(state, isRequired: true),
+    );
+
+    ref.read(examNotifierProvider.notifier).createRequiredAnswerList(payload);
 
     navigate(
       context,
@@ -249,11 +215,17 @@ class ExamQuestionPageState
                                   setState(() {
                                     _currentAnswerList[question.id] = id;
                                     if (examState.isRequired) {
-                                      _requiredAnswerList[question.id] = id;
+                                      ref
+                                          .read(examNotifierProvider.notifier)
+                                          .setRequiredAnswerList(
+                                              question.id, id);
                                     }
 
                                     if (!examState.isRequired) {
-                                      _optionalAnswerList[question.id] = id;
+                                      ref
+                                          .read(examNotifierProvider.notifier)
+                                          .setOptionalAnswerList(
+                                              question.id, id);
                                     }
                                   });
 

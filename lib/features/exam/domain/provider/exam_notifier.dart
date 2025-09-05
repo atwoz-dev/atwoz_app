@@ -13,12 +13,25 @@ part 'exam_notifier.g.dart';
 class ExamNotifier extends _$ExamNotifier {
   @override
   ExamState build() {
-    //_fetchRequiredQuestionList();
     return ExamState.initial();
   }
 
   void setOptional(bool isRequired) {
     state = state.copyWith(isRequired: isRequired);
+  }
+
+  void setRequiredAnswerList(int questionId, int answerId) {
+    final updatedMap = Map<int, int>.from(state.requiredAnswerList)
+      ..[questionId] = answerId;
+
+    state = state.copyWith(requiredAnswerList: updatedMap);
+  }
+
+  void setOptionalAnswerList(int questionId, int answerId) {
+    final updatedMap = Map<int, int>.from(state.optionalAnswerList)
+      ..[questionId] = answerId;
+
+    state = state.copyWith(optionalAnswerList: updatedMap);
   }
 
   void setExamDone() {
@@ -35,6 +48,47 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(currentSubjectIndex: 0);
   }
 
+  Map<String, dynamic> buildFinalPayload(
+    ExamState state, {
+    required bool isRequired,
+  }) {
+    final answerList =
+        isRequired ? state.requiredAnswerList : state.optionalAnswerList;
+
+    final subjectList = state.questionList.questionList;
+
+    print('subjectList: ${subjectList}');
+
+    final List<Map<String, dynamic>> subjects = [];
+
+    for (final subject in subjectList) {
+      final List<Map<String, dynamic>> answers = [];
+
+      for (final question in subject.questions) {
+        final questionId = question.id;
+        final answerId = answerList[questionId];
+
+        if (answerId != null) {
+          answers.add({
+            "questionId": questionId,
+            "answerId": answerId,
+          });
+        }
+      }
+
+      if (answers.isNotEmpty) {
+        subjects.add({
+          "subjectId": subject.id,
+          "answers": answers,
+        });
+      }
+    }
+
+    return {
+      "subjects": subjects,
+    };
+  }
+
   Future<void> fetchRequiredQuestionList() async {
     if (state.isRequiredDataLoaded) return;
 
@@ -45,6 +99,7 @@ class ExamNotifier extends _$ExamNotifier {
         questionList: QuestionData(questionList: requiredQuestionList),
         isLoaded: true,
         isRequiredDataLoaded: true,
+        currentSubjectIndex: 0,
         error: null,
       );
     } catch (e) {
