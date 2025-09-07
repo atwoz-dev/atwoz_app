@@ -13,14 +13,12 @@ part 'home_notifier.g.dart'; // 코드 생성을 위한 부분
 class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
-    const initialState = HomeState();
-
     // 추천 프로필 가져오기
     final profiles =
         await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
 
     // 최종 상태 반환
-    return initialState.copyWith(recommendedProfiles: profiles);
+    return HomeState(recommendedProfiles: profiles);
   }
 
   /// 좋아요 설정

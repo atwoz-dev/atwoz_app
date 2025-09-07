@@ -19,13 +19,6 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
     );
   }
 
-  // bool get isSaveEnabled => state.editableProfileImages.any(
-  //       (image) =>
-  //           image?.status == ProfileImageStatus.add ||
-  //           image?.status == ProfileImageStatus.update ||
-  //           image?.status == ProfileImageStatus.delete,
-  //     );
-
   void updateEditableProfileImage({required int index, required XFile image}) {
     final updatedImages = [...state.editableProfileImages];
 

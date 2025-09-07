@@ -28,7 +28,7 @@ class SaveIntroducedProfilesUseCase {
       final profileDtos = await _fetchProfilesFromServer(categoryKey);
       await _saveProfilesToCache(box, categoryKey, profileDtos);
 
-      return _getIntroducedProfiles(profileDtos);
+      return getIntroducedProfiles(profileDtos);
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
       throw Exception();
@@ -38,15 +38,21 @@ class SaveIntroducedProfilesUseCase {
   /// 캐시에서 유효한 IntroducedProfile 리스트를 꺼냄, 만료 시 null 반환
   List<IntroducedProfile>? _getValidCachedProfiles(Box box, String key) {
     final data = box.get(key);
-    if (data is Map &&
-        data['profiles'] is List<IntroducedProfileDto> &&
-        data['expiresAt'] is DateTime) {
-      final expiresAt = data['expiresAt'] as DateTime;
-      if (DateTime.now().isBefore(expiresAt)) {
-        final dtos = data['profiles'] as List<IntroducedProfileDto>;
-        return _getIntroducedProfiles(dtos);
-      }
+
+    final profiles = data['profiles'];
+    final expiresAt = data['expiresAt'];
+
+    if (data is! Map ||
+        profiles is! List<IntroducedProfileDto> ||
+        expiresAt is! DateTime) {
+      return null;
     }
+
+    if (DateTime.now().isBefore(expiresAt)) {
+      final profileDtos = data['profiles'];
+      return getIntroducedProfiles(profileDtos);
+    }
+
     return null;
   }
 
@@ -63,20 +69,30 @@ class SaveIntroducedProfilesUseCase {
       'expiresAt': DateTime.now().add(const Duration(hours: 1)),
     });
   }
+}
 
-  /// Dto -> 도메인 객체로 변환 + 해시태그 필터/정렬
-  List<IntroducedProfile> _getIntroducedProfiles(
-      List<IntroducedProfileDto> dtos) {
-    return dtos.map(
-      (dto) {
-        final tags = [
-          ...dto.hobbies.map((e) => Hobby.parse(e).label),
-          dto.mbti,
-          if (dto.religion != null) Religion.parse(dto.religion).label
-        ].whereType<String>().toList()
-          ..sort((a, b) => a.length.compareTo(b.length));
-        return dto.toIntroducedProfile(tags);
-      },
-    ).toList();
-  }
+/// Dto -> 도메인 객체로 변환 + 해시태그 필터/정렬
+List<IntroducedProfile> getIntroducedProfiles(
+    List<IntroducedProfileDto> profileDtos) {
+  return profileDtos.map(
+    (profile) {
+      final hobbyLabels =
+          profile.hobbies.map((e) => Hobby.parse(e)); // 취미 해시태크 리스트
+      final mbtiLabel = profile.mbti; // MBTI 해시태그
+      final religionLabel = profile.religion != null
+          ? Religion.parse(profile.religion)
+          : null; // 종교 해시태그(존재하는 경우에만)
+
+      final tags = [hobbyLabels, mbtiLabel, religionLabel]
+          .whereType<String>()
+          .toList(); // null 제거
+
+      final sortedTags = tags
+        ..sort(
+          (a, b) => a.length.compareTo(b.length),
+        ); // 텍스트 길이순 오름차순
+
+      return profile.toIntroducedProfile(sortedTags); // dto -> 모델 변환
+    },
+  ).toList();
 }
