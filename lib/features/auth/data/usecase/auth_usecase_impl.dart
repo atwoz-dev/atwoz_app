@@ -50,7 +50,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
       final success = await _registerDeviceToServer();
       if(!success) {
-        _localStorage.saveEncrypted(_accessToken, '');
+        await _localStorage.saveEncrypted(_accessToken, '');
         throw Exception('device registration failed: clear user token');
       }
       return userResponse;
