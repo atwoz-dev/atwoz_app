@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +40,8 @@ class _AppState extends ConsumerState<App> {
   Future<void> _initialize() async {
     final router = ref.read(routerProvider);
 
-    await ref.read(globalUserProfileNotifierProvider.notifier).initialize();
-    if (ref.read(globalUserProfileNotifierProvider).isDefault) {
+    await ref.read(globalNotifierProvider.notifier).initialize();
+    if (ref.read(globalNotifierProvider).profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
     } else {
       router.goNamed(AppRoute.mainTab.name);

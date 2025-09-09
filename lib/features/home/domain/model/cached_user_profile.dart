@@ -3,15 +3,15 @@ import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-part 'global_user_profile.freezed.dart';
-part 'global_user_profile.g.dart';
+part 'cached_user_profile.freezed.dart';
+part 'cached_user_profile.g.dart';
 
 @freezed
-@HiveType(typeId: 3, adapterName: 'GlobalUserProfileAdapter')
-class GlobalUserProfile with _$GlobalUserProfile {
-  const GlobalUserProfile._(); // for custom getters
+@HiveType(typeId: 3, adapterName: 'CachedUserProfileAdapter')
+class CachedUserProfile with _$CachedUserProfile {
+  const CachedUserProfile._(); // for custom getters
 
-  const factory GlobalUserProfile({
+  const factory CachedUserProfile({
     // statusInfo
     @HiveField(0) required String activityStatus,
     @HiveField(1) required bool isVip,
@@ -39,20 +39,20 @@ class GlobalUserProfile with _$GlobalUserProfile {
     // interviewInfo
     @HiveField(18) required List<InterviewInfo> interviewInfoView,
     @HiveField(19) @Default(0) int myUserId,
-  }) = _GlobalUserProfile;
+  }) = _CachedUserProfile;
 
-  factory GlobalUserProfile.fromJson(Map<String, dynamic> json) =>
-      _$GlobalUserProfileFromJson(json);
+  factory CachedUserProfile.fromJson(Map<String, dynamic> json) =>
+      _$CachedUserProfileFromJson(json);
 
   bool get hasInterview =>
       interviewInfoView.isNotEmpty &&
       interviewInfoView.any((i) => i.title.isNotEmpty || i.content.isNotEmpty);
 
-  static String get boxName => 'GlobalUserProfile';
+  static String get boxName => 'CachedUserProfile';
 
-  factory GlobalUserProfile.init() => _default;
+  factory CachedUserProfile.init() => _default;
 
-  static const _default = GlobalUserProfile(
+  static const _default = CachedUserProfile(
     activityStatus: '',
     isVip: false,
     nickname: '',

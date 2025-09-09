@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
@@ -10,7 +9,6 @@ import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class UserByCategoryPage extends ConsumerStatefulWidget {
   final IntroducedCategory category;
@@ -27,15 +25,12 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
         ref.watch(introducedProfilesNotifierProvider(widget.category));
     final introducedProfilesNotifier =
         ref.read(introducedProfilesNotifierProvider(widget.category).notifier);
-    final userProfile = ref.watch(globalUserProfileNotifierProvider);
+    final userProfile = ref.watch(globalNotifierProvider).profile;
 
     return Scaffold(
       appBar: DefaultAppBar(title: widget.category.label),
       body: introducedProfilesAsync.when(
         data: (profiles) {
-          if (profiles.isEmpty) {
-            return const _EmptyIntroducedListView();
-          }
           return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             itemCount: profiles.length,
@@ -130,51 +125,6 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
       context,
       route: AppRoute.profile,
       extra: ProfileDetailArguments(userId: profile.memberId),
-    );
-  }
-}
-
-class _EmptyIntroducedListView extends StatelessWidget {
-  const _EmptyIntroducedListView();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const DefaultIcon(
-            IconPath.sadEmotion,
-            size: 48,
-          ),
-          const Gap(8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '조건에 맞는 이성을 찾지 못했어요\n대신, 직접 자신을 소개한 분들을 확인해보시겠어요?',
-                textAlign: TextAlign.center,
-                style: Fonts.body02Medium().copyWith(
-                  color: Palette.colorBlack,
-                  fontWeight: FontWeight.w400,
-                  height: 1.5,
-                ),
-              ),
-            ],
-          ),
-          const Gap(32),
-          DefaultOutlinedButton(
-            onPressed: context.pop,
-            textColor: Palette.colorPrimary500,
-            textStyle: Fonts.body01Medium().copyWith(
-              fontWeight: FontWeight.w500,
-            ),
-            child: const Text(
-              '셀프소개 보러 가기',
-            ),
-          )
-        ],
-      ),
     );
   }
 }
