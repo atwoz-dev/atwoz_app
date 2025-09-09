@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-// TODO: API 연결 후 하드코딩(닉네임) 빼기
-// 신고하기 API 연결
 class ReportPage extends ConsumerStatefulWidget {
   final String name;
   final int userId;
@@ -158,6 +156,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                   ? palette.primary
                   : Palette.colorGrey200,
               onPressed: () async {
+                if (reportState.reason == null) return;
                 if (await reportNotifier.report(widget.userId) &&
                     context.mounted) {
                   navigate(context, route: AppRoute.mainTab);

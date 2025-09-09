@@ -25,13 +25,13 @@ class ReportNotifier extends _$ReportNotifier {
   }
 
   void sendReport(Report report) {
-    ref.read(sendReportUseCaseProvider).extecute(report);
+    ref.read(sendReportUseCaseProvider).execute(report);
   }
 
   Future<bool> report(int userId) async {
     state = state.copyWith(reporteeId: userId);
     try {
-      await ref.read(sendReportUseCaseProvider).extecute(state);
+      await ref.read(sendReportUseCaseProvider).execute(state);
       return true;
     } catch (e) {
       return false;
