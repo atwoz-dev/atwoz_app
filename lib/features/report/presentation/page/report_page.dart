@@ -5,7 +5,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/outlined_dropdown.dart';
-import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
 import 'package:atwoz_app/features/report/presentation/provider/report_notifier.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +32,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
           isResizeToAvoidBottomInset: false,
           horizontalMargin: 20,
         );
-  String? selectedReportType;
-  final List<String> reportTypes =
-      ReportReason.values.map((e) => e.label).toList();
+
   final TextEditingController reportContentController = TextEditingController();
 
   @override
@@ -71,17 +68,12 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                     .copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
-              OutlinedDropdown<String>(
-                placeholder: '신고 유형을 선택해주세요.',
-                items: reportTypes,
-                selectedItem: selectedReportType,
-                onItemSelected: (item) {
-                  safeSetState(() {
-                    selectedReportType = item;
-                    reportNotifier.reason = item;
-                  });
-                },
-                valueBuilder: (item) => item,
+              OutlinedDropdown<ReportReason>(
+                placeholder: '신고 유형을 선택해주세요.', items: ReportReason.values,
+                selectedItem: reportState.reason, // 단일 소스
+                onItemSelected: (reason) =>
+                    reportNotifier.reason = reason.label,
+                valueBuilder: (reason) => reason.label,
               ),
               const Gap(30),
               Text(
@@ -140,10 +132,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
             DefaultElevatedButton(
               border: const BorderSide(color: Color(0xffE1E1E1)),
               primary: Colors.white,
-              onPressed: () {
-                Log.d('신고 유형: $selectedReportType');
-                Log.d('신고 내용: ${reportContentController.text}');
-              },
+              onPressed: () {},
               child: Text(
                 '차단하기',
                 style: Fonts.body01Medium(const Color(0xff7E7E7E))
