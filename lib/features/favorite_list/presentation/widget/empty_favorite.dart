@@ -37,8 +37,10 @@ class EmptyFavorite extends StatelessWidget {
             switch (type) {
               case FavoriteTabType.received:
                 navigate(context, route: AppRoute.profileManage);
+                break;
               case FavoriteTabType.sent:
                 navigate(context, route: AppRoute.mainTab);
+                break;
             }
           },
         ),
