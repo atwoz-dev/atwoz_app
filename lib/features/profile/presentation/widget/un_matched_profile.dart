@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,11 +57,21 @@ class _ProfileHeadInformation extends ConsumerWidget {
           Positioned.fill(
             child: ProfileMainImage(profileUri: userInfo.profileUri),
           ),
-          ProfileAppbar(onBackButtonPressed: () {
-            final profile = ref.read(profileNotifierProvider(userId)).profile;
-            if (profile == null) return;
-            context.pop(profile);
-          }),
+          ProfileAppbar(
+            onBackButtonPressed: () {
+              final profile = ref.read(profileNotifierProvider(userId)).profile;
+              if (profile == null) return;
+              context.pop(profile);
+            },
+            onTapInfo: () => navigate(
+              context,
+              route: AppRoute.report,
+              extra: ReportArguments(
+                name: userInfo.name,
+                userId: userId,
+              ),
+            ),
+          ),
           Positioned(
             left: 0,
             bottom: 0,

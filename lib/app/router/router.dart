@@ -156,7 +156,16 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.report.name,
-        builder: (context, state) => const ReportPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! ReportArguments) {
+            return const SizedBox.shrink();
+          }
+          return ReportPage(
+            name: args.name,
+            userId: args.userId,
+          );
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceRegister.name,
