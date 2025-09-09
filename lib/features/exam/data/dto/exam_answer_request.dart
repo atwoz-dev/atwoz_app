@@ -4,16 +4,6 @@ part 'exam_answer_request.freezed.dart';
 part 'exam_answer_request.g.dart';
 
 @freezed
-class ExamAnswerRequest with _$ExamAnswerRequest {
-  const factory ExamAnswerRequest({
-    required List<SubjectAnswerItem> subjects,
-  }) = _ExamAnswerRequest;
-
-  factory ExamAnswerRequest.fromJson(Map<String, dynamic> json) =>
-      _$ExamAnswerRequestFromJson(json);
-}
-
-@freezed
 class SubjectAnswerItem with _$SubjectAnswerItem {
   const factory SubjectAnswerItem({
     required int subjectId,

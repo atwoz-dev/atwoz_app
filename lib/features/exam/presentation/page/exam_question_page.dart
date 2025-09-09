@@ -111,15 +111,19 @@ class ExamQuestionPageState
     });
   }
 
-  void _submit() {
-    final state = ref.watch(examNotifierProvider);
-    final payload = ExamAnswerRequest.fromJson(
-      ref
-          .read(examNotifierProvider.notifier)
-          .buildFinalPayload(state, isRequired: true),
+  void _submit() async {
+    final payload = SubjectAnswerItem.fromJson(
+      ref.read(examNotifierProvider.notifier).buildFinalPayload(
+            _currentAnswerList,
+            _currentSubjectIndex + 1,
+          ),
     );
 
-    ref.read(examNotifierProvider.notifier).createRequiredAnswerList(payload);
+    await ref
+        .read(examNotifierProvider.notifier)
+        .createSubmitAnswerList(payload);
+
+    await ref.read(examNotifierProvider.notifier).fetchSoulmateList();
 
     navigate(
       context,
@@ -214,19 +218,6 @@ class ExamQuestionPageState
                                 onTap: (int id) {
                                   setState(() {
                                     _currentAnswerList[question.id] = id;
-                                    if (examState.isRequired) {
-                                      ref
-                                          .read(examNotifierProvider.notifier)
-                                          .setRequiredAnswerList(
-                                              question.id, id);
-                                    }
-
-                                    if (!examState.isRequired) {
-                                      ref
-                                          .read(examNotifierProvider.notifier)
-                                          .setOptionalAnswerList(
-                                              question.id, id);
-                                    }
                                   });
 
                                   _nextStep();
