@@ -165,4 +165,10 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    reportContentController.dispose();
+    super.dispose();
+  }
 }
