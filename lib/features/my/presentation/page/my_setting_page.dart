@@ -6,11 +6,13 @@ import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MySettingPage extends StatelessWidget {
+class MySettingPage extends ConsumerWidget {
   const MySettingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mySettingAsync = ref.watch(mySettingNotifierProvider);
+
     return Scaffold(
       appBar: const DefaultAppBar(
         title: "설정",
@@ -26,7 +28,20 @@ class MySettingPage extends StatelessWidget {
             title: '계정 설정',
             onTapMove: () => navigate(context, route: AppRoute.accountSetting),
           ),
-          const _MySettingListItem(title: '버전 정보'),
+          mySettingAsync.when(
+            data: (data) => _MySettingListItem(
+              title: '앱 버전',
+              version: data.version,
+            ),
+            loading: () => const _MySettingListItem(
+              title: '앱 버전',
+              version: null,
+            ),
+            error: (error, stackTrace) => const _MySettingListItem(
+              title: '앱 버전',
+              version: null,
+            ),
+          ),
           _MySettingListItem(
             title: '연락처 설정',
             onTapMove: () => navigate(context, route: AppRoute.contactSetting),
@@ -49,18 +64,19 @@ class MySettingPage extends StatelessWidget {
   }
 }
 
-class _MySettingListItem extends ConsumerWidget {
+class _MySettingListItem extends StatelessWidget {
   final String title;
   final VoidCallback? onTapMove;
+  final String? version;
+
   const _MySettingListItem({
     required this.title,
     this.onTapMove,
+    this.version,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final mySettingAsync = ref.watch(mySettingNotifierProvider);
-
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -82,16 +98,12 @@ class _MySettingListItem extends ConsumerWidget {
           children: [
             Text(
               title,
-              style: Fonts.body02Medium().copyWith(
-                fontWeight: FontWeight.w500,
-                color: Palette.colorBlack,
-              ),
+              style: Fonts.body02Medium(Palette.colorBlack),
             ),
-            if (title == '버전 정보')
-              mySettingAsync.when(
-                data: (data) => Text("V${data.version}"),
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stackTrace) => const Text("버전 정보 없음"),
+            if (version != null)
+              Text(
+                "V$version",
+                style: Fonts.body02Medium(const Color(0xff9E9E9E)),
               )
             else
               const DefaultIcon(
