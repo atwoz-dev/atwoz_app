@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
@@ -137,8 +137,8 @@ class MySettingNotifier extends _$MySettingNotifier {
 
   Future<bool> activeAccount() async {
     try {
-      final phoneNumber =
-          ref.read(globalUserProfileNotifierProvider).phoneNumber;
+      final phoneNumber = ref.read(globalNotifierProvider).profile.phoneNumber;
+
       final accessToken = await ref
           .read(myProfileRepositoryProvider)
           .activeAccount(phoneNumber);
@@ -149,9 +149,7 @@ class MySettingNotifier extends _$MySettingNotifier {
       }
 
       ref.read(authUsecaseProvider).setAccessToken(accessToken);
-      await ref
-          .read(globalUserProfileNotifierProvider.notifier)
-          .initializeProfile();
+      await ref.read(globalNotifierProvider.notifier).initialize();
       return true;
     } catch (e) {
       Log.e('계정 활성화 실패: $e');

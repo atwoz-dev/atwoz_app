@@ -37,7 +37,7 @@ class ProfileSubInformation extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _Title(),
-          _SubInformationContainer(
+          SubInformationContainer(
             items: [
               SubInfoItem(
                 iconPath: IconPath.smoking,
@@ -90,8 +90,11 @@ class SubInfoItem {
   final String label;
 }
 
-class _SubInformationContainer extends StatelessWidget {
-  const _SubInformationContainer({required this.items});
+class SubInformationContainer extends StatelessWidget {
+  const SubInformationContainer({
+    super.key,
+    required this.items,
+  });
 
   final List<SubInfoItem> items;
 
