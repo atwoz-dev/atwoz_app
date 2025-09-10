@@ -12,13 +12,11 @@ final notificationRepositoryProvider = Provider<NotificationRepository>(
 );
 
 class NotificationRepository extends BaseRepository {
-  NotificationRepository(Ref ref) : super(ref, '/notifications');
+  NotificationRepository(Ref ref) : super(ref, '/notification-preferences');
 
   Future<List<ServerNotificationType>> loadEnableNotificationTypes() async {
     try {
-      final response = await apiService.getJson(
-        '$path/preferences',
-      );
+      final response = await apiService.getJson(path);
       final notificationPreferences = NotificationPreferencesDto.fromJson(
         response['data'] as Map<String, dynamic>,
       );
@@ -72,60 +70,13 @@ class NotificationRepository extends BaseRepository {
         ),
       );
 
-      await apiService.patchJson(
-        '$path/preferences',
+      await apiService.postJson(
+        path,
         data: {'preferences': serverPreferences},
       );
     } catch (e) {
-      Log.e('서버 알림 설정 동기화 실패: $e');
+      throw Exception('서버 알림 설정 동기화 실패: $e');
     }
-  }
-
-  Future<bool> enableNotificationType(ServerNotificationType type) async {
-    return await _updateNotificationType(type, true);
-  }
-
-  Future<bool> disableNotificationType(ServerNotificationType type) async {
-    return await _updateNotificationType(type, false);
-  }
-
-  Future<bool> _updateNotificationType(
-    ServerNotificationType type,
-    bool enabled,
-  ) async {
-    try {
-      await apiService.patchJson(
-        '$path/preferences',
-        data: {
-          'preferences': {type.key: enabled}
-        },
-      );
-
-      // SharedPreference 갱신
-      await _updateLocalNotificationType(type, enabled);
-
-      return true;
-    } catch (e) {
-      Log.e('알림 타입 ${enabled ? '허용' : '거부'} 실패: $e');
-      return false;
-    }
-  }
-
-  Future<void> _updateLocalNotificationType(
-    ServerNotificationType type,
-    bool enabled,
-  ) async {
-    final currentEnabledTypes = _localEnableNotificationTypes;
-
-    if (enabled) {
-      if (!currentEnabledTypes.contains(type)) {
-        currentEnabledTypes.add(type);
-      }
-    } else {
-      currentEnabledTypes.remove(type);
-    }
-
-    await _saveToLocal(currentEnabledTypes);
   }
 
   Future<void> enableAllNotifications() async {

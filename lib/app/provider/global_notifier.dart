@@ -43,7 +43,6 @@ class GlobalNotifier extends _$GlobalNotifier {
       }
 
       state = state.copyWith(profile: profile);
-      await ref.read(authUsecaseProvider).initializeFcmToken();
     } catch (e) {
       Log.e('Failed to initialize profile: $e');
     }
