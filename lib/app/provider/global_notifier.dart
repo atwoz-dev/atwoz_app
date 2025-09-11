@@ -39,6 +39,7 @@ class GlobalNotifier extends _$GlobalNotifier {
   // 서버에서 프로필 가져오고 Hive에 저장
   Future<CachedUserProfile> fetchProfileToHiveFromServer() async {
     await ref.read(saveProfileToHiveUseCaseProvider).execute();
+
     return await _getProfileFromHive();
   }
 

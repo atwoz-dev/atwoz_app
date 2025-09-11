@@ -6,10 +6,10 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/notification/notification_model.dart';
-import 'package:atwoz_app/features/my/data/dto/server_notification_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
@@ -42,29 +42,32 @@ class _AppState extends ConsumerState<App> {
   }
 
   @override
-  void dispose() {
-    FirebaseManager().removeMessageListener(_handleFcmNotification);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.trackpad,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown,
-        }),
-        themeMode: ThemeMode.light,
-        theme: createThemeData(Palette.lightScheme),
-        darkTheme: createThemeData(Palette.darkScheme),
-        routerConfig: ref.watch(routerProvider),
+      child: ValueListenableBuilder(
+        valueListenable: FirebaseManager().activeFcmNotification,
+        builder: (context, value, child) {
+          if(value != null) {
+            _handleFcmNotification(value);
+          }
+          return child ?? Container();
+        },
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.trackpad,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown,
+          }),
+          themeMode: ThemeMode.light,
+          theme: createThemeData(Palette.lightScheme),
+          darkTheme: createThemeData(Palette.darkScheme),
+          routerConfig: ref.watch(routerProvider),
+        ),
       ),
     );
   }
@@ -79,7 +82,6 @@ class _AppState extends ConsumerState<App> {
       router.goNamed(AppRoute.mainTab.name);
     }
 
-    FirebaseManager().addMessageListener(_handleFcmNotification);
     App.removeSplash();
   }
 
@@ -88,12 +90,11 @@ class _AppState extends ConsumerState<App> {
     if (!data.notificationType.isConnectedProfile) return;
     if (userId == null) {
       assert(false,
-          'notification type [${data.notificationType}] need to senderId');
+      'notification type [${data.notificationType}] need to senderId');
       return;
     }
-    navigate(
-      context,
-      route: AppRoute.profile,
+    rootNavigatorKey.currentContext?.goNamed(
+      AppRoute.profile.name,
       extra: ProfileDetailArguments(
         userId: userId,
       ),

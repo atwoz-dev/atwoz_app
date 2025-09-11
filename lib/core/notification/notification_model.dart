@@ -11,6 +11,7 @@ class FcmNotification {
     required this.notificationType,
   });
 
+  @JsonKey(fromJson: _dynamicToInteger)
   final int? senderId;
   final FcmSenderType senderType;
   @JsonKey(fromJson: ServerNotificationType.parse)
@@ -25,4 +26,10 @@ enum FcmSenderType {
   system,
   @JsonValue('MEMBER')
   member;
+}
+
+int? _dynamicToInteger(dynamic value) {
+  if (value is num) return value.toInt();
+  if (value is String) return int.tryParse(value);
+  return null;
 }
