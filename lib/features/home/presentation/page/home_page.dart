@@ -26,7 +26,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
 
   @override
   void initState() {
-    ref.read(globalNotifierProvider.notifier).initialize();
+    ref.read(globalNotifierProvider.notifier).initProfile();
     super.initState();
   }
 

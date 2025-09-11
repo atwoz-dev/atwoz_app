@@ -1,8 +1,12 @@
 import 'dart:ui';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
+import 'package:atwoz_app/core/notification/notification_model.dart';
+import 'package:atwoz_app/features/my/data/dto/server_notification_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,16 +41,10 @@ class _AppState extends ConsumerState<App> {
     _initialize();
   }
 
-  Future<void> _initialize() async {
-    final router = ref.read(routerProvider);
-
-    await ref.read(globalNotifierProvider.notifier).initialize();
-    if (ref.read(globalNotifierProvider).profile.isDefault) {
-      router.goNamed(AppRoute.onboard.name);
-    } else {
-      router.goNamed(AppRoute.mainTab.name);
-    }
-    App.removeSplash();
+  @override
+  void dispose() {
+    FirebaseManager().removeMessageListener(_handleFcmNotification);
+    super.dispose();
   }
 
   @override
@@ -67,6 +65,37 @@ class _AppState extends ConsumerState<App> {
         theme: createThemeData(Palette.lightScheme),
         darkTheme: createThemeData(Palette.darkScheme),
         routerConfig: ref.watch(routerProvider),
+      ),
+    );
+  }
+
+  Future<void> _initialize() async {
+    final router = ref.read(routerProvider);
+
+    await ref.read(globalNotifierProvider.notifier).initProfile();
+    if (ref.read(globalNotifierProvider).profile.isDefault) {
+      router.goNamed(AppRoute.onboard.name);
+    } else {
+      router.goNamed(AppRoute.mainTab.name);
+    }
+
+    FirebaseManager().addMessageListener(_handleFcmNotification);
+    App.removeSplash();
+  }
+
+  void _handleFcmNotification(FcmNotification data) {
+    final userId = data.senderId;
+    if (!data.notificationType.isConnectedProfile) return;
+    if (userId == null) {
+      assert(false,
+          'notification type [${data.notificationType}] need to senderId');
+      return;
+    }
+    navigate(
+      context,
+      route: AppRoute.profile,
+      extra: ProfileDetailArguments(
+        userId: userId,
       ),
     );
   }
