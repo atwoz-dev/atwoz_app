@@ -33,8 +33,6 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
           horizontalMargin: 20,
         );
 
-  final TextEditingController reportContentController = TextEditingController();
-
   @override
   Widget buildPage(BuildContext context) {
     final reportState = ref.watch(reportNotifierProvider(widget.userId));
@@ -91,7 +89,6 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                     width: 2.0,
                   ),
                 ),
-                controller: reportContentController,
                 onChanged: (value) => reportNotifier.content = value,
                 hintText: '텍스트 입력',
                 hintStyle: Fonts.body02Regular(Palette.colorGrey500),
@@ -168,7 +165,6 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
 
   @override
   void dispose() {
-    reportContentController.dispose();
     super.dispose();
   }
 }
