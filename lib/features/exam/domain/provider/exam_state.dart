@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/exam/data/data.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:atwoz_app/features/store/domain/provider/store_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'exam_state.freezed.dart';
@@ -18,12 +19,16 @@ class ExamState with _$ExamState {
     @Default(false) bool isDone,
     @Default(false) bool isLoaded,
     @Default(false) bool isRequiredDataLoaded,
+    @Default(false) bool hasResultData,
+    @Default(StoreData()) StoreData heartBalance,
     QuestionListErrorType? error,
   }) = _ExamState;
 
   const ExamState._();
 
   factory ExamState.initial() => const ExamState();
+
+  int get totalHeartBalance => heartBalance.heartBalance.totalHeartBalance;
 }
 
 @freezed
@@ -36,6 +41,6 @@ class QuestionData with _$QuestionData {
 @freezed
 class SoulmateData with _$SoulmateData {
   const factory SoulmateData({
-    @Default([]) List<IntroducedProfileDto> soulmateList,
+    @Default([]) List<IntroducedProfile> soulmateList,
   }) = _SoulmateData;
 }

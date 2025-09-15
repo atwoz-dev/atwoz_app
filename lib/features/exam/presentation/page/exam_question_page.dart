@@ -111,29 +111,41 @@ class ExamQuestionPageState
     });
   }
 
-  void _submit() async {
-    final payload = SubjectAnswerItem.fromJson(
-      ref.read(examNotifierProvider.notifier).buildFinalPayload(
-            _currentAnswerList,
-            _currentSubjectIndex + 1,
-          ),
-    );
-
+  Future<void> _submitAnswers(SubjectAnswerItem payload) async {
     await ref
         .read(examNotifierProvider.notifier)
         .createSubmitAnswerList(payload);
+  }
 
-    await ref.read(examNotifierProvider.notifier).fetchSoulmateList();
-
-    navigate(
-      context,
-      route: AppRoute.examResult,
+  void _submit() async {
+    final notifier = ref.read(examNotifierProvider.notifier);
+    final payload = SubjectAnswerItem.fromJson(
+      notifier.buildFinalPayload(
+        _currentAnswerList,
+        _currentSubjectIndex + 1,
+      ),
     );
 
-    if (_currentSubjectIndex < _subjectList.length - 1) {
-      _nextSubject();
-    } else {
-      ref.read(examNotifierProvider.notifier).setOptional(false);
+    await _submitAnswers(payload);
+    await notifier.fetchSoulmateList();
+
+    _handleNavigation();
+  }
+
+  void _handleNavigation() {
+    final notifier = ref.read(examNotifierProvider.notifier);
+    final hasResultData = ref.read(examNotifierProvider).hasResultData;
+    final isLastSubject = _currentSubjectIndex == _subjectList.length - 1;
+
+    if (hasResultData) {
+      navigate(context, route: AppRoute.examResult);
+    }
+
+    _nextSubject();
+
+    if (isLastSubject) {
+      notifier.setOptional(false);
+      navigate(context, route: AppRoute.examResult);
     }
   }
 

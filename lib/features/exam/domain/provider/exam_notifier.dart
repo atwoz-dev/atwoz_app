@@ -2,8 +2,11 @@ import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/exam/data/data.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
+import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
+import 'package:atwoz_app/features/store/domain/provider/store_state.dart';
+import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'exam_state.dart';
@@ -98,8 +101,11 @@ class ExamNotifier extends _$ExamNotifier {
     try {
       final examSoulmateList = await ExamSoulmateFetchUseCase(ref).call();
 
+      final hasResultData = examSoulmateList.isNotEmpty;
+
       state = state.copyWith(
         soulmateList: SoulmateData(soulmateList: examSoulmateList),
+        hasResultData: hasResultData,
         isLoaded: true,
         error: null,
       );
@@ -121,6 +127,52 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
+    }
+  }
+
+  /// 프로필 미리보기
+  Future<void> openProfile({
+    required int memberId,
+  }) async {
+    try {
+      await ExamRemoveBlurUsecase(ref).call(memberId: memberId);
+
+      // 기존 리스트
+      final currentList = state.soulmateList.soulmateList;
+
+      // 업데이트된 리스트 생성
+      final updatedList = currentList
+          .map((profile) => profile.memberId == memberId
+              ? profile.copyWith(isIntroduced: true)
+              : profile)
+          .toList();
+
+      state = state.copyWith(
+        soulmateList: state.soulmateList.copyWith(
+          soulmateList: updatedList,
+        ),
+      );
+    } catch (e) {
+      Log.e('프로필 블러 제거 실패: $e');
+    }
+  }
+
+  // 보유하트 조회
+  Future<void> fetchUserHeartBalance() async {
+    try {
+      final heartBalance = await HeartBalanceFetchUseCase(ref).call();
+
+      state = state.copyWith(
+        heartBalance: StoreData(heartBalance: heartBalance),
+        isLoaded: true,
+        error: null,
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(
+        isLoaded: true,
+        error: QuestionListErrorType.network,
+      );
     }
   }
 }

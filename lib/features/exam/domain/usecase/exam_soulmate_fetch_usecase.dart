@@ -1,15 +1,16 @@
 import 'package:atwoz_app/features/exam/data/data.dart';
+import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 
 class ExamSoulmateFetchUseCase {
   final Ref ref;
 
   const ExamSoulmateFetchUseCase(this.ref);
 
-  Future<List<IntroducedProfileDto>> call() async {
+  Future<List<IntroducedProfile>> call() async {
     final response = await ref.read(examRepositoryProvider).getSolumateList();
 
-    return response;
+    return FetchIntroducedProfilesUseCase.getIntroducedProfiles(response);
   }
 }
