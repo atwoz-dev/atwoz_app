@@ -30,7 +30,8 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                 onPressed: () {
                   navigate(
                     context,
-                    route: AppRoute.myPage,
+                    route: AppRoute.mainTab,
+                    method: NavigationMethod.go,
                   );
                 },
                 child: Text(

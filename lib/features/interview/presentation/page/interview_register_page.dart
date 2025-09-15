@@ -18,6 +18,7 @@ class InterviewRegisterPage extends ConsumerStatefulWidget {
   final int? answerId;
   final int? questionId;
   final bool isAnswered;
+
   const InterviewRegisterPage({
     super.key,
     required this.question,
@@ -74,11 +75,11 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                               _inputContentController.text.trim(),
                             );
                       }
-                      navigate(context,
-                          route: AppRoute.interview,
-                          extra: InterviewArguments(
-                            currentTabIndex: widget.currentTabIndex,
-                          ));
+                      navigate(
+                        context,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
+                      );
                     } catch (e) {
                       showToastMessage('저장에 실패했습니다.');
                     }
@@ -86,16 +87,17 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
             },
           )
         ],
-        leadingAction: (context) => {
+        leadingAction: (context) {
           CustomDialogue.showTwoChoiceDialogue(
               context: context,
               content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
               onElevatedButtonPressed: () {
                 navigate(
                   context,
-                  route: AppRoute.interview,
+                  route: AppRoute.mainTab,
+                  method: NavigationMethod.go,
                 );
-              })
+              });
         },
       ),
       body: Column(

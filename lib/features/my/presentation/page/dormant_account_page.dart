@@ -1,5 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
@@ -17,7 +17,7 @@ class DormantAccountPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nickname = ref.watch(globalUserProfileNotifierProvider).nickname;
+    final nickname = ref.watch(globalNotifierProvider).profile.nickname;
 
     return Scaffold(
       body: SafeArea(
@@ -74,7 +74,7 @@ class DormantAccountPage extends ConsumerWidget {
 
                   navigate(
                     context,
-                    route: AppRoute.myPage,
+                    route: AppRoute.mainTab,
                     method: NavigationMethod.go,
                   );
                 },

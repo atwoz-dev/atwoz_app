@@ -86,7 +86,7 @@ class AuthSignUpTermsPageState
                         // 홈 화면으로 이동
                         navigate(
                           context,
-                          route: AppRoute.home,
+                          route: AppRoute.mainTab,
                           method: NavigationMethod.go,
                         );
                       }

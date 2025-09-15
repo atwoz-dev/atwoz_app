@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/store/domain/provider/usecase_providers.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:atwoz_app/features/store/domain/usecase/verify_receipt_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +23,29 @@ class StoreNotifier extends _$StoreNotifier {
     'APP_ITEM_HEART_550',
   ];
 
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
+
   @override
   StoreState build() {
-    _initializeAppPurchase();
-    _initializeHeartBalanceItem();
+    _initialize();
     return StoreState.initial();
+  }
+
+  Future<void> _initialize() async {
+    await _initializeAppPurchase();
+    await _initializeHeartBalanceItem();
+    _subscribeToPurchaseUpdates();
+  }
+
+  /// 결제 스트림 리스너 등록
+  void _subscribeToPurchaseUpdates() {
+    _subscription?.cancel(); // 중복 방지
+    _subscription = InAppPurchase.instance.purchaseStream.listen(
+      onPurchaseUpdated,
+      onError: (error) {
+        Log.e("구매 스트림 에러: $error");
+      },
+    );
   }
 
   // 스토어의 상품ID를 저장
@@ -49,7 +70,10 @@ class StoreNotifier extends _$StoreNotifier {
     final product = state.products.firstWhere((p) => p.id == productId);
     final param = PurchaseParam(productDetails: product);
 
-    inAppPurchase.buyConsumable(purchaseParam: param, autoConsume: true);
+    inAppPurchase.buyConsumable(
+      purchaseParam: param,
+      autoConsume: true,
+    );
 
     state = state.copyWith(isPurchasePending: true);
   }
@@ -62,16 +86,17 @@ class StoreNotifier extends _$StoreNotifier {
 
     for (final purchase in purchases) {
       if (purchase.status == PurchaseStatus.purchased) {
-        // 영수증 서버 검증
-        await ref
-            .read(storeNotifierProvider.notifier)
-            .verifyReceipt(purchase.verificationData.serverVerificationData);
+        try {
+          // 영수증 서버 검증
+          await ref
+              .read(storeNotifierProvider.notifier)
+              .verifyReceipt(purchase.verificationData.serverVerificationData);
 
-        // 서버 반영 기다리기
-        await Future.delayed(const Duration(seconds: 1));
-
-        // 보유하트 재조회
-        await ref.read(storeNotifierProvider.notifier).fetchHeartBalance();
+          // 보유하트 재조회
+          await ref.read(storeNotifierProvider.notifier).fetchHeartBalance();
+        } catch (e) {
+          Log.e('영수증 검증 또는 하트 조회 실패: $e');
+        }
 
         if (purchase.pendingCompletePurchase) {
           await inAppPurchase.completePurchase(purchase);

@@ -44,7 +44,7 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
   void updateHobbies(List<String> hobbies) {
     _updateState(
       (it) => it.copyWith(
-        hobbies: hobbies.map((e) => Hobby.parse(e)).toList(),
+        hobbies: hobbies.map((e) => Hobby.fromLabel(e)).toList(),
       ),
     );
   }

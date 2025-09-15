@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 // 변경된 해시태그 영역 위젯
 class HashtagWrap extends StatelessWidget {
   final List<String> tags;
+  final bool isCenter;
 
-  const HashtagWrap({required this.tags, super.key});
+  const HashtagWrap({
+    super.key,
+    required this.tags,
+    this.isCenter = false,
+  });
 
   static const double horizontalPadding =
       8.0; // HashtagWidget 내 좌우 padding (4+4)
@@ -66,6 +71,7 @@ class HashtagWrap extends StatelessWidget {
         }
 
         return Wrap(
+          alignment: isCenter ? WrapAlignment.center : WrapAlignment.start,
           spacing: spacing,
           runSpacing: 4,
           children: visibleTags,

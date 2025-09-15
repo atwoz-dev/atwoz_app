@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:android_id/android_id.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
@@ -11,9 +15,10 @@ import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
-import 'package:flutter/foundation.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
@@ -37,15 +42,17 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';
-  static const String _user = 'AuthProvider.user';
 
   @override
   Future<UserData> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
-      await _localStorage.saveItem<UserData>(_user, userResponse);
-
+      final success = await _registerDeviceToServer();
+      if(!success) {
+        await _localStorage.saveEncrypted(_accessToken, '');
+        throw Exception('device registration failed: clear user token');
+      }
       return userResponse;
     } catch (e) {
       logD('유저 데이터 저장 실패: $e');
@@ -58,6 +65,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
     final cookieJar = await _apiService.cookieJar;
+    // TODO(Han): notification 초기화 필요
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
@@ -105,14 +113,40 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     return _localStorage.getEncrypted(_refreshToken);
   }
 
-  @override
-  UserResponse? get user {
-    return _localStorage.readem<UserResponse>(_user);
+  Future<bool> _registerDeviceToServer() async {
+    final fcmToken = await FirebaseManager().getFcmToken();
+    if (fcmToken == null) {
+      Log.e('FCM 토큰을 가져오지 못했습니다.');
+      return false;
+    }
+
+    try {
+      final deviceId = await _getDeviceId();
+      Log.d('register device($deviceId) to server with $fcmToken');
+
+      await _apiService.postJson(
+        '/notifications/device-registration',
+        data: {
+          'deviceId': deviceId ?? '',
+          'registrationToken': fcmToken,
+        },
+      );
+      return true;
+    } catch (e) {
+      Log.e('기기 등록 실패: $e');
+      return false;
+    }
   }
 
-  @override
-  Listenable userRefresh() {
-    return _localStorage.listenable(keys: [_user]);
+  Future<String?> _getDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      final iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor;
+    } else if (Platform.isAndroid) {
+      return await const AndroidId().getId();
+    }
+    return null;
   }
 
   @override

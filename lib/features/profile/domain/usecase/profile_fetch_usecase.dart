@@ -1,4 +1,6 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
@@ -30,14 +32,16 @@ class ProfileFetchUseCase {
         religion: Religion.none,
         region: Region.seoul,
         height: 165.0,
-        job: '직장인',
+        job: Job.artsAndSports,
         matchStatus: designInspectionPresetData,
+        profileExchangeStatus: ProfileExchangeStatus.none,
         favoriteType: FavoriteType.interested,
       );
     }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
-    // TODO(Han): 실패 처리 필요 + my user id 받아오기
+    final myUserId = ref.read(globalNotifierProvider).profile.myUserId;
+
     return response.toModel(myUserId);
   }
 }
@@ -61,8 +65,11 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       religion: Religion.parse(basic.religion),
       region: Region.parse(basic.region),
       height: basic.height.toDouble(),
-      job: basic.job ?? '',
+      job: Job.parse(basic.job),
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
+      // TOOD(Han): profileExchangeStatus는 아직 사용하지 않음
+      profileExchangeStatus: profileExchangeInfo?.profileExchangeStatus ??
+          ProfileExchangeStatus.none,
       favoriteType: FavoriteType.tryParse(basic.likeLevel),
     );
   }

@@ -26,7 +26,7 @@ class IdealTypeRepository extends BaseRepository {
     try {
       await apiService.patchJson(
         path,
-        data: idealTypeDto,
+        data: idealTypeDto.toJson(),
       );
 
       return true;

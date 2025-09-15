@@ -203,9 +203,11 @@ class OnboardingCertificationPageState
                           navigate(context, route: AppRoute.signUp);
                         } else {
                           // 프로필 설정이 필요하지 않은 경우
-                          navigate(context,
-                              route: AppRoute.home,
-                              method: NavigationMethod.go);
+                          navigate(
+                            context,
+                            route: AppRoute.mainTab,
+                            method: NavigationMethod.go,
+                          );
                         }
                       } catch (e) {
                         // TODO(mh): 인증번호 불일치 시 처리되어야함

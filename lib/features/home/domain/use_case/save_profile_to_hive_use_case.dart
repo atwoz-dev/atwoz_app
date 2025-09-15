@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
@@ -23,18 +23,27 @@ class SaveProfileToHiveUseCase {
   })  : _repository = repository,
         _secureStorage = secureStorage;
 
-  Future<void> execute() async {
+  Future<bool> execute() async {
     try {
       final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
 
-      final globalUserProfile =
-          homeProfileDto.toGlobalUserProfile(); // Hive에 저장할 프로필
+      final cachedUserProfile =
+          homeProfileDto.toCachedUserProfile(); // Hive에 저장할 프로필
 
-      final box = await Hive.openBox<GlobalUserProfile>(
-        GlobalUserProfile.boxName,
-      ); // Hive Box 가져오기
+      Box<CachedUserProfile> box; // Hive Box 가져오기
 
-      await box.put('profile', globalUserProfile); // Hive에 저장
+      try {
+        box = await Hive.openBox<CachedUserProfile>(
+          CachedUserProfile.boxName,
+        );
+      } catch (e) {
+        await Hive.deleteBoxFromDisk(CachedUserProfile.boxName);
+        box = await Hive.openBox<CachedUserProfile>(
+          CachedUserProfile.boxName,
+        );
+      }
+
+      await box.put('profile', cachedUserProfile); // Hive에 저장
 
       // SecureStorage 저장
 
@@ -42,8 +51,11 @@ class SaveProfileToHiveUseCase {
           key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
       await _secureStorage.write(
           key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
-    } catch (e) {
-      Log.e('Hive에 프로필 저장 실패: $e');
+
+      return true;
+    } catch (e, stacktrace) {
+      Log.e('Hive에 프로필 저장 실패: $e $stacktrace');
+      return false;
     }
   }
 }

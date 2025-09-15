@@ -25,34 +25,16 @@ class StorePage extends ConsumerStatefulWidget {
 }
 
 class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
-  List<HeartProduct> get _heartItems => [
-        HeartProduct.heart45,
-        HeartProduct.heart110,
-        HeartProduct.heart350,
-        HeartProduct.heart550,
-      ];
-
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
+  static final List<HeartProduct> _heartItems = [
+    HeartProduct.heart45,
+    HeartProduct.heart110,
+    HeartProduct.heart350,
+    HeartProduct.heart550,
+  ];
 
   @override
   void initState() {
     super.initState();
-    _initInAppPurchase();
-  }
-
-  Future<void> _initInAppPurchase() async {
-    final available = await InAppPurchase.instance.isAvailable();
-    if (!available) return;
-    _subscription = InAppPurchase.instance.purchaseStream.listen(
-      (purchases) =>
-          ref.read(storeNotifierProvider.notifier).onPurchaseUpdated(purchases),
-    );
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
   }
 
   @override
@@ -81,8 +63,9 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('보유한 하트',
-                                style: Fonts.header03()
-                                    .copyWith(fontWeight: FontWeight.w900)),
+                                style: Fonts.header03().copyWith(
+                                  fontWeight: FontWeight.w900,
+                                )),
                             const Gap(8),
                             Text(
                               '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
@@ -94,13 +77,14 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                           height: 32,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 12),
-                                shadowColor: Colors.transparent,
-                                backgroundColor: Palette.colorPrimary100,
-                                side: BorderSide(
-                                  width: 1,
-                                  color: Palette.colorPrimary500,
-                                )),
+                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              shadowColor: Colors.transparent,
+                              backgroundColor: Palette.colorPrimary100,
+                              side: BorderSide(
+                                width: 1,
+                                color: Palette.colorPrimary500,
+                              ),
+                            ),
                             onPressed: () {
                               navigate(
                                 context,
@@ -124,7 +108,8 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                                           storeState.totalHeartBalance
                                               .toString(),
                                           style: Fonts.body03Regular(
-                                              Palette.colorGrey900),
+                                            Palette.colorGrey900,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -144,10 +129,11 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                   child: Row(
                     children: [
                       EventHeartCard(
-                          code: HeartProduct.heart90.code,
-                          onCreate: (code) => ref
-                              .read(storeNotifierProvider.notifier)
-                              .buyProduct(code)),
+                        code: HeartProduct.heart90.code,
+                        onCreate: (code) => ref
+                            .read(storeNotifierProvider.notifier)
+                            .buyProduct(code),
+                      ),
                     ],
                   )),
               Expanded(

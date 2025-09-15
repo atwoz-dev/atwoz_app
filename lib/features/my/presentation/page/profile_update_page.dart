@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
 import 'package:flutter/material.dart';
@@ -64,8 +65,12 @@ class ProfileUpdatePage extends ConsumerWidget {
                           profileType: profileType,
                           profile: state.profile,
                           onProfileUpdated: (selectedValue, isChanged) {
+                            Log.d(
+                                'Selected Value: $selectedValue, isChanged: $isChanged');
                             profileManageNotifier.updateProfile(
-                                selectedValue, isChanged);
+                              profile: selectedValue,
+                              isChanged: isChanged,
+                            );
                           },
                         ),
                       ),
@@ -74,13 +79,16 @@ class ProfileUpdatePage extends ConsumerWidget {
                       primary: state.isChanged
                           ? Palette.colorPrimary500
                           : Palette.colorGrey200,
-                      onPressed: () {
-                        if (state.isChanged) {
-                          profileManageNotifier.saveProfile().then((success) {
-                            if (success) {
-                              if (context.mounted) pop(context);
-                            }
-                          });
+                      onPressed: () async {
+                        if (!state.isChanged) return;
+
+                        final isSaved =
+                            await profileManageNotifier.saveProfile();
+
+                        if (!isSaved) return;
+
+                        if (isSaved && context.mounted) {
+                          pop(context);
                         }
                       },
                       child: Text(

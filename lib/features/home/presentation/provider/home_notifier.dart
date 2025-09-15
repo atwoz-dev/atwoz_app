@@ -1,8 +1,8 @@
-import 'package:atwoz_app/app/provider/global_user_profile_notifier.dart';
-import 'package:atwoz_app/app/state/global_user_profile.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
+import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,31 +13,37 @@ part 'home_notifier.g.dart'; // 코드 생성을 위한 부분
 class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
-    state = const AsyncData(HomeState(nickname: ''));
-    try {
-      await _fetchHomeProfile();
-      await _fetchRecommendedProfiles();
-    } catch (e, stackTrace) {
-      state = AsyncError(e, stackTrace);
-      rethrow;
-    }
-    return state.value!;
+    // 추천 프로필 가져오기
+    final profiles =
+        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+
+    // 최종 상태 반환
+    return HomeState(recommendedProfiles: profiles);
   }
 
   /// 좋아요 설정
   Future<void> setFavoriteType(int memberId, FavoriteType type) async {
-    if (!state.hasValue) return;
+    if (!state.hasValue || state.value!.recommendedProfiles == null) return;
     try {
       await ref.read(favoriteRepositoryProvider).requestFavorite(
             memberId,
             type: type,
           );
 
+      final currentState = state.valueOrNull;
+      final profiles = currentState?.recommendedProfiles;
+      if (currentState == null || profiles == null) return;
+
       state = AsyncData(
-        state.value!.copyWith(
-          recommendedProfiles: state.value!.recommendedProfiles
-              .map((e) =>
-                  e.memberId == memberId ? e.copyWith(favoriteType: type) : e)
+        currentState.copyWith(
+          recommendedProfiles: profiles
+              .map(
+                (e) => e.memberId == memberId
+                    ? e.copyWith(
+                        favoriteType: type,
+                      )
+                    : e,
+              )
               .toList(),
         ),
       );
@@ -47,36 +53,39 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
-  Future<void> _fetchHomeProfile() async {
-    GlobalUserProfile profile = ref.read(globalUserProfileNotifierProvider);
-    final profileNotifier =
-        ref.read(globalUserProfileNotifierProvider.notifier);
-
-    // 전역 상태가 Default라면 Hive 또는 서버에서 가져오기
-    if (profile.isDefault) {
-      profile = await profileNotifier.getProfileFromHive();
-
-      if (profile.isDefault) {
-        // Hive에도 데이터가 없으면 서버에서 가져와서 Hive에 저장
-        profile = await profileNotifier.fetchProfileToHiveFromServer();
-      }
-
-      profileNotifier.profile = profile;
+  Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {
+    // 재진입 방지
+    if (state.hasValue && state.requireValue.isCheckingIntroducedProfiles) {
+      return false;
     }
 
-    state = AsyncData(state.value!.copyWith(nickname: profile.nickname));
-  }
-
-  Future<void> _fetchRecommendedProfiles() async {
-    final profiles =
-        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
-
-    if (!state.hasValue) return;
-
-    state = AsyncData(
-      state.requireValue.copyWith(
-        recommendedProfiles: profiles,
-      ),
+    // 로딩 시작
+    state = state.whenData(
+      (s) => s.copyWith(isCheckingIntroducedProfiles: true),
     );
+
+    try {
+      // 프로필 데이터 로드
+      final profiles = await ref
+          .read(saveIntroducedProfilesUseCaseProvider)
+          .execute(category);
+
+      state = state.whenData(
+        (s) => s.copyWith(isCheckingIntroducedProfiles: false),
+      );
+
+      Log.e('소개 프로필 확인 성공: $profiles');
+
+      return profiles.isNotEmpty;
+    } catch (e) {
+      Log.e('소개 프로필 확인 실패: $e');
+
+      // 에러 발생 시에도 로딩 플래그 해제
+      state = state.whenData(
+        (s) => s.copyWith(isCheckingIntroducedProfiles: false),
+      );
+
+      return false;
+    }
   }
 }

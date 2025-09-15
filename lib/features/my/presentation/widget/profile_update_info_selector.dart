@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,17 +56,13 @@ class _ProfileUpdateInfoSelectorState
         onSelected: (value) {
           _tempProfile.value =
               _tempProfile.value.copyWith(job: Job.fromLabel(value));
+          Log.d(_tempProfile);
           widget.onProfileUpdated(
               _tempProfile.value, value != widget.profile.job.label);
         },
       ),
       '지역': _LocationInputWidget(
         initialValue: widget.profile.region,
-        onSubmitted: (value) {
-          _tempProfile.value = _tempProfile.value.copyWith(region: value);
-          widget.onProfileUpdated(_tempProfile.value,
-              value != widget.profile.region && value.isNotEmpty);
-        },
       ),
       '학력': _SingleButtonTypeSelector(
         options: Education.values.map((e) => e.label).toList(),
@@ -220,6 +217,7 @@ class _SingleButtonTypeSelectorState extends State<_SingleButtonTypeSelector> {
       options: widget.options,
       selectedOption: widget.options[_selectedIndex],
       onSelectionChanged: (value) {
+        Log.d('Selected value: $value');
         if (value != null) {
           setState(() {
             _selectedIndex = widget.options.indexOf(value); // 선택된 인덱스 업데이트
@@ -436,47 +434,59 @@ class _GroupTypeSelectorState extends State<_GroupTypeSelector> {
   }
 }
 
-class _LocationInputWidget extends StatefulWidget {
-  const _LocationInputWidget({
-    required this.initialValue,
-    required this.onSubmitted,
-  });
-
+class _LocationInputWidget extends ConsumerStatefulWidget {
   final String initialValue;
-  final void Function(String) onSubmitted;
+
+  const _LocationInputWidget({required this.initialValue});
 
   @override
-  State<_LocationInputWidget> createState() => _LocationInputWidgetState();
+  ConsumerState<_LocationInputWidget> createState() =>
+      _LocationInputWidgetState();
 }
 
-class _LocationInputWidgetState extends State<_LocationInputWidget> {
+class _LocationInputWidgetState extends ConsumerState<_LocationInputWidget> {
   late final TextEditingController _controller;
+  late final ScrollController _scrollController;
 
   List<String> _filteredLocations = [];
 
   @override
   void initState() {
-    _controller = TextEditingController(text: widget.initialValue);
     super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+
+    _scrollController = ScrollController();
+
+    // 스크롤 시 키보드 내리기
+    _scrollController.addListener(() {
+      if (_scrollController.position.isScrollingNotifier.value) {
+        FocusScope.of(context).unfocus();
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final profileManageProvider =
+        ref.read(profileManageNotifierProvider.notifier);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
+        TextField(
           controller: _controller,
           onChanged: (value) {
             setState(() {
               _filteredLocations = addressData.searchLocations(value);
             });
+            profileManageProvider.updateLocation(value);
           },
           decoration: InputDecoration(
             hintText: '지역을 입력하세요',
@@ -501,11 +511,13 @@ class _LocationInputWidgetState extends State<_LocationInputWidget> {
         const SizedBox(height: 8),
         if (_controller.text.isEmpty)
           GestureDetector(
-            onTap: () {
-              // TODO: 현재 위치로 설정하기 기능 구현
-            },
+            onTap: () async => _controller.text =
+                await profileManageProvider.setCurrentLocation(),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              padding: const EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color(0xffDCDEE3),
@@ -525,17 +537,16 @@ class _LocationInputWidgetState extends State<_LocationInputWidget> {
             maxHeight: context.screenHeight * 0.4, // 스크롤 가능한 최대 높이 설정
           ),
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: _filteredLocations.map((location) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _controller.text = location;
-                      widget.onSubmitted(location);
-                      _filteredLocations.clear(); // 검색 후 결과 초기화
-                    });
-
+                    _controller.text = location;
+                    profileManageProvider
+                        .updateLocation(location); // 선택한 지역으로 설정
+                    _filteredLocations.clear(); // 검색 후 결과 초기화
                     FocusScope.of(context).unfocus(); // 키보드 내리기
                   },
                   child: Container(

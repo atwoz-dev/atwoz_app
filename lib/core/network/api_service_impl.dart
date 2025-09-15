@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:atwoz_app/core/config/config.dart';
+import 'package:atwoz_app/core/network/logging_interceptor.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,6 +16,8 @@ import 'api_service.dart';
 import 'dio_service.dart';
 import 'network_exception.dart';
 import 'token_interceptor.dart';
+
+const _refreshTokenKey = 'refresh_token';
 
 final apiServiceProvider = Provider<ApiServiceImpl>((ref) {
   return ApiServiceImpl(
@@ -65,6 +69,7 @@ class ApiServiceImpl implements ApiService {
         ),
         [
           if (enableAuth) TokenInterceptor(ref),
+          if (!kReleaseMode) LoggingInterceptor(),
           CookieManager(_cookieJar),
         ],
       );
@@ -92,7 +97,7 @@ class ApiServiceImpl implements ApiService {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
       await ref.read(localStorageProvider.notifier).initialize();
       final refreshToken =
-          await ref.read(localStorageProvider).getEncrypted('_refreshToken');
+          await ref.read(localStorageProvider).getEncrypted(_refreshTokenKey);
 
       if (accessToken != null) {
         finalHeaders['Authorization'] = "Bearer $accessToken";
@@ -114,12 +119,12 @@ class ApiServiceImpl implements ApiService {
     if (refreshToken == null) return;
 
     final uri = Uri.parse(_baseUrl);
-    _cookieJar.saveFromResponse(uri, [Cookie("_refreshToken", refreshToken)]);
+    _cookieJar.saveFromResponse(uri, [Cookie(_refreshTokenKey, refreshToken)]);
 
     await ref.read(localStorageProvider.notifier).initialize();
     await ref
         .read(localStorageProvider)
-        .saveEncrypted('_refreshToken', refreshToken);
+        .saveEncrypted(_refreshTokenKey, refreshToken);
   }
 
   String? _extractRefreshToken(List<String> cookies) {
