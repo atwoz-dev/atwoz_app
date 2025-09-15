@@ -42,27 +42,11 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
   final LayerLink _layerLink = LayerLink();
   final FocusNode _focusNode = FocusNode();
   bool _isDropdownOpened = false;
-  late final TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
-    _controller = TextEditingController(
-      text: widget.selectedItem != null
-          ? widget.valueBuilder(widget.selectedItem as T)
-          : '',
-    );
-  }
-
-  @override
-  void didUpdateWidget(covariant OutlinedDropdown<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedItem != widget.selectedItem) {
-      _controller.text = widget.selectedItem != null
-          ? widget.valueBuilder(widget.selectedItem as T)
-          : '';
-    }
   }
 
   void _onFocusChange() {
@@ -257,7 +241,6 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
     _overlayEntry?.remove();
     _focusNode.removeListener(_onFocusChange);
     _focusNode.dispose();
-    _controller.dispose();
     super.dispose();
   }
 }
