@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
@@ -30,12 +31,12 @@ class ExamResultPageState
         context: context,
         content: '연애 모의고사를 종료 하시겠어요?\n페이지를 벗어날경우, 저장되지 않아요',
         onElevatedButtonPressed: () {
-          ref.read(examNotifierProvider.notifier).setOptional(true);
+          ref.read(examNotifierProvider.notifier).setSubjectOptional(false);
           ref.read(examNotifierProvider.notifier).resetCurrentSubjectIndex();
 
           navigate(
             context,
-            route: AppRoute.home,
+            route: AppRoute.mainTab,
           );
         });
   }
@@ -45,6 +46,7 @@ class ExamResultPageState
       required IntroducedProfile profile,
       required int index,
       required bool isBlurred,
+      required bool isMale,
       required int heartBalance}) async {
     if (isBlurred) {
       if (!context.mounted) return;
@@ -54,6 +56,7 @@ class ExamResultPageState
         builder: (context) => UnlockWithHeartDialog(
           description: "프로필을 미리보기 하시겠습니까?",
           heartBalance: heartBalance,
+          isMale: isMale,
         ),
       );
 
@@ -103,11 +106,12 @@ class ExamResultPageState
     final EdgeInsets contentPadding =
         EdgeInsets.symmetric(horizontal: horizontalPadding);
     final examState = ref.watch(examNotifierProvider);
+    final userProfile = ref.watch(globalNotifierProvider).profile;
     final int itemCount = 10;
 
     return Scaffold(
       appBar: DefaultAppBar(
-        title: examState.isRequired ? '매칭 현황' : '매칭 결과',
+        title: examState.isSubjectOptional ? '매칭 결과' : '매칭 현황',
         leadingAction: (context) => _showTwoChoiceDialogue(),
       ),
       body: Padding(
@@ -129,6 +133,7 @@ class ExamResultPageState
                     profile: profile,
                     index: index,
                     isBlurred: isBlurred,
+                    isMale: userProfile.isMale,
                     heartBalance: examState.totalHeartBalance,
                   ),
                   profile: profile,
@@ -137,43 +142,42 @@ class ExamResultPageState
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-            child: examState.isRequired
-                ? DefaultElevatedButton(
-                    onPressed: () {
-                      navigate(
-                        context,
-                        route: AppRoute.examQuestion,
-                      );
-                    },
-                    child: Text('다음과목 이어서 풀기'),
-                  )
-                : examState.isDone
-                    ? DefaultElevatedButton(
-                        onPressed: () => {
-                          navigate(
-                            context,
-                            route: AppRoute.home,
-                          )
-                        },
-                        child: Text('연애 모의고사 종료하기'),
-                      )
-                    : DefaultElevatedButton(
-                        onPressed: () => {
-                          ref
-                              .read(examNotifierProvider.notifier)
-                              .resetCurrentSubjectIndex(),
-                          ref
-                              .read(examNotifierProvider.notifier)
-                              .fetchOptionalQuestionList(),
-                          navigate(
-                            context,
-                            route: AppRoute.examQuestion,
-                          )
-                        },
-                        child: Text('선택과목 풀기'),
-                      ),
-          ),
+              padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+              child: examState.isSubjectOptional
+                  ? examState.isDone
+                      ? DefaultElevatedButton(
+                          onPressed: () => {
+                            navigate(
+                              context,
+                              route: AppRoute.mainTab,
+                            )
+                          },
+                          child: Text('연애 모의고사 종료하기'),
+                        )
+                      : DefaultElevatedButton(
+                          onPressed: () => {
+                            ref
+                                .read(examNotifierProvider.notifier)
+                                .resetCurrentSubjectIndex(),
+                            ref
+                                .read(examNotifierProvider.notifier)
+                                .fetchOptionalQuestionList(),
+                            navigate(
+                              context,
+                              route: AppRoute.examQuestion,
+                            )
+                          },
+                          child: Text('선택과목 풀기'),
+                        )
+                  : DefaultElevatedButton(
+                      onPressed: () {
+                        navigate(
+                          context,
+                          route: AppRoute.examQuestion,
+                        );
+                      },
+                      child: Text('다음과목 이어서 풀기'),
+                    )),
         ]),
       ),
     );

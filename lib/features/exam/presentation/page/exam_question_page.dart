@@ -88,12 +88,12 @@ class ExamQuestionPageState
         context: context,
         content: '연애 모의고사를 종료 하시겠어요?\n페이지를 벗어날경우, 저장되지 않아요',
         onElevatedButtonPressed: () {
-          ref.read(examNotifierProvider.notifier).setOptional(true);
+          ref.read(examNotifierProvider.notifier).setSubjectOptional(false);
           ref.read(examNotifierProvider.notifier).resetCurrentSubjectIndex();
 
           navigate(
             context,
-            route: AppRoute.home,
+            route: AppRoute.mainTab,
           );
         });
   }
@@ -137,16 +137,18 @@ class ExamQuestionPageState
     final hasResultData = ref.read(examNotifierProvider).hasResultData;
     final isLastSubject = _currentSubjectIndex == _subjectList.length - 1;
 
+    if (isLastSubject) {
+      notifier.setSubjectOptional(true);
+      navigate(context, route: AppRoute.examResult);
+      return;
+    }
+
     if (hasResultData) {
       navigate(context, route: AppRoute.examResult);
+      return;
     }
 
     _nextSubject();
-
-    if (isLastSubject) {
-      notifier.setOptional(false);
-      navigate(context, route: AppRoute.examResult);
-    }
   }
 
   @override
@@ -256,15 +258,8 @@ class ExamQuestionPageState
                 textColor: Palette.colorGrey500,
               )),
               Expanded(
-                child: examState.isRequired
+                child: examState.isSubjectOptional
                     ? DefaultElevatedButton(
-                        onPressed: _currentAnswerList.length !=
-                                currentSubject.questions.length
-                            ? null
-                            : () => _submit(),
-                        child: Text('제출하기'),
-                      )
-                    : DefaultElevatedButton(
                         onPressed: _currentAnswerList.length !=
                                 currentSubject.questions.length
                             ? null
@@ -272,12 +267,19 @@ class ExamQuestionPageState
                                   _nextSubject(),
                                   ref
                                       .read(examNotifierProvider.notifier)
-                                      .setOptional(true),
+                                      .setSubjectOptional(false),
                                   ref
                                       .read(examNotifierProvider.notifier)
                                       .setExamDone(),
                                 },
                         child: Text('다음'),
+                      )
+                    : DefaultElevatedButton(
+                        onPressed: _currentAnswerList.length !=
+                                currentSubject.questions.length
+                            ? null
+                            : () => _submit(),
+                        child: Text('제출하기'),
                       ),
               )
             ]),

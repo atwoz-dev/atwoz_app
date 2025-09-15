@@ -75,11 +75,19 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                         },
                       ),
                       const Gap(24),
-                      Image.asset(
-                        ImagePath.homeTest,
-                        fit: BoxFit.cover,
-                        width: context.screenWidth,
-                        height: 89,
+                      GestureDetector(
+                        onTap: () {
+                          navigate(
+                            context,
+                            route: AppRoute.exam,
+                          );
+                        },
+                        child: Image.asset(
+                          ImagePath.homeTest,
+                          fit: BoxFit.cover,
+                          width: context.screenWidth,
+                          height: 89,
+                        ),
                       ),
                     ],
                   ),

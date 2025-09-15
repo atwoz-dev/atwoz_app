@@ -15,7 +15,7 @@ class ExamState with _$ExamState {
     @Default(QuestionData()) QuestionData questionList,
     @Default(SoulmateData()) SoulmateData soulmateList,
     @Default(0) int currentSubjectIndex,
-    @Default(true) bool isRequired,
+    @Default(false) bool isSubjectOptional,
     @Default(false) bool isDone,
     @Default(false) bool isLoaded,
     @Default(false) bool isRequiredDataLoaded,

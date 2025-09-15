@@ -20,8 +20,8 @@ class ExamNotifier extends _$ExamNotifier {
     return ExamState.initial();
   }
 
-  void setOptional(bool isRequired) {
-    state = state.copyWith(isRequired: isRequired);
+  void setSubjectOptional(bool isSubjectOptional) {
+    state = state.copyWith(isSubjectOptional: isSubjectOptional);
   }
 
   void setExamDone() {
@@ -57,9 +57,12 @@ class ExamNotifier extends _$ExamNotifier {
 
   Future<void> fetchRequiredQuestionList() async {
     if (state.isRequiredDataLoaded) return;
+    state = state.copyWith(isLoaded: false);
 
     try {
       final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
+
+      await Future.delayed(const Duration(seconds: 1));
 
       state = state.copyWith(
         questionList: QuestionData(questionList: requiredQuestionList),
@@ -100,8 +103,9 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(isLoaded: false);
     try {
       final examSoulmateList = await ExamSoulmateFetchUseCase(ref).call();
-
       final hasResultData = examSoulmateList.isNotEmpty;
+
+      await Future.delayed(const Duration(seconds: 1));
 
       state = state.copyWith(
         soulmateList: SoulmateData(soulmateList: examSoulmateList),
