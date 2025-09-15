@@ -29,7 +29,7 @@ class FetchIntroducedProfilesUseCase {
       final profileDtos = await _fetchProfilesFromServer(categoryKey);
       await _saveProfilesToCache(box, categoryKey, profileDtos);
 
-      return _getIntroducedProfiles(profileDtos);
+      return getIntroducedProfiles(profileDtos);
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
       return [];
@@ -45,7 +45,7 @@ class FetchIntroducedProfilesUseCase {
       final expiresAt = data['expiresAt'] as DateTime;
       if (DateTime.now().isBefore(expiresAt)) {
         final dtos = data['profiles'] as List<IntroducedProfileDto>;
-        return _getIntroducedProfiles(dtos);
+        return getIntroducedProfiles(dtos);
       }
     }
     return null;
@@ -66,7 +66,7 @@ class FetchIntroducedProfilesUseCase {
   }
 
   /// Dto -> 도메인 객체로 변환 + 해시태그 필터/정렬
-  List<IntroducedProfile> _getIntroducedProfiles(
+  static List<IntroducedProfile> getIntroducedProfiles(
       List<IntroducedProfileDto> dtos) {
     return dtos.map(
       (dto) {

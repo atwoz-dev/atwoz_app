@@ -11,9 +11,11 @@ import 'package:go_router/go_router.dart';
 class UnlockWithHeartDialog extends ConsumerWidget {
   const UnlockWithHeartDialog({
     super.key,
+    required this.description,
     required this.heartBalance,
   });
 
+  final String description;
   final int heartBalance;
 
   @override
@@ -35,7 +37,7 @@ class UnlockWithHeartDialog extends ConsumerWidget {
           child: Column(
             children: [
               Text(
-                "소개 받으시겠습니까?",
+                description,
                 style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),

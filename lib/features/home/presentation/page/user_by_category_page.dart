@@ -44,10 +44,8 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
                   index: index,
                   isBlurred: isBlurred,
                   introducedProfilesNotifier: introducedProfilesNotifier,
-                  profiles: profiles,
                 ),
                 profile: profile,
-                category: widget.category,
               );
             },
           ),
@@ -64,7 +62,6 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required int index,
     required bool isBlurred,
     required IntroducedProfilesNotifier introducedProfilesNotifier,
-    required List<IntroducedProfile> profiles,
   }) async {
     if (isBlurred) {
       final heartBalance =
@@ -75,6 +72,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
       final pressed = await showDialog<bool>(
         context: context,
         builder: (context) => UnlockWithHeartDialog(
+          description: "소개 받으시겠습니까?",
           heartBalance: heartBalance,
         ),
       );
