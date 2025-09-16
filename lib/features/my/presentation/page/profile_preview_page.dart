@@ -1,7 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/profile_sub_information.dart';
 import 'package:cached_network_image/cached_network_image.dart';
