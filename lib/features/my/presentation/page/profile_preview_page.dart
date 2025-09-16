@@ -20,11 +20,11 @@ class ProfilePreviewPage extends StatefulWidget {
 }
 
 class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
-  int currentImageIndex = 1;
+  int currentImageNum = 1;
 
   @override
   Widget build(BuildContext context) {
-    final validImges =
+    final validImages =
         widget.profile.profileImages.whereType<MyProfileImage>().toList();
 
     return Scaffold(
@@ -42,9 +42,9 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                       children: [
                         Positioned.fill(
                           child: PageView.builder(
-                            itemCount: validImges.length,
+                            itemCount: validImages.length,
                             itemBuilder: (context, index) {
-                              final image = validImges[index];
+                              final image = validImages[index];
 
                               return CachedNetworkImage(
                                 imageUrl: image.imageUrl,
@@ -53,24 +53,26 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                                 height: context.screenHeight * 0.5,
                               );
                             },
-                            onPageChanged: (value) => setState(
-                              () => currentImageIndex = value + 1,
+                            onPageChanged: (index) => setState(
+                              () => currentImageNum = index + 1,
                             ),
                           ),
                         ),
-                        if (validImges.length > 1)
+                        if (validImages.length > 1)
                           Positioned(
                             top: context.screenHeight * 0.4,
                             right: 16,
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 6.0, vertical: 4.0),
+                                horizontal: 6.0,
+                                vertical: 4.0,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.black.withValues(alpha: 0.6),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Text(
-                                '$currentImageIndex/${validImges.length}',
+                                '$currentImageNum/${validImages.length}',
                               ),
                             ),
                           )
