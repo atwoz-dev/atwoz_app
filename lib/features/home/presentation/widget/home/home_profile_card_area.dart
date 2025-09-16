@@ -220,16 +220,14 @@ class _ProfileCardWidget extends StatelessWidget {
                 ),
               ),
               const Gap(8),
-              SizedBox(
-                height: 40,
-                child: Text(
-                  profile.interviewContent,
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Palette.colorGrey600,
-                  ),
-                  maxLines: 2,
+              Text(
+                profile.interviewContent,
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Palette.colorGrey600,
+                  height: 1.5,
                 ),
+                maxLines: 2,
               ),
               const Gap(24),
               FavoriteButton(
