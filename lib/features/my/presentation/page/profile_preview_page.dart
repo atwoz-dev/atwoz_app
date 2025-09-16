@@ -24,8 +24,9 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final totalImageCount =
-        widget.profile.profileImages.whereType<MyProfileImage>().length;
+    final validImges =
+        widget.profile.profileImages.whereType<MyProfileImage>().toList();
+
     return Scaffold(
       backgroundColor: Palette.colorWhite,
       body: Stack(
@@ -41,12 +42,12 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                       children: [
                         Positioned.fill(
                           child: PageView.builder(
-                            itemCount: totalImageCount,
+                            itemCount: validImges.length,
                             itemBuilder: (context, index) {
-                              final image = widget.profile.profileImages[index];
+                              final image = validImges[index];
 
                               return CachedNetworkImage(
-                                imageUrl: image?.imageUrl ?? '',
+                                imageUrl: image.imageUrl,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: context.screenHeight * 0.5,
@@ -57,7 +58,7 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                             ),
                           ),
                         ),
-                        if (totalImageCount > 1)
+                        if (validImges.length > 1)
                           Positioned(
                             top: context.screenHeight * 0.4,
                             right: 16,
@@ -69,7 +70,7 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Text(
-                                '$currentImageIndex/$totalImageCount',
+                                '$currentImageIndex/${validImges.length}',
                               ),
                             ),
                           )
