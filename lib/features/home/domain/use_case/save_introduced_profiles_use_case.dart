@@ -39,12 +39,12 @@ class SaveIntroducedProfilesUseCase {
   List<IntroducedProfile>? _getValidCachedProfiles(Box box, String key) {
     final data = box.get(key);
 
+    if (data is! Map) return null;
+
     final profiles = data['profiles'];
     final expiresAt = data['expiresAt'];
 
-    if (data is! Map ||
-        profiles is! List<IntroducedProfileDto> ||
-        expiresAt is! DateTime) {
+    if (profiles is! List<IntroducedProfileDto> || expiresAt is! DateTime) {
       return null;
     }
 
