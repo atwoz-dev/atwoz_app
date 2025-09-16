@@ -73,3 +73,13 @@ class InterviewRegisterArguments extends RouteArguments {
   final int? questionId;
   final bool isAnswered;
 }
+
+class ReportArguments extends RouteArguments {
+  const ReportArguments({
+    required this.name,
+    required this.userId,
+  });
+
+  final String name;
+  final int userId;
+}
