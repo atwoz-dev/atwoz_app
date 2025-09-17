@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -36,6 +38,9 @@ class OnboardingCertificationPageState
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
   bool _isButtonEnabled = false;
+  bool _isResendEnabled = true;
+  int _resendCountdown = 30;
+  Timer? _resendTimer;
   String? validationError; // 유효성 검사 결과를 저장
 
   @override
@@ -48,6 +53,7 @@ class OnboardingCertificationPageState
         final authUseCase = ref.read(authUsecaseProvider);
         await authUseCase.sendSmsVerificationCode(widget.phoneNumber);
         showToastMessage('인증번호가 발송되었습니다.');
+        _startResendCountdown();
       } catch (e) {
         Log.e('SMS 발송 실패', errorObject: e);
         showToastMessage('인증번호 발송에 실패했습니다.');
@@ -77,7 +83,29 @@ class OnboardingCertificationPageState
   void dispose() {
     _codeController.dispose();
     _focusNode.dispose(); // FocusNode도 해제
+    _resendTimer?.cancel();
     super.dispose();
+  }
+
+  void _startResendCountdown() {
+    _resendTimer?.cancel();
+    setState(() {
+      _isResendEnabled = false;
+      _resendCountdown = 30;
+    });
+
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_resendCountdown == 0) {
+        timer.cancel();
+        setState(() {
+          _isResendEnabled = true;
+        });
+      } else {
+        setState(() {
+          _resendCountdown--;
+        });
+      }
+    });
   }
 
   void _validateInput(String input) {
@@ -150,23 +178,31 @@ class OnboardingCertificationPageState
                                   textStyle: Fonts.body02Regular()
                                       .copyWith(fontWeight: FontWeight.w500),
                                   textColor: palette.onSurface,
-                                  onPressed: () async {
-                                    try {
-                                      final authUseCase =
-                                          ref.read(authUsecaseProvider);
-                                      await authUseCase.sendSmsVerificationCode(
-                                          widget.phoneNumber);
-                                      safeSetState(() {
-                                        validationError = null; // 기존 오류 메시지 제거
-                                      });
-                                      _codeController.clear();
-                                      showToastMessage('인증번호가 재전송되었습니다.');
-                                    } catch (e) {
-                                      Log.e('재발송 실패', errorObject: e);
-                                      showToastMessage('인증번호 재발송에 실패했습니다.');
-                                    }
-                                  },
-                                  child: const Text('재발송'),
+                                  onPressed: _isResendEnabled
+                                      ? () async {
+                                          try {
+                                            final authUseCase =
+                                                ref.read(authUsecaseProvider);
+                                            await authUseCase
+                                                .sendSmsVerificationCode(
+                                                    widget.phoneNumber);
+                                            safeSetState(() {
+                                              validationError =
+                                                  null; // 기존 오류 메시지 제거
+                                            });
+                                            _codeController.clear();
+                                            showToastMessage('인증번호가 재전송되었습니다.');
+                                            _startResendCountdown();
+                                          } catch (e) {
+                                            Log.e('재발송 실패', errorObject: e);
+                                            showToastMessage(
+                                                '인증번호 재발송에 실패했습니다.');
+                                          }
+                                        }
+                                      : null,
+                                  child: Text(_isResendEnabled
+                                      ? '재발송'
+                                      : '00:${_resendCountdown.toString().padLeft(2, '0')}'),
                                 ),
                               ),
                             ),
