@@ -180,6 +180,9 @@ class OnboardingCertificationPageState
                                   textColor: palette.onSurface,
                                   onPressed: _isResendEnabled
                                       ? () async {
+                                          setState(() {
+                                            _isResendEnabled = false;
+                                          });
                                           try {
                                             final authUseCase =
                                                 ref.read(authUsecaseProvider);
@@ -187,8 +190,7 @@ class OnboardingCertificationPageState
                                                 .sendSmsVerificationCode(
                                                     widget.phoneNumber);
                                             safeSetState(() {
-                                              validationError =
-                                                  null; // 기존 오류 메시지 제거
+                                              validationError = null;
                                             });
                                             _codeController.clear();
                                             showToastMessage('인증번호가 재전송되었습니다.');
@@ -197,6 +199,11 @@ class OnboardingCertificationPageState
                                             Log.e('재발송 실패', errorObject: e);
                                             showToastMessage(
                                                 '인증번호 재발송에 실패했습니다.');
+                                            if (mounted) {
+                                              setState(() {
+                                                _isResendEnabled = true;
+                                              });
+                                            }
                                           }
                                         }
                                       : null,
