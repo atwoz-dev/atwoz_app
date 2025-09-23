@@ -20,7 +20,20 @@ class ProfilePreviewPage extends StatefulWidget {
 }
 
 class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
-  int currentImageNum = 1;
+  int _currentImageIndex = 0;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentImageIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +55,7 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                       children: [
                         Positioned.fill(
                           child: PageView.builder(
+                            controller: _pageController,
                             itemCount: validImages.length,
                             itemBuilder: (context, index) {
                               final image = validImages[index];
@@ -54,7 +68,7 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                               );
                             },
                             onPageChanged: (index) => setState(
-                              () => currentImageNum = index + 1,
+                              () => _currentImageIndex = index,
                             ),
                           ),
                         ),
@@ -72,7 +86,11 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Text(
-                                '$currentImageNum/${validImages.length}',
+                                '${_currentImageIndex + 1}/${validImages.length}',
+                                style: Fonts.body03Regular().copyWith(
+                                  color: Palette.colorWhite,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           )
