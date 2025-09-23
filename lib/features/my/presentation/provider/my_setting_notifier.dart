@@ -156,4 +156,15 @@ class MySettingNotifier extends _$MySettingNotifier {
       return false;
     }
   }
+
+  Future<bool> logout() async {
+    try {
+      await ref.read(authUsecaseProvider).signOut();
+      await ref.read(globalNotifierProvider.notifier).clearProfile();
+      return true;
+    } catch (e) {
+      Log.e('로그아웃 실패: $e');
+      return false;
+    }
+  }
 }
