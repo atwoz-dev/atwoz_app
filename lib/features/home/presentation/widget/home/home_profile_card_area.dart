@@ -56,19 +56,18 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
         }
 
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              // 소개받은 프로필 페이지 뷰
-              width: context.screenWidth,
-              height: context.screenHeight * 0.41,
+            // 높이가 동적으로 변하는 컨테이너
+            AspectRatio(
+              aspectRatio: 1.1,
               child: PageView.builder(
                 itemCount: profiles.length,
-                onPageChanged: (value) => setState(
-                  () => _currentPage = value,
+                onPageChanged: (index) => setState(
+                  () => _currentPage = index,
                 ),
                 itemBuilder: (context, index) {
                   final profile = profiles[index];
-
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => navigate(
@@ -88,6 +87,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                           favoriteType: profile.favoriteType,
                         );
                         if (favoriteType == null) return;
+
                         await homeNotifier.setFavoriteType(
                           profile.memberId,
                           favoriteType,
@@ -179,7 +179,6 @@ class _ProfileCardWidget extends StatelessWidget {
       width: context.screenWidth,
       padding: const EdgeInsets.symmetric(
         horizontal: 45,
-        vertical: 40,
       ),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
@@ -188,7 +187,9 @@ class _ProfileCardWidget extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Gap(20),
           Stack(
             children: [
               SizedBox(
@@ -207,6 +208,7 @@ class _ProfileCardWidget extends StatelessWidget {
           ),
           const Gap(16),
           Column(
+            mainAxisSize: MainAxisSize.min,
             // 하단 프로필 정보
             children: [
               Container(
@@ -220,16 +222,15 @@ class _ProfileCardWidget extends StatelessWidget {
                 ),
               ),
               const Gap(8),
-              SizedBox(
-                height: 40,
-                child: Text(
-                  profile.interviewContent,
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Palette.colorGrey600,
-                  ),
-                  maxLines: 2,
+              Text(
+                profile.interviewContent,
+                style: Fonts.body02Medium().copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Palette.colorGrey600,
+                  height: 1.5,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               const Gap(24),
               FavoriteButton(
@@ -237,6 +238,7 @@ class _ProfileCardWidget extends StatelessWidget {
                 onTap: onTapFavorite,
                 label: '좋아요',
               ),
+              const Gap(20),
             ],
           )
         ],
