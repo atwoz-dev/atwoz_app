@@ -1,12 +1,14 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/my/domain/model/my_profile.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/profile_sub_information.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 
-class ProfilePreviewPage extends StatelessWidget {
+class ProfilePreviewPage extends StatefulWidget {
   final MyProfile profile;
 
   const ProfilePreviewPage({
@@ -15,7 +17,29 @@ class ProfilePreviewPage extends StatelessWidget {
   });
 
   @override
+  State<ProfilePreviewPage> createState() => _ProfilePreviewPageState();
+}
+
+class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final validImages =
+        widget.profile.profileImages.whereType<MyProfileImage>().toList();
+
     return Scaffold(
       backgroundColor: Palette.colorWhite,
       body: Stack(
@@ -27,15 +51,90 @@ class ProfilePreviewPage extends StatelessWidget {
                 child: Stack(
                   children: [
                     /// 배경 이미지
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.network(
-                        profile.profileImages[0]!.imageUrl,
-                        fit: BoxFit.cover,
-                        height: context.screenHeight * 0.5,
-                      ),
+                    Stack(
+                      children: [
+                        Positioned.fill(
+                          child: PageView.builder(
+                            controller: _pageController,
+                            itemCount: validImages.length,
+                            itemBuilder: (context, index) {
+                              final image = validImages[index];
+
+                              return CachedNetworkImage(
+                                imageUrl: image.imageUrl,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: context.screenHeight * 0.5,
+                                imageBuilder: (context, imageProvider) {
+                                  // 테스트용 지연
+                                  return FutureBuilder(
+                                    future: Future.delayed(
+                                        const Duration(seconds: 2)),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState !=
+                                          ConnectionState.done) {
+                                        // 로딩 중에는 placeholder 그대로 보여줌
+                                        return Shimmer.fromColors(
+                                          baseColor: Colors.grey.shade300,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: context.screenHeight * 0.5,
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        );
+                                      }
+                                      // 지연 후 실제 이미지 표시
+                                      return Image(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: context.screenHeight * 0.5,
+                                      );
+                                    },
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    const Text('프로필 이미지 불러오기 실패..'),
+                              );
+                            },
+                          ),
+                        ),
+                        if (validImages.length > 1)
+                          Positioned(
+                            top: context.screenHeight * 0.4,
+                            right: 16,
+                            child: AnimatedBuilder(
+                              animation: _pageController,
+                              builder: (context, child) {
+                                int currentPageIndex = 0;
+                                if (_pageController.hasClients) {
+                                  // page는 double → round()로 정수 변환
+                                  currentPageIndex =
+                                      _pageController.page?.round() ??
+                                          _pageController.initialPage;
+                                }
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6.0,
+                                    vertical: 4.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.6),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Text(
+                                    '${currentPageIndex + 1}/${validImages.length}',
+                                    style: Fonts.body03Regular().copyWith(
+                                      color: Palette.colorWhite,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                      ],
                     ),
 
                     /// 그라디언트
@@ -99,27 +198,27 @@ class ProfilePreviewPage extends StatelessWidget {
                       items: [
                         SubInfoItem(
                           iconPath: IconPath.smoking,
-                          label: profile.smokingStatus.label,
+                          label: widget.profile.smokingStatus.label,
                         ),
                         SubInfoItem(
                           iconPath: IconPath.wineglass,
-                          label: profile.drinkingStatus.label,
+                          label: widget.profile.drinkingStatus.label,
                         ),
                         SubInfoItem(
                           iconPath: IconPath.school,
-                          label: profile.education.label,
+                          label: widget.profile.education.label,
                         ),
                         SubInfoItem(
                           iconPath: IconPath.bless,
-                          label: profile.religion.label,
+                          label: widget.profile.religion.label,
                         ),
                         SubInfoItem(
                           iconPath: IconPath.ruler,
-                          label: '${profile.height}cm',
+                          label: '${widget.profile.height}cm',
                         ),
                         SubInfoItem(
                           iconPath: IconPath.business,
-                          label: profile.job.label,
+                          label: widget.profile.job.label,
                         ),
                       ],
                     ),
@@ -135,7 +234,7 @@ class ProfilePreviewPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${profile.nickname}, ${profile.age}',
+                  '${widget.profile.nickname}, ${widget.profile.age}',
                   style: Fonts.header02().copyWith(
                     color: Palette.colorBlack,
                     fontWeight: FontWeight.w600,
@@ -143,7 +242,7 @@ class ProfilePreviewPage extends StatelessWidget {
                 ),
                 const Gap(6),
                 Text(
-                  '${profile.mbti} ・ ${profile.region}',
+                  '${widget.profile.mbti} ・ ${widget.profile.region}',
                   style: Fonts.body02Medium().copyWith(
                     color: Palette.colorGrey600,
                     fontWeight: FontWeight.w400,
@@ -151,7 +250,7 @@ class ProfilePreviewPage extends StatelessWidget {
                 ),
                 const Gap(6),
                 Row(
-                  children: profile.hobbies
+                  children: widget.profile.hobbies
                       .map(
                         (hobby) => _MainHobbyBadge(hobby.label),
                       )
