@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfilePreviewPage extends StatefulWidget {
   final MyProfile profile;
@@ -64,6 +65,37 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: context.screenHeight * 0.5,
+                                imageBuilder: (context, imageProvider) {
+                                  // 테스트용 지연
+                                  return FutureBuilder(
+                                    future: Future.delayed(
+                                        const Duration(seconds: 2)),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState !=
+                                          ConnectionState.done) {
+                                        // 로딩 중에는 placeholder 그대로 보여줌
+                                        return Shimmer.fromColors(
+                                          baseColor: Colors.grey.shade300,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: context.screenHeight * 0.5,
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        );
+                                      }
+                                      // 지연 후 실제 이미지 표시
+                                      return Image(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: context.screenHeight * 0.5,
+                                      );
+                                    },
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    const Text('프로필 이미지 불러오기 실패..'),
                               );
                             },
                           ),
