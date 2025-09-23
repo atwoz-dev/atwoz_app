@@ -56,19 +56,18 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
         }
 
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
+            // 높이가 동적으로 변하는 컨테이너
             SizedBox(
-              // 소개받은 프로필 페이지 뷰
-              width: context.screenWidth,
               height: context.screenHeight * 0.41,
               child: PageView.builder(
                 itemCount: profiles.length,
-                onPageChanged: (value) => setState(
-                  () => _currentPage = value,
+                onPageChanged: (index) => setState(
+                  () => _currentPage = index,
                 ),
                 itemBuilder: (context, index) {
                   final profile = profiles[index];
-
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => navigate(
@@ -88,6 +87,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                           favoriteType: profile.favoriteType,
                         );
                         if (favoriteType == null) return;
+
                         await homeNotifier.setFavoriteType(
                           profile.memberId,
                           favoriteType,
@@ -175,69 +175,72 @@ class _ProfileCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.screenWidth,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 45,
-        vertical: 40,
-      ),
-      decoration: BoxDecoration(
-        // 카드 색상 및 둥근모서리 설정
-        color: Palette.colorGrey50,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                // 상단 프로필 사진
-                width: 100,
-                height: 100,
-                child: ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: profile.profileImageUrl,
-                    fit: BoxFit.cover,
-                  ), // 추후 api 연동 시 NetworkImage로 변경
+    return SingleChildScrollView(
+      child: Container(
+        width: context.screenWidth,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 45,
+          vertical: 40,
+        ),
+        decoration: BoxDecoration(
+          // 카드 색상 및 둥근모서리 설정
+          color: Palette.colorGrey50,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  // 상단 프로필 사진
+                  width: 100,
+                  height: 100,
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: profile.profileImageUrl,
+                      fit: BoxFit.cover,
+                    ), // 추후 api 연동 시 NetworkImage로 변경
+                  ),
                 ),
-              ),
-              const BlurCoverWidget()
-            ],
-          ),
-          const Gap(16),
-          Column(
-            // 하단 프로필 정보
-            children: [
-              Container(
-                // 해시태그 리스트 뷰
-                width: double.infinity,
-                height: 18,
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: HashtagWrap(
-                  tags: profile.tags,
-                  isCenter: true,
+                const BlurCoverWidget()
+              ],
+            ),
+            const Gap(16),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              // 하단 프로필 정보
+              children: [
+                Container(
+                  // 해시태그 리스트 뷰
+                  width: double.infinity,
+                  height: 18,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: HashtagWrap(
+                    tags: profile.tags,
+                    isCenter: true,
+                  ),
                 ),
-              ),
-              const Gap(8),
-              Text(
-                profile.interviewContent,
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Palette.colorGrey600,
-                  height: 1.5,
+                const Gap(8),
+                Text(
+                  profile.interviewContent,
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Palette.colorGrey600,
+                    height: 1.5,
+                  ),
+                  maxLines: 2,
                 ),
-                maxLines: 2,
-              ),
-              const Gap(24),
-              FavoriteButton(
-                isFavoriteUser: profile.favoriteType != null,
-                onTap: onTapFavorite,
-                label: '좋아요',
-              ),
-            ],
-          )
-        ],
+                const Gap(24),
+                FavoriteButton(
+                  isFavoriteUser: profile.favoriteType != null,
+                  onTap: onTapFavorite,
+                  label: '좋아요',
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
