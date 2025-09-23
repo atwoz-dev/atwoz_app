@@ -20,13 +20,12 @@ class ProfilePreviewPage extends StatefulWidget {
 }
 
 class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
-  int _currentImageIndex = 0;
   late final PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _currentImageIndex);
+    _pageController = PageController(initialPage: 0);
   }
 
   @override
@@ -67,31 +66,40 @@ class _ProfilePreviewPageState extends State<ProfilePreviewPage> {
                                 height: context.screenHeight * 0.5,
                               );
                             },
-                            onPageChanged: (index) => setState(
-                              () => _currentImageIndex = index,
-                            ),
                           ),
                         ),
                         if (validImages.length > 1)
                           Positioned(
                             top: context.screenHeight * 0.4,
                             right: 16,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6.0,
-                                vertical: 4.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withValues(alpha: 0.6),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Text(
-                                '${_currentImageIndex + 1}/${validImages.length}',
-                                style: Fonts.body03Regular().copyWith(
-                                  color: Palette.colorWhite,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                            child: AnimatedBuilder(
+                              animation: _pageController,
+                              builder: (context, child) {
+                                int currentPageIndex = 0;
+                                if (_pageController.hasClients) {
+                                  // page는 double → round()로 정수 변환
+                                  currentPageIndex =
+                                      _pageController.page?.round() ??
+                                          _pageController.initialPage;
+                                }
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6.0,
+                                    vertical: 4.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.6),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Text(
+                                    '${currentPageIndex + 1}/${validImages.length}',
+                                    style: Fonts.body03Regular().copyWith(
+                                      color: Palette.colorWhite,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           )
                       ],
