@@ -24,7 +24,16 @@ class MatchedProfile extends ConsumerWidget {
     final matchStatus = profile.matchStatus;
 
     return Scaffold(
-      appBar: const ProfileAppbar.matched(),
+      appBar: ProfileAppbar.matched(
+        onTapInfo: () => navigate(
+          context,
+          route: AppRoute.report,
+          extra: ReportArguments(
+            name: profile.name,
+            userId: userId,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           vertical: 24.0,

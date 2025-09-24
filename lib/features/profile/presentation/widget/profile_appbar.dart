@@ -2,13 +2,21 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const ProfileAppbar({super.key, this.onBackButtonPressed}) : matched = false;
+  const ProfileAppbar({
+    super.key,
+    this.onBackButtonPressed,
+    this.onTapInfo,
+  }) : matched = false;
 
-  const ProfileAppbar.matched({super.key, this.onBackButtonPressed})
-      : matched = true;
+  const ProfileAppbar.matched({
+    super.key,
+    this.onBackButtonPressed,
+    this.onTapInfo,
+  }) : matched = true;
 
   final bool matched;
   final VoidCallback? onBackButtonPressed;
+  final VoidCallback? onTapInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class ProfileAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: onTapInfo,
           icon: const Icon(Icons.info_outline, size: 24.0),
         ),
       ],

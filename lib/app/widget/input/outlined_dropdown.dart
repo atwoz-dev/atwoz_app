@@ -124,7 +124,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           itemCount: widget.items.length,
-                          separatorBuilder: (context, index) => Divider(
+                          separatorBuilder: (context, index) => const Divider(
                             color: Palette.colorGrey100,
                             height: 2,
                           ),
@@ -226,7 +226,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
             ),
             controller: TextEditingController(
               text: widget.selectedItem != null
-                  ? widget.valueBuilder(widget.selectedItem!)
+                  ? widget.valueBuilder(widget.selectedItem as T)
                   : '',
             ),
             readOnly: true,
