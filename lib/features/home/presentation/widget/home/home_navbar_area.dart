@@ -22,6 +22,7 @@ class HomeNavbarArea extends ConsumerWidget {
           "딩동! $nickname님,\n오늘 소개해드릴 분들이에요!",
           style: Fonts.header03().copyWith(
             fontWeight: FontWeight.w700,
+            height: 1.2,
           ),
         ),
         Row(

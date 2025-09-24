@@ -5,10 +5,12 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/outlined_dropdown.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
 import 'package:atwoz_app/features/report/presentation/provider/report_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 class ReportPage extends ConsumerStatefulWidget {
@@ -146,6 +148,11 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                 if (await reportNotifier.report(widget.userId) &&
                     context.mounted) {
                   navigate(context, route: AppRoute.mainTab);
+                  showToastMessage(
+                    '신고가 정상적으로 접수되었습니다.\n상대방은 차단되어 이후에 노출되지 않습니다.',
+                    gravity: ToastGravity.TOP,
+                    toastLength: Toast.LENGTH_LONG,
+                  );
                 }
               },
               child: Text(
