@@ -55,8 +55,8 @@ class SaveProfileToHiveUseCase {
         key: 'phoneNumber',
         value: homeProfileDto.basicInfo.phoneNumber,
       );
-    } catch (e, stacktrace) {
-      throw Exception('Failed to fetch profile from server');
+    } on Exception {
+      rethrow;
     }
   }
 }

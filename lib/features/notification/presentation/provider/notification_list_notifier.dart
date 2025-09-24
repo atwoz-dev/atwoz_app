@@ -22,11 +22,15 @@ class NotificationListNotifier extends _$NotificationListNotifier {
 
   Future<void> _markAsRead(List<int> notificationIds) async {
     final repository = ref.read(notificationRepositoryProvider);
+    if(!state.hasValue) {
+      Log.e('[NotificationListState] state is not initialized');
+      return;
+    }
     try {
       await repository.markNotificationsAsRead(notificationIds);
       state = AsyncValue.data(
-        state.value!.copyWith(
-          readIds: {...state.value!.readIds, ...notificationIds},
+        state.requireValue.copyWith(
+          readIds: {...state.requireValue.readIds, ...notificationIds},
         ),
       );
     } catch (e) {

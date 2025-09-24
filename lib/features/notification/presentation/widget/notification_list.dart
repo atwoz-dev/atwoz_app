@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
@@ -7,7 +6,6 @@ import 'package:atwoz_app/app/widget/view/default_progress_indicator.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/notification/domain/model/notification_item.dart';
 import 'package:atwoz_app/features/notification/presentation/provider/notification_list_notifier.dart';
-import 'package:atwoz_app/features/notification/presentation/provider/notification_list_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

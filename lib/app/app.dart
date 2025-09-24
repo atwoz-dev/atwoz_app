@@ -6,6 +6,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/notification/notification_model.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,7 +50,7 @@ class _AppState extends ConsumerState<App> {
       child: ValueListenableBuilder(
         valueListenable: FirebaseManager().activeFcmNotification,
         builder: (context, value, child) {
-          if(value != null) {
+          if (value != null) {
             _handleFcmNotification(value);
           }
           return child ?? Container();
@@ -89,8 +90,11 @@ class _AppState extends ConsumerState<App> {
     final userId = data.senderId;
     if (!data.notificationType.isConnectedProfile) return;
     if (userId == null) {
-      assert(false,
-      'notification type [${data.notificationType}] need to senderId');
+      assert(
+        false,
+        'notification type [${data.notificationType}] need to senderId',
+      );
+      Log.e('notification type [${data.notificationType}] requires senderId but was null');
       return;
     }
     rootNavigatorKey.currentContext?.goNamed(

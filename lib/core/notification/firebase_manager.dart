@@ -25,9 +25,6 @@ class FirebaseManager {
     final notification = _fcmNotification;
     return notification;
   }
-  FcmNotification? get debugV {
-    return _fcmNotification.value;
-  }
 
   FirebaseManager._internal();
 
