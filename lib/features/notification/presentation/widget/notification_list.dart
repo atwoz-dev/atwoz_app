@@ -57,8 +57,7 @@ class _ReadAllNotifications extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () =>
-          ref.read(notificationListNotifierProvider.notifier).markAllAsRead(),
+      onTap: ref.read(notificationListNotifierProvider.notifier).markAllAsRead,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         margin: const EdgeInsets.symmetric(horizontal: 20.0),

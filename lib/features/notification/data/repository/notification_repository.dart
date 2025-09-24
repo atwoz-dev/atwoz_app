@@ -24,8 +24,9 @@ class NotificationRepository extends BaseRepository {
       }
       final List<dynamic> dataList = response['data'];
       return dataList
-          .map(
-              (item) => NotificationItem.fromJson(item as Map<String, dynamic>))
+          .map((item) => NotificationItem.fromJson(
+                item as Map<String, dynamic>,
+              ))
           .toList();
     } catch (e) {
       Log.e('Error fetching notifications: $e');
@@ -33,8 +34,6 @@ class NotificationRepository extends BaseRepository {
     }
   }
 
-  /// Marks a list of notifications as read.
-  /// API: PATCH /notifications/read
   Future<void> markNotificationsAsRead(List<int> notificationIds) async {
     if (notificationIds.isEmpty) {
       return;

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert'; // jsonEncode 및 jsonDecode를 위해 추가
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:atwoz_app/core/notification/notification_model.dart';
@@ -23,7 +23,6 @@ class FirebaseManager {
 
   ValueNotifier<FcmNotification?> get activeFcmNotification {
     final notification = _fcmNotification;
-    // _fcmNotification.value = null;
     return notification;
   }
   FcmNotification? get debugV {

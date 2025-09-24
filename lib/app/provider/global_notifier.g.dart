@@ -6,7 +6,7 @@ part of 'global_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$globalNotifierHash() => r'c735c5f2ce41d086e5513476ea8ac106999f110f';
+String _$globalNotifierHash() => r'485f9f66870f2e2a780ae6a52e8df0eb59a47537';
 
 /// See also [GlobalNotifier].
 @ProviderFor(GlobalNotifier)
