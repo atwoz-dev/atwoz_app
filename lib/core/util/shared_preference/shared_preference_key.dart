@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
-import 'package:atwoz_app/features/my/data/dto/server_notification_type.dart';
+import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
 
 part 'parser.dart';
 
