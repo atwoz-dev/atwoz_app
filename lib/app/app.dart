@@ -27,10 +27,7 @@ class App extends ConsumerStatefulWidget {
 
   static void removeSplash() {
     if (_widgetsBinding == null) return;
-    Future.delayed(
-      const Duration(seconds: 1),
-      _widgetsBinding?.allowFirstFrame,
-    );
+    _widgetsBinding?.allowFirstFrame();
     _widgetsBinding = null;
   }
 }

@@ -64,5 +64,13 @@ class UserRepository extends BaseRepository {
       '$path/code?phoneNumber=${phoneNumber.removePhoneFormat}',
       requiresAccessToken: false,
     );
+    //TODO(mh): 테스트 완료 시 변경
+    // await apiService.postJson(
+    //   '$path/code',
+    //   data: {
+    //     'phoneNumber': phoneNumber.removePhoneFormat,
+    //   },
+    //   requiresAccessToken: false,
+    // );
   }
 }
