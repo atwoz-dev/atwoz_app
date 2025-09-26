@@ -69,11 +69,6 @@ firebase-debug.log
 # Generated JSON files
 *.json
 
-#
-*.g.dart
-*.freezed.dart
-
-
 # Flutter 관련
 android/app/src/main/res/drawable-*/splash.png
 android/app/src/main/res/drawable/splash.png
