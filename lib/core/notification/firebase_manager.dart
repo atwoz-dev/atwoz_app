@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:atwoz_app/core/notification/notification_model.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
 import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
@@ -16,6 +18,13 @@ class FirebaseManager {
   final _initialized = Completer();
 
   factory FirebaseManager() => _instance;
+
+  final _fcmNotification = ValueNotifier<FcmNotification?>(null);
+
+  ValueNotifier<FcmNotification?> get activeFcmNotification {
+    final notification = _fcmNotification;
+    return notification;
+  }
 
   FirebaseManager._internal();
 
@@ -35,7 +44,10 @@ class FirebaseManager {
         settings.authorizationStatus.isAllowed,
       );
       await _initializeLocalNotifications();
+
       _initialized.complete();
+
+      _firebaseMessagingBackgroundHandler(await FirebaseMessaging.instance.getInitialMessage());
     } catch (e, stack) {
       if (!_initialized.isCompleted) {
         _initialized.completeError(e, stack);
@@ -68,8 +80,8 @@ class FirebaseManager {
   }
 
   Future<void> _registerFcmHandlers() async {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen(_firebaseMessagingBackgroundHandler);
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
       // TODO: 서버에 토큰 저장 로직 추가
       debugPrint('FCM Token refreshed: $newToken');
@@ -77,14 +89,18 @@ class FirebaseManager {
   }
 
   static Future<void> _firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
+    RemoteMessage? message,
   ) async {
-    Log.d('background event handled ${message.messageId} ${message.data} ${message.notification?.title} ${message.notification?.body} ${message.messageType}');
+    if(message == null) return;
+    _handleBackgroundNotification(message.data);
   }
 
   static void _firebaseMessagingForegroundHandler(RemoteMessage message) {
     final notification = message.notification;
+
     if (notification == null) return;
+
+    final payload = jsonEncode(message.data);
 
     _localNotificationsPlugin.show(
       Random().nextInt(1000),
@@ -99,7 +115,20 @@ class FirebaseManager {
         ),
         iOS: DarwinNotificationDetails(),
       ),
+      payload: payload, // Store fcm data in payload
     );
+  }
+
+  static void _handleBackgroundNotification(Map<String, dynamic> json) {
+    try {
+      final data = FcmNotification.fromJson(json);
+
+      _instance._fcmNotification.value = data;
+    } catch (e) {
+      Log.e(
+        'Error handling FCM data: $json, error: $e',
+      );
+    }
   }
 }
 
@@ -117,14 +146,31 @@ final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future<void> _initializeLocalNotifications() async {
-  await _localNotificationsPlugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@drawable/ic_app'),
-    iOS: DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+  await _localNotificationsPlugin.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('@drawable/ic_app'),
+      iOS: DarwinInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+      ),
     ),
-  ));
+    onDidReceiveNotificationResponse: _onDidReceiveLocalNotificationResponse,
+  );
+}
+
+// Handler for when a local notification is tapped
+void _onDidReceiveLocalNotificationResponse(
+    NotificationResponse notificationResponse) async {
+  final payload = notificationResponse.payload;
+  if (payload != null && payload.isNotEmpty) {
+    try {
+      final data = jsonDecode(payload);
+      FirebaseManager._handleBackgroundNotification(data); // Reuse FCM handling logic
+    } catch (e) {
+      Log.e('Error handling local notification payload: $payload, error: $e');
+    }
+  }
 }
 
 const _defaultChannelId = 'com.atwoz_app.urgent';

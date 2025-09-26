@@ -23,7 +23,7 @@ class SaveProfileToHiveUseCase {
   })  : _repository = repository,
         _secureStorage = secureStorage;
 
-  Future<bool> execute() async {
+  Future<void> execute() async {
     try {
       final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
 
@@ -48,14 +48,15 @@ class SaveProfileToHiveUseCase {
       // SecureStorage 저장
 
       await _secureStorage.write(
-          key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
+        key: 'kakaoId',
+        value: homeProfileDto.basicInfo.kakaoId,
+      );
       await _secureStorage.write(
-          key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
-
-      return true;
-    } catch (e, stacktrace) {
-      Log.e('Hive에 프로필 저장 실패: $e $stacktrace');
-      return false;
+        key: 'phoneNumber',
+        value: homeProfileDto.basicInfo.phoneNumber,
+      );
+    } on Exception {
+      rethrow;
     }
   }
 }

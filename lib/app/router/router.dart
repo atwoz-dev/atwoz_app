@@ -44,7 +44,6 @@ import 'named_go_route.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>();
 
 // State Provider Example
 final authProvider = StateProvider<bool>((ref) => false);
@@ -164,7 +163,16 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.report.name,
-        builder: (context, state) => const ReportPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! ReportArguments) {
+            return const SizedBox.shrink();
+          }
+          return ReportPage(
+            name: args.name,
+            userId: args.userId,
+          );
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceRegister.name,
