@@ -10,7 +10,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +37,12 @@ class OnboardingCertificationPageState
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
   bool _isButtonEnabled = false;
-  bool _isResendEnabled = true;
-  int _resendCountdown = 30;
+  int _resendCountdown = 0;
   Timer? _resendTimer;
   String? validationError; // 유효성 검사 결과를 저장
+
+  // _resendCountdown이 0일 때만 true
+  bool get _isResendEnabled => _resendCountdown == 0;
 
   @override
   void initState() {
@@ -82,30 +83,9 @@ class OnboardingCertificationPageState
   @override
   void dispose() {
     _codeController.dispose();
-    _focusNode.dispose(); // FocusNode도 해제
+    _focusNode.dispose();
     _resendTimer?.cancel();
     super.dispose();
-  }
-
-  void _startResendCountdown() {
-    _resendTimer?.cancel();
-    setState(() {
-      _isResendEnabled = false;
-      _resendCountdown = 30;
-    });
-
-    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_resendCountdown == 0) {
-        timer.cancel();
-        setState(() {
-          _isResendEnabled = true;
-        });
-      } else {
-        setState(() {
-          _resendCountdown--;
-        });
-      }
-    });
   }
 
   void _validateInput(String input) {
@@ -123,12 +103,21 @@ class OnboardingCertificationPageState
     });
   }
 
+  void _startResendCountdown() {
+    _resendTimer?.cancel();
+    setState(() => _resendCountdown = 30);
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() => _resendCountdown--);
+      if (_resendCountdown == 0) timer.cancel();
+    });
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque, // 빈 공간에서도 이벤트를 감지
       onTap: () {
-        FocusScope.of(context).unfocus(); // 외부를 클릭했을 때 focus 해제
+        FocusScope.of(context).unfocus(); // 외부 클릭 시 focus 해제
       },
       child: Column(
         children: [
@@ -148,8 +137,7 @@ class OnboardingCertificationPageState
                   context: context,
                   label: '인증번호',
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.stretch, // 에러 메시지를 왼쪽 정렬
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       IntrinsicHeight(
                         child: Row(
@@ -163,7 +151,6 @@ class OnboardingCertificationPageState
                                 keyboardType: TextInputType.number,
                                 hintText: '000000',
                                 fillColor: Palette.colorGrey100,
-                                // errorText: validationError,
                                 onFieldSubmitted: _validateInput,
                               ),
                             ),
@@ -180,9 +167,6 @@ class OnboardingCertificationPageState
                                   textColor: palette.onSurface,
                                   onPressed: _isResendEnabled
                                       ? () async {
-                                          setState(() {
-                                            _isResendEnabled = false;
-                                          });
                                           try {
                                             final authUseCase =
                                                 ref.read(authUsecaseProvider);
@@ -191,19 +175,14 @@ class OnboardingCertificationPageState
                                                     widget.phoneNumber);
                                             safeSetState(() {
                                               validationError = null;
+                                              _codeController.clear();
+                                              _startResendCountdown();
                                             });
-                                            _codeController.clear();
                                             showToastMessage('인증번호가 재전송되었습니다.');
-                                            _startResendCountdown();
                                           } catch (e) {
                                             Log.e('재발송 실패', errorObject: e);
                                             showToastMessage(
                                                 '인증번호 재발송에 실패했습니다.');
-                                            if (mounted) {
-                                              setState(() {
-                                                _isResendEnabled = true;
-                                              });
-                                            }
                                           }
                                         }
                                       : null,
@@ -216,7 +195,7 @@ class OnboardingCertificationPageState
                           ],
                         ),
                       ),
-                      if (validationError != null) // 에러 메시지가 있을 때만 표시
+                      if (validationError != null)
                         Text(
                           validationError!,
                           style: Fonts.body03Regular(palette.error),
@@ -236,11 +215,12 @@ class OnboardingCertificationPageState
                       final inputCode = _codeController.text;
 
                       try {
-                        // 1. 인증번호 검증
                         final userData = await authUseCase.signIn(
-                            UserSignInRequest(
-                                phoneNumber: widget.phoneNumber,
-                                code: inputCode));
+                          UserSignInRequest(
+                            phoneNumber: widget.phoneNumber,
+                            code: inputCode,
+                          ),
+                        );
 
                         if (userData.isProfileSettingNeeded) {
                           navigate(context, route: AppRoute.signUp);
