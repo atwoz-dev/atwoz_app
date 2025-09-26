@@ -1,80 +1,173 @@
-import 'package:atwoz_app/features/notification/data/dto/notification_response.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/notification/data/dto/notification_preferences_dto.dart';
+import 'package:atwoz_app/features/notification/domain/model/notification_item.dart';
+import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../core/util/shared_preference/shared_preference.dart';
+
+final notificationRepositoryProvider = Provider<NotificationRepository>(
+  (ref) => NotificationRepository(ref),
+);
 
 class NotificationRepository extends BaseRepository {
-  NotificationRepository({required Ref ref}) : super(ref, '/notifications');
+  NotificationRepository(Ref ref) : super(ref, '/notification-preferences');
 
-  /// 실제 데이터를 서버에서 가져오는 메서드 (fetchData 활용)
-  Future<List<NotificationModel>> fetchNotifications() async {
-    // TODO: api 연결 후 교체
-    // return await fetchData<List<NotificationModel>>(
-    //   endpoint: path,
-    //   converter: (data) {
-    //     // JSON 데이터를 `NotificationModel` 리스트로 변환
-    //     return List<Map<String, dynamic>>.from(data!)
-    //         .map((json) => NotificationModel.fromJson(json))
-    //         .toList();
-    //   },
-    // );
-    return Future.value([
-      NotificationModel.create(
-        notificationId: 1,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.request(),
-        senderName: '차은우',
-      ),
-      NotificationModel.create(
-        notificationId: 2,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.rejectProfile(),
-        senderName: '마카롱조아',
-      ),
-      NotificationModel.create(
-        notificationId: 3,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.message(),
-        senderName: '차은우',
-      ),
-      NotificationModel.create(
-        notificationId: 4,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.rejectHeart(),
-        senderName: '마카롱조아',
-      ),
-      NotificationModel.create(
-        notificationId: 5,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.match(),
-        senderName: '마카롱조아',
-      ),
-      NotificationModel.create(
-        notificationId: 6,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.notification(),
-        content: '보다 더 나를 표현할 수 있는 프로필 사진으로 변경해 보세요.',
-      ),
-      NotificationModel.create(
-        notificationId: 7,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.notification(),
-        content: '아직 프로필 소개 글을 작성하지 않으셨네요! 인터뷰를 작성하시면 무료 하트 30개를 지급해 드립니다.',
-      ),
-      NotificationModel.create(
-        notificationId: 8,
-        recipientId: 101,
-        date: DateTime.now(),
-        type: const NotificationListItemType.notification(),
-        content:
-            '작성하신 게시글에 부적절한 내용이 포함되어 있습니다. 다른 사용자들에게 불쾌감을 줄 수 있는 게시글은 삭제될 수 있습니다.',
-      ),
-    ]);
+  Future<List<NotificationItem>> fetchNotifications() async {
+    try {
+      final response = await apiService.getJson('/notifications');
+      if (response['data'] is! List) {
+        throw Exception('Invalid response format: data is not a List');
+      }
+      final List<dynamic> dataList = response['data'];
+      return dataList
+          .map((item) => NotificationItem.fromJson(
+                item as Map<String, dynamic>,
+              ))
+          .toList();
+    } catch (e) {
+      Log.e('Error fetching notifications: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> markNotificationsAsRead(List<int> notificationIds) async {
+    if (notificationIds.isEmpty) {
+      return;
+    }
+    try {
+      await apiService.patchJson(
+        '/notifications',
+        data: {'notificationIds': notificationIds},
+      );
+    } catch (e) {
+      Log.e('Error marking notifications as read: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<ServerNotificationType>> loadEnableNotificationTypes() async {
+    try {
+      final response = await apiService.getJson(path);
+      final notificationPreferences = NotificationPreferencesDto.fromJson(
+        response['data'] as Map<String, dynamic>,
+      );
+
+      final enabledTypes =
+          _parseEnabledServerTypes(notificationPreferences.preferences);
+
+      await _saveToLocal(enabledTypes);
+
+      return enabledTypes;
+    } catch (e) {
+      Log.e('알림 설정 조회 중 오류 발생: $e');
+      return _localEnableNotificationTypes;
+    }
+  }
+
+  List<ServerNotificationType> _parseEnabledServerTypes(
+    Map<String, bool> serverPreferences,
+  ) {
+    return ServerNotificationType.values
+        .where((type) => serverPreferences[type.key] == true)
+        .toList();
+  }
+
+  List<ServerNotificationType> get _localEnableNotificationTypes {
+    return SharedPreferenceManager.getValue(
+          SharedPreferenceKeys.enabledNotifications,
+        ) ??
+        [];
+  }
+
+  Future<void> saveEnableNotificationTypes(
+    List<ServerNotificationType> enabledTypes,
+  ) async {
+    await _syncToServer(enabledTypes);
+    await _saveToLocal(enabledTypes);
+  }
+
+  Future<void> _saveToLocal(List<ServerNotificationType> enabledTypes) async {
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.enabledNotifications,
+      enabledTypes,
+    );
+  }
+
+  Future<void> _syncToServer(List<ServerNotificationType> enabledTypes) async {
+    try {
+      final serverPreferences = Map.fromEntries(
+        ServerNotificationType.values.map(
+          (type) => MapEntry(type.key, enabledTypes.contains(type)),
+        ),
+      );
+
+      await apiService.postJson(
+        path,
+        data: {'preferences': serverPreferences},
+      );
+    } catch (e) {
+      throw Exception('서버 알림 설정 동기화 실패: $e');
+    }
+  }
+
+  Future<void> enableAllNotifications() async {
+    await _updateNotificationPermission(true);
+    final allEnabled = ServerNotificationType.values.toList();
+    await saveEnableNotificationTypes(allEnabled);
+  }
+
+  Future<void> disableAllNotifications() async {
+    await _updateNotificationPermission(false);
+    await saveEnableNotificationTypes([]);
+  }
+
+  Future<void> _updateNotificationPermission(bool allowed) async {
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.notificationAllowed,
+      allowed,
+    );
+  }
+
+  Future<bool> get notificationEnabled async {
+    final allowed = SharedPreferenceManager.getValue(
+          SharedPreferenceKeys.notificationAllowed,
+        ) ??
+        false;
+
+    if (!allowed) return false;
+
+    final status = await FirebaseManager().getNotificationPermissionStatus();
+    if (status.isAllowed) return true;
+
+    await _updateNotificationPermission(false);
+    return false;
+  }
+
+  Future<bool> requestNotificationAllowStatusUpdate(bool allow) async {
+    if (!allow) {
+      await disableAllNotifications();
+      return true;
+    }
+
+    final status = await FirebaseManager().getNotificationPermissionStatus();
+    if (status.isDenied) {
+      await disableAllNotifications();
+      return false;
+    }
+
+    if (status.isNotDetermined) {
+      final newStatus = await FirebaseManager().requestNotificationPermission();
+      if (newStatus.authorizationStatus.isDenied) {
+        await disableAllNotifications();
+        return false;
+      }
+    }
+
+    await enableAllNotifications();
+    return true;
   }
 }

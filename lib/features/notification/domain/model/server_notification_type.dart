@@ -1,5 +1,6 @@
 /// 서버에서 사용하는 알림 타입 enum
 enum ServerNotificationType {
+  unknown(''),
   matchRequest('MATCH_REQUEST'),
   matchAccept('MATCH_ACCEPT'),
   matchReject('MATCH_REJECT'),
@@ -23,4 +24,15 @@ enum ServerNotificationType {
 
   static ServerNotificationType? tryParse(String? value) =>
       _byValue[value?.toUpperCase()];
+
+  static ServerNotificationType parse(String? value) =>
+      _byValue[value?.toUpperCase()] ?? unknown;
+
+  bool get isConnectedProfile => [
+        like,
+        matchAccept,
+        matchRequest,
+        profileExchangeAccept,
+        profileExchangeRequest,
+      ].contains(this);
 }
