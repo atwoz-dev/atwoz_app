@@ -1,6 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
+import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/my/my.dart';
@@ -58,11 +58,22 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           ),
           _AccountSettingItem(
             children: [
-              Text(
-                "로그아웃",
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Palette.colorBlack,
+              GestureDetector(
+                onTap: () async {
+                  final router = ref.read(routerProvider);
+                  if (await ref
+                          .read(mySettingNotifierProvider.notifier)
+                          .logout() &&
+                      context.mounted) {
+                    router.goNamed(AppRoute.onboard.name);
+                  }
+                },
+                child: Text(
+                  "로그아웃",
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Palette.colorBlack,
+                  ),
                 ),
               ),
             ],
