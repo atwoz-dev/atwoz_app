@@ -24,7 +24,7 @@ class SaveProfileToHiveUseCase {
   })  : _repository = repository,
         _localStorage = localStorage;
 
-  Future<bool> execute() async {
+  Future<void> execute() async {
     try {
       final homeProfileDto = await _repository.getProfile(); // 서버에서 프로필 가져오기
 
@@ -47,7 +47,6 @@ class SaveProfileToHiveUseCase {
       await box.put('profile', cachedUserProfile); // Hive에 저장
 
       // SecureStorage 저장
-
       if (homeProfileDto.basicInfo.kakaoId != null) {
         await _localStorage.saveEncrypted(
             'kakaoId', homeProfileDto.basicInfo.kakaoId!);
@@ -57,9 +56,8 @@ class SaveProfileToHiveUseCase {
           'phoneNumber', homeProfileDto.basicInfo.phoneNumber);
 
       return true;
-    } catch (e, stacktrace) {
-      Log.e('Hive에 프로필 저장 실패: $e $stacktrace');
-      return false;
+    } on Exception {
+      rethrow;
     }
   }
 }

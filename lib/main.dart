@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/provider/default_provider_observer.dart';
@@ -25,6 +26,7 @@ void main() {
     /// 환경 변수 초기화
     await Config.initialize(); // 여기에서 호출
     await SharedPreferenceManager.initialize();
+    await FirebaseManager().initialize();
 
     /// 기기 방향 세로로 고정
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[

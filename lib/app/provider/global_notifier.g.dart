@@ -1,0 +1,26 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'global_notifier.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$globalNotifierHash() => r'485f9f66870f2e2a780ae6a52e8df0eb59a47537';
+
+/// See also [GlobalNotifier].
+@ProviderFor(GlobalNotifier)
+final globalNotifierProvider =
+    NotifierProvider<GlobalNotifier, AppGlobalState>.internal(
+  GlobalNotifier.new,
+  name: r'globalNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$globalNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$GlobalNotifier = Notifier<AppGlobalState>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
