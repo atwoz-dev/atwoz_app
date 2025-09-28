@@ -205,6 +205,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
         '요청을 수락하시겠어요?\n'
         '상대방과 메시지를 주고받을 수 있어요!',
       ),
+      buttonVerticalPadding: 8,
     );
   }
 }
