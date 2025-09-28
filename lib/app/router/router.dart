@@ -41,7 +41,6 @@ import 'named_go_route.dart';
 
 // Global Navigator Keys
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>();
 
 // State Provider Example
 final authProvider = StateProvider<bool>((ref) => false);

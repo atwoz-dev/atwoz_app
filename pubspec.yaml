@@ -102,16 +102,10 @@ gen:
 
 # dart run flutter_native_splash:create
 flutter_native_splash:
-  image: "assets/images/logo.png"
-  # dark_image: ""
-  # background_image: ""
+  image: "assets/images/splash.png"
   color: "#FFFFFF"
   android: true
-  ios:
-    true1
-    # android_12:
-  #   image: ""
-  #   image_dark: ""
+  ios: true
 
 # flutter pub run flutter_launcher_icons:main
 flutter_launcher_icons:
