@@ -19,7 +19,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
   final userRepository = ref.read(userRepositoryProvider);
@@ -49,7 +48,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     try {
       await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
       final success = await _registerDeviceToServer();
-      if(!success) {
+      if (!success) {
         await _localStorage.saveEncrypted(_accessToken, '');
         throw Exception('device registration failed: clear user token');
       }
@@ -64,14 +63,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   @override
   Future<void> signOut() async {
     final Uri uri = Uri.parse(Config.baseUrl);
-    final cookieJar = await _apiService.cookieJar;
+    final cookieJar = _apiService.cookieJar;
     // TODO(Han): notification 초기화 필요
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
-
-    await _localStorage.clear();
-    await _localStorage.clearEncrypted();
 
     Log.d("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
   }

@@ -2,6 +2,8 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final router = ref.read(routerProvider);
     return Scaffold(
       appBar: const DefaultAppBar(title: "계정 설정"),
       body: Column(
@@ -52,7 +55,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
               Switch(
                 value: _isSwitched,
                 inactiveTrackColor: const Color(0xffDEDEDE),
-                onChanged: _handleDormantChange,
+                onChanged: (value) => _handleDormantChange(value, router),
               ),
             ],
           ),
@@ -60,13 +63,25 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final router = ref.read(routerProvider);
-                  if (await ref
-                          .read(mySettingNotifierProvider.notifier)
-                          .logout() &&
-                      context.mounted) {
-                    router.goNamed(AppRoute.onboard.name);
+                  final isLogOutCompleted = await ref
+                      .read(mySettingNotifierProvider.notifier)
+                      .logout();
+                  if (!context.mounted) return;
+                  if (!isLogOutCompleted) {
+                    ErrorDialog.open(
+                      context,
+                      error: DialogueErrorType.failSignOut,
+                      onConfirm: context.pop,
+                    );
+
+                    return;
                   }
+
+                  navigate(
+                    context,
+                    route: AppRoute.onboard,
+                    method: NavigationMethod.go,
+                  );
                 },
                 child: Text(
                   "로그아웃",
@@ -97,7 +112,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
     );
   }
 
-  void _handleDormantChange(bool value) async {
+  void _handleDormantChange(bool value, GoRouter router) async {
     // TODO(Han): 휴면 상태에서 해당 동작이 가능한지 확인 필요
     if (!value) return;
 
@@ -109,7 +124,21 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
             .read(mySettingNotifierProvider.notifier)
             .deactiveAccount();
         if (!mounted) return;
-        context.pop(success);
+        if (!success) {
+          ErrorDialog.open(
+            context,
+            error: DialogueErrorType.unknown,
+            onConfirm: () => context
+              ..pop()
+              ..pop(),
+          );
+        }
+
+        navigate(
+          context,
+          route: AppRoute.onboard,
+          method: NavigationMethod.go,
+        );
       },
     );
 

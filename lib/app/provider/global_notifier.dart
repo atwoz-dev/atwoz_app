@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/state/global_state.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/util/util.dart';
@@ -6,7 +7,6 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -62,8 +62,11 @@ class GlobalNotifier extends _$GlobalNotifier {
     return await getProfileFromHive();
   }
 
-  Future<void> clearProfile() async {
+  Future<bool> clearProfile() async {
     try {
+      // 로그아웃
+      await ref.read(authUsecaseProvider).signOut();
+
       // CachedUserProfile 박스 열기 또는 참조
       final profileBox = Hive.isBoxOpen(CachedUserProfile.boxName)
           ? Hive.box<CachedUserProfile>(CachedUserProfile.boxName)
@@ -83,9 +86,13 @@ class GlobalNotifier extends _$GlobalNotifier {
       await introducedProfilesBox.clear();
       await introducedProfilesBox.close();
 
-      await const FlutterSecureStorage().deleteAll();
+      // FlutterSecureStorage에 저장된 데이터 모두 삭제
+      await ref.read(localStorageProvider).clearEncrypted();
+
+      return true;
     } catch (e) {
       Log.e('Failed to clear profile: $e');
+      return false;
     }
   }
 }

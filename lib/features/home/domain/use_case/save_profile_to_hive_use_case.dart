@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
@@ -9,19 +10,19 @@ import 'package:hive/hive.dart';
 final saveProfileToHiveUseCaseProvider = Provider.autoDispose(
   (ref) => SaveProfileToHiveUseCase(
     repository: ref.read(homeProfileRepositoryProvider),
-    secureStorage: const FlutterSecureStorage(),
+    localStorage: ref.read(localStorageProvider),
   ),
 );
 
 class SaveProfileToHiveUseCase {
   final HomeProfileRepository _repository;
-  final FlutterSecureStorage _secureStorage;
+  final LocalStorage _localStorage;
 
   SaveProfileToHiveUseCase({
     required HomeProfileRepository repository,
-    required FlutterSecureStorage secureStorage,
+    required LocalStorage localStorage,
   })  : _repository = repository,
-        _secureStorage = secureStorage;
+        _localStorage = localStorage;
 
   Future<bool> execute() async {
     try {
@@ -47,10 +48,13 @@ class SaveProfileToHiveUseCase {
 
       // SecureStorage 저장
 
-      await _secureStorage.write(
-          key: 'kakaoId', value: homeProfileDto.basicInfo.kakaoId);
-      await _secureStorage.write(
-          key: 'phoneNumber', value: homeProfileDto.basicInfo.phoneNumber);
+      if (homeProfileDto.basicInfo.kakaoId != null) {
+        await _localStorage.saveEncrypted(
+            'kakaoId', homeProfileDto.basicInfo.kakaoId!);
+      }
+
+      await _localStorage.saveEncrypted(
+          'phoneNumber', homeProfileDto.basicInfo.phoneNumber);
 
       return true;
     } catch (e, stacktrace) {

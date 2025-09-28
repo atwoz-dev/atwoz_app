@@ -159,8 +159,13 @@ class MySettingNotifier extends _$MySettingNotifier {
 
   Future<bool> logout() async {
     try {
-      await ref.read(authUsecaseProvider).signOut();
-      await ref.read(globalNotifierProvider.notifier).clearProfile();
+      final isProfileCleared =
+          await ref.read(globalNotifierProvider.notifier).clearProfile();
+
+      if (!isProfileCleared) {
+        return false;
+      }
+
       return true;
     } catch (e) {
       Log.e('로그아웃 실패: $e');
