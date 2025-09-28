@@ -9,6 +9,7 @@ import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_us
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'global_notifier.g.dart';
 
@@ -76,6 +77,9 @@ class GlobalNotifier extends _$GlobalNotifier {
 
       // FlutterSecureStorage에 저장된 데이터 모두 삭제
       await ref.read(localStorageProvider).clearEncrypted();
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
 
       return true;
     } catch (e) {
