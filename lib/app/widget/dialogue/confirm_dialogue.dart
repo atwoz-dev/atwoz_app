@@ -26,6 +26,7 @@ extension ConfirmDialogueX on BuildContext {
   }) async =>
       showDialog(
         barrierColor: Colors.transparent,
+        useSafeArea: false,
         context: this,
         builder: (_) => _ConfirmDialog(
           submit: submit,
@@ -45,6 +46,7 @@ extension ConfirmDialogueX on BuildContext {
   }) async =>
       showDialog(
         barrierColor: Colors.transparent,
+        useSafeArea: false,
         context: this,
         builder: (_) => _ConfirmDialog(
           submit: submit,
