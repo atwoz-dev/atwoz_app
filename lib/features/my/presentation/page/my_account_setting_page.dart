@@ -132,6 +132,8 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
               ..pop()
               ..pop(),
           );
+
+          return;
         }
 
         navigate(
