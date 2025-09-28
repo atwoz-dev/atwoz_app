@@ -1,7 +1,6 @@
 import 'package:atwoz_app/app/state/global_state.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
@@ -51,7 +50,7 @@ class GlobalNotifier extends _$GlobalNotifier {
     return await ref.read(getProfileFromHiveUseCaseProvider).execute();
   }
 
-  Future<bool> clearProfile() async {
+  Future<bool> clearAllData() async {
     try {
       // 로그아웃
       await ref.read(authUsecaseProvider).signOut();

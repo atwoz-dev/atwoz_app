@@ -160,7 +160,7 @@ class MySettingNotifier extends _$MySettingNotifier {
   Future<bool> logout() async {
     try {
       final isProfileCleared =
-          await ref.read(globalNotifierProvider.notifier).clearProfile();
+          await ref.read(globalNotifierProvider.notifier).clearAllData();
 
       if (!isProfileCleared) {
         return false;
