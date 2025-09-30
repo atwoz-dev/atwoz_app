@@ -25,7 +25,7 @@ class ReportNotifier extends _$ReportNotifier {
     );
   }
 
-  Future<bool> report(int userId) async {
+  Future<bool> report() async {
     try {
       await ref.read(sendReportUseCaseProvider).execute(state);
       return true;
@@ -34,9 +34,9 @@ class ReportNotifier extends _$ReportNotifier {
     }
   }
 
-  Future<bool> block(int userId) async {
+  Future<bool> block() async {
     try {
-      await ref.read(blockUserUseCaseProvider).execute(userId);
+      await ref.read(blockUserUseCaseProvider).execute(state.reporteeId);
       return true;
     } catch (e) {
       return false;
