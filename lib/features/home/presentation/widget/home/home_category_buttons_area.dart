@@ -25,6 +25,7 @@ class HomeCategoryButtonsArea extends ConsumerWidget {
         ),
         const Gap(16),
         Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(
             horizontal: 45.5,
             vertical: 24,

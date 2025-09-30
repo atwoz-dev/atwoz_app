@@ -86,7 +86,6 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                           ImagePath.homeTest,
                           fit: BoxFit.cover,
                           width: context.screenWidth,
-                          height: 89,
                         ),
                       ),
                     ],
