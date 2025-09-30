@@ -135,8 +135,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               border: const BorderSide(color: Color(0xffE1E1E1)),
               primary: Colors.white,
               onPressed: () async {
-                final isBlockSuccess =
-                    await reportNotifier.block(widget.userId);
+                final isBlockSuccess = await reportNotifier.block();
 
                 if (!context.mounted) return;
                 if (!isBlockSuccess) {
@@ -169,8 +168,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               onPressed: () async {
                 if (reportState.reason == null) return;
 
-                final isReportSuccess =
-                    await reportNotifier.report(widget.userId);
+                final isReportSuccess = await reportNotifier.report();
 
                 if (!context.mounted) return;
                 if (!isReportSuccess) {
@@ -179,6 +177,8 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                     error: DialogueErrorType.unknown,
                     onConfirm: context.pop,
                   );
+
+                  return;
                 }
 
                 navigate(context, route: AppRoute.mainTab);
