@@ -44,13 +44,14 @@ class IdealTypeSettingPage extends ConsumerWidget {
               primary: data.isFilterPossible
                   ? Palette.colorPrimary500
                   : Palette.colorGrey200,
-              onPressed: () async {
-                if (!data.isFilterPossible) return;
-                if (await idealTypeNotifier.updateIdealType() &&
-                    context.mounted) {
-                  return context.pop();
-                }
-              },
+              onPressed: data.isFilterPossible
+                  ? () async {
+                      if (await idealTypeNotifier.updateIdealType() &&
+                          context.mounted) {
+                        return context.pop();
+                      }
+                    }
+                  : null,
               child: Text(
                 '필터 적용하기',
                 style: Fonts.body01Medium(

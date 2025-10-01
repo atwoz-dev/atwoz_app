@@ -29,13 +29,13 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealTypeState> {
     if (!state.hasValue) return;
     final current = state.requireValue;
 
-    final isFileterPossible =
+    final isFilterPossible =
         state.requireValue.originalIdealType != updateFn(current.idealType);
 
     state = AsyncData(
       current.copyWith(
         idealType: updateFn(current.idealType),
-        isFilterPossible: isFileterPossible,
+        isFilterPossible: isFilterPossible,
       ),
     );
   }
