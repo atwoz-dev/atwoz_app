@@ -75,12 +75,33 @@ class ExamRepository extends BaseRepository {
     }
   }
 
+  // 추천목록 조회 API
+  Future<List<IntroducedProfileDto>> getRecommendList() async {
+    try {
+      //TODO(mh): 실제 엔드포인트로 변경 필요. 서버 개발중
+      final response = await apiService.getJson<Map<String, dynamic>>(
+        '/member/introduction/soulmate',
+      );
+
+      if (response is! Map<String, dynamic> || response['data'] is! List) {
+        throw const NetworkException.formatException();
+      }
+
+      return (response['data'] as List)
+          .map((e) => IntroducedProfileDto.fromJson(e))
+          .toList();
+    } catch (e) {
+      Log.e(e);
+      return [];
+    }
+  }
+
   // 프로필 블러 해제
   Future<void> removeProfileBlur({
     required int memberId,
   }) async {
     await apiService.postJson(
-      '/member/introduction/soulmate',
+      '/member/introduction/same-answer',
       data: {'introducedMemberId': memberId},
     );
   }
