@@ -6,25 +6,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class IdealAgeSettingArea extends ConsumerWidget {
-  const IdealAgeSettingArea({super.key});
+  const IdealAgeSettingArea({
+    super.key,
+    required this.minAge,
+    required this.maxAge,
+  });
+
+  final int minAge;
+  final int maxAge;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeAsync = ref.watch(idealTypeNotifierProvider);
     final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
 
-    return idealTypeAsync.when(
-      data: (data) => IdealAgeSlider(
-        minAge: data.minAge,
-        maxAge: data.maxAge,
-        onChanged: idealTypeNotifier.updateAgeRange,
-      ),
-      error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => const IdealAgeSlider(
-        minAge: 20,
-        maxAge: 46,
-        onChanged: null,
-      ),
+    return IdealAgeSlider(
+      minAge: minAge,
+      maxAge: maxAge,
+      onChanged: idealTypeNotifier.updateAgeRange,
     );
   }
 }
@@ -45,23 +43,26 @@ class IdealAgeSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "나이",
-              style: Fonts.body02Regular().copyWith(
-                fontWeight: FontWeight.w500,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "나이",
+                style: Fonts.body02Regular().copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            Text(
-              "$minAge세~$maxAge세",
-              style: Fonts.body02Regular().copyWith(
-                fontWeight: FontWeight.w500,
-                color: const Color(0xff3B3B3B),
+              Text(
+                "$minAge세~$maxAge세",
+                style: Fonts.body02Regular().copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xff3B3B3B),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const Gap(20),
         Row(

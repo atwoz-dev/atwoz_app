@@ -46,6 +46,10 @@ abstract class $IdealTypeCopyWith<$Res> {
       ExtendedHomeEnum<SmokingStatus> smokingStatus,
       ExtendedHomeEnum<DrinkingStatus> drinkingStatus,
       ExtendedHomeEnum<Religion> religion});
+
+  $ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus;
+  $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus;
+  $ExtendedHomeEnumCopyWith<Religion, $Res> get religion;
 }
 
 /// @nodoc
@@ -102,6 +106,38 @@ class _$IdealTypeCopyWithImpl<$Res, $Val extends IdealType>
               as ExtendedHomeEnum<Religion>,
     ) as $Val);
   }
+
+  /// Create a copy of IdealType
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus {
+    return $ExtendedHomeEnumCopyWith<SmokingStatus, $Res>(_value.smokingStatus,
+        (value) {
+      return _then(_value.copyWith(smokingStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of IdealType
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus {
+    return $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res>(
+        _value.drinkingStatus, (value) {
+      return _then(_value.copyWith(drinkingStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of IdealType
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ExtendedHomeEnumCopyWith<Religion, $Res> get religion {
+    return $ExtendedHomeEnumCopyWith<Religion, $Res>(_value.religion, (value) {
+      return _then(_value.copyWith(religion: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -120,6 +156,13 @@ abstract class _$$IdealTypeImplCopyWith<$Res>
       ExtendedHomeEnum<SmokingStatus> smokingStatus,
       ExtendedHomeEnum<DrinkingStatus> drinkingStatus,
       ExtendedHomeEnum<Religion> religion});
+
+  @override
+  $ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus;
+  @override
+  $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus;
+  @override
+  $ExtendedHomeEnumCopyWith<Religion, $Res> get religion;
 }
 
 /// @nodoc

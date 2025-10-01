@@ -88,9 +88,9 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                     onSelectedItemChanged: (value) {
                       setState(() {
                         _selectedIndex = value;
-                        final selectedValue = widget.options[_selectedIndex];
+                        //final selectedValue = widget.options[_selectedIndex];
 
-                        widget.onItemSelected(selectedValue);
+                        //widget.onItemSelected(selectedValue);
                       });
                     },
                     children: widget.options.map((element) {
@@ -125,7 +125,13 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                 ),
                 DefaultElevatedButton(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  onPressed: context.pop,
+                  onPressed: () {
+                    final selectedValue = widget.options[_selectedIndex];
+
+                    widget.onItemSelected(selectedValue);
+
+                    context.pop();
+                  },
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
                   child: const Text("확인"),

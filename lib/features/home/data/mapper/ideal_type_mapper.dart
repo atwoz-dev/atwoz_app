@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/home/data/dto/ideal_type_dto.dart';
 import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
 import 'package:atwoz_app/features/home/home.dart';

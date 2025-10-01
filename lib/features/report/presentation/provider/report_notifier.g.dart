@@ -6,7 +6,7 @@ part of 'report_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reportNotifierHash() => r'8f2006b7c9be263e52a4700fa21afa8c4f95f9c0';
+String _$reportNotifierHash() => r'8ad3f24996794f08ae97c44309f59801da309192';
 
 /// Copied from Dart SDK
 class _SystemHash {

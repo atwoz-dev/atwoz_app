@@ -9,42 +9,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IdealSettingArea extends ConsumerWidget {
-  const IdealSettingArea({super.key});
+  const IdealSettingArea({
+    super.key,
+    required this.idealType,
+  });
+
+  final IdealType idealType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncIdealType = ref.watch(idealTypeNotifierProvider);
+    final items = _getIdealTypeSettingItemList(idealType);
 
     return Padding(
-      padding: const EdgeInsets.only(top: 24),
-      child: asyncIdealType.when(
-        data: (idealType) {
-          final items = _getIdealTypeSettingItemList(idealType);
-          return Column(
-            children: items
-                .map(
-                  (item) => IdealTypeSettingBox(
-                    item: item,
-                    idealType: idealType,
-                  ),
-                )
-                .toList(),
-          );
-        },
-        error: (error, stackTrace) => Text('$error'),
-        loading: () {
-          final items = _getIdealTypeSettingItemList(null);
-          return Column(
-            children: items
-                .map(
-                  (item) => IdealTypeSettingBox(
-                    item: item,
-                    idealType: null, // 실제 데이터 없음
-                  ),
-                )
-                .toList(),
-          );
-        },
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: items
+            .map(
+              (item) => IdealTypeSettingBox(
+                item: item,
+                idealType: idealType,
+              ),
+            )
+            .toList(),
       ),
     );
   }
