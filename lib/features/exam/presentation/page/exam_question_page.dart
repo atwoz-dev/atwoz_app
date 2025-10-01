@@ -55,6 +55,12 @@ class ExamQuestionPageState
     });
   }
 
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _resetAnswer() {
     setState(() {
       _currentAnswerList = {};
