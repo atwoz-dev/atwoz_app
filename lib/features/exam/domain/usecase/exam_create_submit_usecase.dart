@@ -1,5 +1,6 @@
 import 'package:atwoz_app/features/exam/data/data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:atwoz_app/core/util/log.dart';
 
 class ExamCreateSubmitUsecase {
   final Ref ref;
@@ -9,8 +10,13 @@ class ExamCreateSubmitUsecase {
   Future<void> call({
     required SubjectAnswerItem request,
   }) async {
-    await ref.read(examRepositoryProvider).createSubmitAnswerList(
-          request: request,
-        );
+    try {
+      await ref.read(examRepositoryProvider).createSubmitAnswerList(
+            request: request,
+          );
+    } catch (e) {
+      Log.e(e);
+      rethrow;
+    }
   }
 }
