@@ -63,8 +63,6 @@ class ExamNotifier extends _$ExamNotifier {
     try {
       final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
 
-      await Future.delayed(const Duration(seconds: 1));
-
       state = state.copyWith(
         questionList: QuestionData(questionList: requiredQuestionList),
         isLoaded: true,
@@ -106,8 +104,6 @@ class ExamNotifier extends _$ExamNotifier {
       final examSoulmateList = await ExamSoulmateFetchUseCase(ref).call();
       final hasResultData = examSoulmateList.isNotEmpty;
 
-      await Future.delayed(const Duration(seconds: 1));
-
       if (isResult && !hasResultData) {
         await fetchRecommendList();
         return;
@@ -134,8 +130,6 @@ class ExamNotifier extends _$ExamNotifier {
     try {
       final examRecommendList = await ExamRecommendFetchUseCase(ref).call();
       final hasResultData = examRecommendList.isNotEmpty;
-
-      await Future.delayed(const Duration(seconds: 1));
 
       state = state.copyWith(
         soulmateList: SoulmateData(soulmateList: examRecommendList),
