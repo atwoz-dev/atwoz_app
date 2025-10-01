@@ -5,6 +5,7 @@ import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecas
 import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
+import 'package:atwoz_app/features/exam/domain/usecase/exam_recommend_fetch_usecase.dart';
 import 'package:atwoz_app/features/store/domain/provider/store_state.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -99,7 +100,7 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  Future<void> fetchSoulmateList() async {
+  Future<void> fetchSoulmateList({bool isResult = false}) async {
     state = state.copyWith(isLoaded: false);
     try {
       final examSoulmateList = await ExamSoulmateFetchUseCase(ref).call();
@@ -107,9 +108,39 @@ class ExamNotifier extends _$ExamNotifier {
 
       await Future.delayed(const Duration(seconds: 1));
 
+      if (isResult && !hasResultData) {
+        await fetchRecommendList();
+        return;
+      }
+
       state = state.copyWith(
         soulmateList: SoulmateData(soulmateList: examSoulmateList),
         hasResultData: hasResultData,
+        hasSoulmate: true,
+        isLoaded: true,
+        error: null,
+      );
+    } catch (e) {
+      Log.e(e);
+      state = state.copyWith(
+        isLoaded: true,
+        error: QuestionListErrorType.network,
+      );
+    }
+  }
+
+  Future<void> fetchRecommendList() async {
+    state = state.copyWith(isLoaded: false);
+    try {
+      final examRecommendList = await ExamRecommendFetchUseCase(ref).call();
+      final hasResultData = examRecommendList.isNotEmpty;
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      state = state.copyWith(
+        soulmateList: SoulmateData(soulmateList: examRecommendList),
+        hasResultData: hasResultData,
+        hasSoulmate: false,
         isLoaded: true,
         error: null,
       );
@@ -162,21 +193,14 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   // 보유하트 조회
-  Future<void> fetchUserHeartBalance() async {
+  Future<int> fetchUserHeartBalance() async {
     try {
       final heartBalance = await HeartBalanceFetchUseCase(ref).call();
 
-      state = state.copyWith(
-        heartBalance: StoreData(heartBalance: heartBalance),
-        isLoaded: true,
-        error: null,
-      );
+      return heartBalance.totalHeartBalance;
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: QuestionListErrorType.network,
-      );
+      return 0;
     }
   }
 }

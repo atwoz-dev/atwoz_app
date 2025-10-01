@@ -20,6 +20,7 @@ class ExamState with _$ExamState {
     @Default(false) bool isLoaded,
     @Default(false) bool isRequiredDataLoaded,
     @Default(false) bool hasResultData,
+    @Default(false) bool hasSoulmate,
     @Default(StoreData()) StoreData heartBalance,
     QuestionListErrorType? error,
   }) = _ExamState;

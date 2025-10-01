@@ -24,6 +24,7 @@ mixin _$ExamState {
   bool get isLoaded => throw _privateConstructorUsedError;
   bool get isRequiredDataLoaded => throw _privateConstructorUsedError;
   bool get hasResultData => throw _privateConstructorUsedError;
+  bool get hasSoulmate => throw _privateConstructorUsedError;
   StoreData get heartBalance => throw _privateConstructorUsedError;
   QuestionListErrorType? get error => throw _privateConstructorUsedError;
 
@@ -48,6 +49,7 @@ abstract class $ExamStateCopyWith<$Res> {
       bool isLoaded,
       bool isRequiredDataLoaded,
       bool hasResultData,
+      bool hasSoulmate,
       StoreData heartBalance,
       QuestionListErrorType? error});
 
@@ -79,6 +81,7 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
     Object? isLoaded = null,
     Object? isRequiredDataLoaded = null,
     Object? hasResultData = null,
+    Object? hasSoulmate = null,
     Object? heartBalance = null,
     Object? error = freezed,
   }) {
@@ -114,6 +117,10 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
       hasResultData: null == hasResultData
           ? _value.hasResultData
           : hasResultData // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasSoulmate: null == hasSoulmate
+          ? _value.hasSoulmate
+          : hasSoulmate // ignore: cast_nullable_to_non_nullable
               as bool,
       heartBalance: null == heartBalance
           ? _value.heartBalance
@@ -174,6 +181,7 @@ abstract class _$$ExamStateImplCopyWith<$Res>
       bool isLoaded,
       bool isRequiredDataLoaded,
       bool hasResultData,
+      bool hasSoulmate,
       StoreData heartBalance,
       QuestionListErrorType? error});
 
@@ -206,6 +214,7 @@ class __$$ExamStateImplCopyWithImpl<$Res>
     Object? isLoaded = null,
     Object? isRequiredDataLoaded = null,
     Object? hasResultData = null,
+    Object? hasSoulmate = null,
     Object? heartBalance = null,
     Object? error = freezed,
   }) {
@@ -242,6 +251,10 @@ class __$$ExamStateImplCopyWithImpl<$Res>
           ? _value.hasResultData
           : hasResultData // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasSoulmate: null == hasSoulmate
+          ? _value.hasSoulmate
+          : hasSoulmate // ignore: cast_nullable_to_non_nullable
+              as bool,
       heartBalance: null == heartBalance
           ? _value.heartBalance
           : heartBalance // ignore: cast_nullable_to_non_nullable
@@ -266,6 +279,7 @@ class _$ExamStateImpl extends _ExamState {
       this.isLoaded = false,
       this.isRequiredDataLoaded = false,
       this.hasResultData = false,
+      this.hasSoulmate = false,
       this.heartBalance = const StoreData(),
       this.error})
       : super._();
@@ -296,13 +310,16 @@ class _$ExamStateImpl extends _ExamState {
   final bool hasResultData;
   @override
   @JsonKey()
+  final bool hasSoulmate;
+  @override
+  @JsonKey()
   final StoreData heartBalance;
   @override
   final QuestionListErrorType? error;
 
   @override
   String toString() {
-    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, hasResultData: $hasResultData, heartBalance: $heartBalance, error: $error)';
+    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, error: $error)';
   }
 
   @override
@@ -325,6 +342,8 @@ class _$ExamStateImpl extends _ExamState {
                 other.isRequiredDataLoaded == isRequiredDataLoaded) &&
             (identical(other.hasResultData, hasResultData) ||
                 other.hasResultData == hasResultData) &&
+            (identical(other.hasSoulmate, hasSoulmate) ||
+                other.hasSoulmate == hasSoulmate) &&
             (identical(other.heartBalance, heartBalance) ||
                 other.heartBalance == heartBalance) &&
             (identical(other.error, error) || other.error == error));
@@ -341,6 +360,7 @@ class _$ExamStateImpl extends _ExamState {
       isLoaded,
       isRequiredDataLoaded,
       hasResultData,
+      hasSoulmate,
       heartBalance,
       error);
 
@@ -363,6 +383,7 @@ abstract class _ExamState extends ExamState {
       final bool isLoaded,
       final bool isRequiredDataLoaded,
       final bool hasResultData,
+      final bool hasSoulmate,
       final StoreData heartBalance,
       final QuestionListErrorType? error}) = _$ExamStateImpl;
   const _ExamState._() : super._();
@@ -383,6 +404,8 @@ abstract class _ExamState extends ExamState {
   bool get isRequiredDataLoaded;
   @override
   bool get hasResultData;
+  @override
+  bool get hasSoulmate;
   @override
   StoreData get heartBalance;
   @override

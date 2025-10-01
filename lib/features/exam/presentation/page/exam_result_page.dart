@@ -1,15 +1,19 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
+import 'package:atwoz_app/features/exam/presentation/widget/empty_list.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/user_by_category_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:gap/gap.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
 
 class ExamResultPage extends ConsumerStatefulWidget {
   const ExamResultPage({super.key});
@@ -37,6 +41,7 @@ class ExamResultPageState
           navigate(
             context,
             route: AppRoute.mainTab,
+            method: NavigationMethod.go,
           );
         });
   }
@@ -46,10 +51,22 @@ class ExamResultPageState
       required IntroducedProfile profile,
       required int index,
       required bool isBlurred,
-      required bool isMale,
-      required int heartBalance}) async {
+      required bool isMale}) async {
     if (isBlurred) {
+      final heartBalance =
+          await ref.read(examNotifierProvider.notifier).fetchUserHeartBalance();
+
       if (!context.mounted) return;
+
+      if (heartBalance < Dimens.examProfileOpenHeartCount) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return HeartShortageDialog(heartBalance: heartBalance);
+          },
+        );
+        return;
+      }
 
       final pressed = await showDialog<bool>(
         context: context,
@@ -66,19 +83,10 @@ class ExamResultPageState
             memberId: profile.memberId,
           );
       if (!context.mounted) return;
-      _navigateToProfile(context, profile);
-      return;
     }
 
-    // isBlurred == false일 때만 아래 실행
-    final result = await _navigateToProfile(context, profile);
-    // if (result is UserProfile) {
-    //   introducedProfilesNotifier.updateProfile(
-    //     index: index,
-    //     detailProfile: result,
-    //     category: widget.category,
-    //   );
-    // }
+    _navigateToProfile(context, profile);
+    return;
   }
 
   Future<dynamic> _navigateToProfile(
@@ -91,23 +99,12 @@ class ExamResultPageState
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    // 하트 잔액 조회
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(examNotifierProvider.notifier).fetchUserHeartBalance();
-    });
-  }
-
-  @override
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
         EdgeInsets.symmetric(horizontal: horizontalPadding);
     final examState = ref.watch(examNotifierProvider);
     final userProfile = ref.watch(globalNotifierProvider).profile;
-    final int itemCount = 10;
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -117,29 +114,61 @@ class ExamResultPageState
       body: Padding(
         padding: contentPadding,
         child: Column(children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  examState.isSubjectOptional
+                      ? examState.hasSoulmate
+                          ? "나의 소울메이트를 찾았어요"
+                          : "아쉽게도 소울메이트를 찾지 못했어요"
+                      : "현재 ${examState.soulmateList.soulmateList.length}명이 동일한 답을 선택했어요",
+                  style: Fonts.header03().copyWith(
+                    color: Palette.colorBlack,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  examState.isSubjectOptional
+                      ? examState.hasSoulmate
+                          ? "상대방과 모두 같은 답을 선택하셨어요!"
+                          : "대체로 같은 답을 선택하신 이성분들이에요!"
+                      : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요",
+                  style: Fonts.body03Regular().copyWith(
+                    color: Palette.colorGrey800,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             flex: 9,
-            child: ListView.separated(
-              itemCount: examState.soulmateList.soulmateList.length,
-              separatorBuilder: (_, __) => const Gap(8),
-              itemBuilder: (context, index) {
-                final profile = examState.soulmateList.soulmateList[index];
-                final isBlurred = !profile.isIntroduced;
+            child: examState.hasResultData
+                ? ListView.separated(
+                    itemCount: examState.soulmateList.soulmateList.length,
+                    separatorBuilder: (_, __) => const Gap(8),
+                    itemBuilder: (context, index) {
+                      final profile =
+                          examState.soulmateList.soulmateList[index];
+                      final isBlurred = !profile.isIntroduced;
 
-                return UserByCategoryListItem(
-                  isBlurred: isBlurred,
-                  onTap: () => _handleProfileTap(
-                    context: context,
-                    profile: profile,
-                    index: index,
-                    isBlurred: isBlurred,
-                    isMale: userProfile.isMale,
-                    heartBalance: examState.totalHeartBalance,
-                  ),
-                  profile: profile,
-                );
-              },
-            ),
+                      return UserByCategoryListItem(
+                        isBlurred: isBlurred,
+                        onTap: () => _handleProfileTap(
+                          context: context,
+                          profile: profile,
+                          index: index,
+                          isBlurred: isBlurred,
+                          isMale: userProfile.isMale,
+                        ),
+                        profile: profile,
+                      );
+                    },
+                  )
+                : EmptyList(),
           ),
           Padding(
               padding: EdgeInsets.only(bottom: screenHeight * 0.05),

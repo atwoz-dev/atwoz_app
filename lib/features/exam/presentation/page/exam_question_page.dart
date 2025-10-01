@@ -36,6 +36,8 @@ class ExamQuestionPageState
   int get _currentSubjectIndex =>
       ref.watch(examNotifierProvider.select((s) => s.currentSubjectIndex));
 
+  bool get isLastSubject => _currentSubjectIndex == _subjectList.length - 1;
+
   List<SubjectItem> get _subjectList =>
       ref.watch(examNotifierProvider).questionList.questionList;
 
@@ -94,6 +96,7 @@ class ExamQuestionPageState
           navigate(
             context,
             route: AppRoute.mainTab,
+            method: NavigationMethod.go,
           );
         });
   }
@@ -127,7 +130,7 @@ class ExamQuestionPageState
     );
 
     await _submitAnswers(payload);
-    await notifier.fetchSoulmateList();
+    await notifier.fetchSoulmateList(isResult: isLastSubject);
 
     _handleNavigation();
   }
@@ -135,7 +138,6 @@ class ExamQuestionPageState
   void _handleNavigation() {
     final notifier = ref.read(examNotifierProvider.notifier);
     final hasResultData = ref.read(examNotifierProvider).hasResultData;
-    final isLastSubject = _currentSubjectIndex == _subjectList.length - 1;
 
     if (isLastSubject) {
       notifier.setSubjectOptional(true);
@@ -143,12 +145,12 @@ class ExamQuestionPageState
       return;
     }
 
+    _nextSubject();
+
     if (hasResultData) {
       navigate(context, route: AppRoute.examResult);
       return;
     }
-
-    _nextSubject();
   }
 
   @override
@@ -279,7 +281,7 @@ class ExamQuestionPageState
                                 currentSubject.questions.length
                             ? null
                             : () => _submit(),
-                        child: Text('제출하기'),
+                        child: Text(isLastSubject ? '제출하기' : '저장하기'),
                       ),
               )
             ]),
