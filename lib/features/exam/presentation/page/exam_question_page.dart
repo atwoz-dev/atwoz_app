@@ -39,7 +39,7 @@ class ExamQuestionPageState
   bool get isLastSubject => _currentSubjectIndex == _subjectList.length - 1;
 
   List<SubjectItem> get _subjectList =>
-      ref.watch(examNotifierProvider).questionList.questionList;
+      ref.read(examNotifierProvider).questionList.questionList;
 
   @override
   void initState() {
