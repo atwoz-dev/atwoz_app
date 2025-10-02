@@ -5,6 +5,7 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/features/exam/data/dto/exam_question_response.dart';
+import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
 
 final examRepositoryProvider = Provider<ExamRepository>((ref) {
   return ExamRepository(ref);
@@ -47,11 +48,13 @@ class ExamRepository extends BaseRepository {
 
   /// 필수과목 답변 제출 API
   Future<void> createSubmitAnswerList({
-    required SubjectAnswerItem request,
+    required SubjectAnswer request,
   }) async {
+    final dto = SubjectAnswerItem.fromDomain(request);
+
     await apiService.postJson(
       '$path/submit',
-      data: request.toJson(),
+      data: dto.toJson(),
     );
   }
 

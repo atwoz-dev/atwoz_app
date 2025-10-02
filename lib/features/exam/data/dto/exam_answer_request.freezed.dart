@@ -115,11 +115,12 @@ class __$$SubjectAnswerItemImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SubjectAnswerItemImpl implements _SubjectAnswerItem {
+class _$SubjectAnswerItemImpl extends _SubjectAnswerItem {
   const _$SubjectAnswerItemImpl(
       {required this.subjectId,
       required final List<QuestionAnswerItem> answers})
-      : _answers = answers;
+      : _answers = answers,
+        super._();
 
   factory _$SubjectAnswerItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$SubjectAnswerItemImplFromJson(json);
@@ -171,11 +172,12 @@ class _$SubjectAnswerItemImpl implements _SubjectAnswerItem {
   }
 }
 
-abstract class _SubjectAnswerItem implements SubjectAnswerItem {
+abstract class _SubjectAnswerItem extends SubjectAnswerItem {
   const factory _SubjectAnswerItem(
           {required final int subjectId,
           required final List<QuestionAnswerItem> answers}) =
       _$SubjectAnswerItemImpl;
+  const _SubjectAnswerItem._() : super._();
 
   factory _SubjectAnswerItem.fromJson(Map<String, dynamic> json) =
       _$SubjectAnswerItemImpl.fromJson;
@@ -294,9 +296,10 @@ class __$$QuestionAnswerItemImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$QuestionAnswerItemImpl implements _QuestionAnswerItem {
+class _$QuestionAnswerItemImpl extends _QuestionAnswerItem {
   const _$QuestionAnswerItemImpl(
-      {required this.questionId, required this.answerId});
+      {required this.questionId, required this.answerId})
+      : super._();
 
   factory _$QuestionAnswerItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuestionAnswerItemImplFromJson(json);
@@ -343,10 +346,11 @@ class _$QuestionAnswerItemImpl implements _QuestionAnswerItem {
   }
 }
 
-abstract class _QuestionAnswerItem implements QuestionAnswerItem {
+abstract class _QuestionAnswerItem extends QuestionAnswerItem {
   const factory _QuestionAnswerItem(
       {required final int questionId,
       required final int answerId}) = _$QuestionAnswerItemImpl;
+  const _QuestionAnswerItem._() : super._();
 
   factory _QuestionAnswerItem.fromJson(Map<String, dynamic> json) =
       _$QuestionAnswerItemImpl.fromJson;

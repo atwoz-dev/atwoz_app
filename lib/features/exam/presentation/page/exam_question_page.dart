@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/exam/data/data.dart';
+import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/answer_radio_button.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/step_indicator.dart';
@@ -120,7 +121,7 @@ class ExamQuestionPageState
     });
   }
 
-  Future<void> _submitAnswers(SubjectAnswerItem payload) async {
+  Future<void> _submitAnswers(SubjectAnswer payload) async {
     await ref
         .read(examNotifierProvider.notifier)
         .createSubmitAnswerList(payload);
@@ -128,11 +129,14 @@ class ExamQuestionPageState
 
   void _submit() async {
     final notifier = ref.read(examNotifierProvider.notifier);
-    final payload = SubjectAnswerItem.fromJson(
-      notifier.buildFinalPayload(
-        _currentAnswerList,
-        _currentSubjectIndex + 1,
-      ),
+    final payload = SubjectAnswer(
+      subjectId: _currentSubjectIndex + 1,
+      answers: _currentAnswerList.entries
+          .map((e) => QuestionAnswer(
+                questionId: e.key,
+                answerId: e.value,
+              ))
+          .toList(),
     );
 
     await _submitAnswers(payload);

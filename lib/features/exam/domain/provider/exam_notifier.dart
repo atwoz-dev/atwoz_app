@@ -1,14 +1,13 @@
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/exam/data/data.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_recommend_fetch_usecase.dart';
-import 'package:atwoz_app/features/store/domain/provider/store_state.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
 
 import 'exam_state.dart';
 
@@ -37,23 +36,6 @@ class ExamNotifier extends _$ExamNotifier {
 
   void resetCurrentSubjectIndex() {
     state = state.copyWith(currentSubjectIndex: 0);
-  }
-
-  Map<String, dynamic> buildFinalPayload(
-    Map<int, int> answerList,
-    int subjectId,
-  ) {
-    final answers = answerList.entries.map((entry) {
-      return {
-        "questionId": entry.key,
-        "answerId": entry.value,
-      };
-    }).toList();
-
-    return {
-      "subjectId": subjectId,
-      "answers": answers,
-    };
   }
 
   Future<void> fetchRequiredQuestionList() async {
@@ -148,7 +130,7 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   Future<void> createSubmitAnswerList(
-    SubjectAnswerItem request,
+    SubjectAnswer request,
   ) async {
     try {
       await ExamCreateSubmitUsecase(ref).call(

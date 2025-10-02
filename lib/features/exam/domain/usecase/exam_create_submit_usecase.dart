@@ -1,4 +1,5 @@
-import 'package:atwoz_app/features/exam/data/data.dart';
+import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
+import 'package:atwoz_app/features/exam/data/repository/exam_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/core/util/log.dart';
 
@@ -8,7 +9,7 @@ class ExamCreateSubmitUsecase {
   const ExamCreateSubmitUsecase(this.ref);
 
   Future<void> call({
-    required SubjectAnswerItem request,
+    required SubjectAnswer request,
   }) async {
     try {
       await ref.read(examRepositoryProvider).createSubmitAnswerList(

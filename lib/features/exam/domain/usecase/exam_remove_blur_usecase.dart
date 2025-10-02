@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/exam/data/data.dart';
+import 'package:atwoz_app/features/exam/data/repository/exam_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ExamRemoveBlurUsecase {
