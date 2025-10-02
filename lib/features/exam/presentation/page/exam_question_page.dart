@@ -35,7 +35,7 @@ class ExamQuestionPageState
   int _currentPage = 0;
 
   int get _currentSubjectIndex =>
-      ref.watch(examNotifierProvider.select((s) => s.currentSubjectIndex));
+      ref.read(examNotifierProvider.select((s) => s.currentSubjectIndex));
 
   bool get isLastSubject => _currentSubjectIndex == _subjectList.length - 1;
 
@@ -73,6 +73,8 @@ class ExamQuestionPageState
 
     if (_currentPage < currentSubject.questions.length - 1) {
       await Future.delayed(Duration(milliseconds: 300));
+
+      if (!mounted) return;
 
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
