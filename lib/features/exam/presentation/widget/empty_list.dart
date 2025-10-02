@@ -21,7 +21,7 @@ class EmptyList extends StatelessWidget {
         ),
         const Gap(8.0),
         Text(
-          '이번에는 소울메이트를 찾지 못했지만\n참여자가 늘어나서 같은 답안을\n선택한 이성이 나온다면 알려드릴께요',
+          '참여자가 늘어나서 같은 답안을\n선택한 이성이 나온다면 알려드릴께요',
           textAlign: TextAlign.center,
           style: Fonts.body03Regular().copyWith(
             fontWeight: FontWeight.w500,

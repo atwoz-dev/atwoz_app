@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/empty_list.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
 
 class ExamResultPage extends ConsumerStatefulWidget {
   const ExamResultPage({super.key});
@@ -114,101 +114,102 @@ class ExamResultPageState
       body: Padding(
         padding: contentPadding,
         child: Column(children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  examState.isSubjectOptional
-                      ? examState.hasSoulmate
-                          ? "나의 소울메이트를 찾았어요"
-                          : "아쉽게도 소울메이트를 찾지 못했어요"
-                      : "현재 ${examState.soulmateList.soulmateList.length}명이 동일한 답을 선택했어요",
-                  style: Fonts.header03().copyWith(
-                    color: Palette.colorBlack,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  examState.isSubjectOptional
-                      ? examState.hasSoulmate
-                          ? "상대방과 모두 같은 답을 선택하셨어요!"
-                          : "대체로 같은 답을 선택하신 이성분들이에요!"
-                      : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요",
-                  style: Fonts.body03Regular().copyWith(
-                    color: Palette.colorGrey800,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          _buildHeader(examState),
           Expanded(
             flex: 9,
-            child: examState.hasResultData
-                ? ListView.separated(
-                    itemCount: examState.soulmateList.soulmateList.length,
-                    separatorBuilder: (_, __) => const Gap(8),
-                    itemBuilder: (context, index) {
-                      final profile =
-                          examState.soulmateList.soulmateList[index];
-                      final isBlurred = !profile.isIntroduced;
-
-                      return UserByCategoryListItem(
-                        isBlurred: isBlurred,
-                        onTap: () => _handleProfileTap(
-                          context: context,
-                          profile: profile,
-                          index: index,
-                          isBlurred: isBlurred,
-                          isMale: userProfile.isMale,
-                        ),
-                        profile: profile,
-                      );
-                    },
-                  )
-                : EmptyList(),
+            child: _buildResultList(examState, userProfile),
           ),
-          Padding(
-              padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-              child: examState.isSubjectOptional
-                  ? examState.isDone
-                      ? DefaultElevatedButton(
-                          onPressed: () => {
-                            navigate(
-                              context,
-                              route: AppRoute.mainTab,
-                            )
-                          },
-                          child: Text('연애 모의고사 종료하기'),
-                        )
-                      : DefaultElevatedButton(
-                          onPressed: () => {
-                            ref
-                                .read(examNotifierProvider.notifier)
-                                .resetCurrentSubjectIndex(),
-                            ref
-                                .read(examNotifierProvider.notifier)
-                                .fetchOptionalQuestionList(),
-                            navigate(
-                              context,
-                              route: AppRoute.examQuestion,
-                            )
-                          },
-                          child: Text('선택과목 풀기'),
-                        )
-                  : DefaultElevatedButton(
-                      onPressed: () {
-                        navigate(
-                          context,
-                          route: AppRoute.examQuestion,
-                        );
-                      },
-                      child: Text('다음과목 이어서 풀기'),
-                    )),
+          _buildBottomButton(context, examState),
         ]),
       ),
+    );
+  }
+
+  Widget _buildHeader(ExamState examState) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            examState.isSubjectOptional
+                ? examState.hasSoulmate
+                    ? "나의 소울메이트를 찾았어요"
+                    : "아쉽게도 소울메이트를 찾지 못했어요"
+                : "현재 ${examState.soulmateList.soulmateList.length}명이 동일한 답을 선택했어요",
+            style: Fonts.header03().copyWith(
+              color: Palette.colorBlack,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            examState.isSubjectOptional
+                ? examState.hasSoulmate
+                    ? "상대방과 모두 같은 답을 선택하셨어요!"
+                    : "대체로 같은 답을 선택하신 이성분들이에요!"
+                : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요",
+            style: Fonts.body03Regular().copyWith(
+              color: Palette.colorGrey800,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultList(ExamState examState, CachedUserProfile userProfile) {
+    if (!examState.hasResultData) return const EmptyList();
+
+    return ListView.separated(
+      itemCount: examState.soulmateList.soulmateList.length,
+      separatorBuilder: (_, __) => const Gap(8),
+      itemBuilder: (context, index) {
+        final profile = examState.soulmateList.soulmateList[index];
+        final isBlurred = !profile.isIntroduced;
+
+        return UserByCategoryListItem(
+          isBlurred: isBlurred,
+          onTap: () => _handleProfileTap(
+            context: context,
+            profile: profile,
+            index: index,
+            isBlurred: isBlurred,
+            isMale: userProfile.isMale,
+          ),
+          profile: profile,
+        );
+      },
+    );
+  }
+
+  Widget _buildBottomButton(BuildContext context, ExamState examState) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+      child: examState.isSubjectOptional
+          ? examState.isDone
+              ? DefaultElevatedButton(
+                  onPressed: () {
+                    navigate(context, route: AppRoute.mainTab);
+                  },
+                  child: const Text('연애 모의고사 종료하기'),
+                )
+              : DefaultElevatedButton(
+                  onPressed: () {
+                    ref.read(examNotifierProvider.notifier)
+                      ..resetCurrentSubjectIndex()
+                      ..fetchOptionalQuestionList();
+
+                    navigate(context, route: AppRoute.examQuestion);
+                  },
+                  child: const Text('선택과목 풀기'),
+                )
+          : DefaultElevatedButton(
+              onPressed: () {
+                navigate(context, route: AppRoute.examQuestion);
+              },
+              child: const Text('다음과목 이어서 풀기'),
+            ),
     );
   }
 }
