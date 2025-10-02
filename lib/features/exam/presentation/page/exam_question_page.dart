@@ -187,35 +187,7 @@ class ExamQuestionPageState
             flex: 9,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Gap(24),
-              StepIndicator(
-                totalStep: currentQuestions.length,
-                currentStep: _currentPage + 1,
-              ),
-              Gap(24),
-              ConstrainedBox(
-                constraints: BoxConstraints(minHeight: 60.h),
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${_currentPage + 1}. ",
-                        style: Fonts.header03().copyWith(
-                          color: Palette.colorBlack,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          currentQuestions[_currentPage].content,
-                          style: Fonts.header03().copyWith(
-                            color: Palette.colorBlack,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ]),
-              ),
+              _buildQuestionHeader(currentSubject),
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -294,6 +266,45 @@ class ExamQuestionPageState
           ),
         ]),
       ),
+    );
+  }
+
+  Widget _buildQuestionHeader(SubjectItem currentSubject) {
+    final currentQuestion = currentSubject.questions[_currentPage];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Gap(24),
+        StepIndicator(
+          totalStep: currentSubject.questions.length,
+          currentStep: _currentPage + 1,
+        ),
+        Gap(24),
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 60.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${_currentPage + 1}. ",
+                style: Fonts.header03().copyWith(
+                  color: Palette.colorBlack,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  currentQuestion.content,
+                  style: Fonts.header03().copyWith(
+                    color: Palette.colorBlack,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
