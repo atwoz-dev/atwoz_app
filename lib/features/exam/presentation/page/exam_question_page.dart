@@ -80,87 +80,10 @@ class ExamQuestionPageState
           children: [
             _buildQuestionHeader(currentSubject),
             Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: currentSubject.questions.length,
-                itemBuilder: (context, index) {
-                  final question = currentSubject.questions[index];
-                  final selectedAnswerId =
-                      examState.currentAnswerList[question.id];
-
-                  return Column(
-                    children: question.answers.map((answer) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: AnswerRadioButton(
-                          id: answer.id,
-                          selectedId: selectedAnswerId,
-                          content: answer.content,
-                          onTap: (id) {
-                            notifier.selectAnswer(question.id, id);
-                            if (examState.currentPage <
-                                currentSubject.questions.length - 1) {
-                              notifier.nextPage();
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
+              child:
+                  _buildQuestionPageView(examState, currentSubject, notifier),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-              child: Row(
-                spacing: 8.0,
-                children: [
-                  Expanded(
-                    child: DefaultOutlinedButton(
-                      primary: Palette.colorGrey100,
-                      textColor: Palette.colorGrey500,
-                      onPressed: () {
-                        if (examState.currentPage > 0) {
-                          notifier.previousPage();
-                          _pageController.previousPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        } else {
-                          _showLeaveExamDialogue(context, notifier);
-                        }
-                      },
-                      child: Text('이전'),
-                    ),
-                  ),
-                  Expanded(
-                    child: DefaultElevatedButton(
-                      onPressed: examState.currentAnswerList.length !=
-                              currentSubject.questions.length
-                          ? null
-                          : () {
-                              notifier.submitCurrentSubject(context: context);
-                              _pageController.jumpToPage(0);
-                            },
-                      child: Text(
-                        examState.isSubjectOptional
-                            ? notifier.isLastSubject
-                                ? '저장하기'
-                                : '다음'
-                            : notifier.isLastSubject
-                                ? '제출하기'
-                                : '저장하기',
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            _buildQuestionBottomButton(examState, currentSubject, notifier),
           ],
         ),
       ),
@@ -219,6 +142,99 @@ class ExamQuestionPageState
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildQuestionPageView(
+    ExamState examState,
+    SubjectItem currentSubject,
+    ExamNotifier notifier,
+  ) {
+    return PageView.builder(
+      controller: _pageController,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: currentSubject.questions.length,
+      itemBuilder: (context, index) {
+        final question = currentSubject.questions[index];
+        final selectedAnswerId = examState.currentAnswerList[question.id];
+
+        return Column(
+          children: question.answers.map((answer) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: AnswerRadioButton(
+                id: answer.id,
+                selectedId: selectedAnswerId,
+                content: answer.content,
+                onTap: (id) {
+                  notifier.selectAnswer(question.id, id);
+                  if (examState.currentPage <
+                      currentSubject.questions.length - 1) {
+                    notifier.nextPage();
+                    _pageController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildQuestionBottomButton(
+    ExamState examState,
+    SubjectItem currentSubject,
+    ExamNotifier notifier,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+      child: Row(
+        spacing: 8.0,
+        children: [
+          Expanded(
+            child: DefaultOutlinedButton(
+              primary: Palette.colorGrey100,
+              textColor: Palette.colorGrey500,
+              onPressed: () {
+                if (examState.currentPage > 0) {
+                  notifier.previousPage();
+                  _pageController.previousPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  _showLeaveExamDialogue(context, notifier);
+                }
+              },
+              child: Text('이전'),
+            ),
+          ),
+          Expanded(
+            child: DefaultElevatedButton(
+              onPressed: examState.currentAnswerList.length !=
+                      currentSubject.questions.length
+                  ? null
+                  : () {
+                      notifier.submitCurrentSubject(context: context);
+                      _pageController.jumpToPage(0);
+                    },
+              child: Text(
+                examState.isSubjectOptional
+                    ? notifier.isLastSubject
+                        ? '저장하기'
+                        : '다음'
+                    : notifier.isLastSubject
+                        ? '제출하기'
+                        : '저장하기',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
