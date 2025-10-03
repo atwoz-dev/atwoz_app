@@ -59,7 +59,7 @@ class ExamNotifier extends _$ExamNotifier {
     }
 
     // 결과 데이터가 있으면 결과 페이지로
-    if (state.hasResultData) {
+    if (state.hasResultData && !state.isSubjectOptional) {
       state = state.copyWith(isLoaded: true);
       navigate(context, route: AppRoute.examResult);
       return;

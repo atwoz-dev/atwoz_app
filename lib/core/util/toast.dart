@@ -13,10 +13,10 @@ Future<bool?> showToastMessage(
 }) {
   return Fluttertoast.showToast(
     msg: message,
-    gravity: gravity,
+    gravity: gravity ?? ToastGravity.TOP, // 기본값을 TOP으로 설정
     toastLength: toastLength ?? Toast.LENGTH_SHORT,
     // 기본값 = Toast.LENGTH_SHORT
-    timeInSecForIosWeb: 1,
+    timeInSecForIosWeb: 2,
     textColor: textColor ?? Colors.white,
     // 기본값 = Colors.white
     backgroundColor: backgroundColor ?? Colors.black,

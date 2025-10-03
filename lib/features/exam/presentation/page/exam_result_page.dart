@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/empty_list.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
@@ -25,6 +26,21 @@ class ExamResultPageState
           isAppBar: false,
           isHorizontalMargin: false,
         );
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final examState = ref.read(examNotifierProvider);
+
+      if (examState.isSubjectOptional && !examState.isDone) {
+        showToastMessage(
+          '연애 모의고사 참여 완료! 하트 15개를 받았어요',
+        );
+      }
+    });
+  }
 
   @override
   Widget buildPage(BuildContext context) {
@@ -65,20 +81,20 @@ class ExamResultPageState
                     ? "나의 소울메이트를 찾았어요"
                     : "아쉽게도 소울메이트를 찾지 못했어요"
                 : "현재 ${examState.soulmateList.soulmateList.length}명이 동일한 답을 선택했어요",
-            style: Fonts.header03().copyWith(
+            style: Fonts.header02().copyWith(
               color: Palette.colorBlack,
               fontWeight: FontWeight.w700,
             ),
           ),
+          Gap(6),
           Text(
             examState.isSubjectOptional
                 ? examState.hasSoulmate
                     ? "상대방과 모두 같은 답을 선택하셨어요!"
                     : "대체로 같은 답을 선택하신 이성분들이에요!"
                 : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요",
-            style: Fonts.body03Regular().copyWith(
-              color: Palette.colorGrey800,
-              fontWeight: FontWeight.w700,
+            style: Fonts.body02Regular().copyWith(
+              color: Palette.colorGrey500,
             ),
           ),
         ],
