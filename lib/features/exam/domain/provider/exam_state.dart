@@ -22,6 +22,8 @@ class ExamState with _$ExamState {
     @Default(false) bool hasResultData,
     @Default(false) bool hasSoulmate,
     @Default(StoreData()) StoreData heartBalance,
+    @Default(0) int currentPage,
+    @Default({}) Map<int, int> currentAnswerList,
     QuestionListErrorType? error,
   }) = _ExamState;
 

@@ -6,7 +6,7 @@ part of 'exam_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$examNotifierHash() => r'6e2c6f038a0ce1365006f8631d723e3520c7e4a7';
+String _$examNotifierHash() => r'9dde0fc52a9841ee5d8db95a675ad263c10a97ab';
 
 /// See also [ExamNotifier].
 @ProviderFor(ExamNotifier)

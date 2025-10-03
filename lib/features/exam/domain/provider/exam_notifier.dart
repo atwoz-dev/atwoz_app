@@ -1,3 +1,5 @@
+import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
@@ -5,9 +7,14 @@ import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_recommend_fetch_usecase.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 
 import 'exam_state.dart';
 
@@ -16,28 +23,110 @@ part 'exam_notifier.g.dart';
 @riverpod
 class ExamNotifier extends _$ExamNotifier {
   @override
-  ExamState build() {
-    return ExamState.initial();
+  ExamState build() => ExamState.initial();
+
+  /// 현재 과목 답안 선택
+  void selectAnswer(int questionId, int answerId) {
+    final updatedAnswers = Map<int, int>.from(state.currentAnswerList)
+      ..[questionId] = answerId;
+    state = state.copyWith(currentAnswerList: updatedAnswers);
   }
 
-  void setSubjectOptional(bool isSubjectOptional) {
-    state = state.copyWith(isSubjectOptional: isSubjectOptional);
+  /// 현재 과목 제출
+  Future<void> submitCurrentSubject({required BuildContext context}) async {
+    final payload = SubjectAnswer(
+      subjectId: state.currentSubjectIndex + 1,
+      answers: state.currentAnswerList.entries
+          .map((e) => QuestionAnswer(questionId: e.key, answerId: e.value))
+          .toList(),
+    );
+
+    state = state.copyWith(isLoaded: false);
+
+    await _submitAnswers(payload);
+    await fetchSoulmateList(isResult: true);
+
+    // 마지막 과목인지
+    if (isLastSubject) {
+      state = state.copyWith(
+        isSubjectOptional: true,
+        isDone: state.isSubjectOptional ? true : false,
+        currentAnswerList: {},
+        isLoaded: true,
+      );
+      navigate(context, route: AppRoute.examResult);
+      return;
+    }
+
+    // 결과 데이터가 있으면 결과 페이지로
+    if (state.hasResultData) {
+      state = state.copyWith(isLoaded: true);
+      navigate(context, route: AppRoute.examResult);
+      return;
+    }
+
+    nextSubject();
+    state = state.copyWith(isLoaded: true);
+  }
+
+  Future<void> _submitAnswers(SubjectAnswer payload) async {
+    try {
+      await ExamCreateSubmitUsecase(ref).call(request: payload);
+    } catch (e) {
+      Log.e('답안 제출 실패: $e');
+    }
+  }
+
+  void nextPage() {
+    final currentSubject =
+        state.questionList.questionList[state.currentSubjectIndex];
+    if (state.currentPage < currentSubject.questions.length - 1) {
+      state = state.copyWith(currentPage: state.currentPage + 1);
+    }
+  }
+
+  void previousPage() {
+    if (state.currentPage > 0) {
+      state = state.copyWith(currentPage: state.currentPage - 1);
+    }
+  }
+
+  void nextSubject() {
+    state = state.copyWith(
+      currentSubjectIndex: state.currentSubjectIndex + 1,
+      currentAnswerList: {},
+      currentPage: 0,
+    );
+  }
+
+  void resetCurrentSubjectIndex() {
+    state = state.copyWith(
+      currentSubjectIndex: 0,
+      currentAnswerList: {},
+      currentPage: 0,
+    );
+  }
+
+  void setCurrentSubjectIndex(int index) {
+    state = state.copyWith(
+      currentSubjectIndex: index,
+      currentAnswerList: {},
+      currentPage: 0,
+    );
+  }
+
+  bool get isLastSubject =>
+      state.currentSubjectIndex == state.questionList.questionList.length - 1;
+
+  void setSubjectOptional(bool isOptional) {
+    state = state.copyWith(isSubjectOptional: isOptional);
   }
 
   void setExamDone() {
     state = state.copyWith(isDone: true);
   }
 
-  void setCurrentSubjectIndex(int index) {
-    state = state.copyWith(
-      currentSubjectIndex: index,
-    );
-  }
-
-  void resetCurrentSubjectIndex() {
-    state = state.copyWith(currentSubjectIndex: 0);
-  }
-
+  /// 필수 과목 질문 가져오기
   Future<void> fetchRequiredQuestionList() async {
     if (state.isRequiredDataLoaded) return;
     state = state.copyWith(isLoaded: false);
@@ -54,13 +143,12 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: QuestionListErrorType.network,
-      );
+      state =
+          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
   }
 
+  /// 선택 과목 질문 가져오기
   Future<void> fetchOptionalQuestionList() async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -73,13 +161,12 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: QuestionListErrorType.network,
-      );
+      state =
+          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
   }
 
+  /// 소울메이트 리스트 가져오기
   Future<void> fetchSoulmateList({bool isResult = false}) async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -100,13 +187,12 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: QuestionListErrorType.network,
-      );
+      state =
+          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
   }
 
+  /// 추천 리스트 가져오기
   Future<void> fetchRecommendList() async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -122,61 +208,81 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: QuestionListErrorType.network,
-      );
-    }
-  }
-
-  Future<void> createSubmitAnswerList(
-    SubjectAnswer request,
-  ) async {
-    try {
-      await ExamCreateSubmitUsecase(ref).call(
-        request: request,
-      );
-    } catch (e) {
-      Log.e(e);
+      state =
+          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
   }
 
   /// 프로필 미리보기
-  Future<void> openProfile({
-    required int memberId,
-  }) async {
+  Future<void> openProfile({required int memberId}) async {
     try {
       await ExamRemoveBlurUsecase(ref).call(memberId: memberId);
 
-      // 기존 리스트
-      final currentList = state.soulmateList.soulmateList;
-
-      // 업데이트된 리스트 생성
-      final updatedList = currentList
+      final updatedList = state.soulmateList.soulmateList
           .map((profile) => profile.memberId == memberId
               ? profile.copyWith(isIntroduced: true)
               : profile)
           .toList();
 
       state = state.copyWith(
-        soulmateList: state.soulmateList.copyWith(
-          soulmateList: updatedList,
-        ),
+        soulmateList: state.soulmateList.copyWith(soulmateList: updatedList),
       );
     } catch (e) {
       Log.e('프로필 블러 제거 실패: $e');
     }
   }
 
-  // 보유하트 조회
+  /// 유저 하트 조회
   Future<int> fetchUserHeartBalance() async {
     try {
       final heartBalance = await HeartBalanceFetchUseCase(ref).call();
-
       return heartBalance.totalHeartBalance;
     } catch (e) {
-      Log.e(e);
+      Log.e('하트 조회 실패: $e');
       return 0;
     }
+  }
+}
+
+/// 프로필 탭 핸들링 extension
+extension ExamNotifierProfile on ExamNotifier {
+  Future<void> handleProfileTap({
+    required BuildContext context,
+    required IntroducedProfile profile,
+    required bool isBlurred,
+    required bool isMale,
+  }) async {
+    if (isBlurred) {
+      final heartBalance = await fetchUserHeartBalance();
+      if (!context.mounted) return;
+
+      if (heartBalance < Dimens.examProfileOpenHeartCount) {
+        showDialog(
+          context: context,
+          builder: (_) => HeartShortageDialog(heartBalance: heartBalance),
+        );
+        return;
+      }
+
+      final pressed = await showDialog<bool>(
+        context: context,
+        builder: (_) => UnlockWithHeartDialog(
+          description: "프로필을 미리보기 하시겠습니까?",
+          heartBalance: heartBalance,
+          isMale: isMale,
+        ),
+      );
+
+      if (pressed != true) return;
+
+      await openProfile(memberId: profile.memberId);
+      if (!context.mounted) return;
+    }
+
+    navigate(
+      context,
+      route: AppRoute.profile,
+      extra: ProfileDetailArguments(userId: profile.memberId),
+    );
   }
 }

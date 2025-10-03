@@ -26,6 +26,8 @@ mixin _$ExamState {
   bool get hasResultData => throw _privateConstructorUsedError;
   bool get hasSoulmate => throw _privateConstructorUsedError;
   StoreData get heartBalance => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  Map<int, int> get currentAnswerList => throw _privateConstructorUsedError;
   QuestionListErrorType? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of ExamState
@@ -51,6 +53,8 @@ abstract class $ExamStateCopyWith<$Res> {
       bool hasResultData,
       bool hasSoulmate,
       StoreData heartBalance,
+      int currentPage,
+      Map<int, int> currentAnswerList,
       QuestionListErrorType? error});
 
   $QuestionDataCopyWith<$Res> get questionList;
@@ -83,6 +87,8 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
     Object? hasResultData = null,
     Object? hasSoulmate = null,
     Object? heartBalance = null,
+    Object? currentPage = null,
+    Object? currentAnswerList = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -126,6 +132,14 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
           ? _value.heartBalance
           : heartBalance // ignore: cast_nullable_to_non_nullable
               as StoreData,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentAnswerList: null == currentAnswerList
+          ? _value.currentAnswerList
+          : currentAnswerList // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -183,6 +197,8 @@ abstract class _$$ExamStateImplCopyWith<$Res>
       bool hasResultData,
       bool hasSoulmate,
       StoreData heartBalance,
+      int currentPage,
+      Map<int, int> currentAnswerList,
       QuestionListErrorType? error});
 
   @override
@@ -216,6 +232,8 @@ class __$$ExamStateImplCopyWithImpl<$Res>
     Object? hasResultData = null,
     Object? hasSoulmate = null,
     Object? heartBalance = null,
+    Object? currentPage = null,
+    Object? currentAnswerList = null,
     Object? error = freezed,
   }) {
     return _then(_$ExamStateImpl(
@@ -259,6 +277,14 @@ class __$$ExamStateImplCopyWithImpl<$Res>
           ? _value.heartBalance
           : heartBalance // ignore: cast_nullable_to_non_nullable
               as StoreData,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentAnswerList: null == currentAnswerList
+          ? _value._currentAnswerList
+          : currentAnswerList // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -281,8 +307,11 @@ class _$ExamStateImpl extends _ExamState {
       this.hasResultData = false,
       this.hasSoulmate = false,
       this.heartBalance = const StoreData(),
+      this.currentPage = 0,
+      final Map<int, int> currentAnswerList = const {},
       this.error})
-      : super._();
+      : _currentAnswerList = currentAnswerList,
+        super._();
 
   @override
   @JsonKey()
@@ -315,11 +344,24 @@ class _$ExamStateImpl extends _ExamState {
   @JsonKey()
   final StoreData heartBalance;
   @override
+  @JsonKey()
+  final int currentPage;
+  final Map<int, int> _currentAnswerList;
+  @override
+  @JsonKey()
+  Map<int, int> get currentAnswerList {
+    if (_currentAnswerList is EqualUnmodifiableMapView)
+      return _currentAnswerList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_currentAnswerList);
+  }
+
+  @override
   final QuestionListErrorType? error;
 
   @override
   String toString() {
-    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, error: $error)';
+    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, currentPage: $currentPage, currentAnswerList: $currentAnswerList, error: $error)';
   }
 
   @override
@@ -346,6 +388,10 @@ class _$ExamStateImpl extends _ExamState {
                 other.hasSoulmate == hasSoulmate) &&
             (identical(other.heartBalance, heartBalance) ||
                 other.heartBalance == heartBalance) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other._currentAnswerList, _currentAnswerList) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -362,6 +408,8 @@ class _$ExamStateImpl extends _ExamState {
       hasResultData,
       hasSoulmate,
       heartBalance,
+      currentPage,
+      const DeepCollectionEquality().hash(_currentAnswerList),
       error);
 
   /// Create a copy of ExamState
@@ -385,6 +433,8 @@ abstract class _ExamState extends ExamState {
       final bool hasResultData,
       final bool hasSoulmate,
       final StoreData heartBalance,
+      final int currentPage,
+      final Map<int, int> currentAnswerList,
       final QuestionListErrorType? error}) = _$ExamStateImpl;
   const _ExamState._() : super._();
 
@@ -408,6 +458,10 @@ abstract class _ExamState extends ExamState {
   bool get hasSoulmate;
   @override
   StoreData get heartBalance;
+  @override
+  int get currentPage;
+  @override
+  Map<int, int> get currentAnswerList;
   @override
   QuestionListErrorType? get error;
 

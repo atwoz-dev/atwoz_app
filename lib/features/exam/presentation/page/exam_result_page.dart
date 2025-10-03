@@ -1,14 +1,10 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/empty_list.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
-import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
-import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/user_by_category_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,97 +26,29 @@ class ExamResultPageState
           isHorizontalMargin: false,
         );
 
-  void _showTwoChoiceDialogue() {
-    CustomDialogue.showTwoChoiceDialogue(
-        context: context,
-        content: '연애 모의고사를 종료 하시겠어요?\n페이지를 벗어날경우, 저장되지 않아요',
-        onElevatedButtonPressed: () {
-          ref.read(examNotifierProvider.notifier).setSubjectOptional(false);
-          ref.read(examNotifierProvider.notifier).resetCurrentSubjectIndex();
-
-          navigate(
-            context,
-            route: AppRoute.mainTab,
-            method: NavigationMethod.go,
-          );
-        });
-  }
-
-  Future<void> _handleProfileTap(
-      {required BuildContext context,
-      required IntroducedProfile profile,
-      required int index,
-      required bool isBlurred,
-      required bool isMale}) async {
-    if (isBlurred) {
-      final heartBalance =
-          await ref.read(examNotifierProvider.notifier).fetchUserHeartBalance();
-
-      if (!context.mounted) return;
-
-      if (heartBalance < Dimens.examProfileOpenHeartCount) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return HeartShortageDialog(heartBalance: heartBalance);
-          },
-        );
-        return;
-      }
-
-      final pressed = await showDialog<bool>(
-        context: context,
-        builder: (context) => UnlockWithHeartDialog(
-          description: "프로필을 미리보기 하시겠습니까?",
-          heartBalance: heartBalance,
-          isMale: isMale,
-        ),
-      );
-
-      if (pressed != true) return;
-
-      await ref.read(examNotifierProvider.notifier).openProfile(
-            memberId: profile.memberId,
-          );
-      if (!context.mounted) return;
-    }
-
-    _navigateToProfile(context, profile);
-    return;
-  }
-
-  Future<dynamic> _navigateToProfile(
-      BuildContext context, IntroducedProfile profile) {
-    return navigate(
-      context,
-      route: AppRoute.profile,
-      extra: ProfileDetailArguments(userId: profile.memberId),
-    );
-  }
-
   @override
   Widget buildPage(BuildContext context) {
-    final double horizontalPadding = screenWidth * 0.05;
-    final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
     final examState = ref.watch(examNotifierProvider);
+    final notifier = ref.read(examNotifierProvider.notifier);
     final userProfile = ref.watch(globalNotifierProvider).profile;
 
     return Scaffold(
       appBar: DefaultAppBar(
         title: examState.isSubjectOptional ? '매칭 결과' : '매칭 현황',
-        leadingAction: (context) => _showTwoChoiceDialogue(),
+        leadingAction: (_) => _showLeaveExamDialogue(context, notifier),
       ),
       body: Padding(
-        padding: contentPadding,
-        child: Column(children: [
-          _buildHeader(examState),
-          Expanded(
-            flex: 9,
-            child: _buildResultList(examState, userProfile),
-          ),
-          _buildBottomButton(context, examState),
-        ]),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+        child: Column(
+          children: [
+            _buildHeader(examState),
+            Expanded(
+              child:
+                  _buildResultList(context, examState, notifier, userProfile),
+            ),
+            _buildBottomButton(context, examState, notifier),
+          ],
+        ),
       ),
     );
   }
@@ -158,7 +86,12 @@ class ExamResultPageState
     );
   }
 
-  Widget _buildResultList(ExamState examState, CachedUserProfile userProfile) {
+  Widget _buildResultList(
+    BuildContext context,
+    ExamState examState,
+    ExamNotifier notifier,
+    CachedUserProfile userProfile,
+  ) {
     if (!examState.hasResultData) return const EmptyList();
 
     return ListView.separated(
@@ -170,20 +103,23 @@ class ExamResultPageState
 
         return UserByCategoryListItem(
           isBlurred: isBlurred,
-          onTap: () => _handleProfileTap(
+          profile: profile,
+          onTap: () => notifier.handleProfileTap(
             context: context,
             profile: profile,
-            index: index,
             isBlurred: isBlurred,
             isMale: userProfile.isMale,
           ),
-          profile: profile,
         );
       },
     );
   }
 
-  Widget _buildBottomButton(BuildContext context, ExamState examState) {
+  Widget _buildBottomButton(
+    BuildContext context,
+    ExamState examState,
+    ExamNotifier notifier,
+  ) {
     return Padding(
       padding: EdgeInsets.only(bottom: screenHeight * 0.05),
       child: examState.isSubjectOptional
@@ -195,21 +131,36 @@ class ExamResultPageState
                   child: const Text('연애 모의고사 종료하기'),
                 )
               : DefaultElevatedButton(
-                  onPressed: () {
-                    ref.read(examNotifierProvider.notifier)
-                      ..resetCurrentSubjectIndex()
-                      ..fetchOptionalQuestionList();
-
+                  onPressed: () async {
+                    await notifier.fetchOptionalQuestionList();
+                    notifier.setCurrentSubjectIndex(0);
                     navigate(context, route: AppRoute.examQuestion);
                   },
                   child: const Text('선택과목 풀기'),
                 )
           : DefaultElevatedButton(
               onPressed: () {
+                ref.read(examNotifierProvider.notifier).nextSubject();
                 navigate(context, route: AppRoute.examQuestion);
               },
               child: const Text('다음과목 이어서 풀기'),
             ),
+    );
+  }
+
+  void _showLeaveExamDialogue(BuildContext context, ExamNotifier notifier) {
+    CustomDialogue.showTwoChoiceDialogue(
+      context: context,
+      content: '연애 모의고사를 종료 하시겠어요?\n페이지를 벗어날경우, 저장되지 않아요',
+      onElevatedButtonPressed: () {
+        notifier.setSubjectOptional(false);
+        notifier.resetCurrentSubjectIndex();
+        navigate(
+          context,
+          route: AppRoute.mainTab,
+          method: NavigationMethod.go,
+        );
+      },
     );
   }
 }
