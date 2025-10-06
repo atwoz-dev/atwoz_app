@@ -50,11 +50,8 @@ class GlobalNotifier extends _$GlobalNotifier {
     return await ref.read(getProfileFromHiveUseCaseProvider).execute();
   }
 
-  Future<bool> clearAllData() async {
+  Future<bool> clearLocalData() async {
     try {
-      // 로그아웃
-      await ref.read(authUsecaseProvider).signOut();
-
       // CachedUserProfile 박스 열기 또는 참조
       final profileBox = Hive.isBoxOpen(CachedUserProfile.boxName)
           ? Hive.box<CachedUserProfile>(CachedUserProfile.boxName)

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:android_id/android_id.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
@@ -25,8 +26,14 @@ final authUsecaseProvider = Provider<AuthUseCase>((ref) {
   final localStorage = ref.read(localStorageProvider);
   final apiService = ref.read(apiServiceProvider);
   final photoRepository = ref.read(photoRepositoryProvider);
+
   return AuthUseCaseImpl(
-      userRepository, localStorage, apiService, photoRepository);
+    userRepository,
+    localStorage,
+    apiService,
+    photoRepository,
+    ref,
+  );
 });
 
 /// AuthUseCaseImpl에서 필요한 의존성을 명확하게 주입
@@ -35,9 +42,15 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   final LocalStorage _localStorage;
   final ApiServiceImpl _apiService;
   final PhotoRepository _photoRepository;
+  final Ref _ref;
 
-  AuthUseCaseImpl(this._userRepository, this._localStorage, this._apiService,
-      this._photoRepository);
+  AuthUseCaseImpl(
+    this._userRepository,
+    this._localStorage,
+    this._apiService,
+    this._photoRepository,
+    this._ref,
+  );
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';
@@ -68,6 +81,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     await cookieJar.delete(uri, true);
 
     await _userRepository.signOut();
+
+    await _localStorage.clear();
+    await _localStorage.clearEncrypted();
+
+    await _ref.read(globalNotifierProvider.notifier).clearLocalData();
 
     Log.d("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
   }
