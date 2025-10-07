@@ -28,14 +28,13 @@ class SaveIntroducedProfilesUseCase {
 
       // 캐시 없거나 만료된 경우 서버에서 가져와서 저장
       final profileDtos = await _fetchProfilesFromServer(categoryKey);
-      Log.d('소개 받은 이성 리스트 서버에서 호출: $profileDtos');
 
       await _saveProfilesToCache(box, categoryKey, profileDtos);
 
       return getIntroducedProfiles(profileDtos);
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
-      return [];
+      rethrow;
     }
   }
 
