@@ -18,13 +18,8 @@ class SaveIntroducedProfilesUseCase {
 
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
     try {
-      final Box<Map> box;
-
-      if (Hive.isBoxOpen(IntroducedProfileDto.boxName)) {
-        box = Hive.box<Map>(IntroducedProfileDto.boxName);
-      } else {
-        box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
-      }
+      final Box<Map> box =
+          await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
       final categoryKey = category.name;
 

@@ -14,13 +14,7 @@ class FetchIntroducedProfilesUseCase {
   /// 소개받고 싶은 이성 화면에서 조회되는 메서드
   /// 즉, 빈 리스트인 경우는 존재하지 않음
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
-    final Box<Map> box;
-
-    if (Hive.isBoxOpen(IntroducedProfileDto.boxName)) {
-      box = Hive.box<Map>(IntroducedProfileDto.boxName);
-    } else {
-      box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
-    }
+    final Box<Map> box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
     final categoryKey = category.name;
 

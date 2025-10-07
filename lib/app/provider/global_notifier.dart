@@ -53,12 +53,12 @@ class GlobalNotifier extends _$GlobalNotifier {
   Future<bool> clearLocalData() async {
     try {
       // CachedUserProfile 박스 열기 또는 참조
-      final profileBox = Hive.box<CachedUserProfile>(CachedUserProfile.boxName);
+      final profileBox =
+          await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
 
       // IntroducedProfileDto 박스 열기 또는 참조
-      final introducedProfilesBox = Hive.isBoxOpen(IntroducedProfileDto.boxName)
-          ? Hive.box<Map>(IntroducedProfileDto.boxName)
-          : await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+      final introducedProfilesBox =
+          await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
       await profileBox.clear();
 
