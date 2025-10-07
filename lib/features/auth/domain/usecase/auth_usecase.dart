@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 abstract class AuthUseCase {
   Future<UserData> signIn(UserSignInRequest user);
-  Future<void> signOut();
+  Future<bool> signOut();
   Future<String?> getAccessToken();
   void setAccessToken(String accessToken);
   Future<String?> getRefreshToken();

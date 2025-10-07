@@ -63,11 +63,11 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final isLogOutCompleted = await ref
+                  final signOutCompleted = await ref
                       .read(mySettingNotifierProvider.notifier)
-                      .logout();
+                      .signOut();
                   if (!context.mounted) return;
-                  if (!isLogOutCompleted) {
+                  if (!signOutCompleted) {
                     ErrorDialog.open(
                       context,
                       error: DialogueErrorType.failSignOut,

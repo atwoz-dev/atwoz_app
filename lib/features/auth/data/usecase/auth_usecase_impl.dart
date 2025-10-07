@@ -22,35 +22,23 @@ import 'package:image_picker/image_picker.dart';
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
-  final userRepository = ref.read(userRepositoryProvider);
-  final localStorage = ref.read(localStorageProvider);
-  final apiService = ref.read(apiServiceProvider);
-  final photoRepository = ref.read(photoRepositoryProvider);
-
-  return AuthUseCaseImpl(
-    userRepository,
-    localStorage,
-    apiService,
-    photoRepository,
-    ref,
-  );
+  return AuthUseCaseImpl(ref);
 });
 
 /// AuthUseCaseImpl에서 필요한 의존성을 명확하게 주입
 class AuthUseCaseImpl with LogMixin implements AuthUseCase {
-  final UserRepository _userRepository;
-  final LocalStorage _localStorage;
-  final ApiServiceImpl _apiService;
-  final PhotoRepository _photoRepository;
   final Ref _ref;
 
   AuthUseCaseImpl(
-    this._userRepository,
-    this._localStorage,
-    this._apiService,
-    this._photoRepository,
     this._ref,
   );
+
+  UserRepository get _userRepository => _ref.read(userRepositoryProvider);
+  LocalStorage get _localStorage => _ref.read(localStorageProvider);
+  ApiServiceImpl get _apiService => _ref.read(apiServiceProvider);
+  PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
+  GlobalNotifier get _globalNotifier =>
+      _ref.read(globalNotifierProvider.notifier);
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';
@@ -74,20 +62,37 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   }
 
   @override
-  Future<void> signOut() async {
-    final Uri uri = Uri.parse(Config.baseUrl);
-    final cookieJar = _apiService.cookieJar;
-    // TODO(Han): notification 초기화 필요
-    await cookieJar.delete(uri, true);
+  Future<bool> signOut() async {
+    try {
+      final uri = Uri.parse(Config.baseUrl);
+      final cookieJar = _apiService.cookieJar;
 
-    await _userRepository.signOut();
+      try {
+        await cookieJar.delete(uri, true);
+        await _localStorage.clear();
+        await _localStorage.clearEncrypted();
+        final cleared = await _globalNotifier.clearLocalData();
 
-    await _localStorage.clear();
-    await _localStorage.clearEncrypted();
+        if (!cleared) {
+          throw Exception();
+        }
+      } catch (e) {
+        Log.e("쿠키 및 로컬 데이터 삭제 실패");
+        return false;
+      }
 
-    await _ref.read(globalNotifierProvider.notifier).clearLocalData();
+      try {
+        await _userRepository.signOut();
+      } catch (e) {
+        Log.e("서버 로그아웃 실패");
+        return false;
+      }
 
-    Log.d("로그아웃 완료: 쿠키 및 로컬 데이터 삭제");
+      return true;
+    } catch (e) {
+      Log.e("로그아웃 중 예기치 못한 에러 발생: $e");
+      return false;
+    }
   }
 
   // 프로필 사진 업로드
