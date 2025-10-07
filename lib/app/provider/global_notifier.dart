@@ -53,23 +53,18 @@ class GlobalNotifier extends _$GlobalNotifier {
   Future<bool> clearLocalData() async {
     try {
       // CachedUserProfile 박스 열기 또는 참조
-      final profileBox = Hive.isBoxOpen(CachedUserProfile.boxName)
-          ? Hive.box<CachedUserProfile>(CachedUserProfile.boxName)
-          : await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
+      final profileBox = Hive.box<CachedUserProfile>(CachedUserProfile.boxName);
 
       // IntroducedProfileDto 박스 열기 또는 참조
       final introducedProfilesBox = Hive.isBoxOpen(IntroducedProfileDto.boxName)
-          ? Hive.box<IntroducedProfileDto>(IntroducedProfileDto.boxName)
-          : await Hive.openBox<IntroducedProfileDto>(
-              IntroducedProfileDto.boxName);
+          ? Hive.box<Map>(IntroducedProfileDto.boxName)
+          : await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
       await profileBox.clear();
-      await profileBox.close();
 
       state = state.copyWith(profile: CachedUserProfile.init());
 
       await introducedProfilesBox.clear();
-      await introducedProfilesBox.close();
 
       // FlutterSecureStorage에 저장된 데이터 모두 삭제
       await ref.read(localStorageProvider).clearEncrypted();
