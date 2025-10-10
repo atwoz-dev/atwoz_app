@@ -33,7 +33,7 @@ mixin _$UserProfile {
   double get height => throw _privateConstructorUsedError;
   Job get job => throw _privateConstructorUsedError;
   MatchStatus get matchStatus => throw _privateConstructorUsedError;
-  ProfileExchangeStatus get profileExchangeStatus =>
+  ProfileExchangeInfo? get profileExchangeInfo =>
       throw _privateConstructorUsedError;
   FavoriteType? get favoriteType => throw _privateConstructorUsedError;
 
@@ -67,8 +67,10 @@ abstract class $UserProfileCopyWith<$Res> {
       double height,
       Job job,
       MatchStatus matchStatus,
-      ProfileExchangeStatus profileExchangeStatus,
+      ProfileExchangeInfo? profileExchangeInfo,
       FavoriteType? favoriteType});
+
+  $ProfileExchangeInfoCopyWith<$Res>? get profileExchangeInfo;
 }
 
 /// @nodoc
@@ -102,7 +104,7 @@ class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
     Object? height = null,
     Object? job = null,
     Object? matchStatus = null,
-    Object? profileExchangeStatus = null,
+    Object? profileExchangeInfo = freezed,
     Object? favoriteType = freezed,
   }) {
     return _then(_value.copyWith(
@@ -170,15 +172,30 @@ class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
           ? _value.matchStatus
           : matchStatus // ignore: cast_nullable_to_non_nullable
               as MatchStatus,
-      profileExchangeStatus: null == profileExchangeStatus
-          ? _value.profileExchangeStatus
-          : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileExchangeStatus,
+      profileExchangeInfo: freezed == profileExchangeInfo
+          ? _value.profileExchangeInfo
+          : profileExchangeInfo // ignore: cast_nullable_to_non_nullable
+              as ProfileExchangeInfo?,
       favoriteType: freezed == favoriteType
           ? _value.favoriteType
           : favoriteType // ignore: cast_nullable_to_non_nullable
               as FavoriteType?,
     ) as $Val);
+  }
+
+  /// Create a copy of UserProfile
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileExchangeInfoCopyWith<$Res>? get profileExchangeInfo {
+    if (_value.profileExchangeInfo == null) {
+      return null;
+    }
+
+    return $ProfileExchangeInfoCopyWith<$Res>(_value.profileExchangeInfo!,
+        (value) {
+      return _then(_value.copyWith(profileExchangeInfo: value) as $Val);
+    });
   }
 }
 
@@ -207,8 +224,11 @@ abstract class _$$UserProfileImplCopyWith<$Res>
       double height,
       Job job,
       MatchStatus matchStatus,
-      ProfileExchangeStatus profileExchangeStatus,
+      ProfileExchangeInfo? profileExchangeInfo,
       FavoriteType? favoriteType});
+
+  @override
+  $ProfileExchangeInfoCopyWith<$Res>? get profileExchangeInfo;
 }
 
 /// @nodoc
@@ -240,7 +260,7 @@ class __$$UserProfileImplCopyWithImpl<$Res>
     Object? height = null,
     Object? job = null,
     Object? matchStatus = null,
-    Object? profileExchangeStatus = null,
+    Object? profileExchangeInfo = freezed,
     Object? favoriteType = freezed,
   }) {
     return _then(_$UserProfileImpl(
@@ -308,10 +328,10 @@ class __$$UserProfileImplCopyWithImpl<$Res>
           ? _value.matchStatus
           : matchStatus // ignore: cast_nullable_to_non_nullable
               as MatchStatus,
-      profileExchangeStatus: null == profileExchangeStatus
-          ? _value.profileExchangeStatus
-          : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileExchangeStatus,
+      profileExchangeInfo: freezed == profileExchangeInfo
+          ? _value.profileExchangeInfo
+          : profileExchangeInfo // ignore: cast_nullable_to_non_nullable
+              as ProfileExchangeInfo?,
       favoriteType: freezed == favoriteType
           ? _value.favoriteType
           : favoriteType // ignore: cast_nullable_to_non_nullable
@@ -340,7 +360,7 @@ class _$UserProfileImpl implements _UserProfile {
       required this.height,
       required this.job,
       required this.matchStatus,
-      required this.profileExchangeStatus,
+      required this.profileExchangeInfo,
       required this.favoriteType})
       : _hobbies = hobbies,
         _selfIntroductionItems = selfIntroductionItems;
@@ -391,13 +411,13 @@ class _$UserProfileImpl implements _UserProfile {
   @override
   final MatchStatus matchStatus;
   @override
-  final ProfileExchangeStatus profileExchangeStatus;
+  final ProfileExchangeInfo? profileExchangeInfo;
   @override
   final FavoriteType? favoriteType;
 
   @override
   String toString() {
-    return 'UserProfile(id: $id, name: $name, profileUri: $profileUri, age: $age, mbti: $mbti, address: $address, hobbies: $hobbies, selfIntroductionItems: $selfIntroductionItems, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, educationLevel: $educationLevel, religion: $religion, region: $region, height: $height, job: $job, matchStatus: $matchStatus, profileExchangeStatus: $profileExchangeStatus, favoriteType: $favoriteType)';
+    return 'UserProfile(id: $id, name: $name, profileUri: $profileUri, age: $age, mbti: $mbti, address: $address, hobbies: $hobbies, selfIntroductionItems: $selfIntroductionItems, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, educationLevel: $educationLevel, religion: $religion, region: $region, height: $height, job: $job, matchStatus: $matchStatus, profileExchangeInfo: $profileExchangeInfo, favoriteType: $favoriteType)';
   }
 
   @override
@@ -428,8 +448,8 @@ class _$UserProfileImpl implements _UserProfile {
             (identical(other.job, job) || other.job == job) &&
             (identical(other.matchStatus, matchStatus) ||
                 other.matchStatus == matchStatus) &&
-            (identical(other.profileExchangeStatus, profileExchangeStatus) ||
-                other.profileExchangeStatus == profileExchangeStatus) &&
+            (identical(other.profileExchangeInfo, profileExchangeInfo) ||
+                other.profileExchangeInfo == profileExchangeInfo) &&
             (identical(other.favoriteType, favoriteType) ||
                 other.favoriteType == favoriteType));
   }
@@ -453,7 +473,7 @@ class _$UserProfileImpl implements _UserProfile {
       height,
       job,
       matchStatus,
-      profileExchangeStatus,
+      profileExchangeInfo,
       favoriteType);
 
   /// Create a copy of UserProfile
@@ -483,7 +503,7 @@ abstract class _UserProfile implements UserProfile {
       required final double height,
       required final Job job,
       required final MatchStatus matchStatus,
-      required final ProfileExchangeStatus profileExchangeStatus,
+      required final ProfileExchangeInfo? profileExchangeInfo,
       required final FavoriteType? favoriteType}) = _$UserProfileImpl;
 
   @override
@@ -519,7 +539,7 @@ abstract class _UserProfile implements UserProfile {
   @override
   MatchStatus get matchStatus;
   @override
-  ProfileExchangeStatus get profileExchangeStatus;
+  ProfileExchangeInfo? get profileExchangeInfo;
   @override
   FavoriteType? get favoriteType;
 
