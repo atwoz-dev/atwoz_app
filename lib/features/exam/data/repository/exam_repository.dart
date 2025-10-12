@@ -14,7 +14,6 @@ final examRepositoryProvider = Provider<ExamRepository>((ref) {
 class ExamRepository extends BaseRepository {
   ExamRepository(Ref ref) : super(ref, '/dating-exam');
 
-  /// 필수과목 목록 조회 API
   Future<List<SubjectItem>> getRequiredQuestionList() async {
     try {
       final response = await apiService.getJson<Map<String, dynamic>>(
@@ -30,7 +29,6 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  /// 선택과목 목록 조회 API
   Future<List<SubjectItem>> getOptionalQuestionList() async {
     try {
       final response = await apiService.getJson<Map<String, dynamic>>(
@@ -46,7 +44,6 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  /// 필수과목 답변 제출 API
   Future<void> createSubmitAnswerList({
     required SubjectAnswer request,
   }) async {
@@ -58,7 +55,6 @@ class ExamRepository extends BaseRepository {
     );
   }
 
-  // 소울메이트 조회 API
   Future<List<IntroducedProfileDto>> getSolumateList() async {
     try {
       final response = await apiService.getJson<Map<String, dynamic>>(
@@ -78,7 +74,6 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  // 추천목록 조회 API
   Future<List<IntroducedProfileDto>> getRecommendList() async {
     try {
       //TODO(mh): 실제 엔드포인트로 변경 필요. 서버 개발중
@@ -99,7 +94,6 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  // 프로필 블러 해제
   Future<void> removeProfileBlur({
     required int memberId,
   }) async {
