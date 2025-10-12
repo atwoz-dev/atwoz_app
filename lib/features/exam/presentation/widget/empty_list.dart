@@ -26,7 +26,7 @@ class EmptyList extends StatelessWidget {
           style: Fonts.body03Regular().copyWith(
             fontWeight: FontWeight.w500,
             color: Palette.colorBlack,
-            height: 1.5,
+            height: 1.3,
           ),
         ),
       ],
