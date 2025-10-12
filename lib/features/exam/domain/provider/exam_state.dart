@@ -12,16 +12,16 @@ enum QuestionListErrorType {
 @freezed
 class ExamState with _$ExamState {
   const factory ExamState({
-    @Default(QuestionData()) QuestionData questionList,
-    @Default(SoulmateData()) SoulmateData soulmateList,
-    @Default(0) int currentSubjectIndex,
-    @Default(false) bool isSubjectOptional,
-    @Default(false) bool isDone,
+    required QuestionData questionList,
+    required SoulmateData soulmateList,
+    required int currentSubjectIndex,
+    required bool isSubjectOptional,
+    required bool isDone,
+    required bool hasResultData,
+    required bool hasSoulmate,
+    required StoreData heartBalance,
     @Default(false) bool isLoaded,
     @Default(false) bool isRequiredDataLoaded,
-    @Default(false) bool hasResultData,
-    @Default(false) bool hasSoulmate,
-    @Default(StoreData()) StoreData heartBalance,
     @Default(0) int currentPage,
     @Default({}) Map<int, int> currentAnswerList,
     QuestionListErrorType? error,
@@ -29,7 +29,16 @@ class ExamState with _$ExamState {
 
   const ExamState._();
 
-  factory ExamState.initial() => const ExamState();
+  factory ExamState.initial() => const ExamState(
+        questionList: QuestionData(),
+        soulmateList: SoulmateData(),
+        heartBalance: StoreData(),
+        currentSubjectIndex: 0,
+        isSubjectOptional: false,
+        isDone: false,
+        hasResultData: false,
+        hasSoulmate: false,
+      );
 
   int get totalHeartBalance => heartBalance.heartBalance.totalHeartBalance;
 }

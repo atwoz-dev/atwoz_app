@@ -21,11 +21,11 @@ mixin _$ExamState {
   int get currentSubjectIndex => throw _privateConstructorUsedError;
   bool get isSubjectOptional => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
-  bool get isLoaded => throw _privateConstructorUsedError;
-  bool get isRequiredDataLoaded => throw _privateConstructorUsedError;
   bool get hasResultData => throw _privateConstructorUsedError;
   bool get hasSoulmate => throw _privateConstructorUsedError;
   StoreData get heartBalance => throw _privateConstructorUsedError;
+  bool get isLoaded => throw _privateConstructorUsedError;
+  bool get isRequiredDataLoaded => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
   Map<int, int> get currentAnswerList => throw _privateConstructorUsedError;
   QuestionListErrorType? get error => throw _privateConstructorUsedError;
@@ -48,11 +48,11 @@ abstract class $ExamStateCopyWith<$Res> {
       int currentSubjectIndex,
       bool isSubjectOptional,
       bool isDone,
-      bool isLoaded,
-      bool isRequiredDataLoaded,
       bool hasResultData,
       bool hasSoulmate,
       StoreData heartBalance,
+      bool isLoaded,
+      bool isRequiredDataLoaded,
       int currentPage,
       Map<int, int> currentAnswerList,
       QuestionListErrorType? error});
@@ -82,11 +82,11 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
     Object? currentSubjectIndex = null,
     Object? isSubjectOptional = null,
     Object? isDone = null,
-    Object? isLoaded = null,
-    Object? isRequiredDataLoaded = null,
     Object? hasResultData = null,
     Object? hasSoulmate = null,
     Object? heartBalance = null,
+    Object? isLoaded = null,
+    Object? isRequiredDataLoaded = null,
     Object? currentPage = null,
     Object? currentAnswerList = null,
     Object? error = freezed,
@@ -112,14 +112,6 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoaded: null == isLoaded
-          ? _value.isLoaded
-          : isLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRequiredDataLoaded: null == isRequiredDataLoaded
-          ? _value.isRequiredDataLoaded
-          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
       hasResultData: null == hasResultData
           ? _value.hasResultData
           : hasResultData // ignore: cast_nullable_to_non_nullable
@@ -132,6 +124,14 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
           ? _value.heartBalance
           : heartBalance // ignore: cast_nullable_to_non_nullable
               as StoreData,
+      isLoaded: null == isLoaded
+          ? _value.isLoaded
+          : isLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRequiredDataLoaded: null == isRequiredDataLoaded
+          ? _value.isRequiredDataLoaded
+          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -192,11 +192,11 @@ abstract class _$$ExamStateImplCopyWith<$Res>
       int currentSubjectIndex,
       bool isSubjectOptional,
       bool isDone,
-      bool isLoaded,
-      bool isRequiredDataLoaded,
       bool hasResultData,
       bool hasSoulmate,
       StoreData heartBalance,
+      bool isLoaded,
+      bool isRequiredDataLoaded,
       int currentPage,
       Map<int, int> currentAnswerList,
       QuestionListErrorType? error});
@@ -227,11 +227,11 @@ class __$$ExamStateImplCopyWithImpl<$Res>
     Object? currentSubjectIndex = null,
     Object? isSubjectOptional = null,
     Object? isDone = null,
-    Object? isLoaded = null,
-    Object? isRequiredDataLoaded = null,
     Object? hasResultData = null,
     Object? hasSoulmate = null,
     Object? heartBalance = null,
+    Object? isLoaded = null,
+    Object? isRequiredDataLoaded = null,
     Object? currentPage = null,
     Object? currentAnswerList = null,
     Object? error = freezed,
@@ -257,14 +257,6 @@ class __$$ExamStateImplCopyWithImpl<$Res>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoaded: null == isLoaded
-          ? _value.isLoaded
-          : isLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRequiredDataLoaded: null == isRequiredDataLoaded
-          ? _value.isRequiredDataLoaded
-          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
       hasResultData: null == hasResultData
           ? _value.hasResultData
           : hasResultData // ignore: cast_nullable_to_non_nullable
@@ -277,6 +269,14 @@ class __$$ExamStateImplCopyWithImpl<$Res>
           ? _value.heartBalance
           : heartBalance // ignore: cast_nullable_to_non_nullable
               as StoreData,
+      isLoaded: null == isLoaded
+          ? _value.isLoaded
+          : isLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRequiredDataLoaded: null == isRequiredDataLoaded
+          ? _value.isRequiredDataLoaded
+          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -297,16 +297,16 @@ class __$$ExamStateImplCopyWithImpl<$Res>
 
 class _$ExamStateImpl extends _ExamState {
   const _$ExamStateImpl(
-      {this.questionList = const QuestionData(),
-      this.soulmateList = const SoulmateData(),
-      this.currentSubjectIndex = 0,
-      this.isSubjectOptional = false,
-      this.isDone = false,
+      {required this.questionList,
+      required this.soulmateList,
+      required this.currentSubjectIndex,
+      required this.isSubjectOptional,
+      required this.isDone,
+      required this.hasResultData,
+      required this.hasSoulmate,
+      required this.heartBalance,
       this.isLoaded = false,
       this.isRequiredDataLoaded = false,
-      this.hasResultData = false,
-      this.hasSoulmate = false,
-      this.heartBalance = const StoreData(),
       this.currentPage = 0,
       final Map<int, int> currentAnswerList = const {},
       this.error})
@@ -314,35 +314,27 @@ class _$ExamStateImpl extends _ExamState {
         super._();
 
   @override
-  @JsonKey()
   final QuestionData questionList;
   @override
-  @JsonKey()
   final SoulmateData soulmateList;
   @override
-  @JsonKey()
   final int currentSubjectIndex;
   @override
-  @JsonKey()
   final bool isSubjectOptional;
   @override
-  @JsonKey()
   final bool isDone;
+  @override
+  final bool hasResultData;
+  @override
+  final bool hasSoulmate;
+  @override
+  final StoreData heartBalance;
   @override
   @JsonKey()
   final bool isLoaded;
   @override
   @JsonKey()
   final bool isRequiredDataLoaded;
-  @override
-  @JsonKey()
-  final bool hasResultData;
-  @override
-  @JsonKey()
-  final bool hasSoulmate;
-  @override
-  @JsonKey()
-  final StoreData heartBalance;
   @override
   @JsonKey()
   final int currentPage;
@@ -361,7 +353,7 @@ class _$ExamStateImpl extends _ExamState {
 
   @override
   String toString() {
-    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, currentPage: $currentPage, currentAnswerList: $currentAnswerList, error: $error)';
+    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerList: $currentAnswerList, error: $error)';
   }
 
   @override
@@ -378,16 +370,16 @@ class _$ExamStateImpl extends _ExamState {
             (identical(other.isSubjectOptional, isSubjectOptional) ||
                 other.isSubjectOptional == isSubjectOptional) &&
             (identical(other.isDone, isDone) || other.isDone == isDone) &&
-            (identical(other.isLoaded, isLoaded) ||
-                other.isLoaded == isLoaded) &&
-            (identical(other.isRequiredDataLoaded, isRequiredDataLoaded) ||
-                other.isRequiredDataLoaded == isRequiredDataLoaded) &&
             (identical(other.hasResultData, hasResultData) ||
                 other.hasResultData == hasResultData) &&
             (identical(other.hasSoulmate, hasSoulmate) ||
                 other.hasSoulmate == hasSoulmate) &&
             (identical(other.heartBalance, heartBalance) ||
                 other.heartBalance == heartBalance) &&
+            (identical(other.isLoaded, isLoaded) ||
+                other.isLoaded == isLoaded) &&
+            (identical(other.isRequiredDataLoaded, isRequiredDataLoaded) ||
+                other.isRequiredDataLoaded == isRequiredDataLoaded) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
@@ -403,11 +395,11 @@ class _$ExamStateImpl extends _ExamState {
       currentSubjectIndex,
       isSubjectOptional,
       isDone,
-      isLoaded,
-      isRequiredDataLoaded,
       hasResultData,
       hasSoulmate,
       heartBalance,
+      isLoaded,
+      isRequiredDataLoaded,
       currentPage,
       const DeepCollectionEquality().hash(_currentAnswerList),
       error);
@@ -423,16 +415,16 @@ class _$ExamStateImpl extends _ExamState {
 
 abstract class _ExamState extends ExamState {
   const factory _ExamState(
-      {final QuestionData questionList,
-      final SoulmateData soulmateList,
-      final int currentSubjectIndex,
-      final bool isSubjectOptional,
-      final bool isDone,
+      {required final QuestionData questionList,
+      required final SoulmateData soulmateList,
+      required final int currentSubjectIndex,
+      required final bool isSubjectOptional,
+      required final bool isDone,
+      required final bool hasResultData,
+      required final bool hasSoulmate,
+      required final StoreData heartBalance,
       final bool isLoaded,
       final bool isRequiredDataLoaded,
-      final bool hasResultData,
-      final bool hasSoulmate,
-      final StoreData heartBalance,
       final int currentPage,
       final Map<int, int> currentAnswerList,
       final QuestionListErrorType? error}) = _$ExamStateImpl;
@@ -449,15 +441,15 @@ abstract class _ExamState extends ExamState {
   @override
   bool get isDone;
   @override
-  bool get isLoaded;
-  @override
-  bool get isRequiredDataLoaded;
-  @override
   bool get hasResultData;
   @override
   bool get hasSoulmate;
   @override
   StoreData get heartBalance;
+  @override
+  bool get isLoaded;
+  @override
+  bool get isRequiredDataLoaded;
   @override
   int get currentPage;
   @override
