@@ -11,12 +11,11 @@ class Dimens {
 
   static const double iconSize = 24.0;
 
-  static const double buttonHeight = 40.0;
+  static const double buttonHeight = 54.0;
   static const BorderRadius buttonRadius =
       BorderRadius.all(Radius.circular(10));
   static const double buttonRadiusValue = 10;
-  static const EdgeInsets buttonPadding =
-      EdgeInsets.symmetric(horizontal: 20, vertical: 20);
+  static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 20);
 
   static const double bottomSheetGap = 24.0;
   static const BorderRadius bottomSheetRadius =
