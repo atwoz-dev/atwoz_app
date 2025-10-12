@@ -149,7 +149,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           child: isWaitingProfileExchange
               ? _PrimaryButton(
                   onTap: _profileExchangeHandler,
-                  label: '프로필 교환 요청 수락하기',
+                  label: '프로필 교환 요청 응답하기',
                 )
               : _PrimaryButton(
                   onTap: () => MessageSendBottomSheet.open(
@@ -199,9 +199,8 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           final success = await notifier.rejectProfileExchange();
           if (success) showToastMessage('프로필 교환을 거절하였습니다.');
           if (mounted) {
-            context
-              ..pop()
-              ..pop();
+            context.pop();
+            if(success) context.pop();
           }
         },
       ),
