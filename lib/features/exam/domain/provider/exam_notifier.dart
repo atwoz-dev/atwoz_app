@@ -20,19 +20,20 @@ import 'exam_state.dart';
 
 part 'exam_notifier.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ExamNotifier extends _$ExamNotifier {
   @override
-  ExamState build() => ExamState.initial();
+  ExamState build() {
+    Future.microtask(() => fetchRequiredQuestionList());
+    return ExamState.initial();
+  }
 
-  /// 현재 과목 답안 선택
   void selectAnswer(int questionId, int answerId) {
     final updatedAnswers = Map<int, int>.from(state.currentAnswerList)
       ..[questionId] = answerId;
     state = state.copyWith(currentAnswerList: updatedAnswers);
   }
 
-  /// 현재 과목 제출
   Future<void> submitCurrentSubject({required BuildContext context}) async {
     final payload = SubjectAnswer(
       subjectId: state.currentSubjectIndex + 1,
@@ -126,7 +127,6 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(isDone: true);
   }
 
-  /// 필수 과목 질문 가져오기
   Future<void> fetchRequiredQuestionList() async {
     if (state.isRequiredDataLoaded) return;
     state = state.copyWith(isLoaded: false);
@@ -148,7 +148,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  /// 선택 과목 질문 가져오기
   Future<void> fetchOptionalQuestionList() async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -166,7 +165,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  /// 소울메이트 리스트 가져오기
   Future<void> fetchSoulmateList({bool isResult = false}) async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -192,7 +190,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  /// 추천 리스트 가져오기
   Future<void> fetchRecommendList() async {
     state = state.copyWith(isLoaded: false);
     try {
@@ -213,7 +210,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  /// 프로필 미리보기
   Future<void> openProfile({required int memberId}) async {
     try {
       await ExamRemoveBlurUsecase(ref).call(memberId: memberId);

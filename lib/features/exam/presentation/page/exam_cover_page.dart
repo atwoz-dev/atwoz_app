@@ -21,14 +21,6 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _fetchRequiredQuestionList();
-    });
-  }
-
-  Future<void> _fetchRequiredQuestionList() async {
-    await ref.read(examNotifierProvider.notifier).fetchRequiredQuestionList();
   }
 
   @override
@@ -122,7 +114,6 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
           padding: EdgeInsets.only(bottom: screenHeight * 0.05),
           child: DefaultElevatedButton(
             onPressed: () async {
-              await _fetchRequiredQuestionList();
               navigate(
                 context,
                 route: AppRoute.examQuestion,
