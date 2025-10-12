@@ -44,7 +44,7 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  Future<void> createSubmitAnswerList({
+  Future<void> submitAnswerList({
     required SubjectAnswer request,
   }) async {
     final dto = SubjectAnswerItem.fromDomain(request);

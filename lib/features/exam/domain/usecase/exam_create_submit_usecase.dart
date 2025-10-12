@@ -12,7 +12,7 @@ class ExamCreateSubmitUsecase {
     required SubjectAnswer request,
   }) async {
     try {
-      await ref.read(examRepositoryProvider).createSubmitAnswerList(
+      await ref.read(examRepositoryProvider).submitAnswerList(
             request: request,
           );
     } catch (e) {
