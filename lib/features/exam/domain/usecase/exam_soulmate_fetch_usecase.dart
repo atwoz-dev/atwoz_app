@@ -11,6 +11,6 @@ class ExamSoulmateFetchUseCase {
   Future<List<IntroducedProfile>> call() async {
     final response = await ref.read(examRepositoryProvider).getSolumateList();
 
-    return getIntroducedProfiles(response);
+    return covertToIntroducedProfiles(response);
   }
 }

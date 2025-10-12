@@ -28,7 +28,7 @@ class SaveIntroducedProfilesUseCase {
       final profileDtos = await _fetchProfilesFromServer(categoryKey);
       await _saveProfilesToCache(box, categoryKey, profileDtos);
 
-      return getIntroducedProfiles(profileDtos);
+      return covertToIntroducedProfiles(profileDtos);
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
       throw Exception();
@@ -50,7 +50,7 @@ class SaveIntroducedProfilesUseCase {
 
     if (DateTime.now().isBefore(expiresAt)) {
       final profileDtos = data['profiles'];
-      return getIntroducedProfiles(profileDtos);
+      return covertToIntroducedProfiles(profileDtos);
     }
 
     return null;
@@ -72,7 +72,7 @@ class SaveIntroducedProfilesUseCase {
 }
 
 /// Dto -> 도메인 객체로 변환 + 해시태그 필터/정렬
-List<IntroducedProfile> getIntroducedProfiles(
+List<IntroducedProfile> covertToIntroducedProfiles(
     List<IntroducedProfileDto> profileDtos) {
   return profileDtos.map(
     (profile) {

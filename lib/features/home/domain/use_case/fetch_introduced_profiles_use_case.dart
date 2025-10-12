@@ -37,6 +37,6 @@ class FetchIntroducedProfilesUseCase {
       );
     }
 
-    return getIntroducedProfiles(profiles);
+    return covertToIntroducedProfiles(profiles);
   }
 }
