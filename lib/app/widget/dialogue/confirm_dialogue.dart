@@ -91,7 +91,6 @@ class _ConfirmDialog extends StatelessWidget {
                     child: DefaultElevatedButton(
                       onPressed: cancel!.onTap,
                       primary: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       border: const BorderSide(color: Color(0xffE1E1E1)),
                       child: Text(
                         cancel!.label,
@@ -106,7 +105,6 @@ class _ConfirmDialog extends StatelessWidget {
                   child: DefaultElevatedButton(
                     onPressed: enabled ? submit.onTap : null,
                     primary: Palette.colorPrimary500,
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
                       submit.label,
                       style: Fonts.body02Medium().copyWith(

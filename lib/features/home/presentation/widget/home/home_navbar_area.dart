@@ -44,7 +44,7 @@ class HomeNavbarArea extends ConsumerWidget {
                 // 이상형 설정
                 padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
                 child: const DefaultIcon(
-                  IconPath.tune,
+                  IconPath.filter,
                   size: 24,
                 ),
               ),

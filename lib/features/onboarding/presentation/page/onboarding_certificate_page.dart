@@ -161,6 +161,7 @@ class OnboardingCertificationPageState
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 2.5),
                                 child: DefaultOutlinedButton(
+                                  height: 48.0,
                                   primary: Palette.colorGrey100,
                                   textStyle: Fonts.body02Regular()
                                       .copyWith(fontWeight: FontWeight.w500),
