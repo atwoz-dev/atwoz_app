@@ -73,4 +73,15 @@ class UserRepository extends BaseRepository {
     //   requiresAccessToken: false,
     // );
   }
+
+  // 휴면 계정 활성화
+  Future<void> activateAccount(String phoneNumber) async {
+    await apiService.postJson(
+      '/profile/active',
+      data: {
+        'phoneNumber': phoneNumber,
+      },
+      requiresAccessToken: false,
+    );
+  }
 }

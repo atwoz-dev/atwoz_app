@@ -68,24 +68,23 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
       final cookieJar = _apiService.cookieJar;
 
       try {
-        await cookieJar.delete(uri, true);
-        await _localStorage.clear();
-        await _localStorage.clearEncrypted();
-        final cleared = await _globalNotifier.clearLocalData();
-
-        if (!cleared) {
-          throw Exception();
-        }
-      } catch (e) {
-        Log.e("쿠키 및 로컬 데이터 삭제 실패");
-        return false;
-      }
-
-      try {
+        // 서버 로그아웃 먼저 처리
         await _userRepository.signOut();
       } catch (e) {
         Log.e("서버 로그아웃 실패");
-        return false;
+        return false; // 실패 시 로그아웃 불가
+      }
+
+      try {
+        // 로컬 데이터는 성공/삭제 여부 상관없이 로그아웃 처리
+        await cookieJar.delete(uri, true);
+
+        await _localStorage.clear();
+        await _localStorage.clearEncrypted();
+
+        await _globalNotifier.clearLocalData();
+      } catch (e) {
+        Log.e('로컬 관련 데이터 삭제 실패');
       }
 
       return true;
@@ -184,5 +183,16 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     await _userRepository.sendVerificationCode(
       phoneNumber: phoneNumber,
     );
+  }
+
+  @override
+  Future<bool> activateAccount(String phoneNumber) async {
+    try {
+      await _userRepository.activateAccount(phoneNumber);
+      return true;
+    } catch (e) {
+      Log.e('계정 활성화 실패:$e');
+      return false;
+    }
   }
 }

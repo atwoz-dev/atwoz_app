@@ -50,32 +50,26 @@ class GlobalNotifier extends _$GlobalNotifier {
     return await ref.read(getProfileFromHiveUseCaseProvider).execute();
   }
 
-  Future<bool> clearLocalData() async {
-    try {
-      // CachedUserProfile 박스 열기 또는 참조
-      final profileBox =
-          await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
+  Future<void> clearLocalData() async {
+    // CachedUserProfile 박스 열기 또는 참조
+    final profileBox =
+        await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
 
-      // IntroducedProfileDto 박스 열기 또는 참조
-      final introducedProfilesBox =
-          await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+    // IntroducedProfileDto 박스 열기 또는 참조
+    final introducedProfilesBox =
+        await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
-      await profileBox.clear();
+    state = state.copyWith(profile: CachedUserProfile.init());
 
-      state = state.copyWith(profile: CachedUserProfile.init());
+    await profileBox.clear();
+    await profileBox.close();
+    await introducedProfilesBox.clear();
+    await introducedProfilesBox.close();
 
-      await introducedProfilesBox.clear();
+    // FlutterSecureStorage에 저장된 데이터 모두 삭제
+    await ref.read(localStorageProvider).clearEncrypted();
 
-      // FlutterSecureStorage에 저장된 데이터 모두 삭제
-      await ref.read(localStorageProvider).clearEncrypted();
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
-
-      return true;
-    } catch (e) {
-      Log.e('Failed to clear profile: $e');
-      return false;
-    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
   }
 }
