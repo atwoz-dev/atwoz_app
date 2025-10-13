@@ -6,11 +6,16 @@ class ExamRemoveBlurUsecase {
 
   const ExamRemoveBlurUsecase(this.ref);
 
-  Future<void> call({
+  Future<bool> call({
     required int memberId,
   }) async {
-    await ref.read(examRepositoryProvider).removeProfileBlur(
-          memberId: memberId,
-        );
+    try {
+      await ref.read(examRepositoryProvider).removeProfileBlur(
+            memberId: memberId,
+          );
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

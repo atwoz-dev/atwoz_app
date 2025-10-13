@@ -219,6 +219,7 @@ class ExamQuestionPageState
                       currentSubject.questions.length
                   ? null
                   : () async {
+                      _pageController.jumpToPage(0);
                       final result = await notifier.submitCurrentSubject();
 
                       switch (result) {
