@@ -233,6 +233,7 @@ class ExamNotifier extends _$ExamNotifier {
       await ExamCreateSubmitUsecase(ref).call(request: payload);
     } catch (e) {
       Log.e('답안 제출 실패: $e');
+      rethrow;
     }
   }
 }
