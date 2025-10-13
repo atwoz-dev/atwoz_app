@@ -27,7 +27,7 @@ mixin _$ExamState {
   bool get isLoaded => throw _privateConstructorUsedError;
   bool get isRequiredDataLoaded => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
-  Map<int, int> get currentAnswerList => throw _privateConstructorUsedError;
+  Map<int, int> get currentAnswerMap => throw _privateConstructorUsedError;
   QuestionListErrorType? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of ExamState
@@ -54,7 +54,7 @@ abstract class $ExamStateCopyWith<$Res> {
       bool isLoaded,
       bool isRequiredDataLoaded,
       int currentPage,
-      Map<int, int> currentAnswerList,
+      Map<int, int> currentAnswerMap,
       QuestionListErrorType? error});
 
   $QuestionDataCopyWith<$Res> get questionList;
@@ -88,7 +88,7 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
     Object? isLoaded = null,
     Object? isRequiredDataLoaded = null,
     Object? currentPage = null,
-    Object? currentAnswerList = null,
+    Object? currentAnswerMap = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -136,9 +136,9 @@ class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      currentAnswerList: null == currentAnswerList
-          ? _value.currentAnswerList
-          : currentAnswerList // ignore: cast_nullable_to_non_nullable
+      currentAnswerMap: null == currentAnswerMap
+          ? _value.currentAnswerMap
+          : currentAnswerMap // ignore: cast_nullable_to_non_nullable
               as Map<int, int>,
       error: freezed == error
           ? _value.error
@@ -198,7 +198,7 @@ abstract class _$$ExamStateImplCopyWith<$Res>
       bool isLoaded,
       bool isRequiredDataLoaded,
       int currentPage,
-      Map<int, int> currentAnswerList,
+      Map<int, int> currentAnswerMap,
       QuestionListErrorType? error});
 
   @override
@@ -233,7 +233,7 @@ class __$$ExamStateImplCopyWithImpl<$Res>
     Object? isLoaded = null,
     Object? isRequiredDataLoaded = null,
     Object? currentPage = null,
-    Object? currentAnswerList = null,
+    Object? currentAnswerMap = null,
     Object? error = freezed,
   }) {
     return _then(_$ExamStateImpl(
@@ -281,9 +281,9 @@ class __$$ExamStateImplCopyWithImpl<$Res>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      currentAnswerList: null == currentAnswerList
-          ? _value._currentAnswerList
-          : currentAnswerList // ignore: cast_nullable_to_non_nullable
+      currentAnswerMap: null == currentAnswerMap
+          ? _value._currentAnswerMap
+          : currentAnswerMap // ignore: cast_nullable_to_non_nullable
               as Map<int, int>,
       error: freezed == error
           ? _value.error
@@ -308,9 +308,9 @@ class _$ExamStateImpl extends _ExamState {
       this.isLoaded = false,
       this.isRequiredDataLoaded = false,
       this.currentPage = 0,
-      final Map<int, int> currentAnswerList = const {},
+      final Map<int, int> currentAnswerMap = const {},
       this.error})
-      : _currentAnswerList = currentAnswerList,
+      : _currentAnswerMap = currentAnswerMap,
         super._();
 
   @override
@@ -338,14 +338,13 @@ class _$ExamStateImpl extends _ExamState {
   @override
   @JsonKey()
   final int currentPage;
-  final Map<int, int> _currentAnswerList;
+  final Map<int, int> _currentAnswerMap;
   @override
   @JsonKey()
-  Map<int, int> get currentAnswerList {
-    if (_currentAnswerList is EqualUnmodifiableMapView)
-      return _currentAnswerList;
+  Map<int, int> get currentAnswerMap {
+    if (_currentAnswerMap is EqualUnmodifiableMapView) return _currentAnswerMap;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_currentAnswerList);
+    return EqualUnmodifiableMapView(_currentAnswerMap);
   }
 
   @override
@@ -353,7 +352,7 @@ class _$ExamStateImpl extends _ExamState {
 
   @override
   String toString() {
-    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerList: $currentAnswerList, error: $error)';
+    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
   }
 
   @override
@@ -383,7 +382,7 @@ class _$ExamStateImpl extends _ExamState {
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
-                .equals(other._currentAnswerList, _currentAnswerList) &&
+                .equals(other._currentAnswerMap, _currentAnswerMap) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -401,7 +400,7 @@ class _$ExamStateImpl extends _ExamState {
       isLoaded,
       isRequiredDataLoaded,
       currentPage,
-      const DeepCollectionEquality().hash(_currentAnswerList),
+      const DeepCollectionEquality().hash(_currentAnswerMap),
       error);
 
   /// Create a copy of ExamState
@@ -426,7 +425,7 @@ abstract class _ExamState extends ExamState {
       final bool isLoaded,
       final bool isRequiredDataLoaded,
       final int currentPage,
-      final Map<int, int> currentAnswerList,
+      final Map<int, int> currentAnswerMap,
       final QuestionListErrorType? error}) = _$ExamStateImpl;
   const _ExamState._() : super._();
 
@@ -453,7 +452,7 @@ abstract class _ExamState extends ExamState {
   @override
   int get currentPage;
   @override
-  Map<int, int> get currentAnswerList;
+  Map<int, int> get currentAnswerMap;
   @override
   QuestionListErrorType? get error;
 

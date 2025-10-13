@@ -6,12 +6,11 @@ part of 'exam_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$examNotifierHash() => r'ca9337ffb0de40798c8713d1f0d05a9faa6fe696';
+String _$examNotifierHash() => r'4ad09bb11be65b9f838dfb068bfe608ce9eac346';
 
 /// See also [ExamNotifier].
 @ProviderFor(ExamNotifier)
-final examNotifierProvider =
-    AutoDisposeNotifierProvider<ExamNotifier, ExamState>.internal(
+final examNotifierProvider = NotifierProvider<ExamNotifier, ExamState>.internal(
   ExamNotifier.new,
   name: r'examNotifierProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final examNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ExamNotifier = AutoDisposeNotifier<ExamState>;
+typedef _$ExamNotifier = Notifier<ExamState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

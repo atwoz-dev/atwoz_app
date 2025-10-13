@@ -156,7 +156,7 @@ class ExamQuestionPageState
       itemCount: currentSubject.questions.length,
       itemBuilder: (context, index) {
         final question = currentSubject.questions[index];
-        final selectedAnswerId = examState.currentAnswerList[question.id];
+        final selectedAnswerId = examState.currentAnswerMap[question.id];
 
         return Column(
           children: question.answers.map((answer) {
@@ -215,7 +215,7 @@ class ExamQuestionPageState
           ),
           Expanded(
             child: DefaultElevatedButton(
-              onPressed: examState.currentAnswerList.length !=
+              onPressed: examState.currentAnswerMap.length !=
                       currentSubject.questions.length
                   ? null
                   : () {

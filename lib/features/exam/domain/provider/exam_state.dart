@@ -23,7 +23,7 @@ class ExamState with _$ExamState {
     @Default(false) bool isLoaded,
     @Default(false) bool isRequiredDataLoaded,
     @Default(0) int currentPage,
-    @Default({}) Map<int, int> currentAnswerList,
+    @Default({}) Map<int, int> currentAnswerMap,
     QuestionListErrorType? error,
   }) = _ExamState;
 

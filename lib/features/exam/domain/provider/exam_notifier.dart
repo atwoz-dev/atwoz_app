@@ -29,15 +29,15 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   void selectAnswer(int questionId, int answerId) {
-    final updatedAnswers = Map<int, int>.from(state.currentAnswerList)
+    final updatedAnswers = Map<int, int>.from(state.currentAnswerMap)
       ..[questionId] = answerId;
-    state = state.copyWith(currentAnswerList: updatedAnswers);
+    state = state.copyWith(currentAnswerMap: updatedAnswers);
   }
 
   Future<void> submitCurrentSubject({required BuildContext context}) async {
     final payload = SubjectAnswer(
       subjectId: state.currentSubjectIndex + 1,
-      answers: state.currentAnswerList.entries
+      answers: state.currentAnswerMap.entries
           .map((e) => QuestionAnswer(questionId: e.key, answerId: e.value))
           .toList(),
     );
@@ -52,7 +52,7 @@ class ExamNotifier extends _$ExamNotifier {
       state = state.copyWith(
         isSubjectOptional: true,
         isDone: state.isSubjectOptional ? true : false,
-        currentAnswerList: {},
+        currentAnswerMap: {},
         isLoaded: true,
       );
       navigate(context, route: AppRoute.examResult);
@@ -95,7 +95,7 @@ class ExamNotifier extends _$ExamNotifier {
   void nextSubject() {
     state = state.copyWith(
       currentSubjectIndex: state.currentSubjectIndex + 1,
-      currentAnswerList: {},
+      currentAnswerMap: {},
       currentPage: 0,
     );
   }
@@ -103,7 +103,7 @@ class ExamNotifier extends _$ExamNotifier {
   void resetCurrentSubjectIndex() {
     state = state.copyWith(
       currentSubjectIndex: 0,
-      currentAnswerList: {},
+      currentAnswerMap: {},
       currentPage: 0,
     );
   }
@@ -111,7 +111,7 @@ class ExamNotifier extends _$ExamNotifier {
   void setCurrentSubjectIndex(int index) {
     state = state.copyWith(
       currentSubjectIndex: index,
-      currentAnswerList: {},
+      currentAnswerMap: {},
       currentPage: 0,
     );
   }
