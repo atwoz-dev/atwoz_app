@@ -11,6 +11,6 @@ class ExamRecommendFetchUseCase {
   Future<List<IntroducedProfile>> call() async {
     final response = await ref.read(examRepositoryProvider).getRecommendList();
 
-    return covertToIntroducedProfiles(response);
+    return convertToIntroducedProfiles(response);
   }
 }
