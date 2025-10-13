@@ -23,6 +23,9 @@ class ExamNotifier extends _$ExamNotifier {
     return ExamState.initial();
   }
 
+  bool get isLastSubject =>
+      state.currentSubjectIndex == state.questionList.questionList.length - 1;
+
   void selectAnswer(int questionId, int answerId) {
     final updatedAnswers = Map<int, int>.from(state.currentAnswerMap)
       ..[questionId] = answerId;
@@ -66,14 +69,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  Future<void> _submitAnswers(SubjectAnswer payload) async {
-    try {
-      await ExamCreateSubmitUsecase(ref).call(request: payload);
-    } catch (e) {
-      Log.e('답안 제출 실패: $e');
-    }
-  }
-
   void nextPage() {
     final currentSubject =
         state.questionList.questionList[state.currentSubjectIndex];
@@ -112,36 +107,12 @@ class ExamNotifier extends _$ExamNotifier {
     );
   }
 
-  bool get isLastSubject =>
-      state.currentSubjectIndex == state.questionList.questionList.length - 1;
-
   void setSubjectOptional(bool isOptional) {
     state = state.copyWith(isSubjectOptional: isOptional);
   }
 
   void setExamDone() {
     state = state.copyWith(isDone: true);
-  }
-
-  Future<void> _fetchRequiredQuestionList() async {
-    if (state.isRequiredDataLoaded) return;
-    state = state.copyWith(isLoaded: false);
-
-    try {
-      final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
-
-      state = state.copyWith(
-        questionList: QuestionData(questionList: requiredQuestionList),
-        isLoaded: true,
-        isRequiredDataLoaded: true,
-        currentSubjectIndex: 0,
-        error: null,
-      );
-    } catch (e) {
-      Log.e(e);
-      state =
-          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
-    }
   }
 
   Future<void> fetchOptionalQuestionList() async {
@@ -233,6 +204,35 @@ class ExamNotifier extends _$ExamNotifier {
     } catch (e) {
       Log.e('하트 조회 실패: $e');
       return 0;
+    }
+  }
+
+  Future<void> _fetchRequiredQuestionList() async {
+    if (state.isRequiredDataLoaded) return;
+    state = state.copyWith(isLoaded: false);
+
+    try {
+      final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
+
+      state = state.copyWith(
+        questionList: QuestionData(questionList: requiredQuestionList),
+        isLoaded: true,
+        isRequiredDataLoaded: true,
+        currentSubjectIndex: 0,
+        error: null,
+      );
+    } catch (e) {
+      Log.e(e);
+      state =
+          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
+    }
+  }
+
+  Future<void> _submitAnswers(SubjectAnswer payload) async {
+    try {
+      await ExamCreateSubmitUsecase(ref).call(request: payload);
+    } catch (e) {
+      Log.e('답안 제출 실패: $e');
     }
   }
 }
