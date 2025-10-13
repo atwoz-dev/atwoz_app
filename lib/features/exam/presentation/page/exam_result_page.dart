@@ -1,11 +1,14 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/empty_list.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/user_by_category_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -118,15 +121,43 @@ class ExamResultPageState
         final isBlurred = !profile.isIntroduced;
 
         return UserByCategoryListItem(
-          isBlurred: isBlurred,
-          profile: profile,
-          onTap: () => notifier.handleProfileTap(
-            context: context,
-            profile: profile,
             isBlurred: isBlurred,
-            isMale: userProfile.isMale,
-          ),
-        );
+            profile: profile,
+            onTap: () async {
+              final notifier = ref.read(examNotifierProvider.notifier);
+
+              if (!profile.isIntroduced) {
+                final heartBalance = await notifier.fetchUserHeartBalance();
+
+                if (heartBalance < Dimens.examProfileOpenHeartCount) {
+                  showDialog(
+                    context: context,
+                    builder: (_) =>
+                        HeartShortageDialog(heartBalance: heartBalance),
+                  );
+                  return;
+                }
+
+                final pressed = await showDialog<bool>(
+                  context: context,
+                  builder: (_) => UnlockWithHeartDialog(
+                    description: "프로필을 미리보기 하시겠습니까?",
+                    heartBalance: heartBalance,
+                    isMale: userProfile.isMale,
+                  ),
+                );
+
+                if (pressed != true) return;
+
+                await notifier.openProfile(memberId: profile.memberId);
+              }
+
+              navigate(
+                context,
+                route: AppRoute.profile,
+                extra: ProfileDetailArguments(userId: profile.memberId),
+              );
+            });
       },
     );
   }

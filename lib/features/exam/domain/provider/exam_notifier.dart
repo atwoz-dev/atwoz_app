@@ -1,5 +1,3 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
@@ -7,14 +5,9 @@ import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_recommend_fetch_usecase.dart';
-import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
-import 'package:atwoz_app/features/home/presentation/widget/category/unlock_with_heart_dialog.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
 
 import 'exam_state.dart';
 
@@ -215,7 +208,9 @@ class ExamNotifier extends _$ExamNotifier {
 
   Future<void> openProfile({required int memberId}) async {
     try {
-      await ExamRemoveBlurUsecase(ref).call(memberId: memberId);
+      final success = await ExamRemoveBlurUsecase(ref).call(memberId: memberId);
+
+      if (!success) return;
 
       final updatedList = state.soulmateList.soulmateList
           .map((profile) => profile.memberId == memberId
@@ -231,7 +226,6 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  /// 유저 하트 조회
   Future<int> fetchUserHeartBalance() async {
     try {
       final heartBalance = await HeartBalanceFetchUseCase(ref).call();
@@ -240,48 +234,5 @@ class ExamNotifier extends _$ExamNotifier {
       Log.e('하트 조회 실패: $e');
       return 0;
     }
-  }
-}
-
-/// 프로필 탭 핸들링 extension
-extension ExamNotifierProfile on ExamNotifier {
-  Future<void> handleProfileTap({
-    required BuildContext context,
-    required IntroducedProfile profile,
-    required bool isBlurred,
-    required bool isMale,
-  }) async {
-    if (isBlurred) {
-      final heartBalance = await fetchUserHeartBalance();
-      if (!context.mounted) return;
-
-      if (heartBalance < Dimens.examProfileOpenHeartCount) {
-        showDialog(
-          context: context,
-          builder: (_) => HeartShortageDialog(heartBalance: heartBalance),
-        );
-        return;
-      }
-
-      final pressed = await showDialog<bool>(
-        context: context,
-        builder: (_) => UnlockWithHeartDialog(
-          description: "프로필을 미리보기 하시겠습니까?",
-          heartBalance: heartBalance,
-          isMale: isMale,
-        ),
-      );
-
-      if (pressed != true) return;
-
-      await openProfile(memberId: profile.memberId);
-      if (!context.mounted) return;
-    }
-
-    navigate(
-      context,
-      route: AppRoute.profile,
-      extra: ProfileDetailArguments(userId: profile.memberId),
-    );
   }
 }
