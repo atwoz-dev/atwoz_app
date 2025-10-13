@@ -115,65 +115,62 @@ class SignUpProfilePicturePageState
                       ],
                     ),
                   ),
-                  // 회색 배경으로 처리되는 하단 영역
-                  Container(
-                    color: context.colorScheme.outline,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const AuthPhotoGuideWidget(
-                          title: '이성에게 좋은 인상을 주는 사진',
-                          imagePathsWithText: [
-                            {
-                              'image': 'assets/images/good_pic1.png',
-                              'text': '자연스럽게 웃는 사진'
-                            },
-                            {
-                              'image': 'assets/images/good_pic2.png',
-                              'text': '이목구비가 선명한 사진'
-                            },
-                            {
-                              'image': 'assets/images/good_pic3.png',
-                              'text': '활동적인 사진'
-                            },
-                            {
-                              'image': 'assets/images/good_pic4.png',
-                              'text': '분위기 있는 전신사진'
-                            },
-                          ],
-                        ),
-                        const Gap(24),
-                        const AuthPhotoGuideWidget(
-                          title: '이성에게 부정적인 인상을 주는 사진',
-                          imagePathsWithText: [
-                            {
-                              'image': 'assets/images/bad_pic1.png',
-                              'text': '보정이 과도한 사진'
-                            },
-                            {
-                              'image': 'assets/images/bad_pic2.png',
-                              'text': '2인 이상의 단체 사진'
-                            },
-                            {
-                              'image': 'assets/images/bad_pic3.png',
-                              'text': 'AI 프로필'
-                            },
-                            {
-                              'image': 'assets/images/bad_pic4.png',
-                              'text': '얼굴이 가려진 사진'
-                            },
-                            {
-                              'image': 'assets/images/bad_pic5.png',
-                              'text': '마스크를 착용한 사진'
-                            },
-                            {
-                              'image': 'assets/images/bad_pic6.png',
-                              'text': '사진에 대한 설명'
-                            },
-                          ],
-                        ),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Gap(24),
+                      const AuthPhotoGuideWidget(
+                        title: '이성에게 좋은 인상을 주는 사진',
+                        imagePathsWithText: [
+                          {
+                            'image': 'assets/images/good_pic1.png',
+                            'text': '자연스럽게 웃는 사진'
+                          },
+                          {
+                            'image': 'assets/images/good_pic2.png',
+                            'text': '이목구비가 선명한 사진'
+                          },
+                          {
+                            'image': 'assets/images/good_pic3.png',
+                            'text': '활동적인 사진'
+                          },
+                          {
+                            'image': 'assets/images/good_pic4.png',
+                            'text': '분위기 있는 전신사진'
+                          },
+                        ],
+                      ),
+                      const Gap(24),
+                      const AuthPhotoGuideWidget(
+                        title: '이성에게 부정적인 인상을 주는 사진',
+                        imagePathsWithText: [
+                          {
+                            'image': 'assets/images/bad_pic1.png',
+                            'text': '보정이 과도한 사진'
+                          },
+                          {
+                            'image': 'assets/images/bad_pic2.png',
+                            'text': '2인 이상의 단체 사진'
+                          },
+                          {
+                            'image': 'assets/images/bad_pic3.png',
+                            'text': 'AI 프로필'
+                          },
+                          {
+                            'image': 'assets/images/bad_pic4.png',
+                            'text': '얼굴이 가려진 사진'
+                          },
+                          {
+                            'image': 'assets/images/bad_pic5.png',
+                            'text': '마스크를 착용한 사진'
+                          },
+                          {
+                            'image': 'assets/images/bad_pic6.png',
+                            'text': '사진에 대한 설명'
+                          },
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -182,21 +179,26 @@ class SignUpProfilePicturePageState
               bottom: screenHeight * 0.05,
               left: 0,
               right: 0,
-              child: DefaultElevatedButton(
-                onPressed:
-                    photos.any((photo) => photo != null) && photos[0] != null
+              child: Builder(
+                builder: (context) {
+                  final bool isPrimaryPhotoSelected =
+                      photos.isNotEmpty && photos[0] != null;
+                  return DefaultElevatedButton(
+                    onPressed: isPrimaryPhotoSelected
                         ? () async {
                             navigate(context, route: AppRoute.signUpTerms);
                           }
                         : null,
-                child: Text(
-                  '다음',
-                  style: Fonts.body01Medium(
-                    photos.any((photo) => photo != null)
-                        ? context.palette.onPrimary
-                        : Palette.colorGrey400,
-                  ).copyWith(fontWeight: FontWeight.w900),
-                ),
+                    child: Text(
+                      '다음',
+                      style: Fonts.body01Medium(
+                        isPrimaryPhotoSelected
+                            ? context.palette.onPrimary
+                            : Palette.colorGrey400,
+                      ).copyWith(fontWeight: FontWeight.w900),
+                    ),
+                  );
+                },
               ),
             ),
           ],
