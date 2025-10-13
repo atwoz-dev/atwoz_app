@@ -24,7 +24,7 @@ part 'exam_notifier.g.dart';
 class ExamNotifier extends _$ExamNotifier {
   @override
   ExamState build() {
-    Future.microtask(() => fetchRequiredQuestionList());
+    Future.microtask(() => _fetchRequiredQuestionList());
     return ExamState.initial();
   }
 
@@ -127,7 +127,7 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(isDone: true);
   }
 
-  Future<void> fetchRequiredQuestionList() async {
+  Future<void> _fetchRequiredQuestionList() async {
     if (state.isRequiredDataLoaded) return;
     state = state.copyWith(isLoaded: false);
 
