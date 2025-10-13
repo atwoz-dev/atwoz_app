@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/exam/data/data.dart';
-import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
 import 'package:atwoz_app/features/exam/domain/provider/domain.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/answer_radio_button.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/step_indicator.dart';
@@ -218,9 +218,20 @@ class ExamQuestionPageState
               onPressed: examState.currentAnswerMap.length !=
                       currentSubject.questions.length
                   ? null
-                  : () {
-                      notifier.submitCurrentSubject(context: context);
-                      _pageController.jumpToPage(0);
+                  : () async {
+                      final result = await notifier.submitCurrentSubject();
+
+                      switch (result) {
+                        case ExamSubmitResult.examFinished:
+                        case ExamSubmitResult.showResult:
+                          navigate(context, route: AppRoute.examResult);
+                          break;
+                        case ExamSubmitResult.nextSubject:
+                          break;
+                        case ExamSubmitResult.error:
+                          showToastMessage('제출 중 오류가 발생했습니다.');
+                          break;
+                      }
                     },
               child: Text(
                 examState.isSubjectOptional

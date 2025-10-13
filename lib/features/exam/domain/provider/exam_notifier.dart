@@ -20,6 +20,8 @@ import 'exam_state.dart';
 
 part 'exam_notifier.g.dart';
 
+enum ExamSubmitResult { nextSubject, examFinished, showResult, error }
+
 @Riverpod(keepAlive: true)
 class ExamNotifier extends _$ExamNotifier {
   @override
@@ -34,40 +36,41 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(currentAnswerMap: updatedAnswers);
   }
 
-  Future<void> submitCurrentSubject({required BuildContext context}) async {
-    final payload = SubjectAnswer(
-      subjectId: state.currentSubjectIndex + 1,
-      answers: state.currentAnswerMap.entries
-          .map((e) => QuestionAnswer(questionId: e.key, answerId: e.value))
-          .toList(),
-    );
-
-    state = state.copyWith(isLoaded: false);
-
-    await _submitAnswers(payload);
-    await fetchSoulmateList(isResult: true);
-
-    // 마지막 과목인지
-    if (isLastSubject) {
-      state = state.copyWith(
-        isSubjectOptional: true,
-        isDone: state.isSubjectOptional ? true : false,
-        currentAnswerMap: {},
-        isLoaded: true,
+  Future<ExamSubmitResult> submitCurrentSubject() async {
+    try {
+      final payload = SubjectAnswer(
+        subjectId: state.currentSubjectIndex + 1,
+        answers: state.currentAnswerMap.entries
+            .map((e) => QuestionAnswer(questionId: e.key, answerId: e.value))
+            .toList(),
       );
-      navigate(context, route: AppRoute.examResult);
-      return;
-    }
 
-    // 결과 데이터가 있으면 결과 페이지로
-    if (state.hasResultData && !state.isSubjectOptional) {
+      state = state.copyWith(isLoaded: false);
+      await _submitAnswers(payload);
+      await fetchSoulmateList(isResult: true);
+
+      if (isLastSubject) {
+        state = state.copyWith(
+          isSubjectOptional: true,
+          isDone: state.isSubjectOptional ? true : false,
+          currentAnswerMap: {},
+          isLoaded: true,
+        );
+        return ExamSubmitResult.examFinished;
+      }
+
+      if (state.hasResultData && !state.isSubjectOptional) {
+        state = state.copyWith(isLoaded: true);
+        return ExamSubmitResult.showResult;
+      }
+
+      nextSubject();
       state = state.copyWith(isLoaded: true);
-      navigate(context, route: AppRoute.examResult);
-      return;
+      return ExamSubmitResult.nextSubject;
+    } catch (e) {
+      Log.e('submit error: $e');
+      return ExamSubmitResult.error;
     }
-
-    nextSubject();
-    state = state.copyWith(isLoaded: true);
   }
 
   Future<void> _submitAnswers(SubjectAnswer payload) async {
