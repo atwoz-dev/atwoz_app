@@ -64,12 +64,72 @@ class ExamQuestionPageState
         padding: contentPadding,
         child: Column(
           children: [
-            _buildQuestionHeader(currentSubject),
-            Expanded(
-              child:
-                  _buildQuestionPageView(examState, currentSubject, notifier),
+            _QuestionHeader(
+              currentPage: _currentPage,
+              totalQuestions: currentSubject.questions.length,
+              question: currentSubject.questions[_currentPage],
             ),
-            _buildQuestionBottomButton(examState, currentSubject, notifier),
+            Expanded(
+              child: _QuestionPageView(
+                pageController: _pageController,
+                questions: currentSubject.questions,
+                selectedAnswerMap: examState.currentAnswerMap,
+                onAnswerSelected: (questionId, answerId) {
+                  notifier.selectAnswer(questionId, answerId);
+                },
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                onNextPage: () {
+                  if (examState.currentPage <
+                      currentSubject.questions.length - 1) {
+                    notifier.nextPage();
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
+              ),
+            ),
+            _QuestionBottomButton(
+              currentPage: _currentPage,
+              totalQuestions: currentSubject.questions.length,
+              onPrevPage: () {
+                if (examState.currentPage > 0) {
+                  notifier.previousPage();
+                  _pageController.previousPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  _showLeaveExamDialogue(context, notifier);
+                }
+              },
+              onNextPage: () async {
+                _pageController.jumpToPage(0);
+                final result = await notifier.submitCurrentSubject();
+
+                switch (result) {
+                  case ExamSubmitResult.examFinished:
+                  case ExamSubmitResult.showResult:
+                    navigate(context, route: AppRoute.examResult);
+                    break;
+                  case ExamSubmitResult.nextSubject:
+                    break;
+                  case ExamSubmitResult.error:
+                    showToastMessage('제출 중 오류가 발생했습니다.');
+                    break;
+                }
+              },
+              isSelectAll: examState.currentAnswerMap.length !=
+                  currentSubject.questions.length,
+              isSubjectOptional: examState.isSubjectOptional,
+              isLastSubject: notifier.isLastSubject,
+              screenHeight: screenHeight,
+            )
           ],
         ),
       ),
@@ -90,16 +150,28 @@ class ExamQuestionPageState
       },
     );
   }
+}
 
-  Widget _buildQuestionHeader(SubjectItem currentSubject) {
-    final currentQuestion = currentSubject.questions[_currentPage];
+class _QuestionHeader extends StatelessWidget {
+  final int currentPage;
+  final int totalQuestions;
+  final QuestionItem question;
+
+  const _QuestionHeader({
+    required this.currentPage,
+    required this.totalQuestions,
+    required this.question,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Gap(24),
         StepIndicator(
-          totalStep: currentSubject.questions.length,
-          currentStep: _currentPage + 1,
+          totalStep: totalQuestions,
+          currentStep: currentPage + 1,
         ),
         Gap(24),
         ConstrainedBox(
@@ -108,7 +180,7 @@ class ExamQuestionPageState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${_currentPage + 1}. ",
+                "${currentPage + 1}. ",
                 style: Fonts.header03().copyWith(
                   color: Palette.colorBlack,
                   fontWeight: FontWeight.w700,
@@ -116,7 +188,7 @@ class ExamQuestionPageState
               ),
               Flexible(
                 child: Text(
-                  currentQuestion.content,
+                  question.content,
                   style: Fonts.header03().copyWith(
                     color: Palette.colorBlack,
                     fontWeight: FontWeight.w700,
@@ -129,25 +201,35 @@ class ExamQuestionPageState
       ],
     );
   }
+}
 
-  Widget _buildQuestionPageView(
-    ExamState examState,
-    SubjectItem currentSubject,
-    ExamNotifier notifier,
-  ) {
+class _QuestionPageView extends StatelessWidget {
+  final PageController pageController;
+  final List<QuestionItem> questions;
+  final Map<int, int?> selectedAnswerMap;
+  final void Function(int questionId, int answerId) onAnswerSelected;
+  final VoidCallback onNextPage;
+  final ValueChanged<int> onPageChanged;
+
+  const _QuestionPageView({
+    required this.pageController,
+    required this.questions,
+    required this.selectedAnswerMap,
+    required this.onAnswerSelected,
+    required this.onNextPage,
+    required this.onPageChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return PageView.builder(
-      controller: _pageController,
-      physics: NeverScrollableScrollPhysics(),
-      onPageChanged: (index) {
-        setState(() {
-          _currentPage = index;
-        });
-      },
-      itemCount: currentSubject.questions.length,
+      controller: pageController,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: questions.length,
+      onPageChanged: onPageChanged,
       itemBuilder: (context, index) {
-        final question = currentSubject.questions[index];
-        final selectedAnswerId = examState.currentAnswerMap[question.id];
-
+        final question = questions[index];
+        final selectedAnswerId = selectedAnswerMap[question.id];
         return Column(
           children: question.answers.map((answer) {
             return Padding(
@@ -157,15 +239,8 @@ class ExamQuestionPageState
                 selectedId: selectedAnswerId,
                 content: answer.content,
                 onTap: (id) {
-                  notifier.selectAnswer(question.id, id);
-                  if (examState.currentPage <
-                      currentSubject.questions.length - 1) {
-                    notifier.nextPage();
-                    _pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  }
+                  onAnswerSelected(question.id, id);
+                  onNextPage();
                 },
               ),
             );
@@ -174,12 +249,31 @@ class ExamQuestionPageState
       },
     );
   }
+}
 
-  Widget _buildQuestionBottomButton(
-    ExamState examState,
-    SubjectItem currentSubject,
-    ExamNotifier notifier,
-  ) {
+class _QuestionBottomButton extends StatelessWidget {
+  final int currentPage;
+  final int totalQuestions;
+  final VoidCallback onPrevPage;
+  final VoidCallback onNextPage;
+  final bool isSelectAll;
+  final bool isSubjectOptional;
+  final bool isLastSubject;
+  final double screenHeight;
+
+  const _QuestionBottomButton({
+    required this.currentPage,
+    required this.totalQuestions,
+    required this.onPrevPage,
+    required this.onNextPage,
+    required this.isSelectAll,
+    required this.isSubjectOptional,
+    required this.isLastSubject,
+    required this.screenHeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: screenHeight * 0.05),
       child: Row(
@@ -189,47 +283,19 @@ class ExamQuestionPageState
             child: DefaultOutlinedButton(
               primary: Palette.colorGrey100,
               textColor: Palette.colorGrey500,
-              onPressed: () {
-                if (examState.currentPage > 0) {
-                  notifier.previousPage();
-                  _pageController.previousPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                } else {
-                  _showLeaveExamDialogue(context, notifier);
-                }
-              },
+              onPressed: onPrevPage,
               child: Text('이전'),
             ),
           ),
           Expanded(
             child: DefaultElevatedButton(
-              onPressed: examState.currentAnswerMap.length !=
-                      currentSubject.questions.length
-                  ? null
-                  : () async {
-                      _pageController.jumpToPage(0);
-                      final result = await notifier.submitCurrentSubject();
-
-                      switch (result) {
-                        case ExamSubmitResult.examFinished:
-                        case ExamSubmitResult.showResult:
-                          navigate(context, route: AppRoute.examResult);
-                          break;
-                        case ExamSubmitResult.nextSubject:
-                          break;
-                        case ExamSubmitResult.error:
-                          showToastMessage('제출 중 오류가 발생했습니다.');
-                          break;
-                      }
-                    },
+              onPressed: isSelectAll ? null : onNextPage,
               child: Text(
-                examState.isSubjectOptional
-                    ? notifier.isLastSubject
+                isSubjectOptional
+                    ? isLastSubject
                         ? '저장하기'
                         : '다음'
-                    : notifier.isLastSubject
+                    : isLastSubject
                         ? '제출하기'
                         : '저장하기',
               ),
