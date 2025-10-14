@@ -8,15 +8,40 @@ final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
 });
 
 class ProfileRepository extends BaseRepository {
-  ProfileRepository(Ref ref) : super(ref, '/member');
+  ProfileRepository(Ref ref) : super(ref, '');
 
   Future<ProfileDetailResponse> getProfileDetail(int id) async {
-    final res = await apiService.getJson('$path/$id');
-    if (res is! Map<String, dynamic> || res['data'] is! Map<String, Object?>) {
-      Log.e('data type is not Map<String, dynamic> $res');
-      throw Exception();
+    final res = await apiService.getJson<Map<String, dynamic>>('/member/$id');
+    if (res['data'] is! Map<String, Object?>) {
+      throw Exception('data type is not Map<String, dynamic> $res');
     }
 
     return ProfileDetailResponse.fromJson(res['data']);
+  }
+
+  Future<bool> approveProfileExchange(int profileExchangeId) async {
+    try {
+      final response = await apiService.patchJson<Map<String, dynamic>>(
+        '/profile-exchange/$profileExchangeId/approve',
+      );
+      final int statusCode = response['status'] ?? 500;
+      return statusCode >= 200 && statusCode < 300;
+    } catch (e) {
+      Log.e('Failed to approve profile exchange: $e');
+      return false;
+    }
+  }
+
+  Future<bool> rejectProfileExchange(int profileExchangeId) async {
+    try {
+      final response = await apiService.patchJson(
+        '/profile-exchange/$profileExchangeId/reject',
+      );
+      final int statusCode = response['status'] ?? 500;
+      return statusCode >= 200 && statusCode < 300;
+    } catch (e) {
+      Log.e('Failed to reject profile exchange: $e');
+      return false;
+    }
   }
 }
