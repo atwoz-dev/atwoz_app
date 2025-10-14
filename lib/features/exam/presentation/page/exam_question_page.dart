@@ -32,20 +32,6 @@ class ExamQuestionPageState
   int _currentPage = 0;
 
   @override
-  void initState() {
-    super.initState();
-
-    _pageController.addListener(() {
-      final page = _pageController.page?.round() ?? 0;
-      if (page != _currentPage) {
-        setState(() {
-          _currentPage = page;
-        });
-      }
-    });
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -153,6 +139,11 @@ class ExamQuestionPageState
     return PageView.builder(
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (index) {
+        setState(() {
+          _currentPage = index;
+        });
+      },
       itemCount: currentSubject.questions.length,
       itemBuilder: (context, index) {
         final question = currentSubject.questions[index];
