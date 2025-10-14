@@ -81,7 +81,7 @@ class ExamRepository extends BaseRepository {
         '/member/introduction/soulmate',
       );
 
-      if (response is! Map<String, dynamic> || response['data'] is! List) {
+      if (response['data'] is! List) {
         throw const NetworkException.formatException();
       }
 
