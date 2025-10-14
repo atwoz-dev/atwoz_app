@@ -31,15 +31,16 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
       children: [
         Expanded(
           flex: 9,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Gap(8),
-            Text(
-              '필수과목 30 / 선택 과목 20 (총 50문항)',
-              style: Fonts.body02Medium(),
-            ),
-            const Gap(12),
-            Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(8),
+              Text(
+                '필수과목 30 / 선택 과목 20 (총 50문항)',
+                style: Fonts.body02Medium(),
+              ),
+              const Gap(12),
+              Container(
                 decoration: BoxDecoration(
                   color: Palette.colorGrey50,
                   border: Border.all(
@@ -49,7 +50,10 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24.w),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 24.w,
+                  ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -61,14 +65,15 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                                 '필수과목 30문제를 풀고 선택한 모든 항목이 나와 동일한 상대방과 무료로 매칭을 진행할 수 있습니다'),
                         BulletText(text: '연애 모의고사 최초 1회 참여 시 15하트를 지급해 드립니다'),
                       ]),
-                )),
-            const Gap(24),
-            Text(
-              '필수과목 30',
-              style: Fonts.body03Regular(Palette.colorBlack),
-            ),
-            const Gap(8),
-            Container(
+                ),
+              ),
+              const Gap(24),
+              Text(
+                '필수과목 30',
+                style: Fonts.body03Regular(Palette.colorBlack),
+              ),
+              const Gap(8),
+              Container(
                 decoration: BoxDecoration(
                   color: Palette.colorWhite,
                   border: Border.all(
@@ -86,14 +91,15 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                         SubjectItem(name: '데이트', count: '10'),
                         SubjectItem(name: '취향', count: '10'),
                       ]),
-                )),
-            const Gap(24),
-            Text(
-              '선택과목 20',
-              style: Fonts.body03Regular(Palette.colorBlack),
-            ),
-            const Gap(8),
-            Container(
+                ),
+              ),
+              const Gap(24),
+              Text(
+                '선택과목 20',
+                style: Fonts.body03Regular(Palette.colorBlack),
+              ),
+              const Gap(8),
+              Container(
                 decoration: BoxDecoration(
                   color: Palette.colorWhite,
                   border: Border.all(
@@ -110,8 +116,10 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                         SubjectItem(name: '연애밸런스', count: '12'),
                         SubjectItem(name: '결혼', count: '8'),
                       ]),
-                )),
-          ]),
+                ),
+              ),
+            ],
+          ),
         ),
         Padding(
           padding: EdgeInsets.only(bottom: screenHeight * 0.05),
