@@ -55,7 +55,7 @@ class ExamRepository extends BaseRepository {
     );
   }
 
-  Future<List<IntroducedProfileDto>> getSolumateList() async {
+  Future<List<IntroducedProfileDto>> getSoulmateList() async {
     try {
       final response = await apiService.getJson<Map<String, dynamic>>(
         '/member/introduction/soulmate',

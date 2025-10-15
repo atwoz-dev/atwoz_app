@@ -9,7 +9,7 @@ class ExamSoulmateFetchUseCase {
   const ExamSoulmateFetchUseCase(this.ref);
 
   Future<List<IntroducedProfile>> call() async {
-    final response = await ref.read(examRepositoryProvider).getSolumateList();
+    final response = await ref.read(examRepositoryProvider).getSoulmateList();
 
     return convertToIntroducedProfiles(response);
   }
