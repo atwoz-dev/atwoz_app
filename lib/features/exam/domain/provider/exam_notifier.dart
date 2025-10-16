@@ -68,6 +68,7 @@ class ExamNotifier extends _$ExamNotifier {
       return ExamSubmitResult.nextSubject;
     } catch (e) {
       Log.e('submit error: $e');
+      state = state.copyWith(isLoaded: true);
       return ExamSubmitResult.error;
     }
   }
