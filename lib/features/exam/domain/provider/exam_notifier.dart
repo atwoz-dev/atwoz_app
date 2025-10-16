@@ -34,8 +34,11 @@ class ExamNotifier extends _$ExamNotifier {
 
   Future<ExamSubmitResult> submitCurrentSubject() async {
     try {
+      final currentSubject =
+          state.questionList.questionList[state.currentSubjectIndex];
+
       final payload = SubjectAnswer(
-        subjectId: state.currentSubjectIndex + 1,
+        subjectId: currentSubject.id,
         answers: state.currentAnswerMap.entries
             .map((e) => QuestionAnswer(questionId: e.key, answerId: e.value))
             .toList(),
