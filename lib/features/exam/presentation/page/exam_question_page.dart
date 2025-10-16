@@ -146,6 +146,7 @@ class ExamQuestionPageState
         navigate(
           context,
           route: AppRoute.mainTab,
+          method: NavigationMethod.go,
         );
       },
     );

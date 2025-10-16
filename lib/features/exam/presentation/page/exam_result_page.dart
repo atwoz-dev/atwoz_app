@@ -112,6 +112,7 @@ class ExamResultPageState
         navigate(
           context,
           route: AppRoute.mainTab,
+          method: NavigationMethod.go,
         );
       },
     );
