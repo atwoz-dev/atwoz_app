@@ -68,6 +68,8 @@ class ExamResultPageState
             ),
             Expanded(
               child: _ResultList(
+                isSubjectOptional: examState.isSubjectOptional,
+                hasSoulmate: examState.hasSoulmate,
                 profiles: examState.soulmateList.soulmateList,
                 userProfile: userProfile,
                 fetchHeartBalance: () => notifier.fetchUserHeartBalance(),
@@ -168,6 +170,8 @@ class _ResultHeader extends StatelessWidget {
 }
 
 class _ResultList extends StatelessWidget {
+  final bool isSubjectOptional;
+  final bool hasSoulmate;
   final List<IntroducedProfile> profiles;
   final CachedUserProfile userProfile;
   final Future<int> Function() fetchHeartBalance;
@@ -175,6 +179,8 @@ class _ResultList extends StatelessWidget {
   final void Function(int memberId) onTapProfile;
 
   const _ResultList({
+    required this.isSubjectOptional,
+    required this.hasSoulmate,
     required this.profiles,
     required this.userProfile,
     required this.fetchHeartBalance,
@@ -198,6 +204,12 @@ class _ResultList extends StatelessWidget {
           profile: profile,
           onTap: () async {
             if (!profile.isIntroduced) {
+              if (isSubjectOptional && hasSoulmate) {
+                await onOpenProfile(profile.memberId);
+
+                return;
+              }
+
               final heartBalance = await fetchHeartBalance();
 
               if (heartBalance < Dimens.examProfileOpenHeartCount) {
