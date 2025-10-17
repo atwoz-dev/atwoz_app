@@ -8,11 +8,19 @@ class ExamRemoveBlurUsecase {
 
   Future<bool> call({
     required int memberId,
+    required bool isSoulmate,
   }) async {
     try {
-      await ref.read(examRepositoryProvider).removeProfileBlur(
-            memberId: memberId,
-          );
+      if (isSoulmate) {
+        await ref.read(examRepositoryProvider).removeSoulmateProfileBlur(
+              memberId: memberId,
+            );
+      }
+      if (!isSoulmate) {
+        await ref.read(examRepositoryProvider).removeSameAnswerProfileBlur(
+              memberId: memberId,
+            );
+      }
       return true;
     } catch (e) {
       return false;

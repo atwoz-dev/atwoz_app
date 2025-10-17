@@ -71,8 +71,10 @@ class ExamResultPageState
                 profiles: examState.soulmateList.soulmateList,
                 userProfile: userProfile,
                 fetchHeartBalance: () => notifier.fetchUserHeartBalance(),
-                onOpenProfile: (memberId) =>
-                    notifier.openProfile(memberId: memberId),
+                onOpenProfile: (memberId) => notifier.openProfile(
+                    memberId: memberId,
+                    isSoulmate:
+                        examState.hasSoulmate && examState.isSubjectOptional),
                 onTapProfile: (memberId) {
                   navigate(
                     context,

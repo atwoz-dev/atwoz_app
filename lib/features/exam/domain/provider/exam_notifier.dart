@@ -181,9 +181,11 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  Future<void> openProfile({required int memberId}) async {
+  Future<void> openProfile(
+      {required int memberId, required bool isSoulmate}) async {
     try {
-      final success = await ExamRemoveBlurUsecase(ref).call(memberId: memberId);
+      final success = await ExamRemoveBlurUsecase(ref)
+          .call(memberId: memberId, isSoulmate: isSoulmate);
 
       if (!success) return;
 

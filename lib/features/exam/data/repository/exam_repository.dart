@@ -94,7 +94,16 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  Future<void> removeProfileBlur({
+  Future<void> removeSoulmateProfileBlur({
+    required int memberId,
+  }) async {
+    await apiService.postJson(
+      '/member/introduction/soulmate',
+      data: {'introducedMemberId': memberId},
+    );
+  }
+
+  Future<void> removeSameAnswerProfileBlur({
     required int memberId,
   }) async {
     await apiService.postJson(
