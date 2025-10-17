@@ -4,7 +4,7 @@ part 'interview_question_response.freezed.dart';
 part 'interview_question_response.g.dart';
 
 @freezed
-class InterviewQuestionResponse with _$InterviewQuestionResponse {
+abstract class InterviewQuestionResponse with _$InterviewQuestionResponse {
   const factory InterviewQuestionResponse({
     required int status,
     required String code,
@@ -29,7 +29,7 @@ enum InterviewCategory {
 }
 
 @freezed
-class InterviewQuestionItem with _$InterviewQuestionItem {
+abstract class InterviewQuestionItem with _$InterviewQuestionItem {
   const factory InterviewQuestionItem({
     required int questionId,
     required String questionContent,

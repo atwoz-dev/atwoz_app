@@ -75,7 +75,7 @@ class _ServiceWithdrawReasonPageState
                             label: '탈퇴',
                             onTap: () async {
                               final success = await ref
-                                  .read(mySettingNotifierProvider.notifier)
+                                  .read(mySettingProvider.notifier)
                                   .withdrawAccount();
                               if (!context.mounted) return;
                               if (!success) {

@@ -4,7 +4,7 @@ import 'heart_transaction_summary.dart';
 part 'heart_history_data.freezed.dart';
 
 @freezed
-class HeartHistoryData with _$HeartHistoryData {
+abstract class HeartHistoryData with _$HeartHistoryData {
   const factory HeartHistoryData({
     @Default(<HeartTransactionSummary>[])
     List<HeartTransactionSummary> transactions,

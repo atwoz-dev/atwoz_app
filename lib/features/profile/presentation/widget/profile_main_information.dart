@@ -130,13 +130,13 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
   void initState() {
     super.initState();
     _selectedType =
-        ref.read(profileNotifierProvider(widget.userId)).profile?.favoriteType;
+        ref.read(profileProvider(widget.userId)).profile?.favoriteType;
   }
 
   @override
   Widget build(BuildContext context) {
     final isWaitingProfileExchange = ref
-            .watch(profileNotifierProvider(widget.userId))
+            .watch(profileProvider(widget.userId))
             .profile
             ?.profileExchangeInfo
             ?.profileExchangeStatus
@@ -156,7 +156,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
                     context,
                     userId: widget.userId,
                     onSubmit: () => ref
-                        .read(profileNotifierProvider(widget.userId).notifier)
+                        .read(profileProvider(widget.userId).notifier)
                         .requestMatch(),
                   ),
                   label: '대화 해볼래요',
@@ -183,7 +183,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
   }
 
   void _profileExchangeHandler() async {
-    final notifier = ref.read(profileNotifierProvider(widget.userId).notifier);
+    final notifier = ref.read(profileProvider(widget.userId).notifier);
     context.showConfirmDialog(
       submit: DialogButton(
         label: '수락하기',

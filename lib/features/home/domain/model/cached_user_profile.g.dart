@@ -8,7 +8,7 @@ part of 'cached_user_profile.dart';
 
 class CachedUserProfileAdapter extends TypeAdapter<CachedUserProfile> {
   @override
-  final int typeId = 3;
+  final typeId = 3;
 
   @override
   CachedUserProfile read(BinaryReader reader) {
@@ -23,8 +23,8 @@ class CachedUserProfileAdapter extends TypeAdapter<CachedUserProfile> {
       nickname: fields[3] as String,
       gender: fields[4] as Gender,
       kakaoId: fields[5] as String?,
-      age: fields[6] as int,
-      height: fields[7] as int,
+      age: (fields[6] as num).toInt(),
+      height: (fields[7] as num).toInt(),
       phoneNumber: fields[8] as String,
       job: fields[9] as Job,
       education: fields[10] as Education,
@@ -36,7 +36,7 @@ class CachedUserProfileAdapter extends TypeAdapter<CachedUserProfile> {
       religion: fields[16] as Religion,
       hobbies: (fields[17] as List).cast<Hobby>(),
       interviewInfoView: (fields[18] as List).cast<InterviewInfo>(),
-      myUserId: fields[19] as int,
+      myUserId: fields[19] == null ? 0 : (fields[19] as num).toInt(),
     );
   }
 
@@ -99,7 +99,7 @@ class CachedUserProfileAdapter extends TypeAdapter<CachedUserProfile> {
 
 class InterviewInfoAdapter extends TypeAdapter<InterviewInfo> {
   @override
-  final int typeId = 4;
+  final typeId = 4;
 
   @override
   InterviewInfo read(BinaryReader reader) {
@@ -138,9 +138,8 @@ class InterviewInfoAdapter extends TypeAdapter<InterviewInfo> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CachedUserProfileImpl _$$CachedUserProfileImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CachedUserProfileImpl(
+_CachedUserProfile _$CachedUserProfileFromJson(Map<String, dynamic> json) =>
+    _CachedUserProfile(
       activityStatus: json['activityStatus'] as String,
       isVip: json['isVip'] as bool,
       primaryContactType: json['primaryContactType'] as String?,
@@ -156,8 +155,10 @@ _$CachedUserProfileImpl _$$CachedUserProfileImplFromJson(
       district: json['district'] as String,
       mbti: json['mbti'] as String,
       smokingStatus: $enumDecode(_$SmokingStatusEnumMap, json['smokingStatus']),
-      drinkingStatus:
-          $enumDecode(_$DrinkingStatusEnumMap, json['drinkingStatus']),
+      drinkingStatus: $enumDecode(
+        _$DrinkingStatusEnumMap,
+        json['drinkingStatus'],
+      ),
       religion: $enumDecode(_$ReligionEnumMap, json['religion']),
       hobbies: (json['hobbies'] as List<dynamic>)
           .map((e) => $enumDecode(_$HobbyEnumMap, e))
@@ -168,8 +169,7 @@ _$CachedUserProfileImpl _$$CachedUserProfileImplFromJson(
       myUserId: (json['myUserId'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$CachedUserProfileImplToJson(
-        _$CachedUserProfileImpl instance) =>
+Map<String, dynamic> _$CachedUserProfileToJson(_CachedUserProfile instance) =>
     <String, dynamic>{
       'activityStatus': instance.activityStatus,
       'isVip': instance.isVip,
@@ -193,10 +193,7 @@ Map<String, dynamic> _$$CachedUserProfileImplToJson(
       'myUserId': instance.myUserId,
     };
 
-const _$GenderEnumMap = {
-  Gender.male: 'male',
-  Gender.female: 'female',
-};
+const _$GenderEnumMap = {Gender.male: 'male', Gender.female: 'female'};
 
 const _$JobEnumMap = {
   Job.researchAndEngineering: 'researchAndEngineering',
@@ -289,14 +286,11 @@ const _$HobbyEnumMap = {
   Hobby.others: 'others',
 };
 
-_$InterviewInfoImpl _$$InterviewInfoImplFromJson(Map<String, dynamic> json) =>
-    _$InterviewInfoImpl(
+_InterviewInfo _$InterviewInfoFromJson(Map<String, dynamic> json) =>
+    _InterviewInfo(
       title: json['title'] as String,
       content: json['content'] as String,
     );
 
-Map<String, dynamic> _$$InterviewInfoImplToJson(_$InterviewInfoImpl instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      'content': instance.content,
-    };
+Map<String, dynamic> _$InterviewInfoToJson(_InterviewInfo instance) =>
+    <String, dynamic>{'title': instance.title, 'content': instance.content};

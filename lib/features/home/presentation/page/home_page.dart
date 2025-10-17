@@ -26,14 +26,14 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
 
   @override
   void initState() {
-    ref.read(globalNotifierProvider.notifier).initProfile();
+    ref.read(globalProvider.notifier).initProfile();
     super.initState();
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    final homeStateAsync = ref.watch(homeNotifierProvider);
-    final homeNotifier = ref.read(homeNotifierProvider.notifier);
+    final homeStateAsync = ref.watch(homeProvider);
+    final homeNotifier = ref.read(homeProvider.notifier);
 
     return Scaffold(
       body: SafeArea(

@@ -57,7 +57,7 @@ class IdealTypeSettingBox extends ConsumerWidget {
   void _showDialog(BuildContext context, WidgetRef ref) {
     final options = item.options;
     final label = item.label;
-    final notifier = ref.read(idealTypeNotifierProvider.notifier);
+    final notifier = ref.read(idealTypeProvider.notifier);
 
     switch (item.type) {
       case IdealTypeDialogType.single:

@@ -7,7 +7,7 @@ enum ProfileImageStatus { none, add, update, delete }
 
 // 프로필 이미지 수정 화면에서 사용되는 모델
 @freezed
-class EditableProfileImage with _$EditableProfileImage {
+abstract class EditableProfileImage with _$EditableProfileImage {
   const factory EditableProfileImage({
     int? id,
     String? imageUrl,

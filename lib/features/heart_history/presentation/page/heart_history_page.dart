@@ -40,7 +40,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
     try {
       await ref
-          .read(heartHistoryNotifierProvider.notifier)
+          .read(heartHistoryProvider.notifier)
           .loadMoreHeartTransactions();
     } catch (e) {
       showToastMessage('표시할 항목이 더 이상 없습니다.');
@@ -61,7 +61,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(heartHistoryNotifierProvider);
+    final state = ref.watch(heartHistoryProvider);
 
     if (!state.isLoaded && state.error == null) {
       return const Scaffold(

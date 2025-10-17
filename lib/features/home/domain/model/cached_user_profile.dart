@@ -1,14 +1,14 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 part 'cached_user_profile.freezed.dart';
 part 'cached_user_profile.g.dart';
 
 @freezed
 @HiveType(typeId: 3, adapterName: 'CachedUserProfileAdapter')
-class CachedUserProfile with _$CachedUserProfile {
+abstract class CachedUserProfile with _$CachedUserProfile {
   const CachedUserProfile._(); // for custom getters
 
   const factory CachedUserProfile({
@@ -80,7 +80,7 @@ class CachedUserProfile with _$CachedUserProfile {
 
 @freezed
 @HiveType(typeId: 4, adapterName: 'InterviewInfoAdapter')
-class InterviewInfo with _$InterviewInfo {
+abstract class InterviewInfo with _$InterviewInfo {
   const factory InterviewInfo({
     @HiveField(0) required String title,
     @HiveField(1) required String content,

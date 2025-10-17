@@ -2,7 +2,7 @@ import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 final getProfileFromHiveUseCaseProvider = Provider.autoDispose(
   (ref) => GetProfileFromHiveUseCase(

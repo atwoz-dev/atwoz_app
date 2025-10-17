@@ -10,8 +10,8 @@ class IdealAgeSettingArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeAsync = ref.watch(idealTypeNotifierProvider);
-    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
+    final idealTypeAsync = ref.watch(idealTypeProvider);
+    final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
 
     return idealTypeAsync.when(
       data: (data) => IdealAgeSlider(

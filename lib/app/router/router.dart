@@ -34,6 +34,7 @@ import 'package:atwoz_app/features/heart_history/presentation/page/heart_history
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
 import 'route_arguments.dart';

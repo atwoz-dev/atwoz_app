@@ -6,21 +6,50 @@ part of 'my_setting_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mySettingNotifierHash() => r'b9ecec51de43ae213befd9044e849bce1dc78ec9';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [MySettingNotifier].
 @ProviderFor(MySettingNotifier)
-final mySettingNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<MySettingNotifier, MySettings>.internal(
-  MySettingNotifier.new,
-  name: r'mySettingNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$mySettingNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const mySettingProvider = MySettingNotifierProvider._();
 
-typedef _$MySettingNotifier = AutoDisposeAsyncNotifier<MySettings>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class MySettingNotifierProvider
+    extends $AsyncNotifierProvider<MySettingNotifier, MySettings> {
+  const MySettingNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mySettingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mySettingNotifierHash();
+
+  @$internal
+  @override
+  MySettingNotifier create() => MySettingNotifier();
+}
+
+String _$mySettingNotifierHash() => r'899ae656f184aed3dc511c13292ce0d82946f84d';
+
+abstract class _$MySettingNotifier extends $AsyncNotifier<MySettings> {
+  FutureOr<MySettings> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<MySettings>, MySettings>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<MySettings>, MySettings>,
+              AsyncValue<MySettings>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

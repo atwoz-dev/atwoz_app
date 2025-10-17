@@ -15,7 +15,7 @@ class NotificationList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(notificationListNotifierProvider).when(
+    return ref.watch(notificationListProvider).when(
           data: (state) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -55,7 +55,7 @@ class _ReadAllNotifications extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: ref.read(notificationListNotifierProvider.notifier).markAllAsRead,
+      onTap: ref.read(notificationListProvider.notifier).markAllAsRead,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -87,7 +87,7 @@ class _NotificationItem extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref
-            .read(notificationListNotifierProvider.notifier)
+            .read(notificationListProvider.notifier)
             .markAsRead(notification.notificationId);
 
         if (!notification.notificationType.isConnectedProfile) {

@@ -5,7 +5,7 @@ import 'package:atwoz_app/features/home/data/mapper/introduced_profile_mapper.da
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 final saveIntroducedProfilesUseCaseProvider = Provider(
   (ref) => SaveIntroducedProfilesUseCase(ref: ref),

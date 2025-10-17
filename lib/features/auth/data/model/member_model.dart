@@ -4,7 +4,7 @@ part 'member_model.freezed.dart';
 part 'member_model.g.dart';
 
 @freezed
-class Member with _$Member {
+abstract class Member with _$Member {
   const factory Member({
     required int id,
     required String phoneNumber,
@@ -18,7 +18,7 @@ class Member with _$Member {
 }
 
 @freezed
-class MemberProfile with _$MemberProfile {
+abstract class MemberProfile with _$MemberProfile {
   const factory MemberProfile({
     required String gender,
     required bool isProfileSettingNeeded,
@@ -31,7 +31,7 @@ class MemberProfile with _$MemberProfile {
 }
 
 @freezed
-class HeartBalance with _$HeartBalance {
+abstract class HeartBalance with _$HeartBalance {
   const factory HeartBalance({
     required int purchaseHeartBalance,
     required int missionHeartBalance,

@@ -44,9 +44,9 @@ class _MyProfileImageUpdatePageState
   @override
   Widget build(BuildContext context) {
     final imageUpdateState =
-        ref.watch(profileImageUpdateNotifierProvider(widget.profileImages));
+        ref.watch(profileImageUpdateProvider(widget.profileImages));
     final imageUpdateNotifier = ref.read(
-        profileImageUpdateNotifierProvider(widget.profileImages).notifier);
+        profileImageUpdateProvider(widget.profileImages).notifier);
     final photos = ref.watch(photoProvider);
 
     return GestureDetector(
@@ -116,7 +116,7 @@ class _MyProfileImageUpdatePageState
                                     // EditableProfileImage 업데이트
                                     ref
                                         .read(
-                                            profileImageUpdateNotifierProvider(
+                                            profileImageUpdateProvider(
                                                     widget.profileImages)
                                                 .notifier)
                                         .updateEditableProfileImage(
@@ -132,7 +132,7 @@ class _MyProfileImageUpdatePageState
                                       .updateState(index, null);
 
                                   ref
-                                      .read(profileImageUpdateNotifierProvider(
+                                      .read(profileImageUpdateProvider(
                                               widget.profileImages)
                                           .notifier)
                                       .deleteEditableProfileImage(index: index);

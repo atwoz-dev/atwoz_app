@@ -39,7 +39,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    final storeState = ref.watch(storeNotifierProvider);
+    final storeState = ref.watch(storeProvider);
     final heartBalance = storeState.heartBalance.heartBalance;
 
     final double tagSpacing = 16;
@@ -132,7 +132,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                       EventHeartCard(
                         code: HeartProduct.heart90.code,
                         onCreate: (code) => ref
-                            .read(storeNotifierProvider.notifier)
+                            .read(storeProvider.notifier)
                             .buyProduct(code),
                       ),
                     ],
@@ -154,7 +154,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                             price: product.price.toString(),
                             code: product.code,
                             onCreate: (code) => ref
-                                .read(storeNotifierProvider.notifier)
+                                .read(storeProvider.notifier)
                                 .buyProduct(code)),
                       );
                     }).toList(),

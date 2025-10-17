@@ -5,12 +5,13 @@ import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ideal_type_notifier.g.dart';
 
 @riverpod
-class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealType> {
+class IdealTypeNotifier extends AsyncNotifier<IdealType> {
   @override
   Future<IdealType> build() async {
     final state = await ref.read(fetchIdealTypeUseCaseProvider).execute();

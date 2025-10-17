@@ -5,7 +5,7 @@ part 'favorite_list_response.freezed.dart';
 part 'favorite_list_response.g.dart';
 
 @freezed
-class FavoriteListItemResponse with _$FavoriteListItemResponse {
+abstract class FavoriteListItemResponse with _$FavoriteListItemResponse {
   const factory FavoriteListItemResponse({
     required int likeId,
     required int opponentId,
@@ -35,7 +35,7 @@ class FavoriteListItemResponse with _$FavoriteListItemResponse {
 }
 
 @freezed
-class FavoriteListResponse with _$FavoriteListResponse {
+abstract class FavoriteListResponse with _$FavoriteListResponse {
   const factory FavoriteListResponse({
     required List<FavoriteListItemResponse> likes,
     required bool hasMore,

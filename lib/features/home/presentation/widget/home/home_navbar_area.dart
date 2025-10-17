@@ -12,7 +12,7 @@ class HomeNavbarArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nickname = ref.watch(globalNotifierProvider).profile.nickname;
+    final nickname = ref.watch(globalProvider).profile.nickname;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

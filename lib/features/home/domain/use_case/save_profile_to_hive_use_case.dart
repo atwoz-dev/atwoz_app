@@ -4,7 +4,7 @@ import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.d
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 final saveProfileToHiveUseCaseProvider = Provider.autoDispose(
   (ref) => SaveProfileToHiveUseCase(

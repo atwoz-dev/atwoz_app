@@ -137,7 +137,7 @@ class MySettingNotifier extends _$MySettingNotifier {
 
   Future<bool> activeAccount() async {
     try {
-      final phoneNumber = ref.read(globalNotifierProvider).profile.phoneNumber;
+      final phoneNumber = ref.read(globalProvider).profile.phoneNumber;
 
       final accessToken = await ref
           .read(myProfileRepositoryProvider)
@@ -149,7 +149,7 @@ class MySettingNotifier extends _$MySettingNotifier {
       }
 
       ref.read(authUsecaseProvider).setAccessToken(accessToken);
-      await ref.read(globalNotifierProvider.notifier).initProfile();
+      await ref.read(globalProvider.notifier).initProfile();
       return true;
     } catch (e) {
       Log.e('계정 활성화 실패: $e');

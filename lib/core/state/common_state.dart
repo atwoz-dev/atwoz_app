@@ -4,7 +4,7 @@ part 'common_state.freezed.dart';
 
 /// 상태 정의
 @freezed
-class CommonState with _$CommonState {
+abstract class CommonState with _$CommonState {
   const factory CommonState.initial() = _Initial; // 초기 상태
   const factory CommonState.loading() = _Loading; // 로딩 상태
   const factory CommonState.success() = _Success; // 성공 상테

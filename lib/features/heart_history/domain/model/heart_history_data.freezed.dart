@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,169 +9,272 @@ part of 'heart_history_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$HeartHistoryData {
-  List<HeartTransactionSummary> get transactions =>
-      throw _privateConstructorUsedError;
-  bool get hasMore => throw _privateConstructorUsedError;
 
-  /// Create a copy of HeartHistoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $HeartHistoryDataCopyWith<HeartHistoryData> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<HeartTransactionSummary> get transactions; bool get hasMore;
+/// Create a copy of HeartHistoryData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HeartHistoryDataCopyWith<HeartHistoryData> get copyWith => _$HeartHistoryDataCopyWithImpl<HeartHistoryData>(this as HeartHistoryData, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HeartHistoryData&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(transactions),hasMore);
+
+@override
+String toString() {
+  return 'HeartHistoryData(transactions: $transactions, hasMore: $hasMore)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $HeartHistoryDataCopyWith<$Res> {
-  factory $HeartHistoryDataCopyWith(
-          HeartHistoryData value, $Res Function(HeartHistoryData) then) =
-      _$HeartHistoryDataCopyWithImpl<$Res, HeartHistoryData>;
-  @useResult
-  $Res call({List<HeartTransactionSummary> transactions, bool hasMore});
-}
+abstract mixin class $HeartHistoryDataCopyWith<$Res>  {
+  factory $HeartHistoryDataCopyWith(HeartHistoryData value, $Res Function(HeartHistoryData) _then) = _$HeartHistoryDataCopyWithImpl;
+@useResult
+$Res call({
+ List<HeartTransactionSummary> transactions, bool hasMore
+});
 
+
+
+
+}
 /// @nodoc
-class _$HeartHistoryDataCopyWithImpl<$Res, $Val extends HeartHistoryData>
+class _$HeartHistoryDataCopyWithImpl<$Res>
     implements $HeartHistoryDataCopyWith<$Res> {
-  _$HeartHistoryDataCopyWithImpl(this._value, this._then);
+  _$HeartHistoryDataCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final HeartHistoryData _self;
+  final $Res Function(HeartHistoryData) _then;
 
-  /// Create a copy of HeartHistoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? transactions = null,
-    Object? hasMore = null,
-  }) {
-    return _then(_value.copyWith(
-      transactions: null == transactions
-          ? _value.transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<HeartTransactionSummary>,
-      hasMore: null == hasMore
-          ? _value.hasMore
-          : hasMore // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
+/// Create a copy of HeartHistoryData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? transactions = null,Object? hasMore = null,}) {
+  return _then(_self.copyWith(
+transactions: null == transactions ? _self.transactions : transactions // ignore: cast_nullable_to_non_nullable
+as List<HeartTransactionSummary>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [HeartHistoryData].
+extension HeartHistoryDataPatterns on HeartHistoryData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HeartHistoryData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _HeartHistoryData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HeartHistoryData value)  $default,){
+final _that = this;
+switch (_that) {
+case _HeartHistoryData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HeartHistoryData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _HeartHistoryData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<HeartTransactionSummary> transactions,  bool hasMore)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _HeartHistoryData() when $default != null:
+return $default(_that.transactions,_that.hasMore);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<HeartTransactionSummary> transactions,  bool hasMore)  $default,) {final _that = this;
+switch (_that) {
+case _HeartHistoryData():
+return $default(_that.transactions,_that.hasMore);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<HeartTransactionSummary> transactions,  bool hasMore)?  $default,) {final _that = this;
+switch (_that) {
+case _HeartHistoryData() when $default != null:
+return $default(_that.transactions,_that.hasMore);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$HeartHistoryDataImplCopyWith<$Res>
-    implements $HeartHistoryDataCopyWith<$Res> {
-  factory _$$HeartHistoryDataImplCopyWith(_$HeartHistoryDataImpl value,
-          $Res Function(_$HeartHistoryDataImpl) then) =
-      __$$HeartHistoryDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<HeartTransactionSummary> transactions, bool hasMore});
+
+
+class _HeartHistoryData implements HeartHistoryData {
+  const _HeartHistoryData({final  List<HeartTransactionSummary> transactions = const <HeartTransactionSummary>[], this.hasMore = false}): _transactions = transactions;
+  
+
+ final  List<HeartTransactionSummary> _transactions;
+@override@JsonKey() List<HeartTransactionSummary> get transactions {
+  if (_transactions is EqualUnmodifiableListView) return _transactions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_transactions);
+}
+
+@override@JsonKey() final  bool hasMore;
+
+/// Create a copy of HeartHistoryData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$HeartHistoryDataCopyWith<_HeartHistoryData> get copyWith => __$HeartHistoryDataCopyWithImpl<_HeartHistoryData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HeartHistoryData&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_transactions),hasMore);
+
+@override
+String toString() {
+  return 'HeartHistoryData(transactions: $transactions, hasMore: $hasMore)';
+}
+
+
 }
 
 /// @nodoc
-class __$$HeartHistoryDataImplCopyWithImpl<$Res>
-    extends _$HeartHistoryDataCopyWithImpl<$Res, _$HeartHistoryDataImpl>
-    implements _$$HeartHistoryDataImplCopyWith<$Res> {
-  __$$HeartHistoryDataImplCopyWithImpl(_$HeartHistoryDataImpl _value,
-      $Res Function(_$HeartHistoryDataImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$HeartHistoryDataCopyWith<$Res> implements $HeartHistoryDataCopyWith<$Res> {
+  factory _$HeartHistoryDataCopyWith(_HeartHistoryData value, $Res Function(_HeartHistoryData) _then) = __$HeartHistoryDataCopyWithImpl;
+@override @useResult
+$Res call({
+ List<HeartTransactionSummary> transactions, bool hasMore
+});
 
-  /// Create a copy of HeartHistoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? transactions = null,
-    Object? hasMore = null,
-  }) {
-    return _then(_$HeartHistoryDataImpl(
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<HeartTransactionSummary>,
-      hasMore: null == hasMore
-          ? _value.hasMore
-          : hasMore // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$HeartHistoryDataCopyWithImpl<$Res>
+    implements _$HeartHistoryDataCopyWith<$Res> {
+  __$HeartHistoryDataCopyWithImpl(this._self, this._then);
 
-class _$HeartHistoryDataImpl implements _HeartHistoryData {
-  const _$HeartHistoryDataImpl(
-      {final List<HeartTransactionSummary> transactions =
-          const <HeartTransactionSummary>[],
-      this.hasMore = false})
-      : _transactions = transactions;
+  final _HeartHistoryData _self;
+  final $Res Function(_HeartHistoryData) _then;
 
-  final List<HeartTransactionSummary> _transactions;
-  @override
-  @JsonKey()
-  List<HeartTransactionSummary> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
-
-  @override
-  @JsonKey()
-  final bool hasMore;
-
-  @override
-  String toString() {
-    return 'HeartHistoryData(transactions: $transactions, hasMore: $hasMore)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$HeartHistoryDataImpl &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_transactions), hasMore);
-
-  /// Create a copy of HeartHistoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$HeartHistoryDataImplCopyWith<_$HeartHistoryDataImpl> get copyWith =>
-      __$$HeartHistoryDataImplCopyWithImpl<_$HeartHistoryDataImpl>(
-          this, _$identity);
+/// Create a copy of HeartHistoryData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? transactions = null,Object? hasMore = null,}) {
+  return _then(_HeartHistoryData(
+transactions: null == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
+as List<HeartTransactionSummary>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-abstract class _HeartHistoryData implements HeartHistoryData {
-  const factory _HeartHistoryData(
-      {final List<HeartTransactionSummary> transactions,
-      final bool hasMore}) = _$HeartHistoryDataImpl;
 
-  @override
-  List<HeartTransactionSummary> get transactions;
-  @override
-  bool get hasMore;
-
-  /// Create a copy of HeartHistoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HeartHistoryDataImplCopyWith<_$HeartHistoryDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

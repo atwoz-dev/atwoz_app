@@ -15,8 +15,8 @@ class ContactSettingBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(contactSettingNotifierProvider);
-    final notifier = ref.read(contactSettingNotifierProvider.notifier);
+    final state = ref.watch(contactSettingProvider);
+    final notifier = ref.read(contactSettingProvider.notifier);
 
     return Column(
       children: [

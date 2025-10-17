@@ -6,22 +6,59 @@ part of 'contact_setting_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ContactSettingNotifier)
+const contactSettingProvider = ContactSettingNotifierProvider._();
+
+final class ContactSettingNotifierProvider
+    extends $NotifierProvider<ContactSettingNotifier, ContactSettingState> {
+  const ContactSettingNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'contactSettingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$contactSettingNotifierHash();
+
+  @$internal
+  @override
+  ContactSettingNotifier create() => ContactSettingNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ContactSettingState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ContactSettingState>(value),
+    );
+  }
+}
+
 String _$contactSettingNotifierHash() =>
     r'b3d31c3c40a1aa270dceb3275ade69cc428cc8d3';
 
-/// See also [ContactSettingNotifier].
-@ProviderFor(ContactSettingNotifier)
-final contactSettingNotifierProvider = AutoDisposeNotifierProvider<
-    ContactSettingNotifier, ContactSettingState>.internal(
-  ContactSettingNotifier.new,
-  name: r'contactSettingNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$contactSettingNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ContactSettingNotifier = AutoDisposeNotifier<ContactSettingState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ContactSettingNotifier extends $Notifier<ContactSettingState> {
+  ContactSettingState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<ContactSettingState, ContactSettingState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ContactSettingState, ContactSettingState>,
+              ContactSettingState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

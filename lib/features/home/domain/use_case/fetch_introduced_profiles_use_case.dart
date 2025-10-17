@@ -6,7 +6,7 @@ import 'package:atwoz_app/features/home/home.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 final fetchIntroducedProfilesUseCase = Provider((ref) {
   return FetchIntroducedProfilesUseCase();

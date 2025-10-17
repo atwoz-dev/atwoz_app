@@ -20,7 +20,7 @@ class UnlockWithHeartDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userProfile = ref.watch(globalNotifierProvider).profile;
+    final userProfile = ref.watch(globalProvider).profile;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
