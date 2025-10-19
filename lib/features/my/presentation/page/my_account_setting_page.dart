@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
@@ -24,7 +23,6 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final router = ref.read(routerProvider);
     return Scaffold(
       appBar: const DefaultAppBar(title: "계정 설정"),
       body: Column(
@@ -55,7 +53,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
               Switch(
                 value: _isSwitched,
                 inactiveTrackColor: const Color(0xffDEDEDE),
-                onChanged: (value) => _handleDormantChange(value, router),
+                onChanged: (value) => _handleDormantChange(value),
               ),
             ],
           ),
@@ -112,8 +110,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
     );
   }
 
-  void _handleDormantChange(bool value, GoRouter router) async {
-    // TODO(Han): 휴면 상태에서 해당 동작이 가능한지 확인 필요
+  void _handleDormantChange(bool value) async {
     if (!value) return;
 
     setState(() => _isSwitched = value);

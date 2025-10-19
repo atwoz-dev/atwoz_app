@@ -79,9 +79,6 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
         // 로컬 데이터는 성공/삭제 여부 상관없이 로그아웃 처리
         await cookieJar.delete(uri, true);
 
-        await _localStorage.clear();
-        await _localStorage.clearEncrypted();
-
         await _globalNotifier.clearLocalData();
       } catch (e) {
         Log.e('로컬 관련 데이터 삭제 실패');

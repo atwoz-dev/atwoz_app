@@ -61,15 +61,27 @@ class GlobalNotifier extends _$GlobalNotifier {
 
     state = state.copyWith(profile: CachedUserProfile.init());
 
-    await profileBox.clear();
-    await profileBox.close();
-    await introducedProfilesBox.clear();
-    await introducedProfilesBox.close();
+    try {
+      await profileBox.clear();
+      await profileBox.close();
+      await introducedProfilesBox.clear();
+      await introducedProfilesBox.close();
+    } catch (e) {
+      Log.d('Hive 데이터 삭제 시 오류 발생: $e');
+    }
 
-    // FlutterSecureStorage에 저장된 데이터 모두 삭제
-    await ref.read(localStorageProvider).clearEncrypted();
+    try {
+      // FlutterSecureStorage에 저장된 데이터 모두 삭제
+      await ref.read(localStorageProvider).clearEncrypted();
+    } catch (e) {
+      Log.d('FlutterSecureStorage 데이터 삭제 중 오류 발생: $e');
+    }
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
+    } catch (e) {
+      Log.d('SharedPreference 데이터 삭제 중 오류 발생: $e');
+    }
   }
 }

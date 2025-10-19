@@ -162,7 +162,7 @@ class MySettingNotifier extends _$MySettingNotifier {
       final signOutCompleted = await ref.read(authUsecaseProvider).signOut();
 
       if (!signOutCompleted) {
-        throw Exception();
+        return false;
       }
 
       return true;
