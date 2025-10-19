@@ -213,6 +213,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           textAlign: TextAlign.center,
         ),
       ),
+      buttonVerticalPadding: 8,
     );
   }
 }

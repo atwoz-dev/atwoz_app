@@ -1,11 +1,14 @@
 import 'package:atwoz_app/app/state/global_state.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'global_notifier.g.dart';
 
@@ -45,5 +48,40 @@ class GlobalNotifier extends _$GlobalNotifier {
 
   Future<CachedUserProfile> _getProfileFromHive() async {
     return await ref.read(getProfileFromHiveUseCaseProvider).execute();
+  }
+
+  Future<void> clearLocalData() async {
+    // CachedUserProfile 박스 열기 또는 참조
+    final profileBox =
+        await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
+
+    // IntroducedProfileDto 박스 열기 또는 참조
+    final introducedProfilesBox =
+        await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+
+    state = state.copyWith(profile: CachedUserProfile.init());
+
+    try {
+      await profileBox.clear();
+      await profileBox.close();
+      await introducedProfilesBox.clear();
+      await introducedProfilesBox.close();
+    } catch (e) {
+      Log.d('Hive 데이터 삭제 시 오류 발생: $e');
+    }
+
+    try {
+      // FlutterSecureStorage에 저장된 데이터 모두 삭제
+      await ref.read(localStorageProvider).clearEncrypted();
+    } catch (e) {
+      Log.d('FlutterSecureStorage 데이터 삭제 중 오류 발생: $e');
+    }
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear(); // 앱 내 모든 SharedPreference 데이터 삭제
+    } catch (e) {
+      Log.d('SharedPreference 데이터 삭제 중 오류 발생: $e');
+    }
   }
 }
