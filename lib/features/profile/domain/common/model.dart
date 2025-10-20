@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -26,7 +27,7 @@ class UserProfile with _$UserProfile {
     required double height,
     required Job job,
     required MatchStatus matchStatus,
-    required ProfileExchangeStatus profileExchangeStatus,
+    required ProfileExchangeInfo? profileExchangeInfo,
     required FavoriteType? favoriteType,
   }) = _UserProfile;
 }

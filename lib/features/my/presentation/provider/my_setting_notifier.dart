@@ -156,4 +156,19 @@ class MySettingNotifier extends _$MySettingNotifier {
       return false;
     }
   }
+
+  Future<bool> signOut() async {
+    try {
+      final signOutCompleted = await ref.read(authUsecaseProvider).signOut();
+
+      if (!signOutCompleted) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      Log.e('로그아웃 실패: $e');
+      return false;
+    }
+  }
 }

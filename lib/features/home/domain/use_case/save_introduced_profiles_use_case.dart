@@ -18,7 +18,9 @@ class SaveIntroducedProfilesUseCase {
 
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
     try {
-      final box = await Hive.openBox(IntroducedProfileDto.boxName);
+      final Box<Map> box =
+          await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+
       final categoryKey = category.name;
 
       final cachedProfiles = _getValidCachedProfiles(box, categoryKey);
@@ -26,12 +28,13 @@ class SaveIntroducedProfilesUseCase {
 
       // 캐시 없거나 만료된 경우 서버에서 가져와서 저장
       final profileDtos = await _fetchProfilesFromServer(categoryKey);
+
       await _saveProfilesToCache(box, categoryKey, profileDtos);
 
       return convertToIntroducedProfiles(profileDtos);
     } catch (e, stackTrace) {
       Log.e('소개 받은 이성 리스트 호출 실패: $e\n$stackTrace');
-      throw Exception();
+      rethrow;
     }
   }
 
@@ -57,8 +60,11 @@ class SaveIntroducedProfilesUseCase {
   }
 
   /// 서버에서 IntroducedProfileDto 리스트 불러오기
-  Future<List<IntroducedProfileDto>> _fetchProfilesFromServer(String key) {
-    return _ref.read(introducedProfileRepositoryProvider).getProfiles(key);
+  Future<List<IntroducedProfileDto>> _fetchProfilesFromServer(
+      String key) async {
+    return await _ref
+        .read(introducedProfileRepositoryProvider)
+        .getProfiles(key);
   }
 
   /// IntroducedProfileDto 리스트를 캐시에 저장

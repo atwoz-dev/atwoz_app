@@ -138,6 +138,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
     final isWaitingProfileExchange = ref
             .watch(profileNotifierProvider(widget.userId))
             .profile
+            ?.profileExchangeInfo
             ?.profileExchangeStatus
             .isWaiting ??
         false;
@@ -148,7 +149,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           child: isWaitingProfileExchange
               ? _PrimaryButton(
                   onTap: _profileExchangeHandler,
-                  label: '프로필 교환 요청 수락하기',
+                  label: '프로필 교환 요청 응답하기',
                 )
               : _PrimaryButton(
                   onTap: () => MessageSendBottomSheet.open(
@@ -187,24 +188,32 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
       submit: DialogButton(
         label: '수락하기',
         onTap: () async {
-          await notifier.approveProfileExchange();
-          showToastMessage('프로필 교환을 수락하였습니다.');
+          final success = await notifier.approveProfileExchange();
+          if (success) showToastMessage('프로필 교환을 수락하였습니다.');
           if (mounted) context.pop();
         },
       ),
       cancel: DialogButton(
         label: '거절',
         onTap: () async {
-          await notifier.rejectProfileExchange();
-          showToastMessage('프로필 교환을 거절하였습니다.');
-          if (mounted) context.pop();
+          final success = await notifier.rejectProfileExchange();
+          if (success) showToastMessage('프로필 교환을 거절하였습니다.');
+          if (mounted) {
+            context.pop();
+            if(success) context.pop();
+          }
         },
       ),
       enableCloseButton: false,
-      child: const Text(
-        '요청을 수락하시겠어요?\n'
-        '상대방과 메시지를 주고받을 수 있어요!',
+      child: const Padding(
+        padding: EdgeInsets.only(top: 16.0),
+        child: Text(
+          '요청을 수락하시겠어요?\n'
+          '상대방과 메시지를 주고받을 수 있어요!',
+          textAlign: TextAlign.center,
+        ),
       ),
+      buttonVerticalPadding: 8,
     );
   }
 }

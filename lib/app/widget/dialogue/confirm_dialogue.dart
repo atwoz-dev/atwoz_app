@@ -22,27 +22,36 @@ extension ConfirmDialogueX on BuildContext {
     bool enabled = true,
     required bool enableCloseButton,
     required Widget child,
+    required double buttonVerticalPadding,
   }) async =>
       showDialog(
-          context: this,
-          builder: (_) => _ConfirmDialog(
-                submit: submit,
-                cancel: cancel ?? DialogButton(label: '취소', onTap: pop),
-                enabled: enabled,
-                visibleClose: enableCloseButton,
-                child: child,
-              ));
+        barrierColor: Colors.transparent,
+        useSafeArea: false,
+        context: this,
+        builder: (_) => _ConfirmDialog(
+          submit: submit,
+          cancel: cancel ?? DialogButton(label: '취소', onTap: pop),
+          enabled: enabled,
+          visibleClose: enableCloseButton,
+          buttonVerticalPadding: buttonVerticalPadding,
+          child: child,
+        ),
+      );
 
   Future<T?> showPrimaryConfirmDialog<T>({
     required DialogButton submit,
     bool enabled = true,
     required Widget child,
+    required double buttonVerticalPadding,
   }) async =>
       showDialog(
+        barrierColor: Colors.transparent,
+        useSafeArea: false,
         context: this,
         builder: (_) => _ConfirmDialog(
           submit: submit,
           enabled: enabled,
+          buttonVerticalPadding: buttonVerticalPadding,
           child: child,
         ),
       );
@@ -55,6 +64,7 @@ class _ConfirmDialog extends StatelessWidget {
     required this.enabled,
     this.visibleClose = false,
     required this.child,
+    required this.buttonVerticalPadding,
   });
 
   final DialogButton submit;
@@ -62,64 +72,83 @@ class _ConfirmDialog extends StatelessWidget {
   final DialogButton? cancel;
   final bool visibleClose;
   final Widget child;
+  final double buttonVerticalPadding; // 버튼 세로 여백 설정
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 327.0),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (visibleClose)
-              Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: context.pop,
-                  child: const Icon(Icons.close, size: 24.0),
-                ),
-              ),
-            child,
-            const Gap(24.0),
-            Row(
-              spacing: 8.0,
+    return Material(
+      color: const Color(0xff404040).withValues(alpha: 0.8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 24,
+            ),
+            padding: const EdgeInsets.fromLTRB(12, 32, 12, 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+            ),
+            child: Column(
+              //mainAxisSize: MainAxisSize.min,
               children: [
-                if (cancel != null)
-                  Expanded(
-                    child: DefaultElevatedButton(
-                      onPressed: cancel!.onTap,
-                      primary: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      border: const BorderSide(color: Color(0xffE1E1E1)),
-                      child: Text(
-                        cancel!.label,
-                        style: Fonts.body02Medium().copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Palette.colorBlack,
+                if (visibleClose)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      onTap: context.pop,
+                      child: const Icon(Icons.close, size: 24.0),
+                    ),
+                  ),
+                child,
+                const Gap(24.0),
+                Row(
+                  spacing: 8.0,
+                  children: [
+                    if (cancel != null)
+                      Expanded(
+                        child: DefaultElevatedButton(
+                          onPressed: cancel!.onTap,
+                          primary: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                            vertical: buttonVerticalPadding,
+                          ),
+                          border: const BorderSide(color: Color(0xffE1E1E1)),
+                          height: 44,
+                          child: Text(
+                            cancel!.label,
+                            style: Fonts.body02Medium().copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: Palette.colorBlack,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                Expanded(
-                  child: DefaultElevatedButton(
-                    onPressed: enabled ? submit.onTap : null,
-                    primary: Palette.colorPrimary500,
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      submit.label,
-                      style: Fonts.body02Medium().copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                    Expanded(
+                      child: DefaultElevatedButton(
+                        onPressed: enabled ? submit.onTap : null,
+                        primary: Palette.colorPrimary500,
+                        padding: EdgeInsets.symmetric(
+                          vertical: buttonVerticalPadding,
+                        ),
+                        height: 44,
+                        child: Text(
+                          submit.label,
+                          style: Fonts.body02Medium().copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                )
+                    )
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

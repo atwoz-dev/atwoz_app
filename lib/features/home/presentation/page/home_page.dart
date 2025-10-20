@@ -40,38 +40,37 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
         child: homeStateAsync.when(
           data: (data) => Stack(
             children: [
-              Padding(
+              SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const HomeNavbarArea(), // 홈 상단 네비게이션바
-                      const Gap(16),
-                      const HomeProfileCardArea(), // 소개받은 프로필 부분
-                      const Gap(16),
-                      HomeCategoryButtonsArea(
-                        // 카테고리 버튼 영역
-                        onTapButton: (category) async {
-                          final hasProfiles =
-                              await homeNotifier.checkIntroducedProfiles(
-                            IntroducedCategory.parse(category),
+                child: Column(
+                  children: [
+                    const HomeNavbarArea(), // 홈 상단 네비게이션바
+                    const Gap(16),
+                    const HomeProfileCardArea(), // 소개받은 프로필 부분
+                    const Gap(16),
+                    HomeCategoryButtonsArea(
+                      // 카테고리 버튼 영역
+                      onTapButton: (category) async {
+                        final hasProfiles =
+                            await homeNotifier.checkIntroducedProfiles(
+                          IntroducedCategory.parse(category),
+                        );
+                        if (!hasProfiles) {
+                          showToastMessage(
+                            '조건에 맞는 이성을 찾지 못했어요',
+                            gravity: ToastGravity.TOP,
                           );
-                          if (!hasProfiles) {
-                            showToastMessage(
-                              '조건에 맞는 이성을 찾지 못했어요',
-                              gravity: ToastGravity.TOP,
-                            );
-                            return;
-                          }
-                          if (context.mounted) {
-                            navigate(
-                              context,
-                              route: AppRoute.userByCategory,
-                              extra: UserByCategoryArguments(
-                                category: IntroducedCategory.parse(category),
-                              ),
-                            );
-                          }
+                          return;
+                        }
+                        if (context.mounted) {
+                          navigate(
+                            context,
+                            route: AppRoute.userByCategory,
+                            extra: UserByCategoryArguments(
+                              category: IntroducedCategory.parse(category),
+                            ),
+                          );
+                        }
                         },
                       ),
                       const Gap(24),
