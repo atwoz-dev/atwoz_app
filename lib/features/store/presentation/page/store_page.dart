@@ -40,7 +40,6 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
   @override
   Widget buildPage(BuildContext context) {
     final storeState = ref.watch(storeNotifierProvider);
-    final heartBalance = storeState.heartBalance.heartBalance;
 
     final double tagSpacing = 16;
     final double horizontalPadding = screenWidth * 0.05;
@@ -106,7 +105,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                                         ),
                                         const Gap(4),
                                         Text(
-                                          heartBalance.totalHeartBalance
+                                          storeState.totalHeartBalance
                                               .toString(),
                                           style: Fonts.body03Regular(
                                             Palette.colorGrey900,

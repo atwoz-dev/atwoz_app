@@ -107,11 +107,11 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
                     onPressed: () async {
                       navigate(
                         context,
-                        route: AppRoute.onboard,
+                        route: AppRoute.exam,
                       );
                     },
                     child: Text(
-                      '연애고사',
+                      '연애 모의고사',
                       style: Fonts.body01Regular(palette.onPrimary),
                     ),
                   ),

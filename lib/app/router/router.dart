@@ -7,6 +7,9 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
+import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
+import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dart';
+import 'package:atwoz_app/features/exam/presentation/page/exam_result_page.dart';
 import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/main_tab_view.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
@@ -75,6 +78,11 @@ enum AppRoute {
   store('store'),
   storeNavigation('store-navigation'),
   heartHistory('heart-history'),
+
+  // DatingExam
+  exam('exam'),
+  examQuestion('exam-question'),
+  examResult('exam-result'),
 
   // Notification
   notification('notification'),
@@ -221,6 +229,20 @@ final allRoutes = [
           NamedGoRoute(
             name: AppRoute.contactSetting.name,
             builder: (context, state) => const ContactSettingPage(),
+          ),
+        ],
+      ),
+      NamedGoRoute(
+        name: AppRoute.exam.name,
+        builder: (context, state) => const ExamCoverPage(),
+        routes: [
+          NamedGoRoute(
+            name: AppRoute.examQuestion.name,
+            builder: (context, state) => const ExamQuestionPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.examResult.name,
+            builder: (context, state) => const ExamResultPage(),
           ),
         ],
       ),

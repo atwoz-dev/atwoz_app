@@ -35,6 +35,7 @@ StatusInfoDto _$StatusInfoDtoFromJson(Map<String, dynamic> json) =>
       memberId: (json['memberId'] as num).toInt(),
       activityStatus: json['activityStatus'] as String,
       isVip: json['isVip'] as bool,
+      isDatingExamSubmitted: json['isDatingExamSubmitted'] as bool,
       primaryContactType: json['primaryContactType'] as String?,
     );
 
@@ -43,6 +44,7 @@ Map<String, dynamic> _$StatusInfoDtoToJson(StatusInfoDto instance) =>
       'memberId': instance.memberId,
       'activityStatus': instance.activityStatus,
       'isVip': instance.isVip,
+      'isDatingExamSubmitted': instance.isDatingExamSubmitted,
       'primaryContactType': instance.primaryContactType,
     };
 

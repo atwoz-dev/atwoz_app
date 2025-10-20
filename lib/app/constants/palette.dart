@@ -39,8 +39,8 @@ class Palette {
   static const colorSecondary900 = Color(0xff004561);
 
   static const colorGrey50 = Color(0xffF8F8F8);
-  static const colorGrey100 = Color(0xffECEDEF);
-  static const colorGrey200 = Color(0xffD8DADE);
+  static const colorGrey100 = Color(0xffEDEEF0);
+  static const colorGrey200 = Color(0xffDCDEE3);
   static const colorGrey300 = Color(0xffB4B8C0);
   static const colorGrey400 = Color(0xff9BA0AB);
   static const colorGrey500 = Color(0xff828897);

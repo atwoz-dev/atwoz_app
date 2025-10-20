@@ -12,6 +12,7 @@ _$MemberImpl _$$MemberImplFromJson(Map<String, dynamic> json) => _$MemberImpl(
       memberProfile:
           MemberProfile.fromJson(json['memberProfile'] as Map<String, dynamic>),
       isVip: json['isVip'] as bool,
+      isDatingExamSubmitted: json['isDatingExamSubmitted'] as bool,
       activityStatus:
           $enumDecode(_$ActivityStatusEnumMap, json['activityStatus']),
       heartBalance:
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$MemberImplToJson(_$MemberImpl instance) =>
       'phoneNumber': instance.phoneNumber,
       'memberProfile': instance.memberProfile,
       'isVip': instance.isVip,
+      'isDatingExamSubmitted': instance.isDatingExamSubmitted,
       'activityStatus': _$ActivityStatusEnumMap[instance.activityStatus]!,
       'heartBalance': instance.heartBalance,
     };
