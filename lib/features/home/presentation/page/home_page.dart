@@ -71,31 +71,27 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                             ),
                           );
                         }
-                        },
+                      },
+                    ),
+                    const Gap(24),
+                    GestureDetector(
+                      onTap: () {
+                        navigate(context, route: AppRoute.exam);
+                      },
+                      child: Image.asset(
+                        ImagePath.homeTest,
+                        fit: BoxFit.cover,
+                        width: context.screenWidth,
                       ),
-                      const Gap(24),
-                      GestureDetector(
-                        onTap: () {
-                          navigate(
-                            context,
-                            route: AppRoute.exam,
-                          );
-                        },
-                        child: Image.asset(
-                          ImagePath.homeTest,
-                          fit: BoxFit.cover,
-                          width: context.screenWidth,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               if (data.isCheckingIntroducedProfiles) ...[
                 const ModalBarrier(
                   dismissible: false,
                   color: Colors.transparent,
-                ), // 로딩 시 배경 클릭 방지
+                ),
                 const Center(child: CircularProgressIndicator()),
               ],
             ],
