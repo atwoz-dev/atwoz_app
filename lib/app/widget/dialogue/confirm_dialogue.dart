@@ -2,7 +2,6 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class DialogButton {
@@ -113,31 +112,19 @@ class _ConfirmDialog extends StatelessWidget {
                   child: DefaultElevatedButton(
                     onPressed: enabled ? submit.onTap : null,
                     primary: Palette.colorPrimary500,
+                    padding: EdgeInsets.symmetric(
+                      vertical: buttonVerticalPadding,
+                    ),
+                    height: 44,
                     child: Text(
                       submit.label,
                       style: Fonts.body02Medium().copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
-                    Expanded(
-                      child: DefaultElevatedButton(
-                        onPressed: enabled ? submit.onTap : null,
-                        primary: Palette.colorPrimary500,
-                        padding: EdgeInsets.symmetric(
-                          vertical: buttonVerticalPadding,
-                        ),
-                        height: 44,
-                        child: Text(
-                          submit.label,
-                          style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
