@@ -20,11 +20,6 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
   ExamCoverPageState() : super(defaultAppBarTitle: '연애 모의고사');
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget buildPage(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
