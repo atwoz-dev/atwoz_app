@@ -76,7 +76,9 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                     const Gap(24),
                     GestureDetector(
                       onTap: () {
-                        navigate(context, route: AppRoute.exam);
+                        if (context.mounted) {
+                          navigate(context, route: AppRoute.exam);
+                        }
                       },
                       child: Image.asset(
                         ImagePath.homeTest,
