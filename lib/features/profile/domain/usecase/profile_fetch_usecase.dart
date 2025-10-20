@@ -34,7 +34,7 @@ class ProfileFetchUseCase {
         height: 165.0,
         job: Job.artsAndSports,
         matchStatus: designInspectionPresetData,
-        profileExchangeStatus: ProfileExchangeStatus.none,
+        profileExchangeInfo: null,
         favoriteType: FavoriteType.interested,
       );
     }
@@ -67,9 +67,7 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       height: basic.height.toDouble(),
       job: Job.parse(basic.job),
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
-      // TOOD(Han): profileExchangeStatus는 아직 사용하지 않음
-      profileExchangeStatus: profileExchangeInfo?.profileExchangeStatus ??
-          ProfileExchangeStatus.none,
+      profileExchangeInfo: profileExchangeInfo,
       favoriteType: FavoriteType.tryParse(basic.likeLevel),
     );
   }

@@ -56,8 +56,8 @@ class DefaultElevatedButton extends ConsumerWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
-        disabledForegroundColor: disabledForegroundColor,
-        disabledBackgroundColor: disabledBackgroundColor,
+        disabledForegroundColor: Palette.colorGrey300,
+        disabledBackgroundColor: Palette.colorGrey200,
         elevation: 0,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: padding,

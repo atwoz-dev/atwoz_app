@@ -26,44 +26,46 @@ mixin _$CachedUserProfile {
   @HiveField(1)
   bool get isVip => throw _privateConstructorUsedError;
   @HiveField(2)
+  bool get isDatingExamSubmitted => throw _privateConstructorUsedError;
+  @HiveField(3)
   String? get primaryContactType =>
       throw _privateConstructorUsedError; // 회원가입 후 연락수단 NULL
 // basicInfo
-  @HiveField(3)
-  String get nickname => throw _privateConstructorUsedError;
   @HiveField(4)
-  Gender get gender => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   @HiveField(5)
-  String? get kakaoId => throw _privateConstructorUsedError;
+  Gender get gender => throw _privateConstructorUsedError;
   @HiveField(6)
-  int get age => throw _privateConstructorUsedError;
+  String? get kakaoId => throw _privateConstructorUsedError;
   @HiveField(7)
-  int get height => throw _privateConstructorUsedError;
+  int get age => throw _privateConstructorUsedError;
   @HiveField(8)
-  String get phoneNumber => throw _privateConstructorUsedError; // profileInfo
+  int get height => throw _privateConstructorUsedError;
   @HiveField(9)
-  Job get job => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError; // profileInfo
   @HiveField(10)
-  Education get education => throw _privateConstructorUsedError;
+  Job get job => throw _privateConstructorUsedError;
   @HiveField(11)
-  String get city => throw _privateConstructorUsedError;
+  Education get education => throw _privateConstructorUsedError;
   @HiveField(12)
-  String get district => throw _privateConstructorUsedError;
+  String get city => throw _privateConstructorUsedError;
   @HiveField(13)
-  String get mbti => throw _privateConstructorUsedError;
+  String get district => throw _privateConstructorUsedError;
   @HiveField(14)
-  SmokingStatus get smokingStatus => throw _privateConstructorUsedError;
+  String get mbti => throw _privateConstructorUsedError;
   @HiveField(15)
-  DrinkingStatus get drinkingStatus => throw _privateConstructorUsedError;
+  SmokingStatus get smokingStatus => throw _privateConstructorUsedError;
   @HiveField(16)
-  Religion get religion => throw _privateConstructorUsedError;
+  DrinkingStatus get drinkingStatus => throw _privateConstructorUsedError;
   @HiveField(17)
+  Religion get religion => throw _privateConstructorUsedError;
+  @HiveField(18)
   List<Hobby> get hobbies =>
       throw _privateConstructorUsedError; // interviewInfo
-  @HiveField(18)
+  @HiveField(19)
   List<InterviewInfo> get interviewInfoView =>
       throw _privateConstructorUsedError;
-  @HiveField(19)
+  @HiveField(20)
   int get myUserId => throw _privateConstructorUsedError;
 
   /// Serializes this CachedUserProfile to a JSON map.
@@ -85,24 +87,25 @@ abstract class $CachedUserProfileCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String activityStatus,
       @HiveField(1) bool isVip,
-      @HiveField(2) String? primaryContactType,
-      @HiveField(3) String nickname,
-      @HiveField(4) Gender gender,
-      @HiveField(5) String? kakaoId,
-      @HiveField(6) int age,
-      @HiveField(7) int height,
-      @HiveField(8) String phoneNumber,
-      @HiveField(9) Job job,
-      @HiveField(10) Education education,
-      @HiveField(11) String city,
-      @HiveField(12) String district,
-      @HiveField(13) String mbti,
-      @HiveField(14) SmokingStatus smokingStatus,
-      @HiveField(15) DrinkingStatus drinkingStatus,
-      @HiveField(16) Religion religion,
-      @HiveField(17) List<Hobby> hobbies,
-      @HiveField(18) List<InterviewInfo> interviewInfoView,
-      @HiveField(19) int myUserId});
+      @HiveField(2) bool isDatingExamSubmitted,
+      @HiveField(3) String? primaryContactType,
+      @HiveField(4) String nickname,
+      @HiveField(5) Gender gender,
+      @HiveField(6) String? kakaoId,
+      @HiveField(7) int age,
+      @HiveField(8) int height,
+      @HiveField(9) String phoneNumber,
+      @HiveField(10) Job job,
+      @HiveField(11) Education education,
+      @HiveField(12) String city,
+      @HiveField(13) String district,
+      @HiveField(14) String mbti,
+      @HiveField(15) SmokingStatus smokingStatus,
+      @HiveField(16) DrinkingStatus drinkingStatus,
+      @HiveField(17) Religion religion,
+      @HiveField(18) List<Hobby> hobbies,
+      @HiveField(19) List<InterviewInfo> interviewInfoView,
+      @HiveField(20) int myUserId});
 }
 
 /// @nodoc
@@ -122,6 +125,7 @@ class _$CachedUserProfileCopyWithImpl<$Res, $Val extends CachedUserProfile>
   $Res call({
     Object? activityStatus = null,
     Object? isVip = null,
+    Object? isDatingExamSubmitted = null,
     Object? primaryContactType = freezed,
     Object? nickname = null,
     Object? gender = null,
@@ -149,6 +153,10 @@ class _$CachedUserProfileCopyWithImpl<$Res, $Val extends CachedUserProfile>
       isVip: null == isVip
           ? _value.isVip
           : isVip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDatingExamSubmitted: null == isDatingExamSubmitted
+          ? _value.isDatingExamSubmitted
+          : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
       primaryContactType: freezed == primaryContactType
           ? _value.primaryContactType
@@ -237,24 +245,25 @@ abstract class _$$CachedUserProfileImplCopyWith<$Res>
   $Res call(
       {@HiveField(0) String activityStatus,
       @HiveField(1) bool isVip,
-      @HiveField(2) String? primaryContactType,
-      @HiveField(3) String nickname,
-      @HiveField(4) Gender gender,
-      @HiveField(5) String? kakaoId,
-      @HiveField(6) int age,
-      @HiveField(7) int height,
-      @HiveField(8) String phoneNumber,
-      @HiveField(9) Job job,
-      @HiveField(10) Education education,
-      @HiveField(11) String city,
-      @HiveField(12) String district,
-      @HiveField(13) String mbti,
-      @HiveField(14) SmokingStatus smokingStatus,
-      @HiveField(15) DrinkingStatus drinkingStatus,
-      @HiveField(16) Religion religion,
-      @HiveField(17) List<Hobby> hobbies,
-      @HiveField(18) List<InterviewInfo> interviewInfoView,
-      @HiveField(19) int myUserId});
+      @HiveField(2) bool isDatingExamSubmitted,
+      @HiveField(3) String? primaryContactType,
+      @HiveField(4) String nickname,
+      @HiveField(5) Gender gender,
+      @HiveField(6) String? kakaoId,
+      @HiveField(7) int age,
+      @HiveField(8) int height,
+      @HiveField(9) String phoneNumber,
+      @HiveField(10) Job job,
+      @HiveField(11) Education education,
+      @HiveField(12) String city,
+      @HiveField(13) String district,
+      @HiveField(14) String mbti,
+      @HiveField(15) SmokingStatus smokingStatus,
+      @HiveField(16) DrinkingStatus drinkingStatus,
+      @HiveField(17) Religion religion,
+      @HiveField(18) List<Hobby> hobbies,
+      @HiveField(19) List<InterviewInfo> interviewInfoView,
+      @HiveField(20) int myUserId});
 }
 
 /// @nodoc
@@ -272,6 +281,7 @@ class __$$CachedUserProfileImplCopyWithImpl<$Res>
   $Res call({
     Object? activityStatus = null,
     Object? isVip = null,
+    Object? isDatingExamSubmitted = null,
     Object? primaryContactType = freezed,
     Object? nickname = null,
     Object? gender = null,
@@ -299,6 +309,10 @@ class __$$CachedUserProfileImplCopyWithImpl<$Res>
       isVip: null == isVip
           ? _value.isVip
           : isVip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDatingExamSubmitted: null == isDatingExamSubmitted
+          ? _value.isDatingExamSubmitted
+          : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
       primaryContactType: freezed == primaryContactType
           ? _value.primaryContactType
@@ -382,24 +396,25 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
   const _$CachedUserProfileImpl(
       {@HiveField(0) required this.activityStatus,
       @HiveField(1) required this.isVip,
-      @HiveField(2) this.primaryContactType,
-      @HiveField(3) required this.nickname,
-      @HiveField(4) required this.gender,
-      @HiveField(5) this.kakaoId,
-      @HiveField(6) required this.age,
-      @HiveField(7) required this.height,
-      @HiveField(8) required this.phoneNumber,
-      @HiveField(9) required this.job,
-      @HiveField(10) required this.education,
-      @HiveField(11) required this.city,
-      @HiveField(12) required this.district,
-      @HiveField(13) required this.mbti,
-      @HiveField(14) required this.smokingStatus,
-      @HiveField(15) required this.drinkingStatus,
-      @HiveField(16) required this.religion,
-      @HiveField(17) required final List<Hobby> hobbies,
-      @HiveField(18) required final List<InterviewInfo> interviewInfoView,
-      @HiveField(19) this.myUserId = 0})
+      @HiveField(2) required this.isDatingExamSubmitted,
+      @HiveField(3) this.primaryContactType,
+      @HiveField(4) required this.nickname,
+      @HiveField(5) required this.gender,
+      @HiveField(6) this.kakaoId,
+      @HiveField(7) required this.age,
+      @HiveField(8) required this.height,
+      @HiveField(9) required this.phoneNumber,
+      @HiveField(10) required this.job,
+      @HiveField(11) required this.education,
+      @HiveField(12) required this.city,
+      @HiveField(13) required this.district,
+      @HiveField(14) required this.mbti,
+      @HiveField(15) required this.smokingStatus,
+      @HiveField(16) required this.drinkingStatus,
+      @HiveField(17) required this.religion,
+      @HiveField(18) required final List<Hobby> hobbies,
+      @HiveField(19) required final List<InterviewInfo> interviewInfoView,
+      @HiveField(20) this.myUserId = 0})
       : _hobbies = hobbies,
         _interviewInfoView = interviewInfoView,
         super._();
@@ -416,55 +431,58 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
   final bool isVip;
   @override
   @HiveField(2)
+  final bool isDatingExamSubmitted;
+  @override
+  @HiveField(3)
   final String? primaryContactType;
 // 회원가입 후 연락수단 NULL
 // basicInfo
   @override
-  @HiveField(3)
+  @HiveField(4)
   final String nickname;
   @override
-  @HiveField(4)
+  @HiveField(5)
   final Gender gender;
   @override
-  @HiveField(5)
+  @HiveField(6)
   final String? kakaoId;
   @override
-  @HiveField(6)
+  @HiveField(7)
   final int age;
   @override
-  @HiveField(7)
+  @HiveField(8)
   final int height;
   @override
-  @HiveField(8)
+  @HiveField(9)
   final String phoneNumber;
 // profileInfo
   @override
-  @HiveField(9)
+  @HiveField(10)
   final Job job;
   @override
-  @HiveField(10)
+  @HiveField(11)
   final Education education;
   @override
-  @HiveField(11)
+  @HiveField(12)
   final String city;
   @override
-  @HiveField(12)
+  @HiveField(13)
   final String district;
   @override
-  @HiveField(13)
+  @HiveField(14)
   final String mbti;
   @override
-  @HiveField(14)
+  @HiveField(15)
   final SmokingStatus smokingStatus;
   @override
-  @HiveField(15)
+  @HiveField(16)
   final DrinkingStatus drinkingStatus;
   @override
-  @HiveField(16)
+  @HiveField(17)
   final Religion religion;
   final List<Hobby> _hobbies;
   @override
-  @HiveField(17)
+  @HiveField(18)
   List<Hobby> get hobbies {
     if (_hobbies is EqualUnmodifiableListView) return _hobbies;
     // ignore: implicit_dynamic_type
@@ -475,7 +493,7 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
   final List<InterviewInfo> _interviewInfoView;
 // interviewInfo
   @override
-  @HiveField(18)
+  @HiveField(19)
   List<InterviewInfo> get interviewInfoView {
     if (_interviewInfoView is EqualUnmodifiableListView)
       return _interviewInfoView;
@@ -485,12 +503,12 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
 
   @override
   @JsonKey()
-  @HiveField(19)
+  @HiveField(20)
   final int myUserId;
 
   @override
   String toString() {
-    return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
+    return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
   }
 
   @override
@@ -501,6 +519,8 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
             (identical(other.activityStatus, activityStatus) ||
                 other.activityStatus == activityStatus) &&
             (identical(other.isVip, isVip) || other.isVip == isVip) &&
+            (identical(other.isDatingExamSubmitted, isDatingExamSubmitted) ||
+                other.isDatingExamSubmitted == isDatingExamSubmitted) &&
             (identical(other.primaryContactType, primaryContactType) ||
                 other.primaryContactType == primaryContactType) &&
             (identical(other.nickname, nickname) ||
@@ -537,6 +557,7 @@ class _$CachedUserProfileImpl extends _CachedUserProfile {
         runtimeType,
         activityStatus,
         isVip,
+        isDatingExamSubmitted,
         primaryContactType,
         nickname,
         gender,
@@ -578,24 +599,25 @@ abstract class _CachedUserProfile extends CachedUserProfile {
   const factory _CachedUserProfile(
       {@HiveField(0) required final String activityStatus,
       @HiveField(1) required final bool isVip,
-      @HiveField(2) final String? primaryContactType,
-      @HiveField(3) required final String nickname,
-      @HiveField(4) required final Gender gender,
-      @HiveField(5) final String? kakaoId,
-      @HiveField(6) required final int age,
-      @HiveField(7) required final int height,
-      @HiveField(8) required final String phoneNumber,
-      @HiveField(9) required final Job job,
-      @HiveField(10) required final Education education,
-      @HiveField(11) required final String city,
-      @HiveField(12) required final String district,
-      @HiveField(13) required final String mbti,
-      @HiveField(14) required final SmokingStatus smokingStatus,
-      @HiveField(15) required final DrinkingStatus drinkingStatus,
-      @HiveField(16) required final Religion religion,
-      @HiveField(17) required final List<Hobby> hobbies,
-      @HiveField(18) required final List<InterviewInfo> interviewInfoView,
-      @HiveField(19) final int myUserId}) = _$CachedUserProfileImpl;
+      @HiveField(2) required final bool isDatingExamSubmitted,
+      @HiveField(3) final String? primaryContactType,
+      @HiveField(4) required final String nickname,
+      @HiveField(5) required final Gender gender,
+      @HiveField(6) final String? kakaoId,
+      @HiveField(7) required final int age,
+      @HiveField(8) required final int height,
+      @HiveField(9) required final String phoneNumber,
+      @HiveField(10) required final Job job,
+      @HiveField(11) required final Education education,
+      @HiveField(12) required final String city,
+      @HiveField(13) required final String district,
+      @HiveField(14) required final String mbti,
+      @HiveField(15) required final SmokingStatus smokingStatus,
+      @HiveField(16) required final DrinkingStatus drinkingStatus,
+      @HiveField(17) required final Religion religion,
+      @HiveField(18) required final List<Hobby> hobbies,
+      @HiveField(19) required final List<InterviewInfo> interviewInfoView,
+      @HiveField(20) final int myUserId}) = _$CachedUserProfileImpl;
   const _CachedUserProfile._() : super._();
 
   factory _CachedUserProfile.fromJson(Map<String, dynamic> json) =
@@ -610,58 +632,61 @@ abstract class _CachedUserProfile extends CachedUserProfile {
   bool get isVip;
   @override
   @HiveField(2)
+  bool get isDatingExamSubmitted;
+  @override
+  @HiveField(3)
   String? get primaryContactType; // 회원가입 후 연락수단 NULL
 // basicInfo
   @override
-  @HiveField(3)
+  @HiveField(4)
   String get nickname;
   @override
-  @HiveField(4)
+  @HiveField(5)
   Gender get gender;
   @override
-  @HiveField(5)
+  @HiveField(6)
   String? get kakaoId;
   @override
-  @HiveField(6)
+  @HiveField(7)
   int get age;
   @override
-  @HiveField(7)
+  @HiveField(8)
   int get height;
   @override
-  @HiveField(8)
+  @HiveField(9)
   String get phoneNumber; // profileInfo
   @override
-  @HiveField(9)
+  @HiveField(10)
   Job get job;
   @override
-  @HiveField(10)
+  @HiveField(11)
   Education get education;
   @override
-  @HiveField(11)
+  @HiveField(12)
   String get city;
   @override
-  @HiveField(12)
+  @HiveField(13)
   String get district;
   @override
-  @HiveField(13)
+  @HiveField(14)
   String get mbti;
   @override
-  @HiveField(14)
+  @HiveField(15)
   SmokingStatus get smokingStatus;
   @override
-  @HiveField(15)
+  @HiveField(16)
   DrinkingStatus get drinkingStatus;
   @override
-  @HiveField(16)
+  @HiveField(17)
   Religion get religion;
   @override
-  @HiveField(17)
+  @HiveField(18)
   List<Hobby> get hobbies; // interviewInfo
   @override
-  @HiveField(18)
+  @HiveField(19)
   List<InterviewInfo> get interviewInfoView;
   @override
-  @HiveField(19)
+  @HiveField(20)
   int get myUserId;
 
   /// Create a copy of CachedUserProfile

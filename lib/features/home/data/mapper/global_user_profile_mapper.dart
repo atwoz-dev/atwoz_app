@@ -9,6 +9,7 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
       myUserId: statusInfo.memberId,
       activityStatus: statusInfo.activityStatus,
       isVip: statusInfo.isVip,
+      isDatingExamSubmitted: statusInfo.isDatingExamSubmitted,
       primaryContactType: statusInfo.primaryContactType,
       nickname: basicInfo.nickname,
       gender: Gender.parse(basicInfo.gender),
