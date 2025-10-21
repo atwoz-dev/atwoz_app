@@ -59,41 +59,79 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '마이페이지',
-          style: Fonts.body01Medium(),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
+    final double horizontalPadding = screenWidth * 0.05;
+    final EdgeInsets contentPadding =
+        EdgeInsets.symmetric(horizontal: horizontalPadding);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        top: screenHeight * 0.1,
       ),
-      body: Column(
-        children: _menuItems
-            .map(
-              (item) => Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      if (item.route != null) {
-                        navigate(context, route: item.route!);
-                      }
-                    },
-                    child: _MyPageListItem(
-                      title: item.title,
-                      iconPath: item.iconPath,
+                  Text(
+                    '마이페이지',
+                    style: Fonts.header03().copyWith(
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
                     ),
-                  ),
-                  const Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Palette.colorGrey50,
                   ),
                 ],
               ),
-            )
-            .toList(),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () =>
+                        navigate(context, route: AppRoute.notification),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
+                      child: const DefaultIcon(
+                        IconPath.notification,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const Gap(16),
+          Column(
+            children: _menuItems
+                .map(
+                  (item) => Column(
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          if (item.route != null) {
+                            navigate(context, route: item.route!);
+                          }
+                        },
+                        child: _MyPageListItem(
+                          title: item.title,
+                          iconPath: item.iconPath,
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Palette.colorGrey50,
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
+        ],
       ),
     );
   }
