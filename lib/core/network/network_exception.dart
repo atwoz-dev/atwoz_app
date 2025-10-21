@@ -33,7 +33,7 @@ class NetworkException with _$NetworkException implements Exception {
 
   // apiException: API 응답에 대한 예외 상태를 처리하며, HTTP 상태 코드와 에러 메시지를 인자로 받는다.
   const factory NetworkException.apiException(
-      {int? statusCode, String? message}) = _ApiException;
+      {int? status, String? code, String? message}) = _ApiException;
 
   // 다양한 예외 상황에 맞는 NetworkException 객체를 반환하는 메서드
   static NetworkException getException(Object error) {
@@ -67,23 +67,25 @@ class NetworkException with _$NetworkException implements Exception {
 
         /// 상태 코드 및 메시지 처리
         case DioExceptionType.badResponse:
+          String? code;
           String? message;
-          final statusCode = error.response?.statusCode;
+          final status = error.response?.statusCode;
 
           try {
             final json = error.response?.data as Map;
             message ??= json['Message'] as String?;
             message ??= json['message'] as String?;
+            code ??= json['code'] as String?;
           } catch (_) {}
 
           message ??= error.message;
 
-          if (statusCode == 401) {
+          if (status == 401) {
             return const NetworkException.unauthorizedException();
           }
 
           return NetworkException.apiException(
-              statusCode: statusCode, message: message);
+              status: status, code: code, message: message);
 
         case DioExceptionType.badCertificate:
         case DioExceptionType.cancel:
@@ -103,12 +105,13 @@ class NetworkException with _$NetworkException implements Exception {
   }
 
   // HTTP 상태 코드 가져오는 getter
-  int? get statusCode =>
-      whenOrNull(apiException: (statusCode, _) => statusCode);
+  int? get status => whenOrNull(apiException: (status, code, _) => status);
+
+  String? get code => whenOrNull(apiException: (status, code, _) => code);
 
   // 에러 메시지 가져오는 getter
   String? get message => maybeWhen<String?>(
-        apiException: (_, message) => message,
+        apiException: (status, code, message) => message,
         formatException: () => 'Function이 변경되었습니다. 새로운 버전으로 업그레이드 해주세요!',
         connectionException: () => '네트워크 연결이 불안정합니다. 다시 시도해 주세요!',
         orElse: () => '죄송합니다. 에러 발생으로 인해 나중에 다시 시도해 주세요.',

@@ -23,7 +23,8 @@ mixin _$NetworkException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,7 +34,7 @@ mixin _$NetworkException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,7 +44,7 @@ mixin _$NetworkException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -150,7 +151,8 @@ class _$UnauthorizedExceptionImpl extends _UnauthorizedException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
     return unauthorizedException();
   }
@@ -163,7 +165,7 @@ class _$UnauthorizedExceptionImpl extends _UnauthorizedException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
     return unauthorizedException?.call();
   }
@@ -176,7 +178,7 @@ class _$UnauthorizedExceptionImpl extends _UnauthorizedException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (unauthorizedException != null) {
@@ -309,7 +311,8 @@ class _$OtherExceptionImpl extends _OtherException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
     return otherException(type);
   }
@@ -322,7 +325,7 @@ class _$OtherExceptionImpl extends _OtherException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
     return otherException?.call(type);
   }
@@ -335,7 +338,7 @@ class _$OtherExceptionImpl extends _OtherException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (otherException != null) {
@@ -448,7 +451,8 @@ class _$FormatExceptionImpl extends _FormatException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
     return formatException();
   }
@@ -461,7 +465,7 @@ class _$FormatExceptionImpl extends _FormatException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
     return formatException?.call();
   }
@@ -474,7 +478,7 @@ class _$FormatExceptionImpl extends _FormatException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (formatException != null) {
@@ -580,7 +584,8 @@ class _$ConnectionExceptionImpl extends _ConnectionException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
     return connectionException();
   }
@@ -593,7 +598,7 @@ class _$ConnectionExceptionImpl extends _ConnectionException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
     return connectionException?.call();
   }
@@ -606,7 +611,7 @@ class _$ConnectionExceptionImpl extends _ConnectionException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (connectionException != null) {
@@ -712,7 +717,8 @@ class _$MaintenanceExceptionImpl extends _MaintenanceException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
     return maintenanceException();
   }
@@ -725,7 +731,7 @@ class _$MaintenanceExceptionImpl extends _MaintenanceException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
     return maintenanceException?.call();
   }
@@ -738,7 +744,7 @@ class _$MaintenanceExceptionImpl extends _MaintenanceException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (maintenanceException != null) {
@@ -803,7 +809,7 @@ abstract class _$$ApiExceptionImplCopyWith<$Res> {
           _$ApiExceptionImpl value, $Res Function(_$ApiExceptionImpl) then) =
       __$$ApiExceptionImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int? statusCode, String? message});
+  $Res call({int? status, String? code, String? message});
 }
 
 /// @nodoc
@@ -819,14 +825,19 @@ class __$$ApiExceptionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? statusCode = freezed,
+    Object? status = freezed,
+    Object? code = freezed,
     Object? message = freezed,
   }) {
     return _then(_$ApiExceptionImpl(
-      statusCode: freezed == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as int?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -838,16 +849,18 @@ class __$$ApiExceptionImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ApiExceptionImpl extends _ApiException {
-  const _$ApiExceptionImpl({this.statusCode, this.message}) : super._();
+  const _$ApiExceptionImpl({this.status, this.code, this.message}) : super._();
 
   @override
-  final int? statusCode;
+  final int? status;
+  @override
+  final String? code;
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'NetworkException.apiException(statusCode: $statusCode, message: $message)';
+    return 'NetworkException.apiException(status: $status, code: $code, message: $message)';
   }
 
   @override
@@ -855,13 +868,13 @@ class _$ApiExceptionImpl extends _ApiException {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApiExceptionImpl &&
-            (identical(other.statusCode, statusCode) ||
-                other.statusCode == statusCode) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, statusCode, message);
+  int get hashCode => Object.hash(runtimeType, status, code, message);
 
   /// Create a copy of NetworkException
   /// with the given fields replaced by the non-null parameter values.
@@ -879,9 +892,10 @@ class _$ApiExceptionImpl extends _ApiException {
     required TResult Function() formatException,
     required TResult Function() connectionException,
     required TResult Function() maintenanceException,
-    required TResult Function(int? statusCode, String? message) apiException,
+    required TResult Function(int? status, String? code, String? message)
+        apiException,
   }) {
-    return apiException(statusCode, message);
+    return apiException(status, code, message);
   }
 
   @override
@@ -892,9 +906,9 @@ class _$ApiExceptionImpl extends _ApiException {
     TResult? Function()? formatException,
     TResult? Function()? connectionException,
     TResult? Function()? maintenanceException,
-    TResult? Function(int? statusCode, String? message)? apiException,
+    TResult? Function(int? status, String? code, String? message)? apiException,
   }) {
-    return apiException?.call(statusCode, message);
+    return apiException?.call(status, code, message);
   }
 
   @override
@@ -905,11 +919,11 @@ class _$ApiExceptionImpl extends _ApiException {
     TResult Function()? formatException,
     TResult Function()? connectionException,
     TResult Function()? maintenanceException,
-    TResult Function(int? statusCode, String? message)? apiException,
+    TResult Function(int? status, String? code, String? message)? apiException,
     required TResult orElse(),
   }) {
     if (apiException != null) {
-      return apiException(statusCode, message);
+      return apiException(status, code, message);
     }
     return orElse();
   }
@@ -960,11 +974,14 @@ class _$ApiExceptionImpl extends _ApiException {
 }
 
 abstract class _ApiException extends NetworkException {
-  const factory _ApiException({final int? statusCode, final String? message}) =
-      _$ApiExceptionImpl;
+  const factory _ApiException(
+      {final int? status,
+      final String? code,
+      final String? message}) = _$ApiExceptionImpl;
   const _ApiException._() : super._();
 
-  int? get statusCode;
+  int? get status;
+  String? get code;
   String? get message;
 
   /// Create a copy of NetworkException

@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'global_notifier.dart';
+part of 'onboarding_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$globalNotifierHash() => r'174a055a6a1d49d973a2d0262705d6fe8ab7ae7b';
+String _$onboardingNotifierHash() =>
+    r'f5499c3788a3ddc83cb4eb9276ce336c83bb0bcb';
 
-/// See also [GlobalNotifier].
-@ProviderFor(GlobalNotifier)
-final globalNotifierProvider =
-    NotifierProvider<GlobalNotifier, AppGlobalState>.internal(
-  GlobalNotifier.new,
-  name: r'globalNotifierProvider',
+/// See also [OnboardingNotifier].
+@ProviderFor(OnboardingNotifier)
+final onboardingNotifierProvider =
+    AutoDisposeNotifierProvider<OnboardingNotifier, OnboardingState>.internal(
+  OnboardingNotifier.new,
+  name: r'onboardingNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$globalNotifierHash,
+      : _$onboardingNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$GlobalNotifier = Notifier<AppGlobalState>;
+typedef _$OnboardingNotifier = AutoDisposeNotifier<OnboardingState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
