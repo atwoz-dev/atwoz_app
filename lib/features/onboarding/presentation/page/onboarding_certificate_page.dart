@@ -147,7 +147,7 @@ class _OnboardingCertificationPageState
                           showToastMessage('접근이 제한된 계정입니다.');
                           break;
 
-                        case AuthStatus.temporalilyForbidden:
+                        case AuthStatus.temporarilyForbidden:
                           showToastMessage('일시적으로 제한된 계정입니다.');
                           break;
 

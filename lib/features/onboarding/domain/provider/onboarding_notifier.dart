@@ -88,8 +88,8 @@ class OnboardingNotifier extends _$OnboardingNotifier {
         case ApiErrors.forbidden:
           newStatus = AuthStatus.forbidden;
           break;
-        case ApiErrors.temporalilyForbidden:
-          newStatus = AuthStatus.temporalilyForbidden;
+        case ApiErrors.temporarilyForbidden:
+          newStatus = AuthStatus.temporarilyForbidden;
           break;
         case ApiErrors.deletedUser:
           newStatus = AuthStatus.deletedUser;
