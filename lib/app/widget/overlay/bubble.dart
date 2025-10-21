@@ -23,7 +23,7 @@ Widget bubbleWidget({
     children: [
       if (isShadow)
         CustomPaint(
-          size: Size(width, height + 20), // 그림자의 크기
+          size: Size(width, height + 10), // 그림자의 크기
           painter: ShadowPainter(
             width: width,
             height: height,

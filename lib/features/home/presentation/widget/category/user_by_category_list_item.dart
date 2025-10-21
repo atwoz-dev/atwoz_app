@@ -10,14 +10,12 @@ class UserByCategoryListItem extends ConsumerWidget {
   final bool isBlurred;
   final VoidCallback onTap;
   final IntroducedProfile profile;
-  final IntroducedCategory category;
 
   const UserByCategoryListItem({
     super.key,
     required this.isBlurred,
     required this.onTap,
     required this.profile,
-    required this.category,
   });
 
   @override

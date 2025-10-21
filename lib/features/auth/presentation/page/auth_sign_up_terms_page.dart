@@ -24,7 +24,9 @@ class AuthSignUpTermsPage extends ConsumerStatefulWidget {
 }
 
 class AuthSignUpTermsPageState
-    extends AppBaseConsumerStatefulPageState<AuthSignUpTermsPage> {
+    extends BaseConsumerStatefulPageState<AuthSignUpTermsPage> {
+  AuthSignUpTermsPageState() : super(defaultAppBarTitle: '계정 생성');
+
   List<bool> _isChecked = List.generate(3, (_) => false);
   bool get isButtonEnabled => _isChecked[1] && _isChecked[2];
 
@@ -44,64 +46,58 @@ class AuthSignUpTermsPageState
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: '약관 동의',
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(context.screenWidth * 0.05), // 패딩 동적 설정
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  const AuthStepIndicatorWidget(
-                    totalSteps: 4,
-                    currentStep: 4,
-                  ),
-                  Gap(16.h),
-                  const TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
-                  Gap(28.h),
-                  ..._renderCheckList(),
-                ])),
-            Padding(
-              padding: EdgeInsets.only(bottom: screenHeight * 0.05),
-              child: DefaultElevatedButton(
-                onPressed: isButtonEnabled
-                    ? () async {
-                        // 프로필 이미지 등록
-                        final List<XFile?> photos = ref.read(photoProvider);
-                        await ref
-                            .read(authUsecaseProvider)
-                            .uploadProfilePhotos(photos);
-
-                        // 프로필 등록
-                        final authUseCase = ref.read(authUsecaseProvider);
-                        final profileState = ref.read(signUpProcessProvider);
-                        final profileData =
-                            profileState.toProfileUploadRequest(); // DTO 변환
-                        await authUseCase.uploadProfile(profileData);
-
-                        // 홈 화면으로 이동
-                        navigate(
-                          context,
-                          route: AppRoute.mainTab,
-                          method: NavigationMethod.go,
-                        );
-                      }
-                    : null,
-                child: Text(
-                  '회원가입 완료',
-                  style: Fonts.body01Medium(isButtonEnabled
-                          ? palette.onPrimary
-                          : Palette.colorGrey400)
-                      .copyWith(fontWeight: FontWeight.w900),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                const AuthStepIndicatorWidget(
+                  totalSteps: 4,
+                  currentStep: 4,
                 ),
+                Gap(16.h),
+                const TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
+                Gap(28.h),
+                ..._renderCheckList(),
+              ])),
+          Padding(
+            padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+            child: DefaultElevatedButton(
+              onPressed: isButtonEnabled
+                  ? () async {
+                      // 프로필 이미지 등록
+                      final List<XFile?> photos = ref.read(photoProvider);
+                      await ref
+                          .read(authUsecaseProvider)
+                          .uploadProfilePhotos(photos);
+
+                      // 프로필 등록
+                      final authUseCase = ref.read(authUsecaseProvider);
+                      final profileState = ref.read(signUpProcessProvider);
+                      final profileData =
+                          profileState.toProfileUploadRequest(); // DTO 변환
+                      await authUseCase.uploadProfile(profileData);
+
+                      // 홈 화면으로 이동
+                      navigate(
+                        context,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
+                      );
+                    }
+                  : null,
+              child: Text(
+                '회원가입 완료',
+                style: Fonts.body01Medium(isButtonEnabled
+                        ? palette.onPrimary
+                        : Palette.colorGrey400)
+                    .copyWith(fontWeight: FontWeight.w900),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -176,8 +172,8 @@ class AuthSignUpTermsPageState
                               navigate(
                                 context,
                                 route: index != 1
-                                    ? AppRoute.signUpProfile
-                                    : AppRoute.signUp,
+                                    ? AppRoute.privacyPolicy
+                                    : AppRoute.termsOfUse,
                               );
                             },
                             child: Text('보기',

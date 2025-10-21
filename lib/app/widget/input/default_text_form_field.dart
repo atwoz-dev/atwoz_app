@@ -228,8 +228,8 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
   InputDecoration buildDecoration(BuildContext context) {
     const double defaultPadding = 16;
     final EdgeInsets defaultContentPadding = widget.showCharacterCount
-        ? const EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 33.25)
-        : const EdgeInsets.fromLTRB(0, 17.25, defaultPadding, 17.25);
+        ? const EdgeInsets.fromLTRB(0, 14.25, defaultPadding, 30.25)
+        : const EdgeInsets.fromLTRB(0, 14.25, defaultPadding, 14.25);
 
     // 기본 둥근 테두리
     const InputBorder roundedBorder = OutlineInputBorder(

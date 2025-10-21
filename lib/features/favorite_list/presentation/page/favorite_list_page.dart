@@ -29,7 +29,7 @@ class FavoriteListPage extends StatelessWidget {
               pinned: false,
               bottom: TabBar(
                 indicatorColor: Colors.black,
-                dividerColor: context.colorScheme.outlineVariant,
+                dividerColor: context.colorScheme.outline,
                 unselectedLabelColor: context.colorScheme.secondary,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelColor: context.colorScheme.onSurface,

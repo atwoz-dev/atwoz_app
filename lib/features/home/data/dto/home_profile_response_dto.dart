@@ -27,12 +27,14 @@ class StatusInfoDto {
   final int memberId;
   final String activityStatus;
   final bool isVip;
+  final bool isDatingExamSubmitted;
   final String? primaryContactType;
 
   StatusInfoDto({
     required this.memberId,
     required this.activityStatus,
     required this.isVip,
+    required this.isDatingExamSubmitted,
     required this.primaryContactType,
   });
 

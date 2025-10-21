@@ -91,6 +91,13 @@ flutter:
     - assets/fonts/
     - assets/images/
     - dev.env
+  fonts:
+    - family: MontserratBold
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf
+    - family: MontserratMedium
+      fonts:
+        - asset: assets/fonts/Montserrat-Medium.ttf
 
 scripts:
 run:

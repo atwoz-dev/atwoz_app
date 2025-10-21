@@ -21,7 +21,7 @@ class DefaultOutlinedButton extends StatelessWidget {
     this.height = Dimens.buttonHeight,
     this.width = 0.0,
     this.borderRadius = Dimens.buttonRadius,
-    this.borderWidth = 2.0,
+    this.borderWidth = 1.0,
     this.textStyle,
     this.textColor,
   });
