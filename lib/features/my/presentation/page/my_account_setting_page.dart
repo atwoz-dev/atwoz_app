@@ -155,7 +155,7 @@ class _AccountSettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -178,27 +178,23 @@ Future<bool?> _showUpdateDormantStatus(
     context.showConfirmDialog<bool>(
       submit: DialogButton(label: '확인', onTap: onDormantChanged),
       enableCloseButton: false,
-      child: Column(
-        children: [
-          Text(
-            '휴면 회원 전환',
-            style: Fonts.header02().copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const Gap(16),
-          Text(
-            '프로필이 상대방에게 노출되지 않고\n'
-            '휴면 회원 전환 시 매칭 포함 모든 활동이 제한됩니다\n'
-            '휴면회원으로 전환하시겠습니까?',
-            style: Fonts.body02Medium().copyWith(
-              fontWeight: FontWeight.w400,
-              color: const Color(0xff515151),
-              height: 1.5,
-            ),
-            textAlign: TextAlign.center,
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Column(
+          children: [
+            Text(
+              '프로필이 상대방에게 노출되지 않고\n'
+              '매칭을 포함한 모든 활동이 제한됩니다\n'
+              '휴면회원으로 전환하시겠습니까?\n',
+              style: Fonts.body02Medium().copyWith(
+                fontWeight: FontWeight.w400,
+                color: const Color(0xff515151),
+                height: 1.3,
+              ),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
       ),
       buttonVerticalPadding: 12,
     );

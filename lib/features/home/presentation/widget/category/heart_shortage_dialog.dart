@@ -23,7 +23,7 @@ class HeartShortageDialog extends StatelessWidget {
         Container(
           width: context.screenWidth,
           margin: const EdgeInsets.symmetric(horizontal: 25),
-          padding: const EdgeInsets.fromLTRB(13, 24, 13, 16),
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -48,7 +48,8 @@ class HeartShortageDialog extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
+                    Flexible(
+                      flex: 3,
                       child: DefaultElevatedButton(
                         onPressed: context.pop,
                         primary: Colors.white,
@@ -63,7 +64,8 @@ class HeartShortageDialog extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8), // Gap 대신 SizedBox 사용
-                    Expanded(
+                    Flexible(
+                      flex: 7,
                       child: DefaultElevatedButton(
                         onPressed: () {
                           context.pop();
@@ -82,7 +84,6 @@ class HeartShortageDialog extends StatelessWidget {
                   ],
                 ),
               ),
-              const Gap(16)
             ],
           ),
         )

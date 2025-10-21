@@ -49,13 +49,15 @@ class DefaultElevatedButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Color foregroundColor = onPrimary ?? context.palette.onPrimary;
     final Color backgroundColor = primary ?? context.palette.primary;
+    final Color disabledForegroundColor = onPrimary ?? Palette.colorGrey300;
+    final Color disabledBackgroundColor = primary ?? Palette.colorGrey200;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
-        disabledForegroundColor: Palette.colorGrey300,
-        disabledBackgroundColor: Palette.colorGrey200,
+        disabledForegroundColor: disabledForegroundColor,
+        disabledBackgroundColor: disabledBackgroundColor,
         elevation: 0,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: padding,

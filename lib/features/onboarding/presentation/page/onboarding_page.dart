@@ -80,11 +80,14 @@ class _OnBoardPageState extends AppBaseStatefulPageBase<OnBoardPage> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      Text(
                         '만 18세 이상만 이용 가능하며 회원가입 시\n'
                         '이용약관, 개인정보처리방침에 동의하게 됩니다.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        style: Fonts.body03Regular().copyWith(
+                          color: Palette.colorGrey400,
+                          height: 1.3,
+                        ),
                       ),
                     ],
                   ),

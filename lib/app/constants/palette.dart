@@ -43,7 +43,7 @@ class Palette {
   static const colorGrey200 = Color(0xffDCDEE3);
   static const colorGrey300 = Color(0xffB4B8C0);
   static const colorGrey400 = Color(0xff9BA0AB);
-  static const colorGrey500 = Color(0xff828897);
+  static const colorGrey500 = Color(0xff8D92A0);
   static const colorGrey600 = Color(0xff6B7180);
   static const colorGrey700 = Color(0xff565B67);
   static const colorGrey800 = Color(0xff41454E);
@@ -73,7 +73,8 @@ class Palette {
     secondary: Palette.colorGrey800,
     onSecondary: Palette.colorWhite,
     tertiary: Palette.colorGrey600,
-    outline: Palette.colorGrey50,
+    outline: Palette.colorGrey100,
+    outlineVariant: Palette.colorGrey50,
     shadow: Palette.colorGrey100,
   );
 
@@ -87,7 +88,8 @@ class Palette {
     secondary: Palette.colorGrey800,
     onSecondary: Palette.colorWhite,
     tertiary: Palette.colorGrey600,
-    outline: Palette.colorGrey50,
+    outline: Palette.colorGrey100,
+    outlineVariant: Palette.colorGrey50,
     shadow: Palette.colorGrey100,
   );
 }

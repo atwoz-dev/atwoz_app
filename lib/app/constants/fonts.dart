@@ -10,6 +10,8 @@ class Fonts {
   static const String fontPretendardSemiBold = 'PretendardSemiBold';
   static const String fontPretendardMedium = 'PretendardMedium';
   static const String fontPretendardRegular = 'PretendardRegular';
+  static const String fontMontserratBold = 'MontserratBold';
+  static const String fontMontserratMedium = 'MontserratMedium';
 
   /// Title
   static TextStyle title([Color? color]) => TextStyle(
@@ -119,6 +121,21 @@ class Fonts {
         fontFamily: fontPretendardBold,
         color: color ?? Palette.colorBlack,
         fontSize: 16.sp,
+        height: 1.h,
+      );
+
+  // Numeric
+  static TextStyle numeric01Bold([Color? color]) => TextStyle(
+        fontFamily: fontMontserratBold,
+        color: color ?? Palette.colorBlack,
+        fontSize: 20.sp,
+        height: 1.h,
+      );
+
+  static TextStyle numeric01Medium([Color? color]) => TextStyle(
+        fontFamily: fontMontserratMedium,
+        color: color ?? Palette.colorGrey500,
+        fontSize: 14.sp,
         height: 1.h,
       );
 }

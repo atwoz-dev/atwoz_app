@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/button/default_outlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class CustomDialogue extends StatelessWidget {
@@ -75,9 +76,12 @@ class CustomDialogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Container(
         width: context.screenWidth * 0.9,
-        padding: EdgeInsets.all(context.screenWidth * 0.05),
+        padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,10 +96,13 @@ class CustomDialogue extends StatelessWidget {
             if (title != null) const Gap(12),
             Text(
               content,
-              style: contentStyle ?? Fonts.body01Regular(),
+              style: contentStyle ??
+                  Fonts.body01Regular().copyWith(
+                    height: 1.2,
+                  ),
               textAlign: TextAlign.center,
             ),
-            const Gap(16),
+            const Gap(24),
             Row(
               children: [
                 Expanded(
@@ -105,21 +112,25 @@ class CustomDialogue extends StatelessWidget {
                         outlinedButtonTextBorderColor ?? Palette.colorGrey200,
                     textColor:
                         outlinedButtonTextColor ?? context.palette.onSurface,
-                    height: 35,
+                    height: 44,
                     onPressed: onOutlinedButtonPressed,
-                    child: Text(outlineButtonText),
+                    child: Text(
+                      outlineButtonText,
+                      style: Fonts.body02Regular(),
+                    ),
                   ),
                 ),
                 const Gap(8),
                 Expanded(
                   flex: 1,
                   child: DefaultElevatedButton(
-                    height: 35,
+                    height: 44,
                     primary: elevatedButtonColor ?? context.palette.primary,
                     onPressed: onElevatedButtonPressed,
                     child: Text(
                       elevatedButtonText!,
                       style: TextStyle(
+                        fontSize: 14.sp,
                         color: elevatedButtonTextColor ??
                             context.palette.onPrimary,
                       ),
