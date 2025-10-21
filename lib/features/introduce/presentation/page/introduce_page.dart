@@ -37,55 +37,56 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: contentPadding,
-                    child: Column(
+              Padding(
+                padding: contentPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('셀프소개',
-                            style: Fonts.header03()
-                                .copyWith(fontWeight: FontWeight.w900)),
-                        const Gap(8),
                         Text(
-                          '이성에게 나를 먼저 어필해 볼까요? \n프로필 교환을 통해 메시지를 주고받을 수 있어요!',
-                          style: Fonts.body03Regular(Palette.colorGrey600),
+                          '셀프소개',
+                          style: Fonts.header03().copyWith(
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          //AutoRouter.of(context).push(const IntroduceDetailScreen());
-                        },
-                        child: Container(
-                            padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              navigate(context, route: AppRoute.notification),
+                          child: Container(
+                            padding:
+                                const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
+                            child: const DefaultIcon(
                               IconPath.notification,
                               size: 24,
-                            )),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          navigate(
-                            context,
-                            route: AppRoute.introduceFilter,
-                          );
-                        },
-                        child: Container(
-                            padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
-                              IconPath.filter,
-                              size: 24,
-                            )),
-                      )
-                    ],
-                  )
-                ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            navigate(
+                              context,
+                              route: AppRoute.introduceFilter,
+                            );
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.all(4),
+                              child: DefaultIcon(
+                                IconPath.filter,
+                                size: 24,
+                              )),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const Gap(16),
               DefaultTabBar(
