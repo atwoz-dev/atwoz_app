@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';

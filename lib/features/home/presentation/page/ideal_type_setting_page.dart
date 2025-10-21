@@ -37,28 +37,26 @@ class IdealTypeSettingPage extends ConsumerWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-            child: DefaultElevatedButton(
-              primary: data.isFilterPossible
-                  ? Palette.colorPrimary500
-                  : Palette.colorGrey200,
-              onPressed: data.isFilterPossible
-                  ? () async {
-                      if (await idealTypeNotifier.updateIdealType() &&
-                          context.mounted) {
-                        return context.pop();
-                      }
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: DefaultElevatedButton(
+            primary: data.isFilterPossible
+                ? Palette.colorPrimary500
+                : Palette.colorGrey200,
+            onPressed: data.isFilterPossible
+                ? () async {
+                    if (await idealTypeNotifier.updateIdealType() &&
+                        context.mounted) {
+                      return context.pop();
                     }
-                  : null,
-              child: Text(
-                '필터 적용하기',
-                style: Fonts.body01Medium(
-                  data.isFilterPossible
-                      ? Palette.colorWhite
-                      : Palette.colorGrey300,
-                ),
+                  }
+                : null,
+            child: Text(
+              '필터 적용하기',
+              style: Fonts.body01Medium(
+                data.isFilterPossible
+                    ? Palette.colorWhite
+                    : Palette.colorGrey300,
               ),
             ),
           ),

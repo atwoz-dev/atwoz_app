@@ -14,7 +14,7 @@ class ExtendedHomeEnum<T extends Enum> with _$ExtendedHomeEnum<T> {
     required String label,
   }) = _ExtendedHomeEnum<T>;
 
-  const ExtendedHomeEnum._(); // 👈 freezed에서 custom method 쓰려면 반드시 추가
+  const ExtendedHomeEnum._();
 
   String get name => status?.name ?? "any";
 

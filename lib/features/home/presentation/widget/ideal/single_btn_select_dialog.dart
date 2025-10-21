@@ -85,14 +85,9 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   child: ListWheelScrollView(
                     controller: _controller,
                     itemExtent: context.screenHeight * 0.05,
-                    onSelectedItemChanged: (value) {
-                      setState(() {
-                        _selectedIndex = value;
-                        //final selectedValue = widget.options[_selectedIndex];
-
-                        //widget.onItemSelected(selectedValue);
-                      });
-                    },
+                    onSelectedItemChanged: (value) => setState(
+                      () => _selectedIndex = value,
+                    ),
                     children: widget.options.map((element) {
                       final isSelected =
                           widget.options[_selectedIndex] == element;
