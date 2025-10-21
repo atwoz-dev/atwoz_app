@@ -32,7 +32,10 @@ class DormantAccountPage extends ConsumerWidget {
               Text(
                 '$nickname님, 휴면을 해제하고\n'
                 '새로운 인연을 추천받아보세요!',
-                style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
+                style: Fonts.header02().copyWith(
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
               ),
               Expanded(
                 child: Column(
@@ -46,8 +49,10 @@ class DormantAccountPage extends ConsumerWidget {
                     const Gap(8.0),
                     Text(
                       '회원님은 휴면 중으로 상대방에게\n'
-                      '프로필이 공개되고 있지 않아요요',
-                      style: Fonts.body02Medium(),
+                      '프로필이 공개되고 있지 않아요',
+                      style: Fonts.body02Medium().copyWith(
+                        height: 1.2,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ],

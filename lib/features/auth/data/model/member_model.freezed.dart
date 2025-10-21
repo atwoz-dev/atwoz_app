@@ -24,6 +24,7 @@ mixin _$Member {
   String get phoneNumber => throw _privateConstructorUsedError;
   MemberProfile get memberProfile => throw _privateConstructorUsedError;
   bool get isVip => throw _privateConstructorUsedError;
+  bool get isDatingExamSubmitted => throw _privateConstructorUsedError;
   ActivityStatus get activityStatus => throw _privateConstructorUsedError;
   HeartBalance get heartBalance => throw _privateConstructorUsedError;
 
@@ -46,6 +47,7 @@ abstract class $MemberCopyWith<$Res> {
       String phoneNumber,
       MemberProfile memberProfile,
       bool isVip,
+      bool isDatingExamSubmitted,
       ActivityStatus activityStatus,
       HeartBalance heartBalance});
 
@@ -72,6 +74,7 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
     Object? phoneNumber = null,
     Object? memberProfile = null,
     Object? isVip = null,
+    Object? isDatingExamSubmitted = null,
     Object? activityStatus = null,
     Object? heartBalance = null,
   }) {
@@ -91,6 +94,10 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
       isVip: null == isVip
           ? _value.isVip
           : isVip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDatingExamSubmitted: null == isDatingExamSubmitted
+          ? _value.isDatingExamSubmitted
+          : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
       activityStatus: null == activityStatus
           ? _value.activityStatus
@@ -136,6 +143,7 @@ abstract class _$$MemberImplCopyWith<$Res> implements $MemberCopyWith<$Res> {
       String phoneNumber,
       MemberProfile memberProfile,
       bool isVip,
+      bool isDatingExamSubmitted,
       ActivityStatus activityStatus,
       HeartBalance heartBalance});
 
@@ -162,6 +170,7 @@ class __$$MemberImplCopyWithImpl<$Res>
     Object? phoneNumber = null,
     Object? memberProfile = null,
     Object? isVip = null,
+    Object? isDatingExamSubmitted = null,
     Object? activityStatus = null,
     Object? heartBalance = null,
   }) {
@@ -181,6 +190,10 @@ class __$$MemberImplCopyWithImpl<$Res>
       isVip: null == isVip
           ? _value.isVip
           : isVip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDatingExamSubmitted: null == isDatingExamSubmitted
+          ? _value.isDatingExamSubmitted
+          : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
       activityStatus: null == activityStatus
           ? _value.activityStatus
@@ -202,6 +215,7 @@ class _$MemberImpl implements _Member {
       required this.phoneNumber,
       required this.memberProfile,
       required this.isVip,
+      required this.isDatingExamSubmitted,
       required this.activityStatus,
       required this.heartBalance});
 
@@ -217,13 +231,15 @@ class _$MemberImpl implements _Member {
   @override
   final bool isVip;
   @override
+  final bool isDatingExamSubmitted;
+  @override
   final ActivityStatus activityStatus;
   @override
   final HeartBalance heartBalance;
 
   @override
   String toString() {
-    return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, activityStatus: $activityStatus, heartBalance: $heartBalance)';
+    return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, activityStatus: $activityStatus, heartBalance: $heartBalance)';
   }
 
   @override
@@ -237,6 +253,8 @@ class _$MemberImpl implements _Member {
             (identical(other.memberProfile, memberProfile) ||
                 other.memberProfile == memberProfile) &&
             (identical(other.isVip, isVip) || other.isVip == isVip) &&
+            (identical(other.isDatingExamSubmitted, isDatingExamSubmitted) ||
+                other.isDatingExamSubmitted == isDatingExamSubmitted) &&
             (identical(other.activityStatus, activityStatus) ||
                 other.activityStatus == activityStatus) &&
             (identical(other.heartBalance, heartBalance) ||
@@ -246,7 +264,7 @@ class _$MemberImpl implements _Member {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, phoneNumber, memberProfile,
-      isVip, activityStatus, heartBalance);
+      isVip, isDatingExamSubmitted, activityStatus, heartBalance);
 
   /// Create a copy of Member
   /// with the given fields replaced by the non-null parameter values.
@@ -270,6 +288,7 @@ abstract class _Member implements Member {
       required final String phoneNumber,
       required final MemberProfile memberProfile,
       required final bool isVip,
+      required final bool isDatingExamSubmitted,
       required final ActivityStatus activityStatus,
       required final HeartBalance heartBalance}) = _$MemberImpl;
 
@@ -283,6 +302,8 @@ abstract class _Member implements Member {
   MemberProfile get memberProfile;
   @override
   bool get isVip;
+  @override
+  bool get isDatingExamSubmitted;
   @override
   ActivityStatus get activityStatus;
   @override

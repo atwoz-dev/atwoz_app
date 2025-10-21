@@ -55,7 +55,7 @@ class MyPage extends ConsumerStatefulWidget {
 }
 
 class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
-  MyPageState() : super(isAppBar: false, isHorizontalMargin: false);
+  MyPageState() : super(isAppBar: false, isHorizontalMargin: true);
 
   @override
   Widget buildPage(BuildContext context) {
@@ -71,17 +71,26 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
       body: Column(
         children: _menuItems
             .map(
-              (item) => GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  if (item.route != null) {
-                    navigate(context, route: item.route!);
-                  }
-                },
-                child: _MyPageListItem(
-                  title: item.title,
-                  iconPath: item.iconPath,
-                ),
+              (item) => Column(
+                children: [
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      if (item.route != null) {
+                        navigate(context, route: item.route!);
+                      }
+                    },
+                    child: _MyPageListItem(
+                      title: item.title,
+                      iconPath: item.iconPath,
+                    ),
+                  ),
+                  const Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Palette.colorGrey50,
+                  ),
+                ],
               ),
             )
             .toList(),
@@ -102,7 +111,7 @@ class _MyPageListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
         children: [
           Expanded(

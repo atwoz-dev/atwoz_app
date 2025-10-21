@@ -76,8 +76,8 @@ class _FavoriteTypeSelectDialogState
                 Text(
                   '호감에 따라 상대방이 결정하는데\n'
                   '큰 영향을 줄 수 있어요.',
-                  style: Fonts.body01Regular(
-                    context.colorScheme.secondary,
+                  style: Fonts.body01Regular().copyWith(
+                    color: Palette.colorGrey800,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -155,7 +155,7 @@ class _FavoriteTypeItem extends StatelessWidget {
           ),
           color: selected
               ? context.colorScheme.primaryContainer.withValues(alpha: .12)
-              : null,
+              : context.colorScheme.outlineVariant,
         ),
         padding: const EdgeInsets.all(12.0),
         child: DefaultIcon(

@@ -2,7 +2,6 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class DialogButton {
@@ -94,57 +93,38 @@ class _ConfirmDialog extends StatelessWidget {
             child: Column(
               //mainAxisSize: MainAxisSize.min,
               children: [
-                if (visibleClose)
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      onTap: context.pop,
-                      child: const Icon(Icons.close, size: 24.0),
+                if (cancel != null)
+                  Expanded(
+                    child: DefaultElevatedButton(
+                      onPressed: cancel!.onTap,
+                      primary: Colors.white,
+                      border: const BorderSide(color: Color(0xffE1E1E1)),
+                      child: Text(
+                        cancel!.label,
+                        style: Fonts.body02Medium().copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Palette.colorBlack,
+                        ),
+                      ),
                     ),
                   ),
-                child,
-                const Gap(24.0),
-                Row(
-                  spacing: 8.0,
-                  children: [
-                    if (cancel != null)
-                      Expanded(
-                        child: DefaultElevatedButton(
-                          onPressed: cancel!.onTap,
-                          primary: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                            vertical: buttonVerticalPadding,
-                          ),
-                          border: const BorderSide(color: Color(0xffE1E1E1)),
-                          height: 44,
-                          child: Text(
-                            cancel!.label,
-                            style: Fonts.body02Medium().copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: Palette.colorBlack,
-                            ),
-                          ),
-                        ),
+                Expanded(
+                  child: DefaultElevatedButton(
+                    onPressed: enabled ? submit.onTap : null,
+                    primary: Palette.colorPrimary500,
+                    padding: EdgeInsets.symmetric(
+                      vertical: buttonVerticalPadding,
+                    ),
+                    height: 44,
+                    child: Text(
+                      submit.label,
+                      style: Fonts.body02Medium().copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
-                    Expanded(
-                      child: DefaultElevatedButton(
-                        onPressed: enabled ? submit.onTap : null,
-                        primary: Palette.colorPrimary500,
-                        padding: EdgeInsets.symmetric(
-                          vertical: buttonVerticalPadding,
-                        ),
-                        height: 44,
-                        child: Text(
-                          submit.label,
-                          style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

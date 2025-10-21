@@ -178,12 +178,6 @@ class _SettingButtonGroup extends StatelessWidget {
                 : null,
             child: const Text('저장하기'),
           ),
-          DefaultOutlinedButton(
-            primary: context.colorScheme.outline,
-            textColor: context.colorScheme.secondary,
-            child: const Text('취소하기'),
-            onPressed: () => context.pop(false),
-          )
         ],
       ),
     );

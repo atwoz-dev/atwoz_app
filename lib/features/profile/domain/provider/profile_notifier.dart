@@ -1,6 +1,9 @@
+import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
+import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/usecase.dart';
@@ -11,8 +14,14 @@ part 'profile_notifier.g.dart';
 
 @riverpod
 class ProfileNotifier extends _$ProfileNotifier {
+  late final ProfileRepository _repository;
+  late final String _myName;
+
   @override
   ProfileState build(int userId) {
+    _repository = ref.read(profileRepositoryProvider);
+    _myName = ref.read(globalNotifierProvider).profile.nickname;
+
     _initializeProfileState(userId);
     return ProfileState.initial();
   }
@@ -22,9 +31,9 @@ class ProfileNotifier extends _$ProfileNotifier {
       final profile = await ProfileFetchUseCase(ref).call(userId);
       state = state.copyWith(
         profile: profile,
-        // TODO(Han): replace my user data from server
-        myUserName: '은우',
+        myUserName: _myName,
         registeredContact: true,
+        // TODO(Han): 추후 실제 보유 하트 수로 대체
         heartPoint: 30,
         message: '',
         isLoaded: true,
@@ -143,16 +152,51 @@ class ProfileNotifier extends _$ProfileNotifier {
     }
   }
 
-  Future<void> approveProfileExchange() async {
-    if (state.profile == null) return;
+  Future<bool> approveProfileExchange() async {
+    final profileExchangeId =
+        state.profile?.profileExchangeInfo?.profileExchangeId;
+    if (profileExchangeId == null) {
+      return false;
+    }
+    final success = await _repository.approveProfileExchange(profileExchangeId);
+    if (!success) {
+      state = state.copyWith(error: DialogueErrorType.unknown);
+      return false;
+    }
 
-    // TODO(Han): 구현 필요
+    state = state.copyWith(
+      profile: state.profile!.copyWith(
+        profileExchangeInfo: state.profile?.profileExchangeInfo?.copyWith(
+          profileExchangeStatus: ProfileExchangeStatus.approve,
+        ),
+      ),
+    );
+
+    return true;
   }
 
-  Future<void> rejectProfileExchange() async {
-    if (state.profile == null) return;
+  Future<bool> rejectProfileExchange() async {
+    final profileExchangeId =
+        state.profile?.profileExchangeInfo?.profileExchangeId;
+    if (profileExchangeId == null) {
+      return false;
+    }
 
-    // TODO(Han): 구현 필요
+    final success = await _repository.rejectProfileExchange(profileExchangeId);
+    if (!success) {
+      state = state.copyWith(error: DialogueErrorType.unknown);
+      return false;
+    }
+
+    state = state.copyWith(
+      profile: state.profile!.copyWith(
+        profileExchangeInfo: state.profile?.profileExchangeInfo?.copyWith(
+          profileExchangeStatus: ProfileExchangeStatus.rejected,
+        ),
+      ),
+    );
+
+    return true;
   }
 
   void resetError() {

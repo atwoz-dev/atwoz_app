@@ -18,11 +18,7 @@ class IntroducePage extends ConsumerStatefulWidget {
 }
 
 class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
-  IntroducePageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false
-        );
+  IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
   int _currentTabIndex = 0;
 
   void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
@@ -83,7 +79,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                         child: Container(
                             padding: const EdgeInsets.all(4),
                             child: DefaultIcon(
-                              IconPath.tune,
+                              IconPath.filter,
                               size: 24,
                             )),
                       )

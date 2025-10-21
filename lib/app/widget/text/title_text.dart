@@ -20,7 +20,10 @@ class TitleText extends StatelessWidget {
       title,
       style: textStyle ??
           Fonts.header01().copyWith(
-              fontWeight: fontWeight ?? FontWeight.w900, color: textColor),
+            fontWeight: fontWeight ?? FontWeight.w900,
+            color: textColor,
+            height: 1.2,
+          ),
     );
   }
 }

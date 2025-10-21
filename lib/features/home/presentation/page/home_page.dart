@@ -74,11 +74,17 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                       },
                     ),
                     const Gap(24),
-                    Image.asset(
-                      ImagePath.homeTest,
-                      fit: BoxFit.cover,
-                      width: context.screenWidth,
-                      height: 89,
+                    GestureDetector(
+                      onTap: () {
+                        if (context.mounted) {
+                          navigate(context, route: AppRoute.exam);
+                        }
+                      },
+                      child: Image.asset(
+                        ImagePath.homeTest,
+                        fit: BoxFit.cover,
+                        width: context.screenWidth,
+                      ),
                     ),
                   ],
                 ),
@@ -87,7 +93,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                 const ModalBarrier(
                   dismissible: false,
                   color: Colors.transparent,
-                ), // 로딩 시 배경 클릭 방지
+                ),
                 const Center(child: CircularProgressIndicator()),
               ],
             ],
