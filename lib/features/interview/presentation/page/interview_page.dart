@@ -1,8 +1,10 @@
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_tap_bar.dart';
 import 'package:atwoz_app/features/interview/presentation/widget/question_card.dart';
 import 'package:atwoz_app/features/interview/presentation/widget/interview_banner_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:gap/gap.dart';
@@ -17,9 +19,9 @@ class InterviewPage extends ConsumerStatefulWidget {
 class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   InterviewPageState()
       : super(
-    isAppBar: false,
-    isHorizontalMargin: false,
-  );
+          isAppBar: false,
+          isHorizontalMargin: false,
+        );
   bool _isBannerVisible = true;
   int _currentTabIndex = 0;
 
@@ -31,7 +33,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
-    EdgeInsets.symmetric(horizontal: horizontalPadding);
+        EdgeInsets.symmetric(horizontal: horizontalPadding);
     final double tagSpacing = 16;
 
     return Padding(
@@ -43,16 +45,36 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
         children: [
           Padding(
             padding: contentPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('나를 소개해볼까요?',
-                    style:
-                    Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
-                const Gap(8),
-                Text(
-                  '이성에게 보여 줄 인터뷰예요.',
-                  style: Fonts.body03Regular(Palette.colorGrey600),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '나를 소개해볼까요?',
+                      style: Fonts.header03().copyWith(
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () =>
+                          navigate(context, route: AppRoute.notification),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
+                        child: const DefaultIcon(
+                          IconPath.notification,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
