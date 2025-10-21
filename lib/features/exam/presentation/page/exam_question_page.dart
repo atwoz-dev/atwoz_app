@@ -185,6 +185,7 @@ class _QuestionHeader extends StatelessWidget {
                 style: Fonts.header03().copyWith(
                   color: Palette.colorBlack,
                   fontWeight: FontWeight.w700,
+                  height: 1.3,
                 ),
               ),
               Flexible(
@@ -193,6 +194,7 @@ class _QuestionHeader extends StatelessWidget {
                   style: Fonts.header03().copyWith(
                     color: Palette.colorBlack,
                     fontWeight: FontWeight.w700,
+                    height: 1.3,
                   ),
                 ),
               ),
