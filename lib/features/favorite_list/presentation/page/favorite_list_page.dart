@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/favorite_list/presentation/widget/favorite_list_body.dart';
 import 'package:flutter/material.dart';
+import 'package:atwoz_app/app/router/router.dart';
 
 class FavoriteListPage extends StatelessWidget {
   const FavoriteListPage({super.key});
@@ -27,10 +28,20 @@ class FavoriteListPage extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      navigate(context, route: AppRoute.notification),
                   icon: const DefaultIcon(
                     IconPath.notification,
-                    size: 24.0,
+                    size: 24,
+                  ),
+                  tooltip: '알림',
+                  visualDensity: const VisualDensity(
+                    horizontal: -4,
+                    vertical: -4,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 48,
+                    minHeight: 48,
                   ),
                 ),
               ],

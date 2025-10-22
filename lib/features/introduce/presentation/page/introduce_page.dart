@@ -46,43 +46,51 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const Gap(2),
                         Text(
                           '셀프소개',
                           style: Fonts.header03().copyWith(
                             fontWeight: FontWeight.w700,
-                            height: 1.2,
                           ),
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () =>
+                        IconButton(
+                          onPressed: () =>
                               navigate(context, route: AppRoute.notification),
-                          child: Container(
-                            padding:
-                                const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
-                            child: const DefaultIcon(
-                              IconPath.notification,
-                              size: 24,
-                            ),
+                          icon: const DefaultIcon(
+                            IconPath.notification,
+                            size: 24,
+                          ),
+                          tooltip: '알림',
+                          visualDensity: const VisualDensity(
+                            horizontal: -4,
+                            vertical: -4,
+                          ),
+                          constraints: const BoxConstraints(
+                            minWidth: 48,
+                            minHeight: 48,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () async {
-                            navigate(
-                              context,
-                              route: AppRoute.introduceFilter,
-                            );
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.all(4),
-                              child: DefaultIcon(
-                                IconPath.filter,
-                                size: 24,
-                              )),
-                        )
+                        IconButton(
+                          onPressed: () => navigate(context,
+                              route: AppRoute.introduceFilter),
+                          icon: const DefaultIcon(
+                            IconPath.filter,
+                            size: 24,
+                          ),
+                          tooltip: '필터',
+                          visualDensity: const VisualDensity(
+                            horizontal: -4,
+                            vertical: -4,
+                          ),
+                          constraints: const BoxConstraints(
+                            minWidth: 48,
+                            minHeight: 48,
+                          ),
+                        ),
                       ],
                     ),
                   ],

@@ -61,20 +61,22 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () =>
-                          navigate(context, route: AppRoute.notification),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
-                        child: const DefaultIcon(
-                          IconPath.notification,
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                  ],
+                IconButton(
+                  onPressed: () =>
+                      navigate(context, route: AppRoute.notification),
+                  icon: const DefaultIcon(
+                    IconPath.notification,
+                    size: 24,
+                  ),
+                  tooltip: '알림',
+                  visualDensity: const VisualDensity(
+                    horizontal: -4,
+                    vertical: -4,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 48,
+                    minHeight: 48,
+                  ),
                 ),
               ],
             ),

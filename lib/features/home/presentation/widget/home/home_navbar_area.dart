@@ -27,28 +27,38 @@ class HomeNavbarArea extends ConsumerWidget {
         ),
         Row(
           children: [
-            GestureDetector(
-              onTap: () => navigate(context, route: AppRoute.notification),
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
-                child: const DefaultIcon(
-                  // 알림페이지 바로가기 버튼
-                  IconPath.notification,
-                  size: 24,
-                ),
+            IconButton(
+              onPressed: () => navigate(context, route: AppRoute.notification),
+              icon: const DefaultIcon(
+                IconPath.notification,
+                size: 24,
+              ),
+              tooltip: '알림',
+              visualDensity: const VisualDensity(
+                horizontal: -4,
+                vertical: -4,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 48,
+                minHeight: 48,
               ),
             ),
-            GestureDetector(
-              onTap: () => navigate(context, route: AppRoute.ideal),
-              child: Container(
-                // 이상형 설정
-                padding: const EdgeInsets.fromLTRB(4.8, 2.4, 4.8, 2.4),
-                child: const DefaultIcon(
-                  IconPath.filter,
-                  size: 24,
-                ),
+            IconButton(
+              onPressed: () => navigate(context, route: AppRoute.ideal),
+              icon: const DefaultIcon(
+                IconPath.filter,
+                size: 24,
               ),
-            )
+              tooltip: '이상형 설정',
+              visualDensity: const VisualDensity(
+                horizontal: -4,
+                vertical: -4,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 48,
+                minHeight: 48,
+              ),
+            ),
           ],
         )
       ],
