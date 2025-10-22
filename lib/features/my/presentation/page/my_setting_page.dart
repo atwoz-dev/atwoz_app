@@ -77,42 +77,43 @@ class _MySettingListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 19,
-      ),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xffE1E1E1),
-            width: 1,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTapMove,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 14,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: Fonts.body02Medium(Palette.colorBlack),
+                ),
+                if (version != null)
+                  Text(
+                    "V$version",
+                    style: Fonts.body02Medium(const Color(0xff9E9E9E)),
+                  )
+                else
+                  const DefaultIcon(
+                    IconPath.chevronRight,
+                    size: 24,
+                  ),
+              ],
+            ),
           ),
         ),
-      ),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTapMove,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: Fonts.body02Medium(Palette.colorBlack),
-            ),
-            if (version != null)
-              Text(
-                "V$version",
-                style: Fonts.body02Medium(const Color(0xff9E9E9E)),
-              )
-            else
-              const DefaultIcon(
-                IconPath.chevronRight2,
-                size: 24,
-              ),
-          ],
+        const Divider(
+          height: 1,
+          thickness: 1,
+          color: Palette.colorGrey50,
         ),
-      ),
+      ]),
     );
   }
 }

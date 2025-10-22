@@ -16,11 +16,11 @@ T _$identity<T>(T value) => value;
 mixin _$CachedUserProfile {
 
 // statusInfo
-@HiveField(0) String get activityStatus;@HiveField(1) bool get isVip;@HiveField(2) String? get primaryContactType;// 회원가입 후 연락수단 NULL
+@HiveField(0) String get activityStatus;@HiveField(1) bool get isVip;@HiveField(2) bool get isDatingExamSubmitted;@HiveField(3) String? get primaryContactType;// 회원가입 후 연락수단 NULL
 // basicInfo
-@HiveField(3) String get nickname;@HiveField(4) Gender get gender;@HiveField(5) String? get kakaoId;@HiveField(6) int get age;@HiveField(7) int get height;@HiveField(8) String get phoneNumber;// profileInfo
-@HiveField(9) Job get job;@HiveField(10) Education get education;@HiveField(11) String get city;@HiveField(12) String get district;@HiveField(13) String get mbti;@HiveField(14) SmokingStatus get smokingStatus;@HiveField(15) DrinkingStatus get drinkingStatus;@HiveField(16) Religion get religion;@HiveField(17) List<Hobby> get hobbies;// interviewInfo
-@HiveField(18) List<InterviewInfo> get interviewInfoView;@HiveField(19) int get myUserId;
+@HiveField(4) String get nickname;@HiveField(5) Gender get gender;@HiveField(6) String? get kakaoId;@HiveField(7) int get age;@HiveField(8) int get height;@HiveField(9) String get phoneNumber;// profileInfo
+@HiveField(10) Job get job;@HiveField(11) Education get education;@HiveField(12) String get city;@HiveField(13) String get district;@HiveField(14) String get mbti;@HiveField(15) SmokingStatus get smokingStatus;@HiveField(16) DrinkingStatus get drinkingStatus;@HiveField(17) Religion get religion;@HiveField(18) List<Hobby> get hobbies;// interviewInfo
+@HiveField(19) List<InterviewInfo> get interviewInfoView;@HiveField(20) int get myUserId;
 /// Create a copy of CachedUserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -33,16 +33,16 @@ $CachedUserProfileCopyWith<CachedUserProfile> get copyWith => _$CachedUserProfil
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CachedUserProfile&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.primaryContactType, primaryContactType) || other.primaryContactType == primaryContactType)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.job, job) || other.job == job)&&(identical(other.education, education) || other.education == education)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&const DeepCollectionEquality().equals(other.interviewInfoView, interviewInfoView)&&(identical(other.myUserId, myUserId) || other.myUserId == myUserId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CachedUserProfile&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.isDatingExamSubmitted, isDatingExamSubmitted) || other.isDatingExamSubmitted == isDatingExamSubmitted)&&(identical(other.primaryContactType, primaryContactType) || other.primaryContactType == primaryContactType)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.job, job) || other.job == job)&&(identical(other.education, education) || other.education == education)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&const DeepCollectionEquality().equals(other.interviewInfoView, interviewInfoView)&&(identical(other.myUserId, myUserId) || other.myUserId == myUserId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,activityStatus,isVip,primaryContactType,nickname,gender,kakaoId,age,height,phoneNumber,job,education,city,district,mbti,smokingStatus,drinkingStatus,religion,const DeepCollectionEquality().hash(hobbies),const DeepCollectionEquality().hash(interviewInfoView),myUserId]);
+int get hashCode => Object.hashAll([runtimeType,activityStatus,isVip,isDatingExamSubmitted,primaryContactType,nickname,gender,kakaoId,age,height,phoneNumber,job,education,city,district,mbti,smokingStatus,drinkingStatus,religion,const DeepCollectionEquality().hash(hobbies),const DeepCollectionEquality().hash(interviewInfoView),myUserId]);
 
 @override
 String toString() {
-  return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
+  return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
 }
 
 
@@ -53,7 +53,7 @@ abstract mixin class $CachedUserProfileCopyWith<$Res>  {
   factory $CachedUserProfileCopyWith(CachedUserProfile value, $Res Function(CachedUserProfile) _then) = _$CachedUserProfileCopyWithImpl;
 @useResult
 $Res call({
-@HiveField(0) String activityStatus,@HiveField(1) bool isVip,@HiveField(2) String? primaryContactType,@HiveField(3) String nickname,@HiveField(4) Gender gender,@HiveField(5) String? kakaoId,@HiveField(6) int age,@HiveField(7) int height,@HiveField(8) String phoneNumber,@HiveField(9) Job job,@HiveField(10) Education education,@HiveField(11) String city,@HiveField(12) String district,@HiveField(13) String mbti,@HiveField(14) SmokingStatus smokingStatus,@HiveField(15) DrinkingStatus drinkingStatus,@HiveField(16) Religion religion,@HiveField(17) List<Hobby> hobbies,@HiveField(18) List<InterviewInfo> interviewInfoView,@HiveField(19) int myUserId
+@HiveField(0) String activityStatus,@HiveField(1) bool isVip,@HiveField(2) bool isDatingExamSubmitted,@HiveField(3) String? primaryContactType,@HiveField(4) String nickname,@HiveField(5) Gender gender,@HiveField(6) String? kakaoId,@HiveField(7) int age,@HiveField(8) int height,@HiveField(9) String phoneNumber,@HiveField(10) Job job,@HiveField(11) Education education,@HiveField(12) String city,@HiveField(13) String district,@HiveField(14) String mbti,@HiveField(15) SmokingStatus smokingStatus,@HiveField(16) DrinkingStatus drinkingStatus,@HiveField(17) Religion religion,@HiveField(18) List<Hobby> hobbies,@HiveField(19) List<InterviewInfo> interviewInfoView,@HiveField(20) int myUserId
 });
 
 
@@ -70,10 +70,11 @@ class _$CachedUserProfileCopyWithImpl<$Res>
 
 /// Create a copy of CachedUserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? activityStatus = null,Object? isVip = null,Object? primaryContactType = freezed,Object? nickname = null,Object? gender = null,Object? kakaoId = freezed,Object? age = null,Object? height = null,Object? phoneNumber = null,Object? job = null,Object? education = null,Object? city = null,Object? district = null,Object? mbti = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? hobbies = null,Object? interviewInfoView = null,Object? myUserId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? activityStatus = null,Object? isVip = null,Object? isDatingExamSubmitted = null,Object? primaryContactType = freezed,Object? nickname = null,Object? gender = null,Object? kakaoId = freezed,Object? age = null,Object? height = null,Object? phoneNumber = null,Object? job = null,Object? education = null,Object? city = null,Object? district = null,Object? mbti = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? hobbies = null,Object? interviewInfoView = null,Object? myUserId = null,}) {
   return _then(_self.copyWith(
 activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
 as String,isVip: null == isVip ? _self.isVip : isVip // ignore: cast_nullable_to_non_nullable
+as bool,isDatingExamSubmitted: null == isDatingExamSubmitted ? _self.isDatingExamSubmitted : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,primaryContactType: freezed == primaryContactType ? _self.primaryContactType : primaryContactType // ignore: cast_nullable_to_non_nullable
 as String?,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
 as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
@@ -177,10 +178,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  String? primaryContactType, @HiveField(3)  String nickname, @HiveField(4)  Gender gender, @HiveField(5)  String? kakaoId, @HiveField(6)  int age, @HiveField(7)  int height, @HiveField(8)  String phoneNumber, @HiveField(9)  Job job, @HiveField(10)  Education education, @HiveField(11)  String city, @HiveField(12)  String district, @HiveField(13)  String mbti, @HiveField(14)  SmokingStatus smokingStatus, @HiveField(15)  DrinkingStatus drinkingStatus, @HiveField(16)  Religion religion, @HiveField(17)  List<Hobby> hobbies, @HiveField(18)  List<InterviewInfo> interviewInfoView, @HiveField(19)  int myUserId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  bool isDatingExamSubmitted, @HiveField(3)  String? primaryContactType, @HiveField(4)  String nickname, @HiveField(5)  Gender gender, @HiveField(6)  String? kakaoId, @HiveField(7)  int age, @HiveField(8)  int height, @HiveField(9)  String phoneNumber, @HiveField(10)  Job job, @HiveField(11)  Education education, @HiveField(12)  String city, @HiveField(13)  String district, @HiveField(14)  String mbti, @HiveField(15)  SmokingStatus smokingStatus, @HiveField(16)  DrinkingStatus drinkingStatus, @HiveField(17)  Religion religion, @HiveField(18)  List<Hobby> hobbies, @HiveField(19)  List<InterviewInfo> interviewInfoView, @HiveField(20)  int myUserId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CachedUserProfile() when $default != null:
-return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
+return $default(_that.activityStatus,_that.isVip,_that.isDatingExamSubmitted,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
   return orElse();
 
 }
@@ -198,10 +199,10 @@ return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  String? primaryContactType, @HiveField(3)  String nickname, @HiveField(4)  Gender gender, @HiveField(5)  String? kakaoId, @HiveField(6)  int age, @HiveField(7)  int height, @HiveField(8)  String phoneNumber, @HiveField(9)  Job job, @HiveField(10)  Education education, @HiveField(11)  String city, @HiveField(12)  String district, @HiveField(13)  String mbti, @HiveField(14)  SmokingStatus smokingStatus, @HiveField(15)  DrinkingStatus drinkingStatus, @HiveField(16)  Religion religion, @HiveField(17)  List<Hobby> hobbies, @HiveField(18)  List<InterviewInfo> interviewInfoView, @HiveField(19)  int myUserId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  bool isDatingExamSubmitted, @HiveField(3)  String? primaryContactType, @HiveField(4)  String nickname, @HiveField(5)  Gender gender, @HiveField(6)  String? kakaoId, @HiveField(7)  int age, @HiveField(8)  int height, @HiveField(9)  String phoneNumber, @HiveField(10)  Job job, @HiveField(11)  Education education, @HiveField(12)  String city, @HiveField(13)  String district, @HiveField(14)  String mbti, @HiveField(15)  SmokingStatus smokingStatus, @HiveField(16)  DrinkingStatus drinkingStatus, @HiveField(17)  Religion religion, @HiveField(18)  List<Hobby> hobbies, @HiveField(19)  List<InterviewInfo> interviewInfoView, @HiveField(20)  int myUserId)  $default,) {final _that = this;
 switch (_that) {
 case _CachedUserProfile():
-return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
+return $default(_that.activityStatus,_that.isVip,_that.isDatingExamSubmitted,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +219,10 @@ return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  String? primaryContactType, @HiveField(3)  String nickname, @HiveField(4)  Gender gender, @HiveField(5)  String? kakaoId, @HiveField(6)  int age, @HiveField(7)  int height, @HiveField(8)  String phoneNumber, @HiveField(9)  Job job, @HiveField(10)  Education education, @HiveField(11)  String city, @HiveField(12)  String district, @HiveField(13)  String mbti, @HiveField(14)  SmokingStatus smokingStatus, @HiveField(15)  DrinkingStatus drinkingStatus, @HiveField(16)  Religion religion, @HiveField(17)  List<Hobby> hobbies, @HiveField(18)  List<InterviewInfo> interviewInfoView, @HiveField(19)  int myUserId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  String activityStatus, @HiveField(1)  bool isVip, @HiveField(2)  bool isDatingExamSubmitted, @HiveField(3)  String? primaryContactType, @HiveField(4)  String nickname, @HiveField(5)  Gender gender, @HiveField(6)  String? kakaoId, @HiveField(7)  int age, @HiveField(8)  int height, @HiveField(9)  String phoneNumber, @HiveField(10)  Job job, @HiveField(11)  Education education, @HiveField(12)  String city, @HiveField(13)  String district, @HiveField(14)  String mbti, @HiveField(15)  SmokingStatus smokingStatus, @HiveField(16)  DrinkingStatus drinkingStatus, @HiveField(17)  Religion religion, @HiveField(18)  List<Hobby> hobbies, @HiveField(19)  List<InterviewInfo> interviewInfoView, @HiveField(20)  int myUserId)?  $default,) {final _that = this;
 switch (_that) {
 case _CachedUserProfile() when $default != null:
-return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
+return $default(_that.activityStatus,_that.isVip,_that.isDatingExamSubmitted,_that.primaryContactType,_that.nickname,_that.gender,_that.kakaoId,_that.age,_that.height,_that.phoneNumber,_that.job,_that.education,_that.city,_that.district,_that.mbti,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.hobbies,_that.interviewInfoView,_that.myUserId);case _:
   return null;
 
 }
@@ -233,32 +234,33 @@ return $default(_that.activityStatus,_that.isVip,_that.primaryContactType,_that.
 @JsonSerializable()
 
 class _CachedUserProfile extends CachedUserProfile {
-  const _CachedUserProfile({@HiveField(0) required this.activityStatus, @HiveField(1) required this.isVip, @HiveField(2) this.primaryContactType, @HiveField(3) required this.nickname, @HiveField(4) required this.gender, @HiveField(5) this.kakaoId, @HiveField(6) required this.age, @HiveField(7) required this.height, @HiveField(8) required this.phoneNumber, @HiveField(9) required this.job, @HiveField(10) required this.education, @HiveField(11) required this.city, @HiveField(12) required this.district, @HiveField(13) required this.mbti, @HiveField(14) required this.smokingStatus, @HiveField(15) required this.drinkingStatus, @HiveField(16) required this.religion, @HiveField(17) required final  List<Hobby> hobbies, @HiveField(18) required final  List<InterviewInfo> interviewInfoView, @HiveField(19) this.myUserId = 0}): _hobbies = hobbies,_interviewInfoView = interviewInfoView,super._();
+  const _CachedUserProfile({@HiveField(0) required this.activityStatus, @HiveField(1) required this.isVip, @HiveField(2) required this.isDatingExamSubmitted, @HiveField(3) this.primaryContactType, @HiveField(4) required this.nickname, @HiveField(5) required this.gender, @HiveField(6) this.kakaoId, @HiveField(7) required this.age, @HiveField(8) required this.height, @HiveField(9) required this.phoneNumber, @HiveField(10) required this.job, @HiveField(11) required this.education, @HiveField(12) required this.city, @HiveField(13) required this.district, @HiveField(14) required this.mbti, @HiveField(15) required this.smokingStatus, @HiveField(16) required this.drinkingStatus, @HiveField(17) required this.religion, @HiveField(18) required final  List<Hobby> hobbies, @HiveField(19) required final  List<InterviewInfo> interviewInfoView, @HiveField(20) this.myUserId = 0}): _hobbies = hobbies,_interviewInfoView = interviewInfoView,super._();
   factory _CachedUserProfile.fromJson(Map<String, dynamic> json) => _$CachedUserProfileFromJson(json);
 
 // statusInfo
 @override@HiveField(0) final  String activityStatus;
 @override@HiveField(1) final  bool isVip;
-@override@HiveField(2) final  String? primaryContactType;
+@override@HiveField(2) final  bool isDatingExamSubmitted;
+@override@HiveField(3) final  String? primaryContactType;
 // 회원가입 후 연락수단 NULL
 // basicInfo
-@override@HiveField(3) final  String nickname;
-@override@HiveField(4) final  Gender gender;
-@override@HiveField(5) final  String? kakaoId;
-@override@HiveField(6) final  int age;
-@override@HiveField(7) final  int height;
-@override@HiveField(8) final  String phoneNumber;
+@override@HiveField(4) final  String nickname;
+@override@HiveField(5) final  Gender gender;
+@override@HiveField(6) final  String? kakaoId;
+@override@HiveField(7) final  int age;
+@override@HiveField(8) final  int height;
+@override@HiveField(9) final  String phoneNumber;
 // profileInfo
-@override@HiveField(9) final  Job job;
-@override@HiveField(10) final  Education education;
-@override@HiveField(11) final  String city;
-@override@HiveField(12) final  String district;
-@override@HiveField(13) final  String mbti;
-@override@HiveField(14) final  SmokingStatus smokingStatus;
-@override@HiveField(15) final  DrinkingStatus drinkingStatus;
-@override@HiveField(16) final  Religion religion;
+@override@HiveField(10) final  Job job;
+@override@HiveField(11) final  Education education;
+@override@HiveField(12) final  String city;
+@override@HiveField(13) final  String district;
+@override@HiveField(14) final  String mbti;
+@override@HiveField(15) final  SmokingStatus smokingStatus;
+@override@HiveField(16) final  DrinkingStatus drinkingStatus;
+@override@HiveField(17) final  Religion religion;
  final  List<Hobby> _hobbies;
-@override@HiveField(17) List<Hobby> get hobbies {
+@override@HiveField(18) List<Hobby> get hobbies {
   if (_hobbies is EqualUnmodifiableListView) return _hobbies;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_hobbies);
@@ -267,13 +269,13 @@ class _CachedUserProfile extends CachedUserProfile {
 // interviewInfo
  final  List<InterviewInfo> _interviewInfoView;
 // interviewInfo
-@override@HiveField(18) List<InterviewInfo> get interviewInfoView {
+@override@HiveField(19) List<InterviewInfo> get interviewInfoView {
   if (_interviewInfoView is EqualUnmodifiableListView) return _interviewInfoView;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_interviewInfoView);
 }
 
-@override@JsonKey()@HiveField(19) final  int myUserId;
+@override@JsonKey()@HiveField(20) final  int myUserId;
 
 /// Create a copy of CachedUserProfile
 /// with the given fields replaced by the non-null parameter values.
@@ -288,16 +290,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CachedUserProfile&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.primaryContactType, primaryContactType) || other.primaryContactType == primaryContactType)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.job, job) || other.job == job)&&(identical(other.education, education) || other.education == education)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&const DeepCollectionEquality().equals(other._interviewInfoView, _interviewInfoView)&&(identical(other.myUserId, myUserId) || other.myUserId == myUserId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CachedUserProfile&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.isDatingExamSubmitted, isDatingExamSubmitted) || other.isDatingExamSubmitted == isDatingExamSubmitted)&&(identical(other.primaryContactType, primaryContactType) || other.primaryContactType == primaryContactType)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.job, job) || other.job == job)&&(identical(other.education, education) || other.education == education)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&const DeepCollectionEquality().equals(other._interviewInfoView, _interviewInfoView)&&(identical(other.myUserId, myUserId) || other.myUserId == myUserId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,activityStatus,isVip,primaryContactType,nickname,gender,kakaoId,age,height,phoneNumber,job,education,city,district,mbti,smokingStatus,drinkingStatus,religion,const DeepCollectionEquality().hash(_hobbies),const DeepCollectionEquality().hash(_interviewInfoView),myUserId]);
+int get hashCode => Object.hashAll([runtimeType,activityStatus,isVip,isDatingExamSubmitted,primaryContactType,nickname,gender,kakaoId,age,height,phoneNumber,job,education,city,district,mbti,smokingStatus,drinkingStatus,religion,const DeepCollectionEquality().hash(_hobbies),const DeepCollectionEquality().hash(_interviewInfoView),myUserId]);
 
 @override
 String toString() {
-  return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
+  return 'CachedUserProfile(activityStatus: $activityStatus, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, primaryContactType: $primaryContactType, nickname: $nickname, gender: $gender, kakaoId: $kakaoId, age: $age, height: $height, phoneNumber: $phoneNumber, job: $job, education: $education, city: $city, district: $district, mbti: $mbti, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, hobbies: $hobbies, interviewInfoView: $interviewInfoView, myUserId: $myUserId)';
 }
 
 
@@ -308,7 +310,7 @@ abstract mixin class _$CachedUserProfileCopyWith<$Res> implements $CachedUserPro
   factory _$CachedUserProfileCopyWith(_CachedUserProfile value, $Res Function(_CachedUserProfile) _then) = __$CachedUserProfileCopyWithImpl;
 @override @useResult
 $Res call({
-@HiveField(0) String activityStatus,@HiveField(1) bool isVip,@HiveField(2) String? primaryContactType,@HiveField(3) String nickname,@HiveField(4) Gender gender,@HiveField(5) String? kakaoId,@HiveField(6) int age,@HiveField(7) int height,@HiveField(8) String phoneNumber,@HiveField(9) Job job,@HiveField(10) Education education,@HiveField(11) String city,@HiveField(12) String district,@HiveField(13) String mbti,@HiveField(14) SmokingStatus smokingStatus,@HiveField(15) DrinkingStatus drinkingStatus,@HiveField(16) Religion religion,@HiveField(17) List<Hobby> hobbies,@HiveField(18) List<InterviewInfo> interviewInfoView,@HiveField(19) int myUserId
+@HiveField(0) String activityStatus,@HiveField(1) bool isVip,@HiveField(2) bool isDatingExamSubmitted,@HiveField(3) String? primaryContactType,@HiveField(4) String nickname,@HiveField(5) Gender gender,@HiveField(6) String? kakaoId,@HiveField(7) int age,@HiveField(8) int height,@HiveField(9) String phoneNumber,@HiveField(10) Job job,@HiveField(11) Education education,@HiveField(12) String city,@HiveField(13) String district,@HiveField(14) String mbti,@HiveField(15) SmokingStatus smokingStatus,@HiveField(16) DrinkingStatus drinkingStatus,@HiveField(17) Religion religion,@HiveField(18) List<Hobby> hobbies,@HiveField(19) List<InterviewInfo> interviewInfoView,@HiveField(20) int myUserId
 });
 
 
@@ -325,10 +327,11 @@ class __$CachedUserProfileCopyWithImpl<$Res>
 
 /// Create a copy of CachedUserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? activityStatus = null,Object? isVip = null,Object? primaryContactType = freezed,Object? nickname = null,Object? gender = null,Object? kakaoId = freezed,Object? age = null,Object? height = null,Object? phoneNumber = null,Object? job = null,Object? education = null,Object? city = null,Object? district = null,Object? mbti = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? hobbies = null,Object? interviewInfoView = null,Object? myUserId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? activityStatus = null,Object? isVip = null,Object? isDatingExamSubmitted = null,Object? primaryContactType = freezed,Object? nickname = null,Object? gender = null,Object? kakaoId = freezed,Object? age = null,Object? height = null,Object? phoneNumber = null,Object? job = null,Object? education = null,Object? city = null,Object? district = null,Object? mbti = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? hobbies = null,Object? interviewInfoView = null,Object? myUserId = null,}) {
   return _then(_CachedUserProfile(
 activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
 as String,isVip: null == isVip ? _self.isVip : isVip // ignore: cast_nullable_to_non_nullable
+as bool,isDatingExamSubmitted: null == isDatingExamSubmitted ? _self.isDatingExamSubmitted : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,primaryContactType: freezed == primaryContactType ? _self.primaryContactType : primaryContactType // ignore: cast_nullable_to_non_nullable
 as String?,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
 as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable

@@ -21,6 +21,8 @@ abstract class StoreState with _$StoreState {
   const StoreState._();
 
   factory StoreState.initial() => const StoreState();
+
+  int get totalHeartBalance => heartBalance.heartBalance.totalHeartBalance;
 }
 
 @freezed

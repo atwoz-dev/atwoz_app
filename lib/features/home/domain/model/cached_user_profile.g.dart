@@ -19,70 +19,73 @@ class CachedUserProfileAdapter extends TypeAdapter<CachedUserProfile> {
     return CachedUserProfile(
       activityStatus: fields[0] as String,
       isVip: fields[1] as bool,
-      primaryContactType: fields[2] as String?,
-      nickname: fields[3] as String,
-      gender: fields[4] as Gender,
-      kakaoId: fields[5] as String?,
-      age: (fields[6] as num).toInt(),
-      height: (fields[7] as num).toInt(),
-      phoneNumber: fields[8] as String,
-      job: fields[9] as Job,
-      education: fields[10] as Education,
-      city: fields[11] as String,
-      district: fields[12] as String,
-      mbti: fields[13] as String,
-      smokingStatus: fields[14] as SmokingStatus,
-      drinkingStatus: fields[15] as DrinkingStatus,
-      religion: fields[16] as Religion,
-      hobbies: (fields[17] as List).cast<Hobby>(),
-      interviewInfoView: (fields[18] as List).cast<InterviewInfo>(),
-      myUserId: fields[19] == null ? 0 : (fields[19] as num).toInt(),
+      isDatingExamSubmitted: fields[2] as bool,
+      primaryContactType: fields[3] as String?,
+      nickname: fields[4] as String,
+      gender: fields[5] as Gender,
+      kakaoId: fields[6] as String?,
+      age: (fields[7] as num).toInt(),
+      height: (fields[8] as num).toInt(),
+      phoneNumber: fields[9] as String,
+      job: fields[10] as Job,
+      education: fields[11] as Education,
+      city: fields[12] as String,
+      district: fields[13] as String,
+      mbti: fields[14] as String,
+      smokingStatus: fields[15] as SmokingStatus,
+      drinkingStatus: fields[16] as DrinkingStatus,
+      religion: fields[17] as Religion,
+      hobbies: (fields[18] as List).cast<Hobby>(),
+      interviewInfoView: (fields[19] as List).cast<InterviewInfo>(),
+      myUserId: fields[20] == null ? 0 : (fields[20] as num).toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, CachedUserProfile obj) {
     writer
-      ..writeByte(20)
+      ..writeByte(21)
       ..writeByte(0)
       ..write(obj.activityStatus)
       ..writeByte(1)
       ..write(obj.isVip)
       ..writeByte(2)
-      ..write(obj.primaryContactType)
+      ..write(obj.isDatingExamSubmitted)
       ..writeByte(3)
-      ..write(obj.nickname)
+      ..write(obj.primaryContactType)
       ..writeByte(4)
-      ..write(obj.gender)
+      ..write(obj.nickname)
       ..writeByte(5)
-      ..write(obj.kakaoId)
+      ..write(obj.gender)
       ..writeByte(6)
-      ..write(obj.age)
+      ..write(obj.kakaoId)
       ..writeByte(7)
-      ..write(obj.height)
+      ..write(obj.age)
       ..writeByte(8)
-      ..write(obj.phoneNumber)
+      ..write(obj.height)
       ..writeByte(9)
-      ..write(obj.job)
+      ..write(obj.phoneNumber)
       ..writeByte(10)
-      ..write(obj.education)
+      ..write(obj.job)
       ..writeByte(11)
-      ..write(obj.city)
+      ..write(obj.education)
       ..writeByte(12)
-      ..write(obj.district)
+      ..write(obj.city)
       ..writeByte(13)
-      ..write(obj.mbti)
+      ..write(obj.district)
       ..writeByte(14)
-      ..write(obj.smokingStatus)
+      ..write(obj.mbti)
       ..writeByte(15)
-      ..write(obj.drinkingStatus)
+      ..write(obj.smokingStatus)
       ..writeByte(16)
-      ..write(obj.religion)
+      ..write(obj.drinkingStatus)
       ..writeByte(17)
-      ..write(obj.hobbies)
+      ..write(obj.religion)
       ..writeByte(18)
-      ..write(obj.interviewInfoView)
+      ..write(obj.hobbies)
       ..writeByte(19)
+      ..write(obj.interviewInfoView)
+      ..writeByte(20)
       ..write(obj.myUserId);
   }
 
@@ -142,6 +145,7 @@ _CachedUserProfile _$CachedUserProfileFromJson(Map<String, dynamic> json) =>
     _CachedUserProfile(
       activityStatus: json['activityStatus'] as String,
       isVip: json['isVip'] as bool,
+      isDatingExamSubmitted: json['isDatingExamSubmitted'] as bool,
       primaryContactType: json['primaryContactType'] as String?,
       nickname: json['nickname'] as String,
       gender: $enumDecode(_$GenderEnumMap, json['gender']),
@@ -173,6 +177,7 @@ Map<String, dynamic> _$CachedUserProfileToJson(_CachedUserProfile instance) =>
     <String, dynamic>{
       'activityStatus': instance.activityStatus,
       'isVip': instance.isVip,
+      'isDatingExamSubmitted': instance.isDatingExamSubmitted,
       'primaryContactType': instance.primaryContactType,
       'nickname': instance.nickname,
       'gender': _$GenderEnumMap[instance.gender]!,

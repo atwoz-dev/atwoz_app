@@ -13,6 +13,7 @@ _Member _$MemberFromJson(Map<String, dynamic> json) => _Member(
     json['memberProfile'] as Map<String, dynamic>,
   ),
   isVip: json['isVip'] as bool,
+  isDatingExamSubmitted: json['isDatingExamSubmitted'] as bool,
   activityStatus: $enumDecode(_$ActivityStatusEnumMap, json['activityStatus']),
   heartBalance: HeartBalance.fromJson(
     json['heartBalance'] as Map<String, dynamic>,
@@ -24,6 +25,7 @@ Map<String, dynamic> _$MemberToJson(_Member instance) => <String, dynamic>{
   'phoneNumber': instance.phoneNumber,
   'memberProfile': instance.memberProfile,
   'isVip': instance.isVip,
+  'isDatingExamSubmitted': instance.isDatingExamSubmitted,
   'activityStatus': _$ActivityStatusEnumMap[instance.activityStatus]!,
   'heartBalance': instance.heartBalance,
 };

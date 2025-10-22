@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Member {
 
- int get id; String get phoneNumber; MemberProfile get memberProfile; bool get isVip; ActivityStatus get activityStatus; HeartBalance get heartBalance;
+ int get id; String get phoneNumber; MemberProfile get memberProfile; bool get isVip; bool get isDatingExamSubmitted; ActivityStatus get activityStatus; HeartBalance get heartBalance;
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MemberCopyWith<Member> get copyWith => _$MemberCopyWithImpl<Member>(this as Mem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.memberProfile, memberProfile) || other.memberProfile == memberProfile)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.memberProfile, memberProfile) || other.memberProfile == memberProfile)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.isDatingExamSubmitted, isDatingExamSubmitted) || other.isDatingExamSubmitted == isDatingExamSubmitted)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,phoneNumber,memberProfile,isVip,activityStatus,heartBalance);
+int get hashCode => Object.hash(runtimeType,id,phoneNumber,memberProfile,isVip,isDatingExamSubmitted,activityStatus,heartBalance);
 
 @override
 String toString() {
-  return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, activityStatus: $activityStatus, heartBalance: $heartBalance)';
+  return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, activityStatus: $activityStatus, heartBalance: $heartBalance)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $MemberCopyWith<$Res>  {
   factory $MemberCopyWith(Member value, $Res Function(Member) _then) = _$MemberCopyWithImpl;
 @useResult
 $Res call({
- int id, String phoneNumber, MemberProfile memberProfile, bool isVip, ActivityStatus activityStatus, HeartBalance heartBalance
+ int id, String phoneNumber, MemberProfile memberProfile, bool isVip, bool isDatingExamSubmitted, ActivityStatus activityStatus, HeartBalance heartBalance
 });
 
 
@@ -65,12 +65,13 @@ class _$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? phoneNumber = null,Object? memberProfile = null,Object? isVip = null,Object? activityStatus = null,Object? heartBalance = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? phoneNumber = null,Object? memberProfile = null,Object? isVip = null,Object? isDatingExamSubmitted = null,Object? activityStatus = null,Object? heartBalance = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,memberProfile: null == memberProfile ? _self.memberProfile : memberProfile // ignore: cast_nullable_to_non_nullable
 as MemberProfile,isVip: null == isVip ? _self.isVip : isVip // ignore: cast_nullable_to_non_nullable
+as bool,isDatingExamSubmitted: null == isDatingExamSubmitted ? _self.isDatingExamSubmitted : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
 as ActivityStatus,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
 as HeartBalance,
@@ -176,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  ActivityStatus activityStatus,  HeartBalance heartBalance)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  bool isDatingExamSubmitted,  ActivityStatus activityStatus,  HeartBalance heartBalance)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.activityStatus,_that.heartBalance);case _:
+return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.isDatingExamSubmitted,_that.activityStatus,_that.heartBalance);case _:
   return orElse();
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  ActivityStatus activityStatus,  HeartBalance heartBalance)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  bool isDatingExamSubmitted,  ActivityStatus activityStatus,  HeartBalance heartBalance)  $default,) {final _that = this;
 switch (_that) {
 case _Member():
-return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.activityStatus,_that.heartBalance);case _:
+return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.isDatingExamSubmitted,_that.activityStatus,_that.heartBalance);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -217,10 +218,10 @@ return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  ActivityStatus activityStatus,  HeartBalance heartBalance)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String phoneNumber,  MemberProfile memberProfile,  bool isVip,  bool isDatingExamSubmitted,  ActivityStatus activityStatus,  HeartBalance heartBalance)?  $default,) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.activityStatus,_that.heartBalance);case _:
+return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that.isDatingExamSubmitted,_that.activityStatus,_that.heartBalance);case _:
   return null;
 
 }
@@ -232,13 +233,14 @@ return $default(_that.id,_that.phoneNumber,_that.memberProfile,_that.isVip,_that
 @JsonSerializable()
 
 class _Member implements Member {
-  const _Member({required this.id, required this.phoneNumber, required this.memberProfile, required this.isVip, required this.activityStatus, required this.heartBalance});
+  const _Member({required this.id, required this.phoneNumber, required this.memberProfile, required this.isVip, required this.isDatingExamSubmitted, required this.activityStatus, required this.heartBalance});
   factory _Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 
 @override final  int id;
 @override final  String phoneNumber;
 @override final  MemberProfile memberProfile;
 @override final  bool isVip;
+@override final  bool isDatingExamSubmitted;
 @override final  ActivityStatus activityStatus;
 @override final  HeartBalance heartBalance;
 
@@ -255,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.memberProfile, memberProfile) || other.memberProfile == memberProfile)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.memberProfile, memberProfile) || other.memberProfile == memberProfile)&&(identical(other.isVip, isVip) || other.isVip == isVip)&&(identical(other.isDatingExamSubmitted, isDatingExamSubmitted) || other.isDatingExamSubmitted == isDatingExamSubmitted)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,phoneNumber,memberProfile,isVip,activityStatus,heartBalance);
+int get hashCode => Object.hash(runtimeType,id,phoneNumber,memberProfile,isVip,isDatingExamSubmitted,activityStatus,heartBalance);
 
 @override
 String toString() {
-  return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, activityStatus: $activityStatus, heartBalance: $heartBalance)';
+  return 'Member(id: $id, phoneNumber: $phoneNumber, memberProfile: $memberProfile, isVip: $isVip, isDatingExamSubmitted: $isDatingExamSubmitted, activityStatus: $activityStatus, heartBalance: $heartBalance)';
 }
 
 
@@ -275,7 +277,7 @@ abstract mixin class _$MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   factory _$MemberCopyWith(_Member value, $Res Function(_Member) _then) = __$MemberCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String phoneNumber, MemberProfile memberProfile, bool isVip, ActivityStatus activityStatus, HeartBalance heartBalance
+ int id, String phoneNumber, MemberProfile memberProfile, bool isVip, bool isDatingExamSubmitted, ActivityStatus activityStatus, HeartBalance heartBalance
 });
 
 
@@ -292,12 +294,13 @@ class __$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? phoneNumber = null,Object? memberProfile = null,Object? isVip = null,Object? activityStatus = null,Object? heartBalance = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? phoneNumber = null,Object? memberProfile = null,Object? isVip = null,Object? isDatingExamSubmitted = null,Object? activityStatus = null,Object? heartBalance = null,}) {
   return _then(_Member(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,memberProfile: null == memberProfile ? _self.memberProfile : memberProfile // ignore: cast_nullable_to_non_nullable
 as MemberProfile,isVip: null == isVip ? _self.isVip : isVip // ignore: cast_nullable_to_non_nullable
+as bool,isDatingExamSubmitted: null == isDatingExamSubmitted ? _self.isDatingExamSubmitted : isDatingExamSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
 as ActivityStatus,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
 as HeartBalance,

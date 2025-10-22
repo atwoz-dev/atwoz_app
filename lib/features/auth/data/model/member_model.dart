@@ -10,6 +10,7 @@ abstract class Member with _$Member {
     required String phoneNumber,
     required MemberProfile memberProfile,
     required bool isVip,
+    required bool isDatingExamSubmitted,
     required ActivityStatus activityStatus,
     required HeartBalance heartBalance,
   }) = _Member;

@@ -74,7 +74,7 @@ class _LabelSwitchRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 14.0,
-        horizontal: 16.0,
+        horizontal: 20.0,
       ),
       decoration: BoxDecoration(
         border: Border(

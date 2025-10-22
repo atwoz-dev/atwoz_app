@@ -213,6 +213,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           textAlign: TextAlign.center,
         ),
       ),
+      buttonVerticalPadding: 8,
     );
   }
 }
@@ -231,7 +232,7 @@ class _PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultElevatedButton(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      height: 40.0,
       onPressed: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -342,7 +343,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       child: AnimatedContainer(
         duration: Params.animationDurationLow,
         decoration: _currentDecoration,
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -97,6 +97,7 @@ class _ServiceWithdrawReasonPageState
                           ),
                           enableCloseButton: true,
                           child: const _WithdrawConfirmDialogContent(),
+                          buttonVerticalPadding: 8,
                         )
                     : null,
                 primary: _selectedReason != null

@@ -1,7 +1,8 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
@@ -52,17 +53,40 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
               Switch(
                 value: _isSwitched,
                 inactiveTrackColor: const Color(0xffDEDEDE),
-                onChanged: _handleDormantChange,
+                onChanged: (value) => _handleDormantChange(value),
               ),
             ],
           ),
           _AccountSettingItem(
             children: [
-              Text(
-                "로그아웃",
-                style: Fonts.body02Medium().copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Palette.colorBlack,
+              GestureDetector(
+                onTap: () async {
+                  final signOutCompleted = await ref
+                      .read(mySettingProvider.notifier)
+                      .signOut();
+                  if (!context.mounted) return;
+                  if (!signOutCompleted) {
+                    ErrorDialog.open(
+                      context,
+                      error: DialogueErrorType.failSignOut,
+                      onConfirm: context.pop,
+                    );
+
+                    return;
+                  }
+
+                  navigate(
+                    context,
+                    route: AppRoute.onboard,
+                    method: NavigationMethod.go,
+                  );
+                },
+                child: Text(
+                  "로그아웃",
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Palette.colorBlack,
+                  ),
                 ),
               ),
             ],
@@ -87,7 +111,6 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
   }
 
   void _handleDormantChange(bool value) async {
-    // TODO(Han): 휴면 상태에서 해당 동작이 가능한지 확인 필요
     if (!value) return;
 
     setState(() => _isSwitched = value);
@@ -98,7 +121,23 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
             .read(mySettingProvider.notifier)
             .deactiveAccount();
         if (!mounted) return;
-        context.pop(success);
+        if (!success) {
+          ErrorDialog.open(
+            context,
+            error: DialogueErrorType.unknown,
+            onConfirm: () => context
+              ..pop()
+              ..pop(),
+          );
+
+          return;
+        }
+
+        navigate(
+          context,
+          route: AppRoute.onboard,
+          method: NavigationMethod.go,
+        );
       },
     );
 
@@ -116,7 +155,7 @@ class _AccountSettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -144,23 +183,18 @@ Future<bool?> _showUpdateDormantStatus(
         child: Column(
           children: [
             Text(
-              '휴면 회원 전환',
-              style: Fonts.header02().copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const Gap(16),
-            Text(
               '프로필이 상대방에게 노출되지 않고\n'
-              '휴면 회원 전환 시 매칭 포함 모든 활동이 제한됩니다\n'
+              '매칭을 포함한 모든 활동이 제한됩니다\n'
               '휴면회원으로 전환하시겠습니까?\n',
               style: Fonts.body02Medium().copyWith(
                 fontWeight: FontWeight.w400,
                 color: const Color(0xff515151),
+                height: 1.3,
               ),
               textAlign: TextAlign.center,
             )
           ],
         ),
       ),
+      buttonVerticalPadding: 12,
     );
