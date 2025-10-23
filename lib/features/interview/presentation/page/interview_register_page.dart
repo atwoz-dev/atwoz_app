@@ -59,13 +59,23 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                   content: '작성된 내용을 저장합니다',
                   elevatedButtonText: '확인',
                   onElevatedButtonPressed: () async {
+                    if (widget.questionId == null) {
+                      showToastMessage('내용을 저장하는데 실패했습니다.');
+                      return;
+                    }
+
                     try {
                       if (widget.isAnswered) {
+                        if (widget.answerId == null) {
+                          showToastMessage('내용을 저장하는데 실패했습니다.');
+                          return;
+                        }
+
                         await ref
                             .read(interviewNotifierProvider.notifier)
                             .updateAnswer(
-                              widget.questionId ?? 0,
-                              widget.answerId ?? 0,
+                              widget.questionId!,
+                              widget.answerId!,
                               widget.question,
                               _inputContentController.text.trim(),
                             );
@@ -73,7 +83,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                         await ref
                             .read(interviewNotifierProvider.notifier)
                             .addAnswer(
-                              widget.questionId ?? 0,
+                              widget.questionId!,
                               widget.question,
                               _inputContentController.text.trim(),
                             );
@@ -84,7 +94,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                         method: NavigationMethod.go,
                       );
                     } catch (e) {
-                      showToastMessage('저장에 실패했습니다.');
+                      showToastMessage('내용을 저장하는데 실패했습니다.');
                     }
                   });
             },
