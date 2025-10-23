@@ -3,6 +3,7 @@ import 'package:atwoz_app/features/interview/data/data.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_add_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_fetch_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_update_usecase.dart';
+import 'package:atwoz_app/features/interview/domain/usecase/save_interview_to_hive_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'interview_state.dart';
@@ -42,6 +43,7 @@ class InterviewNotifier extends _$InterviewNotifier {
 
   Future<void> addAnswer(
     int questionId,
+    String question,
     String answerContent,
   ) async {
     try {
@@ -49,13 +51,21 @@ class InterviewNotifier extends _$InterviewNotifier {
         questionId: questionId,
         answerContent: answerContent,
       );
+
+      await ref.read(saveInterviewToHiveUseCaseProvider).execute(
+            questionId: questionId,
+            title: question,
+            content: answerContent,
+          );
     } catch (e) {
       Log.e(e);
     }
   }
 
   Future<void> updateAnswer(
+    int questionId,
     int answerId,
+    String question,
     String answerContent,
   ) async {
     try {
@@ -63,6 +73,12 @@ class InterviewNotifier extends _$InterviewNotifier {
         answerId: answerId,
         answerContent: answerContent,
       );
+
+      await ref.read(saveInterviewToHiveUseCaseProvider).execute(
+            questionId: questionId,
+            title: question,
+            content: answerContent,
+          );
     } catch (e) {
       Log.e(e);
     }

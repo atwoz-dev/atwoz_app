@@ -63,8 +63,10 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                       if (widget.isAnswered) {
                         await ref
                             .read(interviewNotifierProvider.notifier)
-                            .addAnswer(
+                            .updateAnswer(
+                              widget.questionId ?? 0,
                               widget.answerId ?? 0,
+                              widget.question,
                               _inputContentController.text.trim(),
                             );
                       } else {
@@ -72,6 +74,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                             .read(interviewNotifierProvider.notifier)
                             .addAnswer(
                               widget.questionId ?? 0,
+                              widget.question,
                               _inputContentController.text.trim(),
                             );
                       }
@@ -118,7 +121,6 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
               child: DefaultDivider()),
           Expanded(
             child: DefaultTextFormField(
-              autofocus: true,
               initialValue: widget.answer,
               controller: _inputContentController,
               keyboardType: TextInputType.multiline,
