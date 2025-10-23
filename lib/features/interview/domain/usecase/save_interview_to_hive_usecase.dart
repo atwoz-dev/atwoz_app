@@ -20,14 +20,14 @@ class SaveInterviewToHiveUseCase {
     required String title,
     required String content,
   }) async {
-    try {
-      final box = await Hive.openBox<CachedUserProfile>(
-        CachedUserProfile.boxName,
-      );
+    final box = await Hive.openBox<CachedUserProfile>(
+      CachedUserProfile.boxName,
+    );
 
+    try {
       final profile = box.get('profile');
       if (profile == null) {
-        throw Exception('프로필 데이터가 없습니다.');
+        throw Exception('Profile data not found');
       }
 
       final updatedList = List<InterviewInfo>.from(profile.interviewInfoView);
@@ -47,6 +47,8 @@ class SaveInterviewToHiveUseCase {
       await box.put('profile', updatedProfile);
     } catch (e) {
       rethrow;
+    } finally {
+      await box.close();
     }
   }
 }
