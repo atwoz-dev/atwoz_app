@@ -704,8 +704,10 @@ InterviewInfo _$InterviewInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$InterviewInfo {
   @HiveField(0)
-  String get title => throw _privateConstructorUsedError;
+  int get questionId => throw _privateConstructorUsedError;
   @HiveField(1)
+  String get title => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get content => throw _privateConstructorUsedError;
 
   /// Serializes this InterviewInfo to a JSON map.
@@ -724,7 +726,10 @@ abstract class $InterviewInfoCopyWith<$Res> {
           InterviewInfo value, $Res Function(InterviewInfo) then) =
       _$InterviewInfoCopyWithImpl<$Res, InterviewInfo>;
   @useResult
-  $Res call({@HiveField(0) String title, @HiveField(1) String content});
+  $Res call(
+      {@HiveField(0) int questionId,
+      @HiveField(1) String title,
+      @HiveField(2) String content});
 }
 
 /// @nodoc
@@ -742,10 +747,15 @@ class _$InterviewInfoCopyWithImpl<$Res, $Val extends InterviewInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? questionId = null,
     Object? title = null,
     Object? content = null,
   }) {
     return _then(_value.copyWith(
+      questionId: null == questionId
+          ? _value.questionId
+          : questionId // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -766,7 +776,10 @@ abstract class _$$InterviewInfoImplCopyWith<$Res>
       __$$InterviewInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String title, @HiveField(1) String content});
+  $Res call(
+      {@HiveField(0) int questionId,
+      @HiveField(1) String title,
+      @HiveField(2) String content});
 }
 
 /// @nodoc
@@ -782,10 +795,15 @@ class __$$InterviewInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? questionId = null,
     Object? title = null,
     Object? content = null,
   }) {
     return _then(_$InterviewInfoImpl(
+      questionId: null == questionId
+          ? _value.questionId
+          : questionId // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -802,21 +820,26 @@ class __$$InterviewInfoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$InterviewInfoImpl implements _InterviewInfo {
   const _$InterviewInfoImpl(
-      {@HiveField(0) required this.title, @HiveField(1) required this.content});
+      {@HiveField(0) required this.questionId,
+      @HiveField(1) required this.title,
+      @HiveField(2) required this.content});
 
   factory _$InterviewInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$InterviewInfoImplFromJson(json);
 
   @override
   @HiveField(0)
-  final String title;
+  final int questionId;
   @override
   @HiveField(1)
+  final String title;
+  @override
+  @HiveField(2)
   final String content;
 
   @override
   String toString() {
-    return 'InterviewInfo(title: $title, content: $content)';
+    return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
   }
 
   @override
@@ -824,13 +847,15 @@ class _$InterviewInfoImpl implements _InterviewInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InterviewInfoImpl &&
+            (identical(other.questionId, questionId) ||
+                other.questionId == questionId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, content);
+  int get hashCode => Object.hash(runtimeType, questionId, title, content);
 
   /// Create a copy of InterviewInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -850,17 +875,21 @@ class _$InterviewInfoImpl implements _InterviewInfo {
 
 abstract class _InterviewInfo implements InterviewInfo {
   const factory _InterviewInfo(
-      {@HiveField(0) required final String title,
-      @HiveField(1) required final String content}) = _$InterviewInfoImpl;
+      {@HiveField(0) required final int questionId,
+      @HiveField(1) required final String title,
+      @HiveField(2) required final String content}) = _$InterviewInfoImpl;
 
   factory _InterviewInfo.fromJson(Map<String, dynamic> json) =
       _$InterviewInfoImpl.fromJson;
 
   @override
   @HiveField(0)
-  String get title;
+  int get questionId;
   @override
   @HiveField(1)
+  String get title;
+  @override
+  @HiveField(2)
   String get content;
 
   /// Create a copy of InterviewInfo
