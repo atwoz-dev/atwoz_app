@@ -51,15 +51,11 @@ class InterviewNotifier extends _$InterviewNotifier {
         questionId: questionId,
         answerContent: answerContent,
       );
-
-      await ref.read(saveInterviewToHiveUseCaseProvider).execute(
-            questionId: questionId,
-            title: question,
-            content: answerContent,
-          );
     } catch (e) {
-      Log.e(e);
+      Log.e('Failed to add interview to server: $e');
     }
+
+    await _saveInterviewToHive(questionId, question, answerContent);
   }
 
   Future<void> updateAnswer(
@@ -73,14 +69,26 @@ class InterviewNotifier extends _$InterviewNotifier {
         answerId: answerId,
         answerContent: answerContent,
       );
+    } catch (e) {
+      Log.e('Failed to update interview to server: $e');
+    }
 
+    await _saveInterviewToHive(questionId, question, answerContent);
+  }
+
+  Future<void> _saveInterviewToHive(
+    int questionId,
+    String question,
+    String answerContent,
+  ) async {
+    try {
       await ref.read(saveInterviewToHiveUseCaseProvider).execute(
             questionId: questionId,
             title: question,
             content: answerContent,
           );
     } catch (e) {
-      Log.e(e);
+      Log.e('Failed to save interview to local cache: $e');
     }
   }
 }
