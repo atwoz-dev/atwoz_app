@@ -35,12 +35,18 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
   }
 }
 
+class InterviewInfoDefaultValue {
+  static const int noQuestionId = 0;
+  static const String title = '';
+  static const String content = '';
+}
+
 extension InterviewInfoMapper on InterviewInfoDto {
   InterviewInfo toInterviewInfo() {
     return InterviewInfo(
-      questionId: questionId ?? 0,
-      title: title ?? '',
-      content: content ?? '',
+      questionId: questionId ?? InterviewInfoDefaultValue.noQuestionId,
+      title: title ?? InterviewInfoDefaultValue.title,
+      content: content ?? InterviewInfoDefaultValue.content,
     ); // TODO(jh): null 처리 제거
   }
 }
