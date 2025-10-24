@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/widget/view/defalut_app_bar_icon.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
