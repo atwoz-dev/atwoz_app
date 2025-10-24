@@ -8,12 +8,12 @@ class DefaultAppBarIcon extends StatelessWidget {
     super.key,
     this.showNotification = true,
     this.showFilter = false,
-    this.filterRoute,
+    this.filterRoute = AppRoute.ideal,
   });
 
   final bool showNotification;
   final bool showFilter;
-  final AppRoute? filterRoute;
+  final AppRoute filterRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,7 @@ class DefaultAppBarIcon extends StatelessWidget {
         if (showFilter)
           IconButton(
             onPressed: () {
-              if (filterRoute != null) {
-                navigate(context, route: filterRoute!);
-              }
+              navigate(context, route: filterRoute);
             },
             icon: const DefaultIcon(
               IconPath.filter,
