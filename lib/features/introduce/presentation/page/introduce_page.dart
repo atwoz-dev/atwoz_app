@@ -1,13 +1,12 @@
+import 'package:atwoz_app/app/widget/view/defalut_app_bar_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
 
 class IntroducePage extends ConsumerStatefulWidget {
@@ -43,56 +42,19 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Gap(2),
-                        Text(
-                          '셀프소개',
-                          style: Fonts.header03().copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        '셀프소개',
+                        style: Fonts.header03().copyWith(
+                          fontWeight: FontWeight.w700,
                         ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () =>
-                              navigate(context, route: AppRoute.notification),
-                          icon: const DefaultIcon(
-                            IconPath.notification,
-                            size: 24,
-                          ),
-                          tooltip: '알림',
-                          visualDensity: const VisualDensity(
-                            horizontal: -4,
-                            vertical: -4,
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 48,
-                            minHeight: 48,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => navigate(context,
-                              route: AppRoute.introduceFilter),
-                          icon: const DefaultIcon(
-                            IconPath.filter,
-                            size: 24,
-                          ),
-                          tooltip: '필터',
-                          visualDensity: const VisualDensity(
-                            horizontal: -4,
-                            vertical: -4,
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 48,
-                            minHeight: 48,
-                          ),
-                        ),
-                      ],
-                    ),
+                    DefaultAppBarIcon(
+                      showFilter: true,
+                      filterRoute: AppRoute.introduceFilter,
+                    )
                   ],
                 ),
               ),

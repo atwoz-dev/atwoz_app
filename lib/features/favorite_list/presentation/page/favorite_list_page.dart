@@ -1,9 +1,8 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/view/defalut_app_bar_icon.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/favorite_list/presentation/widget/favorite_list_body.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/router/router.dart';
 
 class FavoriteListPage extends StatelessWidget {
   const FavoriteListPage({super.key});
@@ -16,34 +15,16 @@ class FavoriteListPage extends StatelessWidget {
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
-              title: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '좋아요',
-                  style: Fonts.header03().copyWith(
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
-                  ),
+              centerTitle: false,
+              title: Text(
+                '좋아요',
+                style: Fonts.header03().copyWith(
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: () =>
-                      navigate(context, route: AppRoute.notification),
-                  icon: const DefaultIcon(
-                    IconPath.notification,
-                    size: 24,
-                  ),
-                  tooltip: '알림',
-                  visualDensity: const VisualDensity(
-                    horizontal: -4,
-                    vertical: -4,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 48,
-                    minHeight: 48,
-                  ),
-                ),
+                DefaultAppBarIcon(),
               ],
               automaticallyImplyLeading: false,
               pinned: false,

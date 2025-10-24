@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/view/defalut_app_bar_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_tap_bar.dart';
 import 'package:atwoz_app/features/interview/presentation/widget/question_card.dart';
@@ -49,35 +50,16 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '나를 소개해볼까요?',
-                      style: Fonts.header03().copyWith(
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
+                Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    '나를 소개해볼까요?',
+                    style: Fonts.header03().copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
-                  ],
-                ),
-                IconButton(
-                  onPressed: () =>
-                      navigate(context, route: AppRoute.notification),
-                  icon: const DefaultIcon(
-                    IconPath.notification,
-                    size: 24,
-                  ),
-                  tooltip: '알림',
-                  visualDensity: const VisualDensity(
-                    horizontal: -4,
-                    vertical: -4,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 48,
-                    minHeight: 48,
                   ),
                 ),
+                DefaultAppBarIcon(),
               ],
             ),
           ),
