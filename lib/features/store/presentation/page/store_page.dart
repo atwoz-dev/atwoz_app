@@ -40,7 +40,6 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
   @override
   Widget buildPage(BuildContext context) {
     final storeState = ref.watch(storeNotifierProvider);
-    final heartBalance = storeState.heartBalance.heartBalance;
 
     final double tagSpacing = 16;
     final double horizontalPadding = screenWidth * 0.05;
@@ -70,7 +69,10 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                             const Gap(8),
                             Text(
                               '하트는 셀프소개, 좋아요, 모의고사 등 \n여러 기능을 사용할 때 필요한 화폐입니다',
-                              style: Fonts.body03Regular(Palette.colorGrey600),
+                              style: Fonts.body02Regular().copyWith(
+                                color: Palette.colorGrey600,
+                                height: 1.2,
+                              ),
                             ),
                           ],
                         ),
@@ -106,7 +108,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                                         ),
                                         const Gap(4),
                                         Text(
-                                          heartBalance.totalHeartBalance
+                                          storeState.totalHeartBalance
                                               .toString(),
                                           style: Fonts.body03Regular(
                                             Palette.colorGrey900,

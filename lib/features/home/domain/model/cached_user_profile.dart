@@ -15,30 +15,31 @@ class CachedUserProfile with _$CachedUserProfile {
     // statusInfo
     @HiveField(0) required String activityStatus,
     @HiveField(1) required bool isVip,
-    @HiveField(2) String? primaryContactType, // 회원가입 후 연락수단 NULL
+    @HiveField(2) required bool isDatingExamSubmitted,
+    @HiveField(3) String? primaryContactType, // 회원가입 후 연락수단 NULL
 
     // basicInfo
-    @HiveField(3) required String nickname,
-    @HiveField(4) required Gender gender,
-    @HiveField(5) String? kakaoId,
-    @HiveField(6) required int age,
-    @HiveField(7) required int height,
-    @HiveField(8) required String phoneNumber,
+    @HiveField(4) required String nickname,
+    @HiveField(5) required Gender gender,
+    @HiveField(6) String? kakaoId,
+    @HiveField(7) required int age,
+    @HiveField(8) required int height,
+    @HiveField(9) required String phoneNumber,
 
     // profileInfo
-    @HiveField(9) required Job job,
-    @HiveField(10) required Education education,
-    @HiveField(11) required String city,
-    @HiveField(12) required String district,
-    @HiveField(13) required String mbti,
-    @HiveField(14) required SmokingStatus smokingStatus,
-    @HiveField(15) required DrinkingStatus drinkingStatus,
-    @HiveField(16) required Religion religion,
-    @HiveField(17) required List<Hobby> hobbies,
+    @HiveField(10) required Job job,
+    @HiveField(11) required Education education,
+    @HiveField(12) required String city,
+    @HiveField(13) required String district,
+    @HiveField(14) required String mbti,
+    @HiveField(15) required SmokingStatus smokingStatus,
+    @HiveField(16) required DrinkingStatus drinkingStatus,
+    @HiveField(17) required Religion religion,
+    @HiveField(18) required List<Hobby> hobbies,
 
     // interviewInfo
-    @HiveField(18) required List<InterviewInfo> interviewInfoView,
-    @HiveField(19) @Default(0) int myUserId,
+    @HiveField(19) required List<InterviewInfo> interviewInfoView,
+    @HiveField(20) @Default(0) int myUserId,
   }) = _CachedUserProfile;
 
   factory CachedUserProfile.fromJson(Map<String, dynamic> json) =>
@@ -55,6 +56,7 @@ class CachedUserProfile with _$CachedUserProfile {
   static const _default = CachedUserProfile(
     activityStatus: '',
     isVip: false,
+    isDatingExamSubmitted: false,
     nickname: '',
     gender: Gender.male,
     age: 0,

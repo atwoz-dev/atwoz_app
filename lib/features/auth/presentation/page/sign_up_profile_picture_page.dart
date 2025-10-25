@@ -6,6 +6,7 @@ import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
@@ -15,109 +16,109 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SignUpProfilePicturePage extends ConsumerWidget {
+class SignUpProfilePicturePage extends ConsumerStatefulWidget {
   const SignUpProfilePicturePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  SignUpProfilePicturePageState createState() =>
+      SignUpProfilePicturePageState();
+}
+
+class SignUpProfilePicturePageState
+    extends BaseConsumerStatefulPageState<SignUpProfilePicturePage> {
+  SignUpProfilePicturePageState() : super(defaultAppBarTitle: '프로필 사진');
+
+  @override
+  Widget buildPage(BuildContext context) {
     final List<XFile?> photos = ref.watch(photoProvider);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: const DefaultAppBar(
-          title: '프로필 사진',
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 흰색 배경으로 처리되는 상단 영역
-              Container(
-                color: Palette.colorWhite, // 흰색 배경
-                child: Padding(
-                  padding:
-                      EdgeInsets.all(context.screenWidth * 0.05), // 패딩 동적 설정
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const AuthStepIndicatorWidget(
-                        totalSteps: 4,
-                        currentStep: 3,
-                      ),
-                      Gap(12.h),
-                      Row(
-                        children: [
-                          Text(
-                            '프로필 사진을 등록해주세요',
-                            style: Fonts.header03()
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const Gap(6),
-                          ToolTip(
-                            message: '대표 사진은 하단과 같이\n정면사진을 등록해주세요',
-                            boldText: '정면사진',
-                            textStyle: Fonts.body03Regular(
-                              Palette.colorWhite,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Gap(24),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 흰색 배경으로 처리되는 상단 영역
+                  Container(
+                    color: Palette.colorWhite, // 흰색 배경
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AuthStepIndicatorWidget(
+                          totalSteps: 4,
+                          currentStep: 3,
                         ),
-                        itemCount: photos.length,
-                        itemBuilder: (context, index) {
-                          return ProfileImageWidget(
-                            imageFile: photos[index],
-                            onPickImage: () async {
-                              final pickedPhoto = await ref
-                                  .read(photoProvider.notifier)
-                                  .pickPhoto(ImageSource.gallery);
+                        Gap(12.h),
+                        Row(
+                          children: [
+                            Text(
+                              '프로필 사진을 등록해주세요',
+                              style: Fonts.header03()
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const Gap(6),
+                            ToolTip(
+                              message: '대표 사진은 하단과 같이\n정면사진을 등록해주세요',
+                              boldText: '정면사진',
+                              textStyle: Fonts.body03Regular(
+                                Palette.colorWhite,
+                              ),
+                            )
+                          ],
+                        ),
+                        const Gap(24),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                          itemCount: photos.length,
+                          itemBuilder: (context, index) {
+                            return ProfileImageWidget(
+                              imageFile: photos[index],
+                              onPickImage: () async {
+                                final pickedPhoto = await ref
+                                    .read(photoProvider.notifier)
+                                    .pickPhoto(ImageSource.gallery);
 
-                              if (pickedPhoto != null) {
+                                if (pickedPhoto != null) {
+                                  ref
+                                      .read(photoProvider.notifier)
+                                      .updateState(index, pickedPhoto);
+                                }
+                              },
+                              // 사진 삭제
+                              onRemoveImage: () {
                                 ref
                                     .read(photoProvider.notifier)
-                                    .updateState(index, pickedPhoto);
-                              }
-                            },
-                            // 사진 삭제
-                            onRemoveImage: () {
-                              ref
-                                  .read(photoProvider.notifier)
-                                  .updateState(index, null);
-                            },
-                            isRepresentative: index == 0,
-                          );
-                        },
-                      ),
-                      BulletText(
-                        texts: [
-                          '본인의 장점을 어필할 수 있는 가장 멋진 사진으로 올려주세요',
-                          '아래의 가이드를 참고하시면 매칭 확률이 올라가요',
-                        ],
-                        textStyle: Fonts.body03Regular(
-                          const Color.fromRGBO(155, 160, 171, 1),
+                                    .updateState(index, null);
+                              },
+                              isRepresentative: index == 0,
+                            );
+                          },
                         ),
-                      ),
-                    ],
+                        BulletText(
+                          texts: [
+                            '본인의 장점을 어필할 수 있는 가장 멋진 사진으로 올려주세요',
+                            '아래의 가이드를 참고하시면 매칭 확률이 올라가요',
+                          ],
+                          textStyle: Fonts.body03Regular(
+                            const Color.fromRGBO(155, 160, 171, 1),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              // 회색 배경으로 처리되는 하단 영역
-              Container(
-                color: const Color(0xffF8F8F8),
-                child: Padding(
-                  padding: EdgeInsets.all(context.screenWidth * 0.05),
-                  child: Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Gap(24),
                       const AuthPhotoGuideWidget(
                         title: '이성에게 좋은 인상을 주는 사진',
                         imagePathsWithText: [
@@ -169,28 +170,38 @@ class SignUpProfilePicturePage extends ConsumerWidget {
                           },
                         ],
                       ),
-                      DefaultElevatedButton(
-                        onPressed: photos.any((photo) => photo != null) &&
-                                photos[0] != null
-                            ? () async {
-                                navigate(context, route: AppRoute.signUpTerms);
-                              }
-                            : null,
-                        child: Text(
-                          '다음',
-                          style: Fonts.body01Medium(
-                            photos.any((photo) => photo != null)
-                                ? context.palette.onPrimary
-                                : Palette.colorGrey400,
-                          ).copyWith(fontWeight: FontWeight.w900),
-                        ),
-                      ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: screenHeight * 0.05,
+              left: 0,
+              right: 0,
+              child: Builder(
+                builder: (context) {
+                  final bool isPrimaryPhotoSelected =
+                      photos.isNotEmpty && photos[0] != null;
+                  return DefaultElevatedButton(
+                    onPressed: isPrimaryPhotoSelected
+                        ? () async {
+                            navigate(context, route: AppRoute.signUpTerms);
+                          }
+                        : null,
+                    child: Text(
+                      '다음',
+                      style: Fonts.body01Medium(
+                        isPrimaryPhotoSelected
+                            ? context.palette.onPrimary
+                            : Palette.colorGrey400,
+                      ).copyWith(fontWeight: FontWeight.w900),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
