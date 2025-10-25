@@ -11,8 +11,9 @@ NotificationItem _$NotificationItemFromJson(Map<String, dynamic> json) =>
       notificationId: (json['notificationId'] as num).toInt(),
       senderId: (json['senderId'] as num).toInt(),
       receiverId: (json['receiverId'] as num).toInt(),
-      notificationType:
-          ServerNotificationType.parse(json['notificationType'] as String?),
+      notificationType: ServerNotificationType.parse(
+        json['notificationType'] as String?,
+      ),
       title: json['title'] as String,
       body: json['body'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),

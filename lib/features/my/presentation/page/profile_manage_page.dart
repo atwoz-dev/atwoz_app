@@ -9,7 +9,7 @@ class ProfileManagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final myProfileAsync = ref.watch(profileManageNotifierProvider);
+    final myProfileAsync = ref.watch(profileManageProvider);
 
     // 프로필 관리 화면 영역 개수
     const profileMangeAreaCount = 2;

@@ -20,7 +20,7 @@ class ProfileNotifier extends _$ProfileNotifier {
   @override
   ProfileState build(int userId) {
     _repository = ref.read(profileRepositoryProvider);
-    _myName = ref.read(globalNotifierProvider).profile.nickname;
+    _myName = ref.read(globalProvider).profile.nickname;
 
     _initializeProfileState(userId);
     return ProfileState.initial();

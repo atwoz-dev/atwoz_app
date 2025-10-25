@@ -4,7 +4,7 @@ part 'profile_image_response.freezed.dart';
 part 'profile_image_response.g.dart';
 
 @freezed
-class ProfileImageResponse with _$ProfileImageResponse {
+abstract class ProfileImageResponse with _$ProfileImageResponse {
   const factory ProfileImageResponse({
     required int status,
     required String code,
@@ -17,7 +17,7 @@ class ProfileImageResponse with _$ProfileImageResponse {
 }
 
 @freezed
-class ProfileImageData with _$ProfileImageData {
+abstract class ProfileImageData with _$ProfileImageData {
   const factory ProfileImageData({
     required int id,
     required String url,

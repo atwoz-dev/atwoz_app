@@ -6,9 +6,8 @@ part of 'user_sign_up_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserSignUpRequestImpl _$$UserSignUpRequestImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UserSignUpRequestImpl(
+_UserSignUpRequest _$UserSignUpRequestFromJson(Map<String, dynamic> json) =>
+    _UserSignUpRequest(
       seq: (json['SEQ'] as num).toInt(),
       id: json['ID'] as String,
       password: json['PASSWORD'] as String,
@@ -19,11 +18,12 @@ _$UserSignUpRequestImpl _$$UserSignUpRequestImplFromJson(
       registrationPath: (json['REGISTRATION_PATH'] as num?)?.toInt(),
       isResign: json['IS_RESIGN'] as bool,
       createdAt: _$JsonConverterFromJson<String, DateTime>(
-          json['CREATED_AT'], const ConvertStringToDateTime().fromJson),
+        json['CREATED_AT'],
+        const ConvertStringToDateTime().fromJson,
+      ),
     );
 
-Map<String, dynamic> _$$UserSignUpRequestImplToJson(
-        _$UserSignUpRequestImpl instance) =>
+Map<String, dynamic> _$UserSignUpRequestToJson(_UserSignUpRequest instance) =>
     <String, dynamic>{
       'SEQ': instance.seq,
       'ID': instance.id,
@@ -35,17 +35,17 @@ Map<String, dynamic> _$$UserSignUpRequestImplToJson(
       'REGISTRATION_PATH': instance.registrationPath,
       'IS_RESIGN': instance.isResign,
       'CREATED_AT': _$JsonConverterToJson<String, DateTime>(
-          instance.createdAt, const ConvertStringToDateTime().toJson),
+        instance.createdAt,
+        const ConvertStringToDateTime().toJson,
+      ),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
+) => value == null ? null : toJson(value);

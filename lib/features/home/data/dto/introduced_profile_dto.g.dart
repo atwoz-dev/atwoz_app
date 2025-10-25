@@ -8,7 +8,7 @@ part of 'introduced_profile_dto.dart';
 
 class IntroducedProfileDtoAdapter extends TypeAdapter<IntroducedProfileDto> {
   @override
-  final int typeId = 6;
+  final typeId = 6;
 
   @override
   IntroducedProfileDto read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class IntroducedProfileDtoAdapter extends TypeAdapter<IntroducedProfileDto> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return IntroducedProfileDto(
-      memberId: fields[0] as int,
+      memberId: (fields[0] as num).toInt(),
       profileImageUrl: fields[1] as String,
       hobbies: (fields[2] as List).cast<String>(),
       mbti: fields[3] as String,
@@ -66,28 +66,27 @@ class IntroducedProfileDtoAdapter extends TypeAdapter<IntroducedProfileDto> {
 // **************************************************************************
 
 IntroducedProfileDto _$IntroducedProfileDtoFromJson(
-        Map<String, dynamic> json) =>
-    IntroducedProfileDto(
-      memberId: (json['memberId'] as num).toInt(),
-      profileImageUrl: json['profileImageUrl'] as String,
-      hobbies:
-          (json['hobbies'] as List<dynamic>).map((e) => e as String).toList(),
-      mbti: json['mbti'] as String,
-      religion: json['religion'] as String?,
-      interviewAnswerContent: json['interviewAnswerContent'] as String,
-      likeLevel: json['likeLevel'] as String?,
-      isIntroduced: json['isIntroduced'] as bool,
-    );
+  Map<String, dynamic> json,
+) => IntroducedProfileDto(
+  memberId: (json['memberId'] as num).toInt(),
+  profileImageUrl: json['profileImageUrl'] as String,
+  hobbies: (json['hobbies'] as List<dynamic>).map((e) => e as String).toList(),
+  mbti: json['mbti'] as String,
+  religion: json['religion'] as String?,
+  interviewAnswerContent: json['interviewAnswerContent'] as String,
+  likeLevel: json['likeLevel'] as String?,
+  isIntroduced: json['isIntroduced'] as bool,
+);
 
 Map<String, dynamic> _$IntroducedProfileDtoToJson(
-        IntroducedProfileDto instance) =>
-    <String, dynamic>{
-      'memberId': instance.memberId,
-      'profileImageUrl': instance.profileImageUrl,
-      'hobbies': instance.hobbies,
-      'mbti': instance.mbti,
-      'religion': instance.religion,
-      'interviewAnswerContent': instance.interviewAnswerContent,
-      'likeLevel': instance.likeLevel,
-      'isIntroduced': instance.isIntroduced,
-    };
+  IntroducedProfileDto instance,
+) => <String, dynamic>{
+  'memberId': instance.memberId,
+  'profileImageUrl': instance.profileImageUrl,
+  'hobbies': instance.hobbies,
+  'mbti': instance.mbti,
+  'religion': instance.religion,
+  'interviewAnswerContent': instance.interviewAnswerContent,
+  'likeLevel': instance.likeLevel,
+  'isIntroduced': instance.isIntroduced,
+};

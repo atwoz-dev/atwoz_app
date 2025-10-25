@@ -54,7 +54,7 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                     ),
                   );
 
-                  ref.invalidate(profileManageNotifierProvider);
+                  ref.invalidate(profileManageProvider);
                 },
                 child: Stack(
                   children: [

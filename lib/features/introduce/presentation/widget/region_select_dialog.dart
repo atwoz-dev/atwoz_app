@@ -35,7 +35,7 @@ class Regionselectdialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCityList = ref.watch(filterNotifierProvider).selectedCitys;
+    final selectedCityList = ref.watch(filterProvider).selectedCitys;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -67,7 +67,7 @@ class Regionselectdialog extends ConsumerWidget {
                   onSelectionChanged: (updatedSelections) {
                     if (updatedSelections.length > 2) return;
                     ref
-                        .read(filterNotifierProvider.notifier)
+                        .read(filterProvider.notifier)
                         .updateHobbies(updatedSelections);
                   },
                 ),

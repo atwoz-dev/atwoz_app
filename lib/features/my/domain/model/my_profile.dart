@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'my_profile.freezed.dart';
 
 @freezed
-class MyProfile with _$MyProfile {
+abstract class MyProfile with _$MyProfile {
   const factory MyProfile({
     required List<MyProfileImage?> profileImages,
     required Job job,

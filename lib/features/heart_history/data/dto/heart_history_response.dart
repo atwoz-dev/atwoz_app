@@ -4,7 +4,7 @@ part 'heart_history_response.freezed.dart';
 part 'heart_history_response.g.dart';
 
 @freezed
-class HeartHistoryItemResponse with _$HeartHistoryItemResponse {
+abstract class HeartHistoryItemResponse with _$HeartHistoryItemResponse {
   const factory HeartHistoryItemResponse({
     required int id,
     required DateTime createdAt,
@@ -17,7 +17,7 @@ class HeartHistoryItemResponse with _$HeartHistoryItemResponse {
 }
 
 @freezed
-class HeartHistoryResponse with _$HeartHistoryResponse {
+abstract class HeartHistoryResponse with _$HeartHistoryResponse {
   const factory HeartHistoryResponse({
     required List<HeartHistoryItemResponse> transactions,
     required bool hasMore,

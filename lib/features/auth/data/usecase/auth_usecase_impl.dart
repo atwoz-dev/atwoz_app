@@ -38,7 +38,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   ApiServiceImpl get _apiService => _ref.read(apiServiceProvider);
   PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
   GlobalNotifier get _globalNotifier =>
-      _ref.read(globalNotifierProvider.notifier);
+      _ref.read(globalProvider.notifier);
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';

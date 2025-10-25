@@ -8,7 +8,7 @@ part of 'my_profile_image.dart';
 
 class MyProfileImageAdapter extends TypeAdapter<MyProfileImage> {
   @override
-  final int typeId = 5;
+  final typeId = 5;
 
   @override
   MyProfileImage read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class MyProfileImageAdapter extends TypeAdapter<MyProfileImage> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MyProfileImage(
-      id: fields[0] as int,
+      id: (fields[0] as num).toInt(),
       imageUrl: fields[1] as String,
     );
   }

@@ -4,7 +4,7 @@ part 'profile_photo_upload_request.freezed.dart';
 part 'profile_photo_upload_request.g.dart';
 
 @freezed
-class ProfilePhotoUploadRequest with _$ProfilePhotoUploadRequest {
+abstract class ProfilePhotoUploadRequest with _$ProfilePhotoUploadRequest {
   const factory ProfilePhotoUploadRequest({
     String? id, // 새 이미지면 null
     required bool isPrimary, // 대표 이미지 여부

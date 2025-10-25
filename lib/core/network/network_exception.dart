@@ -11,7 +11,7 @@ part 'network_exception.freezed.dart';
 /// 네트워크 요청 중 발생하는 예외를 관리하기 위한 커스텀 Exception 클래스
 // @freezed: Freezed 어노테이션을 사용해 불변 객체와 다양한 상태를 자동으로 생성
 @freezed
-class NetworkException with _$NetworkException implements Exception {
+abstract class NetworkException with _$NetworkException implements Exception {
   // const NetworkException._(): 프라이빗 생성자. 내부 생성 용도로만 사용되며, 외부에서 직접 인스턴스화하지 못하게 함
   const NetworkException._() : super();
 

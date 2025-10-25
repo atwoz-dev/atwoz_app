@@ -8,7 +8,7 @@ import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles
 import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduced_profiles_notifier.g.dart';

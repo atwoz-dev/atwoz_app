@@ -39,11 +39,11 @@ class ExamQuestionPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final examState = ref.watch(examNotifierProvider);
-    final notifier = ref.read(examNotifierProvider.notifier);
+    final examState = ref.watch(examProvider);
+    final notifier = ref.read(examProvider.notifier);
 
     if (!examState.isLoaded || examState.questionList.questionList.isEmpty) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }

@@ -8,14 +8,14 @@ class AgeRangeSlider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final range = ref.watch(filterNotifierProvider).rangeValues;
+    final range = ref.watch(filterProvider).rangeValues;
 
     return RangeSlider(
       values: range,
       min: 20,
       max: 46,
       onChanged: (RangeValues values) {
-        ref.read(filterNotifierProvider.notifier).updateRange(values);
+        ref.read(filterProvider.notifier).updateRange(values);
       },
       activeColor: Palette.colorPrimary500,
       inactiveColor: Palette.colorGrey100,

@@ -11,7 +11,7 @@ class MySettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mySettingAsync = ref.watch(mySettingNotifierProvider);
+    final mySettingAsync = ref.watch(mySettingProvider);
 
     return Scaffold(
       appBar: const DefaultAppBar(

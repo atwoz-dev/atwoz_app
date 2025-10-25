@@ -8,7 +8,7 @@ enum HeartHistoryErrorType {
 }
 
 @freezed
-class HeartHistoryState with _$HeartHistoryState {
+abstract class HeartHistoryState with _$HeartHistoryState {
   const factory HeartHistoryState({
     @Default(const HeartHistoryData()) HeartHistoryData history,
     @Default(false) bool isLoaded,

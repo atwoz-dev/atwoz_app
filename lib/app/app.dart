@@ -73,8 +73,8 @@ class _AppState extends ConsumerState<App> {
   Future<void> _initialize() async {
     final router = ref.read(routerProvider);
 
-    await ref.read(globalNotifierProvider.notifier).initProfile();
-    if (ref.read(globalNotifierProvider).profile.isDefault) {
+    await ref.read(globalProvider.notifier).initProfile();
+    if (ref.read(globalProvider).profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
     } else {
       router.goNamed(AppRoute.mainTab.name);
