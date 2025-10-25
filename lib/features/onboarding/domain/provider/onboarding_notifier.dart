@@ -122,8 +122,13 @@ class OnboardingNotifier extends _$OnboardingNotifier {
   }
 
   // 계정 활성화
-  Future<void> activateAccount(String phoneNumber) async {
-    await ref.read(authUsecaseProvider).activateAccount(phoneNumber);
+  Future<bool> activateAccount(String phoneNumber) async {
+    try {
+      await ref.read(authUsecaseProvider).activateAccount(phoneNumber);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void dispose() {

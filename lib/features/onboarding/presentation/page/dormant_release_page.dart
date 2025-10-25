@@ -1,12 +1,22 @@
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
+import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 // 휴면회원 해제 페이지
 class DormantReleasePage extends ConsumerWidget {
-  const DormantReleasePage({super.key});
+  final String phoneNumber;
+
+  const DormantReleasePage({
+    super.key,
+    required this.phoneNumber,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +63,27 @@ class DormantReleasePage extends ConsumerWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  final isSuccess = await ref
+                      .read(onboardingNotifierProvider.notifier)
+                      .activateAccount(phoneNumber);
+                  if (!context.mounted) return;
+                  if (!isSuccess) {
+                    ErrorDialog.open(
+                      context,
+                      error: DialogueErrorType.failDormantRelease,
+                      onConfirm: context.pop,
+                    );
+
+                    return;
+                  }
+
+                  navigate(
+                    context,
+                    route: AppRoute.onboard,
+                    method: NavigationMethod.go,
+                  );
+                },
               )
             ],
           ),

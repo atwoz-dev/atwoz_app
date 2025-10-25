@@ -258,7 +258,16 @@ final allRoutes = [
           ),
           NamedGoRoute(
             name: AppRoute.dormantRelease.name,
-            builder: (context, state) => const DormantReleasePage(),
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! DormantReleaseArguments) {
+                return const SizedBox.shrink();
+              }
+
+              return DormantReleasePage(
+                phoneNumber: args.phoneNumber,
+              );
+            },
           ),
         ],
       ),

@@ -117,11 +117,11 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
     final isUpdated = await _showUpdateDormantStatus(
       context,
       onDormantChanged: () async {
-        final success = await ref
+        final isSuccess = await ref
             .read(mySettingNotifierProvider.notifier)
             .deactiveAccount();
         if (!mounted) return;
-        if (!success) {
+        if (!isSuccess) {
           ErrorDialog.open(
             context,
             error: DialogueErrorType.unknown,
@@ -133,6 +133,20 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           return;
         }
 
+        final signOutCompleted =
+            await ref.read(mySettingNotifierProvider.notifier).signOut();
+        if (!mounted) return;
+        if (!signOutCompleted) {
+          ErrorDialog.open(
+            context,
+            error: DialogueErrorType.failSignOut,
+            onConfirm: context.pop,
+          );
+
+          return;
+        }
+
+        if (!mounted) return;
         navigate(
           context,
           route: AppRoute.onboard,

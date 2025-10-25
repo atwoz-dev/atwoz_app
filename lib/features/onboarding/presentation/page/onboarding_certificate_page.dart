@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
@@ -133,26 +134,34 @@ class _OnboardingCertificationPageState
                           if (userData?.isProfileSettingNeeded ?? false) {
                             navigate(context, route: AppRoute.signUp);
                           } else {
-                            navigate(context,
-                                route: AppRoute.mainTab,
-                                method: NavigationMethod.go);
+                            navigate(
+                              context,
+                              route: AppRoute.mainTab,
+                              method: NavigationMethod.go,
+                            );
                           }
                           break;
 
                         case AuthStatus.dormant:
-                          navigate(context, route: AppRoute.dormantRelease);
+                          navigate(
+                            context,
+                            route: AppRoute.dormantRelease,
+                            method: NavigationMethod.go,
+                            extra: DormantReleaseArguments(
+                              phoneNumber: widget.phoneNumber,
+                            ),
+                          );
                           break;
 
                         case AuthStatus.forbidden:
-                          showToastMessage('접근이 제한된 계정입니다.');
                           break;
 
                         case AuthStatus.temporarilyForbidden:
-                          showToastMessage('일시적으로 제한된 계정입니다.');
+                          // TODO: 일시정지 대기화면 이동
                           break;
 
                         case AuthStatus.deletedUser:
-                          showToastMessage('삭제된 계정입니다.');
+                          // TODO: 탈퇴계정 다이얼로그 표시
                           break;
 
                         case null:
