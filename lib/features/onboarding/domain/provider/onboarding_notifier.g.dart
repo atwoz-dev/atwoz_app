@@ -6,22 +6,59 @@ part of 'onboarding_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onboardingNotifierHash() =>
-    r'f5499c3788a3ddc83cb4eb9276ce336c83bb0bcb';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [OnboardingNotifier].
 @ProviderFor(OnboardingNotifier)
-final onboardingNotifierProvider =
-    AutoDisposeNotifierProvider<OnboardingNotifier, OnboardingState>.internal(
-  OnboardingNotifier.new,
-  name: r'onboardingNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$onboardingNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const onboardingProvider = OnboardingNotifierProvider._();
 
-typedef _$OnboardingNotifier = AutoDisposeNotifier<OnboardingState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class OnboardingNotifierProvider
+    extends $NotifierProvider<OnboardingNotifier, OnboardingState> {
+  const OnboardingNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'onboardingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$onboardingNotifierHash();
+
+  @$internal
+  @override
+  OnboardingNotifier create() => OnboardingNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(OnboardingState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<OnboardingState>(value),
+    );
+  }
+}
+
+String _$onboardingNotifierHash() =>
+    r'01da9bcacbfbc840075b37745a23107d0e121037';
+
+abstract class _$OnboardingNotifier extends $Notifier<OnboardingState> {
+  OnboardingState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<OnboardingState, OnboardingState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<OnboardingState, OnboardingState>,
+              OnboardingState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'onboarding_state.freezed.dart';
 
 @freezed
-class OnboardingState with _$OnboardingState {
+abstract class OnboardingState with _$OnboardingState {
   const OnboardingState._();
 
   const factory OnboardingState({
@@ -16,8 +16,8 @@ class OnboardingState with _$OnboardingState {
   }) = _OnboardingState;
 
   factory OnboardingState.initial() => const OnboardingState(
-        isButtonEnabled: false,
-        resendCountDown: 0,
-        isLoading: false,
-      );
+    isButtonEnabled: false,
+    resendCountDown: 0,
+    isLoading: false,
+  );
 }
