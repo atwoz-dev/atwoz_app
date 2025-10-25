@@ -6,19 +6,58 @@ part of 'exam_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$examNotifierHash() => r'c05597e061b1afc4d104a9ac0b1032e5c28051ed';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ExamNotifier].
 @ProviderFor(ExamNotifier)
-final examNotifierProvider = NotifierProvider<ExamNotifier, ExamState>.internal(
-  ExamNotifier.new,
-  name: r'examNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$examNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const examProvider = ExamNotifierProvider._();
 
-typedef _$ExamNotifier = Notifier<ExamState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ExamNotifierProvider
+    extends $NotifierProvider<ExamNotifier, ExamState> {
+  const ExamNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'examProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$examNotifierHash();
+
+  @$internal
+  @override
+  ExamNotifier create() => ExamNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExamState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExamState>(value),
+    );
+  }
+}
+
+String _$examNotifierHash() => r'1489a35a875606df4182c4c142b9c143e516b2fa';
+
+abstract class _$ExamNotifier extends $Notifier<ExamState> {
+  ExamState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<ExamState, ExamState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ExamState, ExamState>,
+              ExamState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

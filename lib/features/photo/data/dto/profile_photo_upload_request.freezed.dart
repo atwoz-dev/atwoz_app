@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,201 +9,279 @@ part of 'profile_photo_upload_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ProfilePhotoUploadRequest _$ProfilePhotoUploadRequestFromJson(
-    Map<String, dynamic> json) {
-  return _ProfilePhotoUploadRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ProfilePhotoUploadRequest {
-  String? get id => throw _privateConstructorUsedError; // 새 이미지면 null
-  bool get isPrimary => throw _privateConstructorUsedError; // 대표 이미지 여부
-  int get order => throw _privateConstructorUsedError;
+
+ String? get id;// 새 이미지면 null
+ bool get isPrimary;// 대표 이미지 여부
+ int get order;
+/// Create a copy of ProfilePhotoUploadRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProfilePhotoUploadRequestCopyWith<ProfilePhotoUploadRequest> get copyWith => _$ProfilePhotoUploadRequestCopyWithImpl<ProfilePhotoUploadRequest>(this as ProfilePhotoUploadRequest, _$identity);
 
   /// Serializes this ProfilePhotoUploadRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of ProfilePhotoUploadRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfilePhotoUploadRequestCopyWith<ProfilePhotoUploadRequest> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfilePhotoUploadRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.isPrimary, isPrimary) || other.isPrimary == isPrimary)&&(identical(other.order, order) || other.order == order));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,isPrimary,order);
+
+@override
+String toString() {
+  return 'ProfilePhotoUploadRequest(id: $id, isPrimary: $isPrimary, order: $order)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ProfilePhotoUploadRequestCopyWith<$Res> {
-  factory $ProfilePhotoUploadRequestCopyWith(ProfilePhotoUploadRequest value,
-          $Res Function(ProfilePhotoUploadRequest) then) =
-      _$ProfilePhotoUploadRequestCopyWithImpl<$Res, ProfilePhotoUploadRequest>;
-  @useResult
-  $Res call({String? id, bool isPrimary, int order});
-}
+abstract mixin class $ProfilePhotoUploadRequestCopyWith<$Res>  {
+  factory $ProfilePhotoUploadRequestCopyWith(ProfilePhotoUploadRequest value, $Res Function(ProfilePhotoUploadRequest) _then) = _$ProfilePhotoUploadRequestCopyWithImpl;
+@useResult
+$Res call({
+ String? id, bool isPrimary, int order
+});
 
+
+
+
+}
 /// @nodoc
-class _$ProfilePhotoUploadRequestCopyWithImpl<$Res,
-        $Val extends ProfilePhotoUploadRequest>
+class _$ProfilePhotoUploadRequestCopyWithImpl<$Res>
     implements $ProfilePhotoUploadRequestCopyWith<$Res> {
-  _$ProfilePhotoUploadRequestCopyWithImpl(this._value, this._then);
+  _$ProfilePhotoUploadRequestCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ProfilePhotoUploadRequest _self;
+  final $Res Function(ProfilePhotoUploadRequest) _then;
 
-  /// Create a copy of ProfilePhotoUploadRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? isPrimary = null,
-    Object? order = null,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPrimary: null == isPrimary
-          ? _value.isPrimary
-          : isPrimary // ignore: cast_nullable_to_non_nullable
-              as bool,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of ProfilePhotoUploadRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? isPrimary = null,Object? order = null,}) {
+  return _then(_self.copyWith(
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,isPrimary: null == isPrimary ? _self.isPrimary : isPrimary // ignore: cast_nullable_to_non_nullable
+as bool,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$ProfilePhotoUploadRequestImplCopyWith<$Res>
-    implements $ProfilePhotoUploadRequestCopyWith<$Res> {
-  factory _$$ProfilePhotoUploadRequestImplCopyWith(
-          _$ProfilePhotoUploadRequestImpl value,
-          $Res Function(_$ProfilePhotoUploadRequestImpl) then) =
-      __$$ProfilePhotoUploadRequestImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String? id, bool isPrimary, int order});
 }
 
-/// @nodoc
-class __$$ProfilePhotoUploadRequestImplCopyWithImpl<$Res>
-    extends _$ProfilePhotoUploadRequestCopyWithImpl<$Res,
-        _$ProfilePhotoUploadRequestImpl>
-    implements _$$ProfilePhotoUploadRequestImplCopyWith<$Res> {
-  __$$ProfilePhotoUploadRequestImplCopyWithImpl(
-      _$ProfilePhotoUploadRequestImpl _value,
-      $Res Function(_$ProfilePhotoUploadRequestImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of ProfilePhotoUploadRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? isPrimary = null,
-    Object? order = null,
-  }) {
-    return _then(_$ProfilePhotoUploadRequestImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPrimary: null == isPrimary
-          ? _value.isPrimary
-          : isPrimary // ignore: cast_nullable_to_non_nullable
-              as bool,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Adds pattern-matching-related methods to [ProfilePhotoUploadRequest].
+extension ProfilePhotoUploadRequestPatterns on ProfilePhotoUploadRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfilePhotoUploadRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfilePhotoUploadRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfilePhotoUploadRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  bool isPrimary,  int order)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest() when $default != null:
+return $default(_that.id,_that.isPrimary,_that.order);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  bool isPrimary,  int order)  $default,) {final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest():
+return $default(_that.id,_that.isPrimary,_that.order);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  bool isPrimary,  int order)?  $default,) {final _that = this;
+switch (_that) {
+case _ProfilePhotoUploadRequest() when $default != null:
+return $default(_that.id,_that.isPrimary,_that.order);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ProfilePhotoUploadRequestImpl implements _ProfilePhotoUploadRequest {
-  const _$ProfilePhotoUploadRequestImpl(
-      {this.id, required this.isPrimary, required this.order});
 
-  factory _$ProfilePhotoUploadRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProfilePhotoUploadRequestImplFromJson(json);
+class _ProfilePhotoUploadRequest implements ProfilePhotoUploadRequest {
+  const _ProfilePhotoUploadRequest({this.id, required this.isPrimary, required this.order});
+  factory _ProfilePhotoUploadRequest.fromJson(Map<String, dynamic> json) => _$ProfilePhotoUploadRequestFromJson(json);
 
-  @override
-  final String? id;
+@override final  String? id;
 // 새 이미지면 null
-  @override
-  final bool isPrimary;
+@override final  bool isPrimary;
 // 대표 이미지 여부
-  @override
-  final int order;
+@override final  int order;
 
-  @override
-  String toString() {
-    return 'ProfilePhotoUploadRequest(id: $id, isPrimary: $isPrimary, order: $order)';
-  }
+/// Create a copy of ProfilePhotoUploadRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProfilePhotoUploadRequestCopyWith<_ProfilePhotoUploadRequest> get copyWith => __$ProfilePhotoUploadRequestCopyWithImpl<_ProfilePhotoUploadRequest>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfilePhotoUploadRequestImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.isPrimary, isPrimary) ||
-                other.isPrimary == isPrimary) &&
-            (identical(other.order, order) || other.order == order));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, isPrimary, order);
-
-  /// Create a copy of ProfilePhotoUploadRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfilePhotoUploadRequestImplCopyWith<_$ProfilePhotoUploadRequestImpl>
-      get copyWith => __$$ProfilePhotoUploadRequestImplCopyWithImpl<
-          _$ProfilePhotoUploadRequestImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProfilePhotoUploadRequestImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$ProfilePhotoUploadRequestToJson(this, );
 }
 
-abstract class _ProfilePhotoUploadRequest implements ProfilePhotoUploadRequest {
-  const factory _ProfilePhotoUploadRequest(
-      {final String? id,
-      required final bool isPrimary,
-      required final int order}) = _$ProfilePhotoUploadRequestImpl;
-
-  factory _ProfilePhotoUploadRequest.fromJson(Map<String, dynamic> json) =
-      _$ProfilePhotoUploadRequestImpl.fromJson;
-
-  @override
-  String? get id; // 새 이미지면 null
-  @override
-  bool get isPrimary; // 대표 이미지 여부
-  @override
-  int get order;
-
-  /// Create a copy of ProfilePhotoUploadRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfilePhotoUploadRequestImplCopyWith<_$ProfilePhotoUploadRequestImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfilePhotoUploadRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.isPrimary, isPrimary) || other.isPrimary == isPrimary)&&(identical(other.order, order) || other.order == order));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,isPrimary,order);
+
+@override
+String toString() {
+  return 'ProfilePhotoUploadRequest(id: $id, isPrimary: $isPrimary, order: $order)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ProfilePhotoUploadRequestCopyWith<$Res> implements $ProfilePhotoUploadRequestCopyWith<$Res> {
+  factory _$ProfilePhotoUploadRequestCopyWith(_ProfilePhotoUploadRequest value, $Res Function(_ProfilePhotoUploadRequest) _then) = __$ProfilePhotoUploadRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ String? id, bool isPrimary, int order
+});
+
+
+
+
+}
+/// @nodoc
+class __$ProfilePhotoUploadRequestCopyWithImpl<$Res>
+    implements _$ProfilePhotoUploadRequestCopyWith<$Res> {
+  __$ProfilePhotoUploadRequestCopyWithImpl(this._self, this._then);
+
+  final _ProfilePhotoUploadRequest _self;
+  final $Res Function(_ProfilePhotoUploadRequest) _then;
+
+/// Create a copy of ProfilePhotoUploadRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? isPrimary = null,Object? order = null,}) {
+  return _then(_ProfilePhotoUploadRequest(
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,isPrimary: null == isPrimary ? _self.isPrimary : isPrimary // ignore: cast_nullable_to_non_nullable
+as bool,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on

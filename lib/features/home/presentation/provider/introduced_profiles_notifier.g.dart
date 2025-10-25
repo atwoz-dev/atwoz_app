@@ -6,177 +6,110 @@ part of 'introduced_profiles_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$introducedProfilesNotifierHash() =>
-    r'8d4d4756d01b1b74e4704050635ea86e9d4512b4';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$IntroducedProfilesNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<List<IntroducedProfile>> {
-  late final IntroducedCategory category;
-
-  FutureOr<List<IntroducedProfile>> build(
-    IntroducedCategory category,
-  );
-}
-
-/// See also [IntroducedProfilesNotifier].
 @ProviderFor(IntroducedProfilesNotifier)
-const introducedProfilesNotifierProvider = IntroducedProfilesNotifierFamily();
+const introducedProfilesProvider = IntroducedProfilesNotifierFamily._();
 
-/// See also [IntroducedProfilesNotifier].
-class IntroducedProfilesNotifierFamily
-    extends Family<AsyncValue<List<IntroducedProfile>>> {
-  /// See also [IntroducedProfilesNotifier].
-  const IntroducedProfilesNotifierFamily();
+final class IntroducedProfilesNotifierProvider
+    extends
+        $AsyncNotifierProvider<
+          IntroducedProfilesNotifier,
+          List<IntroducedProfile>
+        > {
+  const IntroducedProfilesNotifierProvider._({
+    required IntroducedProfilesNotifierFamily super.from,
+    required IntroducedCategory super.argument,
+  }) : super(
+         retry: null,
+         name: r'introducedProfilesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [IntroducedProfilesNotifier].
-  IntroducedProfilesNotifierProvider call(
-    IntroducedCategory category,
-  ) {
-    return IntroducedProfilesNotifierProvider(
-      category,
-    );
+  @override
+  String debugGetCreateSourceHash() => _$introducedProfilesNotifierHash();
+
+  @override
+  String toString() {
+    return r'introducedProfilesProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  IntroducedProfilesNotifierProvider getProviderOverride(
-    covariant IntroducedProfilesNotifierProvider provider,
-  ) {
-    return call(
-      provider.category,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'introducedProfilesNotifierProvider';
-}
-
-/// See also [IntroducedProfilesNotifier].
-class IntroducedProfilesNotifierProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<IntroducedProfilesNotifier,
-        List<IntroducedProfile>> {
-  /// See also [IntroducedProfilesNotifier].
-  IntroducedProfilesNotifierProvider(
-    IntroducedCategory category,
-  ) : this._internal(
-          () => IntroducedProfilesNotifier()..category = category,
-          from: introducedProfilesNotifierProvider,
-          name: r'introducedProfilesNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$introducedProfilesNotifierHash,
-          dependencies: IntroducedProfilesNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              IntroducedProfilesNotifierFamily._allTransitiveDependencies,
-          category: category,
-        );
-
-  IntroducedProfilesNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.category,
-  }) : super.internal();
-
-  final IntroducedCategory category;
-
-  @override
-  FutureOr<List<IntroducedProfile>> runNotifierBuild(
-    covariant IntroducedProfilesNotifier notifier,
-  ) {
-    return notifier.build(
-      category,
-    );
-  }
-
-  @override
-  Override overrideWith(IntroducedProfilesNotifier Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: IntroducedProfilesNotifierProvider._internal(
-        () => create()..category = category,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        category: category,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<IntroducedProfilesNotifier,
-      List<IntroducedProfile>> createElement() {
-    return _IntroducedProfilesNotifierProviderElement(this);
-  }
+  IntroducedProfilesNotifier create() => IntroducedProfilesNotifier();
 
   @override
   bool operator ==(Object other) {
     return other is IntroducedProfilesNotifierProvider &&
-        other.category == category;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, category.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin IntroducedProfilesNotifierRef
-    on AutoDisposeAsyncNotifierProviderRef<List<IntroducedProfile>> {
-  /// The parameter `category` of this provider.
-  IntroducedCategory get category;
-}
+String _$introducedProfilesNotifierHash() =>
+    r'8d4d4756d01b1b74e4704050635ea86e9d4512b4';
 
-class _IntroducedProfilesNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<IntroducedProfilesNotifier,
-        List<IntroducedProfile>> with IntroducedProfilesNotifierRef {
-  _IntroducedProfilesNotifierProviderElement(super.provider);
+final class IntroducedProfilesNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          IntroducedProfilesNotifier,
+          AsyncValue<List<IntroducedProfile>>,
+          List<IntroducedProfile>,
+          FutureOr<List<IntroducedProfile>>,
+          IntroducedCategory
+        > {
+  const IntroducedProfilesNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'introducedProfilesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  IntroducedProfilesNotifierProvider call(IntroducedCategory category) =>
+      IntroducedProfilesNotifierProvider._(argument: category, from: this);
 
   @override
-  IntroducedCategory get category =>
-      (origin as IntroducedProfilesNotifierProvider).category;
+  String toString() => r'introducedProfilesProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+
+abstract class _$IntroducedProfilesNotifier
+    extends $AsyncNotifier<List<IntroducedProfile>> {
+  late final _$args = ref.$arg as IntroducedCategory;
+  IntroducedCategory get category => _$args;
+
+  FutureOr<List<IntroducedProfile>> build(IntroducedCategory category);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<List<IntroducedProfile>>,
+              List<IntroducedProfile>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<List<IntroducedProfile>>,
+                List<IntroducedProfile>
+              >,
+              AsyncValue<List<IntroducedProfile>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

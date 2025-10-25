@@ -4,7 +4,7 @@ import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 part 'introduced_profile.freezed.dart';
 
 @freezed
-class IntroducedProfile with _$IntroducedProfile {
+abstract class IntroducedProfile with _$IntroducedProfile {
   const factory IntroducedProfile({
     required int memberId,
     required String profileImageUrl, // imageUrl

@@ -8,7 +8,7 @@ part of 'enum.dart';
 
 class SmokingStatusAdapter extends TypeAdapter<SmokingStatus> {
   @override
-  final int typeId = 11;
+  final typeId = 11;
 
   @override
   SmokingStatus read(BinaryReader reader) {
@@ -33,19 +33,14 @@ class SmokingStatusAdapter extends TypeAdapter<SmokingStatus> {
     switch (obj) {
       case SmokingStatus.none:
         writer.writeByte(0);
-        break;
       case SmokingStatus.quit:
         writer.writeByte(1);
-        break;
       case SmokingStatus.occasional:
         writer.writeByte(2);
-        break;
       case SmokingStatus.daily:
         writer.writeByte(3);
-        break;
       case SmokingStatus.vape:
         writer.writeByte(4);
-        break;
     }
   }
 
@@ -62,7 +57,7 @@ class SmokingStatusAdapter extends TypeAdapter<SmokingStatus> {
 
 class DrinkingStatusAdapter extends TypeAdapter<DrinkingStatus> {
   @override
-  final int typeId = 12;
+  final typeId = 12;
 
   @override
   DrinkingStatus read(BinaryReader reader) {
@@ -87,19 +82,14 @@ class DrinkingStatusAdapter extends TypeAdapter<DrinkingStatus> {
     switch (obj) {
       case DrinkingStatus.none:
         writer.writeByte(0);
-        break;
       case DrinkingStatus.quit:
         writer.writeByte(1);
-        break;
       case DrinkingStatus.social:
         writer.writeByte(2);
-        break;
       case DrinkingStatus.occasional:
         writer.writeByte(3);
-        break;
       case DrinkingStatus.frequent:
         writer.writeByte(4);
-        break;
     }
   }
 
@@ -116,7 +106,7 @@ class DrinkingStatusAdapter extends TypeAdapter<DrinkingStatus> {
 
 class ReligionAdapter extends TypeAdapter<Religion> {
   @override
-  final int typeId = 13;
+  final typeId = 13;
 
   @override
   Religion read(BinaryReader reader) {
@@ -141,19 +131,14 @@ class ReligionAdapter extends TypeAdapter<Religion> {
     switch (obj) {
       case Religion.none:
         writer.writeByte(0);
-        break;
       case Religion.christian:
         writer.writeByte(1);
-        break;
       case Religion.catholic:
         writer.writeByte(2);
-        break;
       case Religion.buddhist:
         writer.writeByte(3);
-        break;
       case Religion.other:
         writer.writeByte(4);
-        break;
     }
   }
 

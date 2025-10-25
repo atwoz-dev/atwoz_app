@@ -37,9 +37,9 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    final reportState = ref.watch(reportNotifierProvider(widget.userId));
+    final reportState = ref.watch(reportProvider(widget.userId));
     final reportNotifier =
-        ref.read(reportNotifierProvider(widget.userId).notifier);
+        ref.read(reportProvider(widget.userId).notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 올라와도 화면/버튼 안 밀림

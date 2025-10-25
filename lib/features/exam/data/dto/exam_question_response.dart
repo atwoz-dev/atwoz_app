@@ -4,7 +4,7 @@ part 'exam_question_response.freezed.dart';
 part 'exam_question_response.g.dart';
 
 @freezed
-class ExamQuestionResponse with _$ExamQuestionResponse {
+abstract class ExamQuestionResponse with _$ExamQuestionResponse {
   const factory ExamQuestionResponse({
     required int status,
     required String code,
@@ -17,7 +17,7 @@ class ExamQuestionResponse with _$ExamQuestionResponse {
 }
 
 @freezed
-class ExamQuestionItem with _$ExamQuestionItem {
+abstract class ExamQuestionItem with _$ExamQuestionItem {
   const factory ExamQuestionItem({
     required List<SubjectItem> subjects,
   }) = _ExamQuestionItem;
@@ -35,7 +35,7 @@ enum ExamType {
 }
 
 @freezed
-class SubjectItem with _$SubjectItem {
+abstract class SubjectItem with _$SubjectItem {
   const factory SubjectItem({
     required int id,
     required ExamType type,
@@ -48,7 +48,7 @@ class SubjectItem with _$SubjectItem {
 }
 
 @freezed
-class QuestionItem with _$QuestionItem {
+abstract class QuestionItem with _$QuestionItem {
   const factory QuestionItem({
     required int id,
     required String content,
@@ -60,7 +60,7 @@ class QuestionItem with _$QuestionItem {
 }
 
 @freezed
-class AnswerItem with _$AnswerItem {
+abstract class AnswerItem with _$AnswerItem {
   const factory AnswerItem({
     required int id,
     required String content,

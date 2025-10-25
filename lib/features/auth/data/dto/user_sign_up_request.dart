@@ -5,7 +5,7 @@ part 'user_sign_up_request.freezed.dart';
 part 'user_sign_up_request.g.dart';
 
 @freezed
-class UserSignUpRequest with _$UserSignUpRequest {
+abstract class UserSignUpRequest with _$UserSignUpRequest {
   @JsonSerializable(fieldRename: FieldRename.screamingSnake)
   const factory UserSignUpRequest({
     required int seq,

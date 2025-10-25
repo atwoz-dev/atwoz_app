@@ -4,7 +4,7 @@ part 'heart_balance_response.freezed.dart';
 part 'heart_balance_response.g.dart';
 
 @freezed
-class HeartBalanceResponse with _$HeartBalanceResponse {
+abstract class HeartBalanceResponse with _$HeartBalanceResponse {
   const factory HeartBalanceResponse({
     required int status,
     required String code,
@@ -17,7 +17,7 @@ class HeartBalanceResponse with _$HeartBalanceResponse {
 }
 
 @freezed
-class HeartBalanceItem with _$HeartBalanceItem {
+abstract class HeartBalanceItem with _$HeartBalanceItem {
   const factory HeartBalanceItem({
     required int purchaseHeartBalance,
     required int missionHeartBalance,

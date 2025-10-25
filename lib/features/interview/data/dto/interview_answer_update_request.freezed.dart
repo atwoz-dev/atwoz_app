@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,172 +9,269 @@ part of 'interview_answer_update_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-InterviewAnswerUpdateRequest _$InterviewAnswerUpdateRequestFromJson(
-    Map<String, dynamic> json) {
-  return _InterviewAnswerUpdateRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$InterviewAnswerUpdateRequest {
-  String get answerContent => throw _privateConstructorUsedError;
+
+ String get answerContent;
+/// Create a copy of InterviewAnswerUpdateRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InterviewAnswerUpdateRequestCopyWith<InterviewAnswerUpdateRequest> get copyWith => _$InterviewAnswerUpdateRequestCopyWithImpl<InterviewAnswerUpdateRequest>(this as InterviewAnswerUpdateRequest, _$identity);
 
   /// Serializes this InterviewAnswerUpdateRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of InterviewAnswerUpdateRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $InterviewAnswerUpdateRequestCopyWith<InterviewAnswerUpdateRequest>
-      get copyWith => throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InterviewAnswerUpdateRequest&&(identical(other.answerContent, answerContent) || other.answerContent == answerContent));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,answerContent);
+
+@override
+String toString() {
+  return 'InterviewAnswerUpdateRequest(answerContent: $answerContent)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $InterviewAnswerUpdateRequestCopyWith<$Res> {
-  factory $InterviewAnswerUpdateRequestCopyWith(
-          InterviewAnswerUpdateRequest value,
-          $Res Function(InterviewAnswerUpdateRequest) then) =
-      _$InterviewAnswerUpdateRequestCopyWithImpl<$Res,
-          InterviewAnswerUpdateRequest>;
-  @useResult
-  $Res call({String answerContent});
-}
+abstract mixin class $InterviewAnswerUpdateRequestCopyWith<$Res>  {
+  factory $InterviewAnswerUpdateRequestCopyWith(InterviewAnswerUpdateRequest value, $Res Function(InterviewAnswerUpdateRequest) _then) = _$InterviewAnswerUpdateRequestCopyWithImpl;
+@useResult
+$Res call({
+ String answerContent
+});
 
+
+
+
+}
 /// @nodoc
-class _$InterviewAnswerUpdateRequestCopyWithImpl<$Res,
-        $Val extends InterviewAnswerUpdateRequest>
+class _$InterviewAnswerUpdateRequestCopyWithImpl<$Res>
     implements $InterviewAnswerUpdateRequestCopyWith<$Res> {
-  _$InterviewAnswerUpdateRequestCopyWithImpl(this._value, this._then);
+  _$InterviewAnswerUpdateRequestCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final InterviewAnswerUpdateRequest _self;
+  final $Res Function(InterviewAnswerUpdateRequest) _then;
 
-  /// Create a copy of InterviewAnswerUpdateRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? answerContent = null,
-  }) {
-    return _then(_value.copyWith(
-      answerContent: null == answerContent
-          ? _value.answerContent
-          : answerContent // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of InterviewAnswerUpdateRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? answerContent = null,}) {
+  return _then(_self.copyWith(
+answerContent: null == answerContent ? _self.answerContent : answerContent // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-abstract class _$$InterviewAnswerUpdateRequestImplCopyWith<$Res>
-    implements $InterviewAnswerUpdateRequestCopyWith<$Res> {
-  factory _$$InterviewAnswerUpdateRequestImplCopyWith(
-          _$InterviewAnswerUpdateRequestImpl value,
-          $Res Function(_$InterviewAnswerUpdateRequestImpl) then) =
-      __$$InterviewAnswerUpdateRequestImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String answerContent});
 }
 
-/// @nodoc
-class __$$InterviewAnswerUpdateRequestImplCopyWithImpl<$Res>
-    extends _$InterviewAnswerUpdateRequestCopyWithImpl<$Res,
-        _$InterviewAnswerUpdateRequestImpl>
-    implements _$$InterviewAnswerUpdateRequestImplCopyWith<$Res> {
-  __$$InterviewAnswerUpdateRequestImplCopyWithImpl(
-      _$InterviewAnswerUpdateRequestImpl _value,
-      $Res Function(_$InterviewAnswerUpdateRequestImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of InterviewAnswerUpdateRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? answerContent = null,
-  }) {
-    return _then(_$InterviewAnswerUpdateRequestImpl(
-      answerContent: null == answerContent
-          ? _value.answerContent
-          : answerContent // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Adds pattern-matching-related methods to [InterviewAnswerUpdateRequest].
+extension InterviewAnswerUpdateRequestPatterns on InterviewAnswerUpdateRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InterviewAnswerUpdateRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InterviewAnswerUpdateRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InterviewAnswerUpdateRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String answerContent)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest() when $default != null:
+return $default(_that.answerContent);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String answerContent)  $default,) {final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest():
+return $default(_that.answerContent);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String answerContent)?  $default,) {final _that = this;
+switch (_that) {
+case _InterviewAnswerUpdateRequest() when $default != null:
+return $default(_that.answerContent);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$InterviewAnswerUpdateRequestImpl
-    implements _InterviewAnswerUpdateRequest {
-  const _$InterviewAnswerUpdateRequestImpl({required this.answerContent});
 
-  factory _$InterviewAnswerUpdateRequestImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$InterviewAnswerUpdateRequestImplFromJson(json);
+class _InterviewAnswerUpdateRequest implements InterviewAnswerUpdateRequest {
+  const _InterviewAnswerUpdateRequest({required this.answerContent});
+  factory _InterviewAnswerUpdateRequest.fromJson(Map<String, dynamic> json) => _$InterviewAnswerUpdateRequestFromJson(json);
 
-  @override
-  final String answerContent;
+@override final  String answerContent;
 
-  @override
-  String toString() {
-    return 'InterviewAnswerUpdateRequest(answerContent: $answerContent)';
-  }
+/// Create a copy of InterviewAnswerUpdateRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InterviewAnswerUpdateRequestCopyWith<_InterviewAnswerUpdateRequest> get copyWith => __$InterviewAnswerUpdateRequestCopyWithImpl<_InterviewAnswerUpdateRequest>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InterviewAnswerUpdateRequestImpl &&
-            (identical(other.answerContent, answerContent) ||
-                other.answerContent == answerContent));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, answerContent);
-
-  /// Create a copy of InterviewAnswerUpdateRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InterviewAnswerUpdateRequestImplCopyWith<
-          _$InterviewAnswerUpdateRequestImpl>
-      get copyWith => __$$InterviewAnswerUpdateRequestImplCopyWithImpl<
-          _$InterviewAnswerUpdateRequestImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$InterviewAnswerUpdateRequestImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$InterviewAnswerUpdateRequestToJson(this, );
 }
 
-abstract class _InterviewAnswerUpdateRequest
-    implements InterviewAnswerUpdateRequest {
-  const factory _InterviewAnswerUpdateRequest(
-          {required final String answerContent}) =
-      _$InterviewAnswerUpdateRequestImpl;
-
-  factory _InterviewAnswerUpdateRequest.fromJson(Map<String, dynamic> json) =
-      _$InterviewAnswerUpdateRequestImpl.fromJson;
-
-  @override
-  String get answerContent;
-
-  /// Create a copy of InterviewAnswerUpdateRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InterviewAnswerUpdateRequestImplCopyWith<
-          _$InterviewAnswerUpdateRequestImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InterviewAnswerUpdateRequest&&(identical(other.answerContent, answerContent) || other.answerContent == answerContent));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,answerContent);
+
+@override
+String toString() {
+  return 'InterviewAnswerUpdateRequest(answerContent: $answerContent)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InterviewAnswerUpdateRequestCopyWith<$Res> implements $InterviewAnswerUpdateRequestCopyWith<$Res> {
+  factory _$InterviewAnswerUpdateRequestCopyWith(_InterviewAnswerUpdateRequest value, $Res Function(_InterviewAnswerUpdateRequest) _then) = __$InterviewAnswerUpdateRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ String answerContent
+});
+
+
+
+
+}
+/// @nodoc
+class __$InterviewAnswerUpdateRequestCopyWithImpl<$Res>
+    implements _$InterviewAnswerUpdateRequestCopyWith<$Res> {
+  __$InterviewAnswerUpdateRequestCopyWithImpl(this._self, this._then);
+
+  final _InterviewAnswerUpdateRequest _self;
+  final $Res Function(_InterviewAnswerUpdateRequest) _then;
+
+/// Create a copy of InterviewAnswerUpdateRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? answerContent = null,}) {
+  return _then(_InterviewAnswerUpdateRequest(
+answerContent: null == answerContent ? _self.answerContent : answerContent // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+// dart format on

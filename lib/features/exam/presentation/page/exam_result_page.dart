@@ -36,7 +36,7 @@ class ExamResultPageState
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final examState = ref.read(examNotifierProvider);
+      final examState = ref.read(examProvider);
 
       if (examState.isSubjectOptional && !examState.isDone) {
         showToastMessage(
@@ -48,9 +48,9 @@ class ExamResultPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final examState = ref.watch(examNotifierProvider);
-    final notifier = ref.read(examNotifierProvider.notifier);
-    final userProfile = ref.watch(globalNotifierProvider).profile;
+    final examState = ref.watch(examProvider);
+    final notifier = ref.read(examProvider.notifier);
+    final userProfile = ref.watch(globalProvider).profile;
 
     return Scaffold(
       appBar: DefaultAppBar(

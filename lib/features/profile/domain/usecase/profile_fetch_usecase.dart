@@ -40,7 +40,7 @@ class ProfileFetchUseCase {
     }
     final response =
         await ref.read(profileRepositoryProvider).getProfileDetail(id);
-    final myUserId = ref.read(globalNotifierProvider).profile.myUserId;
+    final myUserId = ref.read(globalProvider).profile.myUserId;
 
     return response.toModel(myUserId);
   }

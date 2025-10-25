@@ -4,7 +4,7 @@ import 'package:atwoz_app/features/notification/domain/model/server_notification
 part 'my_settings.freezed.dart';
 
 @freezed
-class MySettings with _$MySettings {
+abstract class MySettings with _$MySettings {
   /// enabledNotifications is always a Set<UserNotificationType> for type safety
   const factory MySettings({
     required String version,

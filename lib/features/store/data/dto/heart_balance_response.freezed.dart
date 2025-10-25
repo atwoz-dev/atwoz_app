@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,428 +9,565 @@ part of 'heart_balance_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-HeartBalanceResponse _$HeartBalanceResponseFromJson(Map<String, dynamic> json) {
-  return _HeartBalanceResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$HeartBalanceResponse {
-  int get status => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  HeartBalanceItem get data => throw _privateConstructorUsedError;
+
+ int get status; String get code; String get message; HeartBalanceItem get data;
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HeartBalanceResponseCopyWith<HeartBalanceResponse> get copyWith => _$HeartBalanceResponseCopyWithImpl<HeartBalanceResponse>(this as HeartBalanceResponse, _$identity);
 
   /// Serializes this HeartBalanceResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $HeartBalanceResponseCopyWith<HeartBalanceResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HeartBalanceResponse&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&(identical(other.data, data) || other.data == data));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,status,code,message,data);
+
+@override
+String toString() {
+  return 'HeartBalanceResponse(status: $status, code: $code, message: $message, data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $HeartBalanceResponseCopyWith<$Res> {
-  factory $HeartBalanceResponseCopyWith(HeartBalanceResponse value,
-          $Res Function(HeartBalanceResponse) then) =
-      _$HeartBalanceResponseCopyWithImpl<$Res, HeartBalanceResponse>;
-  @useResult
-  $Res call({int status, String code, String message, HeartBalanceItem data});
+abstract mixin class $HeartBalanceResponseCopyWith<$Res>  {
+  factory $HeartBalanceResponseCopyWith(HeartBalanceResponse value, $Res Function(HeartBalanceResponse) _then) = _$HeartBalanceResponseCopyWithImpl;
+@useResult
+$Res call({
+ int status, String code, String message, HeartBalanceItem data
+});
 
-  $HeartBalanceItemCopyWith<$Res> get data;
+
+$HeartBalanceItemCopyWith<$Res> get data;
+
 }
-
 /// @nodoc
-class _$HeartBalanceResponseCopyWithImpl<$Res,
-        $Val extends HeartBalanceResponse>
+class _$HeartBalanceResponseCopyWithImpl<$Res>
     implements $HeartBalanceResponseCopyWith<$Res> {
-  _$HeartBalanceResponseCopyWithImpl(this._value, this._then);
+  _$HeartBalanceResponseCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final HeartBalanceResponse _self;
+  final $Res Function(HeartBalanceResponse) _then;
 
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? code = null,
-    Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as HeartBalanceItem,
-    ) as $Val);
-  }
-
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $HeartBalanceItemCopyWith<$Res> get data {
-    return $HeartBalanceItemCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
-  }
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? code = null,Object? message = null,Object? data = null,}) {
+  return _then(_self.copyWith(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as HeartBalanceItem,
+  ));
+}
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HeartBalanceItemCopyWith<$Res> get data {
+  
+  return $HeartBalanceItemCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
 }
 
-/// @nodoc
-abstract class _$$HeartBalanceResponseImplCopyWith<$Res>
-    implements $HeartBalanceResponseCopyWith<$Res> {
-  factory _$$HeartBalanceResponseImplCopyWith(_$HeartBalanceResponseImpl value,
-          $Res Function(_$HeartBalanceResponseImpl) then) =
-      __$$HeartBalanceResponseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int status, String code, String message, HeartBalanceItem data});
 
-  @override
-  $HeartBalanceItemCopyWith<$Res> get data;
+/// Adds pattern-matching-related methods to [HeartBalanceResponse].
+extension HeartBalanceResponsePatterns on HeartBalanceResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HeartBalanceResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _HeartBalanceResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HeartBalanceResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _HeartBalanceResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HeartBalanceResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _HeartBalanceResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int status,  String code,  String message,  HeartBalanceItem data)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _HeartBalanceResponse() when $default != null:
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int status,  String code,  String message,  HeartBalanceItem data)  $default,) {final _that = this;
+switch (_that) {
+case _HeartBalanceResponse():
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int status,  String code,  String message,  HeartBalanceItem data)?  $default,) {final _that = this;
+switch (_that) {
+case _HeartBalanceResponse() when $default != null:
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-class __$$HeartBalanceResponseImplCopyWithImpl<$Res>
-    extends _$HeartBalanceResponseCopyWithImpl<$Res, _$HeartBalanceResponseImpl>
-    implements _$$HeartBalanceResponseImplCopyWith<$Res> {
-  __$$HeartBalanceResponseImplCopyWithImpl(_$HeartBalanceResponseImpl _value,
-      $Res Function(_$HeartBalanceResponseImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? code = null,
-    Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_$HeartBalanceResponseImpl(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as HeartBalanceItem,
-    ));
-  }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$HeartBalanceResponseImpl implements _HeartBalanceResponse {
-  const _$HeartBalanceResponseImpl(
-      {required this.status,
-      required this.code,
-      required this.message,
-      required this.data});
 
-  factory _$HeartBalanceResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HeartBalanceResponseImplFromJson(json);
+class _HeartBalanceResponse implements HeartBalanceResponse {
+  const _HeartBalanceResponse({required this.status, required this.code, required this.message, required this.data});
+  factory _HeartBalanceResponse.fromJson(Map<String, dynamic> json) => _$HeartBalanceResponseFromJson(json);
 
-  @override
-  final int status;
-  @override
-  final String code;
-  @override
-  final String message;
-  @override
-  final HeartBalanceItem data;
+@override final  int status;
+@override final  String code;
+@override final  String message;
+@override final  HeartBalanceItem data;
 
-  @override
-  String toString() {
-    return 'HeartBalanceResponse(status: $status, code: $code, message: $message, data: $data)';
-  }
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$HeartBalanceResponseCopyWith<_HeartBalanceResponse> get copyWith => __$HeartBalanceResponseCopyWithImpl<_HeartBalanceResponse>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$HeartBalanceResponseImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.code, code) || other.code == code) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, status, code, message, data);
-
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$HeartBalanceResponseImplCopyWith<_$HeartBalanceResponseImpl>
-      get copyWith =>
-          __$$HeartBalanceResponseImplCopyWithImpl<_$HeartBalanceResponseImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$HeartBalanceResponseImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$HeartBalanceResponseToJson(this, );
 }
 
-abstract class _HeartBalanceResponse implements HeartBalanceResponse {
-  const factory _HeartBalanceResponse(
-      {required final int status,
-      required final String code,
-      required final String message,
-      required final HeartBalanceItem data}) = _$HeartBalanceResponseImpl;
-
-  factory _HeartBalanceResponse.fromJson(Map<String, dynamic> json) =
-      _$HeartBalanceResponseImpl.fromJson;
-
-  @override
-  int get status;
-  @override
-  String get code;
-  @override
-  String get message;
-  @override
-  HeartBalanceItem get data;
-
-  /// Create a copy of HeartBalanceResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HeartBalanceResponseImplCopyWith<_$HeartBalanceResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HeartBalanceResponse&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&(identical(other.data, data) || other.data == data));
 }
 
-HeartBalanceItem _$HeartBalanceItemFromJson(Map<String, dynamic> json) {
-  return _HeartBalanceItem.fromJson(json);
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,status,code,message,data);
+
+@override
+String toString() {
+  return 'HeartBalanceResponse(status: $status, code: $code, message: $message, data: $data)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$HeartBalanceResponseCopyWith<$Res> implements $HeartBalanceResponseCopyWith<$Res> {
+  factory _$HeartBalanceResponseCopyWith(_HeartBalanceResponse value, $Res Function(_HeartBalanceResponse) _then) = __$HeartBalanceResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ int status, String code, String message, HeartBalanceItem data
+});
+
+
+@override $HeartBalanceItemCopyWith<$Res> get data;
+
+}
+/// @nodoc
+class __$HeartBalanceResponseCopyWithImpl<$Res>
+    implements _$HeartBalanceResponseCopyWith<$Res> {
+  __$HeartBalanceResponseCopyWithImpl(this._self, this._then);
+
+  final _HeartBalanceResponse _self;
+  final $Res Function(_HeartBalanceResponse) _then;
+
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? code = null,Object? message = null,Object? data = null,}) {
+  return _then(_HeartBalanceResponse(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as HeartBalanceItem,
+  ));
+}
+
+/// Create a copy of HeartBalanceResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HeartBalanceItemCopyWith<$Res> get data {
+  
+  return $HeartBalanceItemCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
+}
+
 
 /// @nodoc
 mixin _$HeartBalanceItem {
-  int get purchaseHeartBalance => throw _privateConstructorUsedError;
-  int get missionHeartBalance => throw _privateConstructorUsedError;
-  int get totalHeartBalance => throw _privateConstructorUsedError;
+
+ int get purchaseHeartBalance; int get missionHeartBalance; int get totalHeartBalance;
+/// Create a copy of HeartBalanceItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HeartBalanceItemCopyWith<HeartBalanceItem> get copyWith => _$HeartBalanceItemCopyWithImpl<HeartBalanceItem>(this as HeartBalanceItem, _$identity);
 
   /// Serializes this HeartBalanceItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of HeartBalanceItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $HeartBalanceItemCopyWith<HeartBalanceItem> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HeartBalanceItem&&(identical(other.purchaseHeartBalance, purchaseHeartBalance) || other.purchaseHeartBalance == purchaseHeartBalance)&&(identical(other.missionHeartBalance, missionHeartBalance) || other.missionHeartBalance == missionHeartBalance)&&(identical(other.totalHeartBalance, totalHeartBalance) || other.totalHeartBalance == totalHeartBalance));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,purchaseHeartBalance,missionHeartBalance,totalHeartBalance);
+
+@override
+String toString() {
+  return 'HeartBalanceItem(purchaseHeartBalance: $purchaseHeartBalance, missionHeartBalance: $missionHeartBalance, totalHeartBalance: $totalHeartBalance)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $HeartBalanceItemCopyWith<$Res> {
-  factory $HeartBalanceItemCopyWith(
-          HeartBalanceItem value, $Res Function(HeartBalanceItem) then) =
-      _$HeartBalanceItemCopyWithImpl<$Res, HeartBalanceItem>;
-  @useResult
-  $Res call(
-      {int purchaseHeartBalance,
-      int missionHeartBalance,
-      int totalHeartBalance});
-}
+abstract mixin class $HeartBalanceItemCopyWith<$Res>  {
+  factory $HeartBalanceItemCopyWith(HeartBalanceItem value, $Res Function(HeartBalanceItem) _then) = _$HeartBalanceItemCopyWithImpl;
+@useResult
+$Res call({
+ int purchaseHeartBalance, int missionHeartBalance, int totalHeartBalance
+});
 
+
+
+
+}
 /// @nodoc
-class _$HeartBalanceItemCopyWithImpl<$Res, $Val extends HeartBalanceItem>
+class _$HeartBalanceItemCopyWithImpl<$Res>
     implements $HeartBalanceItemCopyWith<$Res> {
-  _$HeartBalanceItemCopyWithImpl(this._value, this._then);
+  _$HeartBalanceItemCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final HeartBalanceItem _self;
+  final $Res Function(HeartBalanceItem) _then;
 
-  /// Create a copy of HeartBalanceItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? purchaseHeartBalance = null,
-    Object? missionHeartBalance = null,
-    Object? totalHeartBalance = null,
-  }) {
-    return _then(_value.copyWith(
-      purchaseHeartBalance: null == purchaseHeartBalance
-          ? _value.purchaseHeartBalance
-          : purchaseHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-      missionHeartBalance: null == missionHeartBalance
-          ? _value.missionHeartBalance
-          : missionHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalHeartBalance: null == totalHeartBalance
-          ? _value.totalHeartBalance
-          : totalHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of HeartBalanceItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? purchaseHeartBalance = null,Object? missionHeartBalance = null,Object? totalHeartBalance = null,}) {
+  return _then(_self.copyWith(
+purchaseHeartBalance: null == purchaseHeartBalance ? _self.purchaseHeartBalance : purchaseHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,missionHeartBalance: null == missionHeartBalance ? _self.missionHeartBalance : missionHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,totalHeartBalance: null == totalHeartBalance ? _self.totalHeartBalance : totalHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$HeartBalanceItemImplCopyWith<$Res>
-    implements $HeartBalanceItemCopyWith<$Res> {
-  factory _$$HeartBalanceItemImplCopyWith(_$HeartBalanceItemImpl value,
-          $Res Function(_$HeartBalanceItemImpl) then) =
-      __$$HeartBalanceItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int purchaseHeartBalance,
-      int missionHeartBalance,
-      int totalHeartBalance});
 }
 
-/// @nodoc
-class __$$HeartBalanceItemImplCopyWithImpl<$Res>
-    extends _$HeartBalanceItemCopyWithImpl<$Res, _$HeartBalanceItemImpl>
-    implements _$$HeartBalanceItemImplCopyWith<$Res> {
-  __$$HeartBalanceItemImplCopyWithImpl(_$HeartBalanceItemImpl _value,
-      $Res Function(_$HeartBalanceItemImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of HeartBalanceItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? purchaseHeartBalance = null,
-    Object? missionHeartBalance = null,
-    Object? totalHeartBalance = null,
-  }) {
-    return _then(_$HeartBalanceItemImpl(
-      purchaseHeartBalance: null == purchaseHeartBalance
-          ? _value.purchaseHeartBalance
-          : purchaseHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-      missionHeartBalance: null == missionHeartBalance
-          ? _value.missionHeartBalance
-          : missionHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalHeartBalance: null == totalHeartBalance
-          ? _value.totalHeartBalance
-          : totalHeartBalance // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Adds pattern-matching-related methods to [HeartBalanceItem].
+extension HeartBalanceItemPatterns on HeartBalanceItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HeartBalanceItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _HeartBalanceItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HeartBalanceItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _HeartBalanceItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HeartBalanceItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _HeartBalanceItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int purchaseHeartBalance,  int missionHeartBalance,  int totalHeartBalance)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _HeartBalanceItem() when $default != null:
+return $default(_that.purchaseHeartBalance,_that.missionHeartBalance,_that.totalHeartBalance);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int purchaseHeartBalance,  int missionHeartBalance,  int totalHeartBalance)  $default,) {final _that = this;
+switch (_that) {
+case _HeartBalanceItem():
+return $default(_that.purchaseHeartBalance,_that.missionHeartBalance,_that.totalHeartBalance);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int purchaseHeartBalance,  int missionHeartBalance,  int totalHeartBalance)?  $default,) {final _that = this;
+switch (_that) {
+case _HeartBalanceItem() when $default != null:
+return $default(_that.purchaseHeartBalance,_that.missionHeartBalance,_that.totalHeartBalance);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$HeartBalanceItemImpl implements _HeartBalanceItem {
-  const _$HeartBalanceItemImpl(
-      {required this.purchaseHeartBalance,
-      required this.missionHeartBalance,
-      required this.totalHeartBalance});
 
-  factory _$HeartBalanceItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HeartBalanceItemImplFromJson(json);
+class _HeartBalanceItem implements HeartBalanceItem {
+  const _HeartBalanceItem({required this.purchaseHeartBalance, required this.missionHeartBalance, required this.totalHeartBalance});
+  factory _HeartBalanceItem.fromJson(Map<String, dynamic> json) => _$HeartBalanceItemFromJson(json);
 
-  @override
-  final int purchaseHeartBalance;
-  @override
-  final int missionHeartBalance;
-  @override
-  final int totalHeartBalance;
+@override final  int purchaseHeartBalance;
+@override final  int missionHeartBalance;
+@override final  int totalHeartBalance;
 
-  @override
-  String toString() {
-    return 'HeartBalanceItem(purchaseHeartBalance: $purchaseHeartBalance, missionHeartBalance: $missionHeartBalance, totalHeartBalance: $totalHeartBalance)';
-  }
+/// Create a copy of HeartBalanceItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$HeartBalanceItemCopyWith<_HeartBalanceItem> get copyWith => __$HeartBalanceItemCopyWithImpl<_HeartBalanceItem>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$HeartBalanceItemImpl &&
-            (identical(other.purchaseHeartBalance, purchaseHeartBalance) ||
-                other.purchaseHeartBalance == purchaseHeartBalance) &&
-            (identical(other.missionHeartBalance, missionHeartBalance) ||
-                other.missionHeartBalance == missionHeartBalance) &&
-            (identical(other.totalHeartBalance, totalHeartBalance) ||
-                other.totalHeartBalance == totalHeartBalance));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, purchaseHeartBalance,
-      missionHeartBalance, totalHeartBalance);
-
-  /// Create a copy of HeartBalanceItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$HeartBalanceItemImplCopyWith<_$HeartBalanceItemImpl> get copyWith =>
-      __$$HeartBalanceItemImplCopyWithImpl<_$HeartBalanceItemImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$HeartBalanceItemImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$HeartBalanceItemToJson(this, );
 }
 
-abstract class _HeartBalanceItem implements HeartBalanceItem {
-  const factory _HeartBalanceItem(
-      {required final int purchaseHeartBalance,
-      required final int missionHeartBalance,
-      required final int totalHeartBalance}) = _$HeartBalanceItemImpl;
-
-  factory _HeartBalanceItem.fromJson(Map<String, dynamic> json) =
-      _$HeartBalanceItemImpl.fromJson;
-
-  @override
-  int get purchaseHeartBalance;
-  @override
-  int get missionHeartBalance;
-  @override
-  int get totalHeartBalance;
-
-  /// Create a copy of HeartBalanceItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HeartBalanceItemImplCopyWith<_$HeartBalanceItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HeartBalanceItem&&(identical(other.purchaseHeartBalance, purchaseHeartBalance) || other.purchaseHeartBalance == purchaseHeartBalance)&&(identical(other.missionHeartBalance, missionHeartBalance) || other.missionHeartBalance == missionHeartBalance)&&(identical(other.totalHeartBalance, totalHeartBalance) || other.totalHeartBalance == totalHeartBalance));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,purchaseHeartBalance,missionHeartBalance,totalHeartBalance);
+
+@override
+String toString() {
+  return 'HeartBalanceItem(purchaseHeartBalance: $purchaseHeartBalance, missionHeartBalance: $missionHeartBalance, totalHeartBalance: $totalHeartBalance)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$HeartBalanceItemCopyWith<$Res> implements $HeartBalanceItemCopyWith<$Res> {
+  factory _$HeartBalanceItemCopyWith(_HeartBalanceItem value, $Res Function(_HeartBalanceItem) _then) = __$HeartBalanceItemCopyWithImpl;
+@override @useResult
+$Res call({
+ int purchaseHeartBalance, int missionHeartBalance, int totalHeartBalance
+});
+
+
+
+
+}
+/// @nodoc
+class __$HeartBalanceItemCopyWithImpl<$Res>
+    implements _$HeartBalanceItemCopyWith<$Res> {
+  __$HeartBalanceItemCopyWithImpl(this._self, this._then);
+
+  final _HeartBalanceItem _self;
+  final $Res Function(_HeartBalanceItem) _then;
+
+/// Create a copy of HeartBalanceItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? purchaseHeartBalance = null,Object? missionHeartBalance = null,Object? totalHeartBalance = null,}) {
+  return _then(_HeartBalanceItem(
+purchaseHeartBalance: null == purchaseHeartBalance ? _self.purchaseHeartBalance : purchaseHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,missionHeartBalance: null == missionHeartBalance ? _self.missionHeartBalance : missionHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,totalHeartBalance: null == totalHeartBalance ? _self.totalHeartBalance : totalHeartBalance // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on

@@ -6,19 +6,57 @@ part of 'photo_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(Photo)
+const photoProvider = PhotoProvider._();
+
+final class PhotoProvider extends $NotifierProvider<Photo, List<XFile?>> {
+  const PhotoProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'photoProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$photoHash();
+
+  @$internal
+  @override
+  Photo create() => Photo();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<XFile?> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<XFile?>>(value),
+    );
+  }
+}
+
 String _$photoHash() => r'29bb707c50381e07e53671997c785cb84a7be058';
 
-/// See also [Photo].
-@ProviderFor(Photo)
-final photoProvider = AutoDisposeNotifierProvider<Photo, List<XFile?>>.internal(
-  Photo.new,
-  name: r'photoProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$photoHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$Photo = AutoDisposeNotifier<List<XFile?>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$Photo extends $Notifier<List<XFile?>> {
+  List<XFile?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<List<XFile?>, List<XFile?>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<List<XFile?>, List<XFile?>>,
+              List<XFile?>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

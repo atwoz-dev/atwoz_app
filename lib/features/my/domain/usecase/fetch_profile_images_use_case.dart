@@ -3,7 +3,7 @@ import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 final fetchProfileImagesUseCaseProvider = Provider<FetchProfileImagesUseCase>(
   (ref) => FetchProfileImagesUseCase(ref),

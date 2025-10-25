@@ -15,7 +15,7 @@ class ProfileSubInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileNotifierProvider(userId)).profile;
+    final profile = ref.watch(profileProvider(userId)).profile;
     if (profile == null) return Container();
 
     return Container(

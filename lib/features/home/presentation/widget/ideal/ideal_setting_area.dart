@@ -13,7 +13,7 @@ class IdealSettingArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncIdealType = ref.watch(idealTypeNotifierProvider);
+    final asyncIdealType = ref.watch(idealTypeProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 24),

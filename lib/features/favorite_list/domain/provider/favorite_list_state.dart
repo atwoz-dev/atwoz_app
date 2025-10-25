@@ -7,7 +7,7 @@ enum FavoriteListErrorType {
 }
 
 @freezed
-class FavoriteListState with _$FavoriteListState {
+abstract class FavoriteListState with _$FavoriteListState {
   const factory FavoriteListState({
     @Default(FavoriteListData()) FavoriteListData myFavoriteUsers,
     @Default(FavoriteListData()) FavoriteListData favoriteMeUsers,

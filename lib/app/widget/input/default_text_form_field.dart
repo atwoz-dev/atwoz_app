@@ -191,7 +191,7 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
               textAlignVertical: widget.textAlignVertical,
               textDirection: widget.textDirection,
               autofocus: widget.autofocus,
-              autocorrect: widget.autocorrect,
+              autocorrect: widget.autocorrect ?? false,
               enableSuggestions: widget.enableSuggestions,
               enabled: widget.enabled,
               minLines: widget.minLines,

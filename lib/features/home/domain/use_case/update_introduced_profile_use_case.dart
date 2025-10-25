@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final updateIntroducedProfileUseCaseProvider = Provider(

@@ -11,7 +11,7 @@ class IdealTypeSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
+    final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
 
     return Scaffold(
       appBar: const DefaultAppBar(title: "이상형 설정"),

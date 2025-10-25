@@ -10,7 +10,7 @@ enum QuestionListErrorType {
 }
 
 @freezed
-class ExamState with _$ExamState {
+abstract class ExamState with _$ExamState {
   const factory ExamState({
     required QuestionData questionList,
     required SoulmateData soulmateList,
@@ -44,14 +44,14 @@ class ExamState with _$ExamState {
 }
 
 @freezed
-class QuestionData with _$QuestionData {
+abstract class QuestionData with _$QuestionData {
   const factory QuestionData({
     @Default([]) List<SubjectItem> questionList,
   }) = _QuestionData;
 }
 
 @freezed
-class SoulmateData with _$SoulmateData {
+abstract class SoulmateData with _$SoulmateData {
   const factory SoulmateData({
     @Default([]) List<IntroducedProfile> soulmateList,
   }) = _SoulmateData;

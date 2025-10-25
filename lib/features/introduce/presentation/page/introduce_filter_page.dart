@@ -16,10 +16,10 @@ class IntroduceFilterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ageRange = ref.watch(filterNotifierProvider).rangeValues;
-    final selectedCityList = ref.watch(filterNotifierProvider).selectedCitys;
+    final ageRange = ref.watch(filterProvider).rangeValues;
+    final selectedCityList = ref.watch(filterProvider).selectedCitys;
     final selectedGenderList =
-        ref.watch(filterNotifierProvider).selectedGenders;
+        ref.watch(filterProvider).selectedGenders;
 
     return Scaffold(
       appBar: const DefaultAppBar(
