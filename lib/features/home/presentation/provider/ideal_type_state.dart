@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'ideal_type_state.freezed.dart';
 
 @freezed
-class IdealTypeState with _$IdealTypeState {
+abstract class IdealTypeState with _$IdealTypeState {
   const factory IdealTypeState({
     required IdealType idealType,
     required IdealType originalIdealType,
