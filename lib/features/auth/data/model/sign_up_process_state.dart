@@ -10,7 +10,7 @@ part 'sign_up_process_state.g.dart';
 
 // TODO(gb): 리팩토링 필요
 @freezed
-class SignUpProcessState with _$SignUpProcessState {
+abstract class SignUpProcessState with _$SignUpProcessState {
   const factory SignUpProcessState({
     @Default(1) int currentStep,
     @Default(null) String? nickname,

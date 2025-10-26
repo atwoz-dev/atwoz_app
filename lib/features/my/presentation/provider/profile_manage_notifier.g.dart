@@ -6,22 +6,53 @@ part of 'profile_manage_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileManageNotifierHash() =>
-    r'6b286b7c95ebc930567d55d44d9b82bc16fdf6e6';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ProfileManageNotifier].
 @ProviderFor(ProfileManageNotifier)
-final profileManageNotifierProvider = AutoDisposeAsyncNotifierProvider<
-    ProfileManageNotifier, ProfileManageState>.internal(
-  ProfileManageNotifier.new,
-  name: r'profileManageNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$profileManageNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const profileManageProvider = ProfileManageNotifierProvider._();
 
-typedef _$ProfileManageNotifier = AutoDisposeAsyncNotifier<ProfileManageState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ProfileManageNotifierProvider
+    extends $AsyncNotifierProvider<ProfileManageNotifier, ProfileManageState> {
+  const ProfileManageNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'profileManageProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$profileManageNotifierHash();
+
+  @$internal
+  @override
+  ProfileManageNotifier create() => ProfileManageNotifier();
+}
+
+String _$profileManageNotifierHash() =>
+    r'90da5c1e11f88702ebf1d95767dfbda99a4cd1f2';
+
+abstract class _$ProfileManageNotifier
+    extends $AsyncNotifier<ProfileManageState> {
+  FutureOr<ProfileManageState> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<AsyncValue<ProfileManageState>, ProfileManageState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<ProfileManageState>, ProfileManageState>,
+              AsyncValue<ProfileManageState>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

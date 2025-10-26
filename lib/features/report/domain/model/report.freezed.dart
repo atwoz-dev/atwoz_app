@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,171 +9,269 @@ part of 'report.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$Report {
-  int get reporteeId => throw _privateConstructorUsedError;
-  ReportReason? get reason => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
 
-  /// Create a copy of Report
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReportCopyWith<Report> get copyWith => throw _privateConstructorUsedError;
+ int get reporteeId; ReportReason? get reason; String get content;
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ReportCopyWith<Report> get copyWith => _$ReportCopyWithImpl<Report>(this as Report, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Report&&(identical(other.reporteeId, reporteeId) || other.reporteeId == reporteeId)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.content, content) || other.content == content));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,reporteeId,reason,content);
+
+@override
+String toString() {
+  return 'Report(reporteeId: $reporteeId, reason: $reason, content: $content)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ReportCopyWith<$Res> {
-  factory $ReportCopyWith(Report value, $Res Function(Report) then) =
-      _$ReportCopyWithImpl<$Res, Report>;
-  @useResult
-  $Res call({int reporteeId, ReportReason? reason, String content});
-}
+abstract mixin class $ReportCopyWith<$Res>  {
+  factory $ReportCopyWith(Report value, $Res Function(Report) _then) = _$ReportCopyWithImpl;
+@useResult
+$Res call({
+ int reporteeId, ReportReason? reason, String content
+});
 
+
+
+
+}
 /// @nodoc
-class _$ReportCopyWithImpl<$Res, $Val extends Report>
+class _$ReportCopyWithImpl<$Res>
     implements $ReportCopyWith<$Res> {
-  _$ReportCopyWithImpl(this._value, this._then);
+  _$ReportCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Report _self;
+  final $Res Function(Report) _then;
 
-  /// Create a copy of Report
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? reporteeId = null,
-    Object? reason = freezed,
-    Object? content = null,
-  }) {
-    return _then(_value.copyWith(
-      reporteeId: null == reporteeId
-          ? _value.reporteeId
-          : reporteeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      reason: freezed == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as ReportReason?,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? reporteeId = null,Object? reason = freezed,Object? content = null,}) {
+  return _then(_self.copyWith(
+reporteeId: null == reporteeId ? _self.reporteeId : reporteeId // ignore: cast_nullable_to_non_nullable
+as int,reason: freezed == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as ReportReason?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Report].
+extension ReportPatterns on Report {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Report value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Report() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Report value)  $default,){
+final _that = this;
+switch (_that) {
+case _Report():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Report value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Report() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int reporteeId,  ReportReason? reason,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Report() when $default != null:
+return $default(_that.reporteeId,_that.reason,_that.content);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int reporteeId,  ReportReason? reason,  String content)  $default,) {final _that = this;
+switch (_that) {
+case _Report():
+return $default(_that.reporteeId,_that.reason,_that.content);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int reporteeId,  ReportReason? reason,  String content)?  $default,) {final _that = this;
+switch (_that) {
+case _Report() when $default != null:
+return $default(_that.reporteeId,_that.reason,_that.content);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ReportImplCopyWith<$Res> implements $ReportCopyWith<$Res> {
-  factory _$$ReportImplCopyWith(
-          _$ReportImpl value, $Res Function(_$ReportImpl) then) =
-      __$$ReportImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int reporteeId, ReportReason? reason, String content});
+
+
+class _Report extends Report {
+  const _Report({required this.reporteeId, required this.reason, required this.content}): super._();
+  
+
+@override final  int reporteeId;
+@override final  ReportReason? reason;
+@override final  String content;
+
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ReportCopyWith<_Report> get copyWith => __$ReportCopyWithImpl<_Report>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Report&&(identical(other.reporteeId, reporteeId) || other.reporteeId == reporteeId)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.content, content) || other.content == content));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,reporteeId,reason,content);
+
+@override
+String toString() {
+  return 'Report(reporteeId: $reporteeId, reason: $reason, content: $content)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ReportImplCopyWithImpl<$Res>
-    extends _$ReportCopyWithImpl<$Res, _$ReportImpl>
-    implements _$$ReportImplCopyWith<$Res> {
-  __$$ReportImplCopyWithImpl(
-      _$ReportImpl _value, $Res Function(_$ReportImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ReportCopyWith<$Res> implements $ReportCopyWith<$Res> {
+  factory _$ReportCopyWith(_Report value, $Res Function(_Report) _then) = __$ReportCopyWithImpl;
+@override @useResult
+$Res call({
+ int reporteeId, ReportReason? reason, String content
+});
 
-  /// Create a copy of Report
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? reporteeId = null,
-    Object? reason = freezed,
-    Object? content = null,
-  }) {
-    return _then(_$ReportImpl(
-      reporteeId: null == reporteeId
-          ? _value.reporteeId
-          : reporteeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      reason: freezed == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as ReportReason?,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$ReportCopyWithImpl<$Res>
+    implements _$ReportCopyWith<$Res> {
+  __$ReportCopyWithImpl(this._self, this._then);
 
-class _$ReportImpl extends _Report {
-  const _$ReportImpl(
-      {required this.reporteeId, required this.reason, required this.content})
-      : super._();
+  final _Report _self;
+  final $Res Function(_Report) _then;
 
-  @override
-  final int reporteeId;
-  @override
-  final ReportReason? reason;
-  @override
-  final String content;
-
-  @override
-  String toString() {
-    return 'Report(reporteeId: $reporteeId, reason: $reason, content: $content)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReportImpl &&
-            (identical(other.reporteeId, reporteeId) ||
-                other.reporteeId == reporteeId) &&
-            (identical(other.reason, reason) || other.reason == reason) &&
-            (identical(other.content, content) || other.content == content));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, reporteeId, reason, content);
-
-  /// Create a copy of Report
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ReportImplCopyWith<_$ReportImpl> get copyWith =>
-      __$$ReportImplCopyWithImpl<_$ReportImpl>(this, _$identity);
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? reporteeId = null,Object? reason = freezed,Object? content = null,}) {
+  return _then(_Report(
+reporteeId: null == reporteeId ? _self.reporteeId : reporteeId // ignore: cast_nullable_to_non_nullable
+as int,reason: freezed == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as ReportReason?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-abstract class _Report extends Report {
-  const factory _Report(
-      {required final int reporteeId,
-      required final ReportReason? reason,
-      required final String content}) = _$ReportImpl;
-  const _Report._() : super._();
 
-  @override
-  int get reporteeId;
-  @override
-  ReportReason? get reason;
-  @override
-  String get content;
-
-  /// Create a copy of Report
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReportImplCopyWith<_$ReportImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

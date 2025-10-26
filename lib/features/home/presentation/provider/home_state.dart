@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'home_state.freezed.dart';
 
 @freezed
-class HomeState with _$HomeState {
+abstract class HomeState with _$HomeState {
   const factory HomeState({
     List<IntroducedProfile>? recommendedProfiles,
     @Default(false) bool isCheckingIntroducedProfiles,

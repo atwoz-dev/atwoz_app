@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'profile_image_update_state.freezed.dart';
 
 @freezed
-class ProfileImageUpdateState with _$ProfileImageUpdateState {
+abstract class ProfileImageUpdateState with _$ProfileImageUpdateState {
   const ProfileImageUpdateState._();
 
   const factory ProfileImageUpdateState({

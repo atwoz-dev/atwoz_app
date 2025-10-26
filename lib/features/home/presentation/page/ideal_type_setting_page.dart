@@ -15,62 +15,62 @@ class IdealTypeSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
-    final idealTypeAsync = ref.watch(idealTypeNotifierProvider);
+    final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
+    final idealTypeAsync = ref.watch(idealTypeProvider);
 
     return idealTypeAsync.when(
-      data: (data) => Scaffold(
-        appBar: const DefaultAppBar(title: "이상형 설정"),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                IdealAgeSettingArea(
-                  minAge: data.idealType.minAge,
-                  maxAge: data.idealType.maxAge,
+      data:
+          (data) => Scaffold(
+            appBar: const DefaultAppBar(title: "이상형 설정"),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    IdealAgeSettingArea(
+                      minAge: data.idealType.minAge,
+                      maxAge: data.idealType.maxAge,
+                    ),
+                    const Gap(24),
+                    IdealSettingArea(idealType: data.idealType),
+                  ],
                 ),
-                const Gap(24),
-                IdealSettingArea(
-                  idealType: data.idealType,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-          child: DefaultElevatedButton(
-            primary: data.isFilterPossible
-                ? Palette.colorPrimary500
-                : Palette.colorGrey200,
-            onPressed: data.isFilterPossible
-                ? () async {
-                    if (await idealTypeNotifier.updateIdealType() &&
-                        context.mounted) {
-                      return context.pop();
-                    }
-                  }
-                : null,
-            child: Text(
-              '필터 적용하기',
-              style: Fonts.body01Medium(
-                data.isFilterPossible
-                    ? Palette.colorWhite
-                    : Palette.colorGrey300,
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              child: DefaultElevatedButton(
+                primary:
+                    data.isFilterPossible
+                        ? Palette.colorPrimary500
+                        : Palette.colorGrey200,
+                onPressed:
+                    data.isFilterPossible
+                        ? () async {
+                          if (await idealTypeNotifier.updateIdealType() &&
+                              context.mounted) {
+                            return context.pop();
+                          }
+                        }
+                        : null,
+                child: Text(
+                  '필터 적용하기',
+                  style: Fonts.body01Medium(
+                    data.isFilterPossible
+                        ? Palette.colorWhite
+                        : Palette.colorGrey300,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      error: (error, stack) => ErrorDialog(
-        error: DialogueErrorType.network,
-        onConfirm: context.pop,
-      ),
-      loading: () => const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      error:
+          (error, stack) => ErrorDialog(
+            error: DialogueErrorType.network,
+            onConfirm: context.pop,
+          ),
+      loading:
+          () =>
+              const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

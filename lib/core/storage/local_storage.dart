@@ -5,22 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
-class LocalStorageNotifier extends StateNotifier<LocalStorage> {
-  LocalStorageNotifier() : super(LocalStorage._());
-
-  Future<void> initialize() async {
-    await state.initialize();
+class LocalStorageNotifier extends Notifier<LocalStorage> {
+  @override
+  LocalStorage build() {
+    final storage = LocalStorage._();
+    return storage;
   }
 }
 
 final localStorageProvider =
-    StateNotifierProvider<LocalStorageNotifier, LocalStorage>((ref) {
-  final notifier = LocalStorageNotifier();
-  notifier.initialize(); // 초기화 실행
-  return notifier;
-});
+    NotifierProvider<LocalStorageNotifier, LocalStorage>(
+      LocalStorageNotifier.new,
+    );
 
 class LocalStorage {
   LocalStorage._();

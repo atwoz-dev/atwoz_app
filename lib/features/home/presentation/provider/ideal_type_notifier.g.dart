@@ -6,21 +6,50 @@ part of 'ideal_type_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$idealTypeNotifierHash() => r'1fe6e987dfaff7ed18ed5b46a4534c2a248a8e57';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [IdealTypeNotifier].
 @ProviderFor(IdealTypeNotifier)
-final idealTypeNotifierProvider = AutoDisposeAsyncNotifierProvider<
-    IdealTypeNotifier, IdealTypeState>.internal(
-  IdealTypeNotifier.new,
-  name: r'idealTypeNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$idealTypeNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const idealTypeProvider = IdealTypeNotifierProvider._();
 
-typedef _$IdealTypeNotifier = AutoDisposeAsyncNotifier<IdealTypeState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class IdealTypeNotifierProvider
+    extends $AsyncNotifierProvider<IdealTypeNotifier, IdealTypeState> {
+  const IdealTypeNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'idealTypeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$idealTypeNotifierHash();
+
+  @$internal
+  @override
+  IdealTypeNotifier create() => IdealTypeNotifier();
+}
+
+String _$idealTypeNotifierHash() => r'b1b0adf25017d07bf4bdf6b880c78f675158b994';
+
+abstract class _$IdealTypeNotifier extends $AsyncNotifier<IdealTypeState> {
+  FutureOr<IdealTypeState> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<IdealTypeState>, IdealTypeState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<IdealTypeState>, IdealTypeState>,
+              AsyncValue<IdealTypeState>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

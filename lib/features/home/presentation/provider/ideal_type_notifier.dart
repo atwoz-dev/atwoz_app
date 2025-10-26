@@ -6,12 +6,13 @@ import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_cas
 import 'package:atwoz_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
 import 'package:atwoz_app/features/home/presentation/provider/ideal_type_state.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ideal_type_notifier.g.dart';
 
 @riverpod
-class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealTypeState> {
+class IdealTypeNotifier extends AsyncNotifier<IdealTypeState> {
   @override
   Future<IdealTypeState> build() async {
     final idealType = await ref.read(fetchIdealTypeUseCaseProvider).execute();
@@ -46,20 +47,15 @@ class IdealTypeNotifier extends AutoDisposeAsyncNotifier<IdealTypeState> {
   void updateCities(List<String> cities) {
     _updateState(
       (it) => it.copyWith(
-        cities: cities
-            .map(
-              (e) => addressData.getCityByLabel(e),
-            )
-            .toList(),
+        cities: cities.map((e) => addressData.getCityByLabel(e)).toList(),
       ),
     );
   }
 
   void updateHobbies(List<String> hobbies) {
     _updateState(
-      (it) => it.copyWith(
-        hobbies: hobbies.map((e) => Hobby.fromLabel(e)).toList(),
-      ),
+      (it) =>
+          it.copyWith(hobbies: hobbies.map((e) => Hobby.fromLabel(e)).toList()),
     );
   }
 

@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,735 +9,885 @@ part of 'exam_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$ExamState {
-  QuestionData get questionList => throw _privateConstructorUsedError;
-  SoulmateData get soulmateList => throw _privateConstructorUsedError;
-  int get currentSubjectIndex => throw _privateConstructorUsedError;
-  bool get isSubjectOptional => throw _privateConstructorUsedError;
-  bool get isDone => throw _privateConstructorUsedError;
-  bool get hasResultData => throw _privateConstructorUsedError;
-  bool get hasSoulmate => throw _privateConstructorUsedError;
-  StoreData get heartBalance => throw _privateConstructorUsedError;
-  bool get isLoaded => throw _privateConstructorUsedError;
-  bool get isRequiredDataLoaded => throw _privateConstructorUsedError;
-  int get currentPage => throw _privateConstructorUsedError;
-  Map<int, int> get currentAnswerMap => throw _privateConstructorUsedError;
-  QuestionListErrorType? get error => throw _privateConstructorUsedError;
 
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExamStateCopyWith<ExamState> get copyWith =>
-      throw _privateConstructorUsedError;
+ QuestionData get questionList; SoulmateData get soulmateList; int get currentSubjectIndex; bool get isSubjectOptional; bool get isDone; bool get hasResultData; bool get hasSoulmate; StoreData get heartBalance; bool get isLoaded; bool get isRequiredDataLoaded; int get currentPage; Map<int, int> get currentAnswerMap; QuestionListErrorType? get error;
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ExamStateCopyWith<ExamState> get copyWith => _$ExamStateCopyWithImpl<ExamState>(this as ExamState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.isRequiredDataLoaded, isRequiredDataLoaded) || other.isRequiredDataLoaded == isRequiredDataLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other.currentAnswerMap, currentAnswerMap)&&(identical(other.error, error) || other.error == error));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,isRequiredDataLoaded,currentPage,const DeepCollectionEquality().hash(currentAnswerMap),error);
+
+@override
+String toString() {
+  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ExamStateCopyWith<$Res> {
-  factory $ExamStateCopyWith(ExamState value, $Res Function(ExamState) then) =
-      _$ExamStateCopyWithImpl<$Res, ExamState>;
-  @useResult
-  $Res call(
-      {QuestionData questionList,
-      SoulmateData soulmateList,
-      int currentSubjectIndex,
-      bool isSubjectOptional,
-      bool isDone,
-      bool hasResultData,
-      bool hasSoulmate,
-      StoreData heartBalance,
-      bool isLoaded,
-      bool isRequiredDataLoaded,
-      int currentPage,
-      Map<int, int> currentAnswerMap,
-      QuestionListErrorType? error});
+abstract mixin class $ExamStateCopyWith<$Res>  {
+  factory $ExamStateCopyWith(ExamState value, $Res Function(ExamState) _then) = _$ExamStateCopyWithImpl;
+@useResult
+$Res call({
+ QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, bool isRequiredDataLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
+});
 
-  $QuestionDataCopyWith<$Res> get questionList;
-  $SoulmateDataCopyWith<$Res> get soulmateList;
-  $StoreDataCopyWith<$Res> get heartBalance;
+
+$QuestionDataCopyWith<$Res> get questionList;$SoulmateDataCopyWith<$Res> get soulmateList;$StoreDataCopyWith<$Res> get heartBalance;
+
 }
-
 /// @nodoc
-class _$ExamStateCopyWithImpl<$Res, $Val extends ExamState>
+class _$ExamStateCopyWithImpl<$Res>
     implements $ExamStateCopyWith<$Res> {
-  _$ExamStateCopyWithImpl(this._value, this._then);
+  _$ExamStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ExamState _self;
+  final $Res Function(ExamState) _then;
 
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionList = null,
-    Object? soulmateList = null,
-    Object? currentSubjectIndex = null,
-    Object? isSubjectOptional = null,
-    Object? isDone = null,
-    Object? hasResultData = null,
-    Object? hasSoulmate = null,
-    Object? heartBalance = null,
-    Object? isLoaded = null,
-    Object? isRequiredDataLoaded = null,
-    Object? currentPage = null,
-    Object? currentAnswerMap = null,
-    Object? error = freezed,
-  }) {
-    return _then(_value.copyWith(
-      questionList: null == questionList
-          ? _value.questionList
-          : questionList // ignore: cast_nullable_to_non_nullable
-              as QuestionData,
-      soulmateList: null == soulmateList
-          ? _value.soulmateList
-          : soulmateList // ignore: cast_nullable_to_non_nullable
-              as SoulmateData,
-      currentSubjectIndex: null == currentSubjectIndex
-          ? _value.currentSubjectIndex
-          : currentSubjectIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      isSubjectOptional: null == isSubjectOptional
-          ? _value.isSubjectOptional
-          : isSubjectOptional // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDone: null == isDone
-          ? _value.isDone
-          : isDone // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasResultData: null == hasResultData
-          ? _value.hasResultData
-          : hasResultData // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasSoulmate: null == hasSoulmate
-          ? _value.hasSoulmate
-          : hasSoulmate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      heartBalance: null == heartBalance
-          ? _value.heartBalance
-          : heartBalance // ignore: cast_nullable_to_non_nullable
-              as StoreData,
-      isLoaded: null == isLoaded
-          ? _value.isLoaded
-          : isLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRequiredDataLoaded: null == isRequiredDataLoaded
-          ? _value.isRequiredDataLoaded
-          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentAnswerMap: null == currentAnswerMap
-          ? _value.currentAnswerMap
-          : currentAnswerMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, int>,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as QuestionListErrorType?,
-    ) as $Val);
-  }
-
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionDataCopyWith<$Res> get questionList {
-    return $QuestionDataCopyWith<$Res>(_value.questionList, (value) {
-      return _then(_value.copyWith(questionList: value) as $Val);
-    });
-  }
-
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SoulmateDataCopyWith<$Res> get soulmateList {
-    return $SoulmateDataCopyWith<$Res>(_value.soulmateList, (value) {
-      return _then(_value.copyWith(soulmateList: value) as $Val);
-    });
-  }
-
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $StoreDataCopyWith<$Res> get heartBalance {
-    return $StoreDataCopyWith<$Res>(_value.heartBalance, (value) {
-      return _then(_value.copyWith(heartBalance: value) as $Val);
-    });
-  }
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? isRequiredDataLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
+  return _then(_self.copyWith(
+questionList: null == questionList ? _self.questionList : questionList // ignore: cast_nullable_to_non_nullable
+as QuestionData,soulmateList: null == soulmateList ? _self.soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
+as SoulmateData,currentSubjectIndex: null == currentSubjectIndex ? _self.currentSubjectIndex : currentSubjectIndex // ignore: cast_nullable_to_non_nullable
+as int,isSubjectOptional: null == isSubjectOptional ? _self.isSubjectOptional : isSubjectOptional // ignore: cast_nullable_to_non_nullable
+as bool,isDone: null == isDone ? _self.isDone : isDone // ignore: cast_nullable_to_non_nullable
+as bool,hasResultData: null == hasResultData ? _self.hasResultData : hasResultData // ignore: cast_nullable_to_non_nullable
+as bool,hasSoulmate: null == hasSoulmate ? _self.hasSoulmate : hasSoulmate // ignore: cast_nullable_to_non_nullable
+as bool,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
+as StoreData,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as bool,isRequiredDataLoaded: null == isRequiredDataLoaded ? _self.isRequiredDataLoaded : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
+as bool,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,currentAnswerMap: null == currentAnswerMap ? _self.currentAnswerMap : currentAnswerMap // ignore: cast_nullable_to_non_nullable
+as Map<int, int>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as QuestionListErrorType?,
+  ));
+}
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QuestionDataCopyWith<$Res> get questionList {
+  
+  return $QuestionDataCopyWith<$Res>(_self.questionList, (value) {
+    return _then(_self.copyWith(questionList: value));
+  });
+}/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SoulmateDataCopyWith<$Res> get soulmateList {
+  
+  return $SoulmateDataCopyWith<$Res>(_self.soulmateList, (value) {
+    return _then(_self.copyWith(soulmateList: value));
+  });
+}/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$StoreDataCopyWith<$Res> get heartBalance {
+  
+  return $StoreDataCopyWith<$Res>(_self.heartBalance, (value) {
+    return _then(_self.copyWith(heartBalance: value));
+  });
+}
 }
 
-/// @nodoc
-abstract class _$$ExamStateImplCopyWith<$Res>
-    implements $ExamStateCopyWith<$Res> {
-  factory _$$ExamStateImplCopyWith(
-          _$ExamStateImpl value, $Res Function(_$ExamStateImpl) then) =
-      __$$ExamStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {QuestionData questionList,
-      SoulmateData soulmateList,
-      int currentSubjectIndex,
-      bool isSubjectOptional,
-      bool isDone,
-      bool hasResultData,
-      bool hasSoulmate,
-      StoreData heartBalance,
-      bool isLoaded,
-      bool isRequiredDataLoaded,
-      int currentPage,
-      Map<int, int> currentAnswerMap,
-      QuestionListErrorType? error});
 
-  @override
-  $QuestionDataCopyWith<$Res> get questionList;
-  @override
-  $SoulmateDataCopyWith<$Res> get soulmateList;
-  @override
-  $StoreDataCopyWith<$Res> get heartBalance;
+/// Adds pattern-matching-related methods to [ExamState].
+extension ExamStatePatterns on ExamState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ExamState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ExamState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ExamState value)  $default,){
+final _that = this;
+switch (_that) {
+case _ExamState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ExamState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ExamState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ExamState() when $default != null:
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)  $default,) {final _that = this;
+switch (_that) {
+case _ExamState():
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,) {final _that = this;
+switch (_that) {
+case _ExamState() when $default != null:
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-class __$$ExamStateImplCopyWithImpl<$Res>
-    extends _$ExamStateCopyWithImpl<$Res, _$ExamStateImpl>
-    implements _$$ExamStateImplCopyWith<$Res> {
-  __$$ExamStateImplCopyWithImpl(
-      _$ExamStateImpl _value, $Res Function(_$ExamStateImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionList = null,
-    Object? soulmateList = null,
-    Object? currentSubjectIndex = null,
-    Object? isSubjectOptional = null,
-    Object? isDone = null,
-    Object? hasResultData = null,
-    Object? hasSoulmate = null,
-    Object? heartBalance = null,
-    Object? isLoaded = null,
-    Object? isRequiredDataLoaded = null,
-    Object? currentPage = null,
-    Object? currentAnswerMap = null,
-    Object? error = freezed,
-  }) {
-    return _then(_$ExamStateImpl(
-      questionList: null == questionList
-          ? _value.questionList
-          : questionList // ignore: cast_nullable_to_non_nullable
-              as QuestionData,
-      soulmateList: null == soulmateList
-          ? _value.soulmateList
-          : soulmateList // ignore: cast_nullable_to_non_nullable
-              as SoulmateData,
-      currentSubjectIndex: null == currentSubjectIndex
-          ? _value.currentSubjectIndex
-          : currentSubjectIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      isSubjectOptional: null == isSubjectOptional
-          ? _value.isSubjectOptional
-          : isSubjectOptional // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDone: null == isDone
-          ? _value.isDone
-          : isDone // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasResultData: null == hasResultData
-          ? _value.hasResultData
-          : hasResultData // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasSoulmate: null == hasSoulmate
-          ? _value.hasSoulmate
-          : hasSoulmate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      heartBalance: null == heartBalance
-          ? _value.heartBalance
-          : heartBalance // ignore: cast_nullable_to_non_nullable
-              as StoreData,
-      isLoaded: null == isLoaded
-          ? _value.isLoaded
-          : isLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRequiredDataLoaded: null == isRequiredDataLoaded
-          ? _value.isRequiredDataLoaded
-          : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentAnswerMap: null == currentAnswerMap
-          ? _value._currentAnswerMap
-          : currentAnswerMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, int>,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as QuestionListErrorType?,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ExamStateImpl extends _ExamState {
-  const _$ExamStateImpl(
-      {required this.questionList,
-      required this.soulmateList,
-      required this.currentSubjectIndex,
-      required this.isSubjectOptional,
-      required this.isDone,
-      required this.hasResultData,
-      required this.hasSoulmate,
-      required this.heartBalance,
-      this.isLoaded = false,
-      this.isRequiredDataLoaded = false,
-      this.currentPage = 0,
-      final Map<int, int> currentAnswerMap = const {},
-      this.error})
-      : _currentAnswerMap = currentAnswerMap,
-        super._();
 
-  @override
-  final QuestionData questionList;
-  @override
-  final SoulmateData soulmateList;
-  @override
-  final int currentSubjectIndex;
-  @override
-  final bool isSubjectOptional;
-  @override
-  final bool isDone;
-  @override
-  final bool hasResultData;
-  @override
-  final bool hasSoulmate;
-  @override
-  final StoreData heartBalance;
-  @override
-  @JsonKey()
-  final bool isLoaded;
-  @override
-  @JsonKey()
-  final bool isRequiredDataLoaded;
-  @override
-  @JsonKey()
-  final int currentPage;
-  final Map<int, int> _currentAnswerMap;
-  @override
-  @JsonKey()
-  Map<int, int> get currentAnswerMap {
-    if (_currentAnswerMap is EqualUnmodifiableMapView) return _currentAnswerMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_currentAnswerMap);
-  }
+class _ExamState extends ExamState {
+  const _ExamState({required this.questionList, required this.soulmateList, required this.currentSubjectIndex, required this.isSubjectOptional, required this.isDone, required this.hasResultData, required this.hasSoulmate, required this.heartBalance, this.isLoaded = false, this.isRequiredDataLoaded = false, this.currentPage = 0, final  Map<int, int> currentAnswerMap = const {}, this.error}): _currentAnswerMap = currentAnswerMap,super._();
+  
 
-  @override
-  final QuestionListErrorType? error;
-
-  @override
-  String toString() {
-    return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ExamStateImpl &&
-            (identical(other.questionList, questionList) ||
-                other.questionList == questionList) &&
-            (identical(other.soulmateList, soulmateList) ||
-                other.soulmateList == soulmateList) &&
-            (identical(other.currentSubjectIndex, currentSubjectIndex) ||
-                other.currentSubjectIndex == currentSubjectIndex) &&
-            (identical(other.isSubjectOptional, isSubjectOptional) ||
-                other.isSubjectOptional == isSubjectOptional) &&
-            (identical(other.isDone, isDone) || other.isDone == isDone) &&
-            (identical(other.hasResultData, hasResultData) ||
-                other.hasResultData == hasResultData) &&
-            (identical(other.hasSoulmate, hasSoulmate) ||
-                other.hasSoulmate == hasSoulmate) &&
-            (identical(other.heartBalance, heartBalance) ||
-                other.heartBalance == heartBalance) &&
-            (identical(other.isLoaded, isLoaded) ||
-                other.isLoaded == isLoaded) &&
-            (identical(other.isRequiredDataLoaded, isRequiredDataLoaded) ||
-                other.isRequiredDataLoaded == isRequiredDataLoaded) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            const DeepCollectionEquality()
-                .equals(other._currentAnswerMap, _currentAnswerMap) &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      questionList,
-      soulmateList,
-      currentSubjectIndex,
-      isSubjectOptional,
-      isDone,
-      hasResultData,
-      hasSoulmate,
-      heartBalance,
-      isLoaded,
-      isRequiredDataLoaded,
-      currentPage,
-      const DeepCollectionEquality().hash(_currentAnswerMap),
-      error);
-
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ExamStateImplCopyWith<_$ExamStateImpl> get copyWith =>
-      __$$ExamStateImplCopyWithImpl<_$ExamStateImpl>(this, _$identity);
+@override final  QuestionData questionList;
+@override final  SoulmateData soulmateList;
+@override final  int currentSubjectIndex;
+@override final  bool isSubjectOptional;
+@override final  bool isDone;
+@override final  bool hasResultData;
+@override final  bool hasSoulmate;
+@override final  StoreData heartBalance;
+@override@JsonKey() final  bool isLoaded;
+@override@JsonKey() final  bool isRequiredDataLoaded;
+@override@JsonKey() final  int currentPage;
+ final  Map<int, int> _currentAnswerMap;
+@override@JsonKey() Map<int, int> get currentAnswerMap {
+  if (_currentAnswerMap is EqualUnmodifiableMapView) return _currentAnswerMap;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_currentAnswerMap);
 }
 
-abstract class _ExamState extends ExamState {
-  const factory _ExamState(
-      {required final QuestionData questionList,
-      required final SoulmateData soulmateList,
-      required final int currentSubjectIndex,
-      required final bool isSubjectOptional,
-      required final bool isDone,
-      required final bool hasResultData,
-      required final bool hasSoulmate,
-      required final StoreData heartBalance,
-      final bool isLoaded,
-      final bool isRequiredDataLoaded,
-      final int currentPage,
-      final Map<int, int> currentAnswerMap,
-      final QuestionListErrorType? error}) = _$ExamStateImpl;
-  const _ExamState._() : super._();
+@override final  QuestionListErrorType? error;
 
-  @override
-  QuestionData get questionList;
-  @override
-  SoulmateData get soulmateList;
-  @override
-  int get currentSubjectIndex;
-  @override
-  bool get isSubjectOptional;
-  @override
-  bool get isDone;
-  @override
-  bool get hasResultData;
-  @override
-  bool get hasSoulmate;
-  @override
-  StoreData get heartBalance;
-  @override
-  bool get isLoaded;
-  @override
-  bool get isRequiredDataLoaded;
-  @override
-  int get currentPage;
-  @override
-  Map<int, int> get currentAnswerMap;
-  @override
-  QuestionListErrorType? get error;
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ExamStateCopyWith<_ExamState> get copyWith => __$ExamStateCopyWithImpl<_ExamState>(this, _$identity);
 
-  /// Create a copy of ExamState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ExamStateImplCopyWith<_$ExamStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.isRequiredDataLoaded, isRequiredDataLoaded) || other.isRequiredDataLoaded == isRequiredDataLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._currentAnswerMap, _currentAnswerMap)&&(identical(other.error, error) || other.error == error));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,isRequiredDataLoaded,currentPage,const DeepCollectionEquality().hash(_currentAnswerMap),error);
+
+@override
+String toString() {
+  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ExamStateCopyWith<$Res> implements $ExamStateCopyWith<$Res> {
+  factory _$ExamStateCopyWith(_ExamState value, $Res Function(_ExamState) _then) = __$ExamStateCopyWithImpl;
+@override @useResult
+$Res call({
+ QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, bool isRequiredDataLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
+});
+
+
+@override $QuestionDataCopyWith<$Res> get questionList;@override $SoulmateDataCopyWith<$Res> get soulmateList;@override $StoreDataCopyWith<$Res> get heartBalance;
+
+}
+/// @nodoc
+class __$ExamStateCopyWithImpl<$Res>
+    implements _$ExamStateCopyWith<$Res> {
+  __$ExamStateCopyWithImpl(this._self, this._then);
+
+  final _ExamState _self;
+  final $Res Function(_ExamState) _then;
+
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? isRequiredDataLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
+  return _then(_ExamState(
+questionList: null == questionList ? _self.questionList : questionList // ignore: cast_nullable_to_non_nullable
+as QuestionData,soulmateList: null == soulmateList ? _self.soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
+as SoulmateData,currentSubjectIndex: null == currentSubjectIndex ? _self.currentSubjectIndex : currentSubjectIndex // ignore: cast_nullable_to_non_nullable
+as int,isSubjectOptional: null == isSubjectOptional ? _self.isSubjectOptional : isSubjectOptional // ignore: cast_nullable_to_non_nullable
+as bool,isDone: null == isDone ? _self.isDone : isDone // ignore: cast_nullable_to_non_nullable
+as bool,hasResultData: null == hasResultData ? _self.hasResultData : hasResultData // ignore: cast_nullable_to_non_nullable
+as bool,hasSoulmate: null == hasSoulmate ? _self.hasSoulmate : hasSoulmate // ignore: cast_nullable_to_non_nullable
+as bool,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
+as StoreData,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as bool,isRequiredDataLoaded: null == isRequiredDataLoaded ? _self.isRequiredDataLoaded : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
+as bool,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,currentAnswerMap: null == currentAnswerMap ? _self._currentAnswerMap : currentAnswerMap // ignore: cast_nullable_to_non_nullable
+as Map<int, int>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as QuestionListErrorType?,
+  ));
+}
+
+/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QuestionDataCopyWith<$Res> get questionList {
+  
+  return $QuestionDataCopyWith<$Res>(_self.questionList, (value) {
+    return _then(_self.copyWith(questionList: value));
+  });
+}/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SoulmateDataCopyWith<$Res> get soulmateList {
+  
+  return $SoulmateDataCopyWith<$Res>(_self.soulmateList, (value) {
+    return _then(_self.copyWith(soulmateList: value));
+  });
+}/// Create a copy of ExamState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$StoreDataCopyWith<$Res> get heartBalance {
+  
+  return $StoreDataCopyWith<$Res>(_self.heartBalance, (value) {
+    return _then(_self.copyWith(heartBalance: value));
+  });
+}
 }
 
 /// @nodoc
 mixin _$QuestionData {
-  List<SubjectItem> get questionList => throw _privateConstructorUsedError;
 
-  /// Create a copy of QuestionData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $QuestionDataCopyWith<QuestionData> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<SubjectItem> get questionList;
+/// Create a copy of QuestionData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$QuestionDataCopyWith<QuestionData> get copyWith => _$QuestionDataCopyWithImpl<QuestionData>(this as QuestionData, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QuestionData&&const DeepCollectionEquality().equals(other.questionList, questionList));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(questionList));
+
+@override
+String toString() {
+  return 'QuestionData(questionList: $questionList)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $QuestionDataCopyWith<$Res> {
-  factory $QuestionDataCopyWith(
-          QuestionData value, $Res Function(QuestionData) then) =
-      _$QuestionDataCopyWithImpl<$Res, QuestionData>;
-  @useResult
-  $Res call({List<SubjectItem> questionList});
-}
+abstract mixin class $QuestionDataCopyWith<$Res>  {
+  factory $QuestionDataCopyWith(QuestionData value, $Res Function(QuestionData) _then) = _$QuestionDataCopyWithImpl;
+@useResult
+$Res call({
+ List<SubjectItem> questionList
+});
 
+
+
+
+}
 /// @nodoc
-class _$QuestionDataCopyWithImpl<$Res, $Val extends QuestionData>
+class _$QuestionDataCopyWithImpl<$Res>
     implements $QuestionDataCopyWith<$Res> {
-  _$QuestionDataCopyWithImpl(this._value, this._then);
+  _$QuestionDataCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final QuestionData _self;
+  final $Res Function(QuestionData) _then;
 
-  /// Create a copy of QuestionData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionList = null,
-  }) {
-    return _then(_value.copyWith(
-      questionList: null == questionList
-          ? _value.questionList
-          : questionList // ignore: cast_nullable_to_non_nullable
-              as List<SubjectItem>,
-    ) as $Val);
-  }
+/// Create a copy of QuestionData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? questionList = null,}) {
+  return _then(_self.copyWith(
+questionList: null == questionList ? _self.questionList : questionList // ignore: cast_nullable_to_non_nullable
+as List<SubjectItem>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [QuestionData].
+extension QuestionDataPatterns on QuestionData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _QuestionData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _QuestionData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _QuestionData value)  $default,){
+final _that = this;
+switch (_that) {
+case _QuestionData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _QuestionData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _QuestionData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<SubjectItem> questionList)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _QuestionData() when $default != null:
+return $default(_that.questionList);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<SubjectItem> questionList)  $default,) {final _that = this;
+switch (_that) {
+case _QuestionData():
+return $default(_that.questionList);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<SubjectItem> questionList)?  $default,) {final _that = this;
+switch (_that) {
+case _QuestionData() when $default != null:
+return $default(_that.questionList);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$QuestionDataImplCopyWith<$Res>
-    implements $QuestionDataCopyWith<$Res> {
-  factory _$$QuestionDataImplCopyWith(
-          _$QuestionDataImpl value, $Res Function(_$QuestionDataImpl) then) =
-      __$$QuestionDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<SubjectItem> questionList});
+
+
+class _QuestionData implements QuestionData {
+  const _QuestionData({final  List<SubjectItem> questionList = const []}): _questionList = questionList;
+  
+
+ final  List<SubjectItem> _questionList;
+@override@JsonKey() List<SubjectItem> get questionList {
+  if (_questionList is EqualUnmodifiableListView) return _questionList;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_questionList);
+}
+
+
+/// Create a copy of QuestionData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$QuestionDataCopyWith<_QuestionData> get copyWith => __$QuestionDataCopyWithImpl<_QuestionData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QuestionData&&const DeepCollectionEquality().equals(other._questionList, _questionList));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_questionList));
+
+@override
+String toString() {
+  return 'QuestionData(questionList: $questionList)';
+}
+
+
 }
 
 /// @nodoc
-class __$$QuestionDataImplCopyWithImpl<$Res>
-    extends _$QuestionDataCopyWithImpl<$Res, _$QuestionDataImpl>
-    implements _$$QuestionDataImplCopyWith<$Res> {
-  __$$QuestionDataImplCopyWithImpl(
-      _$QuestionDataImpl _value, $Res Function(_$QuestionDataImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$QuestionDataCopyWith<$Res> implements $QuestionDataCopyWith<$Res> {
+  factory _$QuestionDataCopyWith(_QuestionData value, $Res Function(_QuestionData) _then) = __$QuestionDataCopyWithImpl;
+@override @useResult
+$Res call({
+ List<SubjectItem> questionList
+});
 
-  /// Create a copy of QuestionData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionList = null,
-  }) {
-    return _then(_$QuestionDataImpl(
-      questionList: null == questionList
-          ? _value._questionList
-          : questionList // ignore: cast_nullable_to_non_nullable
-              as List<SubjectItem>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$QuestionDataCopyWithImpl<$Res>
+    implements _$QuestionDataCopyWith<$Res> {
+  __$QuestionDataCopyWithImpl(this._self, this._then);
 
-class _$QuestionDataImpl implements _QuestionData {
-  const _$QuestionDataImpl({final List<SubjectItem> questionList = const []})
-      : _questionList = questionList;
+  final _QuestionData _self;
+  final $Res Function(_QuestionData) _then;
 
-  final List<SubjectItem> _questionList;
-  @override
-  @JsonKey()
-  List<SubjectItem> get questionList {
-    if (_questionList is EqualUnmodifiableListView) return _questionList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_questionList);
-  }
-
-  @override
-  String toString() {
-    return 'QuestionData(questionList: $questionList)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$QuestionDataImpl &&
-            const DeepCollectionEquality()
-                .equals(other._questionList, _questionList));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_questionList));
-
-  /// Create a copy of QuestionData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$QuestionDataImplCopyWith<_$QuestionDataImpl> get copyWith =>
-      __$$QuestionDataImplCopyWithImpl<_$QuestionDataImpl>(this, _$identity);
+/// Create a copy of QuestionData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? questionList = null,}) {
+  return _then(_QuestionData(
+questionList: null == questionList ? _self._questionList : questionList // ignore: cast_nullable_to_non_nullable
+as List<SubjectItem>,
+  ));
 }
 
-abstract class _QuestionData implements QuestionData {
-  const factory _QuestionData({final List<SubjectItem> questionList}) =
-      _$QuestionDataImpl;
 
-  @override
-  List<SubjectItem> get questionList;
-
-  /// Create a copy of QuestionData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QuestionDataImplCopyWith<_$QuestionDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$SoulmateData {
-  List<IntroducedProfile> get soulmateList =>
-      throw _privateConstructorUsedError;
 
-  /// Create a copy of SoulmateData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SoulmateDataCopyWith<SoulmateData> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<IntroducedProfile> get soulmateList;
+/// Create a copy of SoulmateData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SoulmateDataCopyWith<SoulmateData> get copyWith => _$SoulmateDataCopyWithImpl<SoulmateData>(this as SoulmateData, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SoulmateData&&const DeepCollectionEquality().equals(other.soulmateList, soulmateList));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(soulmateList));
+
+@override
+String toString() {
+  return 'SoulmateData(soulmateList: $soulmateList)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $SoulmateDataCopyWith<$Res> {
-  factory $SoulmateDataCopyWith(
-          SoulmateData value, $Res Function(SoulmateData) then) =
-      _$SoulmateDataCopyWithImpl<$Res, SoulmateData>;
-  @useResult
-  $Res call({List<IntroducedProfile> soulmateList});
-}
+abstract mixin class $SoulmateDataCopyWith<$Res>  {
+  factory $SoulmateDataCopyWith(SoulmateData value, $Res Function(SoulmateData) _then) = _$SoulmateDataCopyWithImpl;
+@useResult
+$Res call({
+ List<IntroducedProfile> soulmateList
+});
 
+
+
+
+}
 /// @nodoc
-class _$SoulmateDataCopyWithImpl<$Res, $Val extends SoulmateData>
+class _$SoulmateDataCopyWithImpl<$Res>
     implements $SoulmateDataCopyWith<$Res> {
-  _$SoulmateDataCopyWithImpl(this._value, this._then);
+  _$SoulmateDataCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SoulmateData _self;
+  final $Res Function(SoulmateData) _then;
 
-  /// Create a copy of SoulmateData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? soulmateList = null,
-  }) {
-    return _then(_value.copyWith(
-      soulmateList: null == soulmateList
-          ? _value.soulmateList
-          : soulmateList // ignore: cast_nullable_to_non_nullable
-              as List<IntroducedProfile>,
-    ) as $Val);
-  }
+/// Create a copy of SoulmateData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? soulmateList = null,}) {
+  return _then(_self.copyWith(
+soulmateList: null == soulmateList ? _self.soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
+as List<IntroducedProfile>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [SoulmateData].
+extension SoulmateDataPatterns on SoulmateData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SoulmateData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _SoulmateData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SoulmateData value)  $default,){
+final _that = this;
+switch (_that) {
+case _SoulmateData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SoulmateData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _SoulmateData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<IntroducedProfile> soulmateList)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _SoulmateData() when $default != null:
+return $default(_that.soulmateList);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<IntroducedProfile> soulmateList)  $default,) {final _that = this;
+switch (_that) {
+case _SoulmateData():
+return $default(_that.soulmateList);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<IntroducedProfile> soulmateList)?  $default,) {final _that = this;
+switch (_that) {
+case _SoulmateData() when $default != null:
+return $default(_that.soulmateList);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$SoulmateDataImplCopyWith<$Res>
-    implements $SoulmateDataCopyWith<$Res> {
-  factory _$$SoulmateDataImplCopyWith(
-          _$SoulmateDataImpl value, $Res Function(_$SoulmateDataImpl) then) =
-      __$$SoulmateDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<IntroducedProfile> soulmateList});
+
+
+class _SoulmateData implements SoulmateData {
+  const _SoulmateData({final  List<IntroducedProfile> soulmateList = const []}): _soulmateList = soulmateList;
+  
+
+ final  List<IntroducedProfile> _soulmateList;
+@override@JsonKey() List<IntroducedProfile> get soulmateList {
+  if (_soulmateList is EqualUnmodifiableListView) return _soulmateList;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_soulmateList);
+}
+
+
+/// Create a copy of SoulmateData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SoulmateDataCopyWith<_SoulmateData> get copyWith => __$SoulmateDataCopyWithImpl<_SoulmateData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SoulmateData&&const DeepCollectionEquality().equals(other._soulmateList, _soulmateList));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_soulmateList));
+
+@override
+String toString() {
+  return 'SoulmateData(soulmateList: $soulmateList)';
+}
+
+
 }
 
 /// @nodoc
-class __$$SoulmateDataImplCopyWithImpl<$Res>
-    extends _$SoulmateDataCopyWithImpl<$Res, _$SoulmateDataImpl>
-    implements _$$SoulmateDataImplCopyWith<$Res> {
-  __$$SoulmateDataImplCopyWithImpl(
-      _$SoulmateDataImpl _value, $Res Function(_$SoulmateDataImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$SoulmateDataCopyWith<$Res> implements $SoulmateDataCopyWith<$Res> {
+  factory _$SoulmateDataCopyWith(_SoulmateData value, $Res Function(_SoulmateData) _then) = __$SoulmateDataCopyWithImpl;
+@override @useResult
+$Res call({
+ List<IntroducedProfile> soulmateList
+});
 
-  /// Create a copy of SoulmateData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? soulmateList = null,
-  }) {
-    return _then(_$SoulmateDataImpl(
-      soulmateList: null == soulmateList
-          ? _value._soulmateList
-          : soulmateList // ignore: cast_nullable_to_non_nullable
-              as List<IntroducedProfile>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$SoulmateDataCopyWithImpl<$Res>
+    implements _$SoulmateDataCopyWith<$Res> {
+  __$SoulmateDataCopyWithImpl(this._self, this._then);
 
-class _$SoulmateDataImpl implements _SoulmateData {
-  const _$SoulmateDataImpl(
-      {final List<IntroducedProfile> soulmateList = const []})
-      : _soulmateList = soulmateList;
+  final _SoulmateData _self;
+  final $Res Function(_SoulmateData) _then;
 
-  final List<IntroducedProfile> _soulmateList;
-  @override
-  @JsonKey()
-  List<IntroducedProfile> get soulmateList {
-    if (_soulmateList is EqualUnmodifiableListView) return _soulmateList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_soulmateList);
-  }
-
-  @override
-  String toString() {
-    return 'SoulmateData(soulmateList: $soulmateList)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SoulmateDataImpl &&
-            const DeepCollectionEquality()
-                .equals(other._soulmateList, _soulmateList));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_soulmateList));
-
-  /// Create a copy of SoulmateData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SoulmateDataImplCopyWith<_$SoulmateDataImpl> get copyWith =>
-      __$$SoulmateDataImplCopyWithImpl<_$SoulmateDataImpl>(this, _$identity);
+/// Create a copy of SoulmateData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? soulmateList = null,}) {
+  return _then(_SoulmateData(
+soulmateList: null == soulmateList ? _self._soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
+as List<IntroducedProfile>,
+  ));
 }
 
-abstract class _SoulmateData implements SoulmateData {
-  const factory _SoulmateData({final List<IntroducedProfile> soulmateList}) =
-      _$SoulmateDataImpl;
 
-  @override
-  List<IntroducedProfile> get soulmateList;
-
-  /// Create a copy of SoulmateData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SoulmateDataImplCopyWith<_$SoulmateDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

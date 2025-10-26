@@ -53,11 +53,11 @@ class _MessageSendBottomSheetState
 
   @override
   void initState() {
-    final message = ref.read(profileNotifierProvider(widget.userId)).message;
+    final message = ref.read(profileProvider(widget.userId)).message;
 
     _controller = TextEditingController(text: message)
       ..addListener(() {
-        ref.read(profileNotifierProvider(widget.userId).notifier).message =
+        ref.read(profileProvider(widget.userId).notifier).message =
             _controller.text;
       });
     super.initState();
@@ -71,7 +71,7 @@ class _MessageSendBottomSheetState
 
   @override
   Widget build(BuildContext context) {
-    final status = ref.watch(profileNotifierProvider(widget.userId));
+    final status = ref.watch(profileProvider(widget.userId));
     final messageReceived = status.matchStatus is MatchingReceived;
 
     final (

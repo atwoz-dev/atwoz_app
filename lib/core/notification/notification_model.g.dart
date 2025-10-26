@@ -9,10 +9,14 @@ part of 'notification_model.dart';
 FcmNotification _$FcmNotificationFromJson(Map<String, dynamic> json) =>
     FcmNotification(
       senderId: _dynamicToInteger(json['senderId']),
-      senderType: $enumDecode(_$FcmSenderTypeEnumMap, json['senderType'],
-          unknownValue: FcmSenderType.unknown),
-      notificationType:
-          ServerNotificationType.parse(json['notificationType'] as String?),
+      senderType: $enumDecode(
+        _$FcmSenderTypeEnumMap,
+        json['senderType'],
+        unknownValue: FcmSenderType.unknown,
+      ),
+      notificationType: ServerNotificationType.parse(
+        json['notificationType'] as String?,
+      ),
     );
 
 Map<String, dynamic> _$FcmNotificationToJson(FcmNotification instance) =>

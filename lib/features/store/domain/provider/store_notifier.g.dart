@@ -6,21 +6,58 @@ part of 'store_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$storeNotifierHash() => r'1e68f1992b1779baab95c631a6b402f4e6558494';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [StoreNotifier].
 @ProviderFor(StoreNotifier)
-final storeNotifierProvider =
-    AutoDisposeNotifierProvider<StoreNotifier, StoreState>.internal(
-  StoreNotifier.new,
-  name: r'storeNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$storeNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const storeProvider = StoreNotifierProvider._();
 
-typedef _$StoreNotifier = AutoDisposeNotifier<StoreState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class StoreNotifierProvider
+    extends $NotifierProvider<StoreNotifier, StoreState> {
+  const StoreNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'storeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$storeNotifierHash();
+
+  @$internal
+  @override
+  StoreNotifier create() => StoreNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(StoreState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<StoreState>(value),
+    );
+  }
+}
+
+String _$storeNotifierHash() => r'421be85942bd701cfc4b953f83f2e4fbec0aeed2';
+
+abstract class _$StoreNotifier extends $Notifier<StoreState> {
+  StoreState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<StoreState, StoreState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<StoreState, StoreState>,
+              StoreState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

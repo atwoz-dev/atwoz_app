@@ -17,7 +17,7 @@ class IdealAgeSettingArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final idealTypeNotifier = ref.read(idealTypeNotifierProvider.notifier);
+    final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
 
     return IdealAgeSlider(
       minAge: minAge,
@@ -69,18 +69,14 @@ class IdealAgeSlider extends StatelessWidget {
           children: [
             Expanded(
               child: RangeSlider(
-                values: RangeValues(
-                  minAge.toDouble(),
-                  maxAge.toDouble(),
-                ),
+                values: RangeValues(minAge.toDouble(), maxAge.toDouble()),
                 min: 20,
                 max: 46,
-                onChanged: onChanged != null
-                    ? (values) => onChanged!(
-                          values.start.toInt(),
-                          values.end.toInt(),
-                        )
-                    : null,
+                onChanged:
+                    onChanged != null
+                        ? (values) =>
+                            onChanged!(values.start.toInt(), values.end.toInt())
+                        : null,
                 activeColor: Palette.colorPrimary500,
                 inactiveColor: const Color(0xffEEEEEE),
               ),

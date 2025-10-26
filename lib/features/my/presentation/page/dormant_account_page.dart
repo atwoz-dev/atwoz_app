@@ -17,7 +17,7 @@ class DormantAccountPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nickname = ref.watch(globalNotifierProvider).profile.nickname;
+    final nickname = ref.watch(globalProvider).profile.nickname;
 
     return Scaffold(
       body: SafeArea(
@@ -62,7 +62,7 @@ class DormantAccountPage extends ConsumerWidget {
                 child: const Text('휴면 해제하기'),
                 onPressed: () async {
                   final success = await ref
-                      .read(mySettingNotifierProvider.notifier)
+                      .read(mySettingProvider.notifier)
                       .activeAccount();
 
                   if (!context.mounted) return;

@@ -8,7 +8,7 @@ part of 'user_response.dart';
 
 class UserDataAdapter extends TypeAdapter<UserData> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   UserData read(BinaryReader reader) {
@@ -47,15 +47,15 @@ class UserDataAdapter extends TypeAdapter<UserData> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserResponseImpl _$$UserResponseImplFromJson(Map<String, dynamic> json) =>
-    _$UserResponseImpl(
+_UserResponse _$UserResponseFromJson(Map<String, dynamic> json) =>
+    _UserResponse(
       status: (json['status'] as num).toInt(),
       code: json['code'] as String,
       message: json['message'] as String,
       data: UserData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$UserResponseImplToJson(_$UserResponseImpl instance) =>
+Map<String, dynamic> _$UserResponseToJson(_UserResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'code': instance.code,
@@ -63,14 +63,12 @@ Map<String, dynamic> _$$UserResponseImplToJson(_$UserResponseImpl instance) =>
       'data': instance.data,
     };
 
-_$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
-    _$UserDataImpl(
-      accessToken: json['accessToken'] as String,
-      isProfileSettingNeeded: json['isProfileSettingNeeded'] as bool,
-    );
+_UserData _$UserDataFromJson(Map<String, dynamic> json) => _UserData(
+  accessToken: json['accessToken'] as String,
+  isProfileSettingNeeded: json['isProfileSettingNeeded'] as bool,
+);
 
-Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
-    <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'isProfileSettingNeeded': instance.isProfileSettingNeeded,
-    };
+Map<String, dynamic> _$UserDataToJson(_UserData instance) => <String, dynamic>{
+  'accessToken': instance.accessToken,
+  'isProfileSettingNeeded': instance.isProfileSettingNeeded,
+};

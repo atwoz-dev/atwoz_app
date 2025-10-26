@@ -6,49 +6,44 @@ part of 'exam_question_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ExamQuestionResponseImpl _$$ExamQuestionResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ExamQuestionResponseImpl(
-      status: (json['status'] as num).toInt(),
-      code: json['code'] as String,
-      message: json['message'] as String,
-      data: ExamQuestionItem.fromJson(json['data'] as Map<String, dynamic>),
-    );
+_ExamQuestionResponse _$ExamQuestionResponseFromJson(
+  Map<String, dynamic> json,
+) => _ExamQuestionResponse(
+  status: (json['status'] as num).toInt(),
+  code: json['code'] as String,
+  message: json['message'] as String,
+  data: ExamQuestionItem.fromJson(json['data'] as Map<String, dynamic>),
+);
 
-Map<String, dynamic> _$$ExamQuestionResponseImplToJson(
-        _$ExamQuestionResponseImpl instance) =>
-    <String, dynamic>{
-      'status': instance.status,
-      'code': instance.code,
-      'message': instance.message,
-      'data': instance.data,
-    };
+Map<String, dynamic> _$ExamQuestionResponseToJson(
+  _ExamQuestionResponse instance,
+) => <String, dynamic>{
+  'status': instance.status,
+  'code': instance.code,
+  'message': instance.message,
+  'data': instance.data,
+};
 
-_$ExamQuestionItemImpl _$$ExamQuestionItemImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ExamQuestionItemImpl(
+_ExamQuestionItem _$ExamQuestionItemFromJson(Map<String, dynamic> json) =>
+    _ExamQuestionItem(
       subjects: (json['subjects'] as List<dynamic>)
           .map((e) => SubjectItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$ExamQuestionItemImplToJson(
-        _$ExamQuestionItemImpl instance) =>
-    <String, dynamic>{
-      'subjects': instance.subjects,
-    };
+Map<String, dynamic> _$ExamQuestionItemToJson(_ExamQuestionItem instance) =>
+    <String, dynamic>{'subjects': instance.subjects};
 
-_$SubjectItemImpl _$$SubjectItemImplFromJson(Map<String, dynamic> json) =>
-    _$SubjectItemImpl(
-      id: (json['id'] as num).toInt(),
-      type: $enumDecode(_$ExamTypeEnumMap, json['type']),
-      name: json['name'] as String,
-      questions: (json['questions'] as List<dynamic>)
-          .map((e) => QuestionItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+_SubjectItem _$SubjectItemFromJson(Map<String, dynamic> json) => _SubjectItem(
+  id: (json['id'] as num).toInt(),
+  type: $enumDecode(_$ExamTypeEnumMap, json['type']),
+  name: json['name'] as String,
+  questions: (json['questions'] as List<dynamic>)
+      .map((e) => QuestionItem.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
-Map<String, dynamic> _$$SubjectItemImplToJson(_$SubjectItemImpl instance) =>
+Map<String, dynamic> _$SubjectItemToJson(_SubjectItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': _$ExamTypeEnumMap[instance.type]!,
@@ -61,8 +56,8 @@ const _$ExamTypeEnumMap = {
   ExamType.optional: 'OPTIONAL',
 };
 
-_$QuestionItemImpl _$$QuestionItemImplFromJson(Map<String, dynamic> json) =>
-    _$QuestionItemImpl(
+_QuestionItem _$QuestionItemFromJson(Map<String, dynamic> json) =>
+    _QuestionItem(
       id: (json['id'] as num).toInt(),
       content: json['content'] as String,
       answers: (json['answers'] as List<dynamic>)
@@ -70,21 +65,17 @@ _$QuestionItemImpl _$$QuestionItemImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$QuestionItemImplToJson(_$QuestionItemImpl instance) =>
+Map<String, dynamic> _$QuestionItemToJson(_QuestionItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       'content': instance.content,
       'answers': instance.answers,
     };
 
-_$AnswerItemImpl _$$AnswerItemImplFromJson(Map<String, dynamic> json) =>
-    _$AnswerItemImpl(
-      id: (json['id'] as num).toInt(),
-      content: json['content'] as String,
-    );
+_AnswerItem _$AnswerItemFromJson(Map<String, dynamic> json) => _AnswerItem(
+  id: (json['id'] as num).toInt(),
+  content: json['content'] as String,
+);
 
-Map<String, dynamic> _$$AnswerItemImplToJson(_$AnswerItemImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'content': instance.content,
-    };
+Map<String, dynamic> _$AnswerItemToJson(_AnswerItem instance) =>
+    <String, dynamic>{'id': instance.id, 'content': instance.content};

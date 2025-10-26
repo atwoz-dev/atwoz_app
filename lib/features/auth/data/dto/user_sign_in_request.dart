@@ -4,7 +4,7 @@ part 'user_sign_in_request.freezed.dart';
 part 'user_sign_in_request.g.dart';
 
 @freezed
-class UserSignInRequest with _$UserSignInRequest {
+abstract class UserSignInRequest with _$UserSignInRequest {
   const factory UserSignInRequest({
     required String phoneNumber,
     required String code,

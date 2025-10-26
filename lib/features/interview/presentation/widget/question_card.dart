@@ -46,7 +46,7 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
 
   void _fetchQuestions() {
     final category = InterviewCategory.values[widget.currentTabIndex];
-    ref.read(interviewNotifierProvider.notifier).fetchQuestionList(category);
+    ref.read(interviewProvider.notifier).fetchQuestionList(category);
   }
 
   @override
@@ -59,7 +59,7 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
 
   @override
   Widget build(BuildContext context) {
-    final interviewState = ref.watch(interviewNotifierProvider);
+    final interviewState = ref.watch(interviewProvider);
     final questionList = interviewState.questionList.questionList;
 
     return Padding(

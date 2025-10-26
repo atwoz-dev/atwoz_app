@@ -34,7 +34,7 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.watch(favoriteListNotifierProvider);
+    final notifier = ref.watch(favoriteListProvider);
 
     return SafeArea(
       child: TabBarView(
@@ -101,7 +101,7 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
     const threshold = 300;
     if (_controller.position.maxScrollExtent >= pixel + threshold) return;
 
-    final notifier = ref.read(favoriteListNotifierProvider.notifier);
+    final notifier = ref.read(favoriteListProvider.notifier);
 
     final currentSelectedTab = FavoriteTabType.values[DefaultTabController.of(
       context,

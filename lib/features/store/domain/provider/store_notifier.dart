@@ -89,11 +89,11 @@ class StoreNotifier extends _$StoreNotifier {
         try {
           // 영수증 서버 검증
           await ref
-              .read(storeNotifierProvider.notifier)
+              .read(storeProvider.notifier)
               .verifyReceipt(purchase.verificationData.serverVerificationData);
 
           // 보유하트 재조회
-          await ref.read(storeNotifierProvider.notifier).fetchHeartBalance();
+          await ref.read(storeProvider.notifier).fetchHeartBalance();
         } catch (e) {
           Log.e('영수증 검증 또는 하트 조회 실패: $e');
         }

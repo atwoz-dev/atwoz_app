@@ -14,7 +14,7 @@ abstract class AppBaseConsumerStatefulPageState<
     with AppThemeConsumerStatefulMixin {
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(commonNotifierProvider);
+    final state = ref.watch(commonProvider);
 
     return Stack(
       alignment: Alignment.center,
@@ -72,7 +72,7 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(commonNotifierProvider);
+    final state = ref.watch(commonProvider);
 
     return Stack(
       alignment: Alignment.center,

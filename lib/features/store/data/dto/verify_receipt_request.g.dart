@@ -6,14 +6,10 @@ part of 'verify_receipt_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VerifyReceiptRequestImpl _$$VerifyReceiptRequestImplFromJson(
-        Map<String, dynamic> json) =>
-    _$VerifyReceiptRequestImpl(
-      appReceipt: json['appReceipt'] as String,
-    );
+_VerifyReceiptRequest _$VerifyReceiptRequestFromJson(
+  Map<String, dynamic> json,
+) => _VerifyReceiptRequest(appReceipt: json['appReceipt'] as String);
 
-Map<String, dynamic> _$$VerifyReceiptRequestImplToJson(
-        _$VerifyReceiptRequestImpl instance) =>
-    <String, dynamic>{
-      'appReceipt': instance.appReceipt,
-    };
+Map<String, dynamic> _$VerifyReceiptRequestToJson(
+  _VerifyReceiptRequest instance,
+) => <String, dynamic>{'appReceipt': instance.appReceipt};

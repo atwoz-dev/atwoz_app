@@ -6,169 +6,96 @@ part of 'report_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reportNotifierHash() => r'8ad3f24996794f08ae97c44309f59801da309192';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$ReportNotifier extends BuildlessAutoDisposeNotifier<Report> {
-  late final int userId;
-
-  Report build(
-    int userId,
-  );
-}
-
-/// See also [ReportNotifier].
 @ProviderFor(ReportNotifier)
-const reportNotifierProvider = ReportNotifierFamily();
+const reportProvider = ReportNotifierFamily._();
 
-/// See also [ReportNotifier].
-class ReportNotifierFamily extends Family<Report> {
-  /// See also [ReportNotifier].
-  const ReportNotifierFamily();
+final class ReportNotifierProvider
+    extends $NotifierProvider<ReportNotifier, Report> {
+  const ReportNotifierProvider._({
+    required ReportNotifierFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'reportProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [ReportNotifier].
-  ReportNotifierProvider call(
-    int userId,
-  ) {
-    return ReportNotifierProvider(
-      userId,
-    );
+  @override
+  String debugGetCreateSourceHash() => _$reportNotifierHash();
+
+  @override
+  String toString() {
+    return r'reportProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  ReportNotifierProvider getProviderOverride(
-    covariant ReportNotifierProvider provider,
-  ) {
-    return call(
-      provider.userId,
-    );
-  }
+  ReportNotifier create() => ReportNotifier();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'reportNotifierProvider';
-}
-
-/// See also [ReportNotifier].
-class ReportNotifierProvider
-    extends AutoDisposeNotifierProviderImpl<ReportNotifier, Report> {
-  /// See also [ReportNotifier].
-  ReportNotifierProvider(
-    int userId,
-  ) : this._internal(
-          () => ReportNotifier()..userId = userId,
-          from: reportNotifierProvider,
-          name: r'reportNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$reportNotifierHash,
-          dependencies: ReportNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              ReportNotifierFamily._allTransitiveDependencies,
-          userId: userId,
-        );
-
-  ReportNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.userId,
-  }) : super.internal();
-
-  final int userId;
-
-  @override
-  Report runNotifierBuild(
-    covariant ReportNotifier notifier,
-  ) {
-    return notifier.build(
-      userId,
-    );
-  }
-
-  @override
-  Override overrideWith(ReportNotifier Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Report value) {
+    return $ProviderOverride(
       origin: this,
-      override: ReportNotifierProvider._internal(
-        () => create()..userId = userId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        userId: userId,
-      ),
+      providerOverride: $SyncValueProvider<Report>(value),
     );
-  }
-
-  @override
-  AutoDisposeNotifierProviderElement<ReportNotifier, Report> createElement() {
-    return _ReportNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ReportNotifierProvider && other.userId == userId;
+    return other is ReportNotifierProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, userId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin ReportNotifierRef on AutoDisposeNotifierProviderRef<Report> {
-  /// The parameter `userId` of this provider.
-  int get userId;
-}
+String _$reportNotifierHash() => r'8f2006b7c9be263e52a4700fa21afa8c4f95f9c0';
 
-class _ReportNotifierProviderElement
-    extends AutoDisposeNotifierProviderElement<ReportNotifier, Report>
-    with ReportNotifierRef {
-  _ReportNotifierProviderElement(super.provider);
+final class ReportNotifierFamily extends $Family
+    with $ClassFamilyOverride<ReportNotifier, Report, Report, Report, int> {
+  const ReportNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'reportProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ReportNotifierProvider call(int userId) =>
+      ReportNotifierProvider._(argument: userId, from: this);
 
   @override
-  int get userId => (origin as ReportNotifierProvider).userId;
+  String toString() => r'reportProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+
+abstract class _$ReportNotifier extends $Notifier<Report> {
+  late final _$args = ref.$arg as int;
+  int get userId => _$args;
+
+  Report build(int userId);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref = this.ref as $Ref<Report, Report>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Report, Report>,
+              Report,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

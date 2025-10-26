@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,495 +9,562 @@ part of 'favorite_list_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-FavoriteListItemResponse _$FavoriteListItemResponseFromJson(
-    Map<String, dynamic> json) {
-  return _FavoriteListItemResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$FavoriteListItemResponse {
-  int get likeId => throw _privateConstructorUsedError;
-  int get opponentId => throw _privateConstructorUsedError;
-  String? get profileImageUrl => throw _privateConstructorUsedError;
-  String? get nickname => throw _privateConstructorUsedError;
-  String? get city => throw _privateConstructorUsedError;
-  int get age => throw _privateConstructorUsedError;
-  bool get isMutualLike => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+
+ int get likeId; int get opponentId; String? get profileImageUrl; String? get nickname; String? get city; int get age; bool get isMutualLike; DateTime get createdAt;
+/// Create a copy of FavoriteListItemResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FavoriteListItemResponseCopyWith<FavoriteListItemResponse> get copyWith => _$FavoriteListItemResponseCopyWithImpl<FavoriteListItemResponse>(this as FavoriteListItemResponse, _$identity);
 
   /// Serializes this FavoriteListItemResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of FavoriteListItemResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $FavoriteListItemResponseCopyWith<FavoriteListItemResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteListItemResponse&&(identical(other.likeId, likeId) || other.likeId == likeId)&&(identical(other.opponentId, opponentId) || other.opponentId == opponentId)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.city, city) || other.city == city)&&(identical(other.age, age) || other.age == age)&&(identical(other.isMutualLike, isMutualLike) || other.isMutualLike == isMutualLike)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,likeId,opponentId,profileImageUrl,nickname,city,age,isMutualLike,createdAt);
+
+@override
+String toString() {
+  return 'FavoriteListItemResponse(likeId: $likeId, opponentId: $opponentId, profileImageUrl: $profileImageUrl, nickname: $nickname, city: $city, age: $age, isMutualLike: $isMutualLike, createdAt: $createdAt)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $FavoriteListItemResponseCopyWith<$Res> {
-  factory $FavoriteListItemResponseCopyWith(FavoriteListItemResponse value,
-          $Res Function(FavoriteListItemResponse) then) =
-      _$FavoriteListItemResponseCopyWithImpl<$Res, FavoriteListItemResponse>;
-  @useResult
-  $Res call(
-      {int likeId,
-      int opponentId,
-      String? profileImageUrl,
-      String? nickname,
-      String? city,
-      int age,
-      bool isMutualLike,
-      DateTime createdAt});
-}
+abstract mixin class $FavoriteListItemResponseCopyWith<$Res>  {
+  factory $FavoriteListItemResponseCopyWith(FavoriteListItemResponse value, $Res Function(FavoriteListItemResponse) _then) = _$FavoriteListItemResponseCopyWithImpl;
+@useResult
+$Res call({
+ int likeId, int opponentId, String? profileImageUrl, String? nickname, String? city, int age, bool isMutualLike, DateTime createdAt
+});
 
+
+
+
+}
 /// @nodoc
-class _$FavoriteListItemResponseCopyWithImpl<$Res,
-        $Val extends FavoriteListItemResponse>
+class _$FavoriteListItemResponseCopyWithImpl<$Res>
     implements $FavoriteListItemResponseCopyWith<$Res> {
-  _$FavoriteListItemResponseCopyWithImpl(this._value, this._then);
+  _$FavoriteListItemResponseCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final FavoriteListItemResponse _self;
+  final $Res Function(FavoriteListItemResponse) _then;
 
-  /// Create a copy of FavoriteListItemResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? likeId = null,
-    Object? opponentId = null,
-    Object? profileImageUrl = freezed,
-    Object? nickname = freezed,
-    Object? city = freezed,
-    Object? age = null,
-    Object? isMutualLike = null,
-    Object? createdAt = null,
-  }) {
-    return _then(_value.copyWith(
-      likeId: null == likeId
-          ? _value.likeId
-          : likeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      opponentId: null == opponentId
-          ? _value.opponentId
-          : opponentId // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileImageUrl: freezed == profileImageUrl
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      age: null == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int,
-      isMutualLike: null == isMutualLike
-          ? _value.isMutualLike
-          : isMutualLike // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
-  }
+/// Create a copy of FavoriteListItemResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? likeId = null,Object? opponentId = null,Object? profileImageUrl = freezed,Object? nickname = freezed,Object? city = freezed,Object? age = null,Object? isMutualLike = null,Object? createdAt = null,}) {
+  return _then(_self.copyWith(
+likeId: null == likeId ? _self.likeId : likeId // ignore: cast_nullable_to_non_nullable
+as int,opponentId: null == opponentId ? _self.opponentId : opponentId // ignore: cast_nullable_to_non_nullable
+as int,profileImageUrl: freezed == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
+as String?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as int,isMutualLike: null == isMutualLike ? _self.isMutualLike : isMutualLike // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
 }
 
-/// @nodoc
-abstract class _$$FavoriteListItemResponseImplCopyWith<$Res>
-    implements $FavoriteListItemResponseCopyWith<$Res> {
-  factory _$$FavoriteListItemResponseImplCopyWith(
-          _$FavoriteListItemResponseImpl value,
-          $Res Function(_$FavoriteListItemResponseImpl) then) =
-      __$$FavoriteListItemResponseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int likeId,
-      int opponentId,
-      String? profileImageUrl,
-      String? nickname,
-      String? city,
-      int age,
-      bool isMutualLike,
-      DateTime createdAt});
 }
 
-/// @nodoc
-class __$$FavoriteListItemResponseImplCopyWithImpl<$Res>
-    extends _$FavoriteListItemResponseCopyWithImpl<$Res,
-        _$FavoriteListItemResponseImpl>
-    implements _$$FavoriteListItemResponseImplCopyWith<$Res> {
-  __$$FavoriteListItemResponseImplCopyWithImpl(
-      _$FavoriteListItemResponseImpl _value,
-      $Res Function(_$FavoriteListItemResponseImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of FavoriteListItemResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? likeId = null,
-    Object? opponentId = null,
-    Object? profileImageUrl = freezed,
-    Object? nickname = freezed,
-    Object? city = freezed,
-    Object? age = null,
-    Object? isMutualLike = null,
-    Object? createdAt = null,
-  }) {
-    return _then(_$FavoriteListItemResponseImpl(
-      likeId: null == likeId
-          ? _value.likeId
-          : likeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      opponentId: null == opponentId
-          ? _value.opponentId
-          : opponentId // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileImageUrl: freezed == profileImageUrl
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      age: null == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int,
-      isMutualLike: null == isMutualLike
-          ? _value.isMutualLike
-          : isMutualLike // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
-  }
+/// Adds pattern-matching-related methods to [FavoriteListItemResponse].
+extension FavoriteListItemResponsePatterns on FavoriteListItemResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FavoriteListItemResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FavoriteListItemResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FavoriteListItemResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int likeId,  int opponentId,  String? profileImageUrl,  String? nickname,  String? city,  int age,  bool isMutualLike,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse() when $default != null:
+return $default(_that.likeId,_that.opponentId,_that.profileImageUrl,_that.nickname,_that.city,_that.age,_that.isMutualLike,_that.createdAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int likeId,  int opponentId,  String? profileImageUrl,  String? nickname,  String? city,  int age,  bool isMutualLike,  DateTime createdAt)  $default,) {final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse():
+return $default(_that.likeId,_that.opponentId,_that.profileImageUrl,_that.nickname,_that.city,_that.age,_that.isMutualLike,_that.createdAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int likeId,  int opponentId,  String? profileImageUrl,  String? nickname,  String? city,  int age,  bool isMutualLike,  DateTime createdAt)?  $default,) {final _that = this;
+switch (_that) {
+case _FavoriteListItemResponse() when $default != null:
+return $default(_that.likeId,_that.opponentId,_that.profileImageUrl,_that.nickname,_that.city,_that.age,_that.isMutualLike,_that.createdAt);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$FavoriteListItemResponseImpl extends _FavoriteListItemResponse {
-  const _$FavoriteListItemResponseImpl(
-      {required this.likeId,
-      required this.opponentId,
-      required this.profileImageUrl,
-      required this.nickname,
-      required this.city,
-      required this.age,
-      required this.isMutualLike,
-      required this.createdAt})
-      : super._();
 
-  factory _$FavoriteListItemResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FavoriteListItemResponseImplFromJson(json);
+class _FavoriteListItemResponse extends FavoriteListItemResponse {
+  const _FavoriteListItemResponse({required this.likeId, required this.opponentId, required this.profileImageUrl, required this.nickname, required this.city, required this.age, required this.isMutualLike, required this.createdAt}): super._();
+  factory _FavoriteListItemResponse.fromJson(Map<String, dynamic> json) => _$FavoriteListItemResponseFromJson(json);
 
-  @override
-  final int likeId;
-  @override
-  final int opponentId;
-  @override
-  final String? profileImageUrl;
-  @override
-  final String? nickname;
-  @override
-  final String? city;
-  @override
-  final int age;
-  @override
-  final bool isMutualLike;
-  @override
-  final DateTime createdAt;
+@override final  int likeId;
+@override final  int opponentId;
+@override final  String? profileImageUrl;
+@override final  String? nickname;
+@override final  String? city;
+@override final  int age;
+@override final  bool isMutualLike;
+@override final  DateTime createdAt;
 
-  @override
-  String toString() {
-    return 'FavoriteListItemResponse(likeId: $likeId, opponentId: $opponentId, profileImageUrl: $profileImageUrl, nickname: $nickname, city: $city, age: $age, isMutualLike: $isMutualLike, createdAt: $createdAt)';
-  }
+/// Create a copy of FavoriteListItemResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FavoriteListItemResponseCopyWith<_FavoriteListItemResponse> get copyWith => __$FavoriteListItemResponseCopyWithImpl<_FavoriteListItemResponse>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FavoriteListItemResponseImpl &&
-            (identical(other.likeId, likeId) || other.likeId == likeId) &&
-            (identical(other.opponentId, opponentId) ||
-                other.opponentId == opponentId) &&
-            (identical(other.profileImageUrl, profileImageUrl) ||
-                other.profileImageUrl == profileImageUrl) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.age, age) || other.age == age) &&
-            (identical(other.isMutualLike, isMutualLike) ||
-                other.isMutualLike == isMutualLike) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, likeId, opponentId,
-      profileImageUrl, nickname, city, age, isMutualLike, createdAt);
-
-  /// Create a copy of FavoriteListItemResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FavoriteListItemResponseImplCopyWith<_$FavoriteListItemResponseImpl>
-      get copyWith => __$$FavoriteListItemResponseImplCopyWithImpl<
-          _$FavoriteListItemResponseImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FavoriteListItemResponseImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$FavoriteListItemResponseToJson(this, );
 }
 
-abstract class _FavoriteListItemResponse extends FavoriteListItemResponse {
-  const factory _FavoriteListItemResponse(
-      {required final int likeId,
-      required final int opponentId,
-      required final String? profileImageUrl,
-      required final String? nickname,
-      required final String? city,
-      required final int age,
-      required final bool isMutualLike,
-      required final DateTime createdAt}) = _$FavoriteListItemResponseImpl;
-  const _FavoriteListItemResponse._() : super._();
-
-  factory _FavoriteListItemResponse.fromJson(Map<String, dynamic> json) =
-      _$FavoriteListItemResponseImpl.fromJson;
-
-  @override
-  int get likeId;
-  @override
-  int get opponentId;
-  @override
-  String? get profileImageUrl;
-  @override
-  String? get nickname;
-  @override
-  String? get city;
-  @override
-  int get age;
-  @override
-  bool get isMutualLike;
-  @override
-  DateTime get createdAt;
-
-  /// Create a copy of FavoriteListItemResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FavoriteListItemResponseImplCopyWith<_$FavoriteListItemResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FavoriteListItemResponse&&(identical(other.likeId, likeId) || other.likeId == likeId)&&(identical(other.opponentId, opponentId) || other.opponentId == opponentId)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.city, city) || other.city == city)&&(identical(other.age, age) || other.age == age)&&(identical(other.isMutualLike, isMutualLike) || other.isMutualLike == isMutualLike)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
-FavoriteListResponse _$FavoriteListResponseFromJson(Map<String, dynamic> json) {
-  return _FavoriteListResponse.fromJson(json);
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,likeId,opponentId,profileImageUrl,nickname,city,age,isMutualLike,createdAt);
+
+@override
+String toString() {
+  return 'FavoriteListItemResponse(likeId: $likeId, opponentId: $opponentId, profileImageUrl: $profileImageUrl, nickname: $nickname, city: $city, age: $age, isMutualLike: $isMutualLike, createdAt: $createdAt)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FavoriteListItemResponseCopyWith<$Res> implements $FavoriteListItemResponseCopyWith<$Res> {
+  factory _$FavoriteListItemResponseCopyWith(_FavoriteListItemResponse value, $Res Function(_FavoriteListItemResponse) _then) = __$FavoriteListItemResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ int likeId, int opponentId, String? profileImageUrl, String? nickname, String? city, int age, bool isMutualLike, DateTime createdAt
+});
+
+
+
+
+}
+/// @nodoc
+class __$FavoriteListItemResponseCopyWithImpl<$Res>
+    implements _$FavoriteListItemResponseCopyWith<$Res> {
+  __$FavoriteListItemResponseCopyWithImpl(this._self, this._then);
+
+  final _FavoriteListItemResponse _self;
+  final $Res Function(_FavoriteListItemResponse) _then;
+
+/// Create a copy of FavoriteListItemResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? likeId = null,Object? opponentId = null,Object? profileImageUrl = freezed,Object? nickname = freezed,Object? city = freezed,Object? age = null,Object? isMutualLike = null,Object? createdAt = null,}) {
+  return _then(_FavoriteListItemResponse(
+likeId: null == likeId ? _self.likeId : likeId // ignore: cast_nullable_to_non_nullable
+as int,opponentId: null == opponentId ? _self.opponentId : opponentId // ignore: cast_nullable_to_non_nullable
+as int,profileImageUrl: freezed == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
+as String?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as int,isMutualLike: null == isMutualLike ? _self.isMutualLike : isMutualLike // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+
+}
+
 
 /// @nodoc
 mixin _$FavoriteListResponse {
-  List<FavoriteListItemResponse> get likes =>
-      throw _privateConstructorUsedError;
-  bool get hasMore => throw _privateConstructorUsedError;
+
+ List<FavoriteListItemResponse> get likes; bool get hasMore;
+/// Create a copy of FavoriteListResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FavoriteListResponseCopyWith<FavoriteListResponse> get copyWith => _$FavoriteListResponseCopyWithImpl<FavoriteListResponse>(this as FavoriteListResponse, _$identity);
 
   /// Serializes this FavoriteListResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of FavoriteListResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $FavoriteListResponseCopyWith<FavoriteListResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteListResponse&&const DeepCollectionEquality().equals(other.likes, likes)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(likes),hasMore);
+
+@override
+String toString() {
+  return 'FavoriteListResponse(likes: $likes, hasMore: $hasMore)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $FavoriteListResponseCopyWith<$Res> {
-  factory $FavoriteListResponseCopyWith(FavoriteListResponse value,
-          $Res Function(FavoriteListResponse) then) =
-      _$FavoriteListResponseCopyWithImpl<$Res, FavoriteListResponse>;
-  @useResult
-  $Res call({List<FavoriteListItemResponse> likes, bool hasMore});
-}
+abstract mixin class $FavoriteListResponseCopyWith<$Res>  {
+  factory $FavoriteListResponseCopyWith(FavoriteListResponse value, $Res Function(FavoriteListResponse) _then) = _$FavoriteListResponseCopyWithImpl;
+@useResult
+$Res call({
+ List<FavoriteListItemResponse> likes, bool hasMore
+});
 
+
+
+
+}
 /// @nodoc
-class _$FavoriteListResponseCopyWithImpl<$Res,
-        $Val extends FavoriteListResponse>
+class _$FavoriteListResponseCopyWithImpl<$Res>
     implements $FavoriteListResponseCopyWith<$Res> {
-  _$FavoriteListResponseCopyWithImpl(this._value, this._then);
+  _$FavoriteListResponseCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final FavoriteListResponse _self;
+  final $Res Function(FavoriteListResponse) _then;
 
-  /// Create a copy of FavoriteListResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? likes = null,
-    Object? hasMore = null,
-  }) {
-    return _then(_value.copyWith(
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteListItemResponse>,
-      hasMore: null == hasMore
-          ? _value.hasMore
-          : hasMore // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
+/// Create a copy of FavoriteListResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? likes = null,Object? hasMore = null,}) {
+  return _then(_self.copyWith(
+likes: null == likes ? _self.likes : likes // ignore: cast_nullable_to_non_nullable
+as List<FavoriteListItemResponse>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-/// @nodoc
-abstract class _$$FavoriteListResponseImplCopyWith<$Res>
-    implements $FavoriteListResponseCopyWith<$Res> {
-  factory _$$FavoriteListResponseImplCopyWith(_$FavoriteListResponseImpl value,
-          $Res Function(_$FavoriteListResponseImpl) then) =
-      __$$FavoriteListResponseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<FavoriteListItemResponse> likes, bool hasMore});
 }
 
-/// @nodoc
-class __$$FavoriteListResponseImplCopyWithImpl<$Res>
-    extends _$FavoriteListResponseCopyWithImpl<$Res, _$FavoriteListResponseImpl>
-    implements _$$FavoriteListResponseImplCopyWith<$Res> {
-  __$$FavoriteListResponseImplCopyWithImpl(_$FavoriteListResponseImpl _value,
-      $Res Function(_$FavoriteListResponseImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of FavoriteListResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? likes = null,
-    Object? hasMore = null,
-  }) {
-    return _then(_$FavoriteListResponseImpl(
-      likes: null == likes
-          ? _value._likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteListItemResponse>,
-      hasMore: null == hasMore
-          ? _value.hasMore
-          : hasMore // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+/// Adds pattern-matching-related methods to [FavoriteListResponse].
+extension FavoriteListResponsePatterns on FavoriteListResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FavoriteListResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FavoriteListResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FavoriteListResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _FavoriteListResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FavoriteListResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _FavoriteListResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<FavoriteListItemResponse> likes,  bool hasMore)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FavoriteListResponse() when $default != null:
+return $default(_that.likes,_that.hasMore);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<FavoriteListItemResponse> likes,  bool hasMore)  $default,) {final _that = this;
+switch (_that) {
+case _FavoriteListResponse():
+return $default(_that.likes,_that.hasMore);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<FavoriteListItemResponse> likes,  bool hasMore)?  $default,) {final _that = this;
+switch (_that) {
+case _FavoriteListResponse() when $default != null:
+return $default(_that.likes,_that.hasMore);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$FavoriteListResponseImpl implements _FavoriteListResponse {
-  const _$FavoriteListResponseImpl(
-      {required final List<FavoriteListItemResponse> likes,
-      required this.hasMore})
-      : _likes = likes;
 
-  factory _$FavoriteListResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FavoriteListResponseImplFromJson(json);
+class _FavoriteListResponse implements FavoriteListResponse {
+  const _FavoriteListResponse({required final  List<FavoriteListItemResponse> likes, required this.hasMore}): _likes = likes;
+  factory _FavoriteListResponse.fromJson(Map<String, dynamic> json) => _$FavoriteListResponseFromJson(json);
 
-  final List<FavoriteListItemResponse> _likes;
-  @override
-  List<FavoriteListItemResponse> get likes {
-    if (_likes is EqualUnmodifiableListView) return _likes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_likes);
-  }
-
-  @override
-  final bool hasMore;
-
-  @override
-  String toString() {
-    return 'FavoriteListResponse(likes: $likes, hasMore: $hasMore)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FavoriteListResponseImpl &&
-            const DeepCollectionEquality().equals(other._likes, _likes) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_likes), hasMore);
-
-  /// Create a copy of FavoriteListResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FavoriteListResponseImplCopyWith<_$FavoriteListResponseImpl>
-      get copyWith =>
-          __$$FavoriteListResponseImplCopyWithImpl<_$FavoriteListResponseImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FavoriteListResponseImplToJson(
-      this,
-    );
-  }
+ final  List<FavoriteListItemResponse> _likes;
+@override List<FavoriteListItemResponse> get likes {
+  if (_likes is EqualUnmodifiableListView) return _likes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_likes);
 }
 
-abstract class _FavoriteListResponse implements FavoriteListResponse {
-  const factory _FavoriteListResponse(
-      {required final List<FavoriteListItemResponse> likes,
-      required final bool hasMore}) = _$FavoriteListResponseImpl;
+@override final  bool hasMore;
 
-  factory _FavoriteListResponse.fromJson(Map<String, dynamic> json) =
-      _$FavoriteListResponseImpl.fromJson;
+/// Create a copy of FavoriteListResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FavoriteListResponseCopyWith<_FavoriteListResponse> get copyWith => __$FavoriteListResponseCopyWithImpl<_FavoriteListResponse>(this, _$identity);
 
-  @override
-  List<FavoriteListItemResponse> get likes;
-  @override
-  bool get hasMore;
-
-  /// Create a copy of FavoriteListResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FavoriteListResponseImplCopyWith<_$FavoriteListResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+Map<String, dynamic> toJson() {
+  return _$FavoriteListResponseToJson(this, );
 }
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FavoriteListResponse&&const DeepCollectionEquality().equals(other._likes, _likes)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_likes),hasMore);
+
+@override
+String toString() {
+  return 'FavoriteListResponse(likes: $likes, hasMore: $hasMore)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FavoriteListResponseCopyWith<$Res> implements $FavoriteListResponseCopyWith<$Res> {
+  factory _$FavoriteListResponseCopyWith(_FavoriteListResponse value, $Res Function(_FavoriteListResponse) _then) = __$FavoriteListResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ List<FavoriteListItemResponse> likes, bool hasMore
+});
+
+
+
+
+}
+/// @nodoc
+class __$FavoriteListResponseCopyWithImpl<$Res>
+    implements _$FavoriteListResponseCopyWith<$Res> {
+  __$FavoriteListResponseCopyWithImpl(this._self, this._then);
+
+  final _FavoriteListResponse _self;
+  final $Res Function(_FavoriteListResponse) _then;
+
+/// Create a copy of FavoriteListResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? likes = null,Object? hasMore = null,}) {
+  return _then(_FavoriteListResponse(
+likes: null == likes ? _self._likes : likes // ignore: cast_nullable_to_non_nullable
+as List<FavoriteListItemResponse>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+// dart format on

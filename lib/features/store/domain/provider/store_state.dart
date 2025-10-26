@@ -9,7 +9,7 @@ enum HeartBalanceErrorType {
 }
 
 @freezed
-class StoreState with _$StoreState {
+abstract class StoreState with _$StoreState {
   const factory StoreState({
     @Default(StoreData()) StoreData heartBalance,
     @Default([]) List<ProductDetails> products,
@@ -26,7 +26,7 @@ class StoreState with _$StoreState {
 }
 
 @freezed
-class StoreData with _$StoreData {
+abstract class StoreData with _$StoreData {
   const factory StoreData({
     @Default(const HeartBalanceItem(
       purchaseHeartBalance: 0,

@@ -4,7 +4,7 @@ part 'profile_upload_request.freezed.dart';
 part 'profile_upload_request.g.dart';
 
 @freezed
-class ProfileUploadRequest with _$ProfileUploadRequest {
+abstract class ProfileUploadRequest with _$ProfileUploadRequest {
   const factory ProfileUploadRequest({
     required String nickname,
     required String gender,

@@ -34,7 +34,9 @@ class ApiServiceImpl implements ApiService {
   late final DioService _dioService;
   late final PersistCookieJar _cookieJar;
   final Completer<void> _initCompleter = Completer();
+
   PersistCookieJar get cookieJar => _cookieJar;
+
   DioService get dioService => _dioService;
 
   ApiServiceImpl({
@@ -95,9 +97,10 @@ class ApiServiceImpl implements ApiService {
 
     if (requiresAccessToken) {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
-      await ref.read(localStorageProvider.notifier).initialize();
-      final refreshToken =
-          await ref.read(localStorageProvider).getEncrypted(_refreshTokenKey);
+      await ref.read(localStorageProvider).initialize();
+      final refreshToken = await ref
+          .read(localStorageProvider)
+          .getEncrypted(_refreshTokenKey);
 
       if (accessToken != null) {
         finalHeaders['Authorization'] = "Bearer $accessToken";
@@ -121,7 +124,7 @@ class ApiServiceImpl implements ApiService {
     final uri = Uri.parse(_baseUrl);
     _cookieJar.saveFromResponse(uri, [Cookie(_refreshTokenKey, refreshToken)]);
 
-    await ref.read(localStorageProvider.notifier).initialize();
+    await ref.read(localStorageProvider).initialize();
     await ref
         .read(localStorageProvider)
         .saveEncrypted(_refreshTokenKey, refreshToken);
@@ -197,17 +200,16 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-  }) =>
-      request(
-        path,
-        method: 'DELETE',
-        contentType: Headers.jsonContentType,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-      );
+  }) => request(
+    path,
+    method: 'DELETE',
+    contentType: Headers.jsonContentType,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+  );
 
   @override
   Future<T> getJson<T>(
@@ -219,18 +221,17 @@ class ApiServiceImpl implements ApiService {
     Converter<T>? converter,
     String? contentType,
     Map<String, String>? headers,
-  }) =>
-      request(
-        path,
-        method: 'GET',
-        contentType: contentType ?? Headers.jsonContentType,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-        headers: headers,
-      );
+  }) => request(
+    path,
+    method: 'GET',
+    contentType: contentType ?? Headers.jsonContentType,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+    headers: headers,
+  );
 
   @override
   Future<T> putJson<T>(
@@ -241,18 +242,17 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-  }) =>
-      request(
-        path,
-        method: 'PUT',
-        contentType: Headers.jsonContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-      );
+  }) => request(
+    path,
+    method: 'PUT',
+    contentType: Headers.jsonContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+  );
 
   @override
   Future<T> postJson<T>(
@@ -264,19 +264,18 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
     Map<String, dynamic>? headers,
-  }) =>
-      request(
-        path,
-        method: 'POST',
-        contentType: Headers.jsonContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-        headers: headers,
-      );
+  }) => request(
+    path,
+    method: 'POST',
+    contentType: Headers.jsonContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+    headers: headers,
+  );
 
   @override
   Future<T> postFormUrlEncoded<T>(
@@ -287,18 +286,17 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-  }) =>
-      request(
-        path,
-        method: 'POST',
-        contentType: Headers.formUrlEncodedContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-      );
+  }) => request(
+    path,
+    method: 'POST',
+    contentType: Headers.formUrlEncodedContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+  );
 
   @override
   Future<T> postFormData<T>(
@@ -309,18 +307,17 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-  }) =>
-      request(
-        path,
-        method: 'POST',
-        contentType: Headers.multipartFormDataContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-      );
+  }) => request(
+    path,
+    method: 'POST',
+    contentType: Headers.multipartFormDataContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+  );
 
   @override
   Future<T> putFormUrlEncoded<T>(
@@ -331,18 +328,17 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-  }) =>
-      request(
-        path,
-        method: 'PUT',
-        contentType: Headers.formUrlEncodedContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-      );
+  }) => request(
+    path,
+    method: 'PUT',
+    contentType: Headers.formUrlEncodedContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+  );
 
   @override
   Future<T> patchJson<T>(
@@ -354,17 +350,16 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
     Map<String, dynamic>? headers,
-  }) =>
-      request(
-        path,
-        method: 'PATCH',
-        contentType: Headers.jsonContentType,
-        data: data,
-        queryParameters: queryParameters,
-        requiresAccessToken: requiresAccessToken,
-        requiresRefreshToken: requiresRefreshToken,
-        requiresRefreshCookie: requiresRefreshCookie,
-        converter: converter,
-        headers: headers,
-      );
+  }) => request(
+    path,
+    method: 'PATCH',
+    contentType: Headers.jsonContentType,
+    data: data,
+    queryParameters: queryParameters,
+    requiresAccessToken: requiresAccessToken,
+    requiresRefreshToken: requiresRefreshToken,
+    requiresRefreshCookie: requiresRefreshCookie,
+    converter: converter,
+    headers: headers,
+  );
 }

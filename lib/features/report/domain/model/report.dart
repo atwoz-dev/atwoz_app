@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'report.freezed.dart';
 
 @freezed
-class Report with _$Report {
+abstract class Report with _$Report {
   const Report._();
 
   const factory Report({
