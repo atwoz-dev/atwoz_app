@@ -32,14 +32,12 @@ class _OnboardingCertificationPageState
     super.initState();
     Future.microtask(() {
       ref
-          .read(onboardingNotifierProvider.notifier)
+          .read(onboardingProvider.notifier)
           .sendVerificationCode(widget.phoneNumber);
     });
 
     _codeController.addListener(() {
-      ref
-          .read(onboardingNotifierProvider.notifier)
-          .validateInput(_codeController.text);
+      ref.read(onboardingProvider.notifier).validateInput(_codeController.text);
     });
   }
 
@@ -52,8 +50,8 @@ class _OnboardingCertificationPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final state = ref.watch(onboardingNotifierProvider);
-    final notifier = ref.read(onboardingNotifierProvider.notifier);
+    final state = ref.watch(onboardingProvider);
+    final notifier = ref.read(onboardingProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -66,8 +64,10 @@ class _OnboardingCertificationPageState
               children: [
                 const TitleText(title: '인증번호를 입력해주세요'),
                 const Gap(5),
-                Text('문자로 보내드린 인증번호를 입력해주세요',
-                    style: Fonts.body02Regular(Palette.colorGrey400)),
+                Text(
+                  '문자로 보내드린 인증번호를 입력해주세요',
+                  style: Fonts.body02Regular(Palette.colorGrey400),
+                ),
                 const Gap(40),
                 buildLabeledRow(
                   context: context,
@@ -93,10 +93,12 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed: state.resendCountDown == 0
-                                  ? () =>
-                                      notifier.resendCode(widget.phoneNumber)
-                                  : null,
+                              onPressed:
+                                  state.resendCountDown == 0
+                                      ? () => notifier.resendCode(
+                                        widget.phoneNumber,
+                                      )
+                                      : null,
                               child: Text(
                                 state.resendCountDown == 0
                                     ? '재발송'
@@ -120,56 +122,57 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed: state.isButtonEnabled && !state.isLoading
-                  ? () async {
-                      final (userData, status) = await notifier.verifyCode(
-                        widget.phoneNumber,
-                        _codeController.text,
-                      );
+              onPressed:
+                  state.isButtonEnabled && !state.isLoading
+                      ? () async {
+                        final (userData, status) = await notifier.verifyCode(
+                          widget.phoneNumber,
+                          _codeController.text,
+                        );
 
-                      if (!context.mounted) return;
+                        if (!context.mounted) return;
 
-                      switch (status) {
-                        case AuthStatus.activate:
-                          if (userData?.isProfileSettingNeeded ?? false) {
-                            navigate(context, route: AppRoute.signUp);
-                          } else {
+                        switch (status) {
+                          case AuthStatus.activate:
+                            if (userData?.isProfileSettingNeeded ?? false) {
+                              navigate(context, route: AppRoute.signUp);
+                            } else {
+                              navigate(
+                                context,
+                                route: AppRoute.mainTab,
+                                method: NavigationMethod.go,
+                              );
+                            }
+                            break;
+
+                          case AuthStatus.dormant:
                             navigate(
                               context,
-                              route: AppRoute.mainTab,
+                              route: AppRoute.dormantRelease,
                               method: NavigationMethod.go,
+                              extra: DormantReleaseArguments(
+                                phoneNumber: widget.phoneNumber,
+                              ),
                             );
-                          }
-                          break;
+                            break;
 
-                        case AuthStatus.dormant:
-                          navigate(
-                            context,
-                            route: AppRoute.dormantRelease,
-                            method: NavigationMethod.go,
-                            extra: DormantReleaseArguments(
-                              phoneNumber: widget.phoneNumber,
-                            ),
-                          );
-                          break;
+                          case AuthStatus.forbidden:
+                            break;
 
-                        case AuthStatus.forbidden:
-                          break;
+                          case AuthStatus.temporarilyForbidden:
+                            // TODO: 일시정지 대기화면 이동
+                            break;
 
-                        case AuthStatus.temporarilyForbidden:
-                          // TODO: 일시정지 대기화면 이동
-                          break;
+                          case AuthStatus.deletedUser:
+                            // TODO: 탈퇴계정 다이얼로그 표시
+                            break;
 
-                        case AuthStatus.deletedUser:
-                          // TODO: 탈퇴계정 다이얼로그 표시
-                          break;
-
-                        case null:
-                          showToastMessage('인증에 실패했습니다.');
-                          break;
+                          case null:
+                            showToastMessage('인증에 실패했습니다.');
+                            break;
+                        }
                       }
-                    }
-                  : null,
+                      : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(

@@ -13,10 +13,7 @@ import 'package:go_router/go_router.dart';
 class DormantReleasePage extends ConsumerWidget {
   final String phoneNumber;
 
-  const DormantReleasePage({
-    super.key,
-    required this.phoneNumber,
-  });
+  const DormantReleasePage({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,10 +36,7 @@ class DormantReleasePage extends ConsumerWidget {
               const Spacer(),
               Column(
                 children: [
-                  const DefaultIcon(
-                    IconPath.gloomyFace,
-                    size: 48.0,
-                  ),
+                  const DefaultIcon(IconPath.gloomyFace, size: 48.0),
                   Text(
                     '회원님은 휴면 중으로 상대방에게\n프로필이 공개되고 있지 않아요',
                     style: Fonts.body02Medium().copyWith(
@@ -51,7 +45,7 @@ class DormantReleasePage extends ConsumerWidget {
                       height: 1.2,
                     ),
                     textAlign: TextAlign.center,
-                  )
+                  ),
                 ],
               ),
               const Spacer(),
@@ -65,7 +59,7 @@ class DormantReleasePage extends ConsumerWidget {
                 ),
                 onPressed: () async {
                   final isSuccess = await ref
-                      .read(onboardingNotifierProvider.notifier)
+                      .read(onboardingProvider.notifier)
                       .activateAccount(phoneNumber);
                   if (!context.mounted) return;
                   if (!isSuccess) {
@@ -84,7 +78,7 @@ class DormantReleasePage extends ConsumerWidget {
                     method: NavigationMethod.go,
                   );
                 },
-              )
+              ),
             ],
           ),
         ),

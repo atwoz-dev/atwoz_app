@@ -7,7 +7,6 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class MyAccountSettingPage extends ConsumerStatefulWidget {
@@ -117,9 +116,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
       context,
       onDormantChanged: () async {
         final isSuccess =
-            await ref
-                .read(mySettingNotifierProvider.notifier)
-                .deactiveAccount();
+            await ref.read(mySettingProvider.notifier).deactiveAccount();
         if (!mounted) return;
         if (!isSuccess) {
           ErrorDialog.open(
@@ -136,7 +133,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
         }
 
         final signOutCompleted =
-            await ref.read(mySettingNotifierProvider.notifier).signOut();
+            await ref.read(mySettingProvider.notifier).signOut();
         if (!mounted) return;
         if (!signOutCompleted) {
           ErrorDialog.open(
