@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-$ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus;$ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus;$ExtendedHomeEnumCopyWith<Religion, $Res> get religion;
+
 
 }
 /// @nodoc
@@ -74,34 +74,7 @@ as ExtendedDrinkingStatus,religion: null == religion ? _self.religion : religion
 as ExtendedReligionStatus,
   ));
 }
-/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus {
-  
-  return $ExtendedHomeEnumCopyWith<SmokingStatus, $Res>(_self.smokingStatus, (value) {
-    return _then(_self.copyWith(smokingStatus: value));
-  });
-}/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus {
-  
-  return $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res>(_self.drinkingStatus, (value) {
-    return _then(_self.copyWith(drinkingStatus: value));
-  });
-}/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<Religion, $Res> get religion {
-  
-  return $ExtendedHomeEnumCopyWith<Religion, $Res>(_self.religion, (value) {
-    return _then(_self.copyWith(religion: value));
-  });
-}
+
 }
 
 
@@ -296,7 +269,7 @@ $Res call({
 });
 
 
-@override $ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus;@override $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus;@override $ExtendedHomeEnumCopyWith<Religion, $Res> get religion;
+
 
 }
 /// @nodoc
@@ -322,34 +295,7 @@ as ExtendedReligionStatus,
   ));
 }
 
-/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<SmokingStatus, $Res> get smokingStatus {
-  
-  return $ExtendedHomeEnumCopyWith<SmokingStatus, $Res>(_self.smokingStatus, (value) {
-    return _then(_self.copyWith(smokingStatus: value));
-  });
-}/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<DrinkingStatus, $Res> get drinkingStatus {
-  
-  return $ExtendedHomeEnumCopyWith<DrinkingStatus, $Res>(_self.drinkingStatus, (value) {
-    return _then(_self.copyWith(drinkingStatus: value));
-  });
-}/// Create a copy of IdealType
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ExtendedHomeEnumCopyWith<Religion, $Res> get religion {
-  
-  return $ExtendedHomeEnumCopyWith<Religion, $Res>(_self.religion, (value) {
-    return _then(_self.copyWith(religion: value));
-  });
-}
+
 }
 
 // dart format on

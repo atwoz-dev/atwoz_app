@@ -33,7 +33,7 @@ final class IdealTypeNotifierProvider
   IdealTypeNotifier create() => IdealTypeNotifier();
 }
 
-String _$idealTypeNotifierHash() => r'b1b0adf25017d07bf4bdf6b880c78f675158b994';
+String _$idealTypeNotifierHash() => r'3f5a914a6749fe97828481d81d78cd9886e7eff9';
 
 abstract class _$IdealTypeNotifier extends $AsyncNotifier<IdealTypeState> {
   FutureOr<IdealTypeState> build();
