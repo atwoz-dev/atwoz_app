@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
@@ -6,8 +7,10 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/router/routing.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/notification/notification_model.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -18,17 +21,8 @@ class App extends ConsumerStatefulWidget {
   @override
   ConsumerState<App> createState() => _AppState();
 
-  static WidgetsBinding? _widgetsBinding;
-
   static void preserveSplash({required WidgetsBinding widgetsBinding}) {
-    _widgetsBinding = widgetsBinding;
-    _widgetsBinding?.deferFirstFrame();
-  }
-
-  static void removeSplash() {
-    if (_widgetsBinding == null) return;
-    _widgetsBinding?.allowFirstFrame();
-    _widgetsBinding = null;
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   }
 }
 
@@ -54,13 +48,15 @@ class _AppState extends ConsumerState<App> {
         },
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.touch,
-            PointerDeviceKind.trackpad,
-            PointerDeviceKind.stylus,
-            PointerDeviceKind.unknown,
-          }),
+          scrollBehavior: const MaterialScrollBehavior().copyWith(
+            dragDevices: {
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.touch,
+              PointerDeviceKind.trackpad,
+              PointerDeviceKind.stylus,
+              PointerDeviceKind.unknown,
+            },
+          ),
           themeMode: ThemeMode.light,
           theme: createThemeData(Palette.lightScheme),
           darkTheme: createThemeData(Palette.darkScheme),
@@ -71,8 +67,8 @@ class _AppState extends ConsumerState<App> {
   }
 
   Future<void> _initialize() async {
+    await ref.read(localStorageProvider).initialize();
     final router = ref.read(routerProvider);
-
     await ref.read(globalProvider.notifier).initProfile();
     if (ref.read(globalProvider).profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
@@ -80,7 +76,7 @@ class _AppState extends ConsumerState<App> {
       router.goNamed(AppRoute.mainTab.name);
     }
 
-    App.removeSplash();
+    FlutterNativeSplash.remove();
   }
 
   void _handleFcmNotification(FcmNotification data) {
@@ -91,14 +87,14 @@ class _AppState extends ConsumerState<App> {
         false,
         'notification type [${data.notificationType}] need to senderId',
       );
-      Log.e('notification type [${data.notificationType}] requires senderId but was null');
+      Log.e(
+        'notification type [${data.notificationType}] requires senderId but was null',
+      );
       return;
     }
     rootNavigatorKey.currentContext?.goNamed(
       AppRoute.profile.name,
-      extra: ProfileDetailArguments(
-        userId: userId,
-      ),
+      extra: ProfileDetailArguments(userId: userId),
     );
   }
 }
