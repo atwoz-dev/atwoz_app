@@ -97,7 +97,6 @@ class ApiServiceImpl implements ApiService {
 
     if (requiresAccessToken) {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
-      await ref.read(localStorageProvider).initialize();
       final refreshToken = await ref
           .read(localStorageProvider)
           .getEncrypted(_refreshTokenKey);
@@ -124,7 +123,6 @@ class ApiServiceImpl implements ApiService {
     final uri = Uri.parse(_baseUrl);
     _cookieJar.saveFromResponse(uri, [Cookie(_refreshTokenKey, refreshToken)]);
 
-    await ref.read(localStorageProvider).initialize();
     await ref
         .read(localStorageProvider)
         .saveEncrypted(_refreshTokenKey, refreshToken);
