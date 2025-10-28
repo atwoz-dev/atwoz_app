@@ -13,7 +13,6 @@ typedef MenuItem = ({
   AppRoute? route,
 });
 
-// Record를 사용한 menuItems 정의
 const List<MenuItem> _menuItems = [
   (
     title: '프로필 관리',
@@ -83,33 +82,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
             ],
           ),
           const Gap(16),
-          Column(
-            children: _menuItems
-                .map(
-                  (item) => Column(
-                    children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          if (item.route != null) {
-                            navigate(context, route: item.route!);
-                          }
-                        },
-                        child: _MyPageListItem(
-                          title: item.title,
-                          iconPath: item.iconPath,
-                        ),
-                      ),
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Palette.colorGrey50,
-                      ),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
+          ..._menuItems.map((item) => _MyPageListItem(item: item)),
         ],
       ),
     );
@@ -117,45 +90,60 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 }
 
 class _MyPageListItem extends StatelessWidget {
-  final String title;
-  final String iconPath;
+  final MenuItem item;
 
   const _MyPageListItem({
-    required this.title,
-    required this.iconPath,
+    required this.item,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
-        children: [
-          Expanded(
+    final isLast = item == _menuItems.last;
+
+    return Column(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (item.route != null) {
+              navigate(context, route: item.route!);
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14),
             child: Row(
               children: [
-                DefaultIcon(
-                  iconPath,
-                  size: 24,
-                ),
-                const Gap(8),
-                Text(
-                  title,
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Palette.colorBlack,
+                Expanded(
+                  child: Row(
+                    children: [
+                      DefaultIcon(item.iconPath, size: 24),
+                      const Gap(8),
+                      Text(
+                        item.title,
+                        style: Fonts.body02Medium().copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Palette.colorBlack,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  overflow: TextOverflow.ellipsis,
+                ),
+                const DefaultIcon(
+                  IconPath.chevronRight,
+                  size: 24,
                 ),
               ],
             ),
           ),
-          const DefaultIcon(
-            IconPath.chevronRight,
-            size: 24,
+        ),
+        if (!isLast)
+          const Divider(
+            height: 1,
+            thickness: 1,
+            color: Palette.colorGrey50,
           ),
-        ],
-      ),
+      ],
     );
   }
 }
