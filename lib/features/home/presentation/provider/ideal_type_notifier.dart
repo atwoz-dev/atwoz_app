@@ -30,7 +30,7 @@ class IdealTypeNotifier extends AsyncNotifier<IdealTypeState> {
     final current = state.requireValue;
 
     final isFilterPossible =
-        state.requireValue.originalIdealType != updateFn(current.idealType);
+        current.originalIdealType != updateFn(current.idealType);
 
     state = AsyncData(
       current.copyWith(
@@ -102,6 +102,16 @@ class IdealTypeNotifier extends AsyncNotifier<IdealTypeState> {
         .read(updateIdealTypeUseCaseProvider)
         .execute(state.requireValue.idealType);
 
-    return isUpdated;
+    if (!isUpdated) return false;
+
+    final current = state.requireValue;
+    state = AsyncData(
+      current.copyWith(
+        originalIdealType: current.idealType,
+        isFilterPossible: false,
+      ),
+    );
+
+    return true;
   }
 }

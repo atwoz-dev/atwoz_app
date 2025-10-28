@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/features/home/home.dart';
@@ -69,9 +70,16 @@ class IdealAgeSlider extends StatelessWidget {
           children: [
             Expanded(
               child: RangeSlider(
-                values: RangeValues(minAge.toDouble(), maxAge.toDouble()),
-                min: 20,
-                max: 46,
+                values: RangeValues(
+                  minAge
+                      .clamp(Dimens.minSelectableAge, Dimens.maxSelectableAge)
+                      .toDouble(),
+                  maxAge
+                      .clamp(Dimens.minSelectableAge, Dimens.maxSelectableAge)
+                      .toDouble(),
+                ),
+                min: Dimens.minSelectableAge.toDouble(),
+                max: Dimens.maxSelectableAge.toDouble(),
                 onChanged:
                     onChanged != null
                         ? (values) =>
