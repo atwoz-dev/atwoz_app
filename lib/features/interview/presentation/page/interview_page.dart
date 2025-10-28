@@ -57,7 +57,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
                     ),
                   ),
                 ),
-                DefaultAppBarIcon(),
+                DefaultAppBarActionGroup(),
               ],
             ),
           ),

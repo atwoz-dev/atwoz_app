@@ -25,7 +25,7 @@ class HomeNavbarArea extends ConsumerWidget {
             height: 1.2,
           ),
         ),
-        DefaultAppBarIcon(
+        DefaultAppBarActionGroup(
           showFilter: true,
           filterRoute: AppRoute.ideal,
         ),

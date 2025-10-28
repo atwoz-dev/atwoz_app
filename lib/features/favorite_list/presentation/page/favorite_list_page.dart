@@ -24,7 +24,7 @@ class FavoriteListPage extends StatelessWidget {
                 ),
               ),
               actions: [
-                DefaultAppBarIcon(),
+                DefaultAppBarActionGroup(),
               ],
               automaticallyImplyLeading: false,
               pinned: false,

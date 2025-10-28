@@ -51,7 +51,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                         ),
                       ),
                     ),
-                    DefaultAppBarIcon(
+                    DefaultAppBarActionGroup(
                       showFilter: true,
                       filterRoute: AppRoute.introduceFilter,
                     )

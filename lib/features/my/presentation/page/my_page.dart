@@ -79,7 +79,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
                   ),
                 ),
               ),
-              DefaultAppBarIcon(),
+              DefaultAppBarActionGroup(),
             ],
           ),
           const Gap(16),
