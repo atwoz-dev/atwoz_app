@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
 import 'package:atwoz_app/features/home/domain/model/main_tab_type.dart';
 import 'package:flutter/material.dart';
