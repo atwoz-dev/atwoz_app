@@ -85,14 +85,9 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   child: ListWheelScrollView(
                     controller: _controller,
                     itemExtent: context.screenHeight * 0.05,
-                    onSelectedItemChanged: (value) {
-                      setState(() {
-                        _selectedIndex = value;
-                        final selectedValue = widget.options[_selectedIndex];
-
-                        widget.onItemSelected(selectedValue);
-                      });
-                    },
+                    onSelectedItemChanged: (value) => setState(
+                      () => _selectedIndex = value,
+                    ),
                     children: widget.options.map((element) {
                       final isSelected =
                           widget.options[_selectedIndex] == element;
@@ -125,7 +120,13 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                 ),
                 DefaultElevatedButton(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  onPressed: context.pop,
+                  onPressed: () {
+                    final selectedValue = widget.options[_selectedIndex];
+
+                    widget.onItemSelected(selectedValue);
+
+                    context.pop();
+                  },
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
                   child: const Text("확인"),
