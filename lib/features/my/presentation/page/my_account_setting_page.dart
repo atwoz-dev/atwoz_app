@@ -7,6 +7,7 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class MyAccountSettingPage extends ConsumerStatefulWidget {
@@ -181,6 +182,11 @@ Future<bool?> _showUpdateDormantStatus(
     padding: const EdgeInsets.only(top: 16.0),
     child: Column(
       children: [
+        Text(
+          '휴면 회원 전환',
+          style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
+        ),
+        const Gap(16),
         Text(
           '프로필이 상대방에게 노출되지 않고\n'
           '매칭을 포함한 모든 활동이 제한됩니다\n'

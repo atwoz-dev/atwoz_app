@@ -1,5 +1,8 @@
 import 'package:atwoz_app/app/router/route_arguments.dart';
+import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
+import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,7 @@ import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
@@ -157,6 +161,40 @@ class _OnboardingCertificationPageState
                             break;
 
                           case AuthStatus.forbidden:
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DefaultDialog(
+                                  title: Text(
+                                    '서비스 이용 제한',
+                                    style: Fonts.header02().copyWith(
+                                      color: Palette.colorBlack,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  content: Text(
+                                    '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
+                                    style: Fonts.body01Medium().copyWith(
+                                      color: const Color(0xff7E7E7E),
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  action: DefaultElevatedButton(
+                                    child: const Text('확인'),
+                                    onPressed: () {
+                                      context.pop();
+                                      navigate(
+                                        context,
+                                        route: AppRoute.onboard,
+                                        method: NavigationMethod.go,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+
                             break;
 
                           case AuthStatus.temporarilyForbidden:
@@ -185,6 +223,39 @@ class _OnboardingCertificationPageState
           ),
         ],
       ),
+    );
+  }
+
+  Future<bool?> showForbiddenDialogue(
+    BuildContext context, {
+    required VoidCallback onTapVerify,
+  }) async {
+    return context.showConfirmDialog(
+      submit: DialogButton(label: '확인', onTap: onTapVerify),
+      enableCloseButton: false,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '서비스 이용 제한',
+            style: Fonts.header02().copyWith(
+              color: Palette.colorBlack,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const Gap(12),
+          Text(
+            '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
+            style: Fonts.body01Medium().copyWith(
+              color: const Color(0xff7E7E7E),
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      buttonVerticalPadding: 12,
+      isOnlyConfirm: true,
     );
   }
 }
