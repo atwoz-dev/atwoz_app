@@ -128,88 +128,7 @@ class _OnboardingCertificationPageState
             child: DefaultElevatedButton(
               onPressed:
                   state.isButtonEnabled && !state.isLoading
-                      ? () async {
-                        final (userData, status) = await notifier.verifyCode(
-                          widget.phoneNumber,
-                          _codeController.text,
-                        );
-
-                        if (!context.mounted) return;
-
-                        switch (status) {
-                          case AuthStatus.activate:
-                            if (userData?.isProfileSettingNeeded ?? false) {
-                              navigate(context, route: AppRoute.signUp);
-                            } else {
-                              navigate(
-                                context,
-                                route: AppRoute.mainTab,
-                                method: NavigationMethod.go,
-                              );
-                            }
-                            break;
-
-                          case AuthStatus.dormant:
-                            navigate(
-                              context,
-                              route: AppRoute.dormantRelease,
-                              method: NavigationMethod.go,
-                              extra: DormantReleaseArguments(
-                                phoneNumber: widget.phoneNumber,
-                              ),
-                            );
-                            break;
-
-                          case AuthStatus.forbidden:
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return DefaultDialog(
-                                  title: Text(
-                                    '서비스 이용 제한',
-                                    style: Fonts.header02().copyWith(
-                                      color: Palette.colorBlack,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  content: Text(
-                                    '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
-                                    style: Fonts.body01Medium().copyWith(
-                                      color: const Color(0xff7E7E7E),
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  action: DefaultElevatedButton(
-                                    child: const Text('확인'),
-                                    onPressed: () {
-                                      context.pop();
-                                      navigate(
-                                        context,
-                                        route: AppRoute.onboard,
-                                        method: NavigationMethod.go,
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-
-                            break;
-
-                          case AuthStatus.temporarilyForbidden:
-                            // TODO: 일시정지 대기화면 이동
-                            break;
-
-                          case AuthStatus.deletedUser:
-                            // TODO: 탈퇴계정 다이얼로그 표시
-                            break;
-
-                          case null:
-                            showToastMessage('인증에 실패했습니다.');
-                            break;
-                        }
-                      }
+                      ? () => _verifyCode(notifier)
                       : null,
               child: Text(
                 '인증하기',
@@ -226,12 +145,101 @@ class _OnboardingCertificationPageState
     );
   }
 
+  void _verifyCode(OnboardingNotifier notifier) async {
+    final (userData, status) = await notifier.verifyCode(
+      widget.phoneNumber,
+      _codeController.text,
+    );
+
+    if (!context.mounted) return;
+
+    switch (status) {
+      case AuthStatus.activate:
+        print('activate임');
+        if (userData?.isProfileSettingNeeded ?? false) {
+          navigate(context, route: AppRoute.signUp);
+        } else {
+          navigate(
+            context,
+            route: AppRoute.mainTab,
+            method: NavigationMethod.go,
+          );
+        }
+        break;
+
+      case AuthStatus.dormant:
+        navigate(
+          context,
+          route: AppRoute.dormantRelease,
+          method: NavigationMethod.go,
+          extra: DormantReleaseArguments(phoneNumber: widget.phoneNumber),
+        );
+        break;
+
+      case AuthStatus.forbidden:
+        await showForbiddenDialogue(context, onTapVerify: () => context.pop());
+
+        break;
+
+      case AuthStatus.temporarilyForbidden:
+        // TODO: 일시정지 대기화면 이동
+        break;
+
+      case AuthStatus.deletedUser:
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return DefaultDialog(
+              title: Text(
+                '서비스 가입 제한',
+                style: Fonts.header02().copyWith(
+                  color: Palette.colorBlack,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              content: Text(
+                '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+                style: Fonts.body01Medium().copyWith(
+                  color: const Color(0xff7E7E7E),
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              action: DefaultElevatedButton(
+                child: const Text('확인'),
+                onPressed: () {
+                  context.pop();
+                  navigate(
+                    context,
+                    route: AppRoute.onboard,
+                    method: NavigationMethod.go,
+                  );
+                },
+              ),
+            );
+          },
+        );
+
+        if (!mounted) return;
+
+        navigate(
+          context,
+          route: AppRoute.onboard,
+          method: NavigationMethod.go, // 전체 화면 교체
+        );
+        break;
+      case null:
+        showToastMessage('인증에 실패했습니다.');
+        break;
+    }
+  }
+
   Future<bool?> showForbiddenDialogue(
     BuildContext context, {
     required VoidCallback onTapVerify,
   }) async {
-    return context.showConfirmDialog(
-      submit: DialogButton(label: '확인', onTap: onTapVerify),
+    return await context.showConfirmDialog(
+      submit: DialogButton(label: '확인', onTap: () => onTapVerify),
       enableCloseButton: false,
       child: Column(
         mainAxisSize: MainAxisSize.min,
