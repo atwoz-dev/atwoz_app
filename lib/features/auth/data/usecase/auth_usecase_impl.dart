@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:android_id/android_id.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
+import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/toast.dart';
@@ -29,16 +29,13 @@ final authUsecaseProvider = Provider<AuthUseCase>((ref) {
 class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   final Ref _ref;
 
-  AuthUseCaseImpl(
-    this._ref,
-  );
+  AuthUseCaseImpl(this._ref);
 
   UserRepository get _userRepository => _ref.read(userRepositoryProvider);
   LocalStorage get _localStorage => _ref.read(localStorageProvider);
   ApiServiceImpl get _apiService => _ref.read(apiServiceProvider);
   PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
-  GlobalNotifier get _globalNotifier =>
-      _ref.read(globalProvider.notifier);
+  GlobalNotifier get _globalNotifier => _ref.read(globalProvider.notifier);
 
   static const String _accessToken = 'AuthProvider.token';
   static const String _refreshToken = 'AuthProvider.reToken';
@@ -141,10 +138,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
 
       await _apiService.postJson(
         '/notifications/device-registration',
-        data: {
-          'deviceId': deviceId ?? '',
-          'registrationToken': fcmToken,
-        },
+        data: {'deviceId': deviceId ?? '', 'registrationToken': fcmToken},
       );
       return true;
     } catch (e) {
@@ -177,9 +171,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
 
   @override
   Future<void> sendSmsVerificationCode(String phoneNumber) async {
-    await _userRepository.sendVerificationCode(
-      phoneNumber: phoneNumber,
-    );
+    await _userRepository.sendVerificationCode(phoneNumber: phoneNumber);
   }
 
   @override

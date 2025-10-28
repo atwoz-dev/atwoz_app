@@ -13,7 +13,7 @@ part of 'ideal_type_notifier.dart';
 const idealTypeProvider = IdealTypeNotifierProvider._();
 
 final class IdealTypeNotifierProvider
-    extends $AsyncNotifierProvider<IdealTypeNotifier, IdealType> {
+    extends $AsyncNotifierProvider<IdealTypeNotifier, IdealTypeState> {
   const IdealTypeNotifierProvider._()
     : super(
         from: null,
@@ -33,20 +33,20 @@ final class IdealTypeNotifierProvider
   IdealTypeNotifier create() => IdealTypeNotifier();
 }
 
-String _$idealTypeNotifierHash() => r'9cd48e6d65a6a071ffed363744b4a6bb9aba1d30';
+String _$idealTypeNotifierHash() => r'3f5a914a6749fe97828481d81d78cd9886e7eff9';
 
-abstract class _$IdealTypeNotifier extends $AsyncNotifier<IdealType> {
-  FutureOr<IdealType> build();
+abstract class _$IdealTypeNotifier extends $AsyncNotifier<IdealTypeState> {
+  FutureOr<IdealTypeState> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<AsyncValue<IdealType>, IdealType>;
+    final ref = this.ref as $Ref<AsyncValue<IdealTypeState>, IdealTypeState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<IdealType>, IdealType>,
-              AsyncValue<IdealType>,
+              AnyNotifier<AsyncValue<IdealTypeState>, IdealTypeState>,
+              AsyncValue<IdealTypeState>,
               Object?,
               Object?
             >;
