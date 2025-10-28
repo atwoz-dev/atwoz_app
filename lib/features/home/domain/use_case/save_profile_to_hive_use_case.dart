@@ -3,7 +3,7 @@ import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
 import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 final saveProfileToHiveUseCaseProvider = Provider.autoDispose(
   (ref) => SaveProfileToHiveUseCase(

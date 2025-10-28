@@ -9,7 +9,7 @@ import 'enum.dart';
 part 'model.freezed.dart';
 
 @freezed
-class UserProfile with _$UserProfile {
+abstract class UserProfile with _$UserProfile {
   const factory UserProfile({
     required int id,
     required String name,

@@ -26,8 +26,8 @@ class ProfilePage extends ConsumerStatefulWidget {
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    ref.listen(profileNotifierProvider(widget.userId), _listener);
-    final state = ref.watch(profileNotifierProvider(widget.userId));
+    ref.listen(profileProvider(widget.userId), _listener);
+    final state = ref.watch(profileProvider(widget.userId));
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -60,7 +60,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     if (!mounted) return;
     final profileNotifier =
-        ref.read(profileNotifierProvider(widget.userId).notifier);
+        ref.read(profileProvider(widget.userId).notifier);
 
     switch (status) {
       case final Matching status when status is MatchingReceived:
@@ -76,7 +76,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               context,
               userId: widget.userId,
               onSubmit: () => ref
-                  .read(profileNotifierProvider(widget.userId).notifier)
+                  .read(profileProvider(widget.userId).notifier)
                   .approveMatch(),
             );
           },
@@ -123,7 +123,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       context,
       error: error,
       onConfirm: () {
-        ref.read(profileNotifierProvider(widget.userId).notifier).resetError();
+        ref.read(profileProvider(widget.userId).notifier).resetError();
         Navigator.of(context)
           ..pop()
           ..pop();

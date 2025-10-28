@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 part 'user_response.freezed.dart';
 part 'user_response.g.dart';
 
 @freezed
-class UserResponse with _$UserResponse {
+abstract class UserResponse with _$UserResponse {
   const factory UserResponse({
     required int status,
     required String code,
@@ -19,7 +19,7 @@ class UserResponse with _$UserResponse {
 
 @freezed
 @HiveType(typeId: 2, adapterName: 'UserDataAdapter')
-class UserData with _$UserData {
+abstract class UserData with _$UserData {
   const factory UserData({
     @HiveField(0) required String accessToken,
     @HiveField(1) required bool isProfileSettingNeeded,

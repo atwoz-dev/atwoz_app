@@ -13,7 +13,7 @@ part 'profile_manage_notifier.g.dart';
 class ProfileManageNotifier extends _$ProfileManageNotifier {
   @override
   Future<ProfileManageState> build() async {
-    final profile = ref.watch(globalNotifierProvider).profile;
+    final profile = ref.watch(globalProvider).profile;
     final profileImages = await _fetchProfileImages();
     return ProfileManageState(
       profile: profile.toMyProfile().copyWith(profileImages: profileImages),
@@ -71,7 +71,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
   }
 
   Future<bool> saveProfile() async {
-    final profileNotifier = ref.read(globalNotifierProvider.notifier);
+    final profileNotifier = ref.read(globalProvider.notifier);
 
     if (state.value?.updatedProfile == null) return false;
 

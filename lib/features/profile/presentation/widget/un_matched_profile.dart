@@ -47,7 +47,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userInfo = ref.watch(profileNotifierProvider(userId)).profile;
+    final userInfo = ref.watch(profileProvider(userId)).profile;
     if (userInfo == null) return Container();
 
     return ConstrainedBox(
@@ -59,7 +59,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
           ),
           ProfileAppbar(
             onBackButtonPressed: () {
-              final profile = ref.read(profileNotifierProvider(userId)).profile;
+              final profile = ref.read(profileProvider(userId)).profile;
               if (profile == null) return;
               context.pop(profile);
             },
@@ -86,7 +86,7 @@ class _ProfileHeadInformation extends ConsumerWidget {
               chatEnabled: chatEnabled,
               favoriteType: userInfo.favoriteType,
               onFavoriteTypeChanged: (type) => ref
-                  .read(profileNotifierProvider(userId).notifier)
+                  .read(profileProvider(userId).notifier)
                   .favoriteType = type,
             ),
           ),

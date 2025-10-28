@@ -7,9 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 비동기 작업을 실행하기 전에 onStart, 성공 시 onSuccess, 실패 시 onError,
 완료 시 onComplete를 선택적으로 제공 가능
  */
-abstract class BaseNotifier<T> extends StateNotifier<T> {
+abstract class BaseNotifier<T> extends AsyncNotifier<T> {
   // ignore: use_super_parameters
-  BaseNotifier(T state) : super(state);
+  BaseNotifier(T state) : super();
 
   /// 안전한 함수 실행을 위한 `runNotifierCatching`
   Future<void> runNotifierCatching({
@@ -45,7 +45,7 @@ abstract class BaseNotifier<T> extends StateNotifier<T> {
 
 /*
 < 사용 예시 >
-final exampleNotifierProvider = StateNotifierProvider<ExampleNotifier, String>(
+final exampleProvider = StateNotifierProvider<ExampleNotifier, String>(
   (ref) => ExampleNotifier(),
 );
 

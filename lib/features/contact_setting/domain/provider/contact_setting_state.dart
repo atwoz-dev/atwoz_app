@@ -4,7 +4,7 @@ import 'package:atwoz_app/app/enum/enum.dart';
 part 'contact_setting_state.freezed.dart';
 
 @freezed
-class ContactSettingState with _$ContactSettingState {
+abstract class ContactSettingState with _$ContactSettingState {
   const ContactSettingState._();
 
   const factory ContactSettingState({

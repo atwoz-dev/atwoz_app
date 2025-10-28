@@ -30,7 +30,7 @@ class HomeNotifier extends _$HomeNotifier {
             type: type,
           );
 
-      final currentState = state.valueOrNull;
+      final currentState = state.value;
       final profiles = currentState?.recommendedProfiles;
       if (currentState == null || profiles == null) return;
 

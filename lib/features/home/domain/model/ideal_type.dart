@@ -7,7 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'ideal_type.freezed.dart';
 
 @freezed
-class IdealType with _$IdealType {
+abstract class IdealType with _$IdealType {
   const factory IdealType({
     required int minAge,
     required int maxAge,

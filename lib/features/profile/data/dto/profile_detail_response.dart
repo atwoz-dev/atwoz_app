@@ -6,7 +6,7 @@ part 'profile_detail_response.freezed.dart';
 part 'profile_detail_response.g.dart';
 
 @freezed
-class ProfileDetailResponse with _$ProfileDetailResponse {
+abstract class ProfileDetailResponse with _$ProfileDetailResponse {
   const factory ProfileDetailResponse({
     required BasicMemberInformation memberInfo,
     required MatchInformation? matchInfo,
@@ -19,7 +19,7 @@ class ProfileDetailResponse with _$ProfileDetailResponse {
 }
 
 @freezed
-class BasicMemberInformation with _$BasicMemberInformation {
+abstract class BasicMemberInformation with _$BasicMemberInformation {
   const factory BasicMemberInformation({
     required int id,
     required String nickname,
@@ -45,7 +45,7 @@ class BasicMemberInformation with _$BasicMemberInformation {
 }
 
 @freezed
-class MatchInformation with _$MatchInformation {
+abstract class MatchInformation with _$MatchInformation {
   const factory MatchInformation({
     required int matchId,
     required int requesterId,
@@ -62,7 +62,7 @@ class MatchInformation with _$MatchInformation {
 }
 
 @freezed
-class ProfileExchangeInfo with _$ProfileExchangeInfo {
+abstract class ProfileExchangeInfo with _$ProfileExchangeInfo {
   const factory ProfileExchangeInfo({
     required int profileExchangeId,
     required int requesterId,
@@ -75,7 +75,7 @@ class ProfileExchangeInfo with _$ProfileExchangeInfo {
 }
 
 @freezed
-class ProfileInterview with _$ProfileInterview {
+abstract class ProfileInterview with _$ProfileInterview {
   const factory ProfileInterview({
     required String content,
     required String category,
