@@ -207,6 +207,20 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
                   style: Fonts.body01Regular(palette.onPrimary),
                 ),
               ),
+              const Gap(16),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () {
+                  navigate(
+                    context,
+                    route: AppRoute.communityGuide,
+                  );
+                },
+                child: Text(
+                  '커뮤니티 가이드',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
             ],
           ),
         ),
