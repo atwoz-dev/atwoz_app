@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_tap_bar.dart';
 import 'package:atwoz_app/features/interview/presentation/widget/question_card.dart';
@@ -17,9 +18,9 @@ class InterviewPage extends ConsumerStatefulWidget {
 class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   InterviewPageState()
       : super(
-    isAppBar: false,
-    isHorizontalMargin: false,
-  );
+          isAppBar: false,
+          isHorizontalMargin: false,
+        );
   bool _isBannerVisible = true;
   int _currentTabIndex = 0;
 
@@ -31,7 +32,7 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding =
-    EdgeInsets.symmetric(horizontal: horizontalPadding);
+        EdgeInsets.symmetric(horizontal: horizontalPadding);
     final double tagSpacing = 16;
 
     return Padding(
@@ -43,17 +44,20 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
         children: [
           Padding(
             padding: contentPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('나를 소개해볼까요?',
-                    style:
-                    Fonts.header03().copyWith(fontWeight: FontWeight.w900)),
-                const Gap(8),
-                Text(
-                  '이성에게 보여 줄 인터뷰예요.',
-                  style: Fonts.body03Regular(Palette.colorGrey600),
+                Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    '나를 소개해볼까요?',
+                    style: Fonts.header03().copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
+                DefaultAppBarActionGroup(),
               ],
             ),
           ),

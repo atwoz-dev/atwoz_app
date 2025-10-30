@@ -87,8 +87,8 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                 border: const OutlineInputBorder(
                   borderRadius: Dimens.buttonRadius,
                   borderSide: BorderSide(
-                    color: Palette.colorGrey100,
-                    width: 2.0,
+                    color: Palette.colorGrey200,
+                    width: 1.0,
                   ),
                 ),
                 onChanged: (value) => reportNotifier.content = value,
