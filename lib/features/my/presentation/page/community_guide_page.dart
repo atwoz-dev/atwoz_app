@@ -21,7 +21,7 @@ class CommunityGuidePage extends StatelessWidget {
                 color: Palette.colorGrey500,
                 fontWeight: FontWeight.w400,
               ),
-              children: _parsePrivacyPolicy(communityGuideText),
+              children: _parseCommunityGuide(communityGuideText),
             ),
           ),
         ),
@@ -30,7 +30,7 @@ class CommunityGuidePage extends StatelessWidget {
   }
 }
 
-List<TextSpan> _parsePrivacyPolicy(String text) =>
+List<TextSpan> _parseCommunityGuide(String text) =>
     text.split('\n').map((lineContent) {
       if (lineContent.startsWith('### ')) {
         return TextSpan(

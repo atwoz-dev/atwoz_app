@@ -1,4 +1,4 @@
-String communityGuideText = '''
+const String communityGuideText = '''
 ### 바인드 커뮤니티 가이드 라인
 
 바인드는 모든 이용자가 안전하고 신뢰할 수 있는 환경에서 서로를 알아갈 수 있도록 최선을 다하고 있습니다.
