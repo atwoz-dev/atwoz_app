@@ -1,4 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class ReportPage extends ConsumerStatefulWidget {
   final String name;
@@ -131,7 +134,26 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
             DefaultElevatedButton(
               border: const BorderSide(color: Color(0xffE1E1E1)),
               primary: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                final isBlockSuccess = await reportNotifier.block();
+
+                if (!context.mounted) return;
+                if (!isBlockSuccess) {
+                  ErrorDialog.open(
+                    context,
+                    error: DialogueErrorType.unknown,
+                    onConfirm: context.pop,
+                  );
+                  return;
+                }
+
+                navigate(context, route: AppRoute.mainTab);
+                showToastMessage(
+                  '정상적으로 차단되었습니다.\n상대방의 프로필은 이후에 노출되지 않습니다.',
+                  gravity: ToastGravity.TOP,
+                  toastLength: Toast.LENGTH_LONG,
+                );
+              },
               child: Text(
                 '차단하기',
                 style: Fonts.body01Medium(const Color(0xff7E7E7E))
@@ -145,15 +167,26 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                   : Palette.colorGrey200,
               onPressed: () async {
                 if (reportState.reason == null) return;
-                if (await reportNotifier.report(widget.userId) &&
-                    context.mounted) {
-                  navigate(context, route: AppRoute.mainTab);
-                  showToastMessage(
-                    '신고가 정상적으로 접수되었습니다.\n상대방은 차단되어 이후에 노출되지 않습니다.',
-                    gravity: ToastGravity.TOP,
-                    toastLength: Toast.LENGTH_LONG,
+
+                final isReportSuccess = await reportNotifier.report();
+
+                if (!context.mounted) return;
+                if (!isReportSuccess) {
+                  ErrorDialog.open(
+                    context,
+                    error: DialogueErrorType.unknown,
+                    onConfirm: context.pop,
                   );
+
+                  return;
                 }
+
+                navigate(context, route: AppRoute.mainTab);
+                showToastMessage(
+                  '신고가 정상적으로 접수되었습니다.\n상대방은 차단되어 이후에 노출되지 않습니다.',
+                  gravity: ToastGravity.TOP,
+                  toastLength: Toast.LENGTH_LONG,
+                );
               },
               child: Text(
                 '신고하기',
