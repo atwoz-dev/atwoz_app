@@ -38,7 +38,7 @@ const List<MenuItem> _menuItems = [
   (
     title: '고객센터',
     iconPath: IconPath.customerCenter,
-    route: null,
+    route: AppRoute.customerCenter,
   ),
   (
     title: '설정',
