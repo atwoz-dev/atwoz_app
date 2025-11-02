@@ -9,6 +9,7 @@ const Color _borderColor = Color(0xFFDDDDDD);
 const Color _buttonBackgroundColor = Color(0xFFF4F4F4); 
 const double _buttonRadius = 8.0;
 
+// 챗봇 메시지 버블 위젯
 class BotMessageBubble extends StatelessWidget {
   final Message message;
   final List<String> options;
@@ -25,7 +26,6 @@ class BotMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 화면 너비의 60%를 계산하여 변수에 저장
     final double messageWidth = MediaQuery.of(context).size.width * 0.6;
 
     return Padding(

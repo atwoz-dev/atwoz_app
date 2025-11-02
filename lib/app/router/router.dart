@@ -369,7 +369,7 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.customerCenter.name,
-        builder: (context, state) => const CustomerCenterPage(),
+        builder: (context, state) => const CustomerCenterPage(), // 수정 완료
       ),
       NamedGoRoute(
         name: AppRoute.setting.name,

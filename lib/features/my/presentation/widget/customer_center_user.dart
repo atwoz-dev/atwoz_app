@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../page/customer_center_page.dart' show Message; // Message 모델 임포트
 
+
+// 사용자 메시지 버블 위젯
 class UserMessageBubble extends StatelessWidget {
   final Message message;
 

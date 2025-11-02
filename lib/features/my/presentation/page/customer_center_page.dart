@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widget/customer_center_user.dart';
 import '../widget/customer_center_bot.dart';
 
+// 고객센터 챗봇의 질문과 답변 데이터
 const Map<String, Map<String, String>> _chatBotData = {
   '사용 방법': {
     '데이트 신청' :
@@ -62,6 +63,7 @@ class Message {
   });
 }
 
+// 고객센터 페이지 구현
 class CustomerCenterPage extends ConsumerStatefulWidget {
   const CustomerCenterPage({super.key});
 
@@ -69,6 +71,7 @@ class CustomerCenterPage extends ConsumerStatefulWidget {
   ConsumerState<CustomerCenterPage> createState() => _CustomerCenterPageState();
 }
 
+// 고객센터 페이지 상태 관리
 class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
   final List<Message> _messages = [];
   String? _selectedCategory;
@@ -80,8 +83,8 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
   void initState() {
     super.initState();
     
-    // 닉네임 로직 제거 후 '진저'님으로 고정
-    const String userName = '진저';
+    // '고객'님으로 고정 후 추후에 닉네임 연동 예정
+    const String userName = '고객';
     
     // 닉네임을 사용하여 초기 메시지 텍스트를 구성
     final greeting = '$userName님, 안녕하세요 굿밋입니다\n궁금한 사항을 선택해 주세요';
@@ -102,6 +105,7 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
     super.dispose();
   }
 
+  // 대화 스크롤을 맨 아래로 이동시키는 함수
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
