@@ -243,7 +243,15 @@ final allRoutes = [
           ),
           NamedGoRoute(
             name: AppRoute.examResult.name,
-            builder: (context, state) => const ExamResultPage(),
+            builder: (context, state) {
+              final args = state.extra;
+              if (args is! ExamResultArguments) {
+                return const SizedBox.shrink();
+              }
+              return ExamResultPage(
+                isFromDirectAccess: args.isFromDirectAccess,
+              );
+            },
           ),
         ],
       ),
