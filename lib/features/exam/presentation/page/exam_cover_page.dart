@@ -17,7 +17,12 @@ class ExamCoverPage extends ConsumerStatefulWidget {
 }
 
 class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
-  ExamCoverPageState() : super(defaultAppBarTitle: '연애 모의고사');
+  ExamCoverPageState()
+      : super(
+          defaultAppBarTitle: '연애 모의고사',
+          defaultAppBarLeadingAction: (context) =>
+              navigate(context, route: AppRoute.mainTab),
+        );
 
   @override
   Widget buildPage(BuildContext context) {

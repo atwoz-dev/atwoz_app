@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/util/toast.dart';
@@ -115,7 +116,13 @@ class ExamQuestionPageState
                 switch (result) {
                   case ExamSubmitResult.examFinished:
                   case ExamSubmitResult.showResult:
-                    navigate(context, route: AppRoute.examResult);
+                    navigate(
+                      context,
+                      route: AppRoute.examResult,
+                      extra: ExamResultArguments(
+                        isFromDirectAccess: false,
+                      ),
+                    );
                     break;
                   case ExamSubmitResult.nextSubject:
                     break;
@@ -143,10 +150,11 @@ class ExamQuestionPageState
       onElevatedButtonPressed: () {
         notifier.setSubjectOptional(false);
         notifier.resetCurrentSubjectIndex();
+
+        Navigator.of(context).pop();
         navigate(
           context,
           route: AppRoute.mainTab,
-          method: NavigationMethod.go,
         );
       },
     );
