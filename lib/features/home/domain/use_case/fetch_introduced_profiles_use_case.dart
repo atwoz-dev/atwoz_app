@@ -3,7 +3,7 @@ import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 final fetchIntroducedProfilesUseCase = Provider((ref) {
   return FetchIntroducedProfilesUseCase();

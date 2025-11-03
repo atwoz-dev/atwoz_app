@@ -6,20 +6,50 @@ part of 'home_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeNotifierHash() => r'ef695ae9770f08014664ce4bd94e5b48a67f271b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [HomeNotifier].
 @ProviderFor(HomeNotifier)
-final homeNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<HomeNotifier, HomeState>.internal(
-  HomeNotifier.new,
-  name: r'homeNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$homeNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const homeProvider = HomeNotifierProvider._();
 
-typedef _$HomeNotifier = AutoDisposeAsyncNotifier<HomeState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class HomeNotifierProvider
+    extends $AsyncNotifierProvider<HomeNotifier, HomeState> {
+  const HomeNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'homeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$homeNotifierHash();
+
+  @$internal
+  @override
+  HomeNotifier create() => HomeNotifier();
+}
+
+String _$homeNotifierHash() => r'c8d43e57de756d112af2f83124df1715dff8ec6f';
+
+abstract class _$HomeNotifier extends $AsyncNotifier<HomeState> {
+  FutureOr<HomeState> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<HomeState>, HomeState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<HomeState>, HomeState>,
+              AsyncValue<HomeState>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

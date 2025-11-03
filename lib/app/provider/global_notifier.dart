@@ -1,12 +1,12 @@
 import 'package:atwoz_app/app/state/global_state.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,12 +52,14 @@ class GlobalNotifier extends _$GlobalNotifier {
 
   Future<void> clearLocalData() async {
     // CachedUserProfile 박스 열기 또는 참조
-    final profileBox =
-        await Hive.openBox<CachedUserProfile>(CachedUserProfile.boxName);
+    final profileBox = await Hive.openBox<CachedUserProfile>(
+      CachedUserProfile.boxName,
+    );
 
     // IntroducedProfileDto 박스 열기 또는 참조
-    final introducedProfilesBox =
-        await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+    final introducedProfilesBox = await Hive.openBox<Map>(
+      IntroducedProfileDto.boxName,
+    );
 
     state = state.copyWith(profile: CachedUserProfile.init());
 

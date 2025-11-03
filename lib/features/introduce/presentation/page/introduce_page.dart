@@ -1,13 +1,12 @@
+import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
 
 class IntroducePage extends ConsumerStatefulWidget {
@@ -37,55 +36,27 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: contentPadding,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('셀프소개',
-                            style: Fonts.header03()
-                                .copyWith(fontWeight: FontWeight.w900)),
-                        const Gap(8),
-                        Text(
-                          '이성에게 나를 먼저 어필해 볼까요? \n프로필 교환을 통해 메시지를 주고받을 수 있어요!',
-                          style: Fonts.body03Regular(Palette.colorGrey600),
+              Padding(
+                padding: contentPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        '셀프소개',
+                        style: Fonts.header03().copyWith(
+                          fontWeight: FontWeight.w700,
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          //AutoRouter.of(context).push(const IntroduceDetailScreen());
-                        },
-                        child: Container(
-                            padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
-                              IconPath.notification,
-                              size: 24,
-                            )),
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          navigate(
-                            context,
-                            route: AppRoute.introduceFilter,
-                          );
-                        },
-                        child: Container(
-                            padding: const EdgeInsets.all(4),
-                            child: DefaultIcon(
-                              IconPath.filter,
-                              size: 24,
-                            )),
-                      )
-                    ],
-                  )
-                ],
+                    ),
+                    DefaultAppBarActionGroup(
+                      showFilter: true,
+                      filterRoute: AppRoute.introduceFilter,
+                    )
+                  ],
+                ),
               ),
               const Gap(16),
               DefaultTabBar(

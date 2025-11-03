@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'notification_list_state.freezed.dart';
 
 @freezed
-class NotificationListState with _$NotificationListState {
+abstract class NotificationListState with _$NotificationListState {
   const factory NotificationListState({
     @Default([]) List<NotificationItem> notifications,
     @Default({}) Set<int> readIds,

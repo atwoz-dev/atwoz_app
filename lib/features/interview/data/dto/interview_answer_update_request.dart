@@ -4,7 +4,7 @@ part 'interview_answer_update_request.freezed.dart';
 part 'interview_answer_update_request.g.dart';
 
 @freezed
-class InterviewAnswerUpdateRequest with _$InterviewAnswerUpdateRequest {
+abstract class InterviewAnswerUpdateRequest with _$InterviewAnswerUpdateRequest {
   const factory InterviewAnswerUpdateRequest({
     required String answerContent,
   }) = _InterviewAnswerUpdateRequest;

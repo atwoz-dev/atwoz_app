@@ -28,11 +28,11 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
   @override
   Widget build(BuildContext context) {
     final homeStateAsync = ref.watch(
-      homeNotifierProvider.select(
+      homeProvider.select(
         (value) => value.whenData((data) => data.recommendedProfiles),
       ),
     ); // 소개받은 프로필 정보들
-    final homeNotifier = ref.read(homeNotifierProvider.notifier);
+    final homeNotifier = ref.read(homeProvider.notifier);
 
     return homeStateAsync.when(
       data: (profiles) {

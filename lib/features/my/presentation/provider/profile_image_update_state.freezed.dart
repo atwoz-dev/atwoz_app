@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,155 +9,269 @@ part of 'profile_image_update_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$ProfileImageUpdateState {
-  List<EditableProfileImage?> get editableProfileImages =>
-      throw _privateConstructorUsedError;
 
-  /// Create a copy of ProfileImageUpdateState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileImageUpdateStateCopyWith<ProfileImageUpdateState> get copyWith =>
-      throw _privateConstructorUsedError;
+ List<EditableProfileImage?> get editableProfileImages;
+/// Create a copy of ProfileImageUpdateState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProfileImageUpdateStateCopyWith<ProfileImageUpdateState> get copyWith => _$ProfileImageUpdateStateCopyWithImpl<ProfileImageUpdateState>(this as ProfileImageUpdateState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileImageUpdateState&&const DeepCollectionEquality().equals(other.editableProfileImages, editableProfileImages));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(editableProfileImages));
+
+@override
+String toString() {
+  return 'ProfileImageUpdateState(editableProfileImages: $editableProfileImages)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ProfileImageUpdateStateCopyWith<$Res> {
-  factory $ProfileImageUpdateStateCopyWith(ProfileImageUpdateState value,
-          $Res Function(ProfileImageUpdateState) then) =
-      _$ProfileImageUpdateStateCopyWithImpl<$Res, ProfileImageUpdateState>;
-  @useResult
-  $Res call({List<EditableProfileImage?> editableProfileImages});
-}
+abstract mixin class $ProfileImageUpdateStateCopyWith<$Res>  {
+  factory $ProfileImageUpdateStateCopyWith(ProfileImageUpdateState value, $Res Function(ProfileImageUpdateState) _then) = _$ProfileImageUpdateStateCopyWithImpl;
+@useResult
+$Res call({
+ List<EditableProfileImage?> editableProfileImages
+});
 
+
+
+
+}
 /// @nodoc
-class _$ProfileImageUpdateStateCopyWithImpl<$Res,
-        $Val extends ProfileImageUpdateState>
+class _$ProfileImageUpdateStateCopyWithImpl<$Res>
     implements $ProfileImageUpdateStateCopyWith<$Res> {
-  _$ProfileImageUpdateStateCopyWithImpl(this._value, this._then);
+  _$ProfileImageUpdateStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ProfileImageUpdateState _self;
+  final $Res Function(ProfileImageUpdateState) _then;
 
-  /// Create a copy of ProfileImageUpdateState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? editableProfileImages = null,
-  }) {
-    return _then(_value.copyWith(
-      editableProfileImages: null == editableProfileImages
-          ? _value.editableProfileImages
-          : editableProfileImages // ignore: cast_nullable_to_non_nullable
-              as List<EditableProfileImage?>,
-    ) as $Val);
-  }
+/// Create a copy of ProfileImageUpdateState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? editableProfileImages = null,}) {
+  return _then(_self.copyWith(
+editableProfileImages: null == editableProfileImages ? _self.editableProfileImages : editableProfileImages // ignore: cast_nullable_to_non_nullable
+as List<EditableProfileImage?>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ProfileImageUpdateState].
+extension ProfileImageUpdateStatePatterns on ProfileImageUpdateState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileImageUpdateState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileImageUpdateState value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileImageUpdateState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<EditableProfileImage?> editableProfileImages)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState() when $default != null:
+return $default(_that.editableProfileImages);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<EditableProfileImage?> editableProfileImages)  $default,) {final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState():
+return $default(_that.editableProfileImages);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<EditableProfileImage?> editableProfileImages)?  $default,) {final _that = this;
+switch (_that) {
+case _ProfileImageUpdateState() when $default != null:
+return $default(_that.editableProfileImages);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ProfileImageUpdateStateImplCopyWith<$Res>
-    implements $ProfileImageUpdateStateCopyWith<$Res> {
-  factory _$$ProfileImageUpdateStateImplCopyWith(
-          _$ProfileImageUpdateStateImpl value,
-          $Res Function(_$ProfileImageUpdateStateImpl) then) =
-      __$$ProfileImageUpdateStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<EditableProfileImage?> editableProfileImages});
+
+
+class _ProfileImageUpdateState extends ProfileImageUpdateState {
+  const _ProfileImageUpdateState({required final  List<EditableProfileImage?> editableProfileImages}): _editableProfileImages = editableProfileImages,super._();
+  
+
+ final  List<EditableProfileImage?> _editableProfileImages;
+@override List<EditableProfileImage?> get editableProfileImages {
+  if (_editableProfileImages is EqualUnmodifiableListView) return _editableProfileImages;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_editableProfileImages);
+}
+
+
+/// Create a copy of ProfileImageUpdateState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProfileImageUpdateStateCopyWith<_ProfileImageUpdateState> get copyWith => __$ProfileImageUpdateStateCopyWithImpl<_ProfileImageUpdateState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileImageUpdateState&&const DeepCollectionEquality().equals(other._editableProfileImages, _editableProfileImages));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_editableProfileImages));
+
+@override
+String toString() {
+  return 'ProfileImageUpdateState(editableProfileImages: $editableProfileImages)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ProfileImageUpdateStateImplCopyWithImpl<$Res>
-    extends _$ProfileImageUpdateStateCopyWithImpl<$Res,
-        _$ProfileImageUpdateStateImpl>
-    implements _$$ProfileImageUpdateStateImplCopyWith<$Res> {
-  __$$ProfileImageUpdateStateImplCopyWithImpl(
-      _$ProfileImageUpdateStateImpl _value,
-      $Res Function(_$ProfileImageUpdateStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ProfileImageUpdateStateCopyWith<$Res> implements $ProfileImageUpdateStateCopyWith<$Res> {
+  factory _$ProfileImageUpdateStateCopyWith(_ProfileImageUpdateState value, $Res Function(_ProfileImageUpdateState) _then) = __$ProfileImageUpdateStateCopyWithImpl;
+@override @useResult
+$Res call({
+ List<EditableProfileImage?> editableProfileImages
+});
 
-  /// Create a copy of ProfileImageUpdateState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? editableProfileImages = null,
-  }) {
-    return _then(_$ProfileImageUpdateStateImpl(
-      editableProfileImages: null == editableProfileImages
-          ? _value._editableProfileImages
-          : editableProfileImages // ignore: cast_nullable_to_non_nullable
-              as List<EditableProfileImage?>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$ProfileImageUpdateStateCopyWithImpl<$Res>
+    implements _$ProfileImageUpdateStateCopyWith<$Res> {
+  __$ProfileImageUpdateStateCopyWithImpl(this._self, this._then);
 
-class _$ProfileImageUpdateStateImpl extends _ProfileImageUpdateState {
-  const _$ProfileImageUpdateStateImpl(
-      {required final List<EditableProfileImage?> editableProfileImages})
-      : _editableProfileImages = editableProfileImages,
-        super._();
+  final _ProfileImageUpdateState _self;
+  final $Res Function(_ProfileImageUpdateState) _then;
 
-  final List<EditableProfileImage?> _editableProfileImages;
-  @override
-  List<EditableProfileImage?> get editableProfileImages {
-    if (_editableProfileImages is EqualUnmodifiableListView)
-      return _editableProfileImages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_editableProfileImages);
-  }
-
-  @override
-  String toString() {
-    return 'ProfileImageUpdateState(editableProfileImages: $editableProfileImages)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileImageUpdateStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._editableProfileImages, _editableProfileImages));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_editableProfileImages));
-
-  /// Create a copy of ProfileImageUpdateState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileImageUpdateStateImplCopyWith<_$ProfileImageUpdateStateImpl>
-      get copyWith => __$$ProfileImageUpdateStateImplCopyWithImpl<
-          _$ProfileImageUpdateStateImpl>(this, _$identity);
+/// Create a copy of ProfileImageUpdateState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? editableProfileImages = null,}) {
+  return _then(_ProfileImageUpdateState(
+editableProfileImages: null == editableProfileImages ? _self._editableProfileImages : editableProfileImages // ignore: cast_nullable_to_non_nullable
+as List<EditableProfileImage?>,
+  ));
 }
 
-abstract class _ProfileImageUpdateState extends ProfileImageUpdateState {
-  const factory _ProfileImageUpdateState(
-          {required final List<EditableProfileImage?> editableProfileImages}) =
-      _$ProfileImageUpdateStateImpl;
-  const _ProfileImageUpdateState._() : super._();
 
-  @override
-  List<EditableProfileImage?> get editableProfileImages;
-
-  /// Create a copy of ProfileImageUpdateState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileImageUpdateStateImplCopyWith<_$ProfileImageUpdateStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
+
+// dart format on

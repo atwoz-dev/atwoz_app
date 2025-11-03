@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,210 +9,311 @@ part of 'profile_manage_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$ProfileManageState {
-  MyProfile get profile => throw _privateConstructorUsedError;
-  MyProfile? get updatedProfile => throw _privateConstructorUsedError;
-  bool get isChanged => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileManageStateCopyWith<ProfileManageState> get copyWith =>
-      throw _privateConstructorUsedError;
+ MyProfile get profile; MyProfile? get updatedProfile; bool get isChanged;
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProfileManageStateCopyWith<ProfileManageState> get copyWith => _$ProfileManageStateCopyWithImpl<ProfileManageState>(this as ProfileManageState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileManageState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.updatedProfile, updatedProfile) || other.updatedProfile == updatedProfile)&&(identical(other.isChanged, isChanged) || other.isChanged == isChanged));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,profile,updatedProfile,isChanged);
+
+@override
+String toString() {
+  return 'ProfileManageState(profile: $profile, updatedProfile: $updatedProfile, isChanged: $isChanged)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ProfileManageStateCopyWith<$Res> {
-  factory $ProfileManageStateCopyWith(
-          ProfileManageState value, $Res Function(ProfileManageState) then) =
-      _$ProfileManageStateCopyWithImpl<$Res, ProfileManageState>;
-  @useResult
-  $Res call({MyProfile profile, MyProfile? updatedProfile, bool isChanged});
+abstract mixin class $ProfileManageStateCopyWith<$Res>  {
+  factory $ProfileManageStateCopyWith(ProfileManageState value, $Res Function(ProfileManageState) _then) = _$ProfileManageStateCopyWithImpl;
+@useResult
+$Res call({
+ MyProfile profile, MyProfile? updatedProfile, bool isChanged
+});
 
-  $MyProfileCopyWith<$Res> get profile;
-  $MyProfileCopyWith<$Res>? get updatedProfile;
+
+$MyProfileCopyWith<$Res> get profile;$MyProfileCopyWith<$Res>? get updatedProfile;
+
 }
-
 /// @nodoc
-class _$ProfileManageStateCopyWithImpl<$Res, $Val extends ProfileManageState>
+class _$ProfileManageStateCopyWithImpl<$Res>
     implements $ProfileManageStateCopyWith<$Res> {
-  _$ProfileManageStateCopyWithImpl(this._value, this._then);
+  _$ProfileManageStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ProfileManageState _self;
+  final $Res Function(ProfileManageState) _then;
 
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? profile = null,
-    Object? updatedProfile = freezed,
-    Object? isChanged = null,
-  }) {
-    return _then(_value.copyWith(
-      profile: null == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as MyProfile,
-      updatedProfile: freezed == updatedProfile
-          ? _value.updatedProfile
-          : updatedProfile // ignore: cast_nullable_to_non_nullable
-              as MyProfile?,
-      isChanged: null == isChanged
-          ? _value.isChanged
-          : isChanged // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? profile = null,Object? updatedProfile = freezed,Object? isChanged = null,}) {
+  return _then(_self.copyWith(
+profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as MyProfile,updatedProfile: freezed == updatedProfile ? _self.updatedProfile : updatedProfile // ignore: cast_nullable_to_non_nullable
+as MyProfile?,isChanged: null == isChanged ? _self.isChanged : isChanged // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MyProfileCopyWith<$Res> get profile {
+  
+  return $MyProfileCopyWith<$Res>(_self.profile, (value) {
+    return _then(_self.copyWith(profile: value));
+  });
+}/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MyProfileCopyWith<$Res>? get updatedProfile {
+    if (_self.updatedProfile == null) {
+    return null;
   }
 
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MyProfileCopyWith<$Res> get profile {
-    return $MyProfileCopyWith<$Res>(_value.profile, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
-  }
+  return $MyProfileCopyWith<$Res>(_self.updatedProfile!, (value) {
+    return _then(_self.copyWith(updatedProfile: value));
+  });
+}
+}
 
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MyProfileCopyWith<$Res>? get updatedProfile {
-    if (_value.updatedProfile == null) {
-      return null;
-    }
 
-    return $MyProfileCopyWith<$Res>(_value.updatedProfile!, (value) {
-      return _then(_value.copyWith(updatedProfile: value) as $Val);
-    });
-  }
+/// Adds pattern-matching-related methods to [ProfileManageState].
+extension ProfileManageStatePatterns on ProfileManageState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileManageState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProfileManageState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileManageState value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileManageState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileManageState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileManageState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MyProfile profile,  MyProfile? updatedProfile,  bool isChanged)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProfileManageState() when $default != null:
+return $default(_that.profile,_that.updatedProfile,_that.isChanged);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MyProfile profile,  MyProfile? updatedProfile,  bool isChanged)  $default,) {final _that = this;
+switch (_that) {
+case _ProfileManageState():
+return $default(_that.profile,_that.updatedProfile,_that.isChanged);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MyProfile profile,  MyProfile? updatedProfile,  bool isChanged)?  $default,) {final _that = this;
+switch (_that) {
+case _ProfileManageState() when $default != null:
+return $default(_that.profile,_that.updatedProfile,_that.isChanged);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ProfileManageStateImplCopyWith<$Res>
-    implements $ProfileManageStateCopyWith<$Res> {
-  factory _$$ProfileManageStateImplCopyWith(_$ProfileManageStateImpl value,
-          $Res Function(_$ProfileManageStateImpl) then) =
-      __$$ProfileManageStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({MyProfile profile, MyProfile? updatedProfile, bool isChanged});
 
-  @override
-  $MyProfileCopyWith<$Res> get profile;
-  @override
-  $MyProfileCopyWith<$Res>? get updatedProfile;
+
+class _ProfileManageState extends ProfileManageState {
+  const _ProfileManageState({required this.profile, this.updatedProfile, this.isChanged = false}): super._();
+  
+
+@override final  MyProfile profile;
+@override final  MyProfile? updatedProfile;
+@override@JsonKey() final  bool isChanged;
+
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProfileManageStateCopyWith<_ProfileManageState> get copyWith => __$ProfileManageStateCopyWithImpl<_ProfileManageState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileManageState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.updatedProfile, updatedProfile) || other.updatedProfile == updatedProfile)&&(identical(other.isChanged, isChanged) || other.isChanged == isChanged));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,profile,updatedProfile,isChanged);
+
+@override
+String toString() {
+  return 'ProfileManageState(profile: $profile, updatedProfile: $updatedProfile, isChanged: $isChanged)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ProfileManageStateImplCopyWithImpl<$Res>
-    extends _$ProfileManageStateCopyWithImpl<$Res, _$ProfileManageStateImpl>
-    implements _$$ProfileManageStateImplCopyWith<$Res> {
-  __$$ProfileManageStateImplCopyWithImpl(_$ProfileManageStateImpl _value,
-      $Res Function(_$ProfileManageStateImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ProfileManageStateCopyWith<$Res> implements $ProfileManageStateCopyWith<$Res> {
+  factory _$ProfileManageStateCopyWith(_ProfileManageState value, $Res Function(_ProfileManageState) _then) = __$ProfileManageStateCopyWithImpl;
+@override @useResult
+$Res call({
+ MyProfile profile, MyProfile? updatedProfile, bool isChanged
+});
 
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? profile = null,
-    Object? updatedProfile = freezed,
-    Object? isChanged = null,
-  }) {
-    return _then(_$ProfileManageStateImpl(
-      profile: null == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as MyProfile,
-      updatedProfile: freezed == updatedProfile
-          ? _value.updatedProfile
-          : updatedProfile // ignore: cast_nullable_to_non_nullable
-              as MyProfile?,
-      isChanged: null == isChanged
-          ? _value.isChanged
-          : isChanged // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+
+@override $MyProfileCopyWith<$Res> get profile;@override $MyProfileCopyWith<$Res>? get updatedProfile;
+
 }
-
 /// @nodoc
+class __$ProfileManageStateCopyWithImpl<$Res>
+    implements _$ProfileManageStateCopyWith<$Res> {
+  __$ProfileManageStateCopyWithImpl(this._self, this._then);
 
-class _$ProfileManageStateImpl extends _ProfileManageState {
-  const _$ProfileManageStateImpl(
-      {required this.profile, this.updatedProfile, this.isChanged = false})
-      : super._();
+  final _ProfileManageState _self;
+  final $Res Function(_ProfileManageState) _then;
 
-  @override
-  final MyProfile profile;
-  @override
-  final MyProfile? updatedProfile;
-  @override
-  @JsonKey()
-  final bool isChanged;
-
-  @override
-  String toString() {
-    return 'ProfileManageState(profile: $profile, updatedProfile: $updatedProfile, isChanged: $isChanged)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileManageStateImpl &&
-            (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.updatedProfile, updatedProfile) ||
-                other.updatedProfile == updatedProfile) &&
-            (identical(other.isChanged, isChanged) ||
-                other.isChanged == isChanged));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, profile, updatedProfile, isChanged);
-
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileManageStateImplCopyWith<_$ProfileManageStateImpl> get copyWith =>
-      __$$ProfileManageStateImplCopyWithImpl<_$ProfileManageStateImpl>(
-          this, _$identity);
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? profile = null,Object? updatedProfile = freezed,Object? isChanged = null,}) {
+  return _then(_ProfileManageState(
+profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as MyProfile,updatedProfile: freezed == updatedProfile ? _self.updatedProfile : updatedProfile // ignore: cast_nullable_to_non_nullable
+as MyProfile?,isChanged: null == isChanged ? _self.isChanged : isChanged // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-abstract class _ProfileManageState extends ProfileManageState {
-  const factory _ProfileManageState(
-      {required final MyProfile profile,
-      final MyProfile? updatedProfile,
-      final bool isChanged}) = _$ProfileManageStateImpl;
-  const _ProfileManageState._() : super._();
+/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MyProfileCopyWith<$Res> get profile {
+  
+  return $MyProfileCopyWith<$Res>(_self.profile, (value) {
+    return _then(_self.copyWith(profile: value));
+  });
+}/// Create a copy of ProfileManageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MyProfileCopyWith<$Res>? get updatedProfile {
+    if (_self.updatedProfile == null) {
+    return null;
+  }
 
-  @override
-  MyProfile get profile;
-  @override
-  MyProfile? get updatedProfile;
-  @override
-  bool get isChanged;
-
-  /// Create a copy of ProfileManageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileManageStateImplCopyWith<_$ProfileManageStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  return $MyProfileCopyWith<$Res>(_self.updatedProfile!, (value) {
+    return _then(_self.copyWith(updatedProfile: value));
+  });
 }
+}
+
+// dart format on

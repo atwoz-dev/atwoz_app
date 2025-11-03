@@ -8,7 +8,7 @@ part of 'enum.dart';
 
 class GenderAdapter extends TypeAdapter<Gender> {
   @override
-  final int typeId = 7;
+  final typeId = 7;
 
   @override
   Gender read(BinaryReader reader) {
@@ -27,10 +27,8 @@ class GenderAdapter extends TypeAdapter<Gender> {
     switch (obj) {
       case Gender.male:
         writer.writeByte(0);
-        break;
       case Gender.female:
         writer.writeByte(1);
-        break;
     }
   }
 
@@ -47,7 +45,7 @@ class GenderAdapter extends TypeAdapter<Gender> {
 
 class EducationAdapter extends TypeAdapter<Education> {
   @override
-  final int typeId = 8;
+  final typeId = 8;
 
   @override
   Education read(BinaryReader reader) {
@@ -80,31 +78,22 @@ class EducationAdapter extends TypeAdapter<Education> {
     switch (obj) {
       case Education.highSchool:
         writer.writeByte(0);
-        break;
       case Education.associate:
         writer.writeByte(1);
-        break;
       case Education.bachelorsLocal:
         writer.writeByte(2);
-        break;
       case Education.bachelorsSeoul:
         writer.writeByte(3);
-        break;
       case Education.bachelorsOverseas:
         writer.writeByte(4);
-        break;
       case Education.lawSchool:
         writer.writeByte(5);
-        break;
       case Education.masters:
         writer.writeByte(6);
-        break;
       case Education.doctorate:
         writer.writeByte(7);
-        break;
       case Education.other:
         writer.writeByte(8);
-        break;
     }
   }
 
@@ -121,7 +110,7 @@ class EducationAdapter extends TypeAdapter<Education> {
 
 class HobbyAdapter extends TypeAdapter<Hobby> {
   @override
-  final int typeId = 9;
+  final typeId = 9;
 
   @override
   Hobby read(BinaryReader reader) {
@@ -194,91 +183,62 @@ class HobbyAdapter extends TypeAdapter<Hobby> {
     switch (obj) {
       case Hobby.travel:
         writer.writeByte(0);
-        break;
       case Hobby.performanceAndExhibition:
         writer.writeByte(1);
-        break;
       case Hobby.webtoonAndComics:
         writer.writeByte(2);
-        break;
       case Hobby.dramaAndEntertainment:
         writer.writeByte(3);
-        break;
       case Hobby.pcAndMobileGames:
         writer.writeByte(4);
-        break;
       case Hobby.animation:
         writer.writeByte(5);
-        break;
       case Hobby.golf:
         writer.writeByte(6);
-        break;
       case Hobby.theaterAndMovies:
         writer.writeByte(7);
-        break;
       case Hobby.writing:
         writer.writeByte(8);
-        break;
       case Hobby.boardGames:
         writer.writeByte(9);
-        break;
       case Hobby.photography:
         writer.writeByte(10);
-        break;
       case Hobby.singing:
         writer.writeByte(11);
-        break;
       case Hobby.badmintonAndTennis:
         writer.writeByte(12);
-        break;
       case Hobby.dance:
         writer.writeByte(13);
-        break;
       case Hobby.driving:
         writer.writeByte(14);
-        break;
       case Hobby.hikingAndClimbing:
         writer.writeByte(15);
-        break;
       case Hobby.walking:
         writer.writeByte(16);
-        break;
       case Hobby.foodHunt:
         writer.writeByte(17);
-        break;
       case Hobby.shopping:
         writer.writeByte(18);
-        break;
       case Hobby.skiAndSnowboard:
         writer.writeByte(19);
-        break;
       case Hobby.playingInstruments:
         writer.writeByte(20);
-        break;
       case Hobby.wine:
         writer.writeByte(21);
-        break;
       case Hobby.workout:
         writer.writeByte(22);
-        break;
       case Hobby.yogaAndPilates:
         writer.writeByte(23);
-        break;
       case Hobby.cooking:
         writer.writeByte(24);
-        break;
       case Hobby.interiorDesign:
         writer.writeByte(25);
-        break;
       case Hobby.cycling:
         writer.writeByte(26);
-        break;
       case Hobby.camping:
         writer.writeByte(27);
-        break;
       case Hobby.others:
         writer.writeByte(28);
-        break;
     }
   }
 
@@ -295,7 +255,7 @@ class HobbyAdapter extends TypeAdapter<Hobby> {
 
 class JobAdapter extends TypeAdapter<Job> {
   @override
-  final int typeId = 10;
+  final typeId = 10;
 
   @override
   Job read(BinaryReader reader) {
@@ -350,64 +310,44 @@ class JobAdapter extends TypeAdapter<Job> {
     switch (obj) {
       case Job.researchAndEngineering:
         writer.writeByte(0);
-        break;
       case Job.selfEmployment:
         writer.writeByte(1);
-        break;
       case Job.sales:
         writer.writeByte(2);
-        break;
       case Job.managementAndPlanning:
         writer.writeByte(3);
-        break;
       case Job.studyingForFuture:
         writer.writeByte(4);
-        break;
       case Job.jobSearching:
         writer.writeByte(5);
-        break;
       case Job.education:
         writer.writeByte(6);
-        break;
       case Job.artsAndSports:
         writer.writeByte(7);
-        break;
       case Job.foodService:
         writer.writeByte(8);
-        break;
       case Job.medicalAndHealth:
         writer.writeByte(9);
-        break;
       case Job.mechanicalAndConstruction:
         writer.writeByte(10);
-        break;
       case Job.design:
         writer.writeByte(11);
-        break;
       case Job.marketingAndAdvertising:
         writer.writeByte(12);
-        break;
       case Job.tradeAndDistribution:
         writer.writeByte(13);
-        break;
       case Job.mediaAndEntertainment:
         writer.writeByte(14);
-        break;
       case Job.legalAndPublic:
         writer.writeByte(15);
-        break;
       case Job.productionAndManufacturing:
         writer.writeByte(16);
-        break;
       case Job.customerService:
         writer.writeByte(17);
-        break;
       case Job.travelAndTransport:
         writer.writeByte(18);
-        break;
       case Job.others:
         writer.writeByte(19);
-        break;
     }
   }
 

@@ -21,9 +21,9 @@ class ProfileUpdatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileManageState = ref.watch(profileManageNotifierProvider);
+    final profileManageState = ref.watch(profileManageProvider);
     final profileManageNotifier =
-        ref.read(profileManageNotifierProvider.notifier);
+        ref.read(profileManageProvider.notifier);
 
     return profileManageState.when(
       data: (state) {

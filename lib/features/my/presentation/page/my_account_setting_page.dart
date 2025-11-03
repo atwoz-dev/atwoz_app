@@ -62,7 +62,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
               GestureDetector(
                 onTap: () async {
                   final signOutCompleted = await ref
-                      .read(mySettingNotifierProvider.notifier)
+                      .read(mySettingProvider.notifier)
                       .signOut();
                   if (!context.mounted) return;
                   if (!signOutCompleted) {
@@ -118,7 +118,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
       context,
       onDormantChanged: () async {
         final success = await ref
-            .read(mySettingNotifierProvider.notifier)
+            .read(mySettingProvider.notifier)
             .deactiveAccount();
         if (!mounted) return;
         if (!success) {

@@ -11,7 +11,7 @@ class MySettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mySettingAsync = ref.watch(mySettingNotifierProvider);
+    final mySettingAsync = ref.watch(mySettingProvider);
 
     return Scaffold(
       appBar: const DefaultAppBar(
@@ -92,12 +92,19 @@ class _MySettingListItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Fonts.body02Medium(Palette.colorBlack),
+                  style: Fonts.body02Medium().copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Palette.colorBlack,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 if (version != null)
-                  Text(
-                    "V$version",
-                    style: Fonts.body02Medium(const Color(0xff9E9E9E)),
+                  SizedBox(
+                    height: 24,
+                    child: Text(
+                      "V$version",
+                      style: Fonts.body02Medium(const Color(0xff9E9E9E)),
+                    ),
                   )
                 else
                   const DefaultIcon(

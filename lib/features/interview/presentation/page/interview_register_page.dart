@@ -81,7 +81,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                             );
                       } else {
                         await ref
-                            .read(interviewNotifierProvider.notifier)
+                            .read(interviewProvider.notifier)
                             .addAnswer(
                               widget.questionId!,
                               widget.question,

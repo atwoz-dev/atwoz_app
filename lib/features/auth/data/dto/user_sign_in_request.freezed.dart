@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,177 +9,272 @@ part of 'user_sign_in_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-UserSignInRequest _$UserSignInRequestFromJson(Map<String, dynamic> json) {
-  return _UserSignInRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$UserSignInRequest {
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
+
+ String get phoneNumber; String get code;
+/// Create a copy of UserSignInRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UserSignInRequestCopyWith<UserSignInRequest> get copyWith => _$UserSignInRequestCopyWithImpl<UserSignInRequest>(this as UserSignInRequest, _$identity);
 
   /// Serializes this UserSignInRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of UserSignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserSignInRequestCopyWith<UserSignInRequest> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSignInRequest&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.code, code) || other.code == code));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,phoneNumber,code);
+
+@override
+String toString() {
+  return 'UserSignInRequest(phoneNumber: $phoneNumber, code: $code)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $UserSignInRequestCopyWith<$Res> {
-  factory $UserSignInRequestCopyWith(
-          UserSignInRequest value, $Res Function(UserSignInRequest) then) =
-      _$UserSignInRequestCopyWithImpl<$Res, UserSignInRequest>;
-  @useResult
-  $Res call({String phoneNumber, String code});
-}
+abstract mixin class $UserSignInRequestCopyWith<$Res>  {
+  factory $UserSignInRequestCopyWith(UserSignInRequest value, $Res Function(UserSignInRequest) _then) = _$UserSignInRequestCopyWithImpl;
+@useResult
+$Res call({
+ String phoneNumber, String code
+});
 
+
+
+
+}
 /// @nodoc
-class _$UserSignInRequestCopyWithImpl<$Res, $Val extends UserSignInRequest>
+class _$UserSignInRequestCopyWithImpl<$Res>
     implements $UserSignInRequestCopyWith<$Res> {
-  _$UserSignInRequestCopyWithImpl(this._value, this._then);
+  _$UserSignInRequestCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final UserSignInRequest _self;
+  final $Res Function(UserSignInRequest) _then;
 
-  /// Create a copy of UserSignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? phoneNumber = null,
-    Object? code = null,
-  }) {
-    return _then(_value.copyWith(
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of UserSignInRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? phoneNumber = null,Object? code = null,}) {
+  return _then(_self.copyWith(
+phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-abstract class _$$UserSignInRequestImplCopyWith<$Res>
-    implements $UserSignInRequestCopyWith<$Res> {
-  factory _$$UserSignInRequestImplCopyWith(_$UserSignInRequestImpl value,
-          $Res Function(_$UserSignInRequestImpl) then) =
-      __$$UserSignInRequestImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String phoneNumber, String code});
 }
 
-/// @nodoc
-class __$$UserSignInRequestImplCopyWithImpl<$Res>
-    extends _$UserSignInRequestCopyWithImpl<$Res, _$UserSignInRequestImpl>
-    implements _$$UserSignInRequestImplCopyWith<$Res> {
-  __$$UserSignInRequestImplCopyWithImpl(_$UserSignInRequestImpl _value,
-      $Res Function(_$UserSignInRequestImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of UserSignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? phoneNumber = null,
-    Object? code = null,
-  }) {
-    return _then(_$UserSignInRequestImpl(
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Adds pattern-matching-related methods to [UserSignInRequest].
+extension UserSignInRequestPatterns on UserSignInRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserSignInRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UserSignInRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserSignInRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _UserSignInRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserSignInRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _UserSignInRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String phoneNumber,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UserSignInRequest() when $default != null:
+return $default(_that.phoneNumber,_that.code);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String phoneNumber,  String code)  $default,) {final _that = this;
+switch (_that) {
+case _UserSignInRequest():
+return $default(_that.phoneNumber,_that.code);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String phoneNumber,  String code)?  $default,) {final _that = this;
+switch (_that) {
+case _UserSignInRequest() when $default != null:
+return $default(_that.phoneNumber,_that.code);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$UserSignInRequestImpl implements _UserSignInRequest {
-  const _$UserSignInRequestImpl(
-      {required this.phoneNumber, required this.code});
 
-  factory _$UserSignInRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserSignInRequestImplFromJson(json);
+class _UserSignInRequest implements UserSignInRequest {
+  const _UserSignInRequest({required this.phoneNumber, required this.code});
+  factory _UserSignInRequest.fromJson(Map<String, dynamic> json) => _$UserSignInRequestFromJson(json);
 
-  @override
-  final String phoneNumber;
-  @override
-  final String code;
+@override final  String phoneNumber;
+@override final  String code;
 
-  @override
-  String toString() {
-    return 'UserSignInRequest(phoneNumber: $phoneNumber, code: $code)';
-  }
+/// Create a copy of UserSignInRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UserSignInRequestCopyWith<_UserSignInRequest> get copyWith => __$UserSignInRequestCopyWithImpl<_UserSignInRequest>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserSignInRequestImpl &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.code, code) || other.code == code));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, phoneNumber, code);
-
-  /// Create a copy of UserSignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserSignInRequestImplCopyWith<_$UserSignInRequestImpl> get copyWith =>
-      __$$UserSignInRequestImplCopyWithImpl<_$UserSignInRequestImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserSignInRequestImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$UserSignInRequestToJson(this, );
 }
 
-abstract class _UserSignInRequest implements UserSignInRequest {
-  const factory _UserSignInRequest(
-      {required final String phoneNumber,
-      required final String code}) = _$UserSignInRequestImpl;
-
-  factory _UserSignInRequest.fromJson(Map<String, dynamic> json) =
-      _$UserSignInRequestImpl.fromJson;
-
-  @override
-  String get phoneNumber;
-  @override
-  String get code;
-
-  /// Create a copy of UserSignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserSignInRequestImplCopyWith<_$UserSignInRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSignInRequest&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.code, code) || other.code == code));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,phoneNumber,code);
+
+@override
+String toString() {
+  return 'UserSignInRequest(phoneNumber: $phoneNumber, code: $code)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UserSignInRequestCopyWith<$Res> implements $UserSignInRequestCopyWith<$Res> {
+  factory _$UserSignInRequestCopyWith(_UserSignInRequest value, $Res Function(_UserSignInRequest) _then) = __$UserSignInRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ String phoneNumber, String code
+});
+
+
+
+
+}
+/// @nodoc
+class __$UserSignInRequestCopyWithImpl<$Res>
+    implements _$UserSignInRequestCopyWith<$Res> {
+  __$UserSignInRequestCopyWithImpl(this._self, this._then);
+
+  final _UserSignInRequest _self;
+  final $Res Function(_UserSignInRequest) _then;
+
+/// Create a copy of UserSignInRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? phoneNumber = null,Object? code = null,}) {
+  return _then(_UserSignInRequest(
+phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+// dart format on

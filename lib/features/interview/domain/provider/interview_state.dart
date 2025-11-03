@@ -8,7 +8,7 @@ enum InterviewListErrorType {
 }
 
 @freezed
-class InterviewState with _$InterviewState {
+abstract class InterviewState with _$InterviewState {
   const factory InterviewState({
     @Default(InterviewData()) InterviewData questionList,
     @Default(false) bool isLoaded,
@@ -21,7 +21,7 @@ class InterviewState with _$InterviewState {
 }
 
 @freezed
-class InterviewData with _$InterviewData {
+abstract class InterviewData with _$InterviewData {
   const factory InterviewData({
     @Default([]) List<InterviewQuestionItem> questionList,
   }) = _InterviewData;

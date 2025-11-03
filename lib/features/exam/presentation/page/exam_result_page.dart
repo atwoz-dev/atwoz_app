@@ -36,7 +36,7 @@ class ExamResultPageState
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final examState = ref.read(examNotifierProvider);
+      final examState = ref.read(examProvider);
 
       if (examState.isSubjectOptional && !examState.isDone) {
         showToastMessage(
@@ -48,9 +48,9 @@ class ExamResultPageState
 
   @override
   Widget buildPage(BuildContext context) {
-    final examState = ref.watch(examNotifierProvider);
-    final notifier = ref.read(examNotifierProvider.notifier);
-    final userProfile = ref.watch(globalNotifierProvider).profile;
+    final examState = ref.watch(examProvider);
+    final notifier = ref.read(examProvider.notifier);
+    final userProfile = ref.watch(globalProvider).profile;
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -142,7 +142,7 @@ class _ResultHeader extends StatelessWidget {
 
     final subtitle = isSubjectOptional
         ? (hasSoulmate ? "상대방과 모두 같은 답을 선택하셨어요!" : "대체로 같은 답을 선택하신 이성분들이에요!")
-        : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요";
+        : "필수과목 30문제를 풀고 모두 동일한 답을 선택해야 해요";
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -163,6 +163,7 @@ class _ResultHeader extends StatelessWidget {
               color: Palette.colorGrey500,
             ),
           ),
+          Gap(12),
         ],
       ),
     );

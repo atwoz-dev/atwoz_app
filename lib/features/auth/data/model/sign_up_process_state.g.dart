@@ -6,49 +6,43 @@ part of 'sign_up_process_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SignUpProcessStateImpl _$$SignUpProcessStateImplFromJson(
-        Map<String, dynamic> json) =>
-    _$SignUpProcessStateImpl(
-      currentStep: (json['currentStep'] as num?)?.toInt() ?? 1,
-      nickname: json['nickname'] as String? ?? null,
-      selectedGender:
-          $enumDecodeNullable(_$GenderEnumMap, json['selectedGender']) ??
-              Gender.male,
-      isLoading: json['isLoading'] as bool? ?? false,
-      error: json['error'] as String? ?? null,
-      selectedYear: (json['selectedYear'] as num?)?.toInt() ?? null,
-      selectedHeight: (json['selectedHeight'] as num?)?.toInt() ?? null,
-      selectedJob:
-          $enumDecodeNullable(_$JobEnumMap, json['selectedJob']) ?? null,
-      selectedLocation: json['selectedLocation'] as String? ?? null,
-      selectedEducation:
-          $enumDecodeNullable(_$EducationEnumMap, json['selectedEducation']) ??
-              null,
-      selectedFirstMbtiLetter:
-          json['selectedFirstMbtiLetter'] as String? ?? null,
-      selectedSecondMbtiLetter:
-          json['selectedSecondMbtiLetter'] as String? ?? null,
-      selectedThirdMbtiLetter:
-          json['selectedThirdMbtiLetter'] as String? ?? null,
-      selectedFourthMbtiLetter:
-          json['selectedFourthMbtiLetter'] as String? ?? null,
-      selectedSmoking: $enumDecodeNullable(
-              _$SmokingStatusEnumMap, json['selectedSmoking']) ??
-          null,
-      selectedDrinking: $enumDecodeNullable(
-              _$DrinkingStatusEnumMap, json['selectedDrinking']) ??
-          null,
-      selectedReligion:
-          $enumDecodeNullable(_$ReligionEnumMap, json['selectedReligion']) ??
-              null,
-      selectedHobbies: (json['selectedHobbies'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$HobbyEnumMap, e))
-              .toList() ??
-          const <Hobby>[],
-    );
+_SignUpProcessState _$SignUpProcessStateFromJson(
+  Map<String, dynamic> json,
+) => _SignUpProcessState(
+  currentStep: (json['currentStep'] as num?)?.toInt() ?? 1,
+  nickname: json['nickname'] as String? ?? null,
+  selectedGender:
+      $enumDecodeNullable(_$GenderEnumMap, json['selectedGender']) ??
+      Gender.male,
+  isLoading: json['isLoading'] as bool? ?? false,
+  error: json['error'] as String? ?? null,
+  selectedYear: (json['selectedYear'] as num?)?.toInt() ?? null,
+  selectedHeight: (json['selectedHeight'] as num?)?.toInt() ?? null,
+  selectedJob: $enumDecodeNullable(_$JobEnumMap, json['selectedJob']) ?? null,
+  selectedLocation: json['selectedLocation'] as String? ?? null,
+  selectedEducation:
+      $enumDecodeNullable(_$EducationEnumMap, json['selectedEducation']) ??
+      null,
+  selectedFirstMbtiLetter: json['selectedFirstMbtiLetter'] as String? ?? null,
+  selectedSecondMbtiLetter: json['selectedSecondMbtiLetter'] as String? ?? null,
+  selectedThirdMbtiLetter: json['selectedThirdMbtiLetter'] as String? ?? null,
+  selectedFourthMbtiLetter: json['selectedFourthMbtiLetter'] as String? ?? null,
+  selectedSmoking:
+      $enumDecodeNullable(_$SmokingStatusEnumMap, json['selectedSmoking']) ??
+      null,
+  selectedDrinking:
+      $enumDecodeNullable(_$DrinkingStatusEnumMap, json['selectedDrinking']) ??
+      null,
+  selectedReligion:
+      $enumDecodeNullable(_$ReligionEnumMap, json['selectedReligion']) ?? null,
+  selectedHobbies:
+      (json['selectedHobbies'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$HobbyEnumMap, e))
+          .toList() ??
+      const <Hobby>[],
+);
 
-Map<String, dynamic> _$$SignUpProcessStateImplToJson(
-        _$SignUpProcessStateImpl instance) =>
+Map<String, dynamic> _$SignUpProcessStateToJson(_SignUpProcessState instance) =>
     <String, dynamic>{
       'currentStep': instance.currentStep,
       'nickname': instance.nickname,
@@ -67,14 +61,12 @@ Map<String, dynamic> _$$SignUpProcessStateImplToJson(
       'selectedSmoking': _$SmokingStatusEnumMap[instance.selectedSmoking],
       'selectedDrinking': _$DrinkingStatusEnumMap[instance.selectedDrinking],
       'selectedReligion': _$ReligionEnumMap[instance.selectedReligion],
-      'selectedHobbies':
-          instance.selectedHobbies.map((e) => _$HobbyEnumMap[e]!).toList(),
+      'selectedHobbies': instance.selectedHobbies
+          .map((e) => _$HobbyEnumMap[e]!)
+          .toList(),
     };
 
-const _$GenderEnumMap = {
-  Gender.male: 'male',
-  Gender.female: 'female',
-};
+const _$GenderEnumMap = {Gender.male: 'male', Gender.female: 'female'};
 
 const _$JobEnumMap = {
   Job.researchAndEngineering: 'researchAndEngineering',

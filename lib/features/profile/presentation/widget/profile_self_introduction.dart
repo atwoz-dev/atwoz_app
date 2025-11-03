@@ -16,7 +16,7 @@ class ProfileSelfIntroduction extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selfIntroductionItems = ref
-            .watch(profileNotifierProvider(userId))
+            .watch(profileProvider(userId))
             .profile
             ?.selfIntroductionItems ??
         [];

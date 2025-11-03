@@ -3,7 +3,7 @@ import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
 import 'package:atwoz_app/features/my/presentation/provider/profile_image_update_state.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/update_photos_use_case.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

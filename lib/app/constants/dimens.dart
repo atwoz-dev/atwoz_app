@@ -12,33 +12,42 @@ class Dimens {
   static const double iconSize = 24.0;
 
   static const double buttonHeight = 54.0;
-  static const BorderRadius buttonRadius =
-      BorderRadius.all(Radius.circular(10));
+  static const BorderRadius buttonRadius = BorderRadius.all(
+    Radius.circular(10),
+  );
   static const double buttonRadiusValue = 10;
   static const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 20);
 
   static const double bottomSheetGap = 24.0;
-  static const BorderRadius bottomSheetRadius =
-      BorderRadius.vertical(top: Radius.circular(10));
+  static const BorderRadius bottomSheetRadius = BorderRadius.vertical(
+    top: Radius.circular(10),
+  );
 
   static const double dialogWidth = 300.0;
   static const double dialogGap = 24.0;
-  static const EdgeInsets dialogPadding =
-      EdgeInsets.symmetric(horizontal: 15.0, vertical: 24.0);
-  static const BorderRadius dialogRadius =
-      BorderRadius.all(Radius.circular(10));
+  static const EdgeInsets dialogPadding = EdgeInsets.symmetric(
+    horizontal: 15.0,
+    vertical: 24.0,
+  );
+  static const BorderRadius dialogRadius = BorderRadius.all(
+    Radius.circular(10),
+  );
 
   static const double appbarHeight = 64.0;
   static const double appbarLeadingSize = 18.0;
-  static const EdgeInsets appbarLeadingPading =
-      EdgeInsets.only(right: 10, left: 20);
+  static const EdgeInsets appbarLeadingPading = EdgeInsets.only(
+    right: 10,
+    left: 20,
+  );
 
   static const double creadcrumbHeight = 32.0;
 
   static const double drawerWidth = 300.0;
 
-  static const EdgeInsets cardPadding =
-      EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
+  static const EdgeInsets cardPadding = EdgeInsets.symmetric(
+    horizontal: 16.0,
+    vertical: 10.0,
+  );
   static const BorderRadius cardRadius = BorderRadius.all(Radius.circular(10));
   static const double cardGap = 12.0;
 
@@ -54,4 +63,10 @@ class Dimens {
 
   // 연애모의고사 프로필 오픈 하트 수
   static const int examProfileOpenHeartCount = 4;
+
+  // 이상형 설정 최소 나이 수
+  static const int minSelectableAge = 20;
+
+  // 이상형 설정 최대 나이 수
+  static const int maxSelectableAge = 46;
 }

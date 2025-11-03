@@ -5,7 +5,7 @@ part 'exam_answer_request.freezed.dart';
 part 'exam_answer_request.g.dart';
 
 @freezed
-class SubjectAnswerItem with _$SubjectAnswerItem {
+abstract class SubjectAnswerItem with _$SubjectAnswerItem {
   const factory SubjectAnswerItem({
     required int subjectId,
     required List<QuestionAnswerItem> answers,
@@ -29,7 +29,7 @@ class SubjectAnswerItem with _$SubjectAnswerItem {
 }
 
 @freezed
-class QuestionAnswerItem with _$QuestionAnswerItem {
+abstract class QuestionAnswerItem with _$QuestionAnswerItem {
   const factory QuestionAnswerItem({
     required int questionId,
     required int answerId,

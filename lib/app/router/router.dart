@@ -21,6 +21,7 @@ import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/community_guide_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/dormant_account_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/my_profile_image_update_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/page.dart';
@@ -37,6 +38,7 @@ import 'package:atwoz_app/features/heart_history/presentation/page/heart_history
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
 import 'route_arguments.dart';
@@ -118,6 +120,7 @@ enum AppRoute {
   withdrawReason('withdraw-reason'),
   privacyPolicy('privacy-policy'),
   termsOfUse('terms-of-use'),
+  communityGuide('community-guide'),
   myProfileImageUpdate('my-profile-image-update'),
   profilePreview('profile-preview'),
   dormantAccount('dormant-account');
@@ -398,6 +401,10 @@ final allRoutes = [
           NamedGoRoute(
             name: AppRoute.termsOfUse.name,
             builder: (context, state) => const TermsOfUsePage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.communityGuide.name,
+            builder: (context, state) => const CommunityGuidePage(),
           ),
         ],
       ),

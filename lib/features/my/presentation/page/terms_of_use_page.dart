@@ -18,7 +18,7 @@ class TermsOfUsePage extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               style: Fonts.body02Medium().copyWith(
-                color: const Color(0xff7E7E7E),
+                color: Palette.colorGrey500,
                 fontWeight: FontWeight.w400,
               ),
               children: _parseTermsOfuse(termsOfUseText),

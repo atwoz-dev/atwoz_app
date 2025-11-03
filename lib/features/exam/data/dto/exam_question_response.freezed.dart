@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,962 +9,1384 @@ part of 'exam_question_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ExamQuestionResponse _$ExamQuestionResponseFromJson(Map<String, dynamic> json) {
-  return _ExamQuestionResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ExamQuestionResponse {
-  int get status => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  ExamQuestionItem get data => throw _privateConstructorUsedError;
+
+ int get status; String get code; String get message; ExamQuestionItem get data;
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ExamQuestionResponseCopyWith<ExamQuestionResponse> get copyWith => _$ExamQuestionResponseCopyWithImpl<ExamQuestionResponse>(this as ExamQuestionResponse, _$identity);
 
   /// Serializes this ExamQuestionResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExamQuestionResponseCopyWith<ExamQuestionResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExamQuestionResponse&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&(identical(other.data, data) || other.data == data));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,status,code,message,data);
+
+@override
+String toString() {
+  return 'ExamQuestionResponse(status: $status, code: $code, message: $message, data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ExamQuestionResponseCopyWith<$Res> {
-  factory $ExamQuestionResponseCopyWith(ExamQuestionResponse value,
-          $Res Function(ExamQuestionResponse) then) =
-      _$ExamQuestionResponseCopyWithImpl<$Res, ExamQuestionResponse>;
-  @useResult
-  $Res call({int status, String code, String message, ExamQuestionItem data});
+abstract mixin class $ExamQuestionResponseCopyWith<$Res>  {
+  factory $ExamQuestionResponseCopyWith(ExamQuestionResponse value, $Res Function(ExamQuestionResponse) _then) = _$ExamQuestionResponseCopyWithImpl;
+@useResult
+$Res call({
+ int status, String code, String message, ExamQuestionItem data
+});
 
-  $ExamQuestionItemCopyWith<$Res> get data;
+
+$ExamQuestionItemCopyWith<$Res> get data;
+
 }
-
 /// @nodoc
-class _$ExamQuestionResponseCopyWithImpl<$Res,
-        $Val extends ExamQuestionResponse>
+class _$ExamQuestionResponseCopyWithImpl<$Res>
     implements $ExamQuestionResponseCopyWith<$Res> {
-  _$ExamQuestionResponseCopyWithImpl(this._value, this._then);
+  _$ExamQuestionResponseCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ExamQuestionResponse _self;
+  final $Res Function(ExamQuestionResponse) _then;
 
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? code = null,
-    Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ExamQuestionItem,
-    ) as $Val);
-  }
-
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ExamQuestionItemCopyWith<$Res> get data {
-    return $ExamQuestionItemCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
-  }
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? code = null,Object? message = null,Object? data = null,}) {
+  return _then(_self.copyWith(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ExamQuestionItem,
+  ));
+}
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ExamQuestionItemCopyWith<$Res> get data {
+  
+  return $ExamQuestionItemCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
 }
 
-/// @nodoc
-abstract class _$$ExamQuestionResponseImplCopyWith<$Res>
-    implements $ExamQuestionResponseCopyWith<$Res> {
-  factory _$$ExamQuestionResponseImplCopyWith(_$ExamQuestionResponseImpl value,
-          $Res Function(_$ExamQuestionResponseImpl) then) =
-      __$$ExamQuestionResponseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int status, String code, String message, ExamQuestionItem data});
 
-  @override
-  $ExamQuestionItemCopyWith<$Res> get data;
+/// Adds pattern-matching-related methods to [ExamQuestionResponse].
+extension ExamQuestionResponsePatterns on ExamQuestionResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ExamQuestionResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ExamQuestionResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ExamQuestionResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _ExamQuestionResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ExamQuestionResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ExamQuestionResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int status,  String code,  String message,  ExamQuestionItem data)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ExamQuestionResponse() when $default != null:
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int status,  String code,  String message,  ExamQuestionItem data)  $default,) {final _that = this;
+switch (_that) {
+case _ExamQuestionResponse():
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int status,  String code,  String message,  ExamQuestionItem data)?  $default,) {final _that = this;
+switch (_that) {
+case _ExamQuestionResponse() when $default != null:
+return $default(_that.status,_that.code,_that.message,_that.data);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-class __$$ExamQuestionResponseImplCopyWithImpl<$Res>
-    extends _$ExamQuestionResponseCopyWithImpl<$Res, _$ExamQuestionResponseImpl>
-    implements _$$ExamQuestionResponseImplCopyWith<$Res> {
-  __$$ExamQuestionResponseImplCopyWithImpl(_$ExamQuestionResponseImpl _value,
-      $Res Function(_$ExamQuestionResponseImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? code = null,
-    Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_$ExamQuestionResponseImpl(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ExamQuestionItem,
-    ));
-  }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ExamQuestionResponseImpl implements _ExamQuestionResponse {
-  const _$ExamQuestionResponseImpl(
-      {required this.status,
-      required this.code,
-      required this.message,
-      required this.data});
 
-  factory _$ExamQuestionResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ExamQuestionResponseImplFromJson(json);
+class _ExamQuestionResponse implements ExamQuestionResponse {
+  const _ExamQuestionResponse({required this.status, required this.code, required this.message, required this.data});
+  factory _ExamQuestionResponse.fromJson(Map<String, dynamic> json) => _$ExamQuestionResponseFromJson(json);
 
-  @override
-  final int status;
-  @override
-  final String code;
-  @override
-  final String message;
-  @override
-  final ExamQuestionItem data;
+@override final  int status;
+@override final  String code;
+@override final  String message;
+@override final  ExamQuestionItem data;
 
-  @override
-  String toString() {
-    return 'ExamQuestionResponse(status: $status, code: $code, message: $message, data: $data)';
-  }
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ExamQuestionResponseCopyWith<_ExamQuestionResponse> get copyWith => __$ExamQuestionResponseCopyWithImpl<_ExamQuestionResponse>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ExamQuestionResponseImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.code, code) || other.code == code) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, status, code, message, data);
-
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ExamQuestionResponseImplCopyWith<_$ExamQuestionResponseImpl>
-      get copyWith =>
-          __$$ExamQuestionResponseImplCopyWithImpl<_$ExamQuestionResponseImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ExamQuestionResponseImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$ExamQuestionResponseToJson(this, );
 }
 
-abstract class _ExamQuestionResponse implements ExamQuestionResponse {
-  const factory _ExamQuestionResponse(
-      {required final int status,
-      required final String code,
-      required final String message,
-      required final ExamQuestionItem data}) = _$ExamQuestionResponseImpl;
-
-  factory _ExamQuestionResponse.fromJson(Map<String, dynamic> json) =
-      _$ExamQuestionResponseImpl.fromJson;
-
-  @override
-  int get status;
-  @override
-  String get code;
-  @override
-  String get message;
-  @override
-  ExamQuestionItem get data;
-
-  /// Create a copy of ExamQuestionResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ExamQuestionResponseImplCopyWith<_$ExamQuestionResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExamQuestionResponse&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&(identical(other.data, data) || other.data == data));
 }
 
-ExamQuestionItem _$ExamQuestionItemFromJson(Map<String, dynamic> json) {
-  return _ExamQuestionItem.fromJson(json);
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,status,code,message,data);
+
+@override
+String toString() {
+  return 'ExamQuestionResponse(status: $status, code: $code, message: $message, data: $data)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ExamQuestionResponseCopyWith<$Res> implements $ExamQuestionResponseCopyWith<$Res> {
+  factory _$ExamQuestionResponseCopyWith(_ExamQuestionResponse value, $Res Function(_ExamQuestionResponse) _then) = __$ExamQuestionResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ int status, String code, String message, ExamQuestionItem data
+});
+
+
+@override $ExamQuestionItemCopyWith<$Res> get data;
+
+}
+/// @nodoc
+class __$ExamQuestionResponseCopyWithImpl<$Res>
+    implements _$ExamQuestionResponseCopyWith<$Res> {
+  __$ExamQuestionResponseCopyWithImpl(this._self, this._then);
+
+  final _ExamQuestionResponse _self;
+  final $Res Function(_ExamQuestionResponse) _then;
+
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? code = null,Object? message = null,Object? data = null,}) {
+  return _then(_ExamQuestionResponse(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ExamQuestionItem,
+  ));
+}
+
+/// Create a copy of ExamQuestionResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ExamQuestionItemCopyWith<$Res> get data {
+  
+  return $ExamQuestionItemCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
+}
+
 
 /// @nodoc
 mixin _$ExamQuestionItem {
-  List<SubjectItem> get subjects => throw _privateConstructorUsedError;
+
+ List<SubjectItem> get subjects;
+/// Create a copy of ExamQuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ExamQuestionItemCopyWith<ExamQuestionItem> get copyWith => _$ExamQuestionItemCopyWithImpl<ExamQuestionItem>(this as ExamQuestionItem, _$identity);
 
   /// Serializes this ExamQuestionItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of ExamQuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExamQuestionItemCopyWith<ExamQuestionItem> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExamQuestionItem&&const DeepCollectionEquality().equals(other.subjects, subjects));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(subjects));
+
+@override
+String toString() {
+  return 'ExamQuestionItem(subjects: $subjects)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ExamQuestionItemCopyWith<$Res> {
-  factory $ExamQuestionItemCopyWith(
-          ExamQuestionItem value, $Res Function(ExamQuestionItem) then) =
-      _$ExamQuestionItemCopyWithImpl<$Res, ExamQuestionItem>;
-  @useResult
-  $Res call({List<SubjectItem> subjects});
-}
+abstract mixin class $ExamQuestionItemCopyWith<$Res>  {
+  factory $ExamQuestionItemCopyWith(ExamQuestionItem value, $Res Function(ExamQuestionItem) _then) = _$ExamQuestionItemCopyWithImpl;
+@useResult
+$Res call({
+ List<SubjectItem> subjects
+});
 
+
+
+
+}
 /// @nodoc
-class _$ExamQuestionItemCopyWithImpl<$Res, $Val extends ExamQuestionItem>
+class _$ExamQuestionItemCopyWithImpl<$Res>
     implements $ExamQuestionItemCopyWith<$Res> {
-  _$ExamQuestionItemCopyWithImpl(this._value, this._then);
+  _$ExamQuestionItemCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ExamQuestionItem _self;
+  final $Res Function(ExamQuestionItem) _then;
 
-  /// Create a copy of ExamQuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? subjects = null,
-  }) {
-    return _then(_value.copyWith(
-      subjects: null == subjects
-          ? _value.subjects
-          : subjects // ignore: cast_nullable_to_non_nullable
-              as List<SubjectItem>,
-    ) as $Val);
-  }
+/// Create a copy of ExamQuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? subjects = null,}) {
+  return _then(_self.copyWith(
+subjects: null == subjects ? _self.subjects : subjects // ignore: cast_nullable_to_non_nullable
+as List<SubjectItem>,
+  ));
 }
 
-/// @nodoc
-abstract class _$$ExamQuestionItemImplCopyWith<$Res>
-    implements $ExamQuestionItemCopyWith<$Res> {
-  factory _$$ExamQuestionItemImplCopyWith(_$ExamQuestionItemImpl value,
-          $Res Function(_$ExamQuestionItemImpl) then) =
-      __$$ExamQuestionItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<SubjectItem> subjects});
 }
 
-/// @nodoc
-class __$$ExamQuestionItemImplCopyWithImpl<$Res>
-    extends _$ExamQuestionItemCopyWithImpl<$Res, _$ExamQuestionItemImpl>
-    implements _$$ExamQuestionItemImplCopyWith<$Res> {
-  __$$ExamQuestionItemImplCopyWithImpl(_$ExamQuestionItemImpl _value,
-      $Res Function(_$ExamQuestionItemImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of ExamQuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? subjects = null,
-  }) {
-    return _then(_$ExamQuestionItemImpl(
-      subjects: null == subjects
-          ? _value._subjects
-          : subjects // ignore: cast_nullable_to_non_nullable
-              as List<SubjectItem>,
-    ));
-  }
+/// Adds pattern-matching-related methods to [ExamQuestionItem].
+extension ExamQuestionItemPatterns on ExamQuestionItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ExamQuestionItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ExamQuestionItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ExamQuestionItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _ExamQuestionItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ExamQuestionItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ExamQuestionItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<SubjectItem> subjects)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ExamQuestionItem() when $default != null:
+return $default(_that.subjects);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<SubjectItem> subjects)  $default,) {final _that = this;
+switch (_that) {
+case _ExamQuestionItem():
+return $default(_that.subjects);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<SubjectItem> subjects)?  $default,) {final _that = this;
+switch (_that) {
+case _ExamQuestionItem() when $default != null:
+return $default(_that.subjects);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ExamQuestionItemImpl implements _ExamQuestionItem {
-  const _$ExamQuestionItemImpl({required final List<SubjectItem> subjects})
-      : _subjects = subjects;
 
-  factory _$ExamQuestionItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ExamQuestionItemImplFromJson(json);
+class _ExamQuestionItem implements ExamQuestionItem {
+  const _ExamQuestionItem({required final  List<SubjectItem> subjects}): _subjects = subjects;
+  factory _ExamQuestionItem.fromJson(Map<String, dynamic> json) => _$ExamQuestionItemFromJson(json);
 
-  final List<SubjectItem> _subjects;
-  @override
-  List<SubjectItem> get subjects {
-    if (_subjects is EqualUnmodifiableListView) return _subjects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_subjects);
-  }
-
-  @override
-  String toString() {
-    return 'ExamQuestionItem(subjects: $subjects)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ExamQuestionItemImpl &&
-            const DeepCollectionEquality().equals(other._subjects, _subjects));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_subjects));
-
-  /// Create a copy of ExamQuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ExamQuestionItemImplCopyWith<_$ExamQuestionItemImpl> get copyWith =>
-      __$$ExamQuestionItemImplCopyWithImpl<_$ExamQuestionItemImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ExamQuestionItemImplToJson(
-      this,
-    );
-  }
+ final  List<SubjectItem> _subjects;
+@override List<SubjectItem> get subjects {
+  if (_subjects is EqualUnmodifiableListView) return _subjects;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_subjects);
 }
 
-abstract class _ExamQuestionItem implements ExamQuestionItem {
-  const factory _ExamQuestionItem({required final List<SubjectItem> subjects}) =
-      _$ExamQuestionItemImpl;
 
-  factory _ExamQuestionItem.fromJson(Map<String, dynamic> json) =
-      _$ExamQuestionItemImpl.fromJson;
+/// Create a copy of ExamQuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ExamQuestionItemCopyWith<_ExamQuestionItem> get copyWith => __$ExamQuestionItemCopyWithImpl<_ExamQuestionItem>(this, _$identity);
 
-  @override
-  List<SubjectItem> get subjects;
-
-  /// Create a copy of ExamQuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ExamQuestionItemImplCopyWith<_$ExamQuestionItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+Map<String, dynamic> toJson() {
+  return _$ExamQuestionItemToJson(this, );
 }
 
-SubjectItem _$SubjectItemFromJson(Map<String, dynamic> json) {
-  return _SubjectItem.fromJson(json);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExamQuestionItem&&const DeepCollectionEquality().equals(other._subjects, _subjects));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_subjects));
+
+@override
+String toString() {
+  return 'ExamQuestionItem(subjects: $subjects)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ExamQuestionItemCopyWith<$Res> implements $ExamQuestionItemCopyWith<$Res> {
+  factory _$ExamQuestionItemCopyWith(_ExamQuestionItem value, $Res Function(_ExamQuestionItem) _then) = __$ExamQuestionItemCopyWithImpl;
+@override @useResult
+$Res call({
+ List<SubjectItem> subjects
+});
+
+
+
+
+}
+/// @nodoc
+class __$ExamQuestionItemCopyWithImpl<$Res>
+    implements _$ExamQuestionItemCopyWith<$Res> {
+  __$ExamQuestionItemCopyWithImpl(this._self, this._then);
+
+  final _ExamQuestionItem _self;
+  final $Res Function(_ExamQuestionItem) _then;
+
+/// Create a copy of ExamQuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? subjects = null,}) {
+  return _then(_ExamQuestionItem(
+subjects: null == subjects ? _self._subjects : subjects // ignore: cast_nullable_to_non_nullable
+as List<SubjectItem>,
+  ));
+}
+
+
+}
+
 
 /// @nodoc
 mixin _$SubjectItem {
-  int get id => throw _privateConstructorUsedError;
-  ExamType get type => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  List<QuestionItem> get questions => throw _privateConstructorUsedError;
+
+ int get id; ExamType get type; String get name; List<QuestionItem> get questions;
+/// Create a copy of SubjectItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SubjectItemCopyWith<SubjectItem> get copyWith => _$SubjectItemCopyWithImpl<SubjectItem>(this as SubjectItem, _$identity);
 
   /// Serializes this SubjectItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of SubjectItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SubjectItemCopyWith<SubjectItem> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.questions, questions));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,type,name,const DeepCollectionEquality().hash(questions));
+
+@override
+String toString() {
+  return 'SubjectItem(id: $id, type: $type, name: $name, questions: $questions)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $SubjectItemCopyWith<$Res> {
-  factory $SubjectItemCopyWith(
-          SubjectItem value, $Res Function(SubjectItem) then) =
-      _$SubjectItemCopyWithImpl<$Res, SubjectItem>;
-  @useResult
-  $Res call({int id, ExamType type, String name, List<QuestionItem> questions});
-}
+abstract mixin class $SubjectItemCopyWith<$Res>  {
+  factory $SubjectItemCopyWith(SubjectItem value, $Res Function(SubjectItem) _then) = _$SubjectItemCopyWithImpl;
+@useResult
+$Res call({
+ int id, ExamType type, String name, List<QuestionItem> questions
+});
 
+
+
+
+}
 /// @nodoc
-class _$SubjectItemCopyWithImpl<$Res, $Val extends SubjectItem>
+class _$SubjectItemCopyWithImpl<$Res>
     implements $SubjectItemCopyWith<$Res> {
-  _$SubjectItemCopyWithImpl(this._value, this._then);
+  _$SubjectItemCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SubjectItem _self;
+  final $Res Function(SubjectItem) _then;
 
-  /// Create a copy of SubjectItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? type = null,
-    Object? name = null,
-    Object? questions = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as ExamType,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      questions: null == questions
-          ? _value.questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as List<QuestionItem>,
-    ) as $Val);
-  }
+/// Create a copy of SubjectItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? name = null,Object? questions = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as ExamType,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,questions: null == questions ? _self.questions : questions // ignore: cast_nullable_to_non_nullable
+as List<QuestionItem>,
+  ));
 }
 
-/// @nodoc
-abstract class _$$SubjectItemImplCopyWith<$Res>
-    implements $SubjectItemCopyWith<$Res> {
-  factory _$$SubjectItemImplCopyWith(
-          _$SubjectItemImpl value, $Res Function(_$SubjectItemImpl) then) =
-      __$$SubjectItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id, ExamType type, String name, List<QuestionItem> questions});
 }
 
-/// @nodoc
-class __$$SubjectItemImplCopyWithImpl<$Res>
-    extends _$SubjectItemCopyWithImpl<$Res, _$SubjectItemImpl>
-    implements _$$SubjectItemImplCopyWith<$Res> {
-  __$$SubjectItemImplCopyWithImpl(
-      _$SubjectItemImpl _value, $Res Function(_$SubjectItemImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of SubjectItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? type = null,
-    Object? name = null,
-    Object? questions = null,
-  }) {
-    return _then(_$SubjectItemImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as ExamType,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      questions: null == questions
-          ? _value._questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as List<QuestionItem>,
-    ));
-  }
+/// Adds pattern-matching-related methods to [SubjectItem].
+extension SubjectItemPatterns on SubjectItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SubjectItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _SubjectItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SubjectItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _SubjectItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SubjectItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _SubjectItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _SubjectItem() when $default != null:
+return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)  $default,) {final _that = this;
+switch (_that) {
+case _SubjectItem():
+return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)?  $default,) {final _that = this;
+switch (_that) {
+case _SubjectItem() when $default != null:
+return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SubjectItemImpl implements _SubjectItem {
-  const _$SubjectItemImpl(
-      {required this.id,
-      required this.type,
-      required this.name,
-      required final List<QuestionItem> questions})
-      : _questions = questions;
 
-  factory _$SubjectItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SubjectItemImplFromJson(json);
+class _SubjectItem implements SubjectItem {
+  const _SubjectItem({required this.id, required this.type, required this.name, required final  List<QuestionItem> questions}): _questions = questions;
+  factory _SubjectItem.fromJson(Map<String, dynamic> json) => _$SubjectItemFromJson(json);
 
-  @override
-  final int id;
-  @override
-  final ExamType type;
-  @override
-  final String name;
-  final List<QuestionItem> _questions;
-  @override
-  List<QuestionItem> get questions {
-    if (_questions is EqualUnmodifiableListView) return _questions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_questions);
-  }
-
-  @override
-  String toString() {
-    return 'SubjectItem(id: $id, type: $type, name: $name, questions: $questions)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SubjectItemImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._questions, _questions));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, type, name,
-      const DeepCollectionEquality().hash(_questions));
-
-  /// Create a copy of SubjectItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SubjectItemImplCopyWith<_$SubjectItemImpl> get copyWith =>
-      __$$SubjectItemImplCopyWithImpl<_$SubjectItemImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SubjectItemImplToJson(
-      this,
-    );
-  }
+@override final  int id;
+@override final  ExamType type;
+@override final  String name;
+ final  List<QuestionItem> _questions;
+@override List<QuestionItem> get questions {
+  if (_questions is EqualUnmodifiableListView) return _questions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_questions);
 }
 
-abstract class _SubjectItem implements SubjectItem {
-  const factory _SubjectItem(
-      {required final int id,
-      required final ExamType type,
-      required final String name,
-      required final List<QuestionItem> questions}) = _$SubjectItemImpl;
 
-  factory _SubjectItem.fromJson(Map<String, dynamic> json) =
-      _$SubjectItemImpl.fromJson;
+/// Create a copy of SubjectItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SubjectItemCopyWith<_SubjectItem> get copyWith => __$SubjectItemCopyWithImpl<_SubjectItem>(this, _$identity);
 
-  @override
-  int get id;
-  @override
-  ExamType get type;
-  @override
-  String get name;
-  @override
-  List<QuestionItem> get questions;
-
-  /// Create a copy of SubjectItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SubjectItemImplCopyWith<_$SubjectItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+Map<String, dynamic> toJson() {
+  return _$SubjectItemToJson(this, );
 }
 
-QuestionItem _$QuestionItemFromJson(Map<String, dynamic> json) {
-  return _QuestionItem.fromJson(json);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._questions, _questions));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,type,name,const DeepCollectionEquality().hash(_questions));
+
+@override
+String toString() {
+  return 'SubjectItem(id: $id, type: $type, name: $name, questions: $questions)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SubjectItemCopyWith<$Res> implements $SubjectItemCopyWith<$Res> {
+  factory _$SubjectItemCopyWith(_SubjectItem value, $Res Function(_SubjectItem) _then) = __$SubjectItemCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, ExamType type, String name, List<QuestionItem> questions
+});
+
+
+
+
+}
+/// @nodoc
+class __$SubjectItemCopyWithImpl<$Res>
+    implements _$SubjectItemCopyWith<$Res> {
+  __$SubjectItemCopyWithImpl(this._self, this._then);
+
+  final _SubjectItem _self;
+  final $Res Function(_SubjectItem) _then;
+
+/// Create a copy of SubjectItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? name = null,Object? questions = null,}) {
+  return _then(_SubjectItem(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as ExamType,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,questions: null == questions ? _self._questions : questions // ignore: cast_nullable_to_non_nullable
+as List<QuestionItem>,
+  ));
+}
+
+
+}
+
 
 /// @nodoc
 mixin _$QuestionItem {
-  int get id => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  List<AnswerItem> get answers => throw _privateConstructorUsedError;
+
+ int get id; String get content; List<AnswerItem> get answers;
+/// Create a copy of QuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$QuestionItemCopyWith<QuestionItem> get copyWith => _$QuestionItemCopyWithImpl<QuestionItem>(this as QuestionItem, _$identity);
 
   /// Serializes this QuestionItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of QuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $QuestionItemCopyWith<QuestionItem> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QuestionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.answers, answers));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content,const DeepCollectionEquality().hash(answers));
+
+@override
+String toString() {
+  return 'QuestionItem(id: $id, content: $content, answers: $answers)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $QuestionItemCopyWith<$Res> {
-  factory $QuestionItemCopyWith(
-          QuestionItem value, $Res Function(QuestionItem) then) =
-      _$QuestionItemCopyWithImpl<$Res, QuestionItem>;
-  @useResult
-  $Res call({int id, String content, List<AnswerItem> answers});
-}
+abstract mixin class $QuestionItemCopyWith<$Res>  {
+  factory $QuestionItemCopyWith(QuestionItem value, $Res Function(QuestionItem) _then) = _$QuestionItemCopyWithImpl;
+@useResult
+$Res call({
+ int id, String content, List<AnswerItem> answers
+});
 
+
+
+
+}
 /// @nodoc
-class _$QuestionItemCopyWithImpl<$Res, $Val extends QuestionItem>
+class _$QuestionItemCopyWithImpl<$Res>
     implements $QuestionItemCopyWith<$Res> {
-  _$QuestionItemCopyWithImpl(this._value, this._then);
+  _$QuestionItemCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final QuestionItem _self;
+  final $Res Function(QuestionItem) _then;
 
-  /// Create a copy of QuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? content = null,
-    Object? answers = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      answers: null == answers
-          ? _value.answers
-          : answers // ignore: cast_nullable_to_non_nullable
-              as List<AnswerItem>,
-    ) as $Val);
-  }
+/// Create a copy of QuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,Object? answers = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,answers: null == answers ? _self.answers : answers // ignore: cast_nullable_to_non_nullable
+as List<AnswerItem>,
+  ));
 }
 
-/// @nodoc
-abstract class _$$QuestionItemImplCopyWith<$Res>
-    implements $QuestionItemCopyWith<$Res> {
-  factory _$$QuestionItemImplCopyWith(
-          _$QuestionItemImpl value, $Res Function(_$QuestionItemImpl) then) =
-      __$$QuestionItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id, String content, List<AnswerItem> answers});
 }
 
-/// @nodoc
-class __$$QuestionItemImplCopyWithImpl<$Res>
-    extends _$QuestionItemCopyWithImpl<$Res, _$QuestionItemImpl>
-    implements _$$QuestionItemImplCopyWith<$Res> {
-  __$$QuestionItemImplCopyWithImpl(
-      _$QuestionItemImpl _value, $Res Function(_$QuestionItemImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of QuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? content = null,
-    Object? answers = null,
-  }) {
-    return _then(_$QuestionItemImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      answers: null == answers
-          ? _value._answers
-          : answers // ignore: cast_nullable_to_non_nullable
-              as List<AnswerItem>,
-    ));
-  }
+/// Adds pattern-matching-related methods to [QuestionItem].
+extension QuestionItemPatterns on QuestionItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _QuestionItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _QuestionItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _QuestionItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _QuestionItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _QuestionItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _QuestionItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String content,  List<AnswerItem> answers)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _QuestionItem() when $default != null:
+return $default(_that.id,_that.content,_that.answers);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String content,  List<AnswerItem> answers)  $default,) {final _that = this;
+switch (_that) {
+case _QuestionItem():
+return $default(_that.id,_that.content,_that.answers);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String content,  List<AnswerItem> answers)?  $default,) {final _that = this;
+switch (_that) {
+case _QuestionItem() when $default != null:
+return $default(_that.id,_that.content,_that.answers);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$QuestionItemImpl implements _QuestionItem {
-  const _$QuestionItemImpl(
-      {required this.id,
-      required this.content,
-      required final List<AnswerItem> answers})
-      : _answers = answers;
 
-  factory _$QuestionItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$QuestionItemImplFromJson(json);
+class _QuestionItem implements QuestionItem {
+  const _QuestionItem({required this.id, required this.content, required final  List<AnswerItem> answers}): _answers = answers;
+  factory _QuestionItem.fromJson(Map<String, dynamic> json) => _$QuestionItemFromJson(json);
 
-  @override
-  final int id;
-  @override
-  final String content;
-  final List<AnswerItem> _answers;
-  @override
-  List<AnswerItem> get answers {
-    if (_answers is EqualUnmodifiableListView) return _answers;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_answers);
-  }
-
-  @override
-  String toString() {
-    return 'QuestionItem(id: $id, content: $content, answers: $answers)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$QuestionItemImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.content, content) || other.content == content) &&
-            const DeepCollectionEquality().equals(other._answers, _answers));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, id, content, const DeepCollectionEquality().hash(_answers));
-
-  /// Create a copy of QuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$QuestionItemImplCopyWith<_$QuestionItemImpl> get copyWith =>
-      __$$QuestionItemImplCopyWithImpl<_$QuestionItemImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$QuestionItemImplToJson(
-      this,
-    );
-  }
+@override final  int id;
+@override final  String content;
+ final  List<AnswerItem> _answers;
+@override List<AnswerItem> get answers {
+  if (_answers is EqualUnmodifiableListView) return _answers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_answers);
 }
 
-abstract class _QuestionItem implements QuestionItem {
-  const factory _QuestionItem(
-      {required final int id,
-      required final String content,
-      required final List<AnswerItem> answers}) = _$QuestionItemImpl;
 
-  factory _QuestionItem.fromJson(Map<String, dynamic> json) =
-      _$QuestionItemImpl.fromJson;
+/// Create a copy of QuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$QuestionItemCopyWith<_QuestionItem> get copyWith => __$QuestionItemCopyWithImpl<_QuestionItem>(this, _$identity);
 
-  @override
-  int get id;
-  @override
-  String get content;
-  @override
-  List<AnswerItem> get answers;
-
-  /// Create a copy of QuestionItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QuestionItemImplCopyWith<_$QuestionItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+Map<String, dynamic> toJson() {
+  return _$QuestionItemToJson(this, );
 }
 
-AnswerItem _$AnswerItemFromJson(Map<String, dynamic> json) {
-  return _AnswerItem.fromJson(json);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QuestionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._answers, _answers));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content,const DeepCollectionEquality().hash(_answers));
+
+@override
+String toString() {
+  return 'QuestionItem(id: $id, content: $content, answers: $answers)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$QuestionItemCopyWith<$Res> implements $QuestionItemCopyWith<$Res> {
+  factory _$QuestionItemCopyWith(_QuestionItem value, $Res Function(_QuestionItem) _then) = __$QuestionItemCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, String content, List<AnswerItem> answers
+});
+
+
+
+
+}
+/// @nodoc
+class __$QuestionItemCopyWithImpl<$Res>
+    implements _$QuestionItemCopyWith<$Res> {
+  __$QuestionItemCopyWithImpl(this._self, this._then);
+
+  final _QuestionItem _self;
+  final $Res Function(_QuestionItem) _then;
+
+/// Create a copy of QuestionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,Object? answers = null,}) {
+  return _then(_QuestionItem(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
+as List<AnswerItem>,
+  ));
+}
+
+
+}
+
 
 /// @nodoc
 mixin _$AnswerItem {
-  int get id => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
+
+ int get id; String get content;
+/// Create a copy of AnswerItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AnswerItemCopyWith<AnswerItem> get copyWith => _$AnswerItemCopyWithImpl<AnswerItem>(this as AnswerItem, _$identity);
 
   /// Serializes this AnswerItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of AnswerItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AnswerItemCopyWith<AnswerItem> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnswerItem&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content);
+
+@override
+String toString() {
+  return 'AnswerItem(id: $id, content: $content)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $AnswerItemCopyWith<$Res> {
-  factory $AnswerItemCopyWith(
-          AnswerItem value, $Res Function(AnswerItem) then) =
-      _$AnswerItemCopyWithImpl<$Res, AnswerItem>;
-  @useResult
-  $Res call({int id, String content});
-}
+abstract mixin class $AnswerItemCopyWith<$Res>  {
+  factory $AnswerItemCopyWith(AnswerItem value, $Res Function(AnswerItem) _then) = _$AnswerItemCopyWithImpl;
+@useResult
+$Res call({
+ int id, String content
+});
 
+
+
+
+}
 /// @nodoc
-class _$AnswerItemCopyWithImpl<$Res, $Val extends AnswerItem>
+class _$AnswerItemCopyWithImpl<$Res>
     implements $AnswerItemCopyWith<$Res> {
-  _$AnswerItemCopyWithImpl(this._value, this._then);
+  _$AnswerItemCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final AnswerItem _self;
+  final $Res Function(AnswerItem) _then;
 
-  /// Create a copy of AnswerItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? content = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of AnswerItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-abstract class _$$AnswerItemImplCopyWith<$Res>
-    implements $AnswerItemCopyWith<$Res> {
-  factory _$$AnswerItemImplCopyWith(
-          _$AnswerItemImpl value, $Res Function(_$AnswerItemImpl) then) =
-      __$$AnswerItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id, String content});
 }
 
-/// @nodoc
-class __$$AnswerItemImplCopyWithImpl<$Res>
-    extends _$AnswerItemCopyWithImpl<$Res, _$AnswerItemImpl>
-    implements _$$AnswerItemImplCopyWith<$Res> {
-  __$$AnswerItemImplCopyWithImpl(
-      _$AnswerItemImpl _value, $Res Function(_$AnswerItemImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of AnswerItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? content = null,
-  }) {
-    return _then(_$AnswerItemImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Adds pattern-matching-related methods to [AnswerItem].
+extension AnswerItemPatterns on AnswerItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AnswerItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _AnswerItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AnswerItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _AnswerItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AnswerItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _AnswerItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _AnswerItem() when $default != null:
+return $default(_that.id,_that.content);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String content)  $default,) {final _that = this;
+switch (_that) {
+case _AnswerItem():
+return $default(_that.id,_that.content);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String content)?  $default,) {final _that = this;
+switch (_that) {
+case _AnswerItem() when $default != null:
+return $default(_that.id,_that.content);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$AnswerItemImpl implements _AnswerItem {
-  const _$AnswerItemImpl({required this.id, required this.content});
 
-  factory _$AnswerItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AnswerItemImplFromJson(json);
+class _AnswerItem implements AnswerItem {
+  const _AnswerItem({required this.id, required this.content});
+  factory _AnswerItem.fromJson(Map<String, dynamic> json) => _$AnswerItemFromJson(json);
 
-  @override
-  final int id;
-  @override
-  final String content;
+@override final  int id;
+@override final  String content;
 
-  @override
-  String toString() {
-    return 'AnswerItem(id: $id, content: $content)';
-  }
+/// Create a copy of AnswerItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AnswerItemCopyWith<_AnswerItem> get copyWith => __$AnswerItemCopyWithImpl<_AnswerItem>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AnswerItemImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.content, content) || other.content == content));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, content);
-
-  /// Create a copy of AnswerItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AnswerItemImplCopyWith<_$AnswerItemImpl> get copyWith =>
-      __$$AnswerItemImplCopyWithImpl<_$AnswerItemImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AnswerItemImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$AnswerItemToJson(this, );
 }
 
-abstract class _AnswerItem implements AnswerItem {
-  const factory _AnswerItem(
-      {required final int id,
-      required final String content}) = _$AnswerItemImpl;
-
-  factory _AnswerItem.fromJson(Map<String, dynamic> json) =
-      _$AnswerItemImpl.fromJson;
-
-  @override
-  int get id;
-  @override
-  String get content;
-
-  /// Create a copy of AnswerItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AnswerItemImplCopyWith<_$AnswerItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnswerItem&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content);
+
+@override
+String toString() {
+  return 'AnswerItem(id: $id, content: $content)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$AnswerItemCopyWith<$Res> implements $AnswerItemCopyWith<$Res> {
+  factory _$AnswerItemCopyWith(_AnswerItem value, $Res Function(_AnswerItem) _then) = __$AnswerItemCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, String content
+});
+
+
+
+
+}
+/// @nodoc
+class __$AnswerItemCopyWithImpl<$Res>
+    implements _$AnswerItemCopyWith<$Res> {
+  __$AnswerItemCopyWithImpl(this._self, this._then);
+
+  final _AnswerItem _self;
+  final $Res Function(_AnswerItem) _then;
+
+/// Create a copy of AnswerItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,}) {
+  return _then(_AnswerItem(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+// dart format on
