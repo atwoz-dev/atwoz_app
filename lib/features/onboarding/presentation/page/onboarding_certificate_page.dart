@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -31,13 +32,16 @@ class _OnboardingCertificationPageState
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
 
+  Timer? _resendTimer;
+  int _resendCountdown = 0;
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      ref
-          .read(onboardingProvider.notifier)
-          .sendVerificationCode(widget.phoneNumber);
+      final notifier = ref.read(onboardingProvider.notifier);
+      notifier.sendVerificationCode(widget.phoneNumber);
+      _startResendCountdown(notifier); // 초기 발송 후 타이머 시작
     });
 
     _codeController.addListener(() {
@@ -49,7 +53,42 @@ class _OnboardingCertificationPageState
   void dispose() {
     _codeController.dispose();
     _focusNode.dispose();
+    _resendTimer?.cancel();
     super.dispose();
+  }
+
+  void _startResendCountdown(OnboardingNotifier notifier) {
+    _resendTimer?.cancel();
+    _resendCountdown = 30; // 초기 카운트 설정
+
+    // Notifier의 resendCountDown 상태만 업데이트 (View에서 watch할 수 있도록)
+    notifier.updateResendCountdown(_resendCountdown);
+
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel(); // 위젯이 unmount되면 타이머 중지
+        return;
+      }
+
+      _resendCountdown--;
+
+      if (_resendCountdown <= 0) {
+        timer.cancel();
+        _resendCountdown = 0;
+      }
+
+      // Notifier의 상태를 업데이트하여 UI에 반영
+      notifier.updateResendCountdown(_resendCountdown);
+    });
+  }
+
+  void _resendCode(OnboardingNotifier notifier) async {
+    if (_resendCountdown > 0) return; // 재전송이 활성화되지 않은 경우 리턴
+
+    await notifier.resendCode(widget.phoneNumber);
+
+    // 서버 요청 성공 후 타이머 재시작
+    _startResendCountdown(notifier);
   }
 
   @override
@@ -99,9 +138,7 @@ class _OnboardingCertificationPageState
                               textColor: palette.onSurface,
                               onPressed:
                                   state.resendCountDown == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
+                                      ? () => _resendCode(notifier)
                                       : null,
                               child: Text(
                                 state.resendCountDown == 0
@@ -217,14 +254,6 @@ class _OnboardingCertificationPageState
               ),
             );
           },
-        );
-
-        if (!mounted) return;
-
-        navigate(
-          context,
-          route: AppRoute.onboard,
-          method: NavigationMethod.go, // 전체 화면 교체
         );
         break;
       case null:

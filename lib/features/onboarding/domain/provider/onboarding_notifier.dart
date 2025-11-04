@@ -19,17 +19,12 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     return OnboardingState.initial();
   }
 
-  Timer? _timer;
-
-  bool get _isResendEnabled => state.resendCountDown == 0;
-
   // 인증번호 발송
   Future<void> sendVerificationCode(String phoneNumber) async {
     try {
       await ref.read(authUsecaseProvider).sendSmsVerificationCode(phoneNumber);
 
       showToastMessage('인증번호가 발송되었습니다.');
-      _startResendCountdown();
     } catch (e) {
       Log.e('SMS 발송 실패', errorObject: e);
       showToastMessage('인증번호 발송에 실패했습니다.');
@@ -38,12 +33,10 @@ class OnboardingNotifier extends _$OnboardingNotifier {
 
   // 인증번호 재발송
   Future<void> resendCode(String phoneNumber) async {
-    if (!_isResendEnabled) return;
     try {
       final authUseCase = ref.read(authUsecaseProvider);
       await authUseCase.sendSmsVerificationCode(phoneNumber);
       showToastMessage('인증번호가 재발송되었습니다.');
-      _startResendCountdown();
       state = state.copyWith(validationError: null);
     } catch (e) {
       Log.e('재발송 실패', errorObject: e);
@@ -54,10 +47,7 @@ class OnboardingNotifier extends _$OnboardingNotifier {
   // 입력값 검증
   void validateInput(String input) {
     if (input.isEmpty) {
-      state = state.copyWith(
-        validationError: null,
-        isButtonEnabled: false,
-      );
+      state = state.copyWith(validationError: null, isButtonEnabled: false);
       return;
     }
 
@@ -70,7 +60,9 @@ class OnboardingNotifier extends _$OnboardingNotifier {
 
   // 인증 요청
   Future<(UserData?, AuthStatus?)> verifyCode(
-      String phoneNumber, String code) async {
+    String phoneNumber,
+    String code,
+  ) async {
     try {
       state = state.copyWith(isLoading: true);
       final authUseCase = ref.read(authUsecaseProvider);
@@ -106,21 +98,6 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     }
   }
 
-  void _startResendCountdown() {
-    _timer?.cancel();
-    int countdown = 30;
-    state = state.copyWith(resendCountDown: countdown);
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      countdown--;
-      if (countdown <= 0) {
-        timer.cancel();
-        state = state.copyWith(resendCountDown: 0);
-      } else {
-        state = state.copyWith(resendCountDown: countdown);
-      }
-    });
-  }
-
   // 계정 활성화
   Future<bool> activateAccount(String phoneNumber) async {
     try {
@@ -131,7 +108,7 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     }
   }
 
-  void dispose() {
-    _timer?.cancel();
+  void updateResendCountdown(int countdown) {
+    state = state.copyWith(resendCountDown: countdown);
   }
 }
