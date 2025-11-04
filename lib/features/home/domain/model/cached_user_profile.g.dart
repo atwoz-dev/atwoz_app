@@ -111,7 +111,7 @@ class InterviewInfoAdapter extends TypeAdapter<InterviewInfo> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return InterviewInfo(
-      questionId: fields[0] as int,
+      questionId: (fields[0] as num).toInt(),
       title: fields[1] as String,
       content: fields[2] as String,
     );
@@ -294,14 +294,14 @@ const _$HobbyEnumMap = {
   Hobby.others: 'others',
 };
 
-_$InterviewInfoImpl _$$InterviewInfoImplFromJson(Map<String, dynamic> json) =>
-    _$InterviewInfoImpl(
+_InterviewInfo _$InterviewInfoFromJson(Map<String, dynamic> json) =>
+    _InterviewInfo(
       questionId: (json['questionId'] as num).toInt(),
       title: json['title'] as String,
       content: json['content'] as String,
     );
 
-Map<String, dynamic> _$$InterviewInfoImplToJson(_$InterviewInfoImpl instance) =>
+Map<String, dynamic> _$InterviewInfoToJson(_InterviewInfo instance) =>
     <String, dynamic>{
       'questionId': instance.questionId,
       'title': instance.title,

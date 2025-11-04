@@ -1,19 +1,13 @@
-import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:hive/hive.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 final saveInterviewToHiveUseCaseProvider = Provider.autoDispose(
-  (ref) => SaveInterviewToHiveUseCase(
-    localStorage: ref.read(localStorageProvider),
-  ),
+  (ref) => SaveInterviewToHiveUseCase(),
 );
 
 class SaveInterviewToHiveUseCase {
-  final LocalStorage _localStorage;
-
-  SaveInterviewToHiveUseCase({required LocalStorage localStorage})
-      : _localStorage = localStorage;
+  SaveInterviewToHiveUseCase();
 
   Future<void> execute({
     required int questionId,
@@ -31,15 +25,20 @@ class SaveInterviewToHiveUseCase {
       }
 
       final updatedList = List<InterviewInfo>.from(profile.interviewInfoView);
-      final existingIndex =
-          updatedList.indexWhere((info) => info.questionId == questionId);
+      final existingIndex = updatedList.indexWhere(
+        (info) => info.questionId == questionId,
+      );
 
       if (existingIndex != -1) {
         updatedList[existingIndex] = InterviewInfo(
-            questionId: questionId, title: title, content: content);
+          questionId: questionId,
+          title: title,
+          content: content,
+        );
       } else {
-        updatedList.add(InterviewInfo(
-            questionId: questionId, title: title, content: content));
+        updatedList.add(
+          InterviewInfo(questionId: questionId, title: title, content: content),
+        );
       }
 
       final updatedProfile = profile.copyWith(interviewInfoView: updatedList);
