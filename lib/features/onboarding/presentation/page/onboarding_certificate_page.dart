@@ -38,9 +38,14 @@ class _OnboardingCertificationPageState
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    Future.microtask(() async {
       final notifier = ref.read(onboardingProvider.notifier);
-      notifier.sendVerificationCode(widget.phoneNumber);
+      final isCodeSended = await notifier.sendVerificationCode(
+        widget.phoneNumber,
+      );
+
+      if (!isCodeSended) return;
+
       _startResendCountdown(notifier); // 초기 발송 후 타이머 시작
     });
 
@@ -85,9 +90,9 @@ class _OnboardingCertificationPageState
   void _resendCode(OnboardingNotifier notifier) async {
     if (_resendCountdown > 0) return; // 재전송이 활성화되지 않은 경우 리턴
 
-    final isSuccess = await notifier.resendCode(widget.phoneNumber);
+    final isCodeResended = await notifier.resendCode(widget.phoneNumber);
 
-    if (!isSuccess) return;
+    if (!isCodeResended) return;
     _startResendCountdown(notifier);
   }
 
@@ -213,7 +218,12 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.forbidden:
-        await showForbiddenDialogue(context, onTapVerify: () => context.pop());
+        await showForbiddenDialogue(
+          context,
+          onTapVerify: context.pop,
+          title: '서비스 이용 제한',
+          content: '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
+        );
 
         break;
 
@@ -222,39 +232,13 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.deletedUser:
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return DefaultDialog(
-              title: Text(
-                '서비스 가입 제한',
-                style: Fonts.header02().copyWith(
-                  color: Palette.colorBlack,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              content: Text(
-                '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
-                style: Fonts.body01Medium().copyWith(
-                  color: const Color(0xff7E7E7E),
-                  fontWeight: FontWeight.w400,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              action: DefaultElevatedButton(
-                child: const Text('확인'),
-                onPressed: () {
-                  context.pop();
-                  navigate(
-                    context,
-                    route: AppRoute.onboard,
-                    method: NavigationMethod.go,
-                  );
-                },
-              ),
-            );
-          },
+        await showForbiddenDialogue(
+          context,
+          onTapVerify: context.pop,
+          title: '서비스 가입 제한',
+          content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
         );
+
         break;
       case null:
         showToastMessage('인증에 실패했습니다.');
@@ -265,15 +249,17 @@ class _OnboardingCertificationPageState
   Future<bool?> showForbiddenDialogue(
     BuildContext context, {
     required VoidCallback onTapVerify,
+    required String title,
+    required String content,
   }) async {
     return await context.showConfirmDialog(
-      submit: DialogButton(label: '확인', onTap: () => onTapVerify),
+      submit: DialogButton(label: '확인', onTap: onTapVerify),
       enableCloseButton: false,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '서비스 이용 제한',
+            title,
             style: Fonts.header02().copyWith(
               color: Palette.colorBlack,
               fontWeight: FontWeight.w700,
@@ -281,7 +267,7 @@ class _OnboardingCertificationPageState
           ),
           const Gap(12),
           Text(
-            '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
+            content,
             style: Fonts.body01Medium().copyWith(
               color: const Color(0xff7E7E7E),
               fontWeight: FontWeight.w400,

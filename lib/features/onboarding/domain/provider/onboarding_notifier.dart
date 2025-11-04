@@ -19,14 +19,16 @@ class OnboardingNotifier extends _$OnboardingNotifier {
   }
 
   // 인증번호 발송
-  Future<void> sendVerificationCode(String phoneNumber) async {
+  Future<bool> sendVerificationCode(String phoneNumber) async {
     try {
       await ref.read(authUsecaseProvider).sendSmsVerificationCode(phoneNumber);
 
       showToastMessage('인증번호가 발송되었습니다.');
+      return true;
     } catch (e) {
       Log.e('SMS 발송 실패', errorObject: e);
       showToastMessage('인증번호 발송에 실패했습니다.');
+      return false;
     }
   }
 
