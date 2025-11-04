@@ -1,4 +1,3 @@
-import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
@@ -55,80 +54,80 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
             child: Text(widget.isAnswered ? '수정' : '등록'),
             onPressed: () {
               CustomDialogue.showTwoChoiceDialogue(
-                  context: context,
-                  content: '작성된 내용을 저장합니다',
-                  elevatedButtonText: '확인',
-                  onElevatedButtonPressed: () async {
-                    if (widget.questionId == null) {
-                      showToastMessage('내용을 저장하는데 실패했습니다.');
-                      return;
-                    }
+                context: context,
+                content: '작성된 내용을 저장합니다',
+                elevatedButtonText: '확인',
+                onElevatedButtonPressed: () async {
+                  if (widget.questionId == null) {
+                    showToastMessage('내용을 저장하는데 실패했습니다.');
+                    return;
+                  }
 
-                    try {
-                      if (widget.isAnswered) {
-                        if (widget.answerId == null) {
-                          showToastMessage('내용을 저장하는데 실패했습니다.');
-                          return;
-                        }
-
-                        await ref
-                            .read(interviewNotifierProvider.notifier)
-                            .updateAnswer(
-                              widget.questionId!,
-                              widget.answerId!,
-                              widget.question,
-                              _inputContentController.text.trim(),
-                            );
-                      } else {
-                        await ref
-                            .read(interviewProvider.notifier)
-                            .addAnswer(
-                              widget.questionId!,
-                              widget.question,
-                              _inputContentController.text.trim(),
-                            );
+                  try {
+                    if (widget.isAnswered) {
+                      if (widget.answerId == null) {
+                        showToastMessage('내용을 저장하는데 실패했습니다.');
+                        return;
                       }
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
-                    } catch (e) {
-                      showToastMessage('내용을 저장하는데 실패했습니다.');
+
+                      await ref
+                          .read(interviewProvider.notifier)
+                          .updateAnswer(
+                            widget.questionId!,
+                            widget.answerId!,
+                            widget.question,
+                            _inputContentController.text.trim(),
+                          );
+                    } else {
+                      await ref
+                          .read(interviewProvider.notifier)
+                          .addAnswer(
+                            widget.questionId!,
+                            widget.question,
+                            _inputContentController.text.trim(),
+                          );
                     }
-                  });
+                    navigate(
+                      context,
+                      route: AppRoute.mainTab,
+                      method: NavigationMethod.go,
+                    );
+                  } catch (e) {
+                    showToastMessage('내용을 저장하는데 실패했습니다.');
+                  }
+                },
+              );
             },
-          )
+          ),
         ],
         leadingAction: (context) {
           CustomDialogue.showTwoChoiceDialogue(
-              context: context,
-              content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
-              onElevatedButtonPressed: () {
-                navigate(
-                  context,
-                  route: AppRoute.mainTab,
-                  method: NavigationMethod.go,
-                );
-              });
+            context: context,
+            content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
+            onElevatedButtonPressed: () {
+              navigate(
+                context,
+                route: AppRoute.mainTab,
+                method: NavigationMethod.go,
+              );
+            },
+          );
         },
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
               vertical: 12.0,
             ),
-            child: Text(
-              widget.question,
-              style: Fonts.body01Medium(),
-            ),
+            child: Text(widget.question, style: Fonts.body01Medium()),
           ),
           const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: DefaultDivider()),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: DefaultDivider(),
+          ),
           Expanded(
             child: DefaultTextFormField(
               initialValue: widget.answer,
@@ -144,7 +143,7 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
               hintText:
                   '인터뷰 답변을 작성해주세요\n\n솔직하고 진심 어린 생각을 담아 답변해주시면,\n인터뷰를 읽는 분들도 깊게 공감할 수 있어요',
             ),
-          )
+          ),
         ],
       ),
     );
