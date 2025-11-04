@@ -89,7 +89,7 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                             );
                         if (favoriteType == null) return;
 
-                        homeNotifier.updateFavoriteType(
+                        homeNotifier.setFavoriteType(
                           memberId: profile.memberId,
                           type: favoriteType,
                         );
