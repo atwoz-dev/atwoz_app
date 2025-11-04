@@ -43,8 +43,6 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(interviewRepositoryProvider);
-
     return Scaffold(
       appBar: DefaultAppBar(
         title: '인터뷰 답변하기',
@@ -87,6 +85,9 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                             _inputContentController.text.trim(),
                           );
                     }
+
+                    if (!context.mounted) return;
+
                     navigate(
                       context,
                       route: AppRoute.mainTab,
