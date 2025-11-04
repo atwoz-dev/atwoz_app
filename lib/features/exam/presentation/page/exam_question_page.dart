@@ -97,7 +97,7 @@ class ExamQuestionPageState
                 if (examState.currentPage > 0) {
                   notifier.previousPage();
                   _pageController.previousPage(
-                    duration: Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
                 } else {
