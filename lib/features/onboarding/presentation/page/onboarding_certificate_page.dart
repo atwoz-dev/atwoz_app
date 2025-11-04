@@ -85,9 +85,9 @@ class _OnboardingCertificationPageState
   void _resendCode(OnboardingNotifier notifier) async {
     if (_resendCountdown > 0) return; // 재전송이 활성화되지 않은 경우 리턴
 
-    await notifier.resendCode(widget.phoneNumber);
+    final isSuccess = await notifier.resendCode(widget.phoneNumber);
 
-    // 서버 요청 성공 후 타이머 재시작
+    if (!isSuccess) return;
     _startResendCountdown(notifier);
   }
 

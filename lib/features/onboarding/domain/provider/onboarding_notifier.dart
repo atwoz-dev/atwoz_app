@@ -31,15 +31,17 @@ class OnboardingNotifier extends _$OnboardingNotifier {
   }
 
   // 인증번호 재발송
-  Future<void> resendCode(String phoneNumber) async {
+  Future<bool> resendCode(String phoneNumber) async {
     try {
       final authUseCase = ref.read(authUsecaseProvider);
       await authUseCase.sendSmsVerificationCode(phoneNumber);
       showToastMessage('인증번호가 재발송되었습니다.');
       state = state.copyWith(validationError: null);
+      return true;
     } catch (e) {
       Log.e('재발송 실패', errorObject: e);
       showToastMessage('인증번호 재발송에 실패했습니다.');
+      return false;
     }
   }
 
