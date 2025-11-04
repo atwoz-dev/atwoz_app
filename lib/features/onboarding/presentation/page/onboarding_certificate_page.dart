@@ -197,34 +197,14 @@ class _OnboardingCertificationPageState
 
     switch (status) {
       case AuthStatus.activate:
-        if (userData?.isProfileSettingNeeded ?? false) {
-          navigate(context, route: AppRoute.signUp);
-        } else {
-          navigate(
-            context,
-            route: AppRoute.mainTab,
-            method: NavigationMethod.go,
-          );
-        }
+        _handleActivateStatus(userData);
         break;
-
       case AuthStatus.dormant:
-        navigate(
-          context,
-          route: AppRoute.dormantRelease,
-          method: NavigationMethod.go,
-          extra: DormantReleaseArguments(phoneNumber: widget.phoneNumber),
-        );
+        _handleDormantStatus();
         break;
 
       case AuthStatus.forbidden:
-        await showForbiddenDialogue(
-          context,
-          onTapVerify: context.pop,
-          title: '서비스 이용 제한',
-          content: '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
-        );
-
+        await _handleForbiddenStatus();
         break;
 
       case AuthStatus.temporarilyForbidden:
@@ -232,13 +212,7 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.deletedUser:
-        await showForbiddenDialogue(
-          context,
-          onTapVerify: context.pop,
-          title: '서비스 가입 제한',
-          content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
-        );
-
+        await _handleDeletedUserStatus();
         break;
       case null:
         showToastMessage('인증에 실패했습니다.');
@@ -246,7 +220,48 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<bool?> showForbiddenDialogue(
+  Future<void> _handleActivateStatus(dynamic userData) async {
+    if (!context.mounted) return;
+
+    if (userData?.isProfileSettingNeeded ?? false) {
+      navigate(context, route: AppRoute.signUp);
+    } else {
+      navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
+    }
+  }
+
+  Future<void> _handleDormantStatus() async {
+    if (!context.mounted) return;
+
+    navigate(
+      context,
+      route: AppRoute.dormantRelease,
+      method: NavigationMethod.go,
+      extra: DormantReleaseArguments(phoneNumber: widget.phoneNumber),
+    );
+  }
+
+  Future<void> _handleForbiddenStatus() async {
+    if (!context.mounted) return;
+    await _showDialogue(
+      context,
+      onTapVerify: context.pop,
+      title: '서비스 이용 제한',
+      content: '서비스 이용약관 및 운영정책 위반으로 사용이 정지되었습니다.',
+    );
+  }
+
+  Future<void> _handleDeletedUserStatus() async {
+    if (!context.mounted) return;
+    await _showDialogue(
+      context,
+      onTapVerify: context.pop,
+      title: '서비스 가입 제한',
+      content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+    );
+  }
+
+  Future<bool?> _showDialogue(
     BuildContext context, {
     required VoidCallback onTapVerify,
     required String title,
