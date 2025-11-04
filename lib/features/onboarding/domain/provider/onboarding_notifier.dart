@@ -1,11 +1,10 @@
 import 'dart:async';
-
-import 'package:atwoz_app/app/constants/api_errors.dart';
 import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/onboarding/domain/enum/auth_error.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -73,10 +72,10 @@ class OnboardingNotifier extends _$OnboardingNotifier {
       return (userData, AuthStatus.activate);
     } on NetworkException catch (e) {
       final newStatus = switch (e.code) {
-        ApiErrors.dormant => AuthStatus.dormant,
-        ApiErrors.forbidden => AuthStatus.forbidden,
-        ApiErrors.temporarilyForbidden => AuthStatus.temporarilyForbidden,
-        ApiErrors.deletedUser => AuthStatus.deletedUser,
+        AuthError.codeDormant => AuthStatus.dormant,
+        AuthError.codeForbidden => AuthStatus.forbidden,
+        AuthError.codeTemporarilyForbidden => AuthStatus.temporarilyForbidden,
+        AuthError.codeDeletedUser => AuthStatus.deletedUser,
         _ => null,
       };
       if (newStatus != null) state = state.copyWith(status: newStatus);
