@@ -155,7 +155,6 @@ class _OnboardingCertificationPageState
 
     switch (status) {
       case AuthStatus.activate:
-        print('activate임');
         if (userData?.isProfileSettingNeeded ?? false) {
           navigate(context, route: AppRoute.signUp);
         } else {
@@ -182,7 +181,7 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.temporarilyForbidden:
-        // TODO: 일시정지 대기화면 이동
+        navigate(context, route: AppRoute.temporalForbidden);
         break;
 
       case AuthStatus.deletedUser:
