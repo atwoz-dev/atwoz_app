@@ -5,7 +5,6 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -21,10 +20,12 @@ class UserByCategoryPage extends ConsumerStatefulWidget {
 class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   @override
   Widget build(BuildContext context) {
-    final introducedProfilesAsync =
-        ref.watch(introducedProfilesProvider(widget.category));
-    final introducedProfilesNotifier =
-        ref.read(introducedProfilesProvider(widget.category).notifier);
+    final introducedProfilesAsync = ref.watch(
+      introducedProfilesProvider(widget.category),
+    );
+    final introducedProfilesNotifier = ref.read(
+      introducedProfilesProvider(widget.category).notifier,
+    );
     final userProfile = ref.watch(globalProvider).profile;
 
     return Scaffold(
@@ -41,14 +42,15 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
               return UserByCategoryListItem(
                 isBlurred: isBlurred,
-                onTap: () => _handleProfileTap(
-                  context: context,
-                  profile: profile,
-                  index: index,
-                  isBlurred: isBlurred,
-                  introducedProfilesNotifier: introducedProfilesNotifier,
-                  isMale: userProfile.isMale,
-                ),
+                onTap:
+                    () => _handleProfileTap(
+                      context: context,
+                      profile: profile,
+                      index: index,
+                      isBlurred: isBlurred,
+                      introducedProfilesNotifier: introducedProfilesNotifier,
+                      isMale: userProfile.isMale,
+                    ),
                 profile: profile,
               );
             },
@@ -69,14 +71,14 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required bool isMale,
   }) async {
     if (isBlurred) {
-      final heartBalance =
-          await introducedProfilesNotifier.fetchUserHeartBalance();
+      final heartBalance = ref.read(globalProvider).heartBalance;
 
       if (!context.mounted) return;
 
-      final openProfileHeartCount = isMale
-          ? Dimens.maleIntroducedProfileOpenHeartCount
-          : Dimens.femaleIntroducedProfileOpenHeartCount;
+      final openProfileHeartCount =
+          isMale
+              ? Dimens.maleIntroducedProfileOpenHeartCount
+              : Dimens.femaleIntroducedProfileOpenHeartCount;
 
       if (heartBalance < openProfileHeartCount) {
         showDialog(
@@ -90,37 +92,30 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       final pressed = await showDialog<bool>(
         context: context,
-        builder: (context) => UnlockWithHeartDialog(
-          description: "소개 받으시겠습니까?",
-          heartBalance: heartBalance,
-          isMale: isMale,
-        ),
+        builder:
+            (context) => UnlockWithHeartDialog(
+              description: "소개 받으시겠습니까?",
+              heartBalance: heartBalance,
+              isMale: isMale,
+            ),
       );
 
       if (pressed != true) return;
 
-      await introducedProfilesNotifier.openProfile(
-        memberId: profile.memberId,
-        category: widget.category,
-      );
+      await introducedProfilesNotifier.openProfile(memberId: profile.memberId);
       if (!context.mounted) return;
       _navigateToProfile(context, profile);
       return;
     }
 
     // isBlurred == false일 때만 아래 실행
-    final result = await _navigateToProfile(context, profile);
-    if (result is UserProfile) {
-      introducedProfilesNotifier.updateProfile(
-        index: index,
-        detailProfile: result,
-        category: widget.category,
-      );
-    }
+    _navigateToProfile(context, profile);
   }
 
   Future<dynamic> _navigateToProfile(
-      BuildContext context, IntroducedProfile profile) {
+    BuildContext context,
+    IntroducedProfile profile,
+  ) {
     return navigate(
       context,
       route: AppRoute.profile,
