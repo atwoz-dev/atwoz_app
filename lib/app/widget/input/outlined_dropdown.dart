@@ -27,9 +27,9 @@ class OutlinedDropdown<T> extends StatefulWidget {
     required this.valueBuilder,
     this.itemBuilder,
     this.activeBorderColor = Palette.colorGrey800,
-    this.inactiveBorderColor = Palette.colorGrey100,
+    this.inactiveBorderColor = Palette.colorGrey200,
     this.hintTextColor = Palette.colorGrey500,
-    this.selectedItemHighlightColor = Palette.colorGrey100,
+    this.selectedItemHighlightColor = Palette.colorGrey200,
     this.placeholder,
   });
 
@@ -113,7 +113,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                           color: _isDropdownOpened
                               ? widget.activeBorderColor
                               : widget.inactiveBorderColor,
-                          width: 2.0, // items 리스트 border
+                          width: 1.0, // items 리스트 border
                         ),
                       ),
                       child: ConstrainedBox(
@@ -126,7 +126,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                           itemCount: widget.items.length,
                           separatorBuilder: (context, index) => const Divider(
                             color: Palette.colorGrey100,
-                            height: 2,
+                            height: 1.0,
                           ),
                           itemBuilder: (context, index) {
                             T item = widget.items[index];
@@ -178,11 +178,14 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
       child: CompositedTransformTarget(
         link: _layerLink,
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.06,
           child: TextFormField(
             textAlign: TextAlign.left,
             focusNode: _focusNode,
             decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
               hintText: widget.selectedItem != null
                   ? null
                   : widget.placeholder ?? '옵션을 선택해주세요',
@@ -202,7 +205,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                   color: _isDropdownOpened
                       ? widget.activeBorderColor
                       : widget.inactiveBorderColor,
-                  width: 2.0,
+                  width: 1.0,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
@@ -211,7 +214,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                   color: _isDropdownOpened
                       ? widget.activeBorderColor
                       : widget.inactiveBorderColor,
-                  width: 2.0,
+                  width: 1.0,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -220,7 +223,7 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                   color: _isDropdownOpened
                       ? widget.activeBorderColor
                       : widget.inactiveBorderColor,
-                  width: 2.0,
+                  width: 1.0,
                 ),
               ),
             ),

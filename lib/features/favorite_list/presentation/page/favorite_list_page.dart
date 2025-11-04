@@ -1,5 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/favorite_list/presentation/widget/favorite_list_body.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +15,29 @@ class FavoriteListPage extends StatelessWidget {
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
-              title: const Text('좋아요'),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const DefaultIcon(
-                    IconPath.notification,
-                    size: 24.0,
-                  ),
+              centerTitle: false,
+              title: Text(
+                '좋아요',
+                style: Fonts.header03().copyWith(
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
                 ),
+              ),
+              actions: [
+                DefaultAppBarActionGroup(),
               ],
               automaticallyImplyLeading: false,
               pinned: false,
               bottom: TabBar(
                 indicatorColor: Colors.black,
                 dividerColor: context.colorScheme.outline,
+                labelStyle: Fonts.body02Regular(Palette.colorGrey400).copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+                unselectedLabelStyle:
+                    Fonts.body02Regular(Palette.colorGrey400).copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
                 unselectedLabelColor: context.colorScheme.secondary,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelColor: context.colorScheme.onSurface,

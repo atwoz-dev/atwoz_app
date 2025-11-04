@@ -53,7 +53,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
       return userResponse;
     } catch (e) {
       logD('유저 데이터 저장 실패: $e');
-      showToastMessage('로그인 실패');
+      showToastMessage('로그인에 실패하였습니다');
       rethrow;
     }
   }
