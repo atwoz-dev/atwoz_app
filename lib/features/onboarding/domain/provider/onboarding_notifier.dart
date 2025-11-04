@@ -72,21 +72,13 @@ class OnboardingNotifier extends _$OnboardingNotifier {
       state = state.copyWith(status: AuthStatus.activate);
       return (userData, AuthStatus.activate);
     } on NetworkException catch (e) {
-      AuthStatus? newStatus;
-      switch (e.code) {
-        case ApiErrors.dormant:
-          newStatus = AuthStatus.dormant;
-          break;
-        case ApiErrors.forbidden:
-          newStatus = AuthStatus.forbidden;
-          break;
-        case ApiErrors.temporarilyForbidden:
-          newStatus = AuthStatus.temporarilyForbidden;
-          break;
-        case ApiErrors.deletedUser:
-          newStatus = AuthStatus.deletedUser;
-          break;
-      }
+      final newStatus = switch (e.code) {
+        ApiErrors.dormant => AuthStatus.dormant,
+        ApiErrors.forbidden => AuthStatus.forbidden,
+        ApiErrors.temporarilyForbidden => AuthStatus.temporarilyForbidden,
+        ApiErrors.deletedUser => AuthStatus.deletedUser,
+        _ => null,
+      };
       if (newStatus != null) state = state.copyWith(status: newStatus);
       return (null, newStatus);
     } catch (e) {
