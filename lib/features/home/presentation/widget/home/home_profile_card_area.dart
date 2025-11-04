@@ -63,18 +63,19 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
               aspectRatio: 1.1,
               child: PageView.builder(
                 itemCount: profiles.length,
-                onPageChanged: (index) => setState(
-                  () => _currentPage = index,
-                ),
+                onPageChanged: (index) => setState(() => _currentPage = index),
                 itemBuilder: (context, index) {
                   final profile = profiles[index];
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => navigate(
-                      context,
-                      route: AppRoute.profile,
-                      extra: ProfileDetailArguments(userId: profile.memberId),
-                    ),
+                    onTap:
+                        () => navigate(
+                          context,
+                          route: AppRoute.profile,
+                          extra: ProfileDetailArguments(
+                            userId: profile.memberId,
+                          ),
+                        ),
                     child: _ProfileCardWidget(
                       profile: profile,
                       onTapFavorite: () async {
@@ -82,15 +83,15 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
 
                         final favoriteType =
                             await FavoriteTypeSelectDialog.open(
-                          context,
-                          userId: profile.memberId,
-                          favoriteType: profile.favoriteType,
-                        );
+                              context,
+                              userId: profile.memberId,
+                              favoriteType: profile.favoriteType,
+                            );
                         if (favoriteType == null) return;
 
-                        await homeNotifier.setFavoriteType(
-                          profile.memberId,
-                          favoriteType,
+                        homeNotifier.updateFavoriteType(
+                          memberId: profile.memberId,
+                          type: favoriteType,
                         );
                       },
                     ),
@@ -132,9 +133,7 @@ class _EmptyProfileCard extends StatelessWidget {
     return Container(
       width: context.screenWidth,
       height: context.screenHeight * 0.41,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 32),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
         color: Palette.colorGrey50,
@@ -143,10 +142,7 @@ class _EmptyProfileCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const DefaultIcon(
-            IconPath.sadEmotion,
-            size: 48,
-          ),
+          const DefaultIcon(IconPath.sadEmotion, size: 48),
           const Gap(8),
           Text(
             '조건에 맞는 이성을 찾지 못했어요\n우측 상단의 필터에서 이상형을 설정할 수 있어요',
@@ -156,7 +152,7 @@ class _EmptyProfileCard extends StatelessWidget {
               height: 1.5,
             ),
             textAlign: TextAlign.center,
-          )
+          ),
         ],
       ),
     );
@@ -177,9 +173,7 @@ class _ProfileCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.screenWidth,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 45,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 45),
       decoration: BoxDecoration(
         // 카드 색상 및 둥근모서리 설정
         color: Palette.colorGrey50,
@@ -203,7 +197,7 @@ class _ProfileCardWidget extends StatelessWidget {
                   ), // 추후 api 연동 시 NetworkImage로 변경
                 ),
               ),
-              const BlurCoverWidget()
+              const BlurCoverWidget(),
             ],
           ),
           const Gap(16),
@@ -216,10 +210,7 @@ class _ProfileCardWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 18,
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: HashtagWrap(
-                  tags: profile.tags,
-                  isCenter: true,
-                ),
+                child: HashtagWrap(tags: profile.tags, isCenter: true),
               ),
               const Gap(8),
               Text(
@@ -240,7 +231,7 @@ class _ProfileCardWidget extends StatelessWidget {
               ),
               const Gap(20),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -250,8 +241,10 @@ class _ProfileCardWidget extends StatelessWidget {
 class _PageCardIndicator extends StatelessWidget {
   final int totalPages;
   final int currentPage;
-  const _PageCardIndicator(
-      {required this.totalPages, required this.currentPage});
+  const _PageCardIndicator({
+    required this.totalPages,
+    required this.currentPage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -265,9 +258,10 @@ class _PageCardIndicator extends StatelessWidget {
           width: 6,
           height: 6,
           decoration: BoxDecoration(
-            color: currentPage == index
-                ? Palette.colorPrimary500
-                : Palette.colorGrey100,
+            color:
+                currentPage == index
+                    ? Palette.colorPrimary500
+                    : Palette.colorGrey100,
             borderRadius: BorderRadius.circular(8),
           ),
         );
