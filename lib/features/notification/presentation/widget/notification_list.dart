@@ -83,17 +83,10 @@ class _NotificationListState extends ConsumerState<NotificationList> {
       return;
     }
 
-    try {
-      await ref.read(notificationListProvider.notifier).loadMoreNotifications();
-    } catch (e) {
-      // Error is already logged in notifier
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoadingMore = false;
-        });
-      }
-    }
+    await ref.read(notificationListProvider.notifier).loadMoreNotifications();
+    if (!mounted) return;
+
+    setState(() => _isLoadingMore = false);
   }
 }
 
