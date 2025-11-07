@@ -80,6 +80,7 @@ class _NotificationListState extends ConsumerState<NotificationList> {
 
     final state = ref.read(notificationListProvider);
     if (!state.hasValue || !state.value!.hasMore) {
+      _isLoadingMore = false;
       return;
     }
 
