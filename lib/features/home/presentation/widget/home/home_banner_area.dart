@@ -16,17 +16,13 @@ class HomeBannerArea extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        if (context.mounted) {
-          isDatingExamSubmitted
-              ? navigate(
-                  context,
-                  route: AppRoute.examResult,
-                  extra: ExamResultArguments(
-                    isFromDirectAccess: true,
-                  ),
-                )
-              : navigate(context, route: AppRoute.exam);
-        }
+        isDatingExamSubmitted
+            ? navigate(
+                context,
+                route: AppRoute.examResult,
+                extra: ExamResultArguments(isFromDirectAccess: true),
+              )
+            : navigate(context, route: AppRoute.exam);
       },
       child: Image.asset(
         ImagePath.homeTest,
