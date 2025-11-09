@@ -22,14 +22,11 @@ class HomeNotifier extends _$HomeNotifier {
 
   // 상태만 변경
   void updateFavoriteType({required int memberId, required FavoriteType type}) {
-    if (!state.hasValue || state.value!.recommendedProfiles == null) return;
-
-    final currentState = state.value;
-    final profiles = currentState?.recommendedProfiles;
-    if (currentState == null || profiles == null) return;
+    final profiles = state.value?.recommendedProfiles;
+    if (profiles == null) return;
 
     state = AsyncData(
-      currentState.copyWith(
+      state.requireValue.copyWith(
         recommendedProfiles:
             profiles
                 .map(
