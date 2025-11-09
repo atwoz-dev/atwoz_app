@@ -41,7 +41,7 @@ final class ExamNotifierProvider
   }
 }
 
-String _$examNotifierHash() => r'c22045d85e4fde2641e166ed768bb6a6af460e6c';
+String _$examNotifierHash() => r'b901cef6cdbf8edd85d48f660ac82d07b7760685';
 
 abstract class _$ExamNotifier extends $Notifier<ExamState> {
   ExamState build();

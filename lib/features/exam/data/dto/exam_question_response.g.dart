@@ -38,6 +38,7 @@ _SubjectItem _$SubjectItemFromJson(Map<String, dynamic> json) => _SubjectItem(
   id: (json['id'] as num).toInt(),
   type: $enumDecode(_$ExamTypeEnumMap, json['type']),
   name: json['name'] as String,
+  isSubmitted: json['isSubmitted'] as bool,
   questions: (json['questions'] as List<dynamic>)
       .map((e) => QuestionItem.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -48,6 +49,7 @@ Map<String, dynamic> _$SubjectItemToJson(_SubjectItem instance) =>
       'id': instance.id,
       'type': _$ExamTypeEnumMap[instance.type]!,
       'name': instance.name,
+      'isSubmitted': instance.isSubmitted,
       'questions': instance.questions,
     };
 

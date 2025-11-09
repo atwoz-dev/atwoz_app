@@ -212,8 +212,12 @@ class ExamNotifier extends _$ExamNotifier {
     try {
       final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
 
+      final filteredList = requiredQuestionList
+          .where((subject) => subject.isSubmitted == false)
+          .toList();
+
       state = state.copyWith(
-        questionList: QuestionData(questionList: requiredQuestionList),
+        questionList: QuestionData(questionList: filteredList),
         isLoaded: true,
         isRequiredDataLoaded: true,
         currentSubjectIndex: 0,
