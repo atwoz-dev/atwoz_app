@@ -360,12 +360,13 @@ as int,
 
 /// @nodoc
 mixin _$InterviewInfo {
-  @HiveField(0)
-  int get questionId => throw _privateConstructorUsedError;
-  @HiveField(1)
-  String get title => throw _privateConstructorUsedError;
-  @HiveField(2)
-  String get content => throw _privateConstructorUsedError;
+
+@HiveField(0) int get questionId;@HiveField(1) String get title;@HiveField(2) String get content;
+/// Create a copy of InterviewInfo
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InterviewInfoCopyWith<InterviewInfo> get copyWith => _$InterviewInfoCopyWithImpl<InterviewInfo>(this as InterviewInfo, _$identity);
 
   /// Serializes this InterviewInfo to a JSON map.
   Map<String, dynamic> toJson();
@@ -373,55 +374,19 @@ mixin _$InterviewInfo {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InterviewInfo&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InterviewInfo&&(identical(other.questionId, questionId) || other.questionId == questionId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
 }
 
-/// @nodoc
-abstract class $InterviewInfoCopyWith<$Res> {
-  factory $InterviewInfoCopyWith(
-          InterviewInfo value, $Res Function(InterviewInfo) then) =
-      _$InterviewInfoCopyWithImpl<$Res, InterviewInfo>;
-  @useResult
-  $Res call(
-      {@HiveField(0) int questionId,
-      @HiveField(1) String title,
-      @HiveField(2) String content});
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,questionId,title,content);
+
+@override
+String toString() {
+  return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
 }
 
-/// @nodoc
-class _$InterviewInfoCopyWithImpl<$Res, $Val extends InterviewInfo>
-    implements $InterviewInfoCopyWith<$Res> {
-  _$InterviewInfoCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of InterviewInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionId = null,
-    Object? title = null,
-    Object? content = null,
-  }) {
-    return _then(_value.copyWith(
-      questionId: null == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
@@ -429,7 +394,7 @@ abstract mixin class $InterviewInfoCopyWith<$Res>  {
   factory $InterviewInfoCopyWith(InterviewInfo value, $Res Function(InterviewInfo) _then) = _$InterviewInfoCopyWithImpl;
 @useResult
 $Res call({
-@HiveField(0) String title,@HiveField(1) String content
+@HiveField(0) int questionId,@HiveField(1) String title,@HiveField(2) String content
 });
 
 
@@ -439,133 +404,189 @@ $Res call({
 /// @nodoc
 class _$InterviewInfoCopyWithImpl<$Res>
     implements $InterviewInfoCopyWith<$Res> {
-  factory _$$InterviewInfoImplCopyWith(
-          _$InterviewInfoImpl value, $Res Function(_$InterviewInfoImpl) then) =
-      __$$InterviewInfoImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@HiveField(0) int questionId,
-      @HiveField(1) String title,
-      @HiveField(2) String content});
+  _$InterviewInfoCopyWithImpl(this._self, this._then);
+
+  final InterviewInfo _self;
+  final $Res Function(InterviewInfo) _then;
+
+/// Create a copy of InterviewInfo
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? questionId = null,Object? title = null,Object? content = null,}) {
+  return _then(_self.copyWith(
+questionId: null == questionId ? _self.questionId : questionId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-class __$$InterviewInfoImplCopyWithImpl<$Res>
-    extends _$InterviewInfoCopyWithImpl<$Res, _$InterviewInfoImpl>
-    implements _$$InterviewInfoImplCopyWith<$Res> {
-  __$$InterviewInfoImplCopyWithImpl(
-      _$InterviewInfoImpl _value, $Res Function(_$InterviewInfoImpl) _then)
-      : super(_value, _then);
+}
 
-  /// Create a copy of InterviewInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? questionId = null,
-    Object? title = null,
-    Object? content = null,
-  }) {
-    return _then(_$InterviewInfoImpl(
-      questionId: null == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+
+/// Adds pattern-matching-related methods to [InterviewInfo].
+extension InterviewInfoPatterns on InterviewInfo {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InterviewInfo value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InterviewInfo() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InterviewInfo value)  $default,){
+final _that = this;
+switch (_that) {
+case _InterviewInfo():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InterviewInfo value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InterviewInfo() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InterviewInfo() when $default != null:
+return $default(_that.questionId,_that.title,_that.content);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)  $default,) {final _that = this;
+switch (_that) {
+case _InterviewInfo():
+return $default(_that.questionId,_that.title,_that.content);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)?  $default,) {final _that = this;
+switch (_that) {
+case _InterviewInfo() when $default != null:
+return $default(_that.questionId,_that.title,_that.content);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$InterviewInfoImpl implements _InterviewInfo {
-  const _$InterviewInfoImpl(
-      {@HiveField(0) required this.questionId,
-      @HiveField(1) required this.title,
-      @HiveField(2) required this.content});
 
-  factory _$InterviewInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InterviewInfoImplFromJson(json);
+class _InterviewInfo implements InterviewInfo {
+  const _InterviewInfo({@HiveField(0) required this.questionId, @HiveField(1) required this.title, @HiveField(2) required this.content});
+  factory _InterviewInfo.fromJson(Map<String, dynamic> json) => _$InterviewInfoFromJson(json);
 
-  @override
-  @HiveField(0)
-  final int questionId;
-  @override
-  @HiveField(1)
-  final String title;
-  @override
-  @HiveField(2)
-  final String content;
+@override@HiveField(0) final  int questionId;
+@override@HiveField(1) final  String title;
+@override@HiveField(2) final  String content;
 
-  @override
-  String toString() {
-    return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
-  }
+/// Create a copy of InterviewInfo
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InterviewInfoCopyWith<_InterviewInfo> get copyWith => __$InterviewInfoCopyWithImpl<_InterviewInfo>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InterviewInfoImpl &&
-            (identical(other.questionId, questionId) ||
-                other.questionId == questionId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.content, content) || other.content == content));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, questionId, title, content);
-
-  /// Create a copy of InterviewInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InterviewInfoImplCopyWith<_$InterviewInfoImpl> get copyWith =>
-      __$$InterviewInfoImplCopyWithImpl<_$InterviewInfoImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$InterviewInfoImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$InterviewInfoToJson(this, );
 }
 
-abstract class _InterviewInfo implements InterviewInfo {
-  const factory _InterviewInfo(
-      {@HiveField(0) required final int questionId,
-      @HiveField(1) required final String title,
-      @HiveField(2) required final String content}) = _$InterviewInfoImpl;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InterviewInfo&&(identical(other.questionId, questionId) || other.questionId == questionId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
+}
 
-  factory _InterviewInfo.fromJson(Map<String, dynamic> json) =
-      _$InterviewInfoImpl.fromJson;
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,questionId,title,content);
 
-  @override
-  @HiveField(0)
-  int get questionId;
-  @override
-  @HiveField(1)
-  String get title;
-  @override
-  @HiveField(2)
-  String get content;
-
-  /// Create a copy of InterviewInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InterviewInfoImplCopyWith<_$InterviewInfoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
 }
 
 
@@ -576,7 +597,7 @@ abstract mixin class _$InterviewInfoCopyWith<$Res> implements $InterviewInfoCopy
   factory _$InterviewInfoCopyWith(_InterviewInfo value, $Res Function(_InterviewInfo) _then) = __$InterviewInfoCopyWithImpl;
 @override @useResult
 $Res call({
-@HiveField(0) String title,@HiveField(1) String content
+@HiveField(0) int questionId,@HiveField(1) String title,@HiveField(2) String content
 });
 
 
@@ -593,9 +614,10 @@ class __$InterviewInfoCopyWithImpl<$Res>
 
 /// Create a copy of InterviewInfo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? questionId = null,Object? title = null,Object? content = null,}) {
   return _then(_InterviewInfo(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+questionId: null == questionId ? _self.questionId : questionId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,
   ));
