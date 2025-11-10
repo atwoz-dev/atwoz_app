@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
+import 'package:atwoz_app/features/exam/domain/provider/exam_notifier.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/bullet_text.dart';
 import 'package:atwoz_app/features/exam/presentation/widget/subject_item.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
 
   @override
   Widget buildPage(BuildContext context) {
+    final notifier = ref.read(examProvider.notifier);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -112,6 +115,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
           padding: EdgeInsets.only(bottom: screenHeight * 0.05),
           child: DefaultElevatedButton(
             onPressed: () async {
+              await notifier.fetchRequiredQuestions();
               navigate(
                 context,
                 route: AppRoute.examQuestion,

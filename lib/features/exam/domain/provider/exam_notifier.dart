@@ -19,7 +19,6 @@ enum ExamSubmitResult { nextSubject, examFinished, showResult, error }
 class ExamNotifier extends _$ExamNotifier {
   @override
   ExamState build() {
-    Future.microtask(() => _fetchRequiredQuestionList());
     return ExamState.initial();
   }
 
@@ -206,9 +205,6 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   Future<void> _fetchRequiredQuestionList() async {
-    if (state.isRequiredDataLoaded) return;
-    state = state.copyWith(isLoaded: false);
-
     try {
       final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
 
@@ -219,7 +215,6 @@ class ExamNotifier extends _$ExamNotifier {
       state = state.copyWith(
         questionList: QuestionData(questionList: filteredList),
         isLoaded: true,
-        isRequiredDataLoaded: true,
         currentSubjectIndex: 0,
         error: null,
       );
@@ -228,6 +223,12 @@ class ExamNotifier extends _$ExamNotifier {
       state =
           state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
+  }
+
+  Future<void> fetchRequiredQuestions() async {
+    state = state.copyWith(isLoaded: false);
+    
+    await _fetchRequiredQuestionList();
   }
 
   Future<void> _submitAnswers(SubjectAnswer payload) async {
