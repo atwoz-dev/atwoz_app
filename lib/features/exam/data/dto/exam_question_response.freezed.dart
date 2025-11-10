@@ -574,7 +574,7 @@ as List<SubjectItem>,
 /// @nodoc
 mixin _$SubjectItem {
 
- int get id; ExamType get type; String get name; List<QuestionItem> get questions;
+ int get id; ExamType get type; String get name; bool get isSubmitted; List<QuestionItem> get questions;
 /// Create a copy of SubjectItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -587,16 +587,16 @@ $SubjectItemCopyWith<SubjectItem> get copyWith => _$SubjectItemCopyWithImpl<Subj
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.questions, questions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&(identical(other.isSubmitted, isSubmitted) || other.isSubmitted == isSubmitted)&&const DeepCollectionEquality().equals(other.questions, questions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,name,const DeepCollectionEquality().hash(questions));
+int get hashCode => Object.hash(runtimeType,id,type,name,isSubmitted,const DeepCollectionEquality().hash(questions));
 
 @override
 String toString() {
-  return 'SubjectItem(id: $id, type: $type, name: $name, questions: $questions)';
+  return 'SubjectItem(id: $id, type: $type, name: $name, isSubmitted: $isSubmitted, questions: $questions)';
 }
 
 
@@ -607,7 +607,7 @@ abstract mixin class $SubjectItemCopyWith<$Res>  {
   factory $SubjectItemCopyWith(SubjectItem value, $Res Function(SubjectItem) _then) = _$SubjectItemCopyWithImpl;
 @useResult
 $Res call({
- int id, ExamType type, String name, List<QuestionItem> questions
+ int id, ExamType type, String name, bool isSubmitted, List<QuestionItem> questions
 });
 
 
@@ -624,12 +624,13 @@ class _$SubjectItemCopyWithImpl<$Res>
 
 /// Create a copy of SubjectItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? name = null,Object? questions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? name = null,Object? isSubmitted = null,Object? questions = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ExamType,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,questions: null == questions ? _self.questions : questions // ignore: cast_nullable_to_non_nullable
+as String,isSubmitted: null == isSubmitted ? _self.isSubmitted : isSubmitted // ignore: cast_nullable_to_non_nullable
+as bool,questions: null == questions ? _self.questions : questions // ignore: cast_nullable_to_non_nullable
 as List<QuestionItem>,
   ));
 }
@@ -715,10 +716,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  bool isSubmitted,  List<QuestionItem> questions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubjectItem() when $default != null:
-return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+return $default(_that.id,_that.type,_that.name,_that.isSubmitted,_that.questions);case _:
   return orElse();
 
 }
@@ -736,10 +737,10 @@ return $default(_that.id,_that.type,_that.name,_that.questions);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  ExamType type,  String name,  bool isSubmitted,  List<QuestionItem> questions)  $default,) {final _that = this;
 switch (_that) {
 case _SubjectItem():
-return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+return $default(_that.id,_that.type,_that.name,_that.isSubmitted,_that.questions);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -756,10 +757,10 @@ return $default(_that.id,_that.type,_that.name,_that.questions);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  ExamType type,  String name,  List<QuestionItem> questions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  ExamType type,  String name,  bool isSubmitted,  List<QuestionItem> questions)?  $default,) {final _that = this;
 switch (_that) {
 case _SubjectItem() when $default != null:
-return $default(_that.id,_that.type,_that.name,_that.questions);case _:
+return $default(_that.id,_that.type,_that.name,_that.isSubmitted,_that.questions);case _:
   return null;
 
 }
@@ -771,12 +772,13 @@ return $default(_that.id,_that.type,_that.name,_that.questions);case _:
 @JsonSerializable()
 
 class _SubjectItem implements SubjectItem {
-  const _SubjectItem({required this.id, required this.type, required this.name, required final  List<QuestionItem> questions}): _questions = questions;
+  const _SubjectItem({required this.id, required this.type, required this.name, required this.isSubmitted, required final  List<QuestionItem> questions}): _questions = questions;
   factory _SubjectItem.fromJson(Map<String, dynamic> json) => _$SubjectItemFromJson(json);
 
 @override final  int id;
 @override final  ExamType type;
 @override final  String name;
+@override final  bool isSubmitted;
  final  List<QuestionItem> _questions;
 @override List<QuestionItem> get questions {
   if (_questions is EqualUnmodifiableListView) return _questions;
@@ -798,16 +800,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._questions, _questions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubjectItem&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.name, name) || other.name == name)&&(identical(other.isSubmitted, isSubmitted) || other.isSubmitted == isSubmitted)&&const DeepCollectionEquality().equals(other._questions, _questions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,name,const DeepCollectionEquality().hash(_questions));
+int get hashCode => Object.hash(runtimeType,id,type,name,isSubmitted,const DeepCollectionEquality().hash(_questions));
 
 @override
 String toString() {
-  return 'SubjectItem(id: $id, type: $type, name: $name, questions: $questions)';
+  return 'SubjectItem(id: $id, type: $type, name: $name, isSubmitted: $isSubmitted, questions: $questions)';
 }
 
 
@@ -818,7 +820,7 @@ abstract mixin class _$SubjectItemCopyWith<$Res> implements $SubjectItemCopyWith
   factory _$SubjectItemCopyWith(_SubjectItem value, $Res Function(_SubjectItem) _then) = __$SubjectItemCopyWithImpl;
 @override @useResult
 $Res call({
- int id, ExamType type, String name, List<QuestionItem> questions
+ int id, ExamType type, String name, bool isSubmitted, List<QuestionItem> questions
 });
 
 
@@ -835,12 +837,13 @@ class __$SubjectItemCopyWithImpl<$Res>
 
 /// Create a copy of SubjectItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? name = null,Object? questions = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? name = null,Object? isSubmitted = null,Object? questions = null,}) {
   return _then(_SubjectItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ExamType,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,questions: null == questions ? _self._questions : questions // ignore: cast_nullable_to_non_nullable
+as String,isSubmitted: null == isSubmitted ? _self.isSubmitted : isSubmitted // ignore: cast_nullable_to_non_nullable
+as bool,questions: null == questions ? _self._questions : questions // ignore: cast_nullable_to_non_nullable
 as List<QuestionItem>,
   ));
 }

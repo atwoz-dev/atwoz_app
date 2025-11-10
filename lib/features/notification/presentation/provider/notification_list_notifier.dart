@@ -11,27 +11,74 @@ part 'notification_list_notifier.g.dart';
 class NotificationListNotifier extends _$NotificationListNotifier {
   @override
   Future<NotificationListState> build() async {
-    final notifications =
-        await ref.watch(notificationRepositoryProvider).fetchNotifications();
+    final result = await ref
+        .watch(notificationRepositoryProvider)
+        .fetchNotifications();
 
     return NotificationListState(
-      notifications: notifications,
-      readIds: {},
+      notifications: result.notifications,
+      hasMore: result.hasMore,
+      lastId: result.notifications.isNotEmpty
+          ? result.notifications.last.notificationId
+          : null,
     );
+  }
+
+  Future<void> loadMoreNotifications() async {
+    if (!state.hasValue) {
+      Log.e('[NotificationListState] state is not initialized');
+      return;
+    }
+
+    final currentState = state.requireValue;
+    if (!currentState.hasMore || currentState.notifications.isEmpty) {
+      return;
+    }
+
+    try {
+      final result = await ref
+          .read(notificationRepositoryProvider)
+          .fetchNotifications(currentState.lastId);
+
+      final updatedNotifications = [
+        ...currentState.notifications,
+        ...result.notifications,
+      ];
+
+      state = AsyncValue.data(
+        currentState.copyWith(
+          notifications: updatedNotifications,
+          hasMore: result.hasMore,
+          lastId: result.notifications.lastOrNull?.notificationId,
+        ),
+      );
+    } catch (e) {
+      Log.e('Failed to load more notifications: $e');
+    }
   }
 
   Future<void> _markAsRead(List<int> notificationIds) async {
     final repository = ref.read(notificationRepositoryProvider);
-    if(!state.hasValue) {
+    if (!state.hasValue) {
       Log.e('[NotificationListState] state is not initialized');
       return;
     }
     try {
       await repository.markNotificationsAsRead(notificationIds);
+
+      final currentState = state.requireValue;
+      final updatedNotifications = currentState.notifications.map((
+        notification,
+      ) {
+        if (!notificationIds.contains(notification.notificationId)) {
+          return notification;
+        }
+
+        return notification.copyWith(isRead: true);
+      }).toList();
+
       state = AsyncValue.data(
-        state.requireValue.copyWith(
-          readIds: {...state.requireValue.readIds, ...notificationIds},
-        ),
+        currentState.copyWith(notifications: updatedNotifications),
       );
     } catch (e) {
       Log.e('Failed to mark notifications as read: $e');
@@ -39,19 +86,26 @@ class NotificationListNotifier extends _$NotificationListNotifier {
   }
 
   Future<void> markAsRead(int notificationId) async {
-    if (state.value?.readIds.contains(notificationId) ?? false) {
-      return;
-    }
+    if (!state.hasValue) return;
+
+    final notification = state.requireValue.notifications.firstWhere(
+      (n) => n.notificationId == notificationId,
+      orElse: () => throw Exception('Notification not found'),
+    );
+
+    if (notification.isRead) return;
     await _markAsRead([notificationId]);
   }
 
   Future<void> markAllAsRead() async {
-    final allIds = state.value?.notifications
+    if (!state.hasValue) return;
+
+    final unreadIds = state.requireValue.notifications
+        .where((n) => !n.isRead)
         .map((n) => n.notificationId)
-        .where((id) => !(state.value?.readIds.contains(id) ?? false))
         .toList();
 
-    if (allIds == null || allIds.isEmpty) return;
-    await _markAsRead(allIds);
+    if (unreadIds.isEmpty) return;
+    await _markAsRead(unreadIds);
   }
 }

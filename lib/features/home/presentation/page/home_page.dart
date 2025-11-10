@@ -2,10 +2,10 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
+import 'package:atwoz_app/features/home/presentation/widget/home/home_banner_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_category_buttons_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_navbar_area.dart';
 import 'package:atwoz_app/features/home/presentation/widget/home/home_profile_card_area.dart';
@@ -74,18 +74,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                       },
                     ),
                     const Gap(24),
-                    GestureDetector(
-                      onTap: () {
-                        if (context.mounted) {
-                          navigate(context, route: AppRoute.exam);
-                        }
-                      },
-                      child: Image.asset(
-                        ImagePath.homeTest,
-                        fit: BoxFit.cover,
-                        width: context.screenWidth,
-                      ),
-                    ),
+                    HomeBannerArea()
                   ],
                 ),
               ),

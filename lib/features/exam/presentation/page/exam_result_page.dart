@@ -17,7 +17,12 @@ import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:gap/gap.dart';
 
 class ExamResultPage extends ConsumerStatefulWidget {
-  const ExamResultPage({super.key});
+  final bool isFromDirectAccess;
+
+  const ExamResultPage({
+    super.key,
+    required this.isFromDirectAccess,
+  });
 
   @override
   ExamResultPageState createState() => ExamResultPageState();
@@ -37,11 +42,16 @@ class ExamResultPageState
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final examState = ref.read(examProvider);
+      final notifier = ref.read(examProvider.notifier);
 
       if (examState.isSubjectOptional && !examState.isDone) {
         showToastMessage(
           '연애 모의고사 참여 완료! 하트 15개를 받았어요',
         );
+      }
+
+      if (widget.isFromDirectAccess) {
+        notifier.handleDirectAccessResult();
       }
     });
   }
@@ -113,10 +123,11 @@ class ExamResultPageState
       onElevatedButtonPressed: () {
         notifier.setSubjectOptional(false);
         notifier.resetCurrentSubjectIndex();
+
+        Navigator.of(context).pop();
         navigate(
           context,
           route: AppRoute.mainTab,
-          method: NavigationMethod.go,
         );
       },
     );
@@ -141,7 +152,7 @@ class _ResultHeader extends StatelessWidget {
         : "현재 $soulmateCount명이 동일한 답을 선택했어요";
 
     final subtitle = isSubjectOptional
-        ? (hasSoulmate ? "상대방과 모두 같은 답을 선택하셨어요!" : "대체로 같은 답을 선택하신 이성분들이에요!")
+        ? (hasSoulmate ? "상대방과 모두 같은 답을 선택하셨어요!" : "참여완료에 대한 하트를 지급해드렸어요")
         : "필수과목 30문제를 풀고 모두 동일한 답을 선택해야 해요";
 
     return Align(

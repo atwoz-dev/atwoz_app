@@ -16,6 +16,7 @@ NotificationItem _$NotificationItemFromJson(Map<String, dynamic> json) =>
       ),
       title: json['title'] as String,
       body: json['body'] as String,
+      isRead: json['isRead'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
@@ -28,6 +29,7 @@ Map<String, dynamic> _$NotificationItemToJson(NotificationItem instance) =>
           _$ServerNotificationTypeEnumMap[instance.notificationType]!,
       'title': instance.title,
       'body': instance.body,
+      'isRead': instance.isRead,
       'createdAt': instance.createdAt.toIso8601String(),
     };
 

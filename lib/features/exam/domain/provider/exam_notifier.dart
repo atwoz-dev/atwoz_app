@@ -1,10 +1,10 @@
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_recommend_fetch_usecase.dart';
 import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
@@ -19,7 +19,6 @@ enum ExamSubmitResult { nextSubject, examFinished, showResult, error }
 class ExamNotifier extends _$ExamNotifier {
   @override
   ExamState build() {
-    Future.microtask(() => _fetchRequiredQuestionList());
     return ExamState.initial();
   }
 
@@ -32,8 +31,18 @@ class ExamNotifier extends _$ExamNotifier {
     state = state.copyWith(currentAnswerMap: updatedAnswers);
   }
 
+  Future<void> handleDirectAccessResult() async {
+    state = state.copyWith(
+      isSubjectOptional: true,
+      isDone: true,
+    );
+
+    await fetchSoulmateList();
+  }
+
   Future<ExamSubmitResult> submitCurrentSubject() async {
     try {
+      final profileNotifier = ref.read(globalProvider.notifier);
       final currentSubject =
           state.questionList.questionList[state.currentSubjectIndex];
 
@@ -44,11 +53,16 @@ class ExamNotifier extends _$ExamNotifier {
             .toList(),
       );
 
-      state = state.copyWith(isLoaded: false);
+      state = state.copyWith(
+        isLoaded: false,
+      );
       await _submitAnswers(payload);
-      await fetchSoulmateList(isResult: true);
+      await fetchSoulmateList();
 
       if (isLastSubject) {
+        profileNotifier.profile =
+            await profileNotifier.fetchProfileToHiveFromServer();
+
         state = state.copyWith(
           isSubjectOptional: true,
           isDone: state.isSubjectOptional ? true : false,
@@ -112,7 +126,9 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   void setSubjectOptional(bool isOptional) {
-    state = state.copyWith(isSubjectOptional: isOptional);
+    state = state.copyWith(
+      isSubjectOptional: isOptional,
+    );
   }
 
   void setExamDone() {
@@ -136,41 +152,16 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  Future<void> fetchSoulmateList({bool isResult = false}) async {
+  Future<void> fetchSoulmateList() async {
     state = state.copyWith(isLoaded: false);
     try {
       final examSoulmateList = await ExamSoulmateFetchUseCase(ref).call();
       final hasResultData = examSoulmateList.isNotEmpty;
 
-      if (isResult && !hasResultData) {
-        await fetchRecommendList();
-        return;
-      }
-
       state = state.copyWith(
         soulmateList: SoulmateData(soulmateList: examSoulmateList),
         hasResultData: hasResultData,
-        hasSoulmate: true,
-        isLoaded: true,
-        error: null,
-      );
-    } catch (e) {
-      Log.e(e);
-      state =
-          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
-    }
-  }
-
-  Future<void> fetchRecommendList() async {
-    state = state.copyWith(isLoaded: false);
-    try {
-      final examRecommendList = await ExamRecommendFetchUseCase(ref).call();
-      final hasResultData = examRecommendList.isNotEmpty;
-
-      state = state.copyWith(
-        soulmateList: SoulmateData(soulmateList: examRecommendList),
-        hasResultData: hasResultData,
-        hasSoulmate: false,
+        hasSoulmate: hasResultData,
         isLoaded: true,
         error: null,
       );
@@ -214,16 +205,16 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   Future<void> _fetchRequiredQuestionList() async {
-    if (state.isRequiredDataLoaded) return;
-    state = state.copyWith(isLoaded: false);
-
     try {
       final requiredQuestionList = await ExamRequiredFetchUseCase(ref).call();
 
+      final filteredList = requiredQuestionList
+          .where((subject) => subject.isSubmitted == false)
+          .toList();
+
       state = state.copyWith(
-        questionList: QuestionData(questionList: requiredQuestionList),
+        questionList: QuestionData(questionList: filteredList),
         isLoaded: true,
-        isRequiredDataLoaded: true,
         currentSubjectIndex: 0,
         error: null,
       );
@@ -232,6 +223,12 @@ class ExamNotifier extends _$ExamNotifier {
       state =
           state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
     }
+  }
+
+  Future<void> fetchRequiredQuestions() async {
+    state = state.copyWith(isLoaded: false);
+    
+    await _fetchRequiredQuestionList();
   }
 
   Future<void> _submitAnswers(SubjectAnswer payload) async {
