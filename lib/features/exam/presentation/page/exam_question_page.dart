@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/core/util/toast.dart';
@@ -22,11 +23,7 @@ class ExamQuestionPage extends ConsumerStatefulWidget {
 
 class ExamQuestionPageState
     extends BaseConsumerStatefulPageState<ExamQuestionPage> {
-  ExamQuestionPageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-        );
+  ExamQuestionPageState() : super(isAppBar: false, isHorizontalMargin: false);
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
@@ -43,17 +40,16 @@ class ExamQuestionPageState
     final notifier = ref.read(examProvider.notifier);
 
     if (!examState.isLoaded || examState.questionList.questionList.isEmpty) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     final currentSubject =
         examState.questionList.questionList[examState.currentSubjectIndex];
 
     final double horizontalPadding = screenWidth * 0.05;
-    final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
+    final EdgeInsets contentPadding = EdgeInsets.symmetric(
+      horizontal: horizontalPadding,
+    );
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -87,7 +83,7 @@ class ExamQuestionPageState
                       currentSubject.questions.length - 1) {
                     notifier.nextPage();
                     _pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
                     );
                   }
@@ -101,7 +97,7 @@ class ExamQuestionPageState
                 if (examState.currentPage > 0) {
                   notifier.previousPage();
                   _pageController.previousPage(
-                    duration: Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
                 } else {
@@ -115,7 +111,11 @@ class ExamQuestionPageState
                 switch (result) {
                   case ExamSubmitResult.examFinished:
                   case ExamSubmitResult.showResult:
-                    navigate(context, route: AppRoute.examResult);
+                    navigate(
+                      context,
+                      route: AppRoute.examResult,
+                      extra: ExamResultArguments(isFromDirectAccess: false),
+                    );
                     break;
                   case ExamSubmitResult.nextSubject:
                     break;
@@ -124,12 +124,13 @@ class ExamQuestionPageState
                     break;
                 }
               },
-              isSelectAll: examState.currentAnswerMap.length !=
+              isSelectAll:
+                  examState.currentAnswerMap.length !=
                   currentSubject.questions.length,
               isSubjectOptional: examState.isSubjectOptional,
               isLastSubject: notifier.isLastSubject,
               screenHeight: screenHeight,
-            )
+            ),
           ],
         ),
       ),
@@ -141,13 +142,12 @@ class ExamQuestionPageState
       context: context,
       content: '연애 모의고사를 종료 하시겠어요?\n페이지를 벗어날경우, 저장되지 않아요',
       onElevatedButtonPressed: () {
+        _pageController.jumpToPage(0);
         notifier.setSubjectOptional(false);
         notifier.resetCurrentSubjectIndex();
-        navigate(
-          context,
-          route: AppRoute.mainTab,
-          method: NavigationMethod.go,
-        );
+
+        Navigator.of(context).pop();
+        navigate(context, route: AppRoute.mainTab);
       },
     );
   }
@@ -170,10 +170,7 @@ class _QuestionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Gap(24),
-        StepIndicator(
-          totalStep: totalQuestions,
-          currentStep: currentPage + 1,
-        ),
+        StepIndicator(totalStep: totalQuestions, currentStep: currentPage + 1),
         Gap(24),
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: 60.h),
@@ -296,11 +293,11 @@ class _QuestionBottomButton extends StatelessWidget {
               child: Text(
                 isSubjectOptional
                     ? isLastSubject
-                        ? '저장하기'
-                        : '다음'
+                          ? '저장하기'
+                          : '다음'
                     : isLastSubject
-                        ? '제출하기'
-                        : '저장하기',
+                    ? '제출하기'
+                    : '저장하기',
               ),
             ),
           ),

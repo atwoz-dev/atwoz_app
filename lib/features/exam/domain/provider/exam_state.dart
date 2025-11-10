@@ -21,7 +21,6 @@ abstract class ExamState with _$ExamState {
     required bool hasSoulmate,
     required StoreData heartBalance,
     @Default(false) bool isLoaded,
-    @Default(false) bool isRequiredDataLoaded,
     @Default(0) int currentPage,
     @Default({}) Map<int, int> currentAnswerMap,
     QuestionListErrorType? error,
