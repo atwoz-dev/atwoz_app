@@ -1,7 +1,7 @@
 import 'package:atwoz_app/features/introduce/data/data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part "introduce_state.freezed.dart";
+part 'introduce_state.freezed.dart';
 
 enum IntroduceListErrorType { network }
 

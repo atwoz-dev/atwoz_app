@@ -1,7 +1,7 @@
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/introduce/data/dto/introduce_list_response.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/introduce_add_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part "introduce_notifier.g.dart";
@@ -10,26 +10,42 @@ part "introduce_notifier.g.dart";
 class IntroduceNotifier extends _$IntroduceNotifier {
   @override
   IntroduceState build() {
-    _initializeIntroducList();
+    _initializeIntroduceList();
     return IntroduceState.initial();
   }
 
-  Future<List<IntroduceItem>> _initializeIntroducList() async {
+  Future<void> _initializeIntroduceList() async {
     try {
       final introduceList = await IntroduceListFetchUseCase(ref).call();
-      state = state.copyWith(introduceList: introduceList, isLoaded: true);
-      return introduceList;
+      state = state.copyWith(
+        introduceList: introduceList,
+        isLoaded: true,
+        error: null,
+      );
     } catch (e) {
       Log.e(e);
       state = state.copyWith(
         isLoaded: true,
         error: IntroduceListErrorType.network,
       );
-      return [];
     }
   }
 
-  Future<List<IntroduceItem>> fetchIntroduceList() async {
-    return await _initializeIntroducList();
+  Future<void> fetchIntroduceList() async {
+    await _initializeIntroduceList();
+  }
+
+  Future<void> addIntroduce({
+    required String title,
+    required String content,
+  }) async {
+    try {
+      await IntroduceAddUseCase(ref).call(title: title, content: content);
+    } catch (e) {
+      // TODO: 에러 발생 처리 어떻게???
+      Log.e('Failed to add introduce to server: $e');
+    }
+
+    // TODO: hive에 저장????
   }
 }

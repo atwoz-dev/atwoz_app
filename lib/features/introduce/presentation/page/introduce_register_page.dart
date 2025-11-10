@@ -3,6 +3,8 @@ import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
+import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +22,37 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
   final TextEditingController _inputTitleController = TextEditingController();
   final TextEditingController _inputContentController = TextEditingController();
 
+  bool canRegister = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _inputTitleController.addListener(() {
+      _checkCanRegister();
+    });
+
+    _inputContentController.addListener(() {
+      _checkCanRegister();
+    });
+  }
+
+  // TODO: canSubmit을 이런식으로 setstate을 이용해서 써도 되는건지 확인 필요. notifier 나 state 를 이용?
+  void _checkCanRegister() {
+    canRegister =
+        _inputTitleController.text.isNotEmpty &&
+        _inputContentController.text.isNotEmpty;
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _inputTitleController.dispose();
+    _inputContentController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,31 +60,52 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
         title: '내 소개 등록하기',
         actions: [
           DefaultTextButton(
-            primary: Palette.colorGrey500,
-            child: Text('등록'),
-            onPressed: () {
-              CustomDialogue.showTwoChoiceDialogue(
-                  context: context,
-                  content: '등록 버튼을 누르면\n작성된 내용을 저장합니다.',
-                  elevatedButtonText: '등록',
-                  onElevatedButtonPressed: () {
-                    //TODO: 작성한 내용 저장
-                  });
-            },
-          )
+            primary: canRegister ? Palette.colorBlack : Palette.colorGrey500,
+            onPressed: canRegister
+                ? () {
+                    CustomDialogue.showTwoChoiceDialogue(
+                      context: context,
+                      content: '등록 버튼을 누르면\n작성된 내용을 저장합니다.',
+                      elevatedButtonText: '등록',
+                      onElevatedButtonPressed: () async {
+                        try {
+                          await ref
+                              .read(introduceProvider.notifier)
+                              .addIntroduce(
+                                title: _inputTitleController.text.trim(),
+                                content: _inputContentController.text.trim(),
+                              );
+
+                          if (!context.mounted) return;
+                          navigate(
+                            context,
+                            route: AppRoute.mainTab,
+                            method: NavigationMethod.go,
+                          );
+                        } catch (e) {
+                          // TODO: content 가 40자 이하면 에러 발생
+                          showToastMessage('내용을 저장하는데 실패했습니다.');
+                        }
+                      },
+                    );
+                  }
+                : null,
+            child: const Text('등록'),
+          ),
         ],
         leadingAction: (context) => {
           CustomDialogue.showTwoChoiceDialogue(
-              context: context,
-              content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
-              outlineButtonText: '머무르기',
-              onElevatedButtonPressed: () {
-                navigate(
-                  context,
-                  route: AppRoute.mainTab,
-                  method: NavigationMethod.go,
-                );
-              })
+            context: context,
+            content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
+            outlineButtonText: '머무르기',
+            onElevatedButtonPressed: () {
+              navigate(
+                context,
+                route: AppRoute.mainTab,
+                method: NavigationMethod.go,
+              );
+            },
+          ),
         },
       ),
       body: Column(
@@ -65,8 +119,9 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
             hintText: '제목을 입력해주세요',
           ),
           const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: DefaultDivider()),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: DefaultDivider(),
+          ),
           Expanded(
             child: DefaultTextFormField(
               autofocus: false,
@@ -82,7 +137,7 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
               hintText:
                   '나이 : 28세\n\n선호 관계 : 서로에게 좋은 자극을 주는 관계\n\n하는 일 : 패션 디자이너로 일하고 있어요\n\n성격 : 밝고 자존감 있는편!\n\n어필:\n대화 나누는걸 좋아해서 대화가 잘 통하는분이 좋아요\n연락 빈도수를 크게 신경쓰진 않지만\n대화가 끊길 정도가 아니면 괜찮다 생각해요!\n리액션 좋다면 최곱니다ㅎㅎ',
             ),
-          )
+          ),
         ],
       ),
     );
