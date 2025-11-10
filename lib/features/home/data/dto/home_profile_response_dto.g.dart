@@ -99,9 +99,9 @@ Map<String, dynamic> _$ProfileInfoDtoToJson(ProfileInfoDto instance) =>
 
 InterviewInfoDto _$InterviewInfoDtoFromJson(Map<String, dynamic> json) =>
     InterviewInfoDto(
-      questionId: (json['questionId'] as num?)?.toInt(),
-      title: json['title'] as String?,
-      content: json['content'] as String?,
+      questionId: (json['questionId'] as num).toInt(),
+      title: json['title'] as String,
+      content: json['content'] as String,
     );
 
 Map<String, dynamic> _$InterviewInfoDtoToJson(InterviewInfoDto instance) =>

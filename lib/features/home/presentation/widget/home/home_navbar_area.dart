@@ -2,17 +2,18 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeNavbarArea extends ConsumerWidget {
-  const HomeNavbarArea({
-    super.key,
-  });
+  const HomeNavbarArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nickname = ref.watch(globalProvider).profile.nickname;
+
+    Log.d('${ref.watch(globalProvider).profile}');
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,7 +26,7 @@ class HomeNavbarArea extends ConsumerWidget {
             height: 1.2,
           ),
         ),
-        DefaultAppBarActionGroup(
+        const DefaultAppBarActionGroup(
           showFilter: true,
           filterRoute: AppRoute.ideal,
         ),
