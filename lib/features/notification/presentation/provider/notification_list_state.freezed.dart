@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NotificationListState {
 
- List<NotificationItem> get notifications; Set<int> get readIds;
+ List<NotificationItem> get notifications; bool get hasMore; int? get lastId;
 /// Create a copy of NotificationListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $NotificationListStateCopyWith<NotificationListState> get copyWith => _$Notifica
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationListState&&const DeepCollectionEquality().equals(other.notifications, notifications)&&const DeepCollectionEquality().equals(other.readIds, readIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationListState&&const DeepCollectionEquality().equals(other.notifications, notifications)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&(identical(other.lastId, lastId) || other.lastId == lastId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(notifications),const DeepCollectionEquality().hash(readIds));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(notifications),hasMore,lastId);
 
 @override
 String toString() {
-  return 'NotificationListState(notifications: $notifications, readIds: $readIds)';
+  return 'NotificationListState(notifications: $notifications, hasMore: $hasMore, lastId: $lastId)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $NotificationListStateCopyWith<$Res>  {
   factory $NotificationListStateCopyWith(NotificationListState value, $Res Function(NotificationListState) _then) = _$NotificationListStateCopyWithImpl;
 @useResult
 $Res call({
- List<NotificationItem> notifications, Set<int> readIds
+ List<NotificationItem> notifications, bool hasMore, int? lastId
 });
 
 
@@ -62,11 +62,12 @@ class _$NotificationListStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationListState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? notifications = null,Object? readIds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? notifications = null,Object? hasMore = null,Object? lastId = freezed,}) {
   return _then(_self.copyWith(
 notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
-as List<NotificationItem>,readIds: null == readIds ? _self.readIds : readIds // ignore: cast_nullable_to_non_nullable
-as Set<int>,
+as List<NotificationItem>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,lastId: freezed == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<NotificationItem> notifications,  Set<int> readIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<NotificationItem> notifications,  bool hasMore,  int? lastId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationListState() when $default != null:
-return $default(_that.notifications,_that.readIds);case _:
+return $default(_that.notifications,_that.hasMore,_that.lastId);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.notifications,_that.readIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<NotificationItem> notifications,  Set<int> readIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<NotificationItem> notifications,  bool hasMore,  int? lastId)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationListState():
-return $default(_that.notifications,_that.readIds);case _:
+return $default(_that.notifications,_that.hasMore,_that.lastId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.notifications,_that.readIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<NotificationItem> notifications,  Set<int> readIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<NotificationItem> notifications,  bool hasMore,  int? lastId)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationListState() when $default != null:
-return $default(_that.notifications,_that.readIds);case _:
+return $default(_that.notifications,_that.hasMore,_that.lastId);case _:
   return null;
 
 }
@@ -207,7 +208,7 @@ return $default(_that.notifications,_that.readIds);case _:
 
 
 class _NotificationListState implements NotificationListState {
-  const _NotificationListState({final  List<NotificationItem> notifications = const [], final  Set<int> readIds = const {}}): _notifications = notifications,_readIds = readIds;
+  const _NotificationListState({final  List<NotificationItem> notifications = const [], this.hasMore = false, this.lastId}): _notifications = notifications;
   
 
  final  List<NotificationItem> _notifications;
@@ -217,13 +218,8 @@ class _NotificationListState implements NotificationListState {
   return EqualUnmodifiableListView(_notifications);
 }
 
- final  Set<int> _readIds;
-@override@JsonKey() Set<int> get readIds {
-  if (_readIds is EqualUnmodifiableSetView) return _readIds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableSetView(_readIds);
-}
-
+@override@JsonKey() final  bool hasMore;
+@override final  int? lastId;
 
 /// Create a copy of NotificationListState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +231,16 @@ _$NotificationListStateCopyWith<_NotificationListState> get copyWith => __$Notif
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationListState&&const DeepCollectionEquality().equals(other._notifications, _notifications)&&const DeepCollectionEquality().equals(other._readIds, _readIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationListState&&const DeepCollectionEquality().equals(other._notifications, _notifications)&&(identical(other.hasMore, hasMore) || other.hasMore == hasMore)&&(identical(other.lastId, lastId) || other.lastId == lastId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),const DeepCollectionEquality().hash(_readIds));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),hasMore,lastId);
 
 @override
 String toString() {
-  return 'NotificationListState(notifications: $notifications, readIds: $readIds)';
+  return 'NotificationListState(notifications: $notifications, hasMore: $hasMore, lastId: $lastId)';
 }
 
 
@@ -255,7 +251,7 @@ abstract mixin class _$NotificationListStateCopyWith<$Res> implements $Notificat
   factory _$NotificationListStateCopyWith(_NotificationListState value, $Res Function(_NotificationListState) _then) = __$NotificationListStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<NotificationItem> notifications, Set<int> readIds
+ List<NotificationItem> notifications, bool hasMore, int? lastId
 });
 
 
@@ -272,11 +268,12 @@ class __$NotificationListStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationListState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? notifications = null,Object? readIds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? notifications = null,Object? hasMore = null,Object? lastId = freezed,}) {
   return _then(_NotificationListState(
 notifications: null == notifications ? _self._notifications : notifications // ignore: cast_nullable_to_non_nullable
-as List<NotificationItem>,readIds: null == readIds ? _self._readIds : readIds // ignore: cast_nullable_to_non_nullable
-as Set<int>,
+as List<NotificationItem>,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
+as bool,lastId: freezed == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
