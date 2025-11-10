@@ -102,6 +102,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         ),
         PostButton(
           onTap: () {
+            // TODO: introduceRegister 갔다와서 셀프소개목록 갱신필요함
             navigate(context, route: AppRoute.introduceRegister);
           },
         ),
