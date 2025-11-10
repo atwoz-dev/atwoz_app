@@ -1,5 +1,7 @@
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
+import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
+import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -24,57 +26,67 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   @override
   Widget buildPage(BuildContext context) {
+    final repository = ref.watch(introduceRepositoryProvider);
+    final notifier = ref.read(introduceProvider.notifier);
+    final state = ref.watch(introduceProvider);
+    notifier.build();
+
+    // final introduceNotifier = ref.read(introduceRepositoryProvider.)
+    // ref.read(introduceProvider.notifier).fetchIntroduceList();
     final double horizontalPadding = screenWidth * 0.05;
-    final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
+    final EdgeInsets contentPadding = EdgeInsets.symmetric(
+      horizontal: horizontalPadding,
+    );
 
     return Stack(
       children: [
         Scaffold(
-            body: Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.1), // 상단 여백 설정
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: contentPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        '셀프소개',
-                        style: Fonts.header03().copyWith(
-                          fontWeight: FontWeight.w700,
+          body: Padding(
+            padding: EdgeInsets.only(top: screenHeight * 0.1), // 상단 여백 설정
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: contentPadding,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          '셀프소개',
+                          style: Fonts.header03().copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
-                    ),
-                    DefaultAppBarActionGroup(
-                      showFilter: true,
-                      filterRoute: AppRoute.introduceFilter,
-                    )
-                  ],
+                      const DefaultAppBarActionGroup(
+                        showFilter: true,
+                        filterRoute: AppRoute.introduceFilter,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Gap(16),
-              DefaultTabBar(
-                tabs: ['소개', '내가 쓴 글'],
-                currentIndex: _currentTabIndex,
-                horizontalPadding: horizontalPadding,
-                onTap: _onTabTapped,
-              ),
-              Expanded(
+                const Gap(16),
+                DefaultTabBar(
+                  tabs: ['소개', '내가 쓴 글'],
+                  currentIndex: _currentTabIndex,
+                  horizontalPadding: horizontalPadding,
+                  onTap: _onTabTapped,
+                ),
+                Expanded(
                   child: Padding(
-                padding: contentPadding,
-                child: _currentTabIndex == 0
-                    ? _buildIntroduceContent(context)
-                    : _buildIntroduceHistory(context),
-              )),
-            ],
+                    padding: contentPadding,
+                    child: _currentTabIndex == 0
+                        ? _buildIntroduceContent(context)
+                        : _buildIntroduceHistory(context),
+                  ),
+                ),
+              ],
+            ),
           ),
-        )),
+        ),
         PostButton(
           onTap: () {
             navigate(
@@ -88,110 +100,134 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   }
 
   Widget _buildIntroduceContent(BuildContext context) {
-    final int itemCount = 10;
+    const int itemCount = 10;
     final double thumbWidth = 64.w;
     final double thumbHeight = 64.h;
     final double gapWidth = 16.w;
 
     return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: itemCount,
-        itemBuilder: (context, index) {
-          bool isLastItem = index == itemCount - 1;
+      padding: EdgeInsets.zero,
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        bool isLastItem = index == itemCount - 1;
 
-          return Container(
-            decoration: BoxDecoration(
-              border: isLastItem
-                  ? null
-                  : Border(
-                      bottom:
-                          BorderSide(width: 1.w, color: Palette.colorGrey50),
-                    ),
-            ),
-            child: GestureDetector(
-              onTap: () async {
-                //AutoRouter.of(context).push(const IntroduceDetailScreen());
-              },
-              child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: Row(
-                    children: [
-                      ClipOval(
-                        child: SizedBox(
-                            width: thumbWidth,
-                            height: thumbHeight,
-                            child: Image.asset(
-                              ImagePath.selfThumb,
-                              fit: BoxFit.cover,
-                            )),
+        return _introduceItem(
+          isLastItem: isLastItem,
+          thumbWidth: thumbWidth,
+          thumbHeight: thumbHeight,
+          gapWidth: gapWidth,
+        );
+      },
+    );
+  }
+
+  Widget _introduceItem({
+    required bool isLastItem,
+    required double thumbWidth,
+    required double thumbHeight,
+    required double gapWidth,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: isLastItem
+            ? null
+            : Border(
+                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+              ),
+      ),
+      child: GestureDetector(
+        onTap: () async {
+          //AutoRouter.of(context).push(const IntroduceDetailScreen());
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.h),
+          child: Row(
+            children: [
+              ClipOval(
+                child: SizedBox(
+                  width: thumbWidth,
+                  height: thumbHeight,
+                  child: Image.asset(
+                    ImagePath.selfThumb,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(width: gapWidth),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '송리버 (서울 / 27 / 186)',
+                      style: Fonts.body02Medium().copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(width: gapWidth),
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('송리버 (서울 / 27 / 186)',
-                              style: Fonts.body02Medium()
-                                  .copyWith(fontWeight: FontWeight.w700)),
-                          const Gap(4),
-                          Text(
-                            '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
-                            style: Fonts.body03Regular(Palette.colorGrey500),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      )),
-                    ],
-                  )),
-            ),
-          );
-        });
+                    ),
+                    const Gap(4),
+                    Text(
+                      '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
+                      style: Fonts.body03Regular(Palette.colorGrey500),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildIntroduceHistory(BuildContext context) {
-    final int itemCount = 4;
+    const int itemCount = 4;
 
     return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: itemCount,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+      padding: EdgeInsets.zero,
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+            ),
+          ),
+          child: GestureDetector(
+            onTap: () async {
+              //AutoRouter.of(context).push(const IntroduceDetailScreen());
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
+                          style: Fonts.body02Medium().copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const Gap(4),
+                        Text(
+                          '2025.02.28',
+                          style: Fonts.body03Regular(Palette.colorGrey500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: GestureDetector(
-              onTap: () async {
-                //AutoRouter.of(context).push(const IntroduceDetailScreen());
-              },
-              child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
-                            style: Fonts.body02Medium()
-                                .copyWith(fontWeight: FontWeight.w700),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const Gap(4),
-                          Text(
-                            '2025.02.28',
-                            style: Fonts.body03Regular(Palette.colorGrey500),
-                          ),
-                        ],
-                      )),
-                    ],
-                  )),
-            ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

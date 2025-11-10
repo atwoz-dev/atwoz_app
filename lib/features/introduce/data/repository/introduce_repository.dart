@@ -46,6 +46,8 @@ class IntroduceRepository extends BaseRepository {
         queryParameters: queryParameters,
       );
 
+      print("체크체크 $response");
+
       final result = IntroduceListResponse.fromJson(response);
       return result.data;
     } catch (e) {
