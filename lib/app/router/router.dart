@@ -94,7 +94,7 @@ enum AppRoute {
   onboard('onboard'),
   onboardPhone('onboard-phone'),
   onboardCertification('onboard-certification'),
-  dormantRelease('dormant_release'),
+  dormantRelease('dormant-release'),
   temporalForbidden('temporal-forbidden'),
 
   // Auth

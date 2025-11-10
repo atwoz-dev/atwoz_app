@@ -26,7 +26,7 @@ class DormantReleasePage extends ConsumerWidget {
             children: [
               const Gap(24),
               Text(
-                '민호님, 휴면을 해제하고\n새로운 인연을 추천받아보세요!',
+                '휴면을 해제하고\n새로운 인연을 추천받아보세요!',
                 style: Fonts.header02().copyWith(
                   color: Palette.colorBlack,
                   fontWeight: FontWeight.w700,

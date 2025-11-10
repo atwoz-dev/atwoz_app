@@ -146,7 +146,6 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           return;
         }
 
-        if (!mounted) return;
         navigate(context, route: AppRoute.onboard, method: NavigationMethod.go);
       },
     );
