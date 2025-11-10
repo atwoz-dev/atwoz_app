@@ -19,11 +19,11 @@ abstract class IntroduceListResponse with _$IntroduceListResponse {
 @freezed
 abstract class IntroduceItem with _$IntroduceItem {
   const factory IntroduceItem({
-    required List<String> preferredCities,
-    required int fromAge,
-    required int toAge,
-    required String gender,
-    required int lastId,
+    required int id,
+    int? yearOfBirth,
+    String? nickname,
+    required String profileUrl,
+    required String title,
   }) = _IntroduceItem;
 
   factory IntroduceItem.fromJson(Map<String, dynamic> json) =>

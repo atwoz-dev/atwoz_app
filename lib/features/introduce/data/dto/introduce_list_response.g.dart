@@ -28,20 +28,18 @@ Map<String, dynamic> _$IntroduceListResponseToJson(
 
 _IntroduceItem _$IntroduceItemFromJson(Map<String, dynamic> json) =>
     _IntroduceItem(
-      preferredCities: (json['preferredCities'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      fromAge: (json['fromAge'] as num).toInt(),
-      toAge: (json['toAge'] as num).toInt(),
-      gender: json['gender'] as String,
-      lastId: (json['lastId'] as num).toInt(),
+      id: (json['id'] as num).toInt(),
+      yearOfBirth: (json['yearOfBirth'] as num?)?.toInt(),
+      nickname: json['nickname'] as String?,
+      profileUrl: json['profileUrl'] as String,
+      title: json['title'] as String,
     );
 
 Map<String, dynamic> _$IntroduceItemToJson(_IntroduceItem instance) =>
     <String, dynamic>{
-      'preferredCities': instance.preferredCities,
-      'fromAge': instance.fromAge,
-      'toAge': instance.toAge,
-      'gender': instance.gender,
-      'lastId': instance.lastId,
+      'id': instance.id,
+      'yearOfBirth': instance.yearOfBirth,
+      'nickname': instance.nickname,
+      'profileUrl': instance.profileUrl,
+      'title': instance.title,
     };

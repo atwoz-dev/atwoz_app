@@ -21,9 +21,11 @@ class IntroduceListFetchUseCase {
 
   const IntroduceListFetchUseCase(this.ref);
 
-  Future<List<String>> call() async {
-    final response = ref.read(introduceRepositoryProvider).getIntroduceList();
-    return [];
+  Future<List<IntroduceItem>> call() async {
+    final response = await ref
+        .read(introduceRepositoryProvider)
+        .getIntroduceList();
+    return response;
   }
 }
 

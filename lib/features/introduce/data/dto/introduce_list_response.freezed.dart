@@ -293,7 +293,7 @@ as List<IntroduceItem>,
 /// @nodoc
 mixin _$IntroduceItem {
 
- List<String> get preferredCities; int get fromAge; int get toAge; String get gender; int get lastId;
+ int get id; int? get yearOfBirth; String? get nickname; String get profileUrl; String get title;
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -306,16 +306,16 @@ $IntroduceItemCopyWith<IntroduceItem> get copyWith => _$IntroduceItemCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceItem&&const DeepCollectionEquality().equals(other.preferredCities, preferredCities)&&(identical(other.fromAge, fromAge) || other.fromAge == fromAge)&&(identical(other.toAge, toAge) || other.toAge == toAge)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.lastId, lastId) || other.lastId == lastId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(preferredCities),fromAge,toAge,gender,lastId);
+int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title);
 
 @override
 String toString() {
-  return 'IntroduceItem(preferredCities: $preferredCities, fromAge: $fromAge, toAge: $toAge, gender: $gender, lastId: $lastId)';
+  return 'IntroduceItem(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title)';
 }
 
 
@@ -326,7 +326,7 @@ abstract mixin class $IntroduceItemCopyWith<$Res>  {
   factory $IntroduceItemCopyWith(IntroduceItem value, $Res Function(IntroduceItem) _then) = _$IntroduceItemCopyWithImpl;
 @useResult
 $Res call({
- List<String> preferredCities, int fromAge, int toAge, String gender, int lastId
+ int id, int? yearOfBirth, String? nickname, String profileUrl, String title
 });
 
 
@@ -343,14 +343,14 @@ class _$IntroduceItemCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? preferredCities = null,Object? fromAge = null,Object? toAge = null,Object? gender = null,Object? lastId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? yearOfBirth = freezed,Object? nickname = freezed,Object? profileUrl = null,Object? title = null,}) {
   return _then(_self.copyWith(
-preferredCities: null == preferredCities ? _self.preferredCities : preferredCities // ignore: cast_nullable_to_non_nullable
-as List<String>,fromAge: null == fromAge ? _self.fromAge : fromAge // ignore: cast_nullable_to_non_nullable
-as int,toAge: null == toAge ? _self.toAge : toAge // ignore: cast_nullable_to_non_nullable
-as int,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
-as String,lastId: null == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
-as int,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,yearOfBirth: freezed == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
+as int?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -435,10 +435,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> preferredCities,  int fromAge,  int toAge,  String gender,  int lastId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceItem() when $default != null:
-return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_that.lastId);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
   return orElse();
 
 }
@@ -456,10 +456,10 @@ return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> preferredCities,  int fromAge,  int toAge,  String gender,  int lastId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceItem():
-return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_that.lastId);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -476,10 +476,10 @@ return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> preferredCities,  int fromAge,  int toAge,  String gender,  int lastId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceItem() when $default != null:
-return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_that.lastId);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
   return null;
 
 }
@@ -491,20 +491,14 @@ return $default(_that.preferredCities,_that.fromAge,_that.toAge,_that.gender,_th
 @JsonSerializable()
 
 class _IntroduceItem implements IntroduceItem {
-  const _IntroduceItem({required final  List<String> preferredCities, required this.fromAge, required this.toAge, required this.gender, required this.lastId}): _preferredCities = preferredCities;
+  const _IntroduceItem({required this.id, this.yearOfBirth, this.nickname, required this.profileUrl, required this.title});
   factory _IntroduceItem.fromJson(Map<String, dynamic> json) => _$IntroduceItemFromJson(json);
 
- final  List<String> _preferredCities;
-@override List<String> get preferredCities {
-  if (_preferredCities is EqualUnmodifiableListView) return _preferredCities;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_preferredCities);
-}
-
-@override final  int fromAge;
-@override final  int toAge;
-@override final  String gender;
-@override final  int lastId;
+@override final  int id;
+@override final  int? yearOfBirth;
+@override final  String? nickname;
+@override final  String profileUrl;
+@override final  String title;
 
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
@@ -519,16 +513,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceItem&&const DeepCollectionEquality().equals(other._preferredCities, _preferredCities)&&(identical(other.fromAge, fromAge) || other.fromAge == fromAge)&&(identical(other.toAge, toAge) || other.toAge == toAge)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.lastId, lastId) || other.lastId == lastId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_preferredCities),fromAge,toAge,gender,lastId);
+int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title);
 
 @override
 String toString() {
-  return 'IntroduceItem(preferredCities: $preferredCities, fromAge: $fromAge, toAge: $toAge, gender: $gender, lastId: $lastId)';
+  return 'IntroduceItem(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title)';
 }
 
 
@@ -539,7 +533,7 @@ abstract mixin class _$IntroduceItemCopyWith<$Res> implements $IntroduceItemCopy
   factory _$IntroduceItemCopyWith(_IntroduceItem value, $Res Function(_IntroduceItem) _then) = __$IntroduceItemCopyWithImpl;
 @override @useResult
 $Res call({
- List<String> preferredCities, int fromAge, int toAge, String gender, int lastId
+ int id, int? yearOfBirth, String? nickname, String profileUrl, String title
 });
 
 
@@ -556,14 +550,14 @@ class __$IntroduceItemCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? preferredCities = null,Object? fromAge = null,Object? toAge = null,Object? gender = null,Object? lastId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? yearOfBirth = freezed,Object? nickname = freezed,Object? profileUrl = null,Object? title = null,}) {
   return _then(_IntroduceItem(
-preferredCities: null == preferredCities ? _self._preferredCities : preferredCities // ignore: cast_nullable_to_non_nullable
-as List<String>,fromAge: null == fromAge ? _self.fromAge : fromAge // ignore: cast_nullable_to_non_nullable
-as int,toAge: null == toAge ? _self.toAge : toAge // ignore: cast_nullable_to_non_nullable
-as int,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
-as String,lastId: null == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
-as int,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,yearOfBirth: freezed == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
+as int?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

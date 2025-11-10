@@ -1,4 +1,5 @@
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/introduce/data/dto/introduce_list_response.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,26 +10,26 @@ part "introduce_notifier.g.dart";
 class IntroduceNotifier extends _$IntroduceNotifier {
   @override
   IntroduceState build() {
-    Log.i("체크체크체크 IntroduceNotifier IntroduceState build()");
     _initializeIntroducList();
     return IntroduceState.initial();
   }
 
-  Future<void> _initializeIntroducList() async {
+  Future<List<IntroduceItem>> _initializeIntroducList() async {
     try {
-      Log.i("체크체크체크 _initializeIntroducList 시작");
       final introduceList = await IntroduceListFetchUseCase(ref).call();
-      Log.i("체크체크체크 introduceList $introduceList");
+      state = state.copyWith(introduceList: introduceList, isLoaded: true);
+      return introduceList;
     } catch (e) {
       Log.e(e);
       state = state.copyWith(
         isLoaded: true,
         error: IntroduceListErrorType.network,
       );
+      return [];
     }
   }
 
-  Future<void> fetchIntroduceList() async {
-    await _initializeIntroducList();
+  Future<List<IntroduceItem>> fetchIntroduceList() async {
+    return await _initializeIntroducList();
   }
 }

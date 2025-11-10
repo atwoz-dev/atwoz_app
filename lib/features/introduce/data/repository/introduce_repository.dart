@@ -46,8 +46,6 @@ class IntroduceRepository extends BaseRepository {
         queryParameters: queryParameters,
       );
 
-      print("체크체크 $response");
-
       final result = IntroduceListResponse.fromJson(response);
       return result.data;
     } catch (e) {
@@ -61,33 +59,19 @@ class IntroduceRepository extends BaseRepository {
     required String title,
     required String content,
   }) async {
-    final request = IntroduceAddRequest(
-      title: title,
-      content: content,
-    );
+    final request = IntroduceAddRequest(title: title, content: content);
 
-    await apiService.postJson(
-      path,
-      data: request.toJson(),
-    );
+    await apiService.postJson(path, data: request.toJson());
   }
 
   /// 셀프 소개 상세 조회 api
-  Future<void> getIntroduceDetail({
-    required int id,
-  }) async {
-    await apiService.getJson(
-      "$path/$id",
-    );
+  Future<void> getIntroduceDetail({required int id}) async {
+    await apiService.getJson("$path/$id");
   }
 
   /// 셀프 소개 삭제 api
-  Future<void> deleteIntroduce({
-    required int id,
-  }) async {
-    await apiService.deleteJson(
-      "$path/$id",
-    );
+  Future<void> deleteIntroduce({required int id}) async {
+    await apiService.deleteJson("$path/$id");
   }
 
   /// 셀프 소개 수정 api
@@ -96,26 +80,15 @@ class IntroduceRepository extends BaseRepository {
     required String title,
     required String content,
   }) async {
-    final request = IntroduceUpdateRequest(
-      title: title,
-      content: content,
-    );
+    final request = IntroduceUpdateRequest(title: title, content: content);
 
-    await apiService.patchJson(
-      "$path/$id",
-      data: request.toJson(),
-    );
+    await apiService.patchJson("$path/$id", data: request.toJson());
   }
 
   /// 자신의 셀프 소개 목록 조회 api
-  Future<void> getMyIntroduceList({
-    required int lastId,
-  }) async {
+  Future<void> getMyIntroduceList({required int lastId}) async {
     final request = IntroduceMyListRequest(lastId: lastId);
 
-    await apiService.postJson(
-      "$path/my",
-      data: request.toJson(),
-    );
+    await apiService.postJson("$path/my", data: request.toJson());
   }
 }

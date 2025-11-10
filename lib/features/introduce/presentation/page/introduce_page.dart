@@ -1,7 +1,8 @@
+import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
+import 'package:atwoz_app/features/introduce/introduce.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +26,30 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(introduceProvider.notifier);
+      notifier.fetchIntroduceList();
+    });
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
-    final repository = ref.watch(introduceRepositoryProvider);
     final notifier = ref.read(introduceProvider.notifier);
     final state = ref.watch(introduceProvider);
-    notifier.build();
 
-    // final introduceNotifier = ref.read(introduceRepositoryProvider.)
-    // ref.read(introduceProvider.notifier).fetchIntroduceList();
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding = EdgeInsets.symmetric(
       horizontal: horizontalPadding,
     );
+
+    // TODO: 셀프 소개 목록 불러오기 전까지 로딩??
+    // TODO: api 에러 처리??
+    if (!state.isLoaded) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
     return Stack(
       children: [
@@ -79,7 +92,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   child: Padding(
                     padding: contentPadding,
                     child: _currentTabIndex == 0
-                        ? _buildIntroduceContent(context)
+                        ? _buildIntroduceContent(context, state.introduceList)
                         : _buildIntroduceHistory(context),
                   ),
                 ),
@@ -89,22 +102,20 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         ),
         PostButton(
           onTap: () {
-            navigate(
-              context,
-              route: AppRoute.introduceRegister,
-            );
+            navigate(context, route: AppRoute.introduceRegister);
           },
         ),
       ],
     );
   }
 
-  Widget _buildIntroduceContent(BuildContext context) {
-    const int itemCount = 10;
-    final double thumbWidth = 64.w;
-    final double thumbHeight = 64.h;
+  Widget _buildIntroduceContent(
+    BuildContext context,
+    List<IntroduceItem> items,
+  ) {
     final double gapWidth = 16.w;
 
+    final int itemCount = items.length;
     return ListView.builder(
       padding: EdgeInsets.zero,
       itemCount: itemCount,
@@ -112,9 +123,8 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         bool isLastItem = index == itemCount - 1;
 
         return _introduceItem(
+          item: items[index],
           isLastItem: isLastItem,
-          thumbWidth: thumbWidth,
-          thumbHeight: thumbHeight,
           gapWidth: gapWidth,
         );
       },
@@ -122,11 +132,12 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   }
 
   Widget _introduceItem({
+    required IntroduceItem item,
     required bool isLastItem,
-    required double thumbWidth,
-    required double thumbHeight,
     required double gapWidth,
   }) {
+    final double thumbSize = 64.w;
+
     return Container(
       decoration: BoxDecoration(
         border: isLastItem
@@ -143,30 +154,21 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Row(
             children: [
-              ClipOval(
-                child: SizedBox(
-                  width: thumbWidth,
-                  height: thumbHeight,
-                  child: Image.asset(
-                    ImagePath.selfThumb,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              RoundedImage(size: thumbSize, imageURL: item.profileUrl),
               SizedBox(width: gapWidth),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '송리버 (서울 / 27 / 186)',
+                      item.nickname ?? "nickname",
                       style: Fonts.body02Medium().copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const Gap(4),
                     Text(
-                      '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
+                      item.title,
                       style: Fonts.body03Regular(Palette.colorGrey500),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
