@@ -1,7 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/photo_usecase.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -49,31 +49,11 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 사진 다건 업로드
-  Future<void> uploadPhotos(int index, List<XFile?> photos) async {
+  // 사진 업로드
+  Future<void> uploadPhotos(List<XFile?> photos) async {
     state = photos;
 
     await ref.read(uploadPhotosUsecaseProvider).execute(state);
-  }
-
-// 사진 단건 업로드
-  Future<void> uploadSinglePhoto(int index, XFile photo) async {
-    state = [...state]..[index] = photo;
-
-    await ref.read(uploadSinglePhotoUseCaseProvider).execute((index, photo));
-  }
-
-  // TODO: id 조회 안 돌리고 백엔드에서 받아오기
-  // 사진 단건 삭제
-  Future<void> deletePhoto(int index) async {
-    // 삭제할 사진이 없으면 바로 종료
-    final imageToDelete = state.elementAtOrNull(index);
-    if (imageToDelete == null) return;
-
-    // UI부터 즉시 업데이트
-    state = [...state]..[index] = null;
-
-    await ref.read(deletePhotoUsecaseProvider).execute(imageToDelete);
   }
 
   // 사진 선택
@@ -92,11 +72,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     }
   }
 
-  // 프로필 사진 불러오기
-  Future<void> fetchProfileImages() async {
-    state = await ref.read(fetchPhotoUsecaseProvider).execute();
-  }
-
   // UI만 업데이트 (빈 공간이 있으면 앞으로 당기기)
   void updateState(int index, XFile? photo) {
     final updatedPhotos = [...state];
@@ -110,9 +85,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     final nonNullPhotos = photos.where((photo) => photo != null).toList();
     final nullCount = photos.length - nonNullPhotos.length;
 
-    return [
-      ...nonNullPhotos,
-      ...List.filled(nullCount, null),
-    ];
+    return [...nonNullPhotos, ...List.filled(nullCount, null)];
   }
 }

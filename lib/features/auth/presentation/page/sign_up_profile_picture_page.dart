@@ -4,7 +4,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/image/profile_image_widget.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
@@ -55,8 +54,9 @@ class SignUpProfilePicturePageState
                           children: [
                             Text(
                               '프로필 사진을 등록해주세요',
-                              style: Fonts.header03()
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              style: Fonts.header03().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const Gap(6),
                             ToolTip(
@@ -65,7 +65,7 @@ class SignUpProfilePicturePageState
                               textStyle: Fonts.body03Regular(
                                 Palette.colorWhite,
                               ),
-                            )
+                            ),
                           ],
                         ),
                         const Gap(24),
@@ -74,10 +74,10 @@ class SignUpProfilePicturePageState
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                              ),
                           itemCount: photos.length,
                           itemBuilder: (context, index) {
                             return ProfileImageWidget(
@@ -115,58 +115,58 @@ class SignUpProfilePicturePageState
                       ],
                     ),
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Gap(24),
-                      const AuthPhotoGuideWidget(
+                      Gap(24),
+                      AuthPhotoGuideWidget(
                         title: '이성에게 좋은 인상을 주는 사진',
                         imagePathsWithText: [
                           {
                             'image': 'assets/images/good_pic1.png',
-                            'text': '자연스럽게 웃는 사진'
+                            'text': '자연스럽게 웃는 사진',
                           },
                           {
                             'image': 'assets/images/good_pic2.png',
-                            'text': '이목구비가 선명한 사진'
+                            'text': '이목구비가 선명한 사진',
                           },
                           {
                             'image': 'assets/images/good_pic3.png',
-                            'text': '활동적인 사진'
+                            'text': '활동적인 사진',
                           },
                           {
                             'image': 'assets/images/good_pic4.png',
-                            'text': '분위기 있는 전신사진'
+                            'text': '분위기 있는 전신사진',
                           },
                         ],
                       ),
-                      const Gap(24),
-                      const AuthPhotoGuideWidget(
+                      Gap(24),
+                      AuthPhotoGuideWidget(
                         title: '이성에게 부정적인 인상을 주는 사진',
                         imagePathsWithText: [
                           {
                             'image': 'assets/images/bad_pic1.png',
-                            'text': '보정이 과도한 사진'
+                            'text': '보정이 과도한 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic2.png',
-                            'text': '2인 이상의 단체 사진'
+                            'text': '2인 이상의 단체 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic3.png',
-                            'text': 'AI 프로필'
+                            'text': 'AI 프로필',
                           },
                           {
                             'image': 'assets/images/bad_pic4.png',
-                            'text': '얼굴이 가려진 사진'
+                            'text': '얼굴이 가려진 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic5.png',
-                            'text': '마스크를 착용한 사진'
+                            'text': '마스크를 착용한 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic6.png',
-                            'text': '사진에 대한 설명'
+                            'text': '사진에 대한 설명',
                           },
                         ],
                       ),
@@ -184,11 +184,12 @@ class SignUpProfilePicturePageState
                   final bool isPrimaryPhotoSelected =
                       photos.isNotEmpty && photos[0] != null;
                   return DefaultElevatedButton(
-                    onPressed: isPrimaryPhotoSelected
-                        ? () async {
-                            navigate(context, route: AppRoute.signUpTerms);
-                          }
-                        : null,
+                    onPressed:
+                        isPrimaryPhotoSelected
+                            ? () async {
+                              navigate(context, route: AppRoute.signUpTerms);
+                            }
+                            : null,
                     child: Text(
                       '다음',
                       style: Fonts.body01Medium(

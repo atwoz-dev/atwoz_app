@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sign_up_process_provider.dart';
+part of 'sign_up_process_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,12 +9,12 @@ part of 'sign_up_process_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(SignUpProcess)
-const signUpProcessProvider = SignUpProcessProvider._();
+@ProviderFor(SignUpProcessNotifier)
+const signUpProcessProvider = SignUpProcessNotifierProvider._();
 
-final class SignUpProcessProvider
-    extends $NotifierProvider<SignUpProcess, SignUpProcessState> {
-  const SignUpProcessProvider._()
+final class SignUpProcessNotifierProvider
+    extends $NotifierProvider<SignUpProcessNotifier, SignUpProcessState> {
+  const SignUpProcessNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -26,11 +26,11 @@ final class SignUpProcessProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$signUpProcessHash();
+  String debugGetCreateSourceHash() => _$signUpProcessNotifierHash();
 
   @$internal
   @override
-  SignUpProcess create() => SignUpProcess();
+  SignUpProcessNotifier create() => SignUpProcessNotifier();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(SignUpProcessState value) {
@@ -41,9 +41,10 @@ final class SignUpProcessProvider
   }
 }
 
-String _$signUpProcessHash() => r'41d999fa4783424f62b29c69e9548518eb487683';
+String _$signUpProcessNotifierHash() =>
+    r'6ed69b6556b7c961e995225e24509f0d97962080';
 
-abstract class _$SignUpProcess extends $Notifier<SignUpProcessState> {
+abstract class _$SignUpProcessNotifier extends $Notifier<SignUpProcessState> {
   SignUpProcessState build();
   @$mustCallSuper
   @override

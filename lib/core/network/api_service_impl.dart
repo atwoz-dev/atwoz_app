@@ -240,10 +240,11 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
+    Map<String, String>? headers,
   }) => request(
     path,
     method: 'PUT',
-    contentType: Headers.jsonContentType,
+    contentType: headers?['Content-Type'] ?? Headers.jsonContentType,
     data: data,
     queryParameters: queryParameters,
     requiresAccessToken: requiresAccessToken,

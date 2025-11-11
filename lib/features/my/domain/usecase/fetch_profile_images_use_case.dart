@@ -20,12 +20,14 @@ class FetchProfileImagesUseCase {
       final box = await Hive.openBox(MyProfileImage.boxName);
       final storedProfileImages = box.get('images');
 
-      final profileImages = (storedProfileImages is List)
-          ? storedProfileImages.cast<MyProfileImage?>()
-          : null;
+      final profileImages =
+          (storedProfileImages is List)
+              ? storedProfileImages.cast<MyProfileImage?>()
+              : null;
 
       // Hive에 저장된 이미지가 유효하지 않은지 확인
-      final isInvalid = profileImages == null ||
+      final isInvalid =
+          profileImages == null ||
           profileImages.every((image) => image == null);
 
       if (!isInvalid) {
@@ -33,22 +35,15 @@ class FetchProfileImagesUseCase {
       }
 
       // 서버에서 이미지 가져오기
-      final response =
+      final profileImageDatas =
           await _ref.read(photoRepositoryProvider).fetchProfileImages();
 
-      // 서버 응답이 없으면 빈 리스트 반환
-      if (response == null) {
-        return List<MyProfileImage?>.filled(Dimens.profileImageMaxCount, null);
-      }
+      final newProfileImages = List<MyProfileImage?>.filled(
+        Dimens.profileImageMaxCount,
+        null,
+      );
 
-      // 정렬 및 매핑
-      final sortedPhotos = response.data.toList()
-        ..sort((a, b) => a.order.compareTo(b.order));
-
-      final newProfileImages =
-          List<MyProfileImage?>.filled(Dimens.profileImageMaxCount, null);
-
-      for (final image in sortedPhotos) {
+      for (final image in profileImageDatas) {
         if (image.order >= 0 && image.order < newProfileImages.length) {
           newProfileImages[image.order] = MyProfileImage(
             id: image.id,
@@ -63,8 +58,10 @@ class FetchProfileImagesUseCase {
       return newProfileImages;
     } catch (e) {
       Log.e("❌ 프로필 이미지 가져오기 중 오류 발생: $e");
-      return List.filled(Dimens.profileImageMaxCount,
-          null); // 앱이 정상적으로 작동할 수 있도록 null로 채운 리스트 반환
+      return List.filled(
+        Dimens.profileImageMaxCount,
+        null,
+      ); // 앱이 정상적으로 작동할 수 있도록 null로 채운 리스트 반환
     }
   }
 }

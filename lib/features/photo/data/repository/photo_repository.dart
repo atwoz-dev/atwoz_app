@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/photo/data/dto/presigned_url_response_dto.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +18,65 @@ final photoRepositoryProvider = Provider<PhotoRepository>((ref) {
 
 class PhotoRepository extends BaseRepository {
   PhotoRepository(Ref ref) : super(ref, '/profileimage');
+
+  Future<List<ProfileImageData>> fetchProfileImages() async {
+    final res = await apiService.getJson(path, requiresAccessToken: true);
+
+    if (res is! Map<String, dynamic> || res['data'] is! List) {
+      throw const FormatException('응답 형식이 올바르지 않습니다.');
+    }
+
+    return (res['data'] as List)
+        .map((e) => ProfileImageData.fromJson(e))
+        .toList();
+  }
+
+  Future<PresignedUrlResponseDto> getPresignedUrl() async {
+    final res = await apiService.postJson(
+      '$path/presigned-url',
+      data: {'fileName': '${DateTime.now().millisecondsSinceEpoch}.png'},
+      requiresAccessToken: true,
+    );
+
+    if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
+      throw const FormatException('응답 형식이 올바르지 않습니다.');
+    }
+
+    return PresignedUrlResponseDto.fromJson(res['data']);
+  }
+
+  Future<bool> uploadImageToS3({
+    required String presignedUrl,
+    required File imageFile,
+  }) async {
+    final res = await Dio().put(
+      presignedUrl,
+      options: Options(headers: {'Content-Type': 'image/png'}),
+      data: await imageFile.readAsBytes(),
+    );
+
+    return res.statusCode == 200;
+  }
+
+  Future<bool> uploadProfilePhotos({
+    required List<File> imageFiles,
+    required List<String> presignedUrls,
+  }) async {
+    // 모든 업로드 작업을 Future 리스트로 생성
+    final List<Future<bool>> uploadTasks = [];
+
+    for (int i = 0; i < imageFiles.length; i++) {
+      final file = imageFiles[i];
+      final url = presignedUrls[i];
+
+      // 개별 파일 업로드 함수 호출
+      uploadTasks.add(uploadImageToS3(presignedUrl: url, imageFile: file));
+    }
+
+    final results = await Future.wait(uploadTasks);
+
+    return !results.contains(false);
+  }
 
   // XFile → MultipartFile 변환 함수 (공통 처리)
   Future<MultipartFile?> _convertToMultipartFile(XFile photo) async {
@@ -53,65 +113,64 @@ class PhotoRepository extends BaseRepository {
   }
 
   // 프로필 사진 다건 업로드
-  Future<void> uploadProfilePhotos(List<XFile?> photos) async {
-    final validPhotos = photos.whereType<XFile>().toList(); // null 제거
-    final convertedFiles =
-        await Future.wait(validPhotos.map(_convertToMultipartFile));
-    final files = convertedFiles.whereType<MultipartFile>().toList(); // null 제거
+  // Future<void> uploadProfilePhotos(List<XFile?> photos) async {
+  //   final validPhotos = photos.whereType<XFile>().toList(); // null 제거
+  //   final convertedFiles = await Future.wait(
+  //     validPhotos.map(_convertToMultipartFile),
+  //   );
+  //   final files = convertedFiles.whereType<MultipartFile>().toList(); // null 제거
 
-    if (files.isEmpty) {
-      Log.d("업로드할 파일이 없습니다.");
-      return;
-    }
+  //   if (files.isEmpty) {
+  //     Log.d("업로드할 파일이 없습니다.");
+  //     return;
+  //   }
 
-    final formData = FormData();
-    for (var i = 0; i < files.length; i++) {
-      formData.files.add(MapEntry("requests[$i].image", files[i]));
-    }
-    final fields = <String, String>{};
+  //   final formData = FormData();
+  //   for (var i = 0; i < files.length; i++) {
+  //     formData.files.add(MapEntry("requests[$i].image", files[i]));
+  //   }
+  //   final fields = <String, String>{};
 
-    for (var i = 0; i < files.length; i++) {
-      final json =
-          ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson();
+  //   for (var i = 0; i < files.length; i++) {
+  //     final json =
+  //         ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson();
 
-      json.entries.where((entry) => entry.value != null).forEach((entry) {
-        fields["requests[$i].${entry.key}"] = entry.value.toString();
-      });
-    }
+  //     json.entries.where((entry) => entry.value != null).forEach((entry) {
+  //       fields["requests[$i].${entry.key}"] = entry.value.toString();
+  //     });
+  //   }
 
-    formData.fields.addAll(fields.entries);
+  //   formData.fields.addAll(fields.entries);
 
-    try {
-      await apiService.postFormData(path, data: formData);
-    } catch (e) {
-      Log.d("사진 업로드 중 오류 발생: $e");
-    }
-  }
+  //   try {
+  //     await apiService.postFormData(path, data: formData);
+  //   } catch (e) {
+  //     Log.d("사진 업로드 중 오류 발생: $e");
+  //   }
+  // }
 
   // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
-      await apiService.deleteJson(
-        '$path/$id',
-      );
+      await apiService.deleteJson('$path/$id');
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
     }
   }
 
   // 프로필 이미지 조회
-  Future<ProfileImageResponse?> fetchProfileImages() async {
-    try {
-      final response = await apiService.getJson(path);
-      final profileImageResponse = ProfileImageResponse.fromJson(response);
+  // Future<ProfileImageResponse?> fetchProfileImages() async {
+  //   try {
+  //     final response = await apiService.getJson(path);
+  //     final profileImageResponse = ProfileImageResponse.fromJson(response);
 
-      Log.d("프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
-      return profileImageResponse;
-    } catch (e) {
-      Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
-      return null;
-    }
-  }
+  //     Log.d("프로필 이미지 조회 성공: ${profileImageResponse.toString()}");
+  //     return profileImageResponse;
+  //   } catch (e) {
+  //     Log.d("❌ 프로필 이미지 조회 중 오류 발생: $e");
+  //     return null;
+  //   }
+  // }
 
   // 프로필 이미지 업데이트
   Future<void> updateProfilePhotos(List<EditableProfileImage> photos) async {
@@ -123,37 +182,26 @@ class PhotoRepository extends BaseRepository {
       if (photo.imageFile == null) continue; // imageFile이 null이면 건너뜀
 
       final multipartFile = await _convertToMultipartFile(
-          photo.imageFile!); // XFile → MultipartFile 변환
+        photo.imageFile!,
+      ); // XFile → MultipartFile 변환
       if (multipartFile == null) continue; // multipartFile이 null이면 건너뜀
 
       formData.files.add(
-        MapEntry(
-          "requests[$reqIdx].image",
-          multipartFile,
-        ),
+        MapEntry("requests[$reqIdx].image", multipartFile),
       ); // 요청 이미지 추가
 
       formData.fields.add(
-        MapEntry(
-          "requests[$reqIdx].order",
-          photo.order.toString(),
-        ),
+        MapEntry("requests[$reqIdx].order", photo.order.toString()),
       ); // 요청 order 추가
 
       formData.fields.add(
-        MapEntry(
-          "requests[$reqIdx].isPrimary",
-          photo.isPrimary.toString(),
-        ),
+        MapEntry("requests[$reqIdx].isPrimary", photo.isPrimary.toString()),
       ); // 요청 isPrimary 추가
 
       if (photo.id != null) {
         // id가 null이 아니면 이미지 변경
         formData.fields.add(
-          MapEntry(
-            "requests[$reqIdx].id",
-            photo.id.toString(),
-          ),
+          MapEntry("requests[$reqIdx].id", photo.id.toString()),
         ); // 요청 id 추가
       }
 

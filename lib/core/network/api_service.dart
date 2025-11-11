@@ -67,6 +67,7 @@ abstract class ApiService {
     bool requiresRefreshToken,
     bool requiresRefreshCookie,
     Converter<T>? converter,
+    Map<String, String>? headers,
   });
 
   Future<T> postJson<T>(
