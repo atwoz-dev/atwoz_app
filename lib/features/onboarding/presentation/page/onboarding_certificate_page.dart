@@ -267,9 +267,8 @@ class _OnboardingCertificationPageState
     required String title,
     required String content,
   }) async {
-    return await context.showConfirmDialog(
+    return await context.showPrimaryConfirmDialog(
       submit: DialogButton(label: '확인', onTap: onTapVerify),
-      enableCloseButton: false,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -292,7 +291,6 @@ class _OnboardingCertificationPageState
         ],
       ),
       buttonVerticalPadding: 12,
-      isOnlyConfirm: true,
     );
   }
 }

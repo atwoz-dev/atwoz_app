@@ -20,7 +20,6 @@ extension ConfirmDialogueX on BuildContext {
     required bool enableCloseButton,
     required Widget child,
     required double buttonVerticalPadding,
-    bool? isOnlyConfirm,
   }) async => showDialog(
     barrierColor: Colors.transparent,
     useSafeArea: false,
@@ -32,7 +31,7 @@ extension ConfirmDialogueX on BuildContext {
           enabled: enabled,
           visibleClose: enableCloseButton,
           buttonVerticalPadding: buttonVerticalPadding,
-          isOnlyConfirm: isOnlyConfirm ?? false,
+
           child: child,
         ),
   );
@@ -64,7 +63,6 @@ class _ConfirmDialog extends StatelessWidget {
     this.visibleClose = false,
     required this.child,
     required this.buttonVerticalPadding,
-    this.isOnlyConfirm,
   });
 
   final DialogButton submit;
@@ -73,7 +71,6 @@ class _ConfirmDialog extends StatelessWidget {
   final bool visibleClose;
   final Widget child;
   final double buttonVerticalPadding; // 버튼 세로 여백 설정
-  final bool? isOnlyConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +101,7 @@ class _ConfirmDialog extends StatelessWidget {
                 Row(
                   spacing: 8,
                   children: [
-                    if (isOnlyConfirm == false && cancel != null)
+                    if (cancel != null)
                       Expanded(
                         child: DefaultElevatedButton(
                           onPressed: cancel!.onTap,
