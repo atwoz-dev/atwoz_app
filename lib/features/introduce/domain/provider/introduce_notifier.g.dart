@@ -41,7 +41,7 @@ final class IntroduceNotifierProvider
   }
 }
 
-String _$introduceNotifierHash() => r'837a1ee8f1893592400dc357a223e6351f82052e';
+String _$introduceNotifierHash() => r'a14980a989de1b8ed0a5ac63d6cd1c73e8463cd5';
 
 abstract class _$IntroduceNotifier extends $Notifier<IntroduceState> {
   IntroduceState build();

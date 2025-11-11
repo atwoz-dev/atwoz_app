@@ -23,21 +23,30 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
   int _currentTabIndex = 0;
 
-  void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
+  late IntroduceNotifier notifier;
+
+  void _onTabTapped(int index) => safeSetState(() {
+    _currentTabIndex = index;
+    if (index == 0) {
+      notifier.fetchIntroduceList();
+    } else if (index == 1) {
+      notifier.fetchIntroduceMyList(lastId: null);
+    }
+  });
 
   @override
   void initState() {
     super.initState();
 
+    notifier = ref.read(introduceProvider.notifier);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(introduceProvider.notifier);
       notifier.fetchIntroduceList();
     });
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    final notifier = ref.read(introduceProvider.notifier);
     final state = ref.watch(introduceProvider);
 
     final double horizontalPadding = screenWidth * 0.05;
@@ -93,7 +102,10 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                     padding: contentPadding,
                     child: _currentTabIndex == 0
                         ? _buildIntroduceContent(context, state.introduceList)
-                        : _buildIntroduceHistory(context),
+                        : _buildIntroduceHistory(
+                            context,
+                            state.introduceMyList,
+                          ),
                   ),
                 ),
               ],
@@ -117,19 +129,21 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     final double gapWidth = 16.w;
 
     final int itemCount = items.length;
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        bool isLastItem = index == itemCount - 1;
+    return itemCount == 0
+        ? const Text("셀프 소개 없음")
+        : ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              bool isLastItem = index == itemCount - 1;
 
-        return _introduceItem(
-          item: items[index],
-          isLastItem: isLastItem,
-          gapWidth: gapWidth,
-        );
-      },
-    );
+              return _introduceItem(
+                item: items[index],
+                isLastItem: isLastItem,
+                gapWidth: gapWidth,
+              );
+            },
+          );
   }
 
   Widget _introduceItem({
@@ -184,53 +198,66 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     );
   }
 
-  Widget _buildIntroduceHistory(BuildContext context) {
-    const int itemCount = 4;
+  Widget _buildIntroduceHistory(
+    BuildContext context,
+    List<IntroduceItem> items,
+  ) {
+    int itemCount = items.length;
 
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
-            ),
-          ),
-          child: GestureDetector(
-            onTap: () async {
-              //AutoRouter.of(context).push(const IntroduceDetailScreen());
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
-                          style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w700,
+    return itemCount == 0
+        ? const Text("내가 작성한 셀프소개 없음")
+        : ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              bool isLastItem = index == itemCount - 1;
+              return Container(
+                decoration: BoxDecoration(
+                  border: isLastItem
+                      ? null
+                      : Border(
+                          bottom: BorderSide(
+                            width: 1.w,
+                            color: Palette.colorGrey50,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                        const Gap(4),
-                        Text(
-                          '2025.02.28',
-                          style: Fonts.body03Regular(Palette.colorGrey500),
+                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    //AutoRouter.of(context).push(const IntroduceDetailScreen());
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                items[index].title,
+                                style: Fonts.body02Medium().copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const Gap(4),
+                              Text(
+                                '2025.02.28',
+                                style: Fonts.body03Regular(
+                                  Palette.colorGrey500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+                ),
+              );
+            },
+          );
   }
 }

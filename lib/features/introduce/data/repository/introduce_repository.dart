@@ -86,9 +86,13 @@ class IntroduceRepository extends BaseRepository {
   }
 
   /// 자신의 셀프 소개 목록 조회 api
-  Future<void> getMyIntroduceList({required int lastId}) async {
-    final request = IntroduceMyListRequest(lastId: lastId);
+  Future<List<IntroduceItem>> getMyIntroduceList({int? lastId}) async {
+    final response = await apiService.getJson(
+      "$path/my",
+      queryParameters: lastId != null ? {"lastId": lastId} : null,
+    );
 
-    await apiService.postJson("$path/my", data: request.toJson());
+    final result = IntroduceListResponse.fromJson(response);
+    return result.data;
   }
 }
