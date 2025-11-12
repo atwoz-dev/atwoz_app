@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class DialogButton {
-  const DialogButton({required this.label, required this.onTap});
+  const DialogButton({required this.label, this.onTap});
 
   final String label;
   final VoidCallback? onTap;
