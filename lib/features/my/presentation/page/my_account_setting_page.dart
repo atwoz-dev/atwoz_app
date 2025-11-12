@@ -149,7 +149,7 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
         onConfirm:
             () =>
                 context
-                  ..pop
+                  ..pop()
                   ..pop(),
       );
     }
