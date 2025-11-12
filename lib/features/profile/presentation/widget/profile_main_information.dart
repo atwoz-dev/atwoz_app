@@ -6,6 +6,7 @@ import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
@@ -93,16 +94,8 @@ class _MainHobbyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 2.0,
-        horizontal: 4.0,
-      ),
-      child: Text(
-        name,
-        style: Fonts.body03Regular(
-          context.palette.primary,
-        ),
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+      child: Text(name, style: Fonts.body03Regular(context.palette.primary)),
     );
   }
 }
@@ -135,7 +128,8 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
 
   @override
   Widget build(BuildContext context) {
-    final isWaitingProfileExchange = ref
+    final isWaitingProfileExchange =
+        ref
             .watch(profileProvider(widget.userId))
             .profile
             ?.profileExchangeInfo
@@ -146,22 +140,28 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
     return Row(
       children: [
         Expanded(
-          child: isWaitingProfileExchange
-              ? _PrimaryButton(
-                  onTap: _profileExchangeHandler,
-                  label: '프로필 교환 요청 응답하기',
-                )
-              : _PrimaryButton(
-                  onTap: () => MessageSendBottomSheet.open(
-                    context,
-                    userId: widget.userId,
-                    onSubmit: () => ref
-                        .read(profileProvider(widget.userId).notifier)
-                        .requestMatch(),
+          child:
+              isWaitingProfileExchange
+                  ? _PrimaryButton(
+                    onTap: _profileExchangeHandler,
+                    label: '프로필 교환 요청 응답하기',
+                  )
+                  : _PrimaryButton(
+                    onTap:
+                        () => MessageSendBottomSheet.open(
+                          context,
+                          userId: widget.userId,
+                          onSubmit:
+                              () =>
+                                  ref
+                                      .read(
+                                        profileProvider(widget.userId).notifier,
+                                      )
+                                      .requestMatch(),
+                        ),
+                    label: '대화 해볼래요',
+                    iconPath: IconPath.letter,
                   ),
-                  label: '대화 해볼래요',
-                  iconPath: IconPath.letter,
-                ),
         ),
         const Gap(8.0),
         FavoriteButton(
@@ -174,7 +174,16 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
               userId: widget.userId,
               favoriteType: _selectedType,
             );
+
             if (favoriteType == null) return;
+
+            ref
+                .read(homeProvider.notifier)
+                .updateFavoriteType(
+                  memberId: widget.userId,
+                  type: favoriteType,
+                );
+
             widget.onFavoriteTypeChanged(favoriteType);
           },
         ),
@@ -200,7 +209,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
           if (success) showToastMessage('프로필 교환을 거절하였습니다.');
           if (mounted) {
             context.pop();
-            if(success) context.pop();
+            if (success) context.pop();
           }
         },
       ),
@@ -243,14 +252,9 @@ class _PrimaryButton extends StatelessWidget {
             DefaultIcon(
               iconPath,
               size: 20.0,
-              colorFilter: DefaultIcon.fillColor(
-                Colors.white,
-              ),
+              colorFilter: DefaultIcon.fillColor(Colors.white),
             ),
-          Text(
-            label,
-            style: Fonts.body02Medium(Colors.white),
-          ),
+          Text(label, style: Fonts.body02Medium(Colors.white)),
         ],
       ),
     );
@@ -293,10 +297,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: [
-            _disabledColor,
-            _disabledColor,
-          ],
+          colors: [_disabledColor, _disabledColor],
         ),
       );
     }
@@ -357,9 +358,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   widget.label!,
-                  style: Fonts.body01Regular().copyWith(
-                    color: Colors.white,
-                  ),
+                  style: Fonts.body01Regular().copyWith(color: Colors.white),
                 ),
               ),
           ],

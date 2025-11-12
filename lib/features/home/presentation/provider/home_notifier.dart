@@ -17,36 +17,41 @@ class HomeNotifier extends _$HomeNotifier {
     final profiles =
         await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
 
-    // 최종 상태 반환
     return HomeState(recommendedProfiles: profiles);
   }
 
-  /// 좋아요 설정
-  Future<void> setFavoriteType(int memberId, FavoriteType type) async {
+  // 상태만 변경
+  void updateFavoriteType({required int memberId, required FavoriteType type}) {
+    final profiles = state.value?.recommendedProfiles;
+    if (profiles == null) return;
+
+    state = AsyncData(
+      state.requireValue.copyWith(
+        recommendedProfiles:
+            profiles
+                .map(
+                  (e) =>
+                      e.memberId == memberId
+                          ? e.copyWith(favoriteType: type)
+                          : e,
+                )
+                .toList(),
+      ),
+    );
+  }
+
+  /// 서버 요청 + 상태 변경
+  Future<void> setFavoriteType({
+    required int memberId,
+    required FavoriteType type,
+  }) async {
     if (!state.hasValue || state.value!.recommendedProfiles == null) return;
     try {
-      await ref.read(favoriteRepositoryProvider).requestFavorite(
-            memberId,
-            type: type,
-          );
+      await ref
+          .read(favoriteRepositoryProvider)
+          .requestFavorite(memberId, type: type);
 
-      final currentState = state.value;
-      final profiles = currentState?.recommendedProfiles;
-      if (currentState == null || profiles == null) return;
-
-      state = AsyncData(
-        currentState.copyWith(
-          recommendedProfiles: profiles
-              .map(
-                (e) => e.memberId == memberId
-                    ? e.copyWith(
-                        favoriteType: type,
-                      )
-                    : e,
-              )
-              .toList(),
-        ),
-      );
+      updateFavoriteType(memberId: memberId, type: type);
     } catch (e, stackTrace) {
       Log.e('좋아요 설정 실패: $e');
       state = AsyncError(e, stackTrace);

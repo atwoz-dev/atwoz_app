@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExamState {
 
- QuestionData get questionList; SoulmateData get soulmateList; int get currentSubjectIndex; bool get isSubjectOptional; bool get isDone; bool get hasResultData; bool get hasSoulmate; StoreData get heartBalance; bool get isLoaded; bool get isRequiredDataLoaded; int get currentPage; Map<int, int> get currentAnswerMap; QuestionListErrorType? get error;
+ QuestionData get questionList; SoulmateData get soulmateList; int get currentSubjectIndex; bool get isSubjectOptional; bool get isDone; bool get hasResultData; bool get hasSoulmate; StoreData get heartBalance; bool get isLoaded; int get currentPage; Map<int, int> get currentAnswerMap; QuestionListErrorType? get error;
 /// Create a copy of ExamState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ExamStateCopyWith<ExamState> get copyWith => _$ExamStateCopyWithImpl<ExamState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.isRequiredDataLoaded, isRequiredDataLoaded) || other.isRequiredDataLoaded == isRequiredDataLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other.currentAnswerMap, currentAnswerMap)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other.currentAnswerMap, currentAnswerMap)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,isRequiredDataLoaded,currentPage,const DeepCollectionEquality().hash(currentAnswerMap),error);
+int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,currentPage,const DeepCollectionEquality().hash(currentAnswerMap),error);
 
 @override
 String toString() {
-  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
+  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ExamStateCopyWith<$Res>  {
   factory $ExamStateCopyWith(ExamState value, $Res Function(ExamState) _then) = _$ExamStateCopyWithImpl;
 @useResult
 $Res call({
- QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, bool isRequiredDataLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
+ QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
 });
 
 
@@ -62,7 +62,7 @@ class _$ExamStateCopyWithImpl<$Res>
 
 /// Create a copy of ExamState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? isRequiredDataLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 questionList: null == questionList ? _self.questionList : questionList // ignore: cast_nullable_to_non_nullable
 as QuestionData,soulmateList: null == soulmateList ? _self.soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,6 @@ as bool,hasResultData: null == hasResultData ? _self.hasResultData : hasResultDa
 as bool,hasSoulmate: null == hasSoulmate ? _self.hasSoulmate : hasSoulmate // ignore: cast_nullable_to_non_nullable
 as bool,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
 as StoreData,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
-as bool,isRequiredDataLoaded: null == isRequiredDataLoaded ? _self.isRequiredDataLoaded : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
 as bool,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,currentAnswerMap: null == currentAnswerMap ? _self.currentAnswerMap : currentAnswerMap // ignore: cast_nullable_to_non_nullable
 as Map<int, int>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -189,10 +188,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ExamState() when $default != null:
-return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
   return orElse();
 
 }
@@ -210,10 +209,10 @@ return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)  $default,) {final _that = this;
 switch (_that) {
 case _ExamState():
-return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -230,10 +229,10 @@ return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  bool isRequiredDataLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( QuestionData questionList,  SoulmateData soulmateList,  int currentSubjectIndex,  bool isSubjectOptional,  bool isDone,  bool hasResultData,  bool hasSoulmate,  StoreData heartBalance,  bool isLoaded,  int currentPage,  Map<int, int> currentAnswerMap,  QuestionListErrorType? error)?  $default,) {final _that = this;
 switch (_that) {
 case _ExamState() when $default != null:
-return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.isRequiredDataLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
+return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,_that.isSubjectOptional,_that.isDone,_that.hasResultData,_that.hasSoulmate,_that.heartBalance,_that.isLoaded,_that.currentPage,_that.currentAnswerMap,_that.error);case _:
   return null;
 
 }
@@ -245,7 +244,7 @@ return $default(_that.questionList,_that.soulmateList,_that.currentSubjectIndex,
 
 
 class _ExamState extends ExamState {
-  const _ExamState({required this.questionList, required this.soulmateList, required this.currentSubjectIndex, required this.isSubjectOptional, required this.isDone, required this.hasResultData, required this.hasSoulmate, required this.heartBalance, this.isLoaded = false, this.isRequiredDataLoaded = false, this.currentPage = 0, final  Map<int, int> currentAnswerMap = const {}, this.error}): _currentAnswerMap = currentAnswerMap,super._();
+  const _ExamState({required this.questionList, required this.soulmateList, required this.currentSubjectIndex, required this.isSubjectOptional, required this.isDone, required this.hasResultData, required this.hasSoulmate, required this.heartBalance, this.isLoaded = false, this.currentPage = 0, final  Map<int, int> currentAnswerMap = const {}, this.error}): _currentAnswerMap = currentAnswerMap,super._();
   
 
 @override final  QuestionData questionList;
@@ -257,7 +256,6 @@ class _ExamState extends ExamState {
 @override final  bool hasSoulmate;
 @override final  StoreData heartBalance;
 @override@JsonKey() final  bool isLoaded;
-@override@JsonKey() final  bool isRequiredDataLoaded;
 @override@JsonKey() final  int currentPage;
  final  Map<int, int> _currentAnswerMap;
 @override@JsonKey() Map<int, int> get currentAnswerMap {
@@ -278,16 +276,16 @@ _$ExamStateCopyWith<_ExamState> get copyWith => __$ExamStateCopyWithImpl<_ExamSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.isRequiredDataLoaded, isRequiredDataLoaded) || other.isRequiredDataLoaded == isRequiredDataLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._currentAnswerMap, _currentAnswerMap)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExamState&&(identical(other.questionList, questionList) || other.questionList == questionList)&&(identical(other.soulmateList, soulmateList) || other.soulmateList == soulmateList)&&(identical(other.currentSubjectIndex, currentSubjectIndex) || other.currentSubjectIndex == currentSubjectIndex)&&(identical(other.isSubjectOptional, isSubjectOptional) || other.isSubjectOptional == isSubjectOptional)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.hasResultData, hasResultData) || other.hasResultData == hasResultData)&&(identical(other.hasSoulmate, hasSoulmate) || other.hasSoulmate == hasSoulmate)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._currentAnswerMap, _currentAnswerMap)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,isRequiredDataLoaded,currentPage,const DeepCollectionEquality().hash(_currentAnswerMap),error);
+int get hashCode => Object.hash(runtimeType,questionList,soulmateList,currentSubjectIndex,isSubjectOptional,isDone,hasResultData,hasSoulmate,heartBalance,isLoaded,currentPage,const DeepCollectionEquality().hash(_currentAnswerMap),error);
 
 @override
 String toString() {
-  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, isRequiredDataLoaded: $isRequiredDataLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
+  return 'ExamState(questionList: $questionList, soulmateList: $soulmateList, currentSubjectIndex: $currentSubjectIndex, isSubjectOptional: $isSubjectOptional, isDone: $isDone, hasResultData: $hasResultData, hasSoulmate: $hasSoulmate, heartBalance: $heartBalance, isLoaded: $isLoaded, currentPage: $currentPage, currentAnswerMap: $currentAnswerMap, error: $error)';
 }
 
 
@@ -298,7 +296,7 @@ abstract mixin class _$ExamStateCopyWith<$Res> implements $ExamStateCopyWith<$Re
   factory _$ExamStateCopyWith(_ExamState value, $Res Function(_ExamState) _then) = __$ExamStateCopyWithImpl;
 @override @useResult
 $Res call({
- QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, bool isRequiredDataLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
+ QuestionData questionList, SoulmateData soulmateList, int currentSubjectIndex, bool isSubjectOptional, bool isDone, bool hasResultData, bool hasSoulmate, StoreData heartBalance, bool isLoaded, int currentPage, Map<int, int> currentAnswerMap, QuestionListErrorType? error
 });
 
 
@@ -315,7 +313,7 @@ class __$ExamStateCopyWithImpl<$Res>
 
 /// Create a copy of ExamState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? isRequiredDataLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? questionList = null,Object? soulmateList = null,Object? currentSubjectIndex = null,Object? isSubjectOptional = null,Object? isDone = null,Object? hasResultData = null,Object? hasSoulmate = null,Object? heartBalance = null,Object? isLoaded = null,Object? currentPage = null,Object? currentAnswerMap = null,Object? error = freezed,}) {
   return _then(_ExamState(
 questionList: null == questionList ? _self.questionList : questionList // ignore: cast_nullable_to_non_nullable
 as QuestionData,soulmateList: null == soulmateList ? _self.soulmateList : soulmateList // ignore: cast_nullable_to_non_nullable
@@ -326,7 +324,6 @@ as bool,hasResultData: null == hasResultData ? _self.hasResultData : hasResultDa
 as bool,hasSoulmate: null == hasSoulmate ? _self.hasSoulmate : hasSoulmate // ignore: cast_nullable_to_non_nullable
 as bool,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
 as StoreData,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
-as bool,isRequiredDataLoaded: null == isRequiredDataLoaded ? _self.isRequiredDataLoaded : isRequiredDataLoaded // ignore: cast_nullable_to_non_nullable
 as bool,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,currentAnswerMap: null == currentAnswerMap ? _self._currentAnswerMap : currentAnswerMap // ignore: cast_nullable_to_non_nullable
 as Map<int, int>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable

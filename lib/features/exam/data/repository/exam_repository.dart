@@ -74,26 +74,6 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  Future<List<IntroducedProfileDto>> getRecommendList() async {
-    try {
-      //TODO(mh): 실제 엔드포인트로 변경 필요. 서버 개발중
-      final response = await apiService.getJson<Map<String, dynamic>>(
-        '/member/introduction/soulmate',
-      );
-
-      if (response['data'] is! List) {
-        throw const NetworkException.formatException();
-      }
-
-      return (response['data'] as List)
-          .map((e) => IntroducedProfileDto.fromJson(e))
-          .toList();
-    } catch (e) {
-      Log.e(e);
-      return [];
-    }
-  }
-
   Future<void> removeSoulmateProfileBlur({
     required int memberId,
   }) async {
