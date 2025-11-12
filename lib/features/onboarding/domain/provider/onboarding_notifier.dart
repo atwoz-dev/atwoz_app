@@ -90,8 +90,11 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     String phoneNumber,
     String code,
   ) async {
+    if (state.isLoading) {
+      return (null, state.status);
+    }
     try {
-      state = state.copyWith(isLoading: true);
+      state = state.copyWith(isLoading: true, validationError: null);
       final authUseCase = ref.read(authUsecaseProvider);
       final userData = await authUseCase.signIn(
         UserSignInRequest(phoneNumber: phoneNumber, code: code),

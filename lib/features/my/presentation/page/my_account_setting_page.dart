@@ -146,6 +146,8 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           return;
         }
 
+        context.pop();
+
         navigate(context, route: AppRoute.onboard, method: NavigationMethod.go);
       },
     );
