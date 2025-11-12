@@ -36,7 +36,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
 
       await _updateCachedProfiles(index);
 
-      _updateProfileState(memberId);
+      _setIntroducedMemberById(memberId);
     } catch (e, stackTrace) {
       Log.e('소개 프로필 블러 제거 실패: $e');
       state = AsyncError(e, stackTrace);
@@ -60,7 +60,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   }
 
   /// UI 상태 즉시 갱신
-  void _updateProfileState(int memberId) {
+  void _setIntroducedMemberById(int memberId) {
     final updatedProfiles =
         state.requireValue.map((profile) {
           return profile.memberId == memberId
