@@ -61,18 +61,9 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final signOutCompleted =
-                      await ref.read(mySettingProvider.notifier).signOut();
-                  if (!context.mounted) return;
-                  if (!signOutCompleted) {
-                    ErrorDialog.open(
-                      context,
-                      error: DialogueErrorType.failSignOut,
-                      onConfirm: context.pop,
-                    );
+                  await _handleSignOut();
 
-                    return;
-                  }
+                  if (!context.mounted) return;
 
                   navigate(
                     context,
@@ -133,18 +124,9 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
           return;
         }
 
-        final signOutCompleted =
-            await ref.read(mySettingProvider.notifier).signOut();
-        if (!mounted) return;
-        if (!signOutCompleted) {
-          ErrorDialog.open(
-            context,
-            error: DialogueErrorType.failSignOut,
-            onConfirm: context.pop,
-          );
+        await _handleSignOut();
 
-          return;
-        }
+        if (!mounted) return;
 
         context.pop();
 
@@ -154,6 +136,23 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
 
     if (isUpdated != null && isUpdated) return;
     setState(() => _isSwitched = false);
+  }
+
+  Future<void> _handleSignOut() async {
+    final signOutCompleted =
+        await ref.read(mySettingProvider.notifier).signOut();
+    if (!mounted) return;
+    if (!signOutCompleted) {
+      ErrorDialog.open(
+        context,
+        error: DialogueErrorType.failSignOut,
+        onConfirm:
+            () =>
+                context
+                  ..pop
+                  ..pop(),
+      );
+    }
   }
 }
 
