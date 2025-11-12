@@ -13,6 +13,8 @@ part 'onboarding_notifier.g.dart';
 
 @riverpod
 class OnboardingNotifier extends _$OnboardingNotifier {
+  Timer? _resendTimer;
+
   @override
   OnboardingState build() {
     return OnboardingState.initial();
@@ -24,12 +26,33 @@ class OnboardingNotifier extends _$OnboardingNotifier {
       await ref.read(authUsecaseProvider).sendSmsVerificationCode(phoneNumber);
 
       showToastMessage('인증번호가 발송되었습니다.');
+      _startResendCountdown();
       return true;
     } catch (e) {
       Log.e('SMS 발송 실패', errorObject: e);
       showToastMessage('인증번호 발송에 실패했습니다.');
       return false;
     }
+  }
+
+  void _startResendCountdown() {
+    _resendTimer?.cancel();
+    const duration = 30;
+    int leftSeconds = duration;
+
+    state = state.copyWith(leftSeconds: leftSeconds);
+
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      leftSeconds--;
+
+      if (leftSeconds <= 0) {
+        timer.cancel();
+        _resendTimer = null;
+        leftSeconds = 0;
+      }
+
+      state = state.copyWith(leftSeconds: leftSeconds);
+    });
   }
 
   // 인증번호 재발송
@@ -39,6 +62,7 @@ class OnboardingNotifier extends _$OnboardingNotifier {
       await authUseCase.sendSmsVerificationCode(phoneNumber);
       showToastMessage('인증번호가 재발송되었습니다.');
       state = state.copyWith(validationError: null);
+      _startResendCountdown();
       return true;
     } catch (e) {
       Log.e('재발송 실패', errorObject: e);
@@ -103,7 +127,8 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     }
   }
 
-  void updateResendCountdown(int countdown) {
-    state = state.copyWith(resendCountDown: countdown);
+  void disposeTimer() {
+    _resendTimer?.cancel();
+    _resendTimer = null;
   }
 }

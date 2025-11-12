@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OnboardingState {
 
- AuthStatus? get status; bool get isButtonEnabled; int get resendCountDown; bool get isLoading; String? get validationError;
+ AuthStatus? get status; int get leftSeconds; bool get isButtonEnabled; bool get isLoading; String? get validationError;
 /// Create a copy of OnboardingState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $OnboardingStateCopyWith<OnboardingState> get copyWith => _$OnboardingStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OnboardingState&&(identical(other.status, status) || other.status == status)&&(identical(other.isButtonEnabled, isButtonEnabled) || other.isButtonEnabled == isButtonEnabled)&&(identical(other.resendCountDown, resendCountDown) || other.resendCountDown == resendCountDown)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.validationError, validationError) || other.validationError == validationError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OnboardingState&&(identical(other.status, status) || other.status == status)&&(identical(other.leftSeconds, leftSeconds) || other.leftSeconds == leftSeconds)&&(identical(other.isButtonEnabled, isButtonEnabled) || other.isButtonEnabled == isButtonEnabled)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.validationError, validationError) || other.validationError == validationError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isButtonEnabled,resendCountDown,isLoading,validationError);
+int get hashCode => Object.hash(runtimeType,status,leftSeconds,isButtonEnabled,isLoading,validationError);
 
 @override
 String toString() {
-  return 'OnboardingState(status: $status, isButtonEnabled: $isButtonEnabled, resendCountDown: $resendCountDown, isLoading: $isLoading, validationError: $validationError)';
+  return 'OnboardingState(status: $status, leftSeconds: $leftSeconds, isButtonEnabled: $isButtonEnabled, isLoading: $isLoading, validationError: $validationError)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $OnboardingStateCopyWith<$Res>  {
   factory $OnboardingStateCopyWith(OnboardingState value, $Res Function(OnboardingState) _then) = _$OnboardingStateCopyWithImpl;
 @useResult
 $Res call({
- AuthStatus? status, bool isButtonEnabled, int resendCountDown, bool isLoading, String? validationError
+ AuthStatus? status, int leftSeconds, bool isButtonEnabled, bool isLoading, String? validationError
 });
 
 
@@ -62,12 +62,12 @@ class _$OnboardingStateCopyWithImpl<$Res>
 
 /// Create a copy of OnboardingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? isButtonEnabled = null,Object? resendCountDown = null,Object? isLoading = null,Object? validationError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? leftSeconds = null,Object? isButtonEnabled = null,Object? isLoading = null,Object? validationError = freezed,}) {
   return _then(_self.copyWith(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AuthStatus?,isButtonEnabled: null == isButtonEnabled ? _self.isButtonEnabled : isButtonEnabled // ignore: cast_nullable_to_non_nullable
-as bool,resendCountDown: null == resendCountDown ? _self.resendCountDown : resendCountDown // ignore: cast_nullable_to_non_nullable
-as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as AuthStatus?,leftSeconds: null == leftSeconds ? _self.leftSeconds : leftSeconds // ignore: cast_nullable_to_non_nullable
+as int,isButtonEnabled: null == isButtonEnabled ? _self.isButtonEnabled : isButtonEnabled // ignore: cast_nullable_to_non_nullable
+as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,validationError: freezed == validationError ? _self.validationError : validationError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -154,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus? status,  bool isButtonEnabled,  int resendCountDown,  bool isLoading,  String? validationError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus? status,  int leftSeconds,  bool isButtonEnabled,  bool isLoading,  String? validationError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OnboardingState() when $default != null:
-return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.isLoading,_that.validationError);case _:
+return $default(_that.status,_that.leftSeconds,_that.isButtonEnabled,_that.isLoading,_that.validationError);case _:
   return orElse();
 
 }
@@ -175,10 +175,10 @@ return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus? status,  bool isButtonEnabled,  int resendCountDown,  bool isLoading,  String? validationError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus? status,  int leftSeconds,  bool isButtonEnabled,  bool isLoading,  String? validationError)  $default,) {final _that = this;
 switch (_that) {
 case _OnboardingState():
-return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.isLoading,_that.validationError);case _:
+return $default(_that.status,_that.leftSeconds,_that.isButtonEnabled,_that.isLoading,_that.validationError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +195,10 @@ return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus? status,  bool isButtonEnabled,  int resendCountDown,  bool isLoading,  String? validationError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus? status,  int leftSeconds,  bool isButtonEnabled,  bool isLoading,  String? validationError)?  $default,) {final _that = this;
 switch (_that) {
 case _OnboardingState() when $default != null:
-return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.isLoading,_that.validationError);case _:
+return $default(_that.status,_that.leftSeconds,_that.isButtonEnabled,_that.isLoading,_that.validationError);case _:
   return null;
 
 }
@@ -210,12 +210,12 @@ return $default(_that.status,_that.isButtonEnabled,_that.resendCountDown,_that.i
 
 
 class _OnboardingState extends OnboardingState {
-  const _OnboardingState({this.status, required this.isButtonEnabled, required this.resendCountDown, required this.isLoading, this.validationError}): super._();
+  const _OnboardingState({this.status, required this.leftSeconds, required this.isButtonEnabled, required this.isLoading, this.validationError}): super._();
   
 
 @override final  AuthStatus? status;
+@override final  int leftSeconds;
 @override final  bool isButtonEnabled;
-@override final  int resendCountDown;
 @override final  bool isLoading;
 @override final  String? validationError;
 
@@ -229,16 +229,16 @@ _$OnboardingStateCopyWith<_OnboardingState> get copyWith => __$OnboardingStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnboardingState&&(identical(other.status, status) || other.status == status)&&(identical(other.isButtonEnabled, isButtonEnabled) || other.isButtonEnabled == isButtonEnabled)&&(identical(other.resendCountDown, resendCountDown) || other.resendCountDown == resendCountDown)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.validationError, validationError) || other.validationError == validationError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnboardingState&&(identical(other.status, status) || other.status == status)&&(identical(other.leftSeconds, leftSeconds) || other.leftSeconds == leftSeconds)&&(identical(other.isButtonEnabled, isButtonEnabled) || other.isButtonEnabled == isButtonEnabled)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.validationError, validationError) || other.validationError == validationError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isButtonEnabled,resendCountDown,isLoading,validationError);
+int get hashCode => Object.hash(runtimeType,status,leftSeconds,isButtonEnabled,isLoading,validationError);
 
 @override
 String toString() {
-  return 'OnboardingState(status: $status, isButtonEnabled: $isButtonEnabled, resendCountDown: $resendCountDown, isLoading: $isLoading, validationError: $validationError)';
+  return 'OnboardingState(status: $status, leftSeconds: $leftSeconds, isButtonEnabled: $isButtonEnabled, isLoading: $isLoading, validationError: $validationError)';
 }
 
 
@@ -249,7 +249,7 @@ abstract mixin class _$OnboardingStateCopyWith<$Res> implements $OnboardingState
   factory _$OnboardingStateCopyWith(_OnboardingState value, $Res Function(_OnboardingState) _then) = __$OnboardingStateCopyWithImpl;
 @override @useResult
 $Res call({
- AuthStatus? status, bool isButtonEnabled, int resendCountDown, bool isLoading, String? validationError
+ AuthStatus? status, int leftSeconds, bool isButtonEnabled, bool isLoading, String? validationError
 });
 
 
@@ -266,12 +266,12 @@ class __$OnboardingStateCopyWithImpl<$Res>
 
 /// Create a copy of OnboardingState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? isButtonEnabled = null,Object? resendCountDown = null,Object? isLoading = null,Object? validationError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? leftSeconds = null,Object? isButtonEnabled = null,Object? isLoading = null,Object? validationError = freezed,}) {
   return _then(_OnboardingState(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AuthStatus?,isButtonEnabled: null == isButtonEnabled ? _self.isButtonEnabled : isButtonEnabled // ignore: cast_nullable_to_non_nullable
-as bool,resendCountDown: null == resendCountDown ? _self.resendCountDown : resendCountDown // ignore: cast_nullable_to_non_nullable
-as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as AuthStatus?,leftSeconds: null == leftSeconds ? _self.leftSeconds : leftSeconds // ignore: cast_nullable_to_non_nullable
+as int,isButtonEnabled: null == isButtonEnabled ? _self.isButtonEnabled : isButtonEnabled // ignore: cast_nullable_to_non_nullable
+as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,validationError: freezed == validationError ? _self.validationError : validationError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

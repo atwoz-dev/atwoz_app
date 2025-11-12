@@ -189,7 +189,7 @@ Future<bool?> _showUpdateDormantStatus(
         Text(
           '프로필이 상대방에게 노출되지 않고\n'
           '매칭을 포함한 모든 활동이 제한됩니다\n'
-          '휴면회원으로 전환하시겠습니까?\n',
+          '휴면회원으로 전환하시겠습니까?',
           style: Fonts.body02Medium().copyWith(
             fontWeight: FontWeight.w400,
             color: const Color(0xff515151),

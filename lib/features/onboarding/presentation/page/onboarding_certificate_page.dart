@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
-import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
@@ -32,9 +31,6 @@ class _OnboardingCertificationPageState
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
 
-  Timer? _resendTimer;
-  int _resendCountdown = 0;
-
   @override
   void initState() {
     super.initState();
@@ -45,8 +41,6 @@ class _OnboardingCertificationPageState
       );
 
       if (!isCodeSended) return;
-
-      _startResendCountdown(notifier); // 초기 발송 후 타이머 시작
     });
 
     _codeController.addListener(() {
@@ -56,44 +50,10 @@ class _OnboardingCertificationPageState
 
   @override
   void dispose() {
+    ref.read(onboardingProvider.notifier).disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
-    _resendTimer?.cancel();
     super.dispose();
-  }
-
-  void _startResendCountdown(OnboardingNotifier notifier) {
-    _resendTimer?.cancel();
-    _resendCountdown = 30; // 초기 카운트 설정
-
-    // Notifier의 resendCountDown 상태만 업데이트 (View에서 watch할 수 있도록)
-    notifier.updateResendCountdown(_resendCountdown);
-
-    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        timer.cancel(); // 위젯이 unmount되면 타이머 중지
-        return;
-      }
-
-      _resendCountdown--;
-
-      if (_resendCountdown <= 0) {
-        timer.cancel();
-        _resendCountdown = 0;
-      }
-
-      // Notifier의 상태를 업데이트하여 UI에 반영
-      notifier.updateResendCountdown(_resendCountdown);
-    });
-  }
-
-  void _resendCode(OnboardingNotifier notifier) async {
-    if (_resendCountdown > 0) return; // 재전송이 활성화되지 않은 경우 리턴
-
-    final isCodeResended = await notifier.resendCode(widget.phoneNumber);
-
-    if (!isCodeResended) return;
-    _startResendCountdown(notifier);
   }
 
   @override
@@ -142,13 +102,15 @@ class _OnboardingCertificationPageState
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
                               onPressed:
-                                  state.resendCountDown == 0
-                                      ? () => _resendCode(notifier)
+                                  state.leftSeconds == 0
+                                      ? () => notifier.resendCode(
+                                        widget.phoneNumber,
+                                      )
                                       : null,
                               child: Text(
-                                state.resendCountDown == 0
+                                state.leftSeconds == 0
                                     ? '재발송'
-                                    : '00:${state.resendCountDown.toString().padLeft(2, '0')}',
+                                    : '00:${state.leftSeconds.toString().padLeft(2, '0')}',
                               ),
                             ),
                           ),

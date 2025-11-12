@@ -21,7 +21,6 @@ extension ConfirmDialogueX on BuildContext {
     required Widget child,
     required double buttonVerticalPadding,
   }) async => showDialog(
-    barrierColor: Colors.transparent,
     useSafeArea: false,
     context: this,
     builder:
@@ -42,7 +41,6 @@ extension ConfirmDialogueX on BuildContext {
     required Widget child,
     required double buttonVerticalPadding,
   }) async => showDialog(
-    barrierColor: Colors.transparent,
     useSafeArea: false,
     context: this,
     builder:
@@ -74,73 +72,71 @@ class _ConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: const Color(0xff404040).withValues(alpha: 0.8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            padding: const EdgeInsets.fromLTRB(12, 32, 12, 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                if (visibleClose)
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      onTap: context.pop,
-                      child: const Icon(Icons.close, size: 24.0),
-                    ),
+    return Center(
+      child: Material(
+        type: MaterialType.transparency,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.fromLTRB(12, 32, 12, 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (visibleClose)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: context.pop,
+                    child: const Icon(Icons.close, size: 24.0),
                   ),
-                child,
-                const Gap(24),
-                Row(
-                  spacing: 8,
-                  children: [
-                    if (cancel != null)
-                      Expanded(
-                        child: DefaultElevatedButton(
-                          onPressed: cancel!.onTap,
-                          primary: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                            vertical: buttonVerticalPadding,
-                          ),
-                          border: const BorderSide(color: Color(0xffE1E1E1)),
-                          child: Text(
-                            cancel!.label,
-                            style: Fonts.body02Medium().copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: Palette.colorBlack,
-                            ),
-                          ),
-                        ),
-                      ),
+                ),
+              child,
+              const Gap(24),
+              Row(
+                spacing: 8,
+                children: [
+                  if (cancel != null)
                     Expanded(
                       child: DefaultElevatedButton(
-                        onPressed: enabled ? submit.onTap : null,
-                        primary: Palette.colorPrimary500,
+                        onPressed: cancel!.onTap,
+                        primary: Colors.white,
                         padding: EdgeInsets.symmetric(
                           vertical: buttonVerticalPadding,
                         ),
+                        border: const BorderSide(color: Color(0xffE1E1E1)),
                         child: Text(
-                          submit.label,
+                          cancel!.label,
                           style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            color: Palette.colorBlack,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  Expanded(
+                    child: DefaultElevatedButton(
+                      onPressed: enabled ? submit.onTap : null,
+                      primary: Palette.colorPrimary500,
+                      padding: EdgeInsets.symmetric(
+                        vertical: buttonVerticalPadding,
+                      ),
+                      child: Text(
+                        submit.label,
+                        style: Fonts.body02Medium().copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
