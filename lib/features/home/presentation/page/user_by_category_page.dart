@@ -102,7 +102,10 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       if (pressed != true) return;
 
-      await introducedProfilesNotifier.openProfile(memberId: profile.memberId);
+      await introducedProfilesNotifier.openProfile(
+        index: index,
+        memberId: profile.memberId,
+      );
       if (!context.mounted) return;
       _navigateToProfile(context, profile);
       return;

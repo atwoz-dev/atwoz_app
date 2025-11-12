@@ -1,11 +1,10 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
-import 'package:hive_ce/hive.dart';
+import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduced_profiles_notifier.g.dart';
@@ -27,7 +26,7 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   }
 
   /// 프로필 소개받기
-  Future<void> openProfile({required int memberId}) async {
+  Future<void> openProfile({required int index, required int memberId}) async {
     if (!state.hasValue) return;
 
     try {
@@ -35,10 +34,9 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
 
       await _updateHeartBalance();
 
-      _updateProfileState(memberId);
+      await _updateCachedProfiles(index);
 
-      // 캐시된 데이터 삭제
-      await _clearCachedProfiles();
+      _updateProfileState(memberId);
     } catch (e, stackTrace) {
       Log.e('소개 프로필 블러 제거 실패: $e');
       state = AsyncError(e, stackTrace);
@@ -73,9 +71,10 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
     state = AsyncData(updatedProfiles);
   }
 
-  /// 캐시 삭제
-  Future<void> _clearCachedProfiles() async {
-    final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
-    await box.delete(category.name);
+  /// 저장된 프로필 목록에서 해당 프로필 수정
+  Future<void> _updateCachedProfiles(int index) async {
+    await ref
+        .read(updateIntroducedProfileUseCaseProvider)
+        .execute(index: index, category: category);
   }
 }
