@@ -4,13 +4,14 @@ import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list
 import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:atwoz_app/features/message_list/presentation/page/message_list_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/my_page.dart';
 
 enum MainTabType {
   home('홈'),
   favorite('좋아요'),
   introduce('셀프소개'),
-  interview('인터뷰'),
+  message('메시지'),
   my('MY');
 
   const MainTabType(this.label);
@@ -38,10 +39,10 @@ final mainTabs = [
     container: const IntroducePage(),
   ),
   TabItemInfo(
-    icon: IconPath.interview,
-    iconFill: IconPath.interviewFill,
-    label: MainTabType.interview.label,
-    container: const InterviewPage(),
+    icon: IconPath.message,
+    iconFill: IconPath.messageFill,
+    label: MainTabType.message.label,
+    container: const MessageListPage(),
   ),
   TabItemInfo(
     icon: IconPath.mypage,

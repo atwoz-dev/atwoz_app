@@ -57,6 +57,8 @@ class IconPath {
   static const String selfFill = '$iconsPath/self_fill.svg';
   static const String interview = '$iconsPath/interview.svg';
   static const String interviewFill = '$iconsPath/interview_fill.svg';
+  static const String message = '$iconsPath/message.svg';
+  static const String messageFill = '$iconsPath/message_fill.svg';
   static const String mypage = '$iconsPath/mypage.svg';
   static const String mypageFill = '$iconsPath/mypage_fill.svg';
 
