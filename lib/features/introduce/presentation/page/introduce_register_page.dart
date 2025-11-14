@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
+import 'package:atwoz_app/app/widget/dialogue/custom_return_dialogue.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
@@ -47,7 +48,7 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
             primary: canSubmit ? Palette.colorBlack : Palette.colorGrey500,
             onPressed: canSubmit
                 ? () {
-                    CustomDialogue.showTwoChoiceDialogue(
+                    CustomReturnDialogue.showTwoChoiceDialogue(
                       context: context,
                       content: '등록 버튼을 누르면\n작성된 내용을 저장합니다.',
                       elevatedButtonText: '등록',
@@ -59,19 +60,18 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
                                 title: _inputTitleController.text.trim(),
                                 content: _inputContentController.text.trim(),
                               );
-
-                          if (!context.mounted) return;
-                          navigate(
-                            context,
-                            route: AppRoute.mainTab,
-                            method: NavigationMethod.go,
-                          );
                         } catch (e) {
                           // TODO: content 가 40자 이하면 에러 발생
                           showToastMessage('내용을 저장하는데 실패했습니다.');
                         }
                       },
-                    );
+                    ).then((pressedConfirm) {
+                      if (pressedConfirm == true) {
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      }
+                    });
                   }
                 : null,
             child: const Text('등록'),

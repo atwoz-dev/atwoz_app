@@ -1,7 +1,6 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_introduce_detail_use_case.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_my_introduce_list_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

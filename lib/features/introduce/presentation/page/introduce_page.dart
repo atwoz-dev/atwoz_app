@@ -48,7 +48,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    print("IntroducePage buildPage");
     // final state = ref.watch(introduceProvider);
     final isLoaded = ref.watch(
       introduceProvider.select((value) => value.isLoaded),
@@ -114,10 +113,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                     padding: contentPadding,
                     child: _currentTabIndex == 0
                         ? _buildIntroduceContent(context, introduceList)
-                        : _buildIntroduceHistory(
-                            context,
-                            introduceMyList,
-                          ),
+                        : _buildIntroduceHistory(context, introduceMyList),
                   ),
                 ),
               ],
@@ -125,9 +121,10 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
           ),
         ),
         PostButton(
-          onTap: () {
-            // TODO: introduceRegister 갔다와서 셀프소개목록 갱신필요함
-            navigate(context, route: AppRoute.introduceRegister);
+          onTap: () async {
+            await navigate(context, route: AppRoute.introduceRegister);
+            // TOGO: 등록한 셀프소개가 서버에 적용되는데 약간의 딜레이 발생
+            _refreshIntroduceList();
           },
         ),
       ],
@@ -217,6 +214,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   ) {
     int itemCount = introduces.length;
 
+    // TODO: 내 셀프소개 글이 없는 경우 화면 필요
     return itemCount == 0
         ? const Text("내가 작성한 셀프소개 없음")
         : ListView.builder(
@@ -238,12 +236,12 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                 ),
                 child: GestureDetector(
                   onTap: () async {
-                    //AutoRouter.of(context).push(const IntroduceDetailScreen());
-                    navigate(
+                    await navigate(
                       context,
                       route: AppRoute.introduceEdit,
                       extra: IntroduceEditArguments(id: introcude.id),
                     );
+                    _refreshIntroduceList();
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -262,6 +260,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const Gap(4),
+                              // TODO: 날짜???
                               Text(
                                 '2025.02.28',
                                 style: Fonts.body03Regular(
@@ -278,5 +277,15 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
               );
             },
           );
+  }
+
+  void _refreshIntroduceList() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (_currentTabIndex == 0) {
+      notifier.fetchIntroduceList();
+    } else if (_currentTabIndex == 1) {
+      notifier.fetchIntroduceMyList();
+    }
   }
 }

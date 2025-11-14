@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
+import 'package:atwoz_app/app/widget/dialogue/custom_return_dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -17,10 +18,7 @@ import 'package:gap/gap.dart';
 
 class IntroduceEditPage extends ConsumerStatefulWidget {
   final int id;
-  const IntroduceEditPage({
-    super.key,
-    required this.id,
-  });
+  const IntroduceEditPage({super.key, required this.id});
 
   @override
   IntroduceEditPageState createState() => IntroduceEditPageState();
@@ -52,8 +50,6 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("IntroduceEditPage buildPage");
-
     bool canSubmit = ref.watch(
       introduceEditProvider.select((value) => value.canSubmit),
     );
@@ -83,7 +79,7 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
             primary: canSubmit ? Palette.colorBlack : Palette.colorGrey500,
             child: const Text('수정'),
             onPressed: () {
-              CustomDialogue.showTwoChoiceDialogue(
+              CustomReturnDialogue.showTwoChoiceDialogue(
                 context: context,
                 content: '수정 버튼을 누르면\n작성된 내용을 저장합니다.',
                 elevatedButtonText: '수정',
@@ -96,19 +92,16 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
                           title: _inputTitleController.text,
                           content: _inputContentController.text,
                         );
-
-                    if (!context.mounted) return;
-                    navigate(
-                      context,
-                      route: AppRoute.mainTab,
-                      method: NavigationMethod.go,
-                    );
                   } catch (e) {
                     // TODO: content 가 40자 이하면 에러 발생
                     showToastMessage('내용을 수정하는데 실패했습니다.');
                   }
                 },
-              );
+              ).then((pressedConfirm) {
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              });
             },
           ),
         ],
