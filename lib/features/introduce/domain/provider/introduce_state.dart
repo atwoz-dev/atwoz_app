@@ -1,4 +1,5 @@
 import 'package:atwoz_app/features/introduce/data/data.dart';
+import 'package:atwoz_app/features/introduce/data/dto/introduce_detail_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'introduce_state.freezed.dart';
@@ -10,6 +11,7 @@ abstract class IntroduceState with _$IntroduceState {
   const factory IntroduceState({
     @Default([]) List<IntroduceItem> introduceList,
     @Default([]) List<IntroduceItem> introduceMyList,
+    @Default(null) IntroduceDetailData? introduceDetail,
     @Default(false) bool isLoaded,
     IntroduceListErrorType? error,
   }) = _IntroduceState;

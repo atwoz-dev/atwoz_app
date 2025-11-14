@@ -91,3 +91,11 @@ class ReportArguments extends RouteArguments {
   final String name;
   final int userId;
 }
+
+class IntroduceEditArguments extends RouteArguments {
+  const IntroduceEditArguments({
+    required this.id,
+  });
+
+  final int id;
+}

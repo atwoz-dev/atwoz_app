@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
@@ -47,7 +48,18 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    final state = ref.watch(introduceProvider);
+    print("IntroducePage buildPage");
+    // final state = ref.watch(introduceProvider);
+    final isLoaded = ref.watch(
+      introduceProvider.select((value) => value.isLoaded),
+    );
+    final introduceList = ref.watch(
+      introduceProvider.select((value) => value.introduceList),
+    );
+
+    final introduceMyList = ref.watch(
+      introduceProvider.select((value) => value.introduceMyList),
+    );
 
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding = EdgeInsets.symmetric(
@@ -56,7 +68,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
     // TODO: 셀프 소개 목록 불러오기 전까지 로딩??
     // TODO: api 에러 처리??
-    if (!state.isLoaded) {
+    if (!isLoaded) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
@@ -101,10 +113,10 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   child: Padding(
                     padding: contentPadding,
                     child: _currentTabIndex == 0
-                        ? _buildIntroduceContent(context, state.introduceList)
+                        ? _buildIntroduceContent(context, introduceList)
                         : _buildIntroduceHistory(
                             context,
-                            state.introduceMyList,
+                            introduceMyList,
                           ),
                   ),
                 ),
@@ -164,6 +176,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       child: GestureDetector(
         onTap: () async {
           //AutoRouter.of(context).push(const IntroduceDetailScreen());
+          // navigate(context, route: AppRoute.introduceDetail);
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -200,9 +213,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   Widget _buildIntroduceHistory(
     BuildContext context,
-    List<IntroduceItem> items,
+    List<IntroduceItem> introduces,
   ) {
-    int itemCount = items.length;
+    int itemCount = introduces.length;
 
     return itemCount == 0
         ? const Text("내가 작성한 셀프소개 없음")
@@ -210,6 +223,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
             padding: EdgeInsets.zero,
             itemCount: itemCount,
             itemBuilder: (context, index) {
+              final introcude = introduces[index];
               bool isLastItem = index == itemCount - 1;
               return Container(
                 decoration: BoxDecoration(
@@ -225,6 +239,11 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                 child: GestureDetector(
                   onTap: () async {
                     //AutoRouter.of(context).push(const IntroduceDetailScreen());
+                    navigate(
+                      context,
+                      route: AppRoute.introduceEdit,
+                      extra: IntroduceEditArguments(id: introcude.id),
+                    );
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -235,7 +254,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                items[index].title,
+                                introcude.title,
                                 style: Fonts.body02Medium().copyWith(
                                   fontWeight: FontWeight.w700,
                                 ),

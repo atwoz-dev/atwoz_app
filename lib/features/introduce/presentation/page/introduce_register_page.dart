@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/introduce/domain/provider/introduce_add_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -22,27 +23,9 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
   final TextEditingController _inputTitleController = TextEditingController();
   final TextEditingController _inputContentController = TextEditingController();
 
-  bool canRegister = false;
-
   @override
   void initState() {
     super.initState();
-
-    _inputTitleController.addListener(() {
-      _checkCanRegister();
-    });
-
-    _inputContentController.addListener(() {
-      _checkCanRegister();
-    });
-  }
-
-  // TODO: canSubmit을 이런식으로 setstate을 이용해서 써도 되는건지 확인 필요. notifier 나 state 를 이용?
-  void _checkCanRegister() {
-    canRegister =
-        _inputTitleController.text.isNotEmpty &&
-        _inputContentController.text.isNotEmpty;
-    setState(() {});
   }
 
   @override
@@ -55,13 +38,15 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool canSubmit = ref.watch(introduceAddProvider).canSubmit;
+
     return Scaffold(
       appBar: DefaultAppBar(
         title: '내 소개 등록하기',
         actions: [
           DefaultTextButton(
-            primary: canRegister ? Palette.colorBlack : Palette.colorGrey500,
-            onPressed: canRegister
+            primary: canSubmit ? Palette.colorBlack : Palette.colorGrey500,
+            onPressed: canSubmit
                 ? () {
                     CustomDialogue.showTwoChoiceDialogue(
                       context: context,
@@ -70,7 +55,7 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
                       onElevatedButtonPressed: () async {
                         try {
                           await ref
-                              .read(introduceProvider.notifier)
+                              .read(introduceAddProvider.notifier)
                               .addIntroduce(
                                 title: _inputTitleController.text.trim(),
                                 content: _inputContentController.text.trim(),
@@ -115,6 +100,8 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
           DefaultTextFormField(
             autofocus: true,
             controller: _inputTitleController,
+            onChanged: (text) =>
+                ref.read(introduceAddProvider.notifier).setTitle(text),
             keyboardType: TextInputType.text,
             hintText: '제목을 입력해주세요',
           ),
@@ -126,6 +113,8 @@ class IntroduceRegisterPageState extends ConsumerState<IntroduceRegisterPage> {
             child: DefaultTextFormField(
               autofocus: false,
               controller: _inputContentController,
+              onChanged: (text) =>
+                  ref.read(introduceAddProvider.notifier).setContent(text),
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               textAlignVertical: TextAlignVertical.top,

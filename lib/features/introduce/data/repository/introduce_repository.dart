@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/data/data.dart';
+import 'package:atwoz_app/features/introduce/data/dto/introduce_detail_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final introduceRepositoryProvider = Provider<IntroduceRepository>((ref) {
@@ -65,8 +66,11 @@ class IntroduceRepository extends BaseRepository {
   }
 
   /// 셀프 소개 상세 조회 api
-  Future<void> getIntroduceDetail({required int id}) async {
-    await apiService.getJson("$path/$id");
+  Future<IntroduceDetailData> getIntroduceDetail({required int id}) async {
+    final response = await apiService.getJson("$path/$id");
+    print("getIntroduceDetail $response");
+    final result = IntroduceDetailResponse.fromJson(response);
+    return result.data;
   }
 
   /// 셀프 소개 삭제 api
@@ -75,7 +79,7 @@ class IntroduceRepository extends BaseRepository {
   }
 
   /// 셀프 소개 수정 api
-  Future<void> updateIntroduce({
+  Future<void> patchIntroduce({
     required int id,
     required String title,
     required String content,

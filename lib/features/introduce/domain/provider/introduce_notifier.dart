@@ -1,11 +1,11 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_add_use_case.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_my_list_use_case.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_introduce_detail_use_case.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_my_introduce_list_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part "introduce_notifier.g.dart";
+part 'introduce_notifier.g.dart';
 
 @riverpod
 class IntroduceNotifier extends _$IntroduceNotifier {
@@ -32,27 +32,18 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     }
   }
 
+  /// 셀프 소개 목록 조회
   Future<void> fetchIntroduceList() async {
     await _initializeIntroduceList();
   }
 
-  Future<void> addIntroduce({
-    required String title,
-    required String content,
-  }) async {
-    try {
-      await IntroduceAddUseCase(ref).call(title: title, content: content);
-    } catch (e) {
-      // TODO: 에러 발생 처리 어떻게???
-      Log.e("Failed to add introduce to server: $e");
-    }
+  /// 셀프 소개 삭제
+  Future<void> deleteIntroduce() async {}
 
-    // TODO: hive에 저장????
-  }
-
+  /// 자신의 셀프 소개 목록 조회
   Future<void> fetchIntroduceMyList({int? lastId}) async {
     try {
-      final introduceMyList = await IntroduceFetchMyListUseCase(
+      final introduceMyList = await IntroduceFetchMyIntroduceListUseCase(
         ref,
       ).call(lastId: lastId);
       state = state.copyWith(
@@ -64,7 +55,5 @@ class IntroduceNotifier extends _$IntroduceNotifier {
       // TODO: 에러 발생 처리 어떻게???
       Log.e("Failed to fetch introduce my list from server: $e");
     }
-
-    // TODO: hive에 저장????
   }
 }

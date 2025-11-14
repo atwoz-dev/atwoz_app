@@ -171,10 +171,7 @@ final allRoutes = [
           if (args is! ReportArguments) {
             return const SizedBox.shrink();
           }
-          return ReportPage(
-            name: args.name,
-            userId: args.userId,
-          );
+          return ReportPage(name: args.name, userId: args.userId);
         },
       ),
       NamedGoRoute(
@@ -183,7 +180,13 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.introduceEdit.name,
-        builder: (context, state) => const IntroduceEditPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! IntroduceEditArguments) {
+            return const SizedBox.shrink();
+          }
+          return IntroduceEditPage(id: args.id);
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceDetail.name,
@@ -433,16 +436,22 @@ Future<T?> navigate<T>(
   final goRouter = GoRouter.of(context);
 
   return switch (method) {
-    NavigationMethod.push =>
-      await goRouter.pushNamed<T>(route.name, extra: extra),
-    NavigationMethod.replace =>
-      await goRouter.replaceNamed<T>(route.name, extra: extra),
+    NavigationMethod.push => await goRouter.pushNamed<T>(
+      route.name,
+      extra: extra,
+    ),
+    NavigationMethod.replace => await goRouter.replaceNamed<T>(
+      route.name,
+      extra: extra,
+    ),
     NavigationMethod.go => (() {
-        goRouter.goNamed(route.name, extra: extra);
-        return null;
-      })(),
-    NavigationMethod.pushReplacement =>
-      await goRouter.pushReplacementNamed<T>(route.name, extra: extra),
+      goRouter.goNamed(route.name, extra: extra);
+      return null;
+    })(),
+    NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
+      route.name,
+      extra: extra,
+    ),
   };
 }
 
