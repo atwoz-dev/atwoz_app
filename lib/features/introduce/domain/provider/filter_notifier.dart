@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,19 +13,24 @@ class FilterNotifier extends _$FilterNotifier {
     return const FilterState(
       rangeValues: RangeValues(27, 32),
       selectedCitys: [],
-      selectedGenders: ["전체 보기", "이성만 보기"],
+      selectedGender: null,
+      hasChanged: false,
     );
   }
 
   void updateRange(RangeValues values) {
-    state = state.copyWith(rangeValues: values);
+    state = state.copyWith(rangeValues: values, hasChanged: true);
   }
 
-  void updateHobbies(List<String> citys) {
-    state = state.copyWith(selectedCitys: citys);
+  void updateCitys(List<String> citys) {
+    state = state.copyWith(selectedCitys: citys, hasChanged: true);
   }
 
-  void updateGenders(List<String> genders) {
-    state = state.copyWith(selectedGenders: genders);
+  void updateGender(Gender? gender) {
+    state = state.copyWith(selectedGender: gender, hasChanged: true);
+  }
+
+  void updateChanged(bool hasChanged) {
+    state = state.copyWith(hasChanged: hasChanged);
   }
 }

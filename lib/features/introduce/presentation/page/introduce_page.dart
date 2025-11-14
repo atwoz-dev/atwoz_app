@@ -22,14 +22,18 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
   int _currentTabIndex = 0;
 
-  late IntroduceNotifier notifier;
+  late IntroduceNotifier introduceNotifier;
+  late FilterNotifier filterNotifier;
+
+  late bool isMale;
+  late String nickname;
 
   void _onTabTapped(int index) => safeSetState(() {
     _currentTabIndex = index;
     if (index == 0) {
-      notifier.fetchIntroduceList();
+      introduceNotifier.fetchIntroduceList();
     } else if (index == 1) {
-      notifier.fetchIntroduceMyList(lastId: null);
+      introduceNotifier.fetchIntroduceMyList(lastId: null);
     }
   });
 
@@ -37,10 +41,15 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   void initState() {
     super.initState();
 
-    notifier = ref.read(introduceProvider.notifier);
+    introduceNotifier = ref.read(introduceProvider.notifier);
+    filterNotifier = ref.read(filterProvider.notifier);
+    isMale = ref.read(globalProvider).profile.isMale;
+    nickname = ref.read(globalProvider).profile.nickname;
+    final filter = ref.read(filterProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifier.fetchIntroduceList();
+      print("filter.getGender ${filter.getGender}");
+      introduceNotifier.fetchIntroduceList(gender: filter.getGender);
     });
   }
 
@@ -56,6 +65,16 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
     final introduceMyList = ref.watch(
       introduceProvider.select((value) => value.introduceMyList),
+    );
+
+    final filterState = ref.watch(filterProvider);
+
+    // TODO: 여기에 위치하니까 필터갔다오면 buildPage가 두번 탐
+    introduceNotifier.fetchIntroduceList(
+      gender: filterState.getGender,
+      fromAge: filterState.rangeValues.start.toInt(),
+      toAge: filterState.rangeValues.end.toInt(),
+      preferredCities: filterState.selectedCitysEng,
     );
 
     final double horizontalPadding = screenWidth * 0.05;
@@ -172,7 +191,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         onTap: () async {
           //AutoRouter.of(context).push(const IntroduceDetailScreen());
           // navigate(context, route: AppRoute.introduceDetail);
-          final nickname = ref.watch(globalProvider).profile.nickname;
 
           if (nickname == item.nickname) {
             await navigate(
@@ -293,9 +311,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (_currentTabIndex == 0) {
-      notifier.fetchIntroduceList();
+      introduceNotifier.fetchIntroduceList();
     } else if (_currentTabIndex == 1) {
-      notifier.fetchIntroduceMyList();
+      introduceNotifier.fetchIntroduceMyList();
     }
   }
 }

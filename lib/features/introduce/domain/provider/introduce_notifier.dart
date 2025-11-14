@@ -14,9 +14,21 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     return IntroduceState.initial();
   }
 
-  Future<void> _initializeIntroduceList() async {
+  Future<void> _initializeIntroduceList({
+    List<String>? preferredCities,
+    int? fromAge,
+    int? toAge,
+    String? gender,
+    int? lastId,
+  }) async {
     try {
-      final introduceList = await IntroduceListFetchUseCase(ref).call();
+      final introduceList = await IntroduceListFetchUseCase(ref).call(
+        preferredCities: preferredCities,
+        fromAge: fromAge,
+        toAge: toAge,
+        gender: gender,
+        lastId: lastId,
+      );
       state = state.copyWith(
         introduceList: introduceList,
         isLoaded: true,
@@ -32,8 +44,20 @@ class IntroduceNotifier extends _$IntroduceNotifier {
   }
 
   /// 셀프 소개 목록 조회
-  Future<void> fetchIntroduceList() async {
-    await _initializeIntroduceList();
+  Future<void> fetchIntroduceList({
+    List<String>? preferredCities,
+    int? fromAge,
+    int? toAge,
+    String? gender,
+    int? lastId,
+  }) async {
+    await _initializeIntroduceList(
+      preferredCities: preferredCities,
+      fromAge: fromAge,
+      toAge: toAge,
+      gender: gender,
+      lastId: lastId,
+    );
   }
 
   /// 셀프 소개 삭제
