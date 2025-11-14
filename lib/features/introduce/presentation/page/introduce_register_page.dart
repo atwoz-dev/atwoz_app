@@ -5,7 +5,6 @@ import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_add_notifier.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
