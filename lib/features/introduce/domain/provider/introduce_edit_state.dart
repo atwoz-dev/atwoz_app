@@ -6,8 +6,8 @@ part 'introduce_edit_state.freezed.dart';
 abstract class IntroduceEditState with _$IntroduceEditState {
   const factory IntroduceEditState({
     @Default(false) bool canSubmit,
-    @Default("") String title,
-    @Default("") String content,
+    @Default(null) String? title,
+    @Default(null) String? content,
   }) = _IntroduceEditState;
 
   const IntroduceEditState._();

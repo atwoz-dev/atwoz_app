@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceEditState {
 
- bool get canSubmit; String get title; String get content;
+ bool get canSubmit; String? get title; String? get content;
 /// Create a copy of IntroduceEditState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $IntroduceEditStateCopyWith<$Res>  {
   factory $IntroduceEditStateCopyWith(IntroduceEditState value, $Res Function(IntroduceEditState) _then) = _$IntroduceEditStateCopyWithImpl;
 @useResult
 $Res call({
- bool canSubmit, String title, String content
+ bool canSubmit, String? title, String? content
 });
 
 
@@ -62,12 +62,12 @@ class _$IntroduceEditStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceEditState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? canSubmit = null,Object? title = null,Object? content = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? canSubmit = null,Object? title = freezed,Object? content = freezed,}) {
   return _then(_self.copyWith(
 canSubmit: null == canSubmit ? _self.canSubmit : canSubmit // ignore: cast_nullable_to_non_nullable
-as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,
+as bool,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool canSubmit,  String title,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool canSubmit,  String? title,  String? content)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceEditState() when $default != null:
 return $default(_that.canSubmit,_that.title,_that.content);case _:
@@ -173,7 +173,7 @@ return $default(_that.canSubmit,_that.title,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool canSubmit,  String title,  String content)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool canSubmit,  String? title,  String? content)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceEditState():
 return $default(_that.canSubmit,_that.title,_that.content);case _:
@@ -193,7 +193,7 @@ return $default(_that.canSubmit,_that.title,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool canSubmit,  String title,  String content)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool canSubmit,  String? title,  String? content)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceEditState() when $default != null:
 return $default(_that.canSubmit,_that.title,_that.content);case _:
@@ -208,12 +208,12 @@ return $default(_that.canSubmit,_that.title,_that.content);case _:
 
 
 class _IntroduceEditState extends IntroduceEditState {
-  const _IntroduceEditState({this.canSubmit = false, this.title = "", this.content = ""}): super._();
+  const _IntroduceEditState({this.canSubmit = false, this.title = null, this.content = null}): super._();
   
 
 @override@JsonKey() final  bool canSubmit;
-@override@JsonKey() final  String title;
-@override@JsonKey() final  String content;
+@override@JsonKey() final  String? title;
+@override@JsonKey() final  String? content;
 
 /// Create a copy of IntroduceEditState
 /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +245,7 @@ abstract mixin class _$IntroduceEditStateCopyWith<$Res> implements $IntroduceEdi
   factory _$IntroduceEditStateCopyWith(_IntroduceEditState value, $Res Function(_IntroduceEditState) _then) = __$IntroduceEditStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool canSubmit, String title, String content
+ bool canSubmit, String? title, String? content
 });
 
 
@@ -262,12 +262,12 @@ class __$IntroduceEditStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceEditState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? canSubmit = null,Object? title = null,Object? content = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? canSubmit = null,Object? title = freezed,Object? content = freezed,}) {
   return _then(_IntroduceEditState(
 canSubmit: null == canSubmit ? _self.canSubmit : canSubmit // ignore: cast_nullable_to_non_nullable
-as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,
+as bool,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

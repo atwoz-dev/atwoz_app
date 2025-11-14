@@ -17,7 +17,9 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
     final title = t.trim();
     state = state.copyWith(
       title: title,
-      canSubmit: title.isNotEmpty && (state.content.isNotEmpty),
+      canSubmit:
+          title.isNotEmpty &&
+          (state.content != null && state.content!.isNotEmpty),
     );
   }
 
@@ -25,7 +27,9 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
     final content = t.trim();
     state = state.copyWith(
       content: content,
-      canSubmit: content.isNotEmpty && (state.title.isNotEmpty),
+      canSubmit:
+          content.isNotEmpty &&
+          (state.title != null && state.title!.isNotEmpty),
     );
   }
 
@@ -36,10 +40,7 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
         ref,
       ).call(id: id);
 
-      state = state.copyWith(
-        title: detail.title,
-        content: detail.content,
-      );
+      state = state.copyWith(title: detail.title, content: detail.content);
     } catch (e) {
       // TODO: 에러 발생 처리 어떻게???
       Log.e("Failed to fetch introduce detail from server: $e");

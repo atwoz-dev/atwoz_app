@@ -6,11 +6,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
-import 'package:atwoz_app/features/introduce/domain/domain.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_add_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_edit_notifier.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -33,6 +29,8 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // TODO: 상세 조회를 introduce_page에서 받아서 넘겨야할지 여기서 조회할지
+      await Future.delayed(const Duration(milliseconds: 500));
       ref
           .read(introduceEditProvider.notifier)
           .fetchIntroduceDetail(id: widget.id);
@@ -48,6 +46,12 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
 
   bool canRegister = false;
 
+  String? initialTitle;
+  String? initialContent;
+
+  bool titleGet = false;
+  bool contentGet = false;
+
   @override
   Widget build(BuildContext context) {
     bool canSubmit = ref.watch(
@@ -58,18 +62,17 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
       introduceEditProvider.select((value) => value.title),
     );
 
-    _inputTitleController.text = title;
+    if (title != null) {
+      _inputTitleController.text = title;
+    }
 
     final content = ref.watch(
       introduceEditProvider.select((value) => value.content),
     );
 
-    _inputContentController.text = content;
-
-    // if (state.introduceDetail != null) {
-    //   _inputTitleController.text = state.introduceDetail!.title;
-    //   _inputContentController.text = state.introduceDetail!.content;
-    // }
+    if (content != null) {
+      _inputContentController.text = content;
+    }
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -126,8 +129,13 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
           DefaultTextFormField(
             autofocus: false,
             controller: _inputTitleController,
-            onChanged: (text) =>
-                ref.read(introduceEditProvider.notifier).setTitle(text),
+            onChanged: (text) {
+              if (titleGet == false) {
+                titleGet = true;
+                return;
+              }
+              ref.read(introduceEditProvider.notifier).setTitle(text);
+            },
             keyboardType: TextInputType.text,
             hintText: '제목을 입력해주세요',
           ),
@@ -137,10 +145,15 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
           ),
           Expanded(
             child: DefaultTextFormField(
-              autofocus: true,
+              autofocus: false,
               controller: _inputContentController,
-              onChanged: (text) =>
-                  ref.read(introduceEditProvider.notifier).setContent(text),
+              onChanged: (text) {
+                if (contentGet == false) {
+                  contentGet = true;
+                  return;
+                }
+                ref.read(introduceEditProvider.notifier).setContent(text);
+              },
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               textAlignVertical: TextAlignVertical.top,

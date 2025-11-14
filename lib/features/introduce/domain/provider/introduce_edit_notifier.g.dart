@@ -42,7 +42,7 @@ final class IntroduceEditNotifierProvider
 }
 
 String _$introduceEditNotifierHash() =>
-    r'8de2cdd752d761151d570bcffd1b40cd31a35ad0';
+    r'89f22131ecd85d4bc2dc95d0127a2371459c6692';
 
 abstract class _$IntroduceEditNotifier extends $Notifier<IntroduceEditState> {
   IntroduceEditState build();
