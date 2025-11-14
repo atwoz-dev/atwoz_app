@@ -1,11 +1,9 @@
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:atwoz_app/features/introduce/introduce.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -174,6 +172,18 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         onTap: () async {
           //AutoRouter.of(context).push(const IntroduceDetailScreen());
           // navigate(context, route: AppRoute.introduceDetail);
+          final nickname = ref.watch(globalProvider).profile.nickname;
+
+          if (nickname == item.nickname) {
+            await navigate(
+              context,
+              route: AppRoute.introduceEdit,
+              extra: IntroduceEditArguments(id: item.id),
+            );
+            _refreshIntroduceList();
+          } else {
+            // TODO: 다른 화면으로 이동
+          }
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -280,7 +290,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   }
 
   void _refreshIntroduceList() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     if (_currentTabIndex == 0) {
       notifier.fetchIntroduceList();
