@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
+import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_my_introduce_list_use_case.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_my_list_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduce_notifier.g.dart';
@@ -9,55 +9,39 @@ part 'introduce_notifier.g.dart';
 @riverpod
 class IntroduceNotifier extends _$IntroduceNotifier {
   @override
-  IntroduceState build() {
-    _initializeIntroduceList();
-    return IntroduceState.initial();
-  }
+  Future<IntroduceState> build() async {
+    final filterState = ref.watch(filterProvider);
 
-  Future<void> _initializeIntroduceList({
-    List<String>? preferredCities,
-    int? fromAge,
-    int? toAge,
-    String? gender,
-    int? lastId,
-  }) async {
-    try {
-      final introduceList = await IntroduceListFetchUseCase(ref).call(
-        preferredCities: preferredCities,
-        fromAge: fromAge,
-        toAge: toAge,
-        gender: gender,
-        lastId: lastId,
-      );
-      state = state.copyWith(
-        introduceList: introduceList,
-        isLoaded: true,
-        error: null,
-      );
-    } catch (e) {
-      Log.e("Failed to fetch introduce list from server: $e");
-      state = state.copyWith(
-        isLoaded: true,
-        error: IntroduceListErrorType.network,
-      );
-    }
+    // 셀프소개 목록 가져오기
+    final introduces = await ref
+        .read(fetchIntroduceListUseCaseProvider)
+        .execute(
+          preferredCities: filterState.selectedCitys,
+          fromAge: filterState.rangeValues.start.toInt(),
+          toAge: filterState.rangeValues.end.toInt(),
+          gender: filterState.getGender,
+        );
+    return IntroduceState(introduceList: introduces, isLoaded: true);
   }
 
   /// 셀프 소개 목록 조회
-  Future<void> fetchIntroduceList({
-    List<String>? preferredCities,
-    int? fromAge,
-    int? toAge,
-    String? gender,
-    int? lastId,
-  }) async {
-    await _initializeIntroduceList(
-      preferredCities: preferredCities,
-      fromAge: fromAge,
-      toAge: toAge,
-      gender: gender,
-      lastId: lastId,
-    );
+  Future<void> fetchIntroduceList() async {
+    final filterState = ref.watch(filterProvider);
+
+    final prevState = state.value;
+
+    if (prevState == null) return;
+
+    final introduces = await ref
+        .read(fetchIntroduceListUseCaseProvider)
+        .execute(
+          preferredCities: filterState.selectedCitys,
+          fromAge: filterState.rangeValues.start.toInt(),
+          toAge: filterState.rangeValues.end.toInt(),
+          gender: filterState.getGender,
+        );
+
+    state = AsyncData(prevState.copyWith(introduceList: introduces));
   }
 
   /// 셀프 소개 삭제
@@ -65,18 +49,14 @@ class IntroduceNotifier extends _$IntroduceNotifier {
 
   /// 자신의 셀프 소개 목록 조회
   Future<void> fetchIntroduceMyList({int? lastId}) async {
-    try {
-      final introduceMyList = await IntroduceFetchMyIntroduceListUseCase(
-        ref,
-      ).call(lastId: lastId);
-      state = state.copyWith(
-        introduceMyList: introduceMyList,
-        isLoaded: true,
-        error: null,
-      );
-    } catch (e) {
-      // TODO: 에러 발생 처리 어떻게???
-      Log.e("Failed to fetch introduce my list from server: $e");
-    }
+    final prevState = state.value;
+
+    if (prevState == null) return;
+
+    final introduces = await ref
+        .read(fetchIntroduceMyListUseCaseProvider)
+        .execute(lastId: lastId);
+
+    state = AsyncData(prevState.copyWith(introduceMyList: introduces));
   }
 }

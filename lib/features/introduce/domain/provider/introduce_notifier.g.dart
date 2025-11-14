@@ -13,7 +13,7 @@ part of 'introduce_notifier.dart';
 const introduceProvider = IntroduceNotifierProvider._();
 
 final class IntroduceNotifierProvider
-    extends $NotifierProvider<IntroduceNotifier, IntroduceState> {
+    extends $AsyncNotifierProvider<IntroduceNotifier, IntroduceState> {
   const IntroduceNotifierProvider._()
     : super(
         from: null,
@@ -31,30 +31,22 @@ final class IntroduceNotifierProvider
   @$internal
   @override
   IntroduceNotifier create() => IntroduceNotifier();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(IntroduceState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<IntroduceState>(value),
-    );
-  }
 }
 
-String _$introduceNotifierHash() => r'a4f1623fc47ec3a16c76995e5d9d77515a2dbf9b';
+String _$introduceNotifierHash() => r'e53532f7e54d07dd4e649098032bb9fc7f5ad1b7';
 
-abstract class _$IntroduceNotifier extends $Notifier<IntroduceState> {
-  IntroduceState build();
+abstract class _$IntroduceNotifier extends $AsyncNotifier<IntroduceState> {
+  FutureOr<IntroduceState> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<IntroduceState, IntroduceState>;
+    final ref = this.ref as $Ref<AsyncValue<IntroduceState>, IntroduceState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<IntroduceState, IntroduceState>,
-              IntroduceState,
+              AnyNotifier<AsyncValue<IntroduceState>, IntroduceState>,
+              AsyncValue<IntroduceState>,
               Object?,
               Object?
             >;

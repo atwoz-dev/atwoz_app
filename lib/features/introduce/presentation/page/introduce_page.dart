@@ -20,73 +20,41 @@ class IntroducePage extends ConsumerStatefulWidget {
 
 class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
+
   int _currentTabIndex = 0;
-
-  late IntroduceNotifier introduceNotifier;
-  late FilterNotifier filterNotifier;
-
-  late bool isMale;
-  late String nickname;
-
-  void _onTabTapped(int index) => safeSetState(() {
-    _currentTabIndex = index;
-    if (index == 0) {
-      introduceNotifier.fetchIntroduceList();
-    } else if (index == 1) {
-      introduceNotifier.fetchIntroduceMyList(lastId: null);
-    }
-  });
+  String nickname = "";
 
   @override
   void initState() {
     super.initState();
 
-    introduceNotifier = ref.read(introduceProvider.notifier);
-    filterNotifier = ref.read(filterProvider.notifier);
-    isMale = ref.read(globalProvider).profile.isMale;
     nickname = ref.read(globalProvider).profile.nickname;
-    final filter = ref.read(filterProvider);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("filter.getGender ${filter.getGender}");
-      introduceNotifier.fetchIntroduceList(gender: filter.getGender);
-    });
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    // final state = ref.watch(introduceProvider);
-    final isLoaded = ref.watch(
-      introduceProvider.select((value) => value.isLoaded),
-    );
-    final introduceList = ref.watch(
-      introduceProvider.select((value) => value.introduceList),
-    );
+    // final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
 
-    final introduceMyList = ref.watch(
-      introduceProvider.select((value) => value.introduceMyList),
-    );
+    // // final state = ref.watch(introduceProvider);
+    // final isLoaded = ref.watch(
+    //   introduceProvider.select((value) => value.isLoaded),
+    // );
+    // final introduceList = ref.watch(
+    //   introduceProvider.select((value) => value.introduceList),
+    // );
 
-    final filterState = ref.watch(filterProvider);
+    // final introduceMyList = ref.watch(
+    //   introduceProvider.select((value) => value.introduceMyList),
+    // );
 
-    // TODO: 여기에 위치하니까 필터갔다오면 buildPage가 두번 탐
-    introduceNotifier.fetchIntroduceList(
-      gender: filterState.getGender,
-      fromAge: filterState.rangeValues.start.toInt(),
-      toAge: filterState.rangeValues.end.toInt(),
-      preferredCities: filterState.selectedCitysEng,
-    );
+    // final filterState = ref.watch(filterProvider);
 
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding = EdgeInsets.symmetric(
       horizontal: horizontalPadding,
     );
 
-    // TODO: 셀프 소개 목록 불러오기 전까지 로딩??
-    // TODO: api 에러 처리??
-    if (!isLoaded) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
+    final stateAync = ref.watch(introduceProvider);
 
     return Stack(
       children: [
@@ -129,8 +97,8 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   child: Padding(
                     padding: contentPadding,
                     child: _currentTabIndex == 0
-                        ? _buildIntroduceContent(context, introduceList)
-                        : _buildIntroduceHistory(context, introduceMyList),
+                        ? _buildIntroduceContent(context, stateAync)
+                        : _buildIntroduceHistory(context, stateAync),
                   ),
                 ),
               ],
@@ -150,26 +118,31 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   Widget _buildIntroduceContent(
     BuildContext context,
-    List<IntroduceItem> items,
+    AsyncValue<IntroduceState> stateAync,
   ) {
     final double gapWidth = 16.w;
 
-    final int itemCount = items.length;
-    return itemCount == 0
-        ? const Text("셀프 소개 없음")
-        : ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: itemCount,
-            itemBuilder: (context, index) {
-              bool isLastItem = index == itemCount - 1;
+    return stateAync.when(
+      data: (data) {
+        final introduces = data.introduceList;
+        final introducesCount = introduces.length;
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: data.introduceList.length,
+          itemBuilder: (context, index) {
+            bool isLastItem = index == introducesCount - 1;
 
-              return _introduceItem(
-                item: items[index],
-                isLastItem: isLastItem,
-                gapWidth: gapWidth,
-              );
-            },
-          );
+            return _introduceItem(
+              item: introduces[index],
+              isLastItem: isLastItem,
+              gapWidth: gapWidth,
+            );
+          },
+        );
+      },
+      error: (error, stackTrace) => const SizedBox.shrink(),
+      loading: () => const Center(child: CircularProgressIndicator()),
+    );
   }
 
   Widget _introduceItem({
@@ -238,82 +211,96 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   Widget _buildIntroduceHistory(
     BuildContext context,
-    List<IntroduceItem> introduces,
+    AsyncValue<IntroduceState> stateAync,
   ) {
-    int itemCount = introduces.length;
+    return stateAync.when(
+      data: (data) {
+        final introduces = data.introduceMyList;
+        final introducesCount = introduces.length;
 
-    // TODO: 내 셀프소개 글이 없는 경우 화면 필요
-    return itemCount == 0
-        ? const Text("내가 작성한 셀프소개 없음")
-        : ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: itemCount,
-            itemBuilder: (context, index) {
-              final introcude = introduces[index];
-              bool isLastItem = index == itemCount - 1;
-              return Container(
-                decoration: BoxDecoration(
-                  border: isLastItem
-                      ? null
-                      : Border(
-                          bottom: BorderSide(
-                            width: 1.w,
-                            color: Palette.colorGrey50,
-                          ),
-                        ),
-                ),
-                child: GestureDetector(
-                  onTap: () async {
-                    await navigate(
-                      context,
-                      route: AppRoute.introduceEdit,
-                      extra: IntroduceEditArguments(id: introcude.id),
-                    );
-                    _refreshIntroduceList();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                introcude.title,
-                                style: Fonts.body02Medium().copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const Gap(4),
-                              // TODO: 날짜???
-                              Text(
-                                '2025.02.28',
-                                style: Fonts.body03Regular(
-                                  Palette.colorGrey500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: introducesCount,
+          itemBuilder: (context, index) {
+            final introduce = introduces[index];
+            bool isLastItem = index == introducesCount - 1;
+            return _introduceHistoryItem(
+              introduce: introduce,
+              isLastItem: isLastItem,
+            );
+          },
+        );
+      },
+      error: (error, stackTrace) => const SizedBox.shrink(),
+      loading: () => const Center(child: CircularProgressIndicator()),
+    );
   }
+
+  Widget _introduceHistoryItem({
+    required IntroduceItem introduce,
+    required bool isLastItem,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: isLastItem
+            ? null
+            : Border(
+                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+              ),
+      ),
+      child: GestureDetector(
+        onTap: () async {
+          await navigate(
+            context,
+            route: AppRoute.introduceEdit,
+            extra: IntroduceEditArguments(id: introduce.id),
+          );
+          _refreshIntroduceList();
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.h),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      introduce.title,
+                      style: Fonts.body02Medium().copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Gap(4),
+                    // TODO: 날짜???
+                    Text(
+                      '2025.02.28',
+                      style: Fonts.body03Regular(Palette.colorGrey500),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onTabTapped(int index) => safeSetState(() {
+    _currentTabIndex = index;
+    _refreshIntroduceList();
+  });
 
   void _refreshIntroduceList() async {
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (_currentTabIndex == 0) {
-      introduceNotifier.fetchIntroduceList();
+      ref.read(introduceProvider.notifier).fetchIntroduceList();
     } else if (_currentTabIndex == 1) {
-      introduceNotifier.fetchIntroduceMyList();
+      ref.read(introduceProvider.notifier).fetchIntroduceMyList();
     }
   }
 }
