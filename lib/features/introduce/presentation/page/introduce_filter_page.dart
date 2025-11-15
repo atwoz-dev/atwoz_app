@@ -4,7 +4,6 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/age_range_slider.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/region_select_dialog.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/row_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -20,7 +19,7 @@ class IntroduceFilterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    FilterNotifier notifer = ref.read(filterProvider.notifier);
+    FilterNotifier filterNotifer = ref.read(filterProvider.notifier);
     final isMale = ref.read(globalProvider).profile.isMale;
     final ageRange = ref.watch(filterProvider).rangeValues;
     final selectedCityList = ref.watch(filterProvider).selectedCitys;
@@ -71,9 +70,9 @@ class IntroduceFilterPage extends ConsumerWidget {
                     onChange: (str) {
                       // hive 저장?
                       if (str == ALL) {
-                        notifer.updateGender(null);
+                        filterNotifer.updateGender(null);
                       } else {
-                        notifer.updateGender(
+                        filterNotifer.updateGender(
                           isMale ? Gender.female : Gender.male,
                         );
                       }

@@ -1,3 +1,5 @@
+import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
+import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
@@ -16,7 +18,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     final introduces = await ref
         .read(fetchIntroduceListUseCaseProvider)
         .execute(
-          preferredCities: filterState.selectedCitys,
+          preferredCities: filterState.selectedCitysEng,
           fromAge: filterState.rangeValues.start.toInt(),
           toAge: filterState.rangeValues.end.toInt(),
           gender: filterState.getGender,
