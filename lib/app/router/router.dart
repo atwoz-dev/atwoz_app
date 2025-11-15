@@ -180,11 +180,23 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.introduceEdit.name,
-        builder: (context, state) => const IntroduceEditPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! IntroduceEditArguments) {
+            return const SizedBox.shrink();
+          }
+          return IntroduceEditPage(id: args.id);
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceDetail.name,
-        builder: (context, state) => const IntroduceDetailPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! IntroduceDetailArguments) {
+            return const SizedBox.shrink();
+          }
+          return IntroduceDetailPage(introduceId: args.introduceId);
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceFilter.name,
@@ -453,11 +465,12 @@ Future<T?> navigate<T>(
       route.name,
       extra: extra,
     ),
-    NavigationMethod.go =>
-      (() {
-        goRouter.goNamed(route.name, extra: extra);
-        return null;
-      })(),
+
+    NavigationMethod.go => (() {
+      goRouter.goNamed(route.name, extra: extra);
+      return null;
+    })(),
+
     NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
       route.name,
       extra: extra,

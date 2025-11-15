@@ -8,11 +8,12 @@ class RowTextFormField extends StatelessWidget {
   final String hintText;
   final String? initialValue;
 
-  const RowTextFormField(
-      {super.key,
-      required this.label,
-      required this.hintText,
-      required this.initialValue});
+  const RowTextFormField({
+    super.key,
+    required this.label,
+    required this.hintText,
+    required this.initialValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class RowTextFormField extends StatelessWidget {
           context: context,
           label: label,
           child: DefaultTextFormField(
+            initialValue: initialValue,
             controller: TextEditingController(text: initialValue),
             onTap: () {
               Regionselectdialog.open(context);

@@ -8,14 +8,43 @@ part 'parser.dart';
 class SharedPreferenceKeys {
   static const enabledNotifications =
       SharedPreferenceKey<List<ServerNotificationType>>(
-    'enabledNotifications',
-    defaultValue: [],
-    fromJson: _enabledNotificationsFromJson,
-    toJson: _enabledNotificationsToJson,
-  );
+        'enabledNotifications',
+        defaultValue: [],
+        fromJson: _enabledNotificationsFromJson,
+        toJson: _enabledNotificationsToJson,
+      );
 
   static const notificationAllowed = SharedPreferencePrimitiveKey<bool>(
     'notificationAllowed',
     defaultValue: false,
+  );
+
+  /// 셀프소개 필터 - 나이
+  static const preferredAgeStart = SharedPreferencePrimitiveKey<int>(
+    "preferredAgeStart",
+    defaultValue: 27,
+  );
+
+  static const preferredAgeEnd = SharedPreferencePrimitiveKey<int>(
+    "preferredAgeEnd",
+    defaultValue: 32,
+  );
+
+  /// 셀프소개 필터 - 선호 지역(한글)
+  static const preferredCities = SharedPreferencePrimitiveKey<List<String>>(
+    "preferredCities",
+    defaultValue: [],
+  );
+
+  /// 셀프소개 필터 - 성별
+  ///
+  /// 0 - null
+  ///
+  /// 1 - male
+  ///
+  /// 2 - female
+  static const showAllGender = SharedPreferencePrimitiveKey<int>(
+    "showAllGender",
+    defaultValue: 0,
   );
 }
