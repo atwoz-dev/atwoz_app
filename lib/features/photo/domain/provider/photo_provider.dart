@@ -51,13 +51,15 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   }
 
   // 사진 업로드
-  Future<void> uploadPhotos(List<ProfilePhoto> photos) async {
+  Future<bool> uploadPhotos(List<ProfilePhoto> photos) async {
+    final clampedPhotos = photos.take(Dimens.profileImageMaxCount).toList();
+
     state = [
-      ...photos.map((e) => e.imageFile),
-      ...List.filled(Dimens.profileImageMaxCount - photos.length, null),
+      ...clampedPhotos.map((e) => e.imageFile),
+      ...List.filled(Dimens.profileImageMaxCount - clampedPhotos.length, null),
     ];
 
-    await ref.read(uploadPhotosUsecaseProvider).execute(photos);
+    return await ref.read(uploadPhotosUsecaseProvider).execute(photos);
   }
 
   // 사진 선택

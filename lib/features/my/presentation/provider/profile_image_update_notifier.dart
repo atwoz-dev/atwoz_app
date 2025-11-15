@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
@@ -28,14 +29,19 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
     try {
       // 현재 state 복사
       final updatedImages = [...state];
-      Log.d('업데이트 전 이미지 리스트: $updatedImages');
+
+      if (index < 0 || index > Dimens.profileImageMaxCount - 1) {
+        throw Exception(
+          '인덱스는 0보다 작거나 ${Dimens.profileImageMaxCount - 1}보다 클 수가 없습니다.',
+        );
+      }
 
       // 리스트 범위보다 큰 인덱스 → append
       if (index >= updatedImages.length) {
         updatedImages.add(ProfilePhoto(imageFile: image, isUpdated: true));
 
         state = updatedImages;
-        Log.d('추가 후 이미지 리스트 : $state');
+
         return;
       }
 
@@ -45,7 +51,6 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
       );
 
       state = updatedImages;
-      Log.d('업데이트 후 이미지 리스트: $updatedImages');
     } catch (e) {
       Log.e('이미지 추가/변경 중 오류 발생: $e');
     }
@@ -53,7 +58,10 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
 
   /// 프로필 이미지 삭제
   void deleteEditableProfileImage(int index) {
-    Log.d('삭제된 index는 $index입니다.');
+    if (index < 0 || index > state.length) {
+      Log.d('인덱스가 리스트 범위에서 벗어났습니다.');
+      return;
+    }
 
     final copiedImages = [...state];
     copiedImages.removeAt(index);

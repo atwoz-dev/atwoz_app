@@ -46,7 +46,7 @@ class _OnboardingCertificationPageState
     });
 
     _codeController.addListener(() {
-      ref.read(onboardingProvider.notifier).validateInput(_codeController.text);
+      _notifier.validateInput(_codeController.text);
     });
   }
 
@@ -61,7 +61,6 @@ class _OnboardingCertificationPageState
   @override
   Widget buildPage(BuildContext context) {
     final state = ref.watch(onboardingProvider);
-    final notifier = ref.read(onboardingProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -105,7 +104,7 @@ class _OnboardingCertificationPageState
                               textColor: palette.onSurface,
                               onPressed: state.leftSeconds == 0
                                   ? () =>
-                                        notifier.resendCode(widget.phoneNumber)
+                                        _notifier.resendCode(widget.phoneNumber)
                                   : null,
                               child: Text(
                                 state.leftSeconds == 0
@@ -131,7 +130,7 @@ class _OnboardingCertificationPageState
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
               onPressed: state.isButtonEnabled && !state.isLoading
-                  ? () => _verifyCode(notifier)
+                  ? () => _verifyCode(_notifier)
                   : null,
               child: Text(
                 '인증하기',

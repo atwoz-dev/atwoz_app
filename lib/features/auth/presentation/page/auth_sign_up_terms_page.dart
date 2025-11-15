@@ -1,6 +1,8 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthSignUpTermsPage extends ConsumerStatefulWidget {
@@ -72,9 +75,20 @@ class AuthSignUpTermsPageState
                           )
                           .toList();
 
-                      await ref
+                      final profileImageUploaded = await ref
                           .read(photoProvider.notifier)
                           .uploadPhotos(profilePhotos);
+
+                      if (!context.mounted) return;
+
+                      if (!profileImageUploaded) {
+                        ErrorDialog.open(
+                          context,
+                          error: DialogueErrorType.failSignUp,
+                          onConfirm: context.pop,
+                        );
+                        return;
+                      }
 
                       // 프로필 등록
                       final isSuccess = await ref

@@ -4,7 +4,8 @@ enum DialogueErrorType {
   failSignOut('로그아웃을 실패했습니다.'),
   failDormantChange('휴면회원 전환에 실패했습니다.'),
   failDormantRelease('휴면회원 해제에 실패했습니다.'),
-  failUpdateProfileImages('프로필 이미지 업데이트에 실패했습니다.');
+  failUpdateProfileImages('프로필 이미지 업데이트에 실패했습니다.'),
+  failSignUp('회원가입에 실패했습니다.');
 
   const DialogueErrorType(this.label);
   final String label;

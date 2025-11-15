@@ -218,7 +218,7 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
     String? contentType,
-    Map<String, String>? headers,
+    Map<String, dynamic>? headers,
   }) => request(
     path,
     method: 'GET',
@@ -240,7 +240,7 @@ class ApiServiceImpl implements ApiService {
     bool requiresRefreshToken = false,
     bool requiresRefreshCookie = false,
     Converter<T>? converter,
-    Map<String, String>? headers,
+    Map<String, dynamic>? headers,
   }) => request(
     path,
     method: 'PUT',

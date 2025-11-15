@@ -56,7 +56,7 @@ abstract class ApiService {
     bool requiresRefreshCookie,
     Converter<T>? converter,
     String? contentType,
-    Map<String, String>? headers,
+    Map<String, dynamic>? headers,
   });
 
   Future<T> putJson<T>(
@@ -67,7 +67,7 @@ abstract class ApiService {
     bool requiresRefreshToken,
     bool requiresRefreshCookie,
     Converter<T>? converter,
-    Map<String, String>? headers,
+    Map<String, dynamic>? headers,
   });
 
   Future<T> postJson<T>(
