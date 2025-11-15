@@ -58,7 +58,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
 
   /// 프로필 이미지 삭제
   void deleteEditableProfileImage(int index) {
-    if (index < 0 || index > state.length) {
+    if (index < 0 || index >= state.length) {
       Log.d('인덱스가 리스트 범위에서 벗어났습니다.');
       return;
     }
