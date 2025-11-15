@@ -34,10 +34,12 @@ class _OnboardingCertificationPageState
     extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
+  late final OnboardingNotifier _notifier;
 
   @override
   void initState() {
     super.initState();
+    _notifier = ref.read(onboardingProvider.notifier);
     Future.microtask(() async {
       final notifier = ref.read(onboardingProvider.notifier);
       final isCodeSended = await notifier.sendVerificationCode(
@@ -54,7 +56,7 @@ class _OnboardingCertificationPageState
 
   @override
   void dispose() {
-    ref.read(onboardingProvider.notifier).disposeTimer();
+    _notifier.disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
     super.dispose();
