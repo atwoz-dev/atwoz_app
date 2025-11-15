@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,17 +51,20 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   }
 
   // 사진 업로드
-  Future<void> uploadPhotos(List<XFile?> photos) async {
-    state = photos;
+  Future<void> uploadPhotos(List<ProfilePhoto> photos) async {
+    state = [
+      ...photos.map((e) => e.imageFile),
+      ...List.filled(Dimens.profileImageMaxCount - photos.length, null),
+    ];
 
-    await ref.read(uploadPhotosUsecaseProvider).execute(state);
+    await ref.read(uploadPhotosUsecaseProvider).execute(photos);
   }
 
   // 사진 선택
   Future<XFile?> pickPhoto(ImageSource source) async {
     try {
-      final permissionStatus =
-          await _permissionHandler.checkPhotoPermissionStatus();
+      final permissionStatus = await _permissionHandler
+          .checkPhotoPermissionStatus();
       if (!permissionStatus) {
         Log.i("권한이 허용되지 않았습니다.");
         return null;

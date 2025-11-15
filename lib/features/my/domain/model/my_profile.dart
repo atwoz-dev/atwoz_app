@@ -8,7 +8,7 @@ part 'my_profile.freezed.dart';
 @freezed
 abstract class MyProfile with _$MyProfile {
   const factory MyProfile({
-    required List<MyProfileImage?> profileImages,
+    required List<MyProfileImage> profileImages,
     required Job job,
     required String region,
     required Education education, // constants/enum 재사용

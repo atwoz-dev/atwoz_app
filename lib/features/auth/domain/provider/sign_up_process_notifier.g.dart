@@ -42,7 +42,7 @@ final class SignUpProcessNotifierProvider
 }
 
 String _$signUpProcessNotifierHash() =>
-    r'6ed69b6556b7c961e995225e24509f0d97962080';
+    r'6033666d60c2305b8eaaa0048d46e7b17cdd2c76';
 
 abstract class _$SignUpProcessNotifier extends $Notifier<SignUpProcessState> {
   SignUpProcessState build();

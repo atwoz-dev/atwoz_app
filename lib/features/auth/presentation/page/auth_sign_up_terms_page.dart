@@ -3,14 +3,11 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,33 +62,37 @@ class AuthSignUpTermsPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  isButtonEnabled
-                      ? () async {
-                        // 프로필 이미지 등록
-                        final List<XFile?> photos = ref.read(photoProvider);
-                        await ref
-                            .read(photoProvider.notifier)
-                            .uploadPhotos(photos);
+              onPressed: isButtonEnabled
+                  ? () async {
+                      // 프로필 이미지 등록
+                      final List<XFile?> photos = ref.read(photoProvider);
+                      final profilePhotos = photos
+                          .map(
+                            (e) => ProfilePhoto(imageFile: e, isUpdated: true),
+                          )
+                          .toList();
 
-                        // 프로필 등록
-                        final isSuccess =
-                            await ref
-                                .read(signUpProcessProvider.notifier)
-                                .uploadProfile();
+                      await ref
+                          .read(photoProvider.notifier)
+                          .uploadPhotos(profilePhotos);
 
-                        if (!isSuccess) return;
+                      // 프로필 등록
+                      final isSuccess = await ref
+                          .read(signUpProcessProvider.notifier)
+                          .uploadProfile();
 
-                        if (!context.mounted) return;
+                      if (!isSuccess) return;
 
-                        // 홈 화면으로 이동
-                        navigate(
-                          context,
-                          route: AppRoute.mainTab,
-                          method: NavigationMethod.go,
-                        );
-                      }
-                      : null,
+                      if (!context.mounted) return;
+
+                      // 홈 화면으로 이동
+                      navigate(
+                        context,
+                        route: AppRoute.mainTab,
+                        method: NavigationMethod.go,
+                      );
+                    }
+                  : null,
               child: Text(
                 '회원가입 완료',
                 style: Fonts.body01Medium(
@@ -134,12 +135,11 @@ class AuthSignUpTermsPageState
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color:
-                index != 0
-                    ? Palette.colorWhite
-                    : checked
-                    ? Palette.colorPrimary100
-                    : Palette.colorGrey100,
+            color: index != 0
+                ? Palette.colorWhite
+                : checked
+                ? Palette.colorPrimary100
+                : Palette.colorGrey100,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
           ),
           padding: const EdgeInsets.only(
@@ -156,19 +156,19 @@ class AuthSignUpTermsPageState
                   children: [
                     index == 0
                         ? DefaultIcon(
-                          checked ? IconPath.checkFill : IconPath.check,
-                          size: 24,
-                        )
+                            checked ? IconPath.checkFill : IconPath.check,
+                            size: 24,
+                          )
                         : DefaultIcon(
-                          IconPath.check,
-                          colorFilter: ColorFilter.mode(
-                            checked
-                                ? Palette.colorPrimary500.withOpacity(0.6)
-                                : Palette.colorGrey300.withOpacity(0.6),
-                            BlendMode.srcIn,
+                            IconPath.check,
+                            colorFilter: ColorFilter.mode(
+                              checked
+                                  ? Palette.colorPrimary500.withOpacity(0.6)
+                                  : Palette.colorGrey300.withOpacity(0.6),
+                              BlendMode.srcIn,
+                            ),
+                            size: 24,
                           ),
-                          size: 24,
-                        ),
                     const SizedBox(width: 8),
                     Text(
                       text,
@@ -182,25 +182,23 @@ class AuthSignUpTermsPageState
                 ),
               ),
               Container(
-                child:
-                    index != 0
-                        ? GestureDetector(
-                          onTap: () {
-                            // TODO: 이용약관, 개인정보 처리방침 화면 나오면 연결 필요함
-                            navigate(
-                              context,
-                              route:
-                                  index != 1
-                                      ? AppRoute.privacyPolicy
-                                      : AppRoute.termsOfUse,
-                            );
-                          },
-                          child: Text(
-                            '보기',
-                            style: Fonts.body01Regular(Palette.colorGrey900),
-                          ),
-                        )
-                        : null,
+                child: index != 0
+                    ? GestureDetector(
+                        onTap: () {
+                          // TODO: 이용약관, 개인정보 처리방침 화면 나오면 연결 필요함
+                          navigate(
+                            context,
+                            route: index != 1
+                                ? AppRoute.privacyPolicy
+                                : AppRoute.termsOfUse,
+                          );
+                        },
+                        child: Text(
+                          '보기',
+                          style: Fonts.body01Regular(Palette.colorGrey900),
+                        ),
+                      )
+                    : null,
               ),
             ],
           ),

@@ -28,18 +28,13 @@ class ProfileManagePage extends ConsumerWidget {
                   profileImages: data.profile.profileImages,
                 );
               } else {
-                return ProfileManageInfoArea(
-                  profile: data.profile,
-                );
+                return ProfileManageInfoArea(profile: data.profile);
               }
             },
           ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          error: (error, stackTrace) => const Center(
-            child: Text('프로필 관리 페이지 로딩 중 오류 발생'),
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) =>
+              const Center(child: Text('프로필 관리 페이지 로딩 중 오류 발생')),
         ),
       ),
     );

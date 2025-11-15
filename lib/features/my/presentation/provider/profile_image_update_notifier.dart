@@ -1,8 +1,7 @@
 import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
-import 'package:atwoz_app/features/my/presentation/provider/profile_image_update_state.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/update_photos_use_case.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,64 +11,73 @@ part 'profile_image_update_notifier.g.dart';
 @Riverpod(keepAlive: true)
 class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
   @override
-  ProfileImageUpdateState build(
-      List<EditableProfileImage?> editableProfileImages) {
-    return ProfileImageUpdateState(
-      editableProfileImages: editableProfileImages,
-    );
+  List<ProfilePhoto> build(List<ProfilePhoto> profilePhotos) {
+    Log.d('가져온 프로필 이미지 리스트는 $profilePhotos');
+    return profilePhotos;
   }
 
-  void updateEditableProfileImage({required int index, required XFile image}) {
-    final updatedImages = [...state.editableProfileImages];
+  bool get isSaveEnabled => state.any((image) => image.isUpdated == true);
 
-    final previousImage = updatedImages[index];
+  /// 프로필 이미지 업데이트
+  Future<void> updateEditableProfileImages({
+    required int index,
+    required XFile image,
+  }) async {
+    Log.d('여기 진입함');
 
-    updatedImages[index] = (previousImage == null)
-        ? EditableProfileImage(
-            id: null,
-            imageUrl: null,
-            imageFile: image,
-            order: index,
-            isPrimary: index == 0,
-            status: ProfileImageStatus.add,
-          )
-        : previousImage.copyWith(
-            imageFile: image,
-            status: ProfileImageStatus.update,
-          );
-
-    state = state.copyWith(editableProfileImages: updatedImages);
-  }
-
-  void deleteEditableProfileImage({required int index}) {
-    final targetProfileImage = state.editableProfileImages[index];
-
-    if (targetProfileImage == null) return;
-
-    final updatedList = [...state.editableProfileImages];
-
-    if (targetProfileImage.status == ProfileImageStatus.add) {
-      updatedList[index] = null;
-    } else {
-      updatedList[index] = targetProfileImage.copyWith(
-        imageFile: null,
-        status: ProfileImageStatus.delete,
-      );
-    }
-    state = state.copyWith(editableProfileImages: updatedList);
-  }
-
-  Future<bool> save() async {
     try {
-      await ref
-          .read(updatePhotosUsecaseProvider)
-          .execute(state.editableProfileImages); // 서버에 이미지 업로드
+      // 현재 state 복사
+      final updatedImages = [...state];
+      Log.d('업데이트 전 이미지 리스트: $updatedImages');
 
-      final box = await Hive.openBox(MyProfileImage.boxName); // Hive Box 가져오기
+      // 리스트 범위보다 큰 인덱스 → append
+      if (index >= updatedImages.length) {
+        updatedImages.add(ProfilePhoto(imageFile: image, isUpdated: true));
 
-      await box.delete('images'); // Hive Box에서 'images' 키로 저장된 데이터 삭제
+        state = updatedImages;
+        Log.d('추가 후 이미지 리스트 : $state');
+        return;
+      }
 
-      return true;
+      updatedImages[index] = updatedImages[index].copyWith(
+        imageFile: image,
+        isUpdated: true,
+      );
+
+      state = updatedImages;
+      Log.d('업데이트 후 이미지 리스트: $updatedImages');
+    } catch (e) {
+      Log.e('이미지 추가/변경 중 오류 발생: $e');
+    }
+  }
+
+  /// 프로필 이미지 삭제
+  void deleteEditableProfileImage(int index) {
+    Log.d('삭제된 index는 $index입니다.');
+
+    final copiedImages = [...state];
+    copiedImages.removeAt(index);
+
+    state = copiedImages;
+
+    Log.d('삭제 후 state: $state');
+  }
+
+  /// 서버 업로드 + Hive에 저장된 데이터 삭제
+  Future<bool> save(List<ProfilePhoto> photos) async {
+    try {
+      // 서버 업로드
+      final isSuccess = await ref
+          .read(uploadPhotosUsecaseProvider)
+          .execute(photos);
+
+      if (isSuccess) {
+        // Hive 데이터 삭제
+        final box = await Hive.openBox(MyProfileImage.boxName);
+        await box.delete('images');
+      }
+
+      return isSuccess;
     } catch (e) {
       Log.e("❌ 프로필 이미지 저장 중 오류 발생: $e");
       return false;
