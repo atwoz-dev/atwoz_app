@@ -38,7 +38,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       horizontal: horizontalPadding,
     );
 
-    final stateAync = ref.watch(introduceProvider);
+    final stateAsync = ref.watch(introduceProvider);
 
     return Stack(
       children: [
@@ -81,8 +81,8 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   child: Padding(
                     padding: contentPadding,
                     child: _currentTabIndex == 0
-                        ? _buildIntroduceContent(context, stateAync)
-                        : _buildIntroduceHistory(context, stateAync),
+                        ? _buildIntroduceContent(context, stateAsync)
+                        : _buildIntroduceHistory(context, stateAsync),
                   ),
                 ),
               ],
@@ -162,6 +162,11 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
             _refreshIntroduceList();
           } else {
             // TODO: 다른 화면으로 이동
+            navigate(
+              context,
+              route: AppRoute.introduceDetail,
+              extra: IntroduceDetailArguments(introduceId: item.id),
+            );
           }
         },
         child: Padding(
