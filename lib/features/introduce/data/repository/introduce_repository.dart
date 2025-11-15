@@ -74,7 +74,7 @@ class IntroduceRepository extends BaseRepository {
 
   /// 셀프 소개 삭제 api
   Future<void> deleteIntroduce({required int id}) async {
-    await apiService.deleteJson("$path/$id");
+    final response = await apiService.deleteJson("$path/$id");
   }
 
   /// 셀프 소개 수정 api

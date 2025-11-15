@@ -85,6 +85,18 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
               CustomReturnDialogue.showTwoChoiceDialogue(
                 context: context,
                 content: '수정 버튼을 누르면\n작성된 내용을 저장합니다.',
+                outlineButtonText: "삭제",
+                onOutlinedButtonPressed: () async {
+                  try {
+                    await ref
+                        .read(introduceEditProvider.notifier)
+                        .deleteIntroduce(
+                          id: widget.id,
+                        );
+                  } catch (e) {
+                    showToastMessage('내용을 삭제하는데 실패했습니다.');
+                  }
+                },
                 elevatedButtonText: '수정',
                 onElevatedButtonPressed: () async {
                   try {
@@ -101,7 +113,7 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
                   }
                 },
               ).then((pressedConfirm) {
-                if (context.mounted) {
+                if (context.mounted && pressedConfirm != null) {
                   Navigator.of(context).pop();
                 }
               });

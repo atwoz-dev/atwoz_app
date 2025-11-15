@@ -73,8 +73,10 @@ class CustomReturnDialogue extends StatelessWidget {
           elevatedButtonText: elevatedButtonText,
           elevatedButtonTextColor: elevatedButtonTextColor,
           elevatedButtonColor: elevatedButtonColor,
-          onOutlinedButtonPressed:
-              onOutlinedButtonPressed ?? () => Navigator.of(context).pop(true),
+          onOutlinedButtonPressed: () {
+            onOutlinedButtonPressed?.call();
+            Navigator.of(context).pop(true);
+          },
           onElevatedButtonPressed: () {
             onElevatedButtonPressed();
             Navigator.of(context).pop(true);
