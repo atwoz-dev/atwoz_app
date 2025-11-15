@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MyProfile {
 
- List<MyProfileImage?> get profileImages; Job get job; String get region; Education get education;// constants/enum 재사용
+ List<MyProfileImage> get profileImages; Job get job; String get region; Education get education;// constants/enum 재사용
  SmokingStatus get smokingStatus;// profile/domain/enum 재사용
  DrinkingStatus get drinkingStatus;// profile/domain/enum 재사용
  Religion get religion;// profile/domain/enum 재사용
@@ -50,7 +50,7 @@ abstract mixin class $MyProfileCopyWith<$Res>  {
   factory $MyProfileCopyWith(MyProfile value, $Res Function(MyProfile) _then) = _$MyProfileCopyWithImpl;
 @useResult
 $Res call({
- List<MyProfileImage?> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
+ List<MyProfileImage> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
 });
 
 
@@ -70,7 +70,7 @@ class _$MyProfileCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,}) {
   return _then(_self.copyWith(
 profileImages: null == profileImages ? _self.profileImages : profileImages // ignore: cast_nullable_to_non_nullable
-as List<MyProfileImage?>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as List<MyProfileImage>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as Job,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String,education: null == education ? _self.education : education // ignore: cast_nullable_to_non_nullable
 as Education,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MyProfile() when $default != null:
 return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
@@ -189,7 +189,7 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)  $default,) {final _that = this;
 switch (_that) {
 case _MyProfile():
 return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
@@ -209,7 +209,7 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,) {final _that = this;
 switch (_that) {
 case _MyProfile() when $default != null:
 return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
@@ -224,11 +224,11 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 
 
 class _MyProfile implements MyProfile {
-  const _MyProfile({required final  List<MyProfileImage?> profileImages, required this.job, required this.region, required this.education, required this.smokingStatus, required this.drinkingStatus, required this.religion, required this.mbti, required final  List<Hobby> hobbies, required this.nickname, required this.age, required this.height, required this.gender, required this.phoneNum}): _profileImages = profileImages,_hobbies = hobbies;
+  const _MyProfile({required final  List<MyProfileImage> profileImages, required this.job, required this.region, required this.education, required this.smokingStatus, required this.drinkingStatus, required this.religion, required this.mbti, required final  List<Hobby> hobbies, required this.nickname, required this.age, required this.height, required this.gender, required this.phoneNum}): _profileImages = profileImages,_hobbies = hobbies;
   
 
- final  List<MyProfileImage?> _profileImages;
-@override List<MyProfileImage?> get profileImages {
+ final  List<MyProfileImage> _profileImages;
+@override List<MyProfileImage> get profileImages {
   if (_profileImages is EqualUnmodifiableListView) return _profileImages;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_profileImages);
@@ -289,7 +289,7 @@ abstract mixin class _$MyProfileCopyWith<$Res> implements $MyProfileCopyWith<$Re
   factory _$MyProfileCopyWith(_MyProfile value, $Res Function(_MyProfile) _then) = __$MyProfileCopyWithImpl;
 @override @useResult
 $Res call({
- List<MyProfileImage?> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
+ List<MyProfileImage> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
 });
 
 
@@ -309,7 +309,7 @@ class __$MyProfileCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,}) {
   return _then(_MyProfile(
 profileImages: null == profileImages ? _self._profileImages : profileImages // ignore: cast_nullable_to_non_nullable
-as List<MyProfileImage?>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as List<MyProfileImage>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as Job,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String,education: null == education ? _self.education : education // ignore: cast_nullable_to_non_nullable
 as Education,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable

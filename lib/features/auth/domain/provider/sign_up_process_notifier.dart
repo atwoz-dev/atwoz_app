@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,10 +8,10 @@ import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-part 'sign_up_process_provider.g.dart';
+part 'sign_up_process_notifier.g.dart';
 
 @Riverpod(keepAlive: false)
-class SignUpProcess extends _$SignUpProcess {
+class SignUpProcessNotifier extends _$SignUpProcessNotifier {
   @override
   SignUpProcessState build() => const SignUpProcessState();
 
@@ -40,8 +41,9 @@ class SignUpProcess extends _$SignUpProcess {
     }
 
     // 입력되지 않은 필드 중 가장 먼저 나오는 필드로 이동
-    final nextStepIndex =
-        requiredFieldsOrder.indexWhere(unwrittenFields.contains);
+    final nextStepIndex = requiredFieldsOrder.indexWhere(
+      unwrittenFields.contains,
+    );
     if (nextStepIndex != -1) {
       state = state.copyWith(currentStep: nextStepIndex + 1);
       return;
@@ -64,22 +66,26 @@ class SignUpProcess extends _$SignUpProcess {
   }
 
   bool isButtonEnabled() => state.isButtonEnabled();
-  void updateField<T>(T value,
-      {required Function(SignUpProcessState, T) copy}) {
+  void updateField<T>(
+    T value, {
+    required Function(SignUpProcessState, T) copy,
+  }) {
     state = copy(state, value);
   }
 
   void updateNickname(String nickname) => updateField(
-        nickname,
-        copy: (s, v) => s.copyWith(
+    nickname,
+    copy:
+        (s, v) => s.copyWith(
           nickname: v,
-          error: v.isEmpty
-              ? null
-              : (v.runes.length < 2
-                  ? '닉네임은 2자 이상이어야 합니다.'
-                  : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
+          error:
+              v.isEmpty
+                  ? null
+                  : (v.runes.length < 2
+                      ? '닉네임은 2자 이상이어야 합니다.'
+                      : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
         ),
-      );
+  );
   void updateSelectedYear(int year) =>
       updateField(year, copy: (s, v) => s.copyWith(selectedYear: v));
 
@@ -150,11 +156,7 @@ class SignUpProcess extends _$SignUpProcess {
 
   void updateHobbies(List<String> hobbies) {
     state = state.copyWith(
-      selectedHobbies: hobbies
-          .map(
-            (e) => Hobby.fromLabel(e),
-          )
-          .toList(),
+      selectedHobbies: hobbies.map((e) => Hobby.fromLabel(e)).toList(),
     );
   }
 
@@ -165,10 +167,21 @@ class SignUpProcess extends _$SignUpProcess {
         await ref.read(getCurrentLocationUseCaseProvider).execute();
 
     Log.d('현재 위치: $location');
-    state = state.copyWith(
-      selectedLocation: location,
-    );
+    state = state.copyWith(selectedLocation: location);
 
     return location;
+  }
+
+  Future<bool> uploadProfile() async {
+    try {
+      await ref
+          .read(authUsecaseProvider)
+          .uploadProfile(state.toProfileUploadRequest());
+
+      return true;
+    } catch (e) {
+      Log.e('프로필 업로드 실패: $e');
+      return false;
+    }
   }
 }

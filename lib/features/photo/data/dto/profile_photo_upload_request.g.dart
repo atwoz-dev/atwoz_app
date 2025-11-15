@@ -6,18 +6,22 @@ part of 'profile_photo_upload_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ProfilePhotoUploadRequest _$ProfilePhotoUploadRequestFromJson(
+ProfilePhotoUploadRequest _$ProfilePhotoUploadRequestFromJson(
   Map<String, dynamic> json,
-) => _ProfilePhotoUploadRequest(
-  id: json['id'] as String?,
-  isPrimary: json['isPrimary'] as bool,
-  order: (json['order'] as num).toInt(),
+) => ProfilePhotoUploadRequest(
+  requests: (json['requests'] as List<dynamic>)
+      .map((e) => PhotoRequest.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$ProfilePhotoUploadRequestToJson(
-  _ProfilePhotoUploadRequest instance,
+  ProfilePhotoUploadRequest instance,
 ) => <String, dynamic>{
-  'id': instance.id,
-  'isPrimary': instance.isPrimary,
-  'order': instance.order,
+  'requests': instance.requests.map((e) => e.toJson()).toList(),
 };
+
+PhotoRequest _$PhotoRequestFromJson(Map<String, dynamic> json) =>
+    PhotoRequest(imageUrl: json['imageUrl'] as String);
+
+Map<String, dynamic> _$PhotoRequestToJson(PhotoRequest instance) =>
+    <String, dynamic>{'imageUrl': instance.imageUrl};

@@ -13,11 +13,10 @@ part of 'profile_image_update_notifier.dart';
 const profileImageUpdateProvider = ProfileImageUpdateNotifierFamily._();
 
 final class ProfileImageUpdateNotifierProvider
-    extends
-        $NotifierProvider<ProfileImageUpdateNotifier, ProfileImageUpdateState> {
+    extends $NotifierProvider<ProfileImageUpdateNotifier, List<ProfilePhoto>> {
   const ProfileImageUpdateNotifierProvider._({
     required ProfileImageUpdateNotifierFamily super.from,
-    required List<EditableProfileImage?> super.argument,
+    required List<ProfilePhoto> super.argument,
   }) : super(
          retry: null,
          name: r'profileImageUpdateProvider',
@@ -41,10 +40,10 @@ final class ProfileImageUpdateNotifierProvider
   ProfileImageUpdateNotifier create() => ProfileImageUpdateNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ProfileImageUpdateState value) {
+  Override overrideWithValue(List<ProfilePhoto> value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ProfileImageUpdateState>(value),
+      providerOverride: $SyncValueProvider<List<ProfilePhoto>>(value),
     );
   }
 
@@ -61,16 +60,16 @@ final class ProfileImageUpdateNotifierProvider
 }
 
 String _$profileImageUpdateNotifierHash() =>
-    r'5b51ef83125440fb313aa2624a704e962c19437c';
+    r'479e8f3fc46e4a53fb3cf90091c2e6d2948d8054';
 
 final class ProfileImageUpdateNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
           ProfileImageUpdateNotifier,
-          ProfileImageUpdateState,
-          ProfileImageUpdateState,
-          ProfileImageUpdateState,
-          List<EditableProfileImage?>
+          List<ProfilePhoto>,
+          List<ProfilePhoto>,
+          List<ProfilePhoto>,
+          List<ProfilePhoto>
         > {
   const ProfileImageUpdateNotifierFamily._()
     : super(
@@ -81,36 +80,29 @@ final class ProfileImageUpdateNotifierFamily extends $Family
         isAutoDispose: false,
       );
 
-  ProfileImageUpdateNotifierProvider call(
-    List<EditableProfileImage?> editableProfileImages,
-  ) => ProfileImageUpdateNotifierProvider._(
-    argument: editableProfileImages,
-    from: this,
-  );
+  ProfileImageUpdateNotifierProvider call(List<ProfilePhoto> profilePhotos) =>
+      ProfileImageUpdateNotifierProvider._(argument: profilePhotos, from: this);
 
   @override
   String toString() => r'profileImageUpdateProvider';
 }
 
 abstract class _$ProfileImageUpdateNotifier
-    extends $Notifier<ProfileImageUpdateState> {
-  late final _$args = ref.$arg as List<EditableProfileImage?>;
-  List<EditableProfileImage?> get editableProfileImages => _$args;
+    extends $Notifier<List<ProfilePhoto>> {
+  late final _$args = ref.$arg as List<ProfilePhoto>;
+  List<ProfilePhoto> get profilePhotos => _$args;
 
-  ProfileImageUpdateState build(
-    List<EditableProfileImage?> editableProfileImages,
-  );
+  List<ProfilePhoto> build(List<ProfilePhoto> profilePhotos);
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build(_$args);
-    final ref =
-        this.ref as $Ref<ProfileImageUpdateState, ProfileImageUpdateState>;
+    final ref = this.ref as $Ref<List<ProfilePhoto>, List<ProfilePhoto>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<ProfileImageUpdateState, ProfileImageUpdateState>,
-              ProfileImageUpdateState,
+              AnyNotifier<List<ProfilePhoto>, List<ProfilePhoto>>,
+              List<ProfilePhoto>,
               Object?,
               Object?
             >;

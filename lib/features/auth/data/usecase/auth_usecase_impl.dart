@@ -14,11 +14,9 @@ import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
@@ -85,28 +83,6 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     } catch (e) {
       Log.e("로그아웃 중 예기치 못한 에러 발생: $e");
       return false;
-    }
-  }
-
-  // 프로필 사진 업로드
-  @override
-  Future<void> uploadProfilePhotos(List<XFile?> photos) async {
-    await _photoRepository.uploadProfilePhotos(photos);
-  }
-
-  // 프로필 사진 삭제
-  @override
-  Future<void> deleteProfilePhoto(int index) async {
-    await _photoRepository.deleteProfilePhoto(index);
-  }
-
-  @override
-  Future<ProfileImageResponse?> fetchProfileImages() async {
-    try {
-      return await _photoRepository.fetchProfileImages();
-    } catch (e) {
-      Log.e("❌ 프로필 사진 조회 실패: $e");
-      rethrow;
     }
   }
 

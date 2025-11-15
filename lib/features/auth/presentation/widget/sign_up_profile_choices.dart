@@ -7,7 +7,7 @@ import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ Widget buildSelectInput({
 
 Widget buildBirthInput({
   required int? selectedYear,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   const defaultYear = 1997;
   // selectedYear가 없으면 초기 세팅
@@ -50,7 +50,7 @@ Widget buildBirthInput({
 
 Widget buildHeightInput({
   required int? selectedHeight,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   const defaultHeight = 170;
 
@@ -73,7 +73,7 @@ Widget buildHeightInput({
 
 Widget buildJobInput({
   required String? selectedJob,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   return SingleSelectListChip(
     options: Job.values.map((e) => e.label).toList(),
@@ -85,10 +85,7 @@ Widget buildJobInput({
 class LocationInputWidget extends ConsumerStatefulWidget {
   final String? selectedLocation;
 
-  const LocationInputWidget({
-    super.key,
-    required this.selectedLocation,
-  });
+  const LocationInputWidget({super.key, required this.selectedLocation});
 
   @override
   ConsumerState<LocationInputWidget> createState() =>
@@ -144,32 +141,25 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xffEDEEF0),
-              ),
+              borderSide: const BorderSide(color: Color(0xffEDEEF0)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Palette.colorBlack,
-              ),
+              borderSide: const BorderSide(color: Palette.colorBlack),
             ),
           ),
         ),
         const SizedBox(height: 8),
         if (_controller.text.isEmpty)
           GestureDetector(
-            onTap: () async =>
-                _controller.text = await signUpProcessNotifier.updateLocation(),
+            onTap:
+                () async =>
+                    _controller.text =
+                        await signUpProcessNotifier.updateLocation(),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color(0xffDCDEE3),
-                ),
+                border: Border.all(color: const Color(0xffDCDEE3)),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
@@ -188,36 +178,38 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: _filteredLocations.map((location) {
-                return GestureDetector(
-                  onTap: () {
-                    _controller.text = location;
-                    signUpProcessNotifier
-                        .updateSelectedLocation(location); // 선택한 지역으로 설정
-                    _filteredLocations.clear(); // 검색 후 결과 초기화
-                    FocusScope.of(context).unfocus(); // 키보드 내리기
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 14,
-                      horizontal: 16,
-                    ),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Palette.colorGrey50,
-                          width: 1.0,
+              children:
+                  _filteredLocations.map((location) {
+                    return GestureDetector(
+                      onTap: () {
+                        _controller.text = location;
+                        signUpProcessNotifier.updateSelectedLocation(
+                          location,
+                        ); // 선택한 지역으로 설정
+                        _filteredLocations.clear(); // 검색 후 결과 초기화
+                        FocusScope.of(context).unfocus(); // 키보드 내리기
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                          horizontal: 16,
+                        ),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Palette.colorGrey50,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          location,
+                          style: Fonts.body02Medium(Palette.colorGrey800),
                         ),
                       ),
-                    ),
-                    child: Text(
-                      location,
-                      style: Fonts.body02Medium(Palette.colorGrey800),
-                    ),
-                  ),
-                );
-              }).toList(),
+                    );
+                  }).toList(),
             ),
           ),
         ),
@@ -228,7 +220,7 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
 
 Widget buildEducationInput({
   required Education? selectedEducation,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   final options = [...Education.values.map((e) => e.label)];
 
@@ -243,11 +235,11 @@ Widget buildEducationInput({
 
 Widget buildMbtiInput({
   required SignUpProcessState signUpState,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   final mbtiOptions = [
     ['E', 'N', 'F', 'P'],
-    ['I', 'S', 'T', 'J']
+    ['I', 'S', 'T', 'J'],
   ];
 
   Widget buildMbtiButton({
@@ -296,10 +288,11 @@ Widget buildMbtiInput({
             final row = index ~/ 4;
             final col = index % 4;
             final letter = mbtiOptions[row][col];
-            final isSelected = (letter == signUpState.selectedFirstMbtiLetter ||
-                letter == signUpState.selectedSecondMbtiLetter ||
-                letter == signUpState.selectedThirdMbtiLetter ||
-                letter == signUpState.selectedFourthMbtiLetter);
+            final isSelected =
+                (letter == signUpState.selectedFirstMbtiLetter ||
+                    letter == signUpState.selectedSecondMbtiLetter ||
+                    letter == signUpState.selectedThirdMbtiLetter ||
+                    letter == signUpState.selectedFourthMbtiLetter);
 
             return buildMbtiButton(
               context: context,
@@ -326,37 +319,34 @@ Widget buildMbtiInput({
 
 Widget buildSmokingInput({
   required SmokingStatus? selectedSmoking,
-  required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedSmoking?.label,
-      values: SmokingStatus.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateSmoking,
-    );
+  required SignUpProcessNotifier signUpNotifier,
+}) => buildSelectInput(
+  selectedValue: selectedSmoking?.label,
+  values: SmokingStatus.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateSmoking,
+);
 
 Widget buildDrinkingInput({
   required DrinkingStatus? selectedDrinking,
-  required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedDrinking?.label,
-      values: DrinkingStatus.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateDrinking,
-    );
+  required SignUpProcessNotifier signUpNotifier,
+}) => buildSelectInput(
+  selectedValue: selectedDrinking?.label,
+  values: DrinkingStatus.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateDrinking,
+);
 
 Widget buildReligionInput({
   required Religion? selectedReligion,
-  required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedReligion?.label,
-      values: Religion.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateReligion,
-    );
+  required SignUpProcessNotifier signUpNotifier,
+}) => buildSelectInput(
+  selectedValue: selectedReligion?.label,
+  values: Religion.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateReligion,
+);
 
 Widget buildHobbiesInput({
   required List<String> selectedHobbies,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   return ListChip(
     options: hobbies,

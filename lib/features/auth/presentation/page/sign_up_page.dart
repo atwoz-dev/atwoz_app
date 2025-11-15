@@ -7,7 +7,7 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/util/validation.dart';
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -86,10 +86,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AuthStepIndicatorWidget(
-                  totalSteps: 4,
-                  currentStep: 1,
-                ),
+                const AuthStepIndicatorWidget(totalSteps: 4, currentStep: 1),
                 Gap(16.h),
                 const TitleText(title: '닉네임을 입력해주세요'),
                 Gap(5.h),
@@ -110,8 +107,10 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                     hintText: '10글자 이내로 입력해주세요.',
                     fillColor: Palette.colorGrey100,
                     errorText: signUpState.error, // 상태 기반 에러 메시지
-                    onFieldSubmitted: (value) =>
-                        signUpProcess.updateNickname(value), // 엔터를 눌렀을 때 유효성 검사
+                    onFieldSubmitted:
+                        (value) => signUpProcess.updateNickname(
+                          value,
+                        ), // 엔터를 눌렀을 때 유효성 검사
                   ),
                 ),
                 Gap(24.h),
@@ -131,14 +130,12 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed: isButtonEnabled
-                  ? () {
-                      navigate(
-                        context,
-                        route: AppRoute.signUpProfileChoice,
-                      );
-                    }
-                  : null,
+              onPressed:
+                  isButtonEnabled
+                      ? () {
+                        navigate(context, route: AppRoute.signUpProfileChoice);
+                      }
+                      : null,
               child: Text(
                 '다음',
                 style: Fonts.body01Medium(
