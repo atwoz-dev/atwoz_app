@@ -5,7 +5,6 @@ import 'package:atwoz_app/features/notification/data/dto/notification_preference
 import 'package:atwoz_app/features/notification/domain/model/notification_item.dart';
 import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/util/shared_preference/shared_preference.dart';
 
@@ -16,18 +15,27 @@ final notificationRepositoryProvider = Provider<NotificationRepository>(
 class NotificationRepository extends BaseRepository {
   NotificationRepository(Ref ref) : super(ref, '/notification-preferences');
 
-  Future<List<NotificationItem>> fetchNotifications() async {
+  Future<({List<NotificationItem> notifications, bool hasMore})>
+  fetchNotifications([int? lastId]) async {
     try {
-      final response = await apiService.getJson('/notifications');
-      if (response['data'] is! List) {
-        throw Exception('Invalid response format: data is not a List');
+      final response = await apiService.getJson<Map<String, dynamic>>(
+        '/notifications',
+        queryParameters: {'lastId': ?lastId},
+      );
+      final data = response['data'] as Map<String, dynamic>;
+      if (data['notifications'] is! List) {
+        throw Exception('Invalid response format: notifications is not a List');
       }
-      final List<dynamic> dataList = response['data'];
-      return dataList
-          .map((item) => NotificationItem.fromJson(
-                item as Map<String, dynamic>,
-              ))
+      final List<dynamic> notificationsList = data['notifications'];
+      final hasMore = data['hasMore'] as bool? ?? false;
+
+      final notifications = notificationsList
+          .map(
+            (item) => NotificationItem.fromJson(item as Map<String, dynamic>),
+          )
           .toList();
+
+      return (notifications: notifications, hasMore: hasMore);
     } catch (e) {
       Log.e('Error fetching notifications: $e');
       rethrow;
@@ -56,8 +64,9 @@ class NotificationRepository extends BaseRepository {
         response['data'] as Map<String, dynamic>,
       );
 
-      final enabledTypes =
-          _parseEnabledServerTypes(notificationPreferences.preferences);
+      final enabledTypes = _parseEnabledServerTypes(
+        notificationPreferences.preferences,
+      );
 
       await _saveToLocal(enabledTypes);
 
@@ -105,10 +114,7 @@ class NotificationRepository extends BaseRepository {
         ),
       );
 
-      await apiService.postJson(
-        path,
-        data: {'preferences': serverPreferences},
-      );
+      await apiService.postJson(path, data: {'preferences': serverPreferences});
     } catch (e) {
       throw Exception('서버 알림 설정 동기화 실패: $e');
     }
@@ -133,7 +139,8 @@ class NotificationRepository extends BaseRepository {
   }
 
   Future<bool> get notificationEnabled async {
-    final allowed = SharedPreferenceManager.getValue(
+    final allowed =
+        SharedPreferenceManager.getValue(
           SharedPreferenceKeys.notificationAllowed,
         ) ??
         false;

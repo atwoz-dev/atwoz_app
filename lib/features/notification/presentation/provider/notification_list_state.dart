@@ -7,6 +7,7 @@ part 'notification_list_state.freezed.dart';
 abstract class NotificationListState with _$NotificationListState {
   const factory NotificationListState({
     @Default([]) List<NotificationItem> notifications,
-    @Default({}) Set<int> readIds,
+    @Default(false) bool hasMore,
+    int? lastId,
   }) = _NotificationListState;
 }

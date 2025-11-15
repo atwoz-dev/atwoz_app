@@ -12,6 +12,7 @@ class NotificationItem {
     required this.notificationType,
     required this.title,
     required this.body,
+    required this.isRead,
     required this.createdAt,
   });
 
@@ -22,8 +23,20 @@ class NotificationItem {
   final ServerNotificationType notificationType;
   final String title;
   final String body;
+  final bool isRead;
   final DateTime createdAt;
 
   factory NotificationItem.fromJson(Map<String, dynamic> json) =>
       _$NotificationItemFromJson(json);
+
+  NotificationItem copyWith({bool? isRead}) => NotificationItem(
+    notificationId: notificationId,
+    senderId: senderId,
+    receiverId: receiverId,
+    notificationType: notificationType,
+    title: title,
+    body: body,
+    isRead: isRead ?? this.isRead,
+    createdAt: createdAt,
+  );
 }

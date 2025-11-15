@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
@@ -27,6 +28,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
   @override
   void initState() {
     ref.read(globalProvider.notifier).initProfile();
+    ref.read(globalProvider.notifier).fetchHeartBalance();
     super.initState();
   }
 
@@ -38,59 +40,58 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: homeStateAsync.when(
-          data: (data) => Stack(
-            children: [
-              SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    const HomeNavbarArea(), // 홈 상단 네비게이션바
-                    const Gap(16),
-                    const HomeProfileCardArea(), // 소개받은 프로필 부분
-                    const Gap(16),
-                    HomeCategoryButtonsArea(
-                      // 카테고리 버튼 영역
-                      onTapButton: (category) async {
-                        final hasProfiles =
-                            await homeNotifier.checkIntroducedProfiles(
-                          IntroducedCategory.parse(category),
-                        );
-                        if (!hasProfiles) {
-                          showToastMessage(
-                            '조건에 맞는 이성을 찾지 못했어요',
-                            gravity: ToastGravity.TOP,
-                          );
-                          return;
-                        }
-                        if (context.mounted) {
-                          navigate(
-                            context,
-                            route: AppRoute.userByCategory,
-                            extra: UserByCategoryArguments(
-                              category: IntroducedCategory.parse(category),
-                            ),
-                          );
-                        }
-                      },
+          data:
+              (data) => Stack(
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
+                        const HomeNavbarArea(), // 홈 상단 네비게이션바
+                        const Gap(16),
+                        const HomeProfileCardArea(), // 소개받은 프로필 부분
+                        const Gap(16),
+                        HomeCategoryButtonsArea(
+                          // 카테고리 버튼 영역
+                          onTapButton: (category) async {
+                            final hasProfiles = await homeNotifier
+                                .checkIntroducedProfiles(
+                                  IntroducedCategory.parse(category),
+                                );
+                            if (!hasProfiles) {
+                              showToastMessage(
+                                '조건에 맞는 이성을 찾지 못했어요',
+                                gravity: ToastGravity.TOP,
+                              );
+                              return;
+                            }
+                            if (context.mounted) {
+                              navigate(
+                                context,
+                                route: AppRoute.userByCategory,
+                                extra: UserByCategoryArguments(
+                                  category: IntroducedCategory.parse(category),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        const Gap(24),
+                        const HomeBannerArea(),
+                      ],
                     ),
-                    const Gap(24),
-                    HomeBannerArea()
+                  ),
+                  if (data.isCheckingIntroducedProfiles) ...[
+                    const ModalBarrier(
+                      dismissible: false,
+                      color: Colors.transparent,
+                    ),
+                    const Center(child: CircularProgressIndicator()),
                   ],
-                ),
+                ],
               ),
-              if (data.isCheckingIntroducedProfiles) ...[
-                const ModalBarrier(
-                  dismissible: false,
-                  color: Colors.transparent,
-                ),
-                const Center(child: CircularProgressIndicator()),
-              ],
-            ],
-          ),
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ),
       ),
     );

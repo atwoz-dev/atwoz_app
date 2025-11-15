@@ -65,9 +65,9 @@ class IntroducedProfileDtoAdapter extends TypeAdapter<IntroducedProfileDto> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-IntroducedProfileDto _$IntroducedProfileDtoFromJson(
+_IntroducedProfileDto _$IntroducedProfileDtoFromJson(
   Map<String, dynamic> json,
-) => IntroducedProfileDto(
+) => _IntroducedProfileDto(
   memberId: (json['memberId'] as num).toInt(),
   profileImageUrl: json['profileImageUrl'] as String,
   hobbies: (json['hobbies'] as List<dynamic>).map((e) => e as String).toList(),
@@ -79,7 +79,7 @@ IntroducedProfileDto _$IntroducedProfileDtoFromJson(
 );
 
 Map<String, dynamic> _$IntroducedProfileDtoToJson(
-  IntroducedProfileDto instance,
+  _IntroducedProfileDto instance,
 ) => <String, dynamic>{
   'memberId': instance.memberId,
   'profileImageUrl': instance.profileImageUrl,
