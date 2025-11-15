@@ -30,10 +30,12 @@ class _OnboardingCertificationPageState
     extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
+  late final OnboardingNotifier _notifier;
 
   @override
   void initState() {
     super.initState();
+    _notifier = ref.read(onboardingProvider.notifier);
     Future.microtask(() async {
       final notifier = ref.read(onboardingProvider.notifier);
       final isCodeSended = await notifier.sendVerificationCode(
@@ -50,7 +52,7 @@ class _OnboardingCertificationPageState
 
   @override
   void dispose() {
-    ref.read(onboardingProvider.notifier).disposeTimer();
+    _notifier.disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -101,12 +103,10 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
@@ -130,10 +130,9 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(notifier)
+                  : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
