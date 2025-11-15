@@ -175,13 +175,7 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   }
 
   @override
-  Future<bool> activateAccount(String phoneNumber) async {
-    try {
-      await _userRepository.activateAccount(phoneNumber);
-      return true;
-    } catch (e) {
-      Log.e('계정 활성화 실패:$e');
-      return false;
-    }
+  Future<void> activateAccount(String phoneNumber) async {
+    await _userRepository.activateAccount(phoneNumber);
   }
 }

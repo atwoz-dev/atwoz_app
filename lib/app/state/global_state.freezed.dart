@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppGlobalState {
 
- CachedUserProfile get profile;
+ CachedUserProfile get profile; int get heartBalance;
 /// Create a copy of AppGlobalState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AppGlobalStateCopyWith<AppGlobalState> get copyWith => _$AppGlobalStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppGlobalState&&(identical(other.profile, profile) || other.profile == profile));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppGlobalState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile);
+int get hashCode => Object.hash(runtimeType,profile,heartBalance);
 
 @override
 String toString() {
-  return 'AppGlobalState(profile: $profile)';
+  return 'AppGlobalState(profile: $profile, heartBalance: $heartBalance)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AppGlobalStateCopyWith<$Res>  {
   factory $AppGlobalStateCopyWith(AppGlobalState value, $Res Function(AppGlobalState) _then) = _$AppGlobalStateCopyWithImpl;
 @useResult
 $Res call({
- CachedUserProfile profile
+ CachedUserProfile profile, int heartBalance
 });
 
 
@@ -62,10 +62,11 @@ class _$AppGlobalStateCopyWithImpl<$Res>
 
 /// Create a copy of AppGlobalState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? profile = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profile = null,Object? heartBalance = null,}) {
   return _then(_self.copyWith(
 profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as CachedUserProfile,
+as CachedUserProfile,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 /// Create a copy of AppGlobalState
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CachedUserProfile profile)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CachedUserProfile profile,  int heartBalance)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppGlobalState() when $default != null:
-return $default(_that.profile);case _:
+return $default(_that.profile,_that.heartBalance);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.profile);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CachedUserProfile profile)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CachedUserProfile profile,  int heartBalance)  $default,) {final _that = this;
 switch (_that) {
 case _AppGlobalState():
-return $default(_that.profile);case _:
+return $default(_that.profile,_that.heartBalance);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.profile);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CachedUserProfile profile)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CachedUserProfile profile,  int heartBalance)?  $default,) {final _that = this;
 switch (_that) {
 case _AppGlobalState() when $default != null:
-return $default(_that.profile);case _:
+return $default(_that.profile,_that.heartBalance);case _:
   return null;
 
 }
@@ -215,10 +216,11 @@ return $default(_that.profile);case _:
 
 
 class _AppGlobalState implements AppGlobalState {
-  const _AppGlobalState({required this.profile});
+  const _AppGlobalState({required this.profile, required this.heartBalance});
   
 
 @override final  CachedUserProfile profile;
+@override final  int heartBalance;
 
 /// Create a copy of AppGlobalState
 /// with the given fields replaced by the non-null parameter values.
@@ -230,16 +232,16 @@ _$AppGlobalStateCopyWith<_AppGlobalState> get copyWith => __$AppGlobalStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppGlobalState&&(identical(other.profile, profile) || other.profile == profile));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppGlobalState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.heartBalance, heartBalance) || other.heartBalance == heartBalance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile);
+int get hashCode => Object.hash(runtimeType,profile,heartBalance);
 
 @override
 String toString() {
-  return 'AppGlobalState(profile: $profile)';
+  return 'AppGlobalState(profile: $profile, heartBalance: $heartBalance)';
 }
 
 
@@ -250,7 +252,7 @@ abstract mixin class _$AppGlobalStateCopyWith<$Res> implements $AppGlobalStateCo
   factory _$AppGlobalStateCopyWith(_AppGlobalState value, $Res Function(_AppGlobalState) _then) = __$AppGlobalStateCopyWithImpl;
 @override @useResult
 $Res call({
- CachedUserProfile profile
+ CachedUserProfile profile, int heartBalance
 });
 
 
@@ -267,10 +269,11 @@ class __$AppGlobalStateCopyWithImpl<$Res>
 
 /// Create a copy of AppGlobalState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? profile = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profile = null,Object? heartBalance = null,}) {
   return _then(_AppGlobalState(
 profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as CachedUserProfile,
+as CachedUserProfile,heartBalance: null == heartBalance ? _self.heartBalance : heartBalance // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

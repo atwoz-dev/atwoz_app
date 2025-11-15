@@ -1,43 +1,26 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_ce/hive.dart';
 
+part 'introduced_profile_dto.freezed.dart';
 part 'introduced_profile_dto.g.dart';
 
-@JsonSerializable()
+@freezed
 @HiveType(typeId: 6, adapterName: 'IntroducedProfileDtoAdapter')
-class IntroducedProfileDto {
-  @HiveField(0)
-  final int memberId;
-  @HiveField(1)
-  final String profileImageUrl;
-  @HiveField(2)
-  final List<String> hobbies;
-  @HiveField(3)
-  final String mbti;
-  @HiveField(4)
-  final String? religion;
-  @HiveField(5)
-  final String interviewAnswerContent;
-  @HiveField(6)
-  final String? likeLevel;
-  @HiveField(7)
-  final bool isIntroduced;
-
-  const IntroducedProfileDto({
-    required this.memberId,
-    required this.profileImageUrl,
-    required this.hobbies,
-    required this.mbti,
-    required this.religion,
-    required this.interviewAnswerContent,
-    this.likeLevel,
-    required this.isIntroduced,
-  });
+abstract class IntroducedProfileDto with _$IntroducedProfileDto {
+  const factory IntroducedProfileDto({
+    // HiveField 어노테이션은 그대로 유지
+    @HiveField(0) required int memberId,
+    @HiveField(1) required String profileImageUrl,
+    @HiveField(2) required List<String> hobbies,
+    @HiveField(3) required String mbti,
+    @HiveField(4) required String? religion,
+    @HiveField(5) required String interviewAnswerContent,
+    @HiveField(6) String? likeLevel,
+    @HiveField(7) required bool isIntroduced,
+  }) = _IntroducedProfileDto;
 
   factory IntroducedProfileDto.fromJson(Map<String, dynamic> json) =>
       _$IntroducedProfileDtoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$IntroducedProfileDtoToJson(this);
 
   static String get boxName => 'IntroducedProfileDto';
 }

@@ -15,5 +15,5 @@ abstract class AuthUseCase {
   Future<void> uploadProfile(ProfileUploadRequest profileData);
   Future<ProfileImageResponse?> fetchProfileImages();
   Future<void> sendSmsVerificationCode(String phoneNumber);
-  Future<bool> activateAccount(String phoneNumber);
+  Future<void> activateAccount(String phoneNumber);
 }

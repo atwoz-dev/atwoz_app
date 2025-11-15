@@ -77,6 +77,14 @@ class ReportArguments extends RouteArguments {
   final int userId;
 }
 
+class DormantReleaseArguments extends RouteArguments {
+  const DormantReleaseArguments({
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
+}
+
 class IntroduceEditArguments extends RouteArguments {
   const IntroduceEditArguments({required this.id});
 
