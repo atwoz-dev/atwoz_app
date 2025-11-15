@@ -77,6 +77,7 @@ class _ConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: const Color(0xff404040).withValues(alpha: 0.8),
+      type: MaterialType.transparency,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

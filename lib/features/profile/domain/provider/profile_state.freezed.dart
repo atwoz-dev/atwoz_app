@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileState {
 
- UserProfile? get profile; String get myUserName; String get phoneNumber; String? get kakaoId; ContactMethod? get selectedContactMethod; int get heartPoint; String get message; bool get isLoaded; DialogueErrorType? get error;
+ UserProfile? get profile; String get myUserName; int get heartPoint; String get message; bool get isLoaded; DialogueErrorType? get error;
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProfileStateCopyWith<ProfileState> get copyWith => _$ProfileStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.myUserName, myUserName) || other.myUserName == myUserName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.selectedContactMethod, selectedContactMethod) || other.selectedContactMethod == selectedContactMethod)&&(identical(other.heartPoint, heartPoint) || other.heartPoint == heartPoint)&&(identical(other.message, message) || other.message == message)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.myUserName, myUserName) || other.myUserName == myUserName)&&(identical(other.heartPoint, heartPoint) || other.heartPoint == heartPoint)&&(identical(other.message, message) || other.message == message)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,myUserName,phoneNumber,kakaoId,selectedContactMethod,heartPoint,message,isLoaded,error);
+int get hashCode => Object.hash(runtimeType,profile,myUserName,heartPoint,message,isLoaded,error);
 
 @override
 String toString() {
-  return 'ProfileState(profile: $profile, myUserName: $myUserName, phoneNumber: $phoneNumber, kakaoId: $kakaoId, selectedContactMethod: $selectedContactMethod, heartPoint: $heartPoint, message: $message, isLoaded: $isLoaded, error: $error)';
+  return 'ProfileState(profile: $profile, myUserName: $myUserName, heartPoint: $heartPoint, message: $message, isLoaded: $isLoaded, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProfileStateCopyWith<$Res>  {
   factory $ProfileStateCopyWith(ProfileState value, $Res Function(ProfileState) _then) = _$ProfileStateCopyWithImpl;
 @useResult
 $Res call({
- UserProfile? profile, String myUserName, String phoneNumber, String? kakaoId, ContactMethod? selectedContactMethod, int heartPoint, String message, bool isLoaded, DialogueErrorType? error
+ UserProfile? profile, String myUserName, int heartPoint, String message, bool isLoaded, DialogueErrorType? error
 });
 
 
@@ -62,14 +62,11 @@ class _$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? profile = freezed,Object? myUserName = null,Object? phoneNumber = null,Object? kakaoId = freezed,Object? selectedContactMethod = freezed,Object? heartPoint = null,Object? message = null,Object? isLoaded = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profile = freezed,Object? myUserName = null,Object? heartPoint = null,Object? message = null,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserProfile?,myUserName: null == myUserName ? _self.myUserName : myUserName // ignore: cast_nullable_to_non_nullable
-as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,kakaoId: freezed == kakaoId ? _self.kakaoId : kakaoId // ignore: cast_nullable_to_non_nullable
-as String?,selectedContactMethod: freezed == selectedContactMethod ? _self.selectedContactMethod : selectedContactMethod // ignore: cast_nullable_to_non_nullable
-as ContactMethod?,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
+as String,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
 as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -170,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserProfile? profile,  String myUserName,  String phoneNumber,  String? kakaoId,  ContactMethod? selectedContactMethod,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserProfile? profile,  String myUserName,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_that.selectedContactMethod,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
+return $default(_that.profile,_that.myUserName,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
   return orElse();
 
 }
@@ -191,10 +188,10 @@ return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserProfile? profile,  String myUserName,  String phoneNumber,  String? kakaoId,  ContactMethod? selectedContactMethod,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserProfile? profile,  String myUserName,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState():
-return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_that.selectedContactMethod,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
+return $default(_that.profile,_that.myUserName,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +208,10 @@ return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserProfile? profile,  String myUserName,  String phoneNumber,  String? kakaoId,  ContactMethod? selectedContactMethod,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserProfile? profile,  String myUserName,  int heartPoint,  String message,  bool isLoaded,  DialogueErrorType? error)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_that.selectedContactMethod,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
+return $default(_that.profile,_that.myUserName,_that.heartPoint,_that.message,_that.isLoaded,_that.error);case _:
   return null;
 
 }
@@ -226,14 +223,11 @@ return $default(_that.profile,_that.myUserName,_that.phoneNumber,_that.kakaoId,_
 
 
 class _ProfileState extends ProfileState {
-  const _ProfileState({required this.profile, required this.myUserName, required this.phoneNumber, required this.kakaoId, required this.selectedContactMethod, required this.heartPoint, required this.message, required this.isLoaded, required this.error}): super._();
+  const _ProfileState({required this.profile, required this.myUserName, required this.heartPoint, required this.message, required this.isLoaded, required this.error}): super._();
   
 
 @override final  UserProfile? profile;
 @override final  String myUserName;
-@override final  String phoneNumber;
-@override final  String? kakaoId;
-@override final  ContactMethod? selectedContactMethod;
 @override final  int heartPoint;
 @override final  String message;
 @override final  bool isLoaded;
@@ -249,16 +243,16 @@ _$ProfileStateCopyWith<_ProfileState> get copyWith => __$ProfileStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.myUserName, myUserName) || other.myUserName == myUserName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.kakaoId, kakaoId) || other.kakaoId == kakaoId)&&(identical(other.selectedContactMethod, selectedContactMethod) || other.selectedContactMethod == selectedContactMethod)&&(identical(other.heartPoint, heartPoint) || other.heartPoint == heartPoint)&&(identical(other.message, message) || other.message == message)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.myUserName, myUserName) || other.myUserName == myUserName)&&(identical(other.heartPoint, heartPoint) || other.heartPoint == heartPoint)&&(identical(other.message, message) || other.message == message)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,myUserName,phoneNumber,kakaoId,selectedContactMethod,heartPoint,message,isLoaded,error);
+int get hashCode => Object.hash(runtimeType,profile,myUserName,heartPoint,message,isLoaded,error);
 
 @override
 String toString() {
-  return 'ProfileState(profile: $profile, myUserName: $myUserName, phoneNumber: $phoneNumber, kakaoId: $kakaoId, selectedContactMethod: $selectedContactMethod, heartPoint: $heartPoint, message: $message, isLoaded: $isLoaded, error: $error)';
+  return 'ProfileState(profile: $profile, myUserName: $myUserName, heartPoint: $heartPoint, message: $message, isLoaded: $isLoaded, error: $error)';
 }
 
 
@@ -269,7 +263,7 @@ abstract mixin class _$ProfileStateCopyWith<$Res> implements $ProfileStateCopyWi
   factory _$ProfileStateCopyWith(_ProfileState value, $Res Function(_ProfileState) _then) = __$ProfileStateCopyWithImpl;
 @override @useResult
 $Res call({
- UserProfile? profile, String myUserName, String phoneNumber, String? kakaoId, ContactMethod? selectedContactMethod, int heartPoint, String message, bool isLoaded, DialogueErrorType? error
+ UserProfile? profile, String myUserName, int heartPoint, String message, bool isLoaded, DialogueErrorType? error
 });
 
 
@@ -286,14 +280,11 @@ class __$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? profile = freezed,Object? myUserName = null,Object? phoneNumber = null,Object? kakaoId = freezed,Object? selectedContactMethod = freezed,Object? heartPoint = null,Object? message = null,Object? isLoaded = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profile = freezed,Object? myUserName = null,Object? heartPoint = null,Object? message = null,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_ProfileState(
 profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserProfile?,myUserName: null == myUserName ? _self.myUserName : myUserName // ignore: cast_nullable_to_non_nullable
-as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,kakaoId: freezed == kakaoId ? _self.kakaoId : kakaoId // ignore: cast_nullable_to_non_nullable
-as String?,selectedContactMethod: freezed == selectedContactMethod ? _self.selectedContactMethod : selectedContactMethod // ignore: cast_nullable_to_non_nullable
-as ContactMethod?,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
+as String,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
 as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable

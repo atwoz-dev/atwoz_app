@@ -12,16 +12,14 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/text/title_text.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
-  const OnboardingCertificationPage({
-    super.key,
-    required this.phoneNumber,
-  });
+  const OnboardingCertificationPage({super.key, required this.phoneNumber});
 
   final String phoneNumber;
 
@@ -158,22 +156,26 @@ class OnboardingCertificationPageState
                             Expanded(
                               flex: 3,
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 2.5),
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 2.5,
+                                ),
                                 child: DefaultOutlinedButton(
                                   height: 48.0,
                                   primary: Palette.colorGrey100,
-                                  textStyle: Fonts.body02Regular()
-                                      .copyWith(fontWeight: FontWeight.w500),
+                                  textStyle: Fonts.body02Regular().copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   textColor: palette.onSurface,
                                   onPressed: _isResendEnabled
                                       ? () async {
                                           try {
-                                            final authUseCase =
-                                                ref.read(authUsecaseProvider);
+                                            final authUseCase = ref.read(
+                                              authUsecaseProvider,
+                                            );
                                             await authUseCase
                                                 .sendSmsVerificationCode(
-                                                    widget.phoneNumber);
+                                                  widget.phoneNumber,
+                                                );
                                             safeSetState(() {
                                               validationError = null;
                                               _codeController.clear();
@@ -183,13 +185,16 @@ class OnboardingCertificationPageState
                                           } catch (e) {
                                             Log.e('재발송 실패', errorObject: e);
                                             showToastMessage(
-                                                '인증번호 재발송에 실패했습니다.');
+                                              '인증번호 재발송에 실패했습니다.',
+                                            );
                                           }
                                         }
                                       : null,
-                                  child: Text(_isResendEnabled
-                                      ? '재발송'
-                                      : '00:${_resendCountdown.toString().padLeft(2, '0')}'),
+                                  child: Text(
+                                    _isResendEnabled
+                                        ? '재발송'
+                                        : '00:${_resendCountdown.toString().padLeft(2, '0')}',
+                                  ),
                                 ),
                               ),
                             ),
@@ -223,6 +228,11 @@ class OnboardingCertificationPageState
                           ),
                         );
 
+                        ref.read(contactSettingProvider.notifier).phone =
+                            widget.phoneNumber;
+
+                        if (!context.mounted) return;
+
                         if (userData.isProfileSettingNeeded) {
                           navigate(context, route: AppRoute.signUp);
                         } else {
@@ -251,10 +261,9 @@ class OnboardingCertificationPageState
                   : null,
               child: Text(
                 '인증하기',
-                style: Fonts.body01Medium(_isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Fonts.body01Medium(
+                  _isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
           ),
