@@ -190,7 +190,13 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.introduceDetail.name,
-        builder: (context, state) => const IntroduceDetailPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! IntroduceDetailArguments) {
+            return const SizedBox.shrink();
+          }
+          return IntroduceDetailPage(introduceId: args.introduceId);
+        },
       ),
       NamedGoRoute(
         name: AppRoute.introduceFilter.name,

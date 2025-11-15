@@ -598,7 +598,7 @@ $MemberBasicInfoCopyWith<$Res> get memberBasicInfo {
 /// @nodoc
 mixin _$MemberBasicInfo {
 
- int get memberId; int get age; String get nickname; String get city; String get district; String get mbti; List<String> get hobbies;
+ int get memberId; int get age; String get nickname; String get profileImageUrl; String get city; String get district; String get mbti; List<String> get hobbies;
 /// Create a copy of MemberBasicInfo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -611,16 +611,16 @@ $MemberBasicInfoCopyWith<MemberBasicInfo> get copyWith => _$MemberBasicInfoCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,age,nickname,city,district,mbti,const DeepCollectionEquality().hash(hobbies));
+int get hashCode => Object.hash(runtimeType,memberId,age,nickname,profileImageUrl,city,district,mbti,const DeepCollectionEquality().hash(hobbies));
 
 @override
 String toString() {
-  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
+  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
 }
 
 
@@ -631,7 +631,7 @@ abstract mixin class $MemberBasicInfoCopyWith<$Res>  {
   factory $MemberBasicInfoCopyWith(MemberBasicInfo value, $Res Function(MemberBasicInfo) _then) = _$MemberBasicInfoCopyWithImpl;
 @useResult
 $Res call({
- int memberId, int age, String nickname, String city, String district, String mbti, List<String> hobbies
+ int memberId, int age, String nickname, String profileImageUrl, String city, String district, String mbti, List<String> hobbies
 });
 
 
@@ -648,11 +648,12 @@ class _$MemberBasicInfoCopyWithImpl<$Res>
 
 /// Create a copy of MemberBasicInfo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? profileImageUrl = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
   return _then(_self.copyWith(
 memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as int,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String,profileImageUrl: null == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
 as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,district: null == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
 as String,mbti: null == mbti ? _self.mbti : mbti // ignore: cast_nullable_to_non_nullable
@@ -742,10 +743,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MemberBasicInfo() when $default != null:
-return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
+return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   return orElse();
 
 }
@@ -763,10 +764,10 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.distric
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String city,  String district,  String mbti,  List<String> hobbies)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)  $default,) {final _that = this;
 switch (_that) {
 case _MemberBasicInfo():
-return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
+return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -783,10 +784,10 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.distric
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int memberId,  int age,  String nickname,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,) {final _that = this;
 switch (_that) {
 case _MemberBasicInfo() when $default != null:
-return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
+return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   return null;
 
 }
@@ -798,12 +799,13 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.city,_that.distric
 @JsonSerializable()
 
 class _MemberBasicInfo implements MemberBasicInfo {
-  const _MemberBasicInfo({required this.memberId, required this.age, required this.nickname, required this.city, required this.district, required this.mbti, required final  List<String> hobbies}): _hobbies = hobbies;
+  const _MemberBasicInfo({required this.memberId, required this.age, required this.nickname, required this.profileImageUrl, required this.city, required this.district, required this.mbti, required final  List<String> hobbies}): _hobbies = hobbies;
   factory _MemberBasicInfo.fromJson(Map<String, dynamic> json) => _$MemberBasicInfoFromJson(json);
 
 @override final  int memberId;
 @override final  int age;
 @override final  String nickname;
+@override final  String profileImageUrl;
 @override final  String city;
 @override final  String district;
 @override final  String mbti;
@@ -828,16 +830,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,age,nickname,city,district,mbti,const DeepCollectionEquality().hash(_hobbies));
+int get hashCode => Object.hash(runtimeType,memberId,age,nickname,profileImageUrl,city,district,mbti,const DeepCollectionEquality().hash(_hobbies));
 
 @override
 String toString() {
-  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
+  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
 }
 
 
@@ -848,7 +850,7 @@ abstract mixin class _$MemberBasicInfoCopyWith<$Res> implements $MemberBasicInfo
   factory _$MemberBasicInfoCopyWith(_MemberBasicInfo value, $Res Function(_MemberBasicInfo) _then) = __$MemberBasicInfoCopyWithImpl;
 @override @useResult
 $Res call({
- int memberId, int age, String nickname, String city, String district, String mbti, List<String> hobbies
+ int memberId, int age, String nickname, String profileImageUrl, String city, String district, String mbti, List<String> hobbies
 });
 
 
@@ -865,11 +867,12 @@ class __$MemberBasicInfoCopyWithImpl<$Res>
 
 /// Create a copy of MemberBasicInfo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? profileImageUrl = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
   return _then(_MemberBasicInfo(
 memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as int,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String,profileImageUrl: null == profileImageUrl ? _self.profileImageUrl : profileImageUrl // ignore: cast_nullable_to_non_nullable
 as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,district: null == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
 as String,mbti: null == mbti ? _self.mbti : mbti // ignore: cast_nullable_to_non_nullable

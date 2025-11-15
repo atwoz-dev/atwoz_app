@@ -20,7 +20,7 @@ class FetchIntroduceListUseCase {
     int? lastId,
   }) async {
     try {
-      final intrduces = await ref
+      final introduces = await ref
           .read(introduceRepositoryProvider)
           .getIntroduceList(
             preferredCities: preferredCities,
@@ -30,7 +30,7 @@ class FetchIntroduceListUseCase {
             lastId: lastId,
           );
 
-      return intrduces;
+      return introduces;
     } catch (e) {
       Log.e("셀프 소개 리스트 호출 실패 : $e");
       return [];

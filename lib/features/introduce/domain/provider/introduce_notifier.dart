@@ -34,7 +34,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     final introduces = await ref
         .read(fetchIntroduceListUseCaseProvider)
         .execute(
-          preferredCities: filterState.selectedCitys,
+          preferredCities: filterState.selectedCitysEng,
           fromAge: filterState.rangeValues.start.toInt(),
           toAge: filterState.rangeValues.end.toInt(),
           gender: filterState.getGender,

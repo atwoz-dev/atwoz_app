@@ -36,6 +36,7 @@ abstract class MemberBasicInfo with _$MemberBasicInfo {
     required int memberId,
     required int age,
     required String nickname,
+    required String profileImageUrl,
     required String city,
     required String district,
     required String mbti,

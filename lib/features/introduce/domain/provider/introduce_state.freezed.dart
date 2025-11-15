@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceState {
 
- List<IntroduceItem> get introduceList; List<IntroduceItem> get introduceMyList; IntroduceDetailData? get introduceDetail; bool get isLoaded; IntroduceListErrorType? get error;
+ List<IntroduceItem> get introduceList; List<IntroduceItem> get introduceMyList; bool get isLoaded; IntroduceListErrorType? get error;
 /// Create a copy of IntroduceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $IntroduceStateCopyWith<IntroduceState> get copyWith => _$IntroduceStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceState&&const DeepCollectionEquality().equals(other.introduceList, introduceList)&&const DeepCollectionEquality().equals(other.introduceMyList, introduceMyList)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceState&&const DeepCollectionEquality().equals(other.introduceList, introduceList)&&const DeepCollectionEquality().equals(other.introduceMyList, introduceMyList)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(introduceList),const DeepCollectionEquality().hash(introduceMyList),introduceDetail,isLoaded,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(introduceList),const DeepCollectionEquality().hash(introduceMyList),isLoaded,error);
 
 @override
 String toString() {
-  return 'IntroduceState(introduceList: $introduceList, introduceMyList: $introduceMyList, introduceDetail: $introduceDetail, isLoaded: $isLoaded, error: $error)';
+  return 'IntroduceState(introduceList: $introduceList, introduceMyList: $introduceMyList, isLoaded: $isLoaded, error: $error)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $IntroduceStateCopyWith<$Res>  {
   factory $IntroduceStateCopyWith(IntroduceState value, $Res Function(IntroduceState) _then) = _$IntroduceStateCopyWithImpl;
 @useResult
 $Res call({
- List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, IntroduceDetailData? introduceDetail, bool isLoaded, IntroduceListErrorType? error
+ List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, bool isLoaded, IntroduceListErrorType? error
 });
 
 
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail;
+
 
 }
 /// @nodoc
@@ -62,29 +62,16 @@ class _$IntroduceStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? introduceDetail = freezed,Object? isLoaded = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 introduceList: null == introduceList ? _self.introduceList : introduceList // ignore: cast_nullable_to_non_nullable
 as List<IntroduceItem>,introduceMyList: null == introduceMyList ? _self.introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceDetail: freezed == introduceDetail ? _self.introduceDetail : introduceDetail // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as List<IntroduceItem>,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as IntroduceListErrorType?,
   ));
 }
-/// Create a copy of IntroduceState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail {
-    if (_self.introduceDetail == null) {
-    return null;
-  }
 
-  return $IntroduceDetailDataCopyWith<$Res>(_self.introduceDetail!, (value) {
-    return _then(_self.copyWith(introduceDetail: value));
-  });
-}
 }
 
 
@@ -166,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  IntroduceDetailData? introduceDetail,  bool isLoaded,  IntroduceListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  bool isLoaded,  IntroduceListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceState() when $default != null:
-return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,_that.isLoaded,_that.error);case _:
+return $default(_that.introduceList,_that.introduceMyList,_that.isLoaded,_that.error);case _:
   return orElse();
 
 }
@@ -187,10 +174,10 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  IntroduceDetailData? introduceDetail,  bool isLoaded,  IntroduceListErrorType? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  bool isLoaded,  IntroduceListErrorType? error)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceState():
-return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,_that.isLoaded,_that.error);case _:
+return $default(_that.introduceList,_that.introduceMyList,_that.isLoaded,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +194,10 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  IntroduceDetailData? introduceDetail,  bool isLoaded,  IntroduceListErrorType? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  bool isLoaded,  IntroduceListErrorType? error)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceState() when $default != null:
-return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,_that.isLoaded,_that.error);case _:
+return $default(_that.introduceList,_that.introduceMyList,_that.isLoaded,_that.error);case _:
   return null;
 
 }
@@ -222,7 +209,7 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceDetail,
 
 
 class _IntroduceState extends IntroduceState {
-  const _IntroduceState({final  List<IntroduceItem> introduceList = const [], final  List<IntroduceItem> introduceMyList = const [], this.introduceDetail = null, this.isLoaded = false, this.error}): _introduceList = introduceList,_introduceMyList = introduceMyList,super._();
+  const _IntroduceState({final  List<IntroduceItem> introduceList = const [], final  List<IntroduceItem> introduceMyList = const [], this.isLoaded = false, this.error}): _introduceList = introduceList,_introduceMyList = introduceMyList,super._();
   
 
  final  List<IntroduceItem> _introduceList;
@@ -239,7 +226,6 @@ class _IntroduceState extends IntroduceState {
   return EqualUnmodifiableListView(_introduceMyList);
 }
 
-@override@JsonKey() final  IntroduceDetailData? introduceDetail;
 @override@JsonKey() final  bool isLoaded;
 @override final  IntroduceListErrorType? error;
 
@@ -253,16 +239,16 @@ _$IntroduceStateCopyWith<_IntroduceState> get copyWith => __$IntroduceStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceState&&const DeepCollectionEquality().equals(other._introduceList, _introduceList)&&const DeepCollectionEquality().equals(other._introduceMyList, _introduceMyList)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceState&&const DeepCollectionEquality().equals(other._introduceList, _introduceList)&&const DeepCollectionEquality().equals(other._introduceMyList, _introduceMyList)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_introduceList),const DeepCollectionEquality().hash(_introduceMyList),introduceDetail,isLoaded,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_introduceList),const DeepCollectionEquality().hash(_introduceMyList),isLoaded,error);
 
 @override
 String toString() {
-  return 'IntroduceState(introduceList: $introduceList, introduceMyList: $introduceMyList, introduceDetail: $introduceDetail, isLoaded: $isLoaded, error: $error)';
+  return 'IntroduceState(introduceList: $introduceList, introduceMyList: $introduceMyList, isLoaded: $isLoaded, error: $error)';
 }
 
 
@@ -273,11 +259,11 @@ abstract mixin class _$IntroduceStateCopyWith<$Res> implements $IntroduceStateCo
   factory _$IntroduceStateCopyWith(_IntroduceState value, $Res Function(_IntroduceState) _then) = __$IntroduceStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, IntroduceDetailData? introduceDetail, bool isLoaded, IntroduceListErrorType? error
+ List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, bool isLoaded, IntroduceListErrorType? error
 });
 
 
-@override $IntroduceDetailDataCopyWith<$Res>? get introduceDetail;
+
 
 }
 /// @nodoc
@@ -290,30 +276,17 @@ class __$IntroduceStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? introduceDetail = freezed,Object? isLoaded = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_IntroduceState(
 introduceList: null == introduceList ? _self._introduceList : introduceList // ignore: cast_nullable_to_non_nullable
 as List<IntroduceItem>,introduceMyList: null == introduceMyList ? _self._introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceDetail: freezed == introduceDetail ? _self.introduceDetail : introduceDetail // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as List<IntroduceItem>,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as IntroduceListErrorType?,
   ));
 }
 
-/// Create a copy of IntroduceState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail {
-    if (_self.introduceDetail == null) {
-    return null;
-  }
 
-  return $IntroduceDetailDataCopyWith<$Res>(_self.introduceDetail!, (value) {
-    return _then(_self.copyWith(introduceDetail: value));
-  });
-}
 }
 
 // dart format on
