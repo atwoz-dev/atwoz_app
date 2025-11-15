@@ -1,5 +1,3 @@
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
@@ -14,7 +12,6 @@ class IntroduceNotifier extends _$IntroduceNotifier {
   Future<IntroduceState> build() async {
     final filterState = ref.watch(filterProvider);
 
-    // 셀프소개 목록 가져오기
     final introduces = await ref
         .read(fetchIntroduceListUseCaseProvider)
         .execute(

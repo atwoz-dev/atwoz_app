@@ -33,22 +33,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    // final idealTypeNotifier = ref.read(idealTypeProvider.notifier);
-
-    // // final state = ref.watch(introduceProvider);
-    // final isLoaded = ref.watch(
-    //   introduceProvider.select((value) => value.isLoaded),
-    // );
-    // final introduceList = ref.watch(
-    //   introduceProvider.select((value) => value.introduceList),
-    // );
-
-    // final introduceMyList = ref.watch(
-    //   introduceProvider.select((value) => value.introduceMyList),
-    // );
-
-    // final filterState = ref.watch(filterProvider);
-
     final double horizontalPadding = screenWidth * 0.05;
     final EdgeInsets contentPadding = EdgeInsets.symmetric(
       horizontal: horizontalPadding,
@@ -108,7 +92,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         PostButton(
           onTap: () async {
             await navigate(context, route: AppRoute.introduceRegister);
-            // TOGO: 등록한 셀프소개가 서버에 적용되는데 약간의 딜레이 발생
+
+            // TODO: 등록한 셀프소개가 서버에 적용되는데 약간의 딜레이 발생. 다른 방법이 있을까?
+            await Future.delayed(const Duration(milliseconds: 500));
             _refreshIntroduceList();
           },
         ),
@@ -171,6 +157,8 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
               route: AppRoute.introduceEdit,
               extra: IntroduceEditArguments(id: item.id),
             );
+
+            await Future.delayed(const Duration(milliseconds: 500));
             _refreshIntroduceList();
           } else {
             // TODO: 다른 화면으로 이동
@@ -255,6 +243,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
             route: AppRoute.introduceEdit,
             extra: IntroduceEditArguments(id: introduce.id),
           );
+          await Future.delayed(const Duration(milliseconds: 500));
           _refreshIntroduceList();
         },
         child: Padding(
@@ -295,8 +284,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   });
 
   void _refreshIntroduceList() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
     if (_currentTabIndex == 0) {
       ref.read(introduceProvider.notifier).fetchIntroduceList();
     } else if (_currentTabIndex == 1) {
