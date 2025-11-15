@@ -7,5 +7,6 @@ part 'global_state.freezed.dart';
 abstract class AppGlobalState with _$AppGlobalState {
   const factory AppGlobalState({
     required CachedUserProfile profile,
+    required int heartBalance,
   }) = _AppGlobalState;
 }
