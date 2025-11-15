@@ -49,7 +49,11 @@ class IntroduceDetailPageState
             introduceDetail.memberBasicInfo.city,
             introduceDetail.memberBasicInfo.district,
           );
-          final hobbies = introduceDetail.memberBasicInfo.hobbies;
+          final hobbies = introduceDetail.memberBasicInfo.hobbies
+              .map(
+                (hobby) => Hobby.parseFromServer(hobby).label,
+              )
+              .toList();
           final title = introduceDetail.title;
           final content = introduceDetail.content;
           final imageUrl = introduceDetail.memberBasicInfo.profileImageUrl;
