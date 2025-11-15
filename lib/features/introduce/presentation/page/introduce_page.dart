@@ -21,6 +21,10 @@ class IntroducePage extends ConsumerStatefulWidget {
 class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
 
+  final _scrollIntroduceController = ScrollController();
+  final _scrollHistoryController = ScrollController();
+  bool _isLoadingMore = false;
+
   int _currentTabIndex = 0;
   String nickname = "";
 
@@ -29,6 +33,37 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     super.initState();
 
     nickname = ref.read(globalProvider).profile.nickname;
+
+    _scrollIntroduceController.addListener(_onScrollIntroduce);
+    _scrollHistoryController.addListener(_onScrollHistory);
+  }
+
+  void _onScrollIntroduce() {
+    if (_isLoadingMore ||
+        _scrollIntroduceController.offset <
+            _scrollIntroduceController.position.maxScrollExtent - 200) {
+      return;
+    }
+
+    _isLoadingMore = true;
+
+    ref.read(introduceProvider.notifier).fetchIntroduceMore().then((_) {
+      _isLoadingMore = false;
+    });
+  }
+
+  void _onScrollHistory() {
+    if (_isLoadingMore ||
+        _scrollHistoryController.offset <
+            _scrollHistoryController.position.maxScrollExtent - 200) {
+      return;
+    }
+
+    _isLoadingMore = true;
+
+    ref.read(introduceProvider.notifier).fetchMyIntroduceMore().then((_) {
+      _isLoadingMore = false;
+    });
   }
 
   @override
@@ -114,6 +149,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
         final introducesCount = introduces.length;
         return ListView.builder(
           padding: EdgeInsets.zero,
+          controller: _scrollIntroduceController,
           itemCount: data.introduceList.length,
           itemBuilder: (context, index) {
             bool isLastItem = index == introducesCount - 1;
@@ -210,9 +246,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       data: (data) {
         final introduces = data.introduceMyList;
         final introducesCount = introduces.length;
-
         return ListView.builder(
           padding: EdgeInsets.zero,
+          controller: _scrollHistoryController,
           itemCount: introducesCount,
           itemBuilder: (context, index) {
             final introduce = introduces[index];
@@ -283,16 +319,17 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     );
   }
 
-  void _onTabTapped(int index) => safeSetState(() {
+  void _onTabTapped(int index) => safeSetState(() async {
     _currentTabIndex = index;
-    _refreshIntroduceList();
+    await _refreshIntroduceList();
+    _isLoadingMore = false;
   });
 
-  void _refreshIntroduceList() async {
+  Future<void> _refreshIntroduceList() async {
     if (_currentTabIndex == 0) {
-      ref.read(introduceProvider.notifier).fetchIntroduceList();
+      await ref.read(introduceProvider.notifier).fetchIntroduceList();
     } else if (_currentTabIndex == 1) {
-      ref.read(introduceProvider.notifier).fetchIntroduceMyList();
+      await ref.read(introduceProvider.notifier).fetchMyIntroduceList();
     }
   }
 }

@@ -10,6 +10,8 @@ abstract class IntroduceState with _$IntroduceState {
   const factory IntroduceState({
     @Default([]) List<IntroduceItem> introduceList,
     @Default([]) List<IntroduceItem> introduceMyList,
+    @Default(null) int? introduceLastId,
+    @Default(null) int? myIntroduceLastId,
     @Default(false) bool isLoaded,
     IntroduceListErrorType? error,
   }) = _IntroduceState;
