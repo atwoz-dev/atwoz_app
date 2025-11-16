@@ -7,6 +7,7 @@ import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
@@ -37,17 +38,17 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
   GlobalNotifier get _globalNotifier => _ref.read(globalProvider.notifier);
 
-  static const String _accessToken = 'AuthProvider.token';
-  static const String _refreshToken = 'AuthProvider.reToken';
-
   @override
   Future<UserData> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
-      await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
+      await _localStorage.saveEncrypted(
+        SecureStorageItem.accessToken,
+        userResponse.accessToken,
+      );
       final success = await _registerDeviceToServer();
       if (!success) {
-        await _localStorage.saveEncrypted(_accessToken, '');
+        await _localStorage.saveEncrypted(SecureStorageItem.accessToken, '');
         throw Exception('device registration failed: clear user token');
       }
       return userResponse;
@@ -112,17 +113,17 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
 
   @override
   Future<String?> getAccessToken() async {
-    return _localStorage.getEncrypted(_accessToken);
+    return _localStorage.getEncrypted(SecureStorageItem.accessToken);
   }
 
   @override
   void setAccessToken(String accessToken) {
-    _localStorage.saveEncrypted(_accessToken, accessToken);
+    _localStorage.saveEncrypted(SecureStorageItem.accessToken, accessToken);
   }
 
   @override
   Future<String?> getRefreshToken() async {
-    return _localStorage.getEncrypted(_refreshToken);
+    return _localStorage.getEncrypted(SecureStorageItem.refreshToken);
   }
 
   Future<bool> _registerDeviceToServer() async {

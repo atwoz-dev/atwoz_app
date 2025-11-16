@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,24 +31,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final state = ref.watch(profileProvider(widget.userId));
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: state.isLoaded
           ? widget.fromMatchedProfile
-              ? UnMatchedProfile(userId: widget.userId, chatEnabled: false)
-              : switch (state.matchStatus) {
-                  final UnMatched _ ||
-                  final Matching _ =>
-                    UnMatchedProfile(userId: widget.userId),
-                  final Matched _ => MatchedProfile(widget.userId),
-                  null => Container(),
-                }
+                ? UnMatchedProfile(userId: widget.userId, chatEnabled: false)
+                : switch (state.matchStatus) {
+                    final UnMatched _ ||
+                    final Matching _ => UnMatchedProfile(userId: widget.userId),
+                    final Matched _ => MatchedProfile(widget.userId),
+                    null => Container(),
+                  }
           : const SkeletonProfile(),
     );
   }
 
   void _listener(ProfileState? prev, ProfileState curr) {
     if (prev?.matchStatus != curr.matchStatus) {
-      _handleStatusChanged(curr.matchStatus);
+      _handleStatusChanged(
+        curr.matchStatus,
+        isContactInitialized: curr.isInitializedContactMethod,
+      );
     }
 
     if (prev?.error != curr.error) {
@@ -55,12 +57,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
   }
 
-  void _handleStatusChanged(MatchStatus? status) {
+  void _handleStatusChanged(
+    MatchStatus? status, {
+    required bool isContactInitialized,
+  }) {
     if (status == null) return;
 
     if (!mounted) return;
-    final profileNotifier =
-        ref.read(profileProvider(widget.userId).notifier);
+    final profileNotifier = ref.read(profileProvider(widget.userId).notifier);
 
     switch (status) {
       case final Matching status when status is MatchingReceived:
@@ -70,8 +74,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           subTitle: '상대방의 메시지를 수락하면 서로의 연락처가 공개됩니다.',
           content: status.receivedMessage,
           submitLabel: '수락',
-          onSubmit: () {
+          onSubmit: () async {
             context.pop();
+
+            if (!isContactInitialized) {
+              final res = await ContactInitializeBottomsheet.open(
+                context,
+                userId: widget.userId,
+              );
+              if (res != true || !mounted) return;
+            }
+
             MessageSendBottomSheet.open(
               context,
               userId: widget.userId,

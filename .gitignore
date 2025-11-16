@@ -77,3 +77,6 @@ android/app/src/main/res/drawable/background.png
 # Web 관련
 web/splash/img/*.png
 web/splash/img/index.html
+
+# cursor setting
+.cursor

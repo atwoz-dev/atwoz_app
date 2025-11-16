@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,10 +9,18 @@ final matchRepositoryProvider = Provider<MatchRepository>((ref) {
 class MatchRepository extends BaseRepository {
   MatchRepository(Ref ref) : super(ref, '/match');
 
-  Future<void> requestMatch(int targetId, String message) async {
+  Future<void> requestMatch({
+    required int targetId,
+    required String message,
+    required ContactMethod contactMethod,
+  }) async {
     await apiService.postJson(
       '$path/request',
-      data: {'responderId': targetId, 'requestMessage': message},
+      data: {
+        'responderId': targetId,
+        'requestMessage': message,
+        'contactType': contactMethod.value,
+      },
     );
   }
 
