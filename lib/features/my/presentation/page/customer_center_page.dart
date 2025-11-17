@@ -1,8 +1,8 @@
+import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; 
-import '../widget/customer_center_user.dart';
-import '../widget/customer_center_bot.dart';
+import '../widget/customer_center.dart';
 
+<<<<<<< HEAD
 // 고객센터 챗봇의 질문과 답변 데이터
 const Map<String, Map<String, String>> _chatBotData = {
   '사용 방법': {
@@ -49,11 +49,13 @@ const Map<String, Map<String, String>> _chatBotData = {
 
 
 // 메시지 데이터를 위한 모델 정의 (다른 위젯들이 'show Message'로 임포트)
+=======
+>>>>>>> bb69797 (고객센터 페이지 수정, 버블 위젯 통합)
 class Message {
   final String sender; // 'bot' 또는 'user'
   final String text;
-  final bool isOptions; // true: 현재 메시지에 버튼 목록이 포함됨
-  final bool isInitialOptions; // true: 6가지 초기 선택지 버튼 (1단계)
+  final bool isOptions;
+  final bool isInitialOptions;
 
   Message({
     required this.sender,
@@ -63,25 +65,35 @@ class Message {
   });
 }
 
+<<<<<<< HEAD
 // 고객센터 페이지 구현
 class CustomerCenterPage extends ConsumerStatefulWidget {
+=======
+class CustomerCenterPage extends StatefulWidget {
+>>>>>>> bb69797 (고객센터 페이지 수정, 버블 위젯 통합)
   const CustomerCenterPage({super.key});
 
   @override
-  ConsumerState<CustomerCenterPage> createState() => _CustomerCenterPageState();
+  State<CustomerCenterPage> createState() => _CustomerCenterPageState();
 }
 
+<<<<<<< HEAD
 // 고객센터 페이지 상태 관리
 class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
+=======
+class _CustomerCenterPageState extends State<CustomerCenterPage> {
+>>>>>>> bb69797 (고객센터 페이지 수정, 버블 위젯 통합)
   final List<Message> _messages = [];
   String? _selectedCategory;
-  static final List<String> _initialOptions = _chatBotData.keys.toList();
   
-  final ScrollController _scrollController = ScrollController();
+  // chatBotData는 Map<String, Map<String, String>> 구조라고 가정합니다.
+  static final _initialOptions = chatBotData.keys.toList();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     
     // '고객'님으로 고정 후 추후에 닉네임 연동 예정
     const String userName = '고객';
@@ -89,13 +101,12 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
     // 닉네임을 사용하여 초기 메시지 텍스트를 구성
     final greeting = '$userName님, 안녕하세요 굿밋입니다\n궁금한 사항을 선택해 주세요';
     
+=======
+    const String userName = '고객';
+    final greeting = '$userName님, 안녕하세요 딥플입니다.\n궁금한 사항을 선택해 주세요';
+>>>>>>> bb69797 (고객센터 페이지 수정, 버블 위젯 통합)
     _messages.add(
-      Message(
-        sender: 'bot',
-        text: greeting,
-        isOptions: true,
-        isInitialOptions: true,
-      ),
+      Message(sender: 'bot', text: greeting, isOptions: true, isInitialOptions: true),
     );
   }
 
@@ -110,38 +121,44 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent, // 스크롤 최대치 (가장 아래)
-          duration: const Duration(milliseconds: 300), 
-          curve: Curves.easeOut, 
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.easeOut,
         );
       }
     });
   }
 
-  // 사용자의 선택지 클릭을 처리하는 함수
+  List<String> _getCurrentOptions(Message message) {
+    if (!message.isOptions) return [];
+
+    if (message.isInitialOptions) {
+      return _initialOptions;
+    } else if (_selectedCategory != null) {
+      return chatBotData[_selectedCategory]?.keys.toList() ?? [];
+    }
+    return [];
+  }
+
   void _handleOptionSelected(String option, {required bool isInitialSelection}) {
     if (!mounted) return;
 
-    // 1. 사용자의 선택 메시지를 추가
-    setState(() {
-      _messages.add(Message(sender: 'user', text: option));
-    });
-    // 사용자 메시지 추가 후 스크롤
+    // 1. 사용자가 선택한 메시지 추가
+    setState(() => _messages.add(Message(sender: 'user', text: option)));
     _scrollToBottom();
 
-
     if (isInitialSelection) {
-      // 1단계 선택 (상단 메뉴 선택) - 2단계 메뉴 제시
+      // 1단계 선택: 2단계 메뉴 제시
       _selectedCategory = option;
-      
-      Future.delayed(const Duration(milliseconds: 500), () {
+
+      Future.delayed(const Duration(milliseconds: 700), () {
         if (mounted) {
           setState(() {
             _messages.add(
               Message(
                 sender: 'bot',
                 text: '$option에 대해 무엇이 궁금하신가요?',
-                isOptions: true, // 하위 메뉴(subOptions)를 버튼으로 표시
+                isOptions: true,
                 isInitialOptions: false,
               ),
             );
@@ -150,15 +167,34 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
         }
       });
     } else {
-      // 2단계 선택 (하단 메뉴 선택) - 최종 응답
-      String botResponse = _chatBotData[_selectedCategory]![option]!;
+      // 2단계 선택: 최종 답변 제시 및 초기화
+      final botResponse = chatBotData[_selectedCategory]?[option] ?? '해당 내용이 없습니다.';
 
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 700), () {
         if (mounted) {
-          setState(() {
-            _messages.add(Message(sender: 'bot', text: botResponse));
-          });
+          // 최종 답변 추가
+          setState(() => _messages.add(Message(sender: 'bot', text: botResponse)));
           _scrollToBottom();
+
+          // 카테고리 초기화
+          _selectedCategory = null; 
+
+          // 초기 선택지 복구 메시지 추가
+          Future.delayed(const Duration(milliseconds: 700), () {
+            if (mounted) {
+              setState(() {
+                _messages.add(
+                  Message(
+                    sender: 'bot',
+                    text: '다른 문의 사항이 있으신가요?',
+                    isOptions: true,
+                    isInitialOptions: true, // 초기 옵션으로 돌아가기 위해 true
+                  ),
+                );
+              });
+              _scrollToBottom();
+            }
+          });
         }
       });
     }
@@ -167,44 +203,35 @@ class _CustomerCenterPageState extends ConsumerState<CustomerCenterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('고객 센터'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('고객 센터'), centerTitle: true),
       body: Column(
         children: [
-          // 챗봇 대화 영역
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final message = _messages[index];
-                
-                if (message.sender == 'bot') {
-                  // 봇 메시지
-                  List<String> currentOptions = [];
-                  if (message.isOptions) {
-                    if (message.isInitialOptions) {
-                      // 1단계 선택지 (초기 6가지 메뉴)
-                      currentOptions = _initialOptions;
-                    } else {
-                      // 2단계 선택지 (현재 카테고리의 하위 메뉴)
-                      currentOptions = _chatBotData[_selectedCategory]?.keys.toList() ?? [];
-                    }
-                  }
 
-                  return BotMessageBubble(
-                    message: message,
-                    options: currentOptions,
-                    isInitialOptions: message.isInitialOptions,
-                    onOptionSelected: _handleOptionSelected,
-                  );
-                } else {
-                  // 사용자 메시지
-                  return UserMessageBubble(message: message);
-                }
+                final messageWidget = message.sender == 'bot'
+                    ? BotMessageBubble(
+                        message: message,
+                        options: _getCurrentOptions(message), 
+                        isInitialOptions: message.isInitialOptions,
+                        onOptionSelected: _handleOptionSelected,
+                      )
+                    : UserMessageBubble(message: message);
+
+                return AnimatedOpacity(
+                  // 💡 AnimatedOpacity 복구: 모든 메시지에 대해 즉시 1.0으로 설정하여 나타나는 효과
+                  opacity: 1.0,
+                  duration: const Duration(milliseconds: 500),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: messageWidget,
+                  ),
+                );
               },
             ),
           ),
