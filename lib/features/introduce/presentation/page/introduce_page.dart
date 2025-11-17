@@ -319,10 +319,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     );
   }
 
-  void _onTabTapped(int index) => safeSetState(() async {
+  void _onTabTapped(int index) => safeSetState(() {
     _currentTabIndex = index;
-    await _refreshIntroduceList();
-    _isLoadingMore = false;
+    _refreshIntroduceList();
   });
 
   Future<void> _refreshIntroduceList() async {
@@ -331,5 +330,6 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     } else if (_currentTabIndex == 1) {
       await ref.read(introduceProvider.notifier).fetchMyIntroduceList();
     }
+    _isLoadingMore = false;
   }
 }
