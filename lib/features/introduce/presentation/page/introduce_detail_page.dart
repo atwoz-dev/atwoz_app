@@ -70,33 +70,40 @@ class IntroduceDetailPageState
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+
                       children: [
                         RoundedImage(imageURL: imageUrl, size: 100),
 
                         SizedBox(width: 16.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "$nickname, $age",
-                              style: Fonts.header02(
-                                Palette.colorGrey900,
-                              ).copyWith(fontWeight: FontWeight.w700),
-                            ),
-                            const Gap(6),
-                            Text(
-                              '$mbti · $location',
-                              style: Fonts.body03Regular(Palette.colorGrey500),
-                            ),
-                            const Gap(6),
-                            SizedBox(height: 2.h),
-                            DefaultChip(titleList: hobbies),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "$nickname, $age",
+                                style: Fonts.header02(
+                                  Palette.colorGrey900,
+                                ).copyWith(fontWeight: FontWeight.w700),
+                              ),
+                              const Gap(6),
+                              Text(
+                                '$mbti · $location',
+                                style: Fonts.body03Regular(
+                                  Palette.colorGrey500,
+                                ),
+                              ),
+                              const Gap(6),
+                              SizedBox(height: 2.h),
+                              DefaultChip(titleList: hobbies),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                     const Gap(16),
-                    _InteractionButtons(introduceDetail.profileExchangeStatus),
+                    _InteractionButtons(
+                      introduceDetail.profileExchangeStatus,
+                    ),
                   ],
                 ),
               ),
