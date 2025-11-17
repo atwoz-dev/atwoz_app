@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../widget/customer_center.dart';
 
 class Message {
-  final String sender; // 'bot' 또는 'user'
+  final String sender;
   final String text;
   final bool isOptions;
   final bool isInitialOptions;
@@ -74,7 +74,6 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
   void _handleOptionSelected(String option, {required bool isInitialSelection}) {
     if (!mounted) return;
 
-    // 1. 사용자가 선택한 메시지 추가
     setState(() => _messages.add(Message(sender: 'user', text: option)));
     _scrollToBottom();
 
@@ -103,14 +102,11 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
 
       Future.delayed(const Duration(milliseconds: 700), () {
         if (mounted) {
-          // 최종 답변 추가
           setState(() => _messages.add(Message(sender: 'bot', text: botResponse)));
           _scrollToBottom();
 
-          // 카테고리 초기화
           _selectedCategory = null; 
 
-          // 초기 선택지 복구 메시지 추가
           Future.delayed(const Duration(milliseconds: 700), () {
             if (mounted) {
               setState(() {
@@ -119,7 +115,7 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
                     sender: 'bot',
                     text: '다른 문의 사항이 있으신가요?',
                     isOptions: true,
-                    isInitialOptions: true, // 초기 옵션으로 돌아가기 위해 true
+                    isInitialOptions: true,
                   ),
                 );
               });
@@ -155,7 +151,6 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
                     : UserMessageBubble(message: message);
 
                 return AnimatedOpacity(
-                  // 💡 AnimatedOpacity 복구: 모든 메시지에 대해 즉시 1.0으로 설정하여 나타나는 효과
                   opacity: 1.0,
                   duration: const Duration(milliseconds: 500),
                   child: Padding(
