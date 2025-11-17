@@ -140,9 +140,9 @@ class _OptionSelectBubble extends StatelessWidget {
       width: messageWidth, 
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: _botColor, // 그룹 배경색
+        color: _botColor,
         border: Border.all(
-          color: _botBorderColor, // 그룹 경계선
+          color: _botBorderColor,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(_bubbleRadius),

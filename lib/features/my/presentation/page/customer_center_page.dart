@@ -27,7 +27,6 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
   final List<Message> _messages = [];
   String? _selectedCategory;
   
-  // chatBotData는 Map<String, Map<String, String>> 구조라고 가정합니다.
   static final _initialOptions = chatBotData.keys.toList();
   final _scrollController = ScrollController();
 
@@ -97,7 +96,6 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
         }
       });
     } else {
-      // 2단계 선택: 최종 답변 제시 및 초기화
       final botResponse = chatBotData[_selectedCategory]?[option] ?? '해당 내용이 없습니다.';
 
       Future.delayed(const Duration(milliseconds: 700), () {
