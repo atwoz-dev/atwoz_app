@@ -9,7 +9,7 @@ final introduceRepositoryProvider = Provider<IntroduceRepository>((ref) {
 });
 
 class IntroduceRepository extends BaseRepository {
-  IntroduceRepository(Ref ref) : super(ref, "/self-introduction");
+  IntroduceRepository(Ref ref) : super(ref, '/self-introduction');
 
   /// 셀프 소개 목록 조회 api
   Future<List<IntroduceItem>> getIntroduceList({
@@ -20,31 +20,15 @@ class IntroduceRepository extends BaseRepository {
     int? lastId,
   }) async {
     try {
-      Map<String, dynamic> queryParameters = {};
-
-      if (preferredCities != null && preferredCities.isNotEmpty) {
-        queryParameters["preferredCities"] = preferredCities.join(",");
-      }
-
-      if (fromAge != null) {
-        queryParameters["fromAge"] = fromAge;
-      }
-
-      if (toAge != null) {
-        queryParameters["toAge"] = toAge;
-      }
-
-      if (gender != null) {
-        queryParameters["gender"] = gender;
-      }
-
-      if (lastId != null) {
-        queryParameters["lastId"] = lastId;
-      }
-
       final response = await apiService.getJson<Map<String, dynamic>>(
         path,
-        queryParameters: queryParameters,
+        queryParameters: {
+          'preferredCities': ?preferredCities?.join(','),
+          'fromAge': ?fromAge,
+          'toAge': ?toAge,
+          'gender': ?gender,
+          'lastId': ?lastId,
+        },
       );
 
       final result = IntroduceListResponse.fromJson(response);
@@ -60,21 +44,25 @@ class IntroduceRepository extends BaseRepository {
     required String title,
     required String content,
   }) async {
-    final request = IntroduceAddRequest(title: title, content: content);
-
-    await apiService.postJson(path, data: request.toJson());
+    await apiService.postJson(
+      path,
+      data: IntroduceAddRequest(
+        title: title,
+        content: content,
+      ).toJson(),
+    );
   }
 
   /// 셀프 소개 상세 조회 api
   Future<IntroduceDetailData> getIntroduceDetail({required int id}) async {
-    final response = await apiService.getJson("$path/$id");
+    final response = await apiService.getJson('$path/$id');
     final result = IntroduceDetailResponse.fromJson(response);
     return result.data;
   }
 
   /// 셀프 소개 삭제 api
   Future<void> deleteIntroduce({required int id}) async {
-    final response = await apiService.deleteJson("$path/$id");
+    final response = await apiService.deleteJson('$path/$id');
   }
 
   /// 셀프 소개 수정 api
@@ -85,14 +73,14 @@ class IntroduceRepository extends BaseRepository {
   }) async {
     final request = IntroduceUpdateRequest(title: title, content: content);
 
-    await apiService.patchJson("$path/$id", data: request.toJson());
+    await apiService.patchJson('$path/$id', data: request.toJson());
   }
 
   /// 자신의 셀프 소개 목록 조회 api
   Future<List<IntroduceItem>> getMyIntroduceList({int? lastId}) async {
     final response = await apiService.getJson(
-      "$path/my",
-      queryParameters: lastId != null ? {"lastId": lastId} : null,
+      '$path/my',
+      queryParameters: lastId != null ? {'lastId': lastId} : null,
     );
 
     final result = IntroduceListResponse.fromJson(response);

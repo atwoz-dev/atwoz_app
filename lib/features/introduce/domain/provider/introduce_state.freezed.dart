@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceState {
 
- List<IntroduceItem> get introduceList; List<IntroduceItem> get introduceMyList; int? get introduceLastId; int? get myIntroduceLastId; bool get isLoaded; IntroduceListErrorType? get error;
+ List<IntroduceInfo> get introduceList; List<IntroduceInfo> get introduceMyList; int? get introduceLastId; int? get myIntroduceLastId; bool get isLoaded; IntroduceListErrorType? get error;
 /// Create a copy of IntroduceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $IntroduceStateCopyWith<$Res>  {
   factory $IntroduceStateCopyWith(IntroduceState value, $Res Function(IntroduceState) _then) = _$IntroduceStateCopyWithImpl;
 @useResult
 $Res call({
- List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, int? introduceLastId, int? myIntroduceLastId, bool isLoaded, IntroduceListErrorType? error
+ List<IntroduceInfo> introduceList, List<IntroduceInfo> introduceMyList, int? introduceLastId, int? myIntroduceLastId, bool isLoaded, IntroduceListErrorType? error
 });
 
 
@@ -65,8 +65,8 @@ class _$IntroduceStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? introduceLastId = freezed,Object? myIntroduceLastId = freezed,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 introduceList: null == introduceList ? _self.introduceList : introduceList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceMyList: null == introduceMyList ? _self.introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceLastId: freezed == introduceLastId ? _self.introduceLastId : introduceLastId // ignore: cast_nullable_to_non_nullable
+as List<IntroduceInfo>,introduceMyList: null == introduceMyList ? _self.introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
+as List<IntroduceInfo>,introduceLastId: freezed == introduceLastId ? _self.introduceLastId : introduceLastId // ignore: cast_nullable_to_non_nullable
 as int?,myIntroduceLastId: freezed == myIntroduceLastId ? _self.myIntroduceLastId : myIntroduceLastId // ignore: cast_nullable_to_non_nullable
 as int?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<IntroduceInfo> introduceList,  List<IntroduceInfo> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceState() when $default != null:
 return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,_that.myIntroduceLastId,_that.isLoaded,_that.error);case _:
@@ -176,7 +176,7 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<IntroduceInfo> introduceList,  List<IntroduceInfo> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceState():
 return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,_that.myIntroduceLastId,_that.isLoaded,_that.error);case _:
@@ -196,7 +196,7 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<IntroduceItem> introduceList,  List<IntroduceItem> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<IntroduceInfo> introduceList,  List<IntroduceInfo> introduceMyList,  int? introduceLastId,  int? myIntroduceLastId,  bool isLoaded,  IntroduceListErrorType? error)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceState() when $default != null:
 return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,_that.myIntroduceLastId,_that.isLoaded,_that.error);case _:
@@ -211,18 +211,18 @@ return $default(_that.introduceList,_that.introduceMyList,_that.introduceLastId,
 
 
 class _IntroduceState extends IntroduceState {
-  const _IntroduceState({final  List<IntroduceItem> introduceList = const [], final  List<IntroduceItem> introduceMyList = const [], this.introduceLastId = null, this.myIntroduceLastId = null, this.isLoaded = false, this.error}): _introduceList = introduceList,_introduceMyList = introduceMyList,super._();
+  const _IntroduceState({final  List<IntroduceInfo> introduceList = const [], final  List<IntroduceInfo> introduceMyList = const [], this.introduceLastId = null, this.myIntroduceLastId = null, this.isLoaded = false, this.error}): _introduceList = introduceList,_introduceMyList = introduceMyList,super._();
   
 
- final  List<IntroduceItem> _introduceList;
-@override@JsonKey() List<IntroduceItem> get introduceList {
+ final  List<IntroduceInfo> _introduceList;
+@override@JsonKey() List<IntroduceInfo> get introduceList {
   if (_introduceList is EqualUnmodifiableListView) return _introduceList;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_introduceList);
 }
 
- final  List<IntroduceItem> _introduceMyList;
-@override@JsonKey() List<IntroduceItem> get introduceMyList {
+ final  List<IntroduceInfo> _introduceMyList;
+@override@JsonKey() List<IntroduceInfo> get introduceMyList {
   if (_introduceMyList is EqualUnmodifiableListView) return _introduceMyList;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_introduceMyList);
@@ -263,7 +263,7 @@ abstract mixin class _$IntroduceStateCopyWith<$Res> implements $IntroduceStateCo
   factory _$IntroduceStateCopyWith(_IntroduceState value, $Res Function(_IntroduceState) _then) = __$IntroduceStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<IntroduceItem> introduceList, List<IntroduceItem> introduceMyList, int? introduceLastId, int? myIntroduceLastId, bool isLoaded, IntroduceListErrorType? error
+ List<IntroduceInfo> introduceList, List<IntroduceInfo> introduceMyList, int? introduceLastId, int? myIntroduceLastId, bool isLoaded, IntroduceListErrorType? error
 });
 
 
@@ -283,8 +283,8 @@ class __$IntroduceStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? introduceList = null,Object? introduceMyList = null,Object? introduceLastId = freezed,Object? myIntroduceLastId = freezed,Object? isLoaded = null,Object? error = freezed,}) {
   return _then(_IntroduceState(
 introduceList: null == introduceList ? _self._introduceList : introduceList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceMyList: null == introduceMyList ? _self._introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
-as List<IntroduceItem>,introduceLastId: freezed == introduceLastId ? _self.introduceLastId : introduceLastId // ignore: cast_nullable_to_non_nullable
+as List<IntroduceInfo>,introduceMyList: null == introduceMyList ? _self._introduceMyList : introduceMyList // ignore: cast_nullable_to_non_nullable
+as List<IntroduceInfo>,introduceLastId: freezed == introduceLastId ? _self.introduceLastId : introduceLastId // ignore: cast_nullable_to_non_nullable
 as int?,myIntroduceLastId: freezed == myIntroduceLastId ? _self.myIntroduceLastId : myIntroduceLastId // ignore: cast_nullable_to_non_nullable
 as int?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable

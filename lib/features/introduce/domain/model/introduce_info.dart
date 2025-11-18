@@ -1,4 +1,5 @@
 import 'package:atwoz_app/features/introduce/data/data.dart';
+import 'package:atwoz_app/features/introduce/data/mapper/introduce_mapper.dart';
 import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,11 +9,11 @@ part "introduce_info.freezed.dart";
 @freezed
 abstract class IntroduceInfo with _$IntroduceInfo {
   const factory IntroduceInfo({
-    required List<String> preferredCities,
-    required int fromAge,
-    required int toAge,
-    required String gender,
-    required int lastId,
+    required int id,
+    int? yearOfBirth,
+    String? nickname,
+    required String profileUrl,
+    required String title,
   }) = _IntroduceInfo;
 }
 
@@ -21,7 +22,7 @@ class IntroduceListFetchUseCase {
 
   const IntroduceListFetchUseCase(this.ref);
 
-  Future<List<IntroduceItem>> call({
+  Future<List<IntroduceInfo>> call({
     List<String>? preferredCities,
     int? fromAge,
     int? toAge,
@@ -37,11 +38,10 @@ class IntroduceListFetchUseCase {
           gender: gender,
           lastId: lastId,
         );
-    return response;
+    return response
+        .map(
+          (e) => e.toDomain(),
+        )
+        .toList();
   }
-}
-
-// IntroduceListResponseDto -> List<IntroduceInfo> 변경
-List<IntroduceInfo> convertToDomain(List<IntroduceItem> items) {
-  return [];
 }

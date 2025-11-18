@@ -1,6 +1,8 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/data/dto/introduce_list_response.dart';
+import 'package:atwoz_app/features/introduce/data/mapper/introduce_mapper.dart';
 import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
+import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final fetchIntroduceListUseCaseProvider = Provider<FetchIntroduceListUseCase>(
@@ -12,7 +14,7 @@ class FetchIntroduceListUseCase {
 
   FetchIntroduceListUseCase(this.ref);
 
-  Future<List<IntroduceItem>> execute({
+  Future<List<IntroduceInfo>> execute({
     List<String>? preferredCities,
     int? fromAge,
     int? toAge,
@@ -30,7 +32,11 @@ class FetchIntroduceListUseCase {
             lastId: lastId,
           );
 
-      return introduces;
+      return introduces
+          .map(
+            (e) => e.toDomain(),
+          )
+          .toList();
     } catch (e) {
       Log.e("셀프 소개 리스트 호출 실패 : $e");
       return [];
