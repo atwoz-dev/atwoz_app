@@ -46,7 +46,7 @@ class _IntroduceMyListState extends ConsumerState<IntroduceMyList> {
 
     _isLoadingMore = true;
 
-    ref.read(introduceProvider.notifier).fetchIntroduceMore().then((_) {
+    ref.read(introduceProvider.notifier).fetchMyIntroduceMore().then((_) {
       _isLoadingMore = false;
     });
   }
