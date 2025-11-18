@@ -19,3 +19,8 @@ List<ServerNotificationType> _enabledNotificationsFromJson(String value) {
 String _enabledNotificationsToJson(List<ServerNotificationType> value) {
   return json.encode(value.map((e) => e.key).toList());
 }
+
+ContactMethod? _contactMethodFromJson(String value) =>
+    ContactMethod.parse(value);
+
+String _contactMethodToJson(ContactMethod? value) => value?.name ?? '';
