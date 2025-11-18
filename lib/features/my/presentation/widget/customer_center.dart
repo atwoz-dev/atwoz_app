@@ -2,16 +2,17 @@ import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:flutter/material.dart';
 import '../page/customer_center_page.dart' show Message;
+import 'package:gap/gap.dart';
 
 
 const _userColor = Color(0xFF7A41FF);
 const _botColor = Colors.white;
 const _botBorderColor = Color(0xFFDDDDDD);
-const _bubbleRadius = 8.0;
+const _bubbleRadius = 6.0;
 const _textColor = Color(0xFF333333); 
 const _buttonBackgroundColor = Color(0xFFF4F4F4); 
 const _iconSize = 24.0;
-const _iconContainerSize = 36.0;
+const _iconContainerSize = 40.0;
 
 class UserMessageBubble extends StatelessWidget {
   final Message message;
@@ -21,7 +22,7 @@ class UserMessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       alignment: Alignment.centerRight,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -59,12 +60,11 @@ class BotMessageBubble extends StatelessWidget {
     final messageWidth = MediaQuery.of(context).size.width * 0.6;
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       alignment: Alignment.centerLeft,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 봇 아이콘 영역
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -73,21 +73,19 @@ class BotMessageBubble extends StatelessWidget {
             child: Container(
               width: _iconContainerSize,
               height: _iconContainerSize,
-              padding: const EdgeInsets.all(6.0), 
+              padding: const EdgeInsets.all(8.0), 
               child: const DefaultIcon(
                 IconPath.customerCenterLogo,
                 size: _iconSize,
               ),
             ),
           ),
-          const SizedBox(width: 8.0),
+          const Gap(8.0),
 
-          // 메시지 및 옵션 영역
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 봇 메시지 버블
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   constraints: BoxConstraints(maxWidth: messageWidth),
@@ -104,7 +102,7 @@ class BotMessageBubble extends StatelessWidget {
                 ),
                 
                 if (options.isNotEmpty) ...[
-                  const SizedBox(height: 8.0),
+                  const Gap(8.0),
                   _OptionSelectBubble(
                     options: options,
                     isInitialOptions: isInitialOptions,
@@ -138,7 +136,7 @@ class _OptionSelectBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: messageWidth, 
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: _botColor,
         border: Border.all(
