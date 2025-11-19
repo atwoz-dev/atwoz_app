@@ -6,12 +6,9 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
-<<<<<<< HEAD
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_review_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_reject_page.dart';
-=======
 import 'package:atwoz_app/features/onboarding/presentation/page/dormant_release_page.dart';
->>>>>>> aad01dbc7292abab9b74390e4e57f38e9ea5e14e
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dart';
@@ -468,18 +465,14 @@ Future<T?> navigate<T>(
       route.name,
       extra: extra,
     ),
-<<<<<<< HEAD
     NavigationMethod.go => (() {
       goRouter.goNamed(route.name, extra: extra);
       return null;
     })(),
-=======
-    NavigationMethod.go =>
-      (() {
-        goRouter.goNamed(route.name, extra: extra);
-        return null;
-      })(),
->>>>>>> aad01dbc7292abab9b74390e4e57f38e9ea5e14e
+    NavigationMethod.go => (() {
+      goRouter.goNamed(route.name, extra: extra);
+      return null;
+    })(),
     NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
       route.name,
       extra: extra,

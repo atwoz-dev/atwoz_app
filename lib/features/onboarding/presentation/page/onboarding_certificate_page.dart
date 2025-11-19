@@ -16,13 +16,10 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
-<<<<<<< HEAD
-
-=======
->>>>>>> aad01dbc7292abab9b74390e4e57f38e9ea5e14e
   final String phoneNumber;
 
   @override
@@ -98,52 +95,6 @@ class _OnboardingCertificationPageState
                               hintText: '000000',
                               fillColor: Palette.colorGrey100,
                             ),
-<<<<<<< HEAD
-                            const Gap(10),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 2.5,
-                                ),
-                                child: DefaultOutlinedButton(
-                                  height: 48.0,
-                                  primary: Palette.colorGrey100,
-                                  textStyle: Fonts.body02Regular().copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textColor: palette.onSurface,
-                                  onPressed: _isResendEnabled
-                                      ? () async {
-                                          try {
-                                            final authUseCase = ref.read(
-                                              authUsecaseProvider,
-                                            );
-                                            await authUseCase
-                                                .sendSmsVerificationCode(
-                                                  widget.phoneNumber,
-                                                );
-                                            safeSetState(() {
-                                              validationError = null;
-                                              _codeController.clear();
-                                              _startResendCountdown();
-                                            });
-                                            showToastMessage('인증번호가 재전송되었습니다.');
-                                          } catch (e) {
-                                            Log.e('재발송 실패', errorObject: e);
-                                            showToastMessage(
-                                              '인증번호 재발송에 실패했습니다.',
-                                            );
-                                          }
-                                        }
-                                      : null,
-                                  child: Text(
-                                    _isResendEnabled
-                                        ? '재발송'
-                                        : '00:${_resendCountdown.toString().padLeft(2, '0')}',
-                                  ),
-                                ),
-=======
                           ),
                           const Gap(10),
                           Expanded(
@@ -151,17 +102,14 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
                                     : '00:${state.leftSeconds.toString().padLeft(2, '0')}',
->>>>>>> aad01dbc7292abab9b74390e4e57f38e9ea5e14e
                               ),
                             ),
                           ),
@@ -181,64 +129,15 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-<<<<<<< HEAD
-              onPressed: _isButtonEnabled
-                  ? () async {
-                      final authUseCase = ref.read(authUsecaseProvider);
-                      final inputCode = _codeController.text;
-
-                      try {
-                        final userData = await authUseCase.signIn(
-                          UserSignInRequest(
-                            phoneNumber: widget.phoneNumber,
-                            code: inputCode,
-                          ),
-                        );
-
-                        if (userData.isProfileSettingNeeded) {
-                          navigate(context, route: AppRoute.signUp);
-                        } else if (userData.activityStatus ==
-                            'REJECTED_SCREENING') {
-                          navigate(
-                            context,
-                            route: AppRoute.signUpProfileReject,
-                          );
-                        } else {
-                          // 프로필 설정이 필요하지 않은 경우
-                          navigate(context, route: AppRoute.mainTab);
-                        }
-                      } catch (e) {
-                        // TODO(mh): 인증번호 불일치 시 처리되어야함
-                        // 400  : 인증번호가 일치하지 않는 경우.
-                        // 404 : 인증번호가 존재하지 않는 경우.
-                        // setState(() {
-                        //   validationError = '인증번호가 일치하지 않습니다.';
-                        // });
-
-                        Log.e('인증 실패', errorObject: e);
-                        _codeController.clear();
-                        safeSetState(() {
-                          validationError = '인증에 실패했습니다.';
-                        });
-                      }
-                    }
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(notifier)
                   : null,
-              child: Text(
-                '인증하기',
-                style: Fonts.body01Medium(
-                  _isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
-=======
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
                   state.isButtonEnabled
                       ? palette.onPrimary
                       : Palette.colorGrey400,
->>>>>>> aad01dbc7292abab9b74390e4e57f38e9ea5e14e
                 ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
@@ -249,7 +148,7 @@ class _OnboardingCertificationPageState
   }
 
   void _verifyCode(OnboardingNotifier notifier) async {
-    final (userData, status) = await notifier.verifyCode(
+    final (UserData? userData, status) = await notifier.verifyCode(
       widget.phoneNumber,
       _codeController.text,
     );
@@ -281,11 +180,13 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<void> _handleActivateStatus(dynamic userData) async {
+  Future<void> _handleActivateStatus(UserData? userData) async {
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReject);
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }
