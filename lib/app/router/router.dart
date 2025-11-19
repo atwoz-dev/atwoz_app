@@ -6,6 +6,8 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_review_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_reject_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dart';
@@ -106,6 +108,8 @@ enum AppRoute {
   signUpProfileChoice('sign-up-profile-choice'),
   signUpProfileUpdate('sign-up-profile-update'),
   signUpProfilePicture('sign-up-profile-picture'),
+  signUpProfileReview('sign-up-profile-review'),
+  signUpProfileReject('sign-up-profile-reject'),
 
   // My
   profileManage('profile-manage'),
@@ -171,10 +175,7 @@ final allRoutes = [
           if (args is! ReportArguments) {
             return const SizedBox.shrink();
           }
-          return ReportPage(
-            name: args.name,
-            userId: args.userId,
-          );
+          return ReportPage(name: args.name, userId: args.userId);
         },
       ),
       NamedGoRoute(
@@ -317,6 +318,14 @@ final allRoutes = [
                 name: AppRoute.signUpProfileUpdate.name,
                 builder: (context, state) => const SignUpProfileUpdatePage(),
               ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfileReview.name,
+                builder: (context, state) => const SignUpProfileReviewPage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfileReject.name,
+                builder: (context, state) => const SignUpProfileRejectPage(),
+              ),
             ],
           ),
         ],
@@ -433,16 +442,22 @@ Future<T?> navigate<T>(
   final goRouter = GoRouter.of(context);
 
   return switch (method) {
-    NavigationMethod.push =>
-      await goRouter.pushNamed<T>(route.name, extra: extra),
-    NavigationMethod.replace =>
-      await goRouter.replaceNamed<T>(route.name, extra: extra),
+    NavigationMethod.push => await goRouter.pushNamed<T>(
+      route.name,
+      extra: extra,
+    ),
+    NavigationMethod.replace => await goRouter.replaceNamed<T>(
+      route.name,
+      extra: extra,
+    ),
     NavigationMethod.go => (() {
-        goRouter.goNamed(route.name, extra: extra);
-        return null;
-      })(),
-    NavigationMethod.pushReplacement =>
-      await goRouter.pushReplacementNamed<T>(route.name, extra: extra),
+      goRouter.goNamed(route.name, extra: extra);
+      return null;
+    })(),
+    NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
+      route.name,
+      extra: extra,
+    ),
   };
 }
 
