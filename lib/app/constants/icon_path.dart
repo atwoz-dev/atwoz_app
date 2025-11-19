@@ -47,6 +47,7 @@ class IconPath {
   static const String mailOutline = '$iconsPath/mail_outline.svg';
   static const String imageDelete = '$iconsPath/image_delete.svg';
   static const String emptyProfileImage = '$iconsPath/empty_profile_image.svg';
+  static const String reviewProfileImage = '$iconsPath/review_profile_image.svg';
 
   // 네비게이션 바
   static const String home = '$iconsPath/home.svg';
