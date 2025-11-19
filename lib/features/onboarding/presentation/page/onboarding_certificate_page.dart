@@ -101,12 +101,10 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
@@ -130,10 +128,9 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(notifier)
+                  : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
@@ -219,7 +216,7 @@ class _OnboardingCertificationPageState
       context,
       onTapVerify: context.pop,
       title: '서비스 가입 제한',
-      content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+      content: '탈퇴일로부터 3개월간 동일 계정으로\n재가입이 제한됩니다.',
     );
   }
 
