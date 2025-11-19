@@ -68,15 +68,31 @@ class _AppState extends ConsumerState<App> {
 
   Future<void> _initialize() async {
     await ref.read(localStorageProvider).initialize();
-    final router = ref.read(routerProvider);
     await ref.read(globalProvider.notifier).initProfile();
-    if (ref.read(globalProvider).profile.isDefault) {
+    _navigateToInitialRoute();
+    FlutterNativeSplash.remove();
+  }
+
+  void _navigateToInitialRoute() {
+    final router = ref.read(routerProvider);
+    final profile = ref.read(globalProvider).profile;
+
+    if (profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
-    } else {
-      router.goNamed(AppRoute.mainTab.name);
+      return;
     }
 
-    FlutterNativeSplash.remove();
+    if (profile.activityStatus == 'WAITING_SCREENING') {
+      router.goNamed(AppRoute.signUpProfileReview.name);
+      return;
+    }
+
+    if (profile.activityStatus == 'REJECTED_SCREENING') {
+      router.goNamed(AppRoute.signUpProfileReject.name);
+      return;
+    }
+
+    router.goNamed(AppRoute.mainTab.name);
   }
 
   void _handleFcmNotification(FcmNotification data) {
