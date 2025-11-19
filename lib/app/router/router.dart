@@ -477,10 +477,6 @@ Future<T?> navigate<T>(
       goRouter.goNamed(route.name, extra: extra);
       return null;
     })(),
-    NavigationMethod.go => (() {
-      goRouter.goNamed(route.name, extra: extra);
-      return null;
-    })(),
     NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
       route.name,
       extra: extra,
