@@ -18,10 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
-  const OnboardingCertificationPage({
-    super.key,
-    required this.phoneNumber,
-  });
+  const OnboardingCertificationPage({super.key, required this.phoneNumber});
 
   final String phoneNumber;
 
@@ -158,22 +155,26 @@ class OnboardingCertificationPageState
                             Expanded(
                               flex: 3,
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 2.5),
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 2.5,
+                                ),
                                 child: DefaultOutlinedButton(
                                   height: 48.0,
                                   primary: Palette.colorGrey100,
-                                  textStyle: Fonts.body02Regular()
-                                      .copyWith(fontWeight: FontWeight.w500),
+                                  textStyle: Fonts.body02Regular().copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   textColor: palette.onSurface,
                                   onPressed: _isResendEnabled
                                       ? () async {
                                           try {
-                                            final authUseCase =
-                                                ref.read(authUsecaseProvider);
+                                            final authUseCase = ref.read(
+                                              authUsecaseProvider,
+                                            );
                                             await authUseCase
                                                 .sendSmsVerificationCode(
-                                                    widget.phoneNumber);
+                                                  widget.phoneNumber,
+                                                );
                                             safeSetState(() {
                                               validationError = null;
                                               _codeController.clear();
@@ -183,13 +184,16 @@ class OnboardingCertificationPageState
                                           } catch (e) {
                                             Log.e('재발송 실패', errorObject: e);
                                             showToastMessage(
-                                                '인증번호 재발송에 실패했습니다.');
+                                              '인증번호 재발송에 실패했습니다.',
+                                            );
                                           }
                                         }
                                       : null,
-                                  child: Text(_isResendEnabled
-                                      ? '재발송'
-                                      : '00:${_resendCountdown.toString().padLeft(2, '0')}'),
+                                  child: Text(
+                                    _isResendEnabled
+                                        ? '재발송'
+                                        : '00:${_resendCountdown.toString().padLeft(2, '0')}',
+                                  ),
                                 ),
                               ),
                             ),
@@ -225,13 +229,15 @@ class OnboardingCertificationPageState
 
                         if (userData.isProfileSettingNeeded) {
                           navigate(context, route: AppRoute.signUp);
-                        } else {
-                          // 프로필 설정이 필요하지 않은 경우
+                        } else if (userData.activityStatus ==
+                            'REJECTED_SCREENING') {
                           navigate(
                             context,
-                            route: AppRoute.mainTab,
-                            method: NavigationMethod.go,
+                            route: AppRoute.signUpProfileReject,
                           );
+                        } else {
+                          // 프로필 설정이 필요하지 않은 경우
+                          navigate(context, route: AppRoute.mainTab);
                         }
                       } catch (e) {
                         // TODO(mh): 인증번호 불일치 시 처리되어야함
@@ -251,10 +257,9 @@ class OnboardingCertificationPageState
                   : null,
               child: Text(
                 '인증하기',
-                style: Fonts.body01Medium(_isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Fonts.body01Medium(
+                  _isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
           ),
