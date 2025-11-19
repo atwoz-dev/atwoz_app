@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,19 +40,19 @@ class LocalStorage {
 
   /* ------------------ SECURE STORAGE ----------------------- */
 
-  Future<String?> getEncrypted(String key) async {
+  Future<String?> getEncrypted(SecureStorageItem key) async {
     await _initCompleter.future;
     try {
-      return _secureStorage?.read(key: key);
+      return _secureStorage?.read(key: key.key);
     } on PlatformException {
       return null;
     }
   }
 
-  Future<bool> saveEncrypted(String key, String value) async {
+  Future<bool> saveEncrypted(SecureStorageItem key, String value) async {
     await _initCompleter.future;
     try {
-      await _secureStorage!.write(key: key, value: value);
+      await _secureStorage!.write(key: key.key, value: value);
       return Future<bool>.value(true);
     } on PlatformException catch (_) {
       return Future<bool>.value(false);

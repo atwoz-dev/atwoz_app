@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,7 +10,9 @@ abstract class ProfileState with _$ProfileState {
   const factory ProfileState({
     required UserProfile? profile,
     required String myUserName,
-    required bool registeredContact,
+    required String phoneNumber,
+    required String? kakaoId,
+    required ContactMethod? selectedContactMethod,
     required int heartPoint,
     required String message,
     required bool isLoaded,
@@ -17,14 +20,16 @@ abstract class ProfileState with _$ProfileState {
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
-        profile: null,
-        myUserName: '',
-        registeredContact: false,
-        heartPoint: 0,
-        message: '',
-        isLoaded: false,
-        error: null,
-      );
+    profile: null,
+    myUserName: '',
+    phoneNumber: '',
+    kakaoId: null,
+    selectedContactMethod: null,
+    heartPoint: 0,
+    message: '',
+    isLoaded: false,
+    error: null,
+  );
 
   const ProfileState._();
 
@@ -33,4 +38,6 @@ abstract class ProfileState with _$ProfileState {
   bool get enabledMessageInput =>
       profile?.matchStatus is UnMatched ||
       profile?.matchStatus is MatchingReceived;
+
+  bool get isInitializedContactMethod => selectedContactMethod != null;
 }

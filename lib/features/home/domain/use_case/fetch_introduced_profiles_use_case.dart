@@ -14,25 +14,31 @@ class FetchIntroducedProfilesUseCase {
   /// 소개받고 싶은 이성 화면에서 조회되는 메서드
   /// 즉, 빈 리스트인 경우는 존재하지 않음
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
-    final Box<Map> box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+    final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
     final categoryKey = category.name;
+    final rawData = box.get(categoryKey);
 
-    final data = box.get(categoryKey) as Map<String, dynamic>?;
-
-    if (data is! Map<String, dynamic> ||
-        data['profiles'] is! List<IntroducedProfileDto>) {
+    if (rawData is! Map) {
       throw const FormatException(
-        'IntroducedProfileDto 박스에서 꺼낸 데이터 형식이 올바르지 않습니다.',
+        'IntroducedProfileDto 박스에서 꺼낸 데이터 형식이 Map이 아닙니다.',
       );
     }
 
-    final profiles = data['profiles'];
+    final data = rawData.cast<String, dynamic>();
 
-    if (profiles is! List<IntroducedProfileDto>) {
-      throw const FormatException(
-        'IntroducedProfileDto 타입의 리스트 형식이어야 합니다.',
-      );
+    final rawProfiles = data['profiles'];
+
+    if (rawProfiles is! List) {
+      throw const FormatException('데이터 안에 profiles 필드가 List 형식이 아닙니다.');
+    }
+
+    final List<IntroducedProfileDto> profiles;
+    try {
+      profiles = rawProfiles.cast<IntroducedProfileDto>().toList();
+    } catch (e) {
+      // 리스트 내부 요소 타입이 IntroducedProfileDto가 아닐 경우 처리
+      throw FormatException('리스트 내부 요소가 IntroducedProfileDto 타입이 아닙니다. 에러: $e');
     }
 
     return convertToIntroducedProfiles(profiles);
