@@ -347,7 +347,15 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.profileManage.name,
-        builder: (context, state) => const ProfileManagePage(),
+        builder: (context, state) {
+          final args = state.extra;
+
+          if (args is MyProfileManageArguments) {
+            return ProfileManagePage(isRejectedProfile: args.isRejectedProfile);
+          }
+
+          return const ProfileManagePage(isRejectedProfile: false);
+        },
         routes: [
           NamedGoRoute(
             name: AppRoute.profileUpdate.name,

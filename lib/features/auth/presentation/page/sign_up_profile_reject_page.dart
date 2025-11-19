@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/button/button.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,13 @@ class SignUpProfileRejectPage extends ConsumerWidget {
                     child: DefaultElevatedButton(
                       child: const Text('프로필 수정하기'),
                       onPressed: () async {
-                        navigate(context, route: AppRoute.profileManage);
+                        navigate(
+                          context,
+                          route: AppRoute.profileManage,
+                          extra: MyProfileManageArguments(
+                            isRejectedProfile: true,
+                          ),
+                        );
                       },
                     ),
                   ),
