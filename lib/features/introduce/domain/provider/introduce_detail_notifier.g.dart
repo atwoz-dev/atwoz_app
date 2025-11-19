@@ -53,7 +53,7 @@ final class IntroduceDetailNotifierProvider
 }
 
 String _$introduceDetailNotifierHash() =>
-    r'c8113d58dcff4835deecb13001e29fb6a0f98a1d';
+    r'907d28460436acef9d6d3b59db9cfd9d35f63db5';
 
 final class IntroduceDetailNotifierFamily extends $Family
     with

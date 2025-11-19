@@ -4,7 +4,10 @@ import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_notifier.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +23,10 @@ class IntroduceDetailPage extends ConsumerStatefulWidget {
   IntroduceDetailPageState createState() => IntroduceDetailPageState();
 }
 
+// 상대방 프로필 조회
+// yes -> 프로필 보여줘
+// no -> 셀프소개 상세 조회 시작
+
 class IntroduceDetailPageState
     extends AppBaseConsumerStatefulPageState<IntroduceDetailPage> {
   @override
@@ -32,6 +39,9 @@ class IntroduceDetailPageState
     final stateAsync = ref.watch(
       introduceDetailProvider(introduceId: widget.introduceId),
     );
+    final notifier = ref.read(
+      introduceDetailProvider(introduceId: widget.introduceId).notifier,
+    );
 
     return Scaffold(
       appBar: const DefaultAppBar(title: '상대방 정보'),
@@ -41,6 +51,7 @@ class IntroduceDetailPageState
             // TODO: 에러처리
             return const SizedBox.shrink();
           }
+
           final introduceDetail = data.introduceDetail!;
           final nickname = introduceDetail.memberBasicInfo.nickname;
           final age = introduceDetail.memberBasicInfo.age;
@@ -57,6 +68,7 @@ class IntroduceDetailPageState
           final title = introduceDetail.title;
           final content = introduceDetail.content;
           final imageUrl = introduceDetail.memberBasicInfo.profileImageUrl;
+          final memberId = introduceDetail.memberBasicInfo.memberId;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,6 +115,7 @@ class IntroduceDetailPageState
                     const Gap(16),
                     _InteractionButtons(
                       introduceDetail.profileExchangeStatus,
+                      memberId,
                     ),
                   ],
                 ),
@@ -158,12 +171,13 @@ class IntroduceDetailPageState
   }
 }
 
-class _InteractionButtons extends StatelessWidget {
+class _InteractionButtons extends ConsumerWidget {
   final String? status;
-  const _InteractionButtons(this.status);
+  final int memberId;
+  const _InteractionButtons(this.status, this.memberId);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         status == null ? exchangeButton() : talkButton(),
@@ -173,7 +187,16 @@ class _InteractionButtons extends StatelessWidget {
           child: DefaultElevatedButton(
             padding: const EdgeInsets.all(10.0),
             primary: Palette.colorGrey100,
-            onPressed: () {},
+            onPressed: () async {
+              final favoriteType = await FavoriteTypeSelectDialog.open(
+                context,
+                userId: memberId,
+                favoriteType: FavoriteType.interested,
+              );
+              if (favoriteType == null) return;
+
+              print("favoriteType $favoriteType");
+            },
             child: const DefaultIcon(IconPath.heart),
           ),
         ),
