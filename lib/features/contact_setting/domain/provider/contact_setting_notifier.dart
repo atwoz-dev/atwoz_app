@@ -2,6 +2,7 @@ import 'package:atwoz_app/features/profile/data/repository/profile_repository.da
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 
+import '../../../../core/util/log.dart';
 import 'contact_setting_state.dart';
 
 part 'contact_setting_notifier.g.dart';
@@ -33,28 +34,34 @@ class ContactSettingNotifier extends _$ContactSettingNotifier {
   /// ref.read(localStorageProvider)
   ///  ..saveEncrypted(SecureStorageItem.phoneNumber, state.phone)
   ///  ..saveEncrypted(SecureStorageItem.kakaoId, state.kakao);
-  ///  - 프로필 조회시, 403 / 차단당함, 휴면,
   Future<bool> registerContactSetting({
     ContactMethod? method,
     String? kakaoId,
     String? phoneNumber,
-}) async {
-    final newMethod = method ?? ContactMethod.phone;
-    _repository.setContactMethod(newMethod);
-    if (kakaoId?.isNotEmpty == true && kakaoId != state.kakao) {
-      await _repository.setKakaoId(kakaoId ?? '');
+  }) async {
+    try {
+      final newMethod = method ?? state.method ?? ContactMethod.phone;
+      if (newMethod != state.method) {
+        _repository.setContactMethod(newMethod);
+      }
+      if (kakaoId?.isNotEmpty == true && kakaoId != state.kakao) {
+        await _repository.setKakaoId(kakaoId ?? '');
+      }
+
+      if (phoneNumber?.isNotEmpty == true && phoneNumber != state.phone) {
+        _repository.setPhoneNumber(phoneNumber ?? '');
+      }
+
+      state = state.copyWith(
+        method: newMethod,
+        kakao: kakaoId ?? state.kakao,
+        phone: phoneNumber ?? state.phone,
+      );
+
+      return true;
+    } on Exception catch (e) {
+      Log.e('contact register failure', errorObject: e);
+      return false;
     }
-
-    if(phoneNumber?.isNotEmpty == true && phoneNumber != state.phone) {
-      _repository.setPhoneNumber(phoneNumber?? '');
-    }
-
-    state = state.copyWith(
-      method: newMethod,
-      kakao: kakaoId ?? state.kakao,
-      phone: phoneNumber ?? state.phone,
-    );
-
-    return true;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
