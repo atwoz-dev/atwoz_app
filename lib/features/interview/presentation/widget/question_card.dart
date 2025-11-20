@@ -86,6 +86,10 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
               },
               onLongPress: () {
                 if (!question.isAnswered) return;
+                if (question.answerId == null) {
+                  showToastMessage('소개글을 삭제할 수 없습니다.');
+                  return;
+                }
 
                 CustomDialogue.showTwoChoiceDialogue(
                   context: context,
@@ -94,6 +98,8 @@ class _QuestionCardState extends AppBaseConsumerWidgetState<QuestionCard> {
                     final isSuccess = await ref
                         .read(interviewProvider.notifier)
                         .removeAnswer(question.answerId!, question.questionId);
+
+                    if (!context.mounted) return;
 
                     Navigator.of(context).pop();
 
