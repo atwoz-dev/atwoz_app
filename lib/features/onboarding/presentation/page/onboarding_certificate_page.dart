@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,11 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../contact_setting/domain/provider/contact_setting_notifier.dart';
+
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
+
   final String phoneNumber;
 
   @override
@@ -101,12 +105,10 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
@@ -130,10 +132,9 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(notifier)
+                  : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
@@ -182,7 +183,11 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<void> _handleActivateStatus(dynamic userData) async {
+  Future<void> _handleActivateStatus(UserData? userData) async {
+    ref
+        .read(contactSettingProvider.notifier)
+        .registerContactSetting(phoneNumber: widget.phoneNumber);
+
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {

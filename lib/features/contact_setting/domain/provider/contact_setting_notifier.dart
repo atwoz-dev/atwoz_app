@@ -1,3 +1,4 @@
+import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 
@@ -5,22 +6,55 @@ import 'contact_setting_state.dart';
 
 part 'contact_setting_notifier.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ContactSettingNotifier extends _$ContactSettingNotifier {
+  late final ProfileRepository _repository;
+
   @override
   ContactSettingState build() {
+    _repository = ref.read(profileRepositoryProvider);
     return ContactSettingState.initial();
   }
 
-  set method(ContactMethod method) {
-    state = state.copyWith(method: method);
+  Future<void> initialize() async {
+    final (phoneNumber, kakaoId) = await (
+      _repository.getPhoneNumber(),
+      _repository.getKakaoId(),
+    ).wait;
+
+    state = ContactSettingState(
+      method: _repository.getContactMethod(),
+      phone: phoneNumber,
+      kakao: kakaoId,
+    );
   }
 
-  set kakao(String kakao) => state = state.copyWith(kakao: kakao);
+  /// TODO(Han): 추후 phone number 갱신 기능 추가
+  /// ref.read(localStorageProvider)
+  ///  ..saveEncrypted(SecureStorageItem.phoneNumber, state.phone)
+  ///  ..saveEncrypted(SecureStorageItem.kakaoId, state.kakao);
+  ///  - 프로필 조회시, 403 / 차단당함, 휴면,
+  Future<bool> registerContactSetting({
+    ContactMethod? method,
+    String? kakaoId,
+    String? phoneNumber,
+}) async {
+    final newMethod = method ?? ContactMethod.phone;
+    _repository.setContactMethod(newMethod);
+    if (kakaoId?.isNotEmpty == true && kakaoId != state.kakao) {
+      await _repository.setKakaoId(kakaoId ?? '');
+    }
 
-  set phone(String phone) => state = state.copyWith(phone: phone);
+    if(phoneNumber?.isNotEmpty == true && phoneNumber != state.phone) {
+      _repository.setPhoneNumber(phoneNumber?? '');
+    }
 
-  Future<void> registerContactInformation() async {
-    // TODO(Han): db or api call
+    state = state.copyWith(
+      method: newMethod,
+      kakao: kakaoId ?? state.kakao,
+      phone: phoneNumber ?? state.phone,
+    );
+
+    return true;
   }
 }
