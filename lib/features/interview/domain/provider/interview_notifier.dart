@@ -1,5 +1,6 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/interview/data/data.dart';
+import 'package:atwoz_app/features/interview/domain/usecase/delete_interview_to_hive_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_add_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_remove_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_fetch_usecase.dart';
@@ -59,11 +60,14 @@ class InterviewNotifier extends _$InterviewNotifier {
     await _saveInterviewToHive(questionId, question, answerContent);
   }
 
-  Future<void> removeAnswer(int answerId) async {
+  Future<bool> removeAnswer(int answerId, int questionId) async {
     try {
       await InterviewRemoveUseCase(ref).call(answerId: answerId);
+      await _deleteInterviewToHive(questionId);
+      return true;
     } catch (e) {
       Log.e('Failed to add interview to server: $e');
+      return false;
     }
   }
 
@@ -99,6 +103,16 @@ class InterviewNotifier extends _$InterviewNotifier {
           );
     } catch (e) {
       Log.e('Failed to save interview to local cache: $e');
+    }
+  }
+
+  Future<void> _deleteInterviewToHive(int questionId) async {
+    try {
+      await ref
+          .read(deleteInterviewToHiveUseCaseProvider)
+          .execute(questionId: questionId);
+    } catch (e) {
+      Log.e('Failed to delete interview to local cache: $e');
     }
   }
 }
