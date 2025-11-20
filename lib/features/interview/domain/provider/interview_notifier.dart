@@ -66,7 +66,7 @@ class InterviewNotifier extends _$InterviewNotifier {
       await _deleteInterviewToHive(questionId);
       return true;
     } catch (e) {
-      Log.e('Failed to add interview to server: $e');
+      Log.e('Failed to remove interview to server: $e');
       return false;
     }
   }
