@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
@@ -152,10 +153,8 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
         const SizedBox(height: 8),
         if (_controller.text.isEmpty)
           GestureDetector(
-            onTap:
-                () async =>
-                    _controller.text =
-                        await signUpProcessNotifier.updateLocation(),
+            onTap: () async =>
+                _controller.text = await signUpProcessNotifier.updateLocation(),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
@@ -178,38 +177,37 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children:
-                  _filteredLocations.map((location) {
-                    return GestureDetector(
-                      onTap: () {
-                        _controller.text = location;
-                        signUpProcessNotifier.updateSelectedLocation(
-                          location,
-                        ); // 선택한 지역으로 설정
-                        _filteredLocations.clear(); // 검색 후 결과 초기화
-                        FocusScope.of(context).unfocus(); // 키보드 내리기
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                          horizontal: 16,
-                        ),
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Palette.colorGrey50,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          location,
-                          style: Fonts.body02Medium(Palette.colorGrey800),
+              children: _filteredLocations.map((location) {
+                return GestureDetector(
+                  onTap: () {
+                    _controller.text = location;
+                    signUpProcessNotifier.updateSelectedLocation(
+                      location,
+                    ); // 선택한 지역으로 설정
+                    _filteredLocations.clear(); // 검색 후 결과 초기화
+                    FocusScope.of(context).unfocus(); // 키보드 내리기
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 14,
+                      horizontal: 16,
+                    ),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Palette.colorGrey50,
+                          width: 1.0,
                         ),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                    child: Text(
+                      location,
+                      style: Fonts.body02Medium(Palette.colorGrey800),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ),
@@ -290,9 +288,9 @@ Widget buildMbtiInput({
             final letter = mbtiOptions[row][col];
             final isSelected =
                 (letter == signUpState.selectedFirstMbtiLetter ||
-                    letter == signUpState.selectedSecondMbtiLetter ||
-                    letter == signUpState.selectedThirdMbtiLetter ||
-                    letter == signUpState.selectedFourthMbtiLetter);
+                letter == signUpState.selectedSecondMbtiLetter ||
+                letter == signUpState.selectedThirdMbtiLetter ||
+                letter == signUpState.selectedFourthMbtiLetter);
 
             return buildMbtiButton(
               context: context,
@@ -352,5 +350,6 @@ Widget buildHobbiesInput({
     options: hobbies,
     selectedOptions: selectedHobbies,
     onSelectionChanged: signUpNotifier.updateHobbies,
+    maxSelectionCount: Dimens.maxSelectableHobbiesCount,
   );
 }

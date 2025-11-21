@@ -69,4 +69,7 @@ class Dimens {
 
   // 이상형 설정 최대 나이 수
   static const int maxSelectableAge = 46;
+
+  // 취미 선택 최대 개수
+  static const int maxSelectableHobbiesCount = 3;
 }

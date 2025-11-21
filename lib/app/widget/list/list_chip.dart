@@ -8,6 +8,7 @@ class ListChip extends StatelessWidget {
   final List<String> selectedOptions; // 선택된 옵션 리스트
   final void Function(List<String> updatedSelections)
   onSelectionChanged; // 선택 변경 콜백
+  final int? maxSelectionCount;
   final double spacing; // 가로 간격
   final double runSpacing; // 세로 간격
   final WrapAlignment alignment; // 가로 방향 정렬
@@ -18,6 +19,7 @@ class ListChip extends StatelessWidget {
     required this.options,
     required this.selectedOptions,
     required this.onSelectionChanged,
+    this.maxSelectionCount,
     this.spacing = 8.0,
     this.runSpacing = 8.0,
     this.alignment = WrapAlignment.center,
@@ -37,7 +39,10 @@ class ListChip extends StatelessWidget {
           onTap: () {
             final updatedSelections = [
               ...selectedOptions,
-              if (!isSelected && selectedOptions.length < 3) option,
+              if (!isSelected &&
+                  (maxSelectionCount == null ||
+                      selectedOptions.length < maxSelectionCount!))
+                option,
             ]..removeWhere((e) => isSelected && e == option);
             onSelectionChanged(updatedSelections);
           },
