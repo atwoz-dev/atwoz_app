@@ -1,3 +1,4 @@
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
 import 'package:atwoz_app/features/report/domain/model/report.dart';
@@ -30,7 +31,12 @@ class ReportNotifier extends _$ReportNotifier {
           .execute(state);
 
       if (isReportSuccess) {
-        await _deleteCachedIntroducedProfiles();
+        try {
+          await _deleteCachedIntroducedProfiles();
+        } catch (e) {
+          Log.e('캐시 삭제 실패: $e');
+          // 신고는 성공했으므로 true 반환
+        }
       }
       return isReportSuccess;
     } catch (e) {
@@ -45,7 +51,12 @@ class ReportNotifier extends _$ReportNotifier {
           .execute(state.reporteeId);
 
       if (isBlockSuccess) {
-        await _deleteCachedIntroducedProfiles();
+        try {
+          await _deleteCachedIntroducedProfiles();
+        } catch (e) {
+          Log.e('캐시 삭제 실패: $e');
+          // 차단은 성공했으므로 true 반환
+        }
       }
 
       return isBlockSuccess;
@@ -56,6 +67,11 @@ class ReportNotifier extends _$ReportNotifier {
 
   Future<void> _deleteCachedIntroducedProfiles() async {
     final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
-    await box.clear();
+
+    try {
+      await box.clear();
+    } finally {
+      await box.close();
+    }
   }
 }
