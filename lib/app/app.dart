@@ -83,10 +83,6 @@ class _AppState extends ConsumerState<App> {
       return;
     }
 
-    // print('+++++++++++++++++++++++++++++++');
-    // print(profile.activityStatus);
-    // print(activityStatus);
-
     final activityStatus = ActivityStatus.parse(profile.activityStatus);
 
     switch (activityStatus) {
