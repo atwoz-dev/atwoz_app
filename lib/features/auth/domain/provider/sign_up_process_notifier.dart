@@ -30,8 +30,9 @@ class SignUpProcessNotifier extends _$SignUpProcessNotifier {
     ];
 
     // 현재 상태에서 입력되지 않은 필드 필터링
-    final unwrittenFields =
-        state.unwritten.where(requiredFieldsOrder.contains).toList();
+    final unwrittenFields = state.unwritten
+        .where(requiredFieldsOrder.contains)
+        .toList();
 
     // 모든 필드가 입력되었으면 완료 페이지로 이동
     if (unwrittenFields.isEmpty) {
@@ -75,16 +76,14 @@ class SignUpProcessNotifier extends _$SignUpProcessNotifier {
 
   void updateNickname(String nickname) => updateField(
     nickname,
-    copy:
-        (s, v) => s.copyWith(
-          nickname: v,
-          error:
-              v.isEmpty
-                  ? null
-                  : (v.runes.length < 2
-                      ? '닉네임은 2자 이상이어야 합니다.'
-                      : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
-        ),
+    copy: (s, v) => s.copyWith(
+      nickname: v,
+      error: v.isEmpty
+          ? null
+          : (v.runes.length < 2
+                ? '닉네임은 2자 이상이어야 합니다.'
+                : (v.runes.length > 10 ? '닉네임은 10자 이하이어야 합니다.' : null)),
+    ),
   );
   void updateSelectedYear(int year) =>
       updateField(year, copy: (s, v) => s.copyWith(selectedYear: v));
@@ -163,8 +162,9 @@ class SignUpProcessNotifier extends _$SignUpProcessNotifier {
   void reset() => state = const SignUpProcessState();
 
   Future<String> updateLocation() async {
-    final location =
-        await ref.read(getCurrentLocationUseCaseProvider).execute();
+    final location = await ref
+        .read(getCurrentLocationUseCaseProvider)
+        .execute();
 
     Log.d('현재 위치: $location');
     state = state.copyWith(selectedLocation: location);
