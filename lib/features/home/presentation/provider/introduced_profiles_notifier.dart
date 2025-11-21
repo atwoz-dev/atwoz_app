@@ -18,6 +18,8 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
           .watch(fetchIntroducedProfilesUseCase)
           .execute(category);
 
+      Log.d(profiles.map((e) => e.memberId).toList());
+
       return profiles;
     } catch (e) {
       Log.e('소개 프로필 조회 실패: $e');
@@ -26,8 +28,8 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   }
 
   /// 프로필 소개받기
-  Future<void> openProfile({required int index, required int memberId}) async {
-    if (!state.hasValue) return;
+  Future<bool> openProfile({required int index, required int memberId}) async {
+    if (!state.hasValue) return false;
 
     try {
       await _removeBlurFromProfile(memberId);
@@ -37,9 +39,11 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
       await _updateCachedProfiles(index);
 
       _setIntroducedMemberById(memberId);
-    } catch (e, stackTrace) {
+
+      return true;
+    } catch (e) {
       Log.e('소개 프로필 블러 제거 실패: $e');
-      state = AsyncError(e, stackTrace);
+      return false;
     }
   }
 
@@ -61,12 +65,11 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
 
   /// UI 상태 즉시 갱신
   void _setIntroducedMemberById(int memberId) {
-    final updatedProfiles =
-        state.requireValue.map((profile) {
-          return profile.memberId == memberId
-              ? profile.copyWith(isIntroduced: true)
-              : profile;
-        }).toList();
+    final updatedProfiles = state.requireValue.map((profile) {
+      return profile.memberId == memberId
+          ? profile.copyWith(isIntroduced: true)
+          : profile;
+    }).toList();
 
     state = AsyncData(updatedProfiles);
   }

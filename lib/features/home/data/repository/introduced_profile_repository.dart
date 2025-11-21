@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final introducedProfileRepositoryProvider =
     Provider<IntroducedProfileRepository>((ref) {
-  return IntroducedProfileRepository(ref);
-});
+      return IntroducedProfileRepository(ref);
+    });
 
 class IntroducedProfileRepository extends BaseRepository {
   IntroducedProfileRepository(Ref ref) : super(ref, '/member');
@@ -30,14 +30,12 @@ class IntroducedProfileRepository extends BaseRepository {
   }) async {
     await apiService.postJson(
       '$path/introduction/$category',
-      data: {'introducedMemberId': memberId},
+      data: {'introducedMemberId': 370},
     );
   }
 
   Future<HeartBalance> getHeartBalance() async {
-    final response = await apiService.getJson(
-      '$path/heartbalance',
-    );
+    final response = await apiService.getJson('$path/heartbalance');
 
     if (response is! Map<String, dynamic> ||
         response['data'] is! Map<String, dynamic>) {

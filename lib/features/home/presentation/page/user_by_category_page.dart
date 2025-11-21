@@ -42,15 +42,14 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
               return UserByCategoryListItem(
                 isBlurred: isBlurred,
-                onTap:
-                    () => _handleProfileTap(
-                      context: context,
-                      profile: profile,
-                      index: index,
-                      isBlurred: isBlurred,
-                      introducedProfilesNotifier: introducedProfilesNotifier,
-                      isMale: userProfile.isMale,
-                    ),
+                onTap: () => _handleProfileTap(
+                  context: context,
+                  profile: profile,
+                  index: index,
+                  isBlurred: isBlurred,
+                  introducedProfilesNotifier: introducedProfilesNotifier,
+                  isMale: userProfile.isMale,
+                ),
                 profile: profile,
               );
             },
@@ -75,10 +74,9 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       if (!context.mounted) return;
 
-      final openProfileHeartCount =
-          isMale
-              ? Dimens.maleIntroducedProfileOpenHeartCount
-              : Dimens.femaleIntroducedProfileOpenHeartCount;
+      final openProfileHeartCount = isMale
+          ? Dimens.maleIntroducedProfileOpenHeartCount
+          : Dimens.femaleIntroducedProfileOpenHeartCount;
 
       if (heartBalance < openProfileHeartCount) {
         showDialog(
@@ -92,21 +90,24 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       final pressed = await showDialog<bool>(
         context: context,
-        builder:
-            (context) => UnlockWithHeartDialog(
-              description: "소개 받으시겠습니까?",
-              heartBalance: heartBalance,
-              isMale: isMale,
-            ),
+        builder: (context) => UnlockWithHeartDialog(
+          description: "소개 받으시겠습니까?",
+          heartBalance: heartBalance,
+          isMale: isMale,
+        ),
       );
 
       if (pressed != true) return;
 
-      await introducedProfilesNotifier.openProfile(
+      final profileOpenCompleted = await introducedProfilesNotifier.openProfile(
         index: index,
         memberId: profile.memberId,
       );
+
       if (!context.mounted) return;
+
+      if (!profileOpenCompleted) return;
+
       _navigateToProfile(context, profile);
       return;
     }
