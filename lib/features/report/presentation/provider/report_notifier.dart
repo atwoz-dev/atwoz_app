@@ -66,12 +66,16 @@ class ReportNotifier extends _$ReportNotifier {
   }
 
   Future<void> _deleteCachedIntroducedProfiles() async {
+    final isBoxOpened = Hive.isBoxOpen(IntroducedProfileDto.boxName);
     final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
     try {
       await box.clear();
     } finally {
-      await box.close();
+      if (!isBoxOpened) {
+        // 다른 곳에 박스가 열려있다면 이곳에서 닫지 않음
+        await box.close();
+      }
     }
   }
 }
