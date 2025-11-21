@@ -95,8 +95,11 @@ class _AppState extends ConsumerState<App> {
       case ActivityStatus.active:
         router.goNamed(AppRoute.mainTab.name);
         break;
+      case null:
+        router.goNamed(AppRoute.onboard.name);
+        break;
       default:
-        router.goNamed(AppRoute.mainTab.name);
+        router.goNamed(AppRoute.onboard.name);
     }
   }
 

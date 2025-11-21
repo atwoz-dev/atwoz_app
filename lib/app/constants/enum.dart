@@ -283,5 +283,6 @@ enum ActivityStatus {
     for (final value in ActivityStatus.values) value.label: value,
   };
 
-  static ActivityStatus? parse(String? value) => _byValue[value];
+  static ActivityStatus? parse(String? value) =>
+      _byValue[value] ?? ActivityStatus.active;
 }
