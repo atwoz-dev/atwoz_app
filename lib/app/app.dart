@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -82,17 +83,25 @@ class _AppState extends ConsumerState<App> {
       return;
     }
 
-    if (profile.activityStatus == 'WAITING_SCREENING') {
-      router.goNamed(AppRoute.signUpProfileReview.name);
-      return;
-    }
+    // print('+++++++++++++++++++++++++++++++');
+    // print(profile.activityStatus);
+    // print(activityStatus);
 
-    if (profile.activityStatus == 'REJECTED_SCREENING') {
-      router.goNamed(AppRoute.signUpProfileReject.name);
-      return;
-    }
+    final activityStatus = ActivityStatus.parse(profile.activityStatus);
 
-    router.goNamed(AppRoute.mainTab.name);
+    switch (activityStatus) {
+      case ActivityStatus.waitingScreening:
+        router.goNamed(AppRoute.signUpProfileReview.name);
+        break;
+      case ActivityStatus.rejectedScreening:
+        router.goNamed(AppRoute.signUpProfileReject.name);
+        break;
+      case ActivityStatus.active:
+        router.goNamed(AppRoute.mainTab.name);
+        break;
+      default:
+        router.goNamed(AppRoute.mainTab.name);
+    }
   }
 
   void _handleFcmNotification(FcmNotification data) {

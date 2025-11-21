@@ -7,10 +7,7 @@ part 'enum.g.dart';
 extension EnumToJson on Enum {
   String toJson() {
     final converted = name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)}',
-        )
+        .replaceAllMapped(RegExp(r'[A-Z]'), (match) => '_${match.group(0)}')
         .toUpperCase();
 
     return converted.startsWith('_') ? converted.substring(1) : converted;
@@ -19,9 +16,10 @@ extension EnumToJson on Enum {
 
 // 백엔드 응답을 Enum으로 변환
 extension StringToEnum on String {
-  T toEnum<T extends Enum>(List<T> values
-      //  ,{required T defaultValue}
-      ) {
+  T toEnum<T extends Enum>(
+    List<T> values,
+    //  ,{required T defaultValue}
+  ) {
     return values.firstWhere(
       (e) => e.toJson() == this, // 백엔드 값과 매칭
       // orElse: () => defaultValue, // 기본값 설정
@@ -266,4 +264,24 @@ enum ProfileExchangeStatus {
   rejected;
 
   bool get isWaiting => this == waiting;
+}
+
+enum ActivityStatus {
+  initial("INITIAL"),
+  active("ACTIVE"),
+  suspendedTemporarily("SUSPENDED_TEMPORARILY"),
+  suspendedPermanently("SUSPENDED_PERMANENTLY"),
+  waitingScreening("WAITING_SCREENING"),
+  rejectedScreening("REJECTED_SCREENING"),
+  dormant("DORMANT"),
+  deleted("DELETED");
+
+  final String label;
+  const ActivityStatus(this.label);
+
+  static final _byValue = {
+    for (final value in ActivityStatus.values) value.label: value,
+  };
+
+  static ActivityStatus? parse(String? value) => _byValue[value];
 }
