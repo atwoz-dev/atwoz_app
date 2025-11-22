@@ -69,4 +69,7 @@ class Dimens {
 
   // 이상형 설정 최대 나이 수
   static const int maxSelectableAge = 46;
+
+  // 프로필 교환하기 하트 수
+  static const int profileExchangeHeartCount = 3;
 }

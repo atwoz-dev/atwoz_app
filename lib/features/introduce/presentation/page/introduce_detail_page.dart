@@ -1,13 +1,13 @@
 import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
-import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
-import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_notifier.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/profile_exchange_dialog.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +74,8 @@ class IntroduceDetailPageState
           final like = introduceDetail.like;
           print("체크체크체크 introduceDetail.like ${introduceDetail.like}");
 
+          final heartBalance = ref.read(globalProvider).heartBalance;
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,8 +123,22 @@ class IntroduceDetailPageState
                       children: [
                         introduceDetail.profileExchangeStatus == null
                             ? _InteractionButton("프로필 교환하기", () {
-                              notifier.
-                            })
+                                // TODO: dialog 오픈할 때 "보유하트조회"를 해야할까요??
+                                ProfileExchangeDialog.open(
+                                  context,
+                                  myHeart: heartBalance,
+                                  onSendExchange: () {},
+                                  onNotEnoughHeart: () {
+                                    Navigator.of(context).pop();
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => HeartShortageDialog(
+                                        heartBalance: heartBalance,
+                                      ),
+                                    );
+                                  },
+                                );
+                              })
                             : _InteractionButton("대화 해볼래요", () {}),
                         const Gap(8.0),
                         SizedBox(
@@ -237,69 +253,3 @@ class _InteractionButton extends ConsumerWidget {
     );
   }
 }
-
-// class _InteractionButtons extends ConsumerWidget {
-//   final String? status;
-//   final int memberId;
-//   const _InteractionButtons(this.status, this.memberId);
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Row(
-//       children: [
-//         status == null ? exchangeButton() : talkButton(),
-//         const Gap(8.0),
-//         SizedBox(
-//           width: 44.0,
-//           child: DefaultElevatedButton(
-//             padding: const EdgeInsets.all(10.0),
-//             primary: Palette.colorGrey100,
-//             onPressed: () async {
-//               final favoriteType = await FavoriteTypeSelectDialog.open(
-//                 context,
-//                 userId: memberId,
-//                 favoriteType: FavoriteType.interested,
-//               );
-//               if (favoriteType == null) return;
-
-//               print("favoriteType $favoriteType");
-//             },
-//             child: const DefaultIcon(IconPath.heart),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget exchangeButton() {
-//     return Expanded(
-//       child: DefaultElevatedButton(
-//         padding: const EdgeInsets.symmetric(vertical: 10.0),
-//         child: Row(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           mainAxisSize: MainAxisSize.min,
-//           children: [Text("프로필 교환하기", style: Fonts.body02Medium(Colors.white))],
-//         ),
-//         onPressed: () => {},
-//       ),
-//     );
-//   }
-
-//   Widget talkButton() {
-//     return Expanded(
-//       child: DefaultElevatedButton(
-//         padding: const EdgeInsets.symmetric(vertical: 10.0),
-//         child: Row(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             const DefaultIcon(IconPath.letter),
-//             const Gap(8.0),
-//             Text("대화 해볼래요", style: Fonts.body02Medium(Colors.white)),
-//           ],
-//         ),
-//         onPressed: () => {},
-//       ),
-//     );
-//   }
-// }

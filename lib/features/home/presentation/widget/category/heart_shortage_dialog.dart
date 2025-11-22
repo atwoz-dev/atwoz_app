@@ -86,7 +86,7 @@ class HeartShortageDialog extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
