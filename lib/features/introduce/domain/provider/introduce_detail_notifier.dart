@@ -3,6 +3,7 @@ import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_state.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
+import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/usecase/profile_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,10 +25,10 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
         .read(fetchIntroduceDetailUseCaseProvider)
         .execute(introduceId: introduceId);
 
-    print("IntroduceDetailNotifier introduceDetail $introduceDetail");
-
+    // TODO: 상세조회 실패. 에러 처리
     if (introduceDetail == null) {
       return IntroduceDetailState(
+        introduceId: introduceId,
         introduceDetail: introduceDetail,
         isLoaded: true,
       );
@@ -38,9 +39,8 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
         ref,
       ).call(introduceDetail.memberBasicInfo.memberId);
 
-      print("IntroduceDetailNotifier profile $profile");
-
       return IntroduceDetailState(
+        introduceId: introduceId,
         introduceDetail: introduceDetail,
         profile: profile,
         isLoaded: true,
@@ -49,22 +49,21 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
       if (e.status == 403) {
         // 상대방 프로필 권한 X
         return IntroduceDetailState(
+          introduceId: introduceId,
           introduceDetail: introduceDetail,
           profile: null,
           isLoaded: true,
         );
       }
-      return const IntroduceDetailState(
-        introduceDetail: null,
-        isLoaded: true,
-      );
-    } catch (e) {
-      print("IntroduceDetailNotifier get profile error $e");
-      return const IntroduceDetailState(
-        introduceDetail: null,
-        isLoaded: true,
-      );
     }
+    // 프로필 조회 그 외 실패
+    // TODO: 에러 처리
+    return IntroduceDetailState(
+      introduceId: introduceId,
+      introduceDetail: introduceDetail,
+      profile: null,
+      isLoaded: true,
+    );
   }
 
   Future<void> setFavoriteType({
@@ -79,5 +78,27 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
       Log.e('좋아요 설정 실패: $e');
       state = AsyncError(e, s);
     }
+  }
+
+  Future<bool> requestProfileExchange(int responderId) async {
+    final repository = ref.read(profileRepositoryProvider);
+
+    final success = await repository.requestProfileExchange(responderId);
+
+    if (!success) {
+      // TODO: 에러 처리
+      return false;
+    }
+
+    // success했으면 introduceDetail 갱신해보자
+
+    final introduceDetail = await ref
+        .read(fetchIntroduceDetailUseCaseProvider)
+        .execute(introduceId: state.requireValue.introduceId);
+
+    state = AsyncValue.data(
+      state.requireValue.copyWith(introduceDetail: introduceDetail),
+    );
+    return true;
   }
 }

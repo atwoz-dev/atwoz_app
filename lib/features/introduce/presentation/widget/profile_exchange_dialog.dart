@@ -97,12 +97,12 @@ class _ProfileExchangeDialogState extends ConsumerState<ProfileExchangeDialog> {
                       ],
                     ),
                     onPressed: () {
-                      if (widget.heartBalance <
-                          Dimens.profileExchangeHeartCount) {
-                        widget.onNotEnoughHeart();
-                      } else {
-                        widget.onSendExchange();
-                      }
+                      // if (widget.heartBalance <
+                      //     Dimens.profileExchangeHeartCount) {
+                      //   widget.onNotEnoughHeart();
+                      // } else {
+                      widget.onSendExchange();
+                      // }
                     },
                   ),
                 ),

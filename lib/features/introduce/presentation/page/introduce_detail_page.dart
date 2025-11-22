@@ -127,7 +127,13 @@ class IntroduceDetailPageState
                                 ProfileExchangeDialog.open(
                                   context,
                                   myHeart: heartBalance,
-                                  onSendExchange: () {},
+                                  onSendExchange: () {
+                                    // 프로필 교환 보내기
+                                    notifier.requestProfileExchange(
+                                      memberId,
+                                    );
+                                    Navigator.of(context).pop();
+                                  },
                                   onNotEnoughHeart: () {
                                     Navigator.of(context).pop();
                                     showDialog(
@@ -139,7 +145,7 @@ class IntroduceDetailPageState
                                   },
                                 );
                               })
-                            : _InteractionButton("대화 해볼래요", () {}),
+                            : _WaitingButton("상대방의 수락을 기다리고 있어요", () {}),
                         const Gap(8.0),
                         SizedBox(
                           width: 44.0,
@@ -244,6 +250,31 @@ class _InteractionButton extends ConsumerWidget {
       child: DefaultElevatedButton(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         onPressed: onPressed,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [Text(text, style: Fonts.body02Medium(Colors.white))],
+        ),
+      ),
+    );
+  }
+}
+
+class _WaitingButton extends ConsumerWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const _WaitingButton(
+    this.text,
+    this.onPressed,
+  );
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Expanded(
+      child: DefaultElevatedButton(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        onPressed: null,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

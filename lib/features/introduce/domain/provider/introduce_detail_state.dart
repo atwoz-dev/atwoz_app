@@ -7,6 +7,7 @@ part 'introduce_detail_state.freezed.dart';
 @freezed
 abstract class IntroduceDetailState with _$IntroduceDetailState {
   const factory IntroduceDetailState({
+    @Default(-1) int introduceId,
     @Default(null) IntroduceDetailData? introduceDetail,
     @Default(null) UserProfile? profile,
     @Default(false) bool isLoaded,
