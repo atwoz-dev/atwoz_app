@@ -13,22 +13,32 @@ final favoriteRepositoryProvider = Provider<FavoriteRepository>((ref) {
 class FavoriteRepository extends BaseRepository {
   FavoriteRepository(Ref ref) : super(ref, '/likes');
 
-  Future<void> requestFavorite(
+  Future<bool> requestFavorite(
     int receiverId, {
     required FavoriteType type,
   }) async {
-    await apiService.postJson(
+    final res = await apiService.postJson(
       path,
       data: {
         'receiverId': receiverId,
-        'likeLevel': type.name.camelCaseToSnakeCase()
+        'likeLevel': type.name.camelCaseToSnakeCase(),
       },
     );
+
+    if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
+      throw Exception('응답 형식이 올바르지 않습니다');
+    }
+
+    final hasProcessedMission = res['data']['hasProcessedMission'];
+
+    if (hasProcessedMission is! bool) {
+      throw Exception('미션성공여부 데이터 타입이 bool이 아닙니다');
+    }
+
+    return hasProcessedMission;
   }
 
-  Future<FavoriteListData> getMyFavoriteUserList([
-    int? lastId,
-  ]) async {
+  Future<FavoriteListData> getMyFavoriteUserList([int? lastId]) async {
     final res = await apiService.getJson(
       '$path/sent',
       queryParameters: lastId != null ? {'lastLikeId': lastId} : null,
@@ -36,9 +46,7 @@ class FavoriteRepository extends BaseRepository {
     return _parseFavoriteList(res);
   }
 
-  Future<FavoriteListData> getUserListFavoriteMe([
-    int? lastId,
-  ]) async {
+  Future<FavoriteListData> getUserListFavoriteMe([int? lastId]) async {
     final res = await apiService.getJson(
       '$path/received',
       queryParameters: lastId != null ? {'lastLikeId': lastId} : null,

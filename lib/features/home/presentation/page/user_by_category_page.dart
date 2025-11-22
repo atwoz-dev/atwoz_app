@@ -42,15 +42,14 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
               return UserByCategoryListItem(
                 isBlurred: isBlurred,
-                onTap:
-                    () => _handleProfileTap(
-                      context: context,
-                      profile: profile,
-                      index: index,
-                      isBlurred: isBlurred,
-                      introducedProfilesNotifier: introducedProfilesNotifier,
-                      isMale: userProfile.isMale,
-                    ),
+                onTap: () => _handleProfileTap(
+                  context: context,
+                  profile: profile,
+                  index: index,
+                  isBlurred: isBlurred,
+                  introducedProfilesNotifier: introducedProfilesNotifier,
+                  isMale: userProfile.isMale,
+                ),
                 profile: profile,
               );
             },
@@ -71,14 +70,16 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required bool isMale,
   }) async {
     if (isBlurred) {
-      final heartBalance = ref.read(globalProvider).heartBalance;
+      final heartBalance = ref
+          .read(globalProvider)
+          .heartBalance
+          .totalHeartBalance;
 
       if (!context.mounted) return;
 
-      final openProfileHeartCount =
-          isMale
-              ? Dimens.maleIntroducedProfileOpenHeartCount
-              : Dimens.femaleIntroducedProfileOpenHeartCount;
+      final openProfileHeartCount = isMale
+          ? Dimens.maleIntroducedProfileOpenHeartCount
+          : Dimens.femaleIntroducedProfileOpenHeartCount;
 
       if (heartBalance < openProfileHeartCount) {
         showDialog(
@@ -92,12 +93,11 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       final pressed = await showDialog<bool>(
         context: context,
-        builder:
-            (context) => UnlockWithHeartDialog(
-              description: "소개 받으시겠습니까?",
-              heartBalance: heartBalance,
-              isMale: isMale,
-            ),
+        builder: (context) => UnlockWithHeartDialog(
+          description: "소개 받으시겠습니까?",
+          heartBalance: heartBalance,
+          isMale: isMale,
+        ),
       );
 
       if (pressed != true) return;

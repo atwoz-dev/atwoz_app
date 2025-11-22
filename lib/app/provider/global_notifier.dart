@@ -1,13 +1,13 @@
 import 'package:atwoz_app/app/state/global_state.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
-import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +19,11 @@ class GlobalNotifier extends _$GlobalNotifier {
   @override
   AppGlobalState build() {
     initProfile();
-    return AppGlobalState(profile: CachedUserProfile.init(), heartBalance: 0);
+    fetchHeartBalance();
+    return AppGlobalState(
+      profile: CachedUserProfile.init(),
+      heartBalance: HeartBalance.init(),
+    );
   }
 
   set profile(CachedUserProfile profile) {
@@ -43,12 +47,13 @@ class GlobalNotifier extends _$GlobalNotifier {
 
   Future<void> fetchHeartBalance() async {
     try {
-      final balance =
-          await ref.read(fetchUserHeartBalanceUseCaseProvider).execute();
+      final heartBalance = await ref
+          .read(fetchUserHeartBalanceUseCaseProvider)
+          .execute();
 
-      Log.d('가져온 하트 수: $balance');
+      Log.d('가져온 하트 수: $heartBalance');
 
-      state = state.copyWith(heartBalance: balance);
+      state = state.copyWith(heartBalance: heartBalance);
     } catch (e) {
       Log.d('보유 하트 수 가져오기 실패: $e');
     }

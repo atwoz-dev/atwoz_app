@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
@@ -54,6 +55,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     if (prev?.error != curr.error) {
       _handleErrorChanged(curr.error);
+    }
+
+    if (prev?.profile?.favoriteType != curr.profile?.favoriteType) {
+      showToastMessage("좋아요 미션완료! 하트가 지급되었어요");
+      ref
+          .read(profileProvider(widget.userId).notifier)
+          .resetHasProcessedMission();
     }
   }
 

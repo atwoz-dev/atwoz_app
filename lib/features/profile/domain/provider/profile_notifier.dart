@@ -78,12 +78,23 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      await ref
+      final hasProcessedMission = await ref
           .read(favoriteRepositoryProvider)
           .requestFavorite(state.profile!.id, type: type);
+
+      state = state.copyWith(hasProcessedMission: hasProcessedMission);
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
+    }
+  }
+
+  void resetHasProcessedMission() async {
+    state = state.copyWith(hasProcessedMission: false);
+    try {
+      await ref.read(globalProvider.notifier).fetchHeartBalance();
+    } catch (e) {
+      Log.e('보유 하트 수 갱신 실패: $e');
     }
   }
 
@@ -96,6 +107,9 @@ class ProfileNotifier extends _$ProfileNotifier {
         message: state.message,
         method: state.selectedContactMethod ?? ContactMethod.phone,
       );
+
+      // 하트 사용하여 메시지 요청 후 보유 하트 수 갱신
+      await ref.read(globalProvider.notifier).fetchHeartBalance();
 
       state = state.copyWith(
         profile: state.profile?.copyWith(
