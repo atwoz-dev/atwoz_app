@@ -21,9 +21,10 @@ class BulletText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: texts.map(
-        (text) {
-          return Row(
+      children: texts.map((text) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: text != texts.last ? 8.0 : 0),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Baseline(
@@ -31,10 +32,7 @@ class BulletText extends StatelessWidget {
                 baselineType: TextBaseline.alphabetic,
                 child: Text(
                   '•', // 불릿
-                  style: TextStyle(
-                    fontSize: bulletSize,
-                    color: bulletColor,
-                  ),
+                  style: TextStyle(fontSize: bulletSize, color: bulletColor),
                 ),
               ),
               Gap(spacing), // 불릿과 텍스트 간 간격
@@ -45,9 +43,9 @@ class BulletText extends StatelessWidget {
                 ),
               ),
             ],
-          );
-        },
-      ).toList(),
+          ),
+        );
+      }).toList(),
     );
   }
 }

@@ -16,6 +16,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
@@ -101,12 +102,10 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
@@ -130,10 +129,9 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(notifier)
+                  : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
@@ -150,7 +148,7 @@ class _OnboardingCertificationPageState
   }
 
   void _verifyCode(OnboardingNotifier notifier) async {
-    final (userData, status) = await notifier.verifyCode(
+    final (UserData? userData, status) = await notifier.verifyCode(
       widget.phoneNumber,
       _codeController.text,
     );
@@ -182,11 +180,13 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<void> _handleActivateStatus(dynamic userData) async {
+  Future<void> _handleActivateStatus(UserData? userData) async {
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReject);
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }
