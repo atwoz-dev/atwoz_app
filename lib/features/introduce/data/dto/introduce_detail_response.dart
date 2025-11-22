@@ -9,7 +9,7 @@ abstract class IntroduceDetailResponse with _$IntroduceDetailResponse {
     required int status,
     required String code,
     required String message,
-    required IntroduceDetailData data,
+    required IntroduceDetailDTO data,
   }) = _IntroduceDetailResponse;
 
   factory IntroduceDetailResponse.fromJson(Map<String, dynamic> json) =>
@@ -17,22 +17,22 @@ abstract class IntroduceDetailResponse with _$IntroduceDetailResponse {
 }
 
 @freezed
-abstract class IntroduceDetailData with _$IntroduceDetailData {
-  const factory IntroduceDetailData({
+abstract class IntroduceDetailDTO with _$IntroduceDetailDTO {
+  const factory IntroduceDetailDTO({
     required String title,
     required String content,
     String? like,
     String? profileExchangeStatus,
-    required MemberBasicInfo memberBasicInfo,
-  }) = _IntroduceDetailData;
+    required MemberBasicInfoDTO memberBasicInfoDto,
+  }) = _IntroduceDetailDTO;
 
-  factory IntroduceDetailData.fromJson(Map<String, dynamic> json) =>
-      _$IntroduceDetailDataFromJson(json);
+  factory IntroduceDetailDTO.fromJson(Map<String, dynamic> json) =>
+      _$IntroduceDetailDTOFromJson(json);
 }
 
 @freezed
-abstract class MemberBasicInfo with _$MemberBasicInfo {
-  const factory MemberBasicInfo({
+abstract class MemberBasicInfoDTO with _$MemberBasicInfoDTO {
+  const factory MemberBasicInfoDTO({
     required int memberId,
     required int age,
     required String nickname,
@@ -41,8 +41,8 @@ abstract class MemberBasicInfo with _$MemberBasicInfo {
     required String district,
     required String mbti,
     required List<String> hobbies,
-  }) = _MemberBasicInfo;
+  }) = _MemberBasicInfoDTO;
 
-  factory MemberBasicInfo.fromJson(Map<String, dynamic> json) =>
-      _$MemberBasicInfoFromJson(json);
+  factory MemberBasicInfoDTO.fromJson(Map<String, dynamic> json) =>
+      _$MemberBasicInfoDTOFromJson(json);
 }

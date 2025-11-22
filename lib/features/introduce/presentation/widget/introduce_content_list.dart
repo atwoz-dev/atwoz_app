@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
@@ -69,7 +70,7 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
             bool isLastItem = index == introducesCount - 1;
 
             return IntroduceListItem(
-              item: introduces[index],
+              introduce: introduces[index],
               isLastItem: isLastItem,
               nickname: nickname,
             );
@@ -83,13 +84,13 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
 }
 
 class IntroduceListItem extends ConsumerWidget {
-  final IntroduceInfo item;
+  final IntroduceInfo introduce;
   final bool isLastItem;
   final String nickname;
 
   const IntroduceListItem({
     super.key,
-    required this.item,
+    required this.introduce,
     required this.isLastItem,
     required this.nickname,
   });
@@ -108,43 +109,66 @@ class IntroduceListItem extends ConsumerWidget {
       ),
       child: GestureDetector(
         onTap: () async {
-          if (nickname == item.nickname) {
+          if (nickname == introduce.nickname) {
             await navigate(
               context,
               route: AppRoute.introduceEdit,
-              extra: IntroduceEditArguments(id: item.id),
+              extra: IntroduceEditArguments(id: introduce.id),
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
             await ref.read(introduceProvider.notifier).fetchIntroduceList();
           } else {
-            // TODO: 다른 화면으로 이동
-            navigate(
-              context,
-              route: AppRoute.introduceDetail,
-              extra: IntroduceDetailArguments(introduceId: item.id),
-            );
+            // 셀프 소개 상세 조회
+            final detail = await ref
+                .read(introduceProvider.notifier)
+                .fetchIntroduceDetail(introduce.id);
+
+            // TODO: 에러 처리
+            if (detail == null) return;
+
+            if (detail.profileExchangeStatus == ProfileExchangeStatus.approve) {
+              if (context.mounted) {
+                navigate(
+                  context,
+                  route: AppRoute.profile,
+                  extra: ProfileDetailArguments(
+                    userId: detail.memberBasicInfo.memberId,
+                  ),
+                );
+              }
+            } else {
+              if (context.mounted) {
+                navigate(
+                  context,
+                  route: AppRoute.introduceDetail,
+                  extra: IntroduceDetailArguments(
+                    introduceId: introduce.id,
+                  ),
+                );
+              }
+            }
           }
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Row(
             children: [
-              RoundedImage(size: thumbSize, imageURL: item.profileUrl),
+              RoundedImage(size: thumbSize, imageURL: introduce.profileUrl),
               SizedBox(width: gapWidth),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.nickname ?? "nickname",
+                      introduce.nickname ?? "nickname",
                       style: Fonts.body02Medium().copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const Gap(4),
                     Text(
-                      item.title,
+                      introduce.title,
                       style: Fonts.body03Regular(Palette.colorGrey500),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

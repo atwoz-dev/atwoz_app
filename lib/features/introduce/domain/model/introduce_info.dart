@@ -1,10 +1,9 @@
-import 'package:atwoz_app/features/introduce/data/data.dart';
 import 'package:atwoz_app/features/introduce/data/mapper/introduce_mapper.dart';
 import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part "introduce_info.freezed.dart";
+part 'introduce_info.freezed.dart';
 
 @freezed
 abstract class IntroduceInfo with _$IntroduceInfo {

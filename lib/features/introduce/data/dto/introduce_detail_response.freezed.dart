@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceDetailResponse {
 
- int get status; String get code; String get message; IntroduceDetailData get data;
+ int get status; String get code; String get message; IntroduceDetailDTO get data;
 /// Create a copy of IntroduceDetailResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $IntroduceDetailResponseCopyWith<$Res>  {
   factory $IntroduceDetailResponseCopyWith(IntroduceDetailResponse value, $Res Function(IntroduceDetailResponse) _then) = _$IntroduceDetailResponseCopyWithImpl;
 @useResult
 $Res call({
- int status, String code, String message, IntroduceDetailData data
+ int status, String code, String message, IntroduceDetailDTO data
 });
 
 
-$IntroduceDetailDataCopyWith<$Res> get data;
+$IntroduceDetailDTOCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -71,16 +71,16 @@ status: null == status ? _self.status : status // ignore: cast_nullable_to_non_n
 as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData,
+as IntroduceDetailDTO,
   ));
 }
 /// Create a copy of IntroduceDetailResponse
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res> get data {
+$IntroduceDetailDTOCopyWith<$Res> get data {
   
-  return $IntroduceDetailDataCopyWith<$Res>(_self.data, (value) {
+  return $IntroduceDetailDTOCopyWith<$Res>(_self.data, (value) {
     return _then(_self.copyWith(data: value));
   });
 }
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int status,  String code,  String message,  IntroduceDetailData data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int status,  String code,  String message,  IntroduceDetailDTO data)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceDetailResponse() when $default != null:
 return $default(_that.status,_that.code,_that.message,_that.data);case _:
@@ -186,7 +186,7 @@ return $default(_that.status,_that.code,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int status,  String code,  String message,  IntroduceDetailData data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int status,  String code,  String message,  IntroduceDetailDTO data)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailResponse():
 return $default(_that.status,_that.code,_that.message,_that.data);case _:
@@ -206,7 +206,7 @@ return $default(_that.status,_that.code,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int status,  String code,  String message,  IntroduceDetailData data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int status,  String code,  String message,  IntroduceDetailDTO data)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailResponse() when $default != null:
 return $default(_that.status,_that.code,_that.message,_that.data);case _:
@@ -227,7 +227,7 @@ class _IntroduceDetailResponse implements IntroduceDetailResponse {
 @override final  int status;
 @override final  String code;
 @override final  String message;
-@override final  IntroduceDetailData data;
+@override final  IntroduceDetailDTO data;
 
 /// Create a copy of IntroduceDetailResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -262,11 +262,11 @@ abstract mixin class _$IntroduceDetailResponseCopyWith<$Res> implements $Introdu
   factory _$IntroduceDetailResponseCopyWith(_IntroduceDetailResponse value, $Res Function(_IntroduceDetailResponse) _then) = __$IntroduceDetailResponseCopyWithImpl;
 @override @useResult
 $Res call({
- int status, String code, String message, IntroduceDetailData data
+ int status, String code, String message, IntroduceDetailDTO data
 });
 
 
-@override $IntroduceDetailDataCopyWith<$Res> get data;
+@override $IntroduceDetailDTOCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -285,7 +285,7 @@ status: null == status ? _self.status : status // ignore: cast_nullable_to_non_n
 as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData,
+as IntroduceDetailDTO,
   ));
 }
 
@@ -293,9 +293,9 @@ as IntroduceDetailData,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res> get data {
+$IntroduceDetailDTOCopyWith<$Res> get data {
   
-  return $IntroduceDetailDataCopyWith<$Res>(_self.data, (value) {
+  return $IntroduceDetailDTOCopyWith<$Res>(_self.data, (value) {
     return _then(_self.copyWith(data: value));
   });
 }
@@ -303,83 +303,83 @@ $IntroduceDetailDataCopyWith<$Res> get data {
 
 
 /// @nodoc
-mixin _$IntroduceDetailData {
+mixin _$IntroduceDetailDTO {
 
- String get title; String get content; String? get like; String? get profileExchangeStatus; MemberBasicInfo get memberBasicInfo;
-/// Create a copy of IntroduceDetailData
+ String get title; String get content; String? get like; String? get profileExchangeStatus; MemberBasicInfoDTO get memberBasicInfoDto;
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<IntroduceDetailData> get copyWith => _$IntroduceDetailDataCopyWithImpl<IntroduceDetailData>(this as IntroduceDetailData, _$identity);
+$IntroduceDetailDTOCopyWith<IntroduceDetailDTO> get copyWith => _$IntroduceDetailDTOCopyWithImpl<IntroduceDetailDTO>(this as IntroduceDetailDTO, _$identity);
 
-  /// Serializes this IntroduceDetailData to a JSON map.
+  /// Serializes this IntroduceDetailDTO to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailData&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfo, memberBasicInfo) || other.memberBasicInfo == memberBasicInfo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfoDto, memberBasicInfoDto) || other.memberBasicInfoDto == memberBasicInfoDto));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfo);
+int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfoDto);
 
 @override
 String toString() {
-  return 'IntroduceDetailData(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfo: $memberBasicInfo)';
+  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfoDto: $memberBasicInfoDto)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $IntroduceDetailDataCopyWith<$Res>  {
-  factory $IntroduceDetailDataCopyWith(IntroduceDetailData value, $Res Function(IntroduceDetailData) _then) = _$IntroduceDetailDataCopyWithImpl;
+abstract mixin class $IntroduceDetailDTOCopyWith<$Res>  {
+  factory $IntroduceDetailDTOCopyWith(IntroduceDetailDTO value, $Res Function(IntroduceDetailDTO) _then) = _$IntroduceDetailDTOCopyWithImpl;
 @useResult
 $Res call({
- String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfo memberBasicInfo
+ String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfoDto
 });
 
 
-$MemberBasicInfoCopyWith<$Res> get memberBasicInfo;
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto;
 
 }
 /// @nodoc
-class _$IntroduceDetailDataCopyWithImpl<$Res>
-    implements $IntroduceDetailDataCopyWith<$Res> {
-  _$IntroduceDetailDataCopyWithImpl(this._self, this._then);
+class _$IntroduceDetailDTOCopyWithImpl<$Res>
+    implements $IntroduceDetailDTOCopyWith<$Res> {
+  _$IntroduceDetailDTOCopyWithImpl(this._self, this._then);
 
-  final IntroduceDetailData _self;
-  final $Res Function(IntroduceDetailData) _then;
+  final IntroduceDetailDTO _self;
+  final $Res Function(IntroduceDetailDTO) _then;
 
-/// Create a copy of IntroduceDetailData
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfo = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfoDto = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,like: freezed == like ? _self.like : like // ignore: cast_nullable_to_non_nullable
 as String?,profileExchangeStatus: freezed == profileExchangeStatus ? _self.profileExchangeStatus : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-as String?,memberBasicInfo: null == memberBasicInfo ? _self.memberBasicInfo : memberBasicInfo // ignore: cast_nullable_to_non_nullable
-as MemberBasicInfo,
+as String?,memberBasicInfoDto: null == memberBasicInfoDto ? _self.memberBasicInfoDto : memberBasicInfoDto // ignore: cast_nullable_to_non_nullable
+as MemberBasicInfoDTO,
   ));
 }
-/// Create a copy of IntroduceDetailData
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MemberBasicInfoCopyWith<$Res> get memberBasicInfo {
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto {
   
-  return $MemberBasicInfoCopyWith<$Res>(_self.memberBasicInfo, (value) {
-    return _then(_self.copyWith(memberBasicInfo: value));
+  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfoDto, (value) {
+    return _then(_self.copyWith(memberBasicInfoDto: value));
   });
 }
 }
 
 
-/// Adds pattern-matching-related methods to [IntroduceDetailData].
-extension IntroduceDetailDataPatterns on IntroduceDetailData {
+/// Adds pattern-matching-related methods to [IntroduceDetailDTO].
+extension IntroduceDetailDTOPatterns on IntroduceDetailDTO {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -392,10 +392,10 @@ extension IntroduceDetailDataPatterns on IntroduceDetailData {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _IntroduceDetailData value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _IntroduceDetailDTO value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _IntroduceDetailData() when $default != null:
+case _IntroduceDetailDTO() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -414,10 +414,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _IntroduceDetailData value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _IntroduceDetailDTO value)  $default,){
 final _that = this;
 switch (_that) {
-case _IntroduceDetailData():
+case _IntroduceDetailDTO():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -435,10 +435,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _IntroduceDetailData value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _IntroduceDetailDTO value)?  $default,){
 final _that = this;
 switch (_that) {
-case _IntroduceDetailData() when $default != null:
+case _IntroduceDetailDTO() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -456,10 +456,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfo memberBasicInfo)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _IntroduceDetailData() when $default != null:
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
+case _IntroduceDetailDTO() when $default != null:
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
   return orElse();
 
 }
@@ -477,10 +477,10 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfo memberBasicInfo)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)  $default,) {final _that = this;
 switch (_that) {
-case _IntroduceDetailData():
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
+case _IntroduceDetailDTO():
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -497,10 +497,10 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfo memberBasicInfo)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)?  $default,) {final _that = this;
 switch (_that) {
-case _IntroduceDetailData() when $default != null:
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
+case _IntroduceDetailDTO() when $default != null:
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
   return null;
 
 }
@@ -511,107 +511,107 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 /// @nodoc
 @JsonSerializable()
 
-class _IntroduceDetailData implements IntroduceDetailData {
-  const _IntroduceDetailData({required this.title, required this.content, this.like, this.profileExchangeStatus, required this.memberBasicInfo});
-  factory _IntroduceDetailData.fromJson(Map<String, dynamic> json) => _$IntroduceDetailDataFromJson(json);
+class _IntroduceDetailDTO implements IntroduceDetailDTO {
+  const _IntroduceDetailDTO({required this.title, required this.content, this.like, this.profileExchangeStatus, required this.memberBasicInfoDto});
+  factory _IntroduceDetailDTO.fromJson(Map<String, dynamic> json) => _$IntroduceDetailDTOFromJson(json);
 
 @override final  String title;
 @override final  String content;
 @override final  String? like;
 @override final  String? profileExchangeStatus;
-@override final  MemberBasicInfo memberBasicInfo;
+@override final  MemberBasicInfoDTO memberBasicInfoDto;
 
-/// Create a copy of IntroduceDetailData
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$IntroduceDetailDataCopyWith<_IntroduceDetailData> get copyWith => __$IntroduceDetailDataCopyWithImpl<_IntroduceDetailData>(this, _$identity);
+_$IntroduceDetailDTOCopyWith<_IntroduceDetailDTO> get copyWith => __$IntroduceDetailDTOCopyWithImpl<_IntroduceDetailDTO>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$IntroduceDetailDataToJson(this, );
+  return _$IntroduceDetailDTOToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailData&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfo, memberBasicInfo) || other.memberBasicInfo == memberBasicInfo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfoDto, memberBasicInfoDto) || other.memberBasicInfoDto == memberBasicInfoDto));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfo);
+int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfoDto);
 
 @override
 String toString() {
-  return 'IntroduceDetailData(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfo: $memberBasicInfo)';
+  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfoDto: $memberBasicInfoDto)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$IntroduceDetailDataCopyWith<$Res> implements $IntroduceDetailDataCopyWith<$Res> {
-  factory _$IntroduceDetailDataCopyWith(_IntroduceDetailData value, $Res Function(_IntroduceDetailData) _then) = __$IntroduceDetailDataCopyWithImpl;
+abstract mixin class _$IntroduceDetailDTOCopyWith<$Res> implements $IntroduceDetailDTOCopyWith<$Res> {
+  factory _$IntroduceDetailDTOCopyWith(_IntroduceDetailDTO value, $Res Function(_IntroduceDetailDTO) _then) = __$IntroduceDetailDTOCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfo memberBasicInfo
+ String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfoDto
 });
 
 
-@override $MemberBasicInfoCopyWith<$Res> get memberBasicInfo;
+@override $MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto;
 
 }
 /// @nodoc
-class __$IntroduceDetailDataCopyWithImpl<$Res>
-    implements _$IntroduceDetailDataCopyWith<$Res> {
-  __$IntroduceDetailDataCopyWithImpl(this._self, this._then);
+class __$IntroduceDetailDTOCopyWithImpl<$Res>
+    implements _$IntroduceDetailDTOCopyWith<$Res> {
+  __$IntroduceDetailDTOCopyWithImpl(this._self, this._then);
 
-  final _IntroduceDetailData _self;
-  final $Res Function(_IntroduceDetailData) _then;
+  final _IntroduceDetailDTO _self;
+  final $Res Function(_IntroduceDetailDTO) _then;
 
-/// Create a copy of IntroduceDetailData
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfo = null,}) {
-  return _then(_IntroduceDetailData(
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfoDto = null,}) {
+  return _then(_IntroduceDetailDTO(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,like: freezed == like ? _self.like : like // ignore: cast_nullable_to_non_nullable
 as String?,profileExchangeStatus: freezed == profileExchangeStatus ? _self.profileExchangeStatus : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-as String?,memberBasicInfo: null == memberBasicInfo ? _self.memberBasicInfo : memberBasicInfo // ignore: cast_nullable_to_non_nullable
-as MemberBasicInfo,
+as String?,memberBasicInfoDto: null == memberBasicInfoDto ? _self.memberBasicInfoDto : memberBasicInfoDto // ignore: cast_nullable_to_non_nullable
+as MemberBasicInfoDTO,
   ));
 }
 
-/// Create a copy of IntroduceDetailData
+/// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MemberBasicInfoCopyWith<$Res> get memberBasicInfo {
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto {
   
-  return $MemberBasicInfoCopyWith<$Res>(_self.memberBasicInfo, (value) {
-    return _then(_self.copyWith(memberBasicInfo: value));
+  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfoDto, (value) {
+    return _then(_self.copyWith(memberBasicInfoDto: value));
   });
 }
 }
 
 
 /// @nodoc
-mixin _$MemberBasicInfo {
+mixin _$MemberBasicInfoDTO {
 
  int get memberId; int get age; String get nickname; String get profileImageUrl; String get city; String get district; String get mbti; List<String> get hobbies;
-/// Create a copy of MemberBasicInfo
+/// Create a copy of MemberBasicInfoDTO
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$MemberBasicInfoCopyWith<MemberBasicInfo> get copyWith => _$MemberBasicInfoCopyWithImpl<MemberBasicInfo>(this as MemberBasicInfo, _$identity);
+$MemberBasicInfoDTOCopyWith<MemberBasicInfoDTO> get copyWith => _$MemberBasicInfoDTOCopyWithImpl<MemberBasicInfoDTO>(this as MemberBasicInfoDTO, _$identity);
 
-  /// Serializes this MemberBasicInfo to a JSON map.
+  /// Serializes this MemberBasicInfoDTO to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBasicInfoDTO&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -620,15 +620,15 @@ int get hashCode => Object.hash(runtimeType,memberId,age,nickname,profileImageUr
 
 @override
 String toString() {
-  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
+  return 'MemberBasicInfoDTO(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $MemberBasicInfoCopyWith<$Res>  {
-  factory $MemberBasicInfoCopyWith(MemberBasicInfo value, $Res Function(MemberBasicInfo) _then) = _$MemberBasicInfoCopyWithImpl;
+abstract mixin class $MemberBasicInfoDTOCopyWith<$Res>  {
+  factory $MemberBasicInfoDTOCopyWith(MemberBasicInfoDTO value, $Res Function(MemberBasicInfoDTO) _then) = _$MemberBasicInfoDTOCopyWithImpl;
 @useResult
 $Res call({
  int memberId, int age, String nickname, String profileImageUrl, String city, String district, String mbti, List<String> hobbies
@@ -639,14 +639,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$MemberBasicInfoCopyWithImpl<$Res>
-    implements $MemberBasicInfoCopyWith<$Res> {
-  _$MemberBasicInfoCopyWithImpl(this._self, this._then);
+class _$MemberBasicInfoDTOCopyWithImpl<$Res>
+    implements $MemberBasicInfoDTOCopyWith<$Res> {
+  _$MemberBasicInfoDTOCopyWithImpl(this._self, this._then);
 
-  final MemberBasicInfo _self;
-  final $Res Function(MemberBasicInfo) _then;
+  final MemberBasicInfoDTO _self;
+  final $Res Function(MemberBasicInfoDTO) _then;
 
-/// Create a copy of MemberBasicInfo
+/// Create a copy of MemberBasicInfoDTO
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? profileImageUrl = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
   return _then(_self.copyWith(
@@ -665,8 +665,8 @@ as List<String>,
 }
 
 
-/// Adds pattern-matching-related methods to [MemberBasicInfo].
-extension MemberBasicInfoPatterns on MemberBasicInfo {
+/// Adds pattern-matching-related methods to [MemberBasicInfoDTO].
+extension MemberBasicInfoDTOPatterns on MemberBasicInfoDTO {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -679,10 +679,10 @@ extension MemberBasicInfoPatterns on MemberBasicInfo {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MemberBasicInfo value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MemberBasicInfoDTO value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _MemberBasicInfo() when $default != null:
+case _MemberBasicInfoDTO() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -701,10 +701,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MemberBasicInfo value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MemberBasicInfoDTO value)  $default,){
 final _that = this;
 switch (_that) {
-case _MemberBasicInfo():
+case _MemberBasicInfoDTO():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -722,10 +722,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MemberBasicInfo value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MemberBasicInfoDTO value)?  $default,){
 final _that = this;
 switch (_that) {
-case _MemberBasicInfo() when $default != null:
+case _MemberBasicInfoDTO() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -745,7 +745,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _MemberBasicInfo() when $default != null:
+case _MemberBasicInfoDTO() when $default != null:
 return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   return orElse();
 
@@ -766,7 +766,7 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_t
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)  $default,) {final _that = this;
 switch (_that) {
-case _MemberBasicInfo():
+case _MemberBasicInfoDTO():
 return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   throw StateError('Unexpected subclass');
 
@@ -786,7 +786,7 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_t
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int memberId,  int age,  String nickname,  String profileImageUrl,  String city,  String district,  String mbti,  List<String> hobbies)?  $default,) {final _that = this;
 switch (_that) {
-case _MemberBasicInfo() when $default != null:
+case _MemberBasicInfoDTO() when $default != null:
 return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_that.city,_that.district,_that.mbti,_that.hobbies);case _:
   return null;
 
@@ -798,9 +798,9 @@ return $default(_that.memberId,_that.age,_that.nickname,_that.profileImageUrl,_t
 /// @nodoc
 @JsonSerializable()
 
-class _MemberBasicInfo implements MemberBasicInfo {
-  const _MemberBasicInfo({required this.memberId, required this.age, required this.nickname, required this.profileImageUrl, required this.city, required this.district, required this.mbti, required final  List<String> hobbies}): _hobbies = hobbies;
-  factory _MemberBasicInfo.fromJson(Map<String, dynamic> json) => _$MemberBasicInfoFromJson(json);
+class _MemberBasicInfoDTO implements MemberBasicInfoDTO {
+  const _MemberBasicInfoDTO({required this.memberId, required this.age, required this.nickname, required this.profileImageUrl, required this.city, required this.district, required this.mbti, required final  List<String> hobbies}): _hobbies = hobbies;
+  factory _MemberBasicInfoDTO.fromJson(Map<String, dynamic> json) => _$MemberBasicInfoDTOFromJson(json);
 
 @override final  int memberId;
 @override final  int age;
@@ -817,20 +817,20 @@ class _MemberBasicInfo implements MemberBasicInfo {
 }
 
 
-/// Create a copy of MemberBasicInfo
+/// Create a copy of MemberBasicInfoDTO
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$MemberBasicInfoCopyWith<_MemberBasicInfo> get copyWith => __$MemberBasicInfoCopyWithImpl<_MemberBasicInfo>(this, _$identity);
+_$MemberBasicInfoDTOCopyWith<_MemberBasicInfoDTO> get copyWith => __$MemberBasicInfoDTOCopyWithImpl<_MemberBasicInfoDTO>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$MemberBasicInfoToJson(this, );
+  return _$MemberBasicInfoDTOToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBasicInfo&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBasicInfoDTO&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.age, age) || other.age == age)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -839,15 +839,15 @@ int get hashCode => Object.hash(runtimeType,memberId,age,nickname,profileImageUr
 
 @override
 String toString() {
-  return 'MemberBasicInfo(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
+  return 'MemberBasicInfoDTO(memberId: $memberId, age: $age, nickname: $nickname, profileImageUrl: $profileImageUrl, city: $city, district: $district, mbti: $mbti, hobbies: $hobbies)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$MemberBasicInfoCopyWith<$Res> implements $MemberBasicInfoCopyWith<$Res> {
-  factory _$MemberBasicInfoCopyWith(_MemberBasicInfo value, $Res Function(_MemberBasicInfo) _then) = __$MemberBasicInfoCopyWithImpl;
+abstract mixin class _$MemberBasicInfoDTOCopyWith<$Res> implements $MemberBasicInfoDTOCopyWith<$Res> {
+  factory _$MemberBasicInfoDTOCopyWith(_MemberBasicInfoDTO value, $Res Function(_MemberBasicInfoDTO) _then) = __$MemberBasicInfoDTOCopyWithImpl;
 @override @useResult
 $Res call({
  int memberId, int age, String nickname, String profileImageUrl, String city, String district, String mbti, List<String> hobbies
@@ -858,17 +858,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$MemberBasicInfoCopyWithImpl<$Res>
-    implements _$MemberBasicInfoCopyWith<$Res> {
-  __$MemberBasicInfoCopyWithImpl(this._self, this._then);
+class __$MemberBasicInfoDTOCopyWithImpl<$Res>
+    implements _$MemberBasicInfoDTOCopyWith<$Res> {
+  __$MemberBasicInfoDTOCopyWithImpl(this._self, this._then);
 
-  final _MemberBasicInfo _self;
-  final $Res Function(_MemberBasicInfo) _then;
+  final _MemberBasicInfoDTO _self;
+  final $Res Function(_MemberBasicInfoDTO) _then;
 
-/// Create a copy of MemberBasicInfo
+/// Create a copy of MemberBasicInfoDTO
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? memberId = null,Object? age = null,Object? nickname = null,Object? profileImageUrl = null,Object? city = null,Object? district = null,Object? mbti = null,Object? hobbies = null,}) {
-  return _then(_MemberBasicInfo(
+  return _then(_MemberBasicInfoDTO(
 memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as int,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable

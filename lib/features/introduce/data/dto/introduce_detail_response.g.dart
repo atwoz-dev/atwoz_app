@@ -12,7 +12,7 @@ _IntroduceDetailResponse _$IntroduceDetailResponseFromJson(
   status: (json['status'] as num).toInt(),
   code: json['code'] as String,
   message: json['message'] as String,
-  data: IntroduceDetailData.fromJson(json['data'] as Map<String, dynamic>),
+  data: IntroduceDetailDTO.fromJson(json['data'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$IntroduceDetailResponseToJson(
@@ -24,29 +24,28 @@ Map<String, dynamic> _$IntroduceDetailResponseToJson(
   'data': instance.data,
 };
 
-_IntroduceDetailData _$IntroduceDetailDataFromJson(Map<String, dynamic> json) =>
-    _IntroduceDetailData(
+_IntroduceDetailDTO _$IntroduceDetailDTOFromJson(Map<String, dynamic> json) =>
+    _IntroduceDetailDTO(
       title: json['title'] as String,
       content: json['content'] as String,
       like: json['like'] as String?,
       profileExchangeStatus: json['profileExchangeStatus'] as String?,
-      memberBasicInfo: MemberBasicInfo.fromJson(
-        json['memberBasicInfo'] as Map<String, dynamic>,
+      memberBasicInfoDto: MemberBasicInfoDTO.fromJson(
+        json['memberBasicInfoDto'] as Map<String, dynamic>,
       ),
     );
 
-Map<String, dynamic> _$IntroduceDetailDataToJson(
-  _IntroduceDetailData instance,
-) => <String, dynamic>{
-  'title': instance.title,
-  'content': instance.content,
-  'like': instance.like,
-  'profileExchangeStatus': instance.profileExchangeStatus,
-  'memberBasicInfo': instance.memberBasicInfo,
-};
+Map<String, dynamic> _$IntroduceDetailDTOToJson(_IntroduceDetailDTO instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'like': instance.like,
+      'profileExchangeStatus': instance.profileExchangeStatus,
+      'memberBasicInfoDto': instance.memberBasicInfoDto,
+    };
 
-_MemberBasicInfo _$MemberBasicInfoFromJson(Map<String, dynamic> json) =>
-    _MemberBasicInfo(
+_MemberBasicInfoDTO _$MemberBasicInfoDTOFromJson(Map<String, dynamic> json) =>
+    _MemberBasicInfoDTO(
       memberId: (json['memberId'] as num).toInt(),
       age: (json['age'] as num).toInt(),
       nickname: json['nickname'] as String,
@@ -59,7 +58,7 @@ _MemberBasicInfo _$MemberBasicInfoFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$MemberBasicInfoToJson(_MemberBasicInfo instance) =>
+Map<String, dynamic> _$MemberBasicInfoDTOToJson(_MemberBasicInfoDTO instance) =>
     <String, dynamic>{
       'memberId': instance.memberId,
       'age': instance.age,

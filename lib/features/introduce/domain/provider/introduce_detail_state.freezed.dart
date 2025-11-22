@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceDetailState {
 
- int get introduceId; IntroduceDetailData? get introduceDetail; UserProfile? get profile; bool get isLoaded;
+ int get introduceId; IntroduceDetail? get introduceDetail; bool get isLoaded;
 /// Create a copy of IntroduceDetailState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $IntroduceDetailStateCopyWith<IntroduceDetailState> get copyWith => _$IntroduceD
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailState&&(identical(other.introduceId, introduceId) || other.introduceId == introduceId)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailState&&(identical(other.introduceId, introduceId) || other.introduceId == introduceId)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,introduceId,introduceDetail,profile,isLoaded);
+int get hashCode => Object.hash(runtimeType,introduceId,introduceDetail,isLoaded);
 
 @override
 String toString() {
-  return 'IntroduceDetailState(introduceId: $introduceId, introduceDetail: $introduceDetail, profile: $profile, isLoaded: $isLoaded)';
+  return 'IntroduceDetailState(introduceId: $introduceId, introduceDetail: $introduceDetail, isLoaded: $isLoaded)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $IntroduceDetailStateCopyWith<$Res>  {
   factory $IntroduceDetailStateCopyWith(IntroduceDetailState value, $Res Function(IntroduceDetailState) _then) = _$IntroduceDetailStateCopyWithImpl;
 @useResult
 $Res call({
- int introduceId, IntroduceDetailData? introduceDetail, UserProfile? profile, bool isLoaded
+ int introduceId, IntroduceDetail? introduceDetail, bool isLoaded
 });
 
 
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail;$UserProfileCopyWith<$Res>? get profile;
+$IntroduceDetailCopyWith<$Res>? get introduceDetail;
 
 }
 /// @nodoc
@@ -62,12 +62,11 @@ class _$IntroduceDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? introduceId = null,Object? introduceDetail = freezed,Object? profile = freezed,Object? isLoaded = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? introduceId = null,Object? introduceDetail = freezed,Object? isLoaded = null,}) {
   return _then(_self.copyWith(
 introduceId: null == introduceId ? _self.introduceId : introduceId // ignore: cast_nullable_to_non_nullable
 as int,introduceDetail: freezed == introduceDetail ? _self.introduceDetail : introduceDetail // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as UserProfile?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as IntroduceDetail?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -75,25 +74,13 @@ as bool,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail {
+$IntroduceDetailCopyWith<$Res>? get introduceDetail {
     if (_self.introduceDetail == null) {
     return null;
   }
 
-  return $IntroduceDetailDataCopyWith<$Res>(_self.introduceDetail!, (value) {
+  return $IntroduceDetailCopyWith<$Res>(_self.introduceDetail!, (value) {
     return _then(_self.copyWith(introduceDetail: value));
-  });
-}/// Create a copy of IntroduceDetailState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res>? get profile {
-    if (_self.profile == null) {
-    return null;
-  }
-
-  return $UserProfileCopyWith<$Res>(_self.profile!, (value) {
-    return _then(_self.copyWith(profile: value));
   });
 }
 }
@@ -177,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int introduceId,  IntroduceDetailData? introduceDetail,  UserProfile? profile,  bool isLoaded)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int introduceId,  IntroduceDetail? introduceDetail,  bool isLoaded)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceDetailState() when $default != null:
-return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLoaded);case _:
+return $default(_that.introduceId,_that.introduceDetail,_that.isLoaded);case _:
   return orElse();
 
 }
@@ -198,10 +185,10 @@ return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int introduceId,  IntroduceDetailData? introduceDetail,  UserProfile? profile,  bool isLoaded)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int introduceId,  IntroduceDetail? introduceDetail,  bool isLoaded)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailState():
-return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLoaded);case _:
+return $default(_that.introduceId,_that.introduceDetail,_that.isLoaded);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +205,10 @@ return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int introduceId,  IntroduceDetailData? introduceDetail,  UserProfile? profile,  bool isLoaded)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int introduceId,  IntroduceDetail? introduceDetail,  bool isLoaded)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailState() when $default != null:
-return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLoaded);case _:
+return $default(_that.introduceId,_that.introduceDetail,_that.isLoaded);case _:
   return null;
 
 }
@@ -233,12 +220,11 @@ return $default(_that.introduceId,_that.introduceDetail,_that.profile,_that.isLo
 
 
 class _IntroduceDetailState extends IntroduceDetailState {
-  const _IntroduceDetailState({this.introduceId = -1, this.introduceDetail = null, this.profile = null, this.isLoaded = false}): super._();
+  const _IntroduceDetailState({this.introduceId = -1, this.introduceDetail = null, this.isLoaded = false}): super._();
   
 
 @override@JsonKey() final  int introduceId;
-@override@JsonKey() final  IntroduceDetailData? introduceDetail;
-@override@JsonKey() final  UserProfile? profile;
+@override@JsonKey() final  IntroduceDetail? introduceDetail;
 @override@JsonKey() final  bool isLoaded;
 
 /// Create a copy of IntroduceDetailState
@@ -251,16 +237,16 @@ _$IntroduceDetailStateCopyWith<_IntroduceDetailState> get copyWith => __$Introdu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailState&&(identical(other.introduceId, introduceId) || other.introduceId == introduceId)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailState&&(identical(other.introduceId, introduceId) || other.introduceId == introduceId)&&(identical(other.introduceDetail, introduceDetail) || other.introduceDetail == introduceDetail)&&(identical(other.isLoaded, isLoaded) || other.isLoaded == isLoaded));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,introduceId,introduceDetail,profile,isLoaded);
+int get hashCode => Object.hash(runtimeType,introduceId,introduceDetail,isLoaded);
 
 @override
 String toString() {
-  return 'IntroduceDetailState(introduceId: $introduceId, introduceDetail: $introduceDetail, profile: $profile, isLoaded: $isLoaded)';
+  return 'IntroduceDetailState(introduceId: $introduceId, introduceDetail: $introduceDetail, isLoaded: $isLoaded)';
 }
 
 
@@ -271,11 +257,11 @@ abstract mixin class _$IntroduceDetailStateCopyWith<$Res> implements $IntroduceD
   factory _$IntroduceDetailStateCopyWith(_IntroduceDetailState value, $Res Function(_IntroduceDetailState) _then) = __$IntroduceDetailStateCopyWithImpl;
 @override @useResult
 $Res call({
- int introduceId, IntroduceDetailData? introduceDetail, UserProfile? profile, bool isLoaded
+ int introduceId, IntroduceDetail? introduceDetail, bool isLoaded
 });
 
 
-@override $IntroduceDetailDataCopyWith<$Res>? get introduceDetail;@override $UserProfileCopyWith<$Res>? get profile;
+@override $IntroduceDetailCopyWith<$Res>? get introduceDetail;
 
 }
 /// @nodoc
@@ -288,12 +274,11 @@ class __$IntroduceDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceDetailState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? introduceId = null,Object? introduceDetail = freezed,Object? profile = freezed,Object? isLoaded = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? introduceId = null,Object? introduceDetail = freezed,Object? isLoaded = null,}) {
   return _then(_IntroduceDetailState(
 introduceId: null == introduceId ? _self.introduceId : introduceId // ignore: cast_nullable_to_non_nullable
 as int,introduceDetail: freezed == introduceDetail ? _self.introduceDetail : introduceDetail // ignore: cast_nullable_to_non_nullable
-as IntroduceDetailData?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as UserProfile?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
+as IntroduceDetail?,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -302,25 +287,13 @@ as bool,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$IntroduceDetailDataCopyWith<$Res>? get introduceDetail {
+$IntroduceDetailCopyWith<$Res>? get introduceDetail {
     if (_self.introduceDetail == null) {
     return null;
   }
 
-  return $IntroduceDetailDataCopyWith<$Res>(_self.introduceDetail!, (value) {
+  return $IntroduceDetailCopyWith<$Res>(_self.introduceDetail!, (value) {
     return _then(_self.copyWith(introduceDetail: value));
-  });
-}/// Create a copy of IntroduceDetailState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res>? get profile {
-    if (_self.profile == null) {
-    return null;
-  }
-
-  return $UserProfileCopyWith<$Res>(_self.profile!, (value) {
-    return _then(_self.copyWith(profile: value));
   });
 }
 }

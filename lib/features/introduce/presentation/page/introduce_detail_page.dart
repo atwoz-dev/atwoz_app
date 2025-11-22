@@ -54,6 +54,7 @@ class IntroduceDetailPageState
             return const SizedBox.shrink();
           }
 
+          // 셀프소개 상세
           final introduceDetail = data.introduceDetail!;
           final nickname = introduceDetail.memberBasicInfo.nickname;
           final age = introduceDetail.memberBasicInfo.age;
@@ -74,6 +75,7 @@ class IntroduceDetailPageState
           final like = introduceDetail.like;
           print("체크체크체크 introduceDetail.like ${introduceDetail.like}");
 
+          // 하트 갯수
           final heartBalance = ref.read(globalProvider).heartBalance;
 
           return Column(
@@ -121,7 +123,8 @@ class IntroduceDetailPageState
                     const Gap(16),
                     Row(
                       children: [
-                        introduceDetail.profileExchangeStatus == null
+                        introduceDetail.profileExchangeStatus ==
+                                ProfileExchangeStatus.none
                             ? _InteractionButton("프로필 교환하기", () {
                                 // TODO: dialog 오픈할 때 "보유하트조회"를 해야할까요??
                                 ProfileExchangeDialog.open(

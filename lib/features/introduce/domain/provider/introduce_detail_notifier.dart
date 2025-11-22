@@ -1,11 +1,9 @@
-import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_state.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:atwoz_app/features/profile/domain/usecase/profile_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduce_detail_notifier.g.dart';
@@ -26,42 +24,10 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
         .execute(introduceId: introduceId);
 
     // TODO: 상세조회 실패. 에러 처리
-    if (introduceDetail == null) {
-      return IntroduceDetailState(
-        introduceId: introduceId,
-        introduceDetail: introduceDetail,
-        isLoaded: true,
-      );
-    }
-
-    try {
-      final profile = await ProfileFetchUseCase(
-        ref,
-      ).call(introduceDetail.memberBasicInfo.memberId);
-
-      return IntroduceDetailState(
-        introduceId: introduceId,
-        introduceDetail: introduceDetail,
-        profile: profile,
-        isLoaded: true,
-      );
-    } on NetworkException catch (e) {
-      if (e.status == 403) {
-        // 상대방 프로필 권한 X
-        return IntroduceDetailState(
-          introduceId: introduceId,
-          introduceDetail: introduceDetail,
-          profile: null,
-          isLoaded: true,
-        );
-      }
-    }
-    // 프로필 조회 그 외 실패
-    // TODO: 에러 처리
+    if (introduceDetail == null) {}
     return IntroduceDetailState(
       introduceId: introduceId,
       introduceDetail: introduceDetail,
-      profile: null,
       isLoaded: true,
     );
   }

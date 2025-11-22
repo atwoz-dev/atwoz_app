@@ -332,4 +332,19 @@ enum ProfileExchangeStatus {
   rejected;
 
   bool get isWaiting => this == waiting;
+
+  static ProfileExchangeStatus parse(String? value) {
+    if (value == null) return ProfileExchangeStatus.none;
+
+    switch (value.toUpperCase()) {
+      case 'WAITING':
+        return ProfileExchangeStatus.waiting;
+      case 'APPROVE':
+        return ProfileExchangeStatus.approve;
+      case 'REJECTED':
+        return ProfileExchangeStatus.rejected;
+      default:
+        return ProfileExchangeStatus.none;
+    }
+  }
 }

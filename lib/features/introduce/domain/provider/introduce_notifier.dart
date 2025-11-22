@@ -1,5 +1,8 @@
+import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/introduce/domain/model/introduce_detail.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
+import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_my_list_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -137,5 +140,18 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     }
   }
 
-  ///
+  /// 셀프 소개 상세 조회
+  Future<IntroduceDetail?> fetchIntroduceDetail(int introduceId) async {
+    try {
+      final introduceDetail = await ref
+          .read(fetchIntroduceDetailUseCaseProvider)
+          .execute(introduceId: introduceId);
+
+      return introduceDetail;
+    } catch (e) {
+      // TODO: 에러 처리?
+      Log.e('셀프 소개 상세 조회 api 실패 $e');
+      return null;
+    }
+  }
 }

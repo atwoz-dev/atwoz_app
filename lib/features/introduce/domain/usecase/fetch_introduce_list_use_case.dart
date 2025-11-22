@@ -1,5 +1,4 @@
 import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/introduce/data/dto/introduce_list_response.dart';
 import 'package:atwoz_app/features/introduce/data/mapper/introduce_mapper.dart';
 import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
