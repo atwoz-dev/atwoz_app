@@ -12,19 +12,11 @@ part 'introduce_detail_notifier.g.dart';
 class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
   @override
   Future<IntroduceDetailState> build({required int introduceId}) async {
-    // 상대방 프로필 조회
-    // yes -> 프로필 보여줘
-    // no -> 셀프소개 상세 조회 시작
-
-    // 근데 상대방 프로질 조회하려면 셀프소개 상세조회를 해야함
-    // TODO: memberId를 셀프 소개 조회시 받으면?
-
     final introduceDetail = await ref
         .read(fetchIntroduceDetailUseCaseProvider)
         .execute(introduceId: introduceId);
 
     // TODO: 상세조회 실패. 에러 처리
-    if (introduceDetail == null) {}
     return IntroduceDetailState(
       introduceId: introduceId,
       introduceDetail: introduceDetail,
