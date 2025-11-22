@@ -305,7 +305,7 @@ $IntroduceDetailDTOCopyWith<$Res> get data {
 /// @nodoc
 mixin _$IntroduceDetailDTO {
 
- String get title; String get content; String? get like; String? get profileExchangeStatus; MemberBasicInfoDTO get memberBasicInfoDto;
+ String get title; String get content; String? get like; String? get profileExchangeStatus; MemberBasicInfoDTO get memberBasicInfo;
 /// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,16 +318,16 @@ $IntroduceDetailDTOCopyWith<IntroduceDetailDTO> get copyWith => _$IntroduceDetai
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfoDto, memberBasicInfoDto) || other.memberBasicInfoDto == memberBasicInfoDto));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfo, memberBasicInfo) || other.memberBasicInfo == memberBasicInfo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfoDto);
+int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfo);
 
 @override
 String toString() {
-  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfoDto: $memberBasicInfoDto)';
+  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfo: $memberBasicInfo)';
 }
 
 
@@ -338,11 +338,11 @@ abstract mixin class $IntroduceDetailDTOCopyWith<$Res>  {
   factory $IntroduceDetailDTOCopyWith(IntroduceDetailDTO value, $Res Function(IntroduceDetailDTO) _then) = _$IntroduceDetailDTOCopyWithImpl;
 @useResult
 $Res call({
- String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfoDto
+ String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfo
 });
 
 
-$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto;
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfo;
 
 }
 /// @nodoc
@@ -355,13 +355,13 @@ class _$IntroduceDetailDTOCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfoDto = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfo = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,like: freezed == like ? _self.like : like // ignore: cast_nullable_to_non_nullable
 as String?,profileExchangeStatus: freezed == profileExchangeStatus ? _self.profileExchangeStatus : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-as String?,memberBasicInfoDto: null == memberBasicInfoDto ? _self.memberBasicInfoDto : memberBasicInfoDto // ignore: cast_nullable_to_non_nullable
+as String?,memberBasicInfo: null == memberBasicInfo ? _self.memberBasicInfo : memberBasicInfo // ignore: cast_nullable_to_non_nullable
 as MemberBasicInfoDTO,
   ));
 }
@@ -369,10 +369,10 @@ as MemberBasicInfoDTO,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto {
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfo {
   
-  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfoDto, (value) {
-    return _then(_self.copyWith(memberBasicInfoDto: value));
+  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfo, (value) {
+    return _then(_self.copyWith(memberBasicInfo: value));
   });
 }
 }
@@ -456,10 +456,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfo)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceDetailDTO() when $default != null:
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
   return orElse();
 
 }
@@ -477,10 +477,10 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfo)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailDTO():
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -497,10 +497,10 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfoDto)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  String? like,  String? profileExchangeStatus,  MemberBasicInfoDTO memberBasicInfo)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceDetailDTO() when $default != null:
-return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfoDto);case _:
+return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus,_that.memberBasicInfo);case _:
   return null;
 
 }
@@ -512,14 +512,14 @@ return $default(_that.title,_that.content,_that.like,_that.profileExchangeStatus
 @JsonSerializable()
 
 class _IntroduceDetailDTO implements IntroduceDetailDTO {
-  const _IntroduceDetailDTO({required this.title, required this.content, this.like, this.profileExchangeStatus, required this.memberBasicInfoDto});
+  const _IntroduceDetailDTO({required this.title, required this.content, this.like, this.profileExchangeStatus, required this.memberBasicInfo});
   factory _IntroduceDetailDTO.fromJson(Map<String, dynamic> json) => _$IntroduceDetailDTOFromJson(json);
 
 @override final  String title;
 @override final  String content;
 @override final  String? like;
 @override final  String? profileExchangeStatus;
-@override final  MemberBasicInfoDTO memberBasicInfoDto;
+@override final  MemberBasicInfoDTO memberBasicInfo;
 
 /// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
@@ -534,16 +534,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfoDto, memberBasicInfoDto) || other.memberBasicInfoDto == memberBasicInfoDto));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceDetailDTO&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.like, like) || other.like == like)&&(identical(other.profileExchangeStatus, profileExchangeStatus) || other.profileExchangeStatus == profileExchangeStatus)&&(identical(other.memberBasicInfo, memberBasicInfo) || other.memberBasicInfo == memberBasicInfo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfoDto);
+int get hashCode => Object.hash(runtimeType,title,content,like,profileExchangeStatus,memberBasicInfo);
 
 @override
 String toString() {
-  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfoDto: $memberBasicInfoDto)';
+  return 'IntroduceDetailDTO(title: $title, content: $content, like: $like, profileExchangeStatus: $profileExchangeStatus, memberBasicInfo: $memberBasicInfo)';
 }
 
 
@@ -554,11 +554,11 @@ abstract mixin class _$IntroduceDetailDTOCopyWith<$Res> implements $IntroduceDet
   factory _$IntroduceDetailDTOCopyWith(_IntroduceDetailDTO value, $Res Function(_IntroduceDetailDTO) _then) = __$IntroduceDetailDTOCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfoDto
+ String title, String content, String? like, String? profileExchangeStatus, MemberBasicInfoDTO memberBasicInfo
 });
 
 
-@override $MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto;
+@override $MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfo;
 
 }
 /// @nodoc
@@ -571,13 +571,13 @@ class __$IntroduceDetailDTOCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceDetailDTO
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfoDto = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? like = freezed,Object? profileExchangeStatus = freezed,Object? memberBasicInfo = null,}) {
   return _then(_IntroduceDetailDTO(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,like: freezed == like ? _self.like : like // ignore: cast_nullable_to_non_nullable
 as String?,profileExchangeStatus: freezed == profileExchangeStatus ? _self.profileExchangeStatus : profileExchangeStatus // ignore: cast_nullable_to_non_nullable
-as String?,memberBasicInfoDto: null == memberBasicInfoDto ? _self.memberBasicInfoDto : memberBasicInfoDto // ignore: cast_nullable_to_non_nullable
+as String?,memberBasicInfo: null == memberBasicInfo ? _self.memberBasicInfo : memberBasicInfo // ignore: cast_nullable_to_non_nullable
 as MemberBasicInfoDTO,
   ));
 }
@@ -586,10 +586,10 @@ as MemberBasicInfoDTO,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfoDto {
+$MemberBasicInfoDTOCopyWith<$Res> get memberBasicInfo {
   
-  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfoDto, (value) {
-    return _then(_self.copyWith(memberBasicInfoDto: value));
+  return $MemberBasicInfoDTOCopyWith<$Res>(_self.memberBasicInfo, (value) {
+    return _then(_self.copyWith(memberBasicInfo: value));
   });
 }
 }

@@ -30,8 +30,8 @@ _IntroduceDetailDTO _$IntroduceDetailDTOFromJson(Map<String, dynamic> json) =>
       content: json['content'] as String,
       like: json['like'] as String?,
       profileExchangeStatus: json['profileExchangeStatus'] as String?,
-      memberBasicInfoDto: MemberBasicInfoDTO.fromJson(
-        json['memberBasicInfoDto'] as Map<String, dynamic>,
+      memberBasicInfo: MemberBasicInfoDTO.fromJson(
+        json['memberBasicInfo'] as Map<String, dynamic>,
       ),
     );
 
@@ -41,7 +41,7 @@ Map<String, dynamic> _$IntroduceDetailDTOToJson(_IntroduceDetailDTO instance) =>
       'content': instance.content,
       'like': instance.like,
       'profileExchangeStatus': instance.profileExchangeStatus,
-      'memberBasicInfoDto': instance.memberBasicInfoDto,
+      'memberBasicInfo': instance.memberBasicInfo,
     };
 
 _MemberBasicInfoDTO _$MemberBasicInfoDTOFromJson(Map<String, dynamic> json) =>

@@ -155,6 +155,7 @@ enum FavoriteType {
       type.name.camelCaseToSnakeCase(): type,
   };
 
-  static FavoriteType? tryParse(String? value) =>
-      _byValue[value?.toUpperCase()];
+  static FavoriteType? tryParse(String? value) {
+    return _byValue[value?.toUpperCase()];
+  }
 }

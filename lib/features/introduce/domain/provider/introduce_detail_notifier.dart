@@ -32,6 +32,20 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
     );
   }
 
+  Future<bool> getIntroduceDetail() async {
+    final introduceDetail = await ref
+        .read(fetchIntroduceDetailUseCaseProvider)
+        .execute(introduceId: introduceId);
+
+    // TODO: 에러처리
+    if (introduceDetail == null) return false;
+
+    state = AsyncValue.data(
+      state.requireValue.copyWith(introduceDetail: introduceDetail),
+    );
+    return true;
+  }
+
   Future<void> setFavoriteType({
     required int memberId,
     required FavoriteType type,
@@ -60,7 +74,7 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
 
     final introduceDetail = await ref
         .read(fetchIntroduceDetailUseCaseProvider)
-        .execute(introduceId: state.requireValue.introduceId);
+        .execute(introduceId: introduceId);
 
     state = AsyncValue.data(
       state.requireValue.copyWith(introduceDetail: introduceDetail),

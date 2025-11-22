@@ -19,6 +19,7 @@ class FetchIntroduceDetailUseCase {
       final introduce = await ref
           .read(introduceRepositoryProvider)
           .getIntroduceDetail(id: introduceId);
+
       return introduce.toDomain();
     } catch (e) {
       Log.e("셀프 소개 상세 호출 실패 : $e");

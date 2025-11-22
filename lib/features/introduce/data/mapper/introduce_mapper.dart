@@ -22,7 +22,7 @@ extension IntroduceDetailMapper on IntroduceDetailDTO {
     return IntroduceDetail(
       title: title,
       content: content,
-      memberBasicInfo: memberBasicInfoDto.toDomain(),
+      memberBasicInfo: memberBasicInfo.toDomain(),
       like: FavoriteType.tryParse(like),
       profileExchangeStatus: ProfileExchangeStatus.parse(profileExchangeStatus),
     );

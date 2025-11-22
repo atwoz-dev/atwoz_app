@@ -23,7 +23,7 @@ abstract class IntroduceDetailDTO with _$IntroduceDetailDTO {
     required String content,
     String? like,
     String? profileExchangeStatus,
-    required MemberBasicInfoDTO memberBasicInfoDto,
+    required MemberBasicInfoDTO memberBasicInfo,
   }) = _IntroduceDetailDTO;
 
   factory IntroduceDetailDTO.fromJson(Map<String, dynamic> json) =>

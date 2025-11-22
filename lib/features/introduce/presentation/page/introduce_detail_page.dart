@@ -73,7 +73,6 @@ class IntroduceDetailPageState
           final imageUrl = introduceDetail.memberBasicInfo.profileImageUrl;
           final memberId = introduceDetail.memberBasicInfo.memberId;
           final like = introduceDetail.like;
-          print("체크체크체크 introduceDetail.like ${introduceDetail.like}");
 
           // 하트 갯수
           final heartBalance = ref.read(globalProvider).heartBalance;
@@ -170,6 +169,7 @@ class IntroduceDetailPageState
                               );
 
                               // memberinfo 업데이트 필요
+                              await notifier.getIntroduceDetail();
                             },
                             child: DefaultIcon(
                               like == null
