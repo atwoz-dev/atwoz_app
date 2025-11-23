@@ -65,7 +65,7 @@ class IntroduceDetailPageState
           );
           final hobbies = introduceDetail.memberBasicInfo.hobbies
               .map(
-                (hobby) => Hobby.parseFromServer(hobby).label,
+                (hobby) => Hobby.parse(hobby).label,
               )
               .toList();
           final title = introduceDetail.title;
