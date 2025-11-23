@@ -40,8 +40,8 @@ class ContactSettingNotifier extends _$ContactSettingNotifier {
     String? phoneNumber,
   }) async {
     try {
-      final newMethod = method ?? state.method ?? ContactMethod.phone;
-      if (newMethod != state.method) {
+      final newMethod = method ?? state.method;
+      if (newMethod != null && newMethod != state.method) {
         _repository.setContactMethod(newMethod);
       }
       if (kakaoId?.isNotEmpty == true && kakaoId != state.kakao) {
