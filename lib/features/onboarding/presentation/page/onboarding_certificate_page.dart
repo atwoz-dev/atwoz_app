@@ -219,7 +219,7 @@ class _OnboardingCertificationPageState
       context,
       onTapVerify: context.pop,
       title: '서비스 가입 제한',
-      content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+      content: '탈퇴일로부터 3개월간 동일 계정으로\n재가입이 제한됩니다.',
     );
   }
 
