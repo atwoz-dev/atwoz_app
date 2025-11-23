@@ -36,6 +36,7 @@ class _MainTabViewState extends State<MainTabView>
       extendBodyBehindAppBar: false,
       body: TabBarView(
         controller: _controller,
+        physics: const NeverScrollableScrollPhysics(),
         children: mainTabs.map((item) => item.container).toList(),
       ),
       bottomNavigationBar: DefaultBottomNavigationBar(
