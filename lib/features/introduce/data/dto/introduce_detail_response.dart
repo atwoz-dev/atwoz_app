@@ -41,6 +41,7 @@ abstract class MemberBasicInfoDTO with _$MemberBasicInfoDTO {
     required String district,
     required String mbti,
     required List<String> hobbies,
+    required String gender,
   }) = _MemberBasicInfoDTO;
 
   factory MemberBasicInfoDTO.fromJson(Map<String, dynamic> json) =>

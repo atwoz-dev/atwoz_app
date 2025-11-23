@@ -26,5 +26,6 @@ abstract class MemberBasicInfo with _$MemberBasicInfo {
     required String district,
     required String mbti,
     required List<String> hobbies,
+    required Gender gender,
   }) = _MemberBasicInfo;
 }

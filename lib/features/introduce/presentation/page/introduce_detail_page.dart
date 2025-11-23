@@ -45,6 +45,8 @@ class IntroduceDetailPageState
       introduceDetailProvider(introduceId: widget.introduceId).notifier,
     );
 
+    final myGender = ref.read(globalProvider).profile.gender;
+
     return Scaffold(
       appBar: const DefaultAppBar(title: '상대방 정보'),
       body: stateAsync.when(
@@ -73,6 +75,7 @@ class IntroduceDetailPageState
           final imageUrl = introduceDetail.memberBasicInfo.profileImageUrl;
           final memberId = introduceDetail.memberBasicInfo.memberId;
           final like = introduceDetail.like;
+          final gender = introduceDetail.memberBasicInfo.gender;
 
           // 하트 갯수
           final heartBalance = ref.read(globalProvider).heartBalance;
@@ -120,66 +123,67 @@ class IntroduceDetailPageState
                       ],
                     ),
                     const Gap(16),
-                    Row(
-                      children: [
-                        introduceDetail.profileExchangeStatus ==
-                                ProfileExchangeStatus.none
-                            ? _InteractionButton("프로필 교환하기", () {
-                                // TODO: dialog 오픈할 때 "보유하트조회"를 해야할까요??
-                                ProfileExchangeDialog.open(
-                                  context,
-                                  myHeart: heartBalance,
-                                  onSendExchange: () {
-                                    // 프로필 교환 보내기
-                                    notifier.requestProfileExchange(
-                                      memberId,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  onNotEnoughHeart: () {
-                                    Navigator.of(context).pop();
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => HeartShortageDialog(
-                                        heartBalance: heartBalance,
-                                      ),
-                                    );
-                                  },
-                                );
-                              })
-                            : _WaitingButton("상대방의 수락을 기다리고 있어요", () {}),
-                        const Gap(8.0),
-                        SizedBox(
-                          width: 44.0,
-                          child: DefaultElevatedButton(
-                            padding: const EdgeInsets.all(10.0),
-                            primary: Palette.colorGrey100,
-                            onPressed: () async {
-                              final favoriteType =
-                                  await FavoriteTypeSelectDialog.open(
+                    if (myGender != gender)
+                      Row(
+                        children: [
+                          introduceDetail.profileExchangeStatus ==
+                                  ProfileExchangeStatus.none
+                              ? _InteractionButton("프로필 교환하기", () {
+                                  // TODO: dialog 오픈할 때 "보유하트조회"를 해야할까요??
+                                  ProfileExchangeDialog.open(
                                     context,
-                                    userId: memberId,
-                                    favoriteType: FavoriteType.interested,
+                                    myHeart: heartBalance,
+                                    onSendExchange: () {
+                                      // 프로필 교환 보내기
+                                      notifier.requestProfileExchange(
+                                        memberId,
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    onNotEnoughHeart: () {
+                                      Navigator.of(context).pop();
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => HeartShortageDialog(
+                                          heartBalance: heartBalance,
+                                        ),
+                                      );
+                                    },
                                   );
-                              if (favoriteType == null) return;
+                                })
+                              : _WaitingButton("상대방의 수락을 기다리고 있어요", () {}),
+                          const Gap(8.0),
+                          SizedBox(
+                            width: 44.0,
+                            child: DefaultElevatedButton(
+                              padding: const EdgeInsets.all(10.0),
+                              primary: Palette.colorGrey100,
+                              onPressed: () async {
+                                final favoriteType =
+                                    await FavoriteTypeSelectDialog.open(
+                                      context,
+                                      userId: memberId,
+                                      favoriteType: FavoriteType.interested,
+                                    );
+                                if (favoriteType == null) return;
 
-                              await notifier.setFavoriteType(
-                                memberId: memberId,
-                                type: favoriteType,
-                              );
+                                await notifier.setFavoriteType(
+                                  memberId: memberId,
+                                  type: favoriteType,
+                                );
 
-                              // memberinfo 업데이트 필요
-                              await notifier.getIntroduceDetail();
-                            },
-                            child: DefaultIcon(
-                              like == null
-                                  ? IconPath.heart
-                                  : IconPath.heartFill,
+                                // memberinfo 업데이트 필요
+                                await notifier.getIntroduceDetail();
+                              },
+                              child: DefaultIcon(
+                                like == null
+                                    ? IconPath.heart
+                                    : IconPath.heartFill,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                   ],
                 ),
               ),

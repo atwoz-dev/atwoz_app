@@ -40,6 +40,7 @@ extension MemberBasicInfoMapper on MemberBasicInfoDTO {
       district: district,
       mbti: mbti,
       hobbies: hobbies,
+      gender: Gender.parse(gender),
     );
   }
 }

@@ -56,6 +56,7 @@ _MemberBasicInfoDTO _$MemberBasicInfoDTOFromJson(Map<String, dynamic> json) =>
       hobbies: (json['hobbies'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      gender: json['gender'] as String,
     );
 
 Map<String, dynamic> _$MemberBasicInfoDTOToJson(_MemberBasicInfoDTO instance) =>
@@ -68,4 +69,5 @@ Map<String, dynamic> _$MemberBasicInfoDTOToJson(_MemberBasicInfoDTO instance) =>
       'district': instance.district,
       'mbti': instance.mbti,
       'hobbies': instance.hobbies,
+      'gender': instance.gender,
     };
