@@ -52,7 +52,7 @@ class EmptyMessage extends StatelessWidget {
 
   String get _content => switch (type) {
         MessageTabType.received => '아직 이성에게 받은 메시지가 없어요\n'
-            '본인을 좀 더 알 수있게\n'
+            '본인을 좀 더 알 수 있게\n'
             '프로필을 채워보면 어떨까요?\n',
         MessageTabType.sent => '아직 이성에게 보낸 메시지가 없어요\n'
             '마음에 드는 이성이 있다면\n'
