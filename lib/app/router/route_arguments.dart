@@ -28,6 +28,12 @@ class UserByCategoryArguments extends RouteArguments {
   final IntroducedCategory category;
 }
 
+class MyProfileManageArguments extends RouteArguments {
+  const MyProfileManageArguments({this.isRejectedProfile = false});
+
+  final bool isRejectedProfile;
+}
+
 class MyProfileUpdateArguments extends RouteArguments {
   const MyProfileUpdateArguments({required this.profileType});
 
@@ -78,9 +84,7 @@ class ReportArguments extends RouteArguments {
 }
 
 class DormantReleaseArguments extends RouteArguments {
-  const DormantReleaseArguments({
-    required this.phoneNumber,
-  });
+  const DormantReleaseArguments({required this.phoneNumber});
 
   final String phoneNumber;
 }

@@ -7,10 +7,7 @@ part 'enum.g.dart';
 extension EnumToJson on Enum {
   String toJson() {
     final converted = name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)}',
-        )
+        .replaceAllMapped(RegExp(r'[A-Z]'), (match) => '_${match.group(0)}')
         .toUpperCase();
 
     return converted.startsWith('_') ? converted.substring(1) : converted;
@@ -282,4 +279,25 @@ enum ProfileExchangeStatus {
         return ProfileExchangeStatus.none;
     }
   }
+}
+
+enum ActivityStatus {
+  initial("INITIAL"),
+  active("ACTIVE"),
+  suspendedTemporarily("SUSPENDED_TEMPORARILY"),
+  suspendedPermanently("SUSPENDED_PERMANENTLY"),
+  waitingScreening("WAITING_SCREENING"),
+  rejectedScreening("REJECTED_SCREENING"),
+  dormant("DORMANT"),
+  deleted("DELETED");
+
+  final String label;
+  const ActivityStatus(this.label);
+
+  static final _byValue = {
+    for (final value in ActivityStatus.values) value.label: value,
+  };
+
+  static ActivityStatus? parse(String? value) =>
+      _byValue[value] ?? ActivityStatus.active;
 }

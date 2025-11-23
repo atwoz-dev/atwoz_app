@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:atwoz_app/core/config/config.dart';
 import 'package:atwoz_app/core/network/logging_interceptor.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -99,7 +100,7 @@ class ApiServiceImpl implements ApiService {
       final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
       final refreshToken = await ref
           .read(localStorageProvider)
-          .getEncrypted(_refreshTokenKey);
+          .getEncrypted(SecureStorageItem.refreshToken);
 
       if (accessToken != null) {
         finalHeaders['Authorization'] = "Bearer $accessToken";
@@ -125,7 +126,7 @@ class ApiServiceImpl implements ApiService {
 
     await ref
         .read(localStorageProvider)
-        .saveEncrypted(_refreshTokenKey, refreshToken);
+        .saveEncrypted(SecureStorageItem.refreshToken, refreshToken);
   }
 
   String? _extractRefreshToken(List<String> cookies) {

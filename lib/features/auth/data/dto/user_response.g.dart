@@ -19,17 +19,20 @@ class UserDataAdapter extends TypeAdapter<UserData> {
     return UserData(
       accessToken: fields[0] as String,
       isProfileSettingNeeded: fields[1] as bool,
+      activityStatus: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserData obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.accessToken)
       ..writeByte(1)
-      ..write(obj.isProfileSettingNeeded);
+      ..write(obj.isProfileSettingNeeded)
+      ..writeByte(2)
+      ..write(obj.activityStatus);
   }
 
   @override
@@ -66,9 +69,11 @@ Map<String, dynamic> _$UserResponseToJson(_UserResponse instance) =>
 _UserData _$UserDataFromJson(Map<String, dynamic> json) => _UserData(
   accessToken: json['accessToken'] as String,
   isProfileSettingNeeded: json['isProfileSettingNeeded'] as bool,
+  activityStatus: json['activityStatus'] as String,
 );
 
 Map<String, dynamic> _$UserDataToJson(_UserData instance) => <String, dynamic>{
   'accessToken': instance.accessToken,
   'isProfileSettingNeeded': instance.isProfileSettingNeeded,
+  'activityStatus': instance.activityStatus,
 };

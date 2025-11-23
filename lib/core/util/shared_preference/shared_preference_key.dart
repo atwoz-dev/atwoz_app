@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
 import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
 
@@ -34,6 +35,12 @@ class SharedPreferenceKeys {
   static const preferredCities = SharedPreferencePrimitiveKey<List<String>>(
     "preferredCities",
     defaultValue: [],
+  );
+
+  static const defaultContactMethod = SharedPreferenceKey<ContactMethod?>(
+    'defaultContactMethod',
+    fromJson: _contactMethodFromJson,
+    toJson: _contactMethodToJson,
   );
 
   /// 셀프소개 필터 - 성별

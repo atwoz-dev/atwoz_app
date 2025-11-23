@@ -3,7 +3,7 @@ import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/data/dto/home_profile_response_dto.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 
-extension GlobalUserProfileMapper on HomeProfileResponseDto {
+extension CachedUserProfileMapper on HomeProfileResponseDto {
   CachedUserProfile toCachedUserProfile() {
     return CachedUserProfile(
       myUserId: statusInfo.memberId,
@@ -26,27 +26,18 @@ extension GlobalUserProfileMapper on HomeProfileResponseDto {
       drinkingStatus: DrinkingStatus.parse(profileInfo.drinkingStatus),
       religion: Religion.parse(profileInfo.religion),
       hobbies: profileInfo.hobbies.map((e) => Hobby.parse(e)).toList(),
-      interviewInfoView: interviewInfoView
-          .map(
-            (e) => e.toInterviewInfo(),
-          )
-          .toList(),
+      interviewInfoView:
+          interviewInfoView.map((e) => e.toInterviewInfo()).toList(),
     );
   }
-}
-
-class InterviewInfoDefaultValue {
-  static const int noQuestionId = 0;
-  static const String title = '';
-  static const String content = '';
 }
 
 extension InterviewInfoMapper on InterviewInfoDto {
   InterviewInfo toInterviewInfo() {
     return InterviewInfo(
-      questionId: questionId ?? InterviewInfoDefaultValue.noQuestionId,
-      title: title ?? InterviewInfoDefaultValue.title,
-      content: content ?? InterviewInfoDefaultValue.content,
-    ); // TODO(jh): null 처리 제거
+      questionId: questionId,
+      title: title,
+      content: content,
+    );
   }
 }
