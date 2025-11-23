@@ -12,17 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class ServiceWithdrawPage extends ConsumerStatefulWidget {
+class ServiceWithdrawPage extends ConsumerWidget {
   const ServiceWithdrawPage({super.key});
 
   @override
-  ConsumerState<ServiceWithdrawPage> createState() =>
-      _ServiceWithdrawPageState();
-}
-
-class _ServiceWithdrawPageState extends ConsumerState<ServiceWithdrawPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: const DefaultAppBar(title: "서비스 탈퇴"),
       body: SafeArea(
@@ -50,7 +44,7 @@ class _ServiceWithdrawPageState extends ConsumerState<ServiceWithdrawPage> {
                   ),
                 ),
                 onPressed: () {
-                  _handleDormantChange();
+                  _handleDormantChange(context, ref);
                 },
               ),
               const Gap(8),
@@ -74,14 +68,14 @@ class _ServiceWithdrawPageState extends ConsumerState<ServiceWithdrawPage> {
     );
   }
 
-  void _handleDormantChange() async {
+  void _handleDormantChange(BuildContext context, WidgetRef ref) async {
     await _showUpdateDormantStatus(
       context,
       onDormantChanged: () async {
         final isSuccess = await ref
             .read(mySettingProvider.notifier)
             .deactiveAccount();
-        if (!mounted) return;
+        if (!context.mounted) return;
         if (!isSuccess) {
           ErrorDialog.open(
             context,
@@ -94,9 +88,9 @@ class _ServiceWithdrawPageState extends ConsumerState<ServiceWithdrawPage> {
           return;
         }
 
-        await _handleSignOut();
+        await _handleSignOut(context, ref);
 
-        if (!mounted) return;
+        if (!context.mounted) return;
 
         context.pop();
 
@@ -105,11 +99,11 @@ class _ServiceWithdrawPageState extends ConsumerState<ServiceWithdrawPage> {
     );
   }
 
-  Future<void> _handleSignOut() async {
+  Future<void> _handleSignOut(BuildContext context, WidgetRef ref) async {
     final signOutCompleted = await ref
         .read(mySettingProvider.notifier)
         .signOut();
-    if (!mounted) return;
+    if (!context.mounted) return;
     if (!signOutCompleted) {
       ErrorDialog.open(
         context,
