@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -71,15 +72,38 @@ class _AppState extends ConsumerState<App> {
     await ref.read(localStorageProvider).initialize();
     await ref.read(globalProvider.notifier).initProfile();
     await ref.read(contactSettingProvider.notifier).initialize();
+    
+    _navigateToInitialRoute();
+    FlutterNativeSplash.remove();
+  }
 
+  void _navigateToInitialRoute() {
     final router = ref.read(routerProvider);
-    if (ref.read(globalProvider).profile.isDefault) {
+    final profile = ref.read(globalProvider).profile;
+
+    if (profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
-    } else {
-      router.goNamed(AppRoute.mainTab.name);
+      return;
     }
 
-    FlutterNativeSplash.remove();
+    final activityStatus = ActivityStatus.parse(profile.activityStatus);
+
+    switch (activityStatus) {
+      case ActivityStatus.waitingScreening:
+        router.goNamed(AppRoute.signUpProfileReview.name);
+        break;
+      case ActivityStatus.rejectedScreening:
+        router.goNamed(AppRoute.signUpProfileReject.name);
+        break;
+      case ActivityStatus.active:
+        router.goNamed(AppRoute.mainTab.name);
+        break;
+      case null:
+        router.goNamed(AppRoute.onboard.name);
+        break;
+      default:
+        router.goNamed(AppRoute.onboard.name);
+    }
   }
 
   void _handleFcmNotification(FcmNotification data) {

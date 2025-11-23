@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/auth/data/data.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
@@ -151,7 +151,7 @@ class _OnboardingCertificationPageState
   }
 
   void _verifyCode(OnboardingNotifier notifier) async {
-    final (userData, status) = await notifier.verifyCode(
+    final (UserData? userData, status) = await notifier.verifyCode(
       widget.phoneNumber,
       _codeController.text,
     );
@@ -187,11 +187,13 @@ class _OnboardingCertificationPageState
     ref
         .read(contactSettingProvider.notifier)
         .registerContactSetting(phoneNumber: widget.phoneNumber);
-
+        
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReject);
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }

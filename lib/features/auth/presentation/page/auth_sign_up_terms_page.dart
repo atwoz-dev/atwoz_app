@@ -80,11 +80,10 @@ class AuthSignUpTermsPageState
                           profileState.toProfileUploadRequest(); // DTO 변환
                       await authUseCase.uploadProfile(profileData);
 
-                      // 홈 화면으로 이동
+                      // 심사대기 화면으로 이동
                       navigate(
                         context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
+                        route: AppRoute.signUpProfileReview,
                       );
                     }
                   : null,

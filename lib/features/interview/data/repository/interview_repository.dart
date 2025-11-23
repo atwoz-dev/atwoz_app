@@ -19,9 +19,7 @@ class InterviewRepository extends BaseRepository {
     try {
       final response = await apiService.getJson<Map<String, dynamic>>(
         '$path/question',
-        queryParameters: {
-          'category': category.name.toUpperCase(),
-        },
+        queryParameters: {'category': category.name.toUpperCase()},
       );
 
       final result = InterviewQuestionResponse.fromJson(response);
@@ -43,10 +41,12 @@ class InterviewRepository extends BaseRepository {
       answerContent: answerContent,
     );
 
-    await apiService.postJson(
-      '$path/answer',
-      data: request.toJson(),
-    );
+    await apiService.postJson('$path/answer', data: request.toJson());
+  }
+
+  /// 인터뷰 답변 삭제 API
+  Future<void> removeAnswer({required int answerId}) async {
+    await apiService.deleteJson('$path/answer/$answerId');
   }
 
   /// 인터뷰 답변 수정 API
