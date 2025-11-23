@@ -131,7 +131,7 @@ class IntroduceListItem extends ConsumerWidget {
 
             if (!context.mounted) return;
             if (detail == null) {
-              // TODO: 에러 메세지??
+              // TODO: 에러 처리 - 메시지?
               return ErrorDialog.open(
                 context,
                 error: DialogueErrorType.unknown,

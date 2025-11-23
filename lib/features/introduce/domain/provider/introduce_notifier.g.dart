@@ -33,7 +33,7 @@ final class IntroduceNotifierProvider
   IntroduceNotifier create() => IntroduceNotifier();
 }
 
-String _$introduceNotifierHash() => r'92b0e329db9d7076928b335f1458e0576c8db502';
+String _$introduceNotifierHash() => r'0b5fd783b03502254971183b2fa2703677f22229';
 
 abstract class _$IntroduceNotifier extends $AsyncNotifier<IntroduceState> {
   FutureOr<IntroduceState> build();

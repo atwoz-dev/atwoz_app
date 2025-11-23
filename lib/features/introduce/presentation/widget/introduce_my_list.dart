@@ -127,7 +127,7 @@ class IntroduceHistoryListItem extends ConsumerWidget {
                     .deleteIntroduce(item.id);
                 await Future.delayed(const Duration(milliseconds: 500));
                 ref.read(introduceProvider.notifier).fetchMyIntroduceList();
-              } catch (e, s) {
+              } catch (e) {
                 // TODO: 에러 처리
                 showToastMessage('삭제하는데 실패했습니다.');
               }

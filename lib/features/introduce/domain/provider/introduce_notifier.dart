@@ -61,6 +61,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
         ),
       );
     } catch (e, s) {
+      // TODO: 에러 처리
       Log.e("셀프 소개 목록 조회 중 오류 발생 : $e");
       state = AsyncError(e, s);
     }
@@ -97,6 +98,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
         );
       }
     } catch (e, s) {
+      // TODO: 에러 처리
       Log.e("셀프 소개 목록 조회 중 오류 발생 : $e");
       state = AsyncError(e, s);
     }
@@ -120,6 +122,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
         ),
       );
     } catch (e, s) {
+      // TODO: 에러 처리
       Log.e("내 셀프 소개 목록 조회 중 오류 발생 : $e");
       state = AsyncError(e, s);
     }
@@ -149,6 +152,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
         );
       }
     } catch (e, s) {
+      // TODO: 에러 처리
       Log.e("내 셀프 소개 목록 조회 중 오류 발생 : $e");
       state = AsyncError(e, s);
     }
