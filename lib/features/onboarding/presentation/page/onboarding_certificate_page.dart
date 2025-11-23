@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
+
   final String phoneNumber;
 
   @override
@@ -181,6 +184,10 @@ class _OnboardingCertificationPageState
   }
 
   Future<void> _handleActivateStatus(UserData? userData) async {
+    ref
+        .read(contactSettingProvider.notifier)
+        .registerContactSetting(phoneNumber: widget.phoneNumber);
+        
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
