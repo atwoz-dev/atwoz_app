@@ -32,7 +32,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
         introduceLastId: introduces.last.id,
       );
     } catch (e, s) {
-      throw AsyncValue.error(e, s);
+      throw AsyncError(e, s);
     }
   }
 

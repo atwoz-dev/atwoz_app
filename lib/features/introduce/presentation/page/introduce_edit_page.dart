@@ -28,13 +28,9 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // TODO: 상세 조회를 introduce_page에서 받아서 넘겨야할지 여기서 조회할지
-      await Future.delayed(const Duration(milliseconds: 500));
-      ref
-          .read(introduceEditProvider.notifier)
-          .fetchIntroduceDetail(id: widget.id);
-    });
+    ref
+        .read(introduceEditProvider.notifier)
+        .fetchIntroduceDetail(id: widget.id);
   }
 
   @override
