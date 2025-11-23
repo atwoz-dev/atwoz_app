@@ -1,4 +1,3 @@
-import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/data/mapper/introduce_mapper.dart';
 import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_detail.dart';
@@ -15,15 +14,10 @@ class FetchIntroduceDetailUseCase {
   FetchIntroduceDetailUseCase(this.ref);
 
   Future<IntroduceDetail?> execute({required int introduceId}) async {
-    try {
-      final introduce = await ref
-          .read(introduceRepositoryProvider)
-          .getIntroduceDetail(id: introduceId);
+    final introduce = await ref
+        .read(introduceRepositoryProvider)
+        .getIntroduceDetail(id: introduceId);
 
-      return introduce.toDomain();
-    } catch (e) {
-      Log.e("셀프 소개 상세 호출 실패 : $e");
-      return null;
-    }
+    return introduce.toDomain();
   }
 }

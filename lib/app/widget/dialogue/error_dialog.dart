@@ -55,12 +55,11 @@ class ErrorDialog extends StatelessWidget {
     BuildContext context, {
     required DialogueErrorType error,
     required VoidCallback onConfirm,
-  }) =>
-      showDialog<bool>(
-        context: context,
-        builder: (context) => ErrorDialog(
-          error: error,
-          onConfirm: onConfirm,
-        ),
-      );
+  }) => showDialog<bool>(
+    context: context,
+    builder: (context) => ErrorDialog(
+      error: error,
+      onConfirm: onConfirm,
+    ),
+  );
 }

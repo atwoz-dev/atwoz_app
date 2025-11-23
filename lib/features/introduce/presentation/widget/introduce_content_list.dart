@@ -4,6 +4,8 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class IntroduceContentList extends ConsumerStatefulWidget {
   const IntroduceContentList({super.key});
@@ -62,6 +65,7 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
       data: (data) {
         final introduces = data.introduceList;
         final introducesCount = introduces.length;
+
         return ListView.builder(
           padding: EdgeInsets.zero,
           controller: _scrollController,
@@ -77,7 +81,8 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
           },
         );
       },
-      error: (error, stackTrace) => const SizedBox.shrink(),
+      error: (error, stackTrace) =>
+          const Center(child: Text('셀프 소개 목록 조회 중 오류 발생')),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
@@ -124,8 +129,15 @@ class IntroduceListItem extends ConsumerWidget {
                 .read(introduceProvider.notifier)
                 .fetchIntroduceDetail(introduce.id);
 
-            // TODO: 에러 처리
-            if (detail == null) return;
+            if (!context.mounted) return;
+            if (detail == null) {
+              // TODO: 에러 메세지??
+              return ErrorDialog.open(
+                context,
+                error: DialogueErrorType.unknown,
+                onConfirm: context.pop,
+              );
+            }
 
             if (detail.profileExchangeStatus == ProfileExchangeStatus.approve) {
               if (context.mounted) {

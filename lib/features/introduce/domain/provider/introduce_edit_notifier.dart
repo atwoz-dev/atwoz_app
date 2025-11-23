@@ -1,6 +1,5 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_edit_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_delete_use_case.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/introduce_edit_use_case.dart';
 import 'package:atwoz_app/features/introduce/domain/usecase/introduce_fetch_introduce_detail_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -61,16 +60,6 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
     } catch (e) {
       // TODO: 에러 발생 처리 어떻게???
       Log.e("Failed to edit introduce to server: $e");
-    }
-  }
-
-  /// 셀프 소개 삭제
-  Future<void> deleteIntroduce({required int id}) async {
-    try {
-      await IntroduceDeleteUseCase(ref).call(id: id);
-    } catch (e) {
-      // TODO: 에러 발생 처리 어떻게???
-      Log.e("Failed to delete introduce from server: $e");
     }
   }
 }

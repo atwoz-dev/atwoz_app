@@ -3,6 +3,8 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/dialogue/custom_return_dialogue.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +76,8 @@ class _IntroduceMyListState extends ConsumerState<IntroduceMyList> {
           },
         );
       },
-      error: (error, stackTrace) => const SizedBox.shrink(),
+      error: (error, stackTrace) =>
+          const Center(child: Text('내가 쓴 글 조회 중 오류 발생')),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
@@ -110,7 +113,29 @@ class IntroduceHistoryListItem extends ConsumerWidget {
             extra: IntroduceEditArguments(id: item.id),
           );
           await Future.delayed(const Duration(milliseconds: 500));
-          await ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+          ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+        },
+        onLongPress: () {
+          CustomReturnDialogue.showTwoChoiceDialogue(
+            context: context,
+            content: '삭제 버튼을 누르면\n내 셀프소개 글이 삭제됩니다.',
+            elevatedButtonText: "삭제",
+            onElevatedButtonPressed: () async {
+              try {
+                await ref
+                    .read(introduceProvider.notifier)
+                    .deleteIntroduce(item.id);
+              } catch (e, s) {
+                showToastMessage('삭제하는데 실패했습니다.');
+              }
+            },
+          ).then((success) async {
+            if (success == true) {
+              // 목록 갱신
+              await Future.delayed(const Duration(milliseconds: 500));
+              ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+            }
+          });
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),

@@ -86,7 +86,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
           onTap: () async {
             await navigate(context, route: AppRoute.introduceRegister);
 
-            // TODO: 등록한 셀프소개가 서버에 적용되는데 약간의 딜레이 발생. 다른 방법이 있을까?
+            // 등록한 셀프소개가 적용되는 딜레이 필요
             await Future.delayed(const Duration(milliseconds: 500));
             _refreshIntroduceList();
           },
@@ -102,9 +102,9 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
 
   Future<void> _refreshIntroduceList() async {
     if (_currentTabIndex == 0) {
-      await ref.read(introduceProvider.notifier).fetchIntroduceList();
+      ref.read(introduceProvider.notifier).fetchIntroduceList();
     } else if (_currentTabIndex == 1) {
-      await ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+      ref.read(introduceProvider.notifier).fetchMyIntroduceList();
     }
   }
 }
