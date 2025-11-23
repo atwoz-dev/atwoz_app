@@ -175,7 +175,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
       await ref.read(deleteIntroduceUseCaseProvider).execute(id: id);
     } catch (e, s) {
       Log.e("Failed to delete introduce from server: $e");
-      state = AsyncError(e, s);
+      rethrow;
     }
   }
 }

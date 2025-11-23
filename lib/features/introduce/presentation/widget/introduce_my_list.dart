@@ -125,17 +125,14 @@ class IntroduceHistoryListItem extends ConsumerWidget {
                 await ref
                     .read(introduceProvider.notifier)
                     .deleteIntroduce(item.id);
+                await Future.delayed(const Duration(milliseconds: 500));
+                ref.read(introduceProvider.notifier).fetchMyIntroduceList();
               } catch (e, s) {
+                // TODO: 에러 처리
                 showToastMessage('삭제하는데 실패했습니다.');
               }
             },
-          ).then((success) async {
-            if (success == true) {
-              // 목록 갱신
-              await Future.delayed(const Duration(milliseconds: 500));
-              ref.read(introduceProvider.notifier).fetchMyIntroduceList();
-            }
-          });
+          );
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
