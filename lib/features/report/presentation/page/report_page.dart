@@ -197,7 +197,8 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
 
     // 2) 서버 성공했지만 캐시 삭제 실패 → 재시도 Dialog
     if (!result.isDeletedCache) {
-      _showRetryCacheDialog(context);
+      await _showRetryCacheDialog(context);
+      if (!context.mounted) return;
     }
 
     // 3) 정상 동작 후 메인 화면 & Toast
@@ -209,10 +210,10 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
     );
   }
 
-  void _showRetryCacheDialog(BuildContext context) {
+  Future<void> _showRetryCacheDialog(BuildContext context) async {
     final notifier = ref.read(reportProvider(widget.userId).notifier);
 
-    context.showPrimaryConfirmDialog(
+    await context.showPrimaryConfirmDialog(
       submit: DialogButton(
         label: '확인',
         onTap: () async {
