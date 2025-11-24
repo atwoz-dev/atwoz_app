@@ -42,7 +42,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
 
       if (previous?.hasProcessedMission == false &&
           current?.hasProcessedMission == true) {
-        showToastMessage('좋아요 미션완료! 하트가 지급되었습니다');
+        showToastMessage('좋아요 보내기 미션 완료! 하트 2개를 받았어요');
 
         ref.read(homeProvider.notifier).resetHasProcessedMission();
       }

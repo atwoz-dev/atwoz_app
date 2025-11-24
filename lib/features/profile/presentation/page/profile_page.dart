@@ -58,7 +58,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
 
     if (prev?.profile?.favoriteType != curr.profile?.favoriteType) {
-      showToastMessage("좋아요 미션완료! 하트가 지급되었어요");
+      showToastMessage("좋아요 보내기 미션 완료! 하트 2개를 받았어요요");
       ref
           .read(profileProvider(widget.userId).notifier)
           .resetHasProcessedMission();
