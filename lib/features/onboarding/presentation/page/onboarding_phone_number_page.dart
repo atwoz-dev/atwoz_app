@@ -123,7 +123,7 @@ class OnboardingPhoneInputPageState
                     focusNode: focusNode,
                     autofocus: false,
                     controller: _phoneController,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.number,
                     hintText: '010-0000-0000',
                     fillColor: Palette.colorGrey100,
                     errorText: validationError,
@@ -144,10 +144,11 @@ class OnboardingPhoneInputPageState
                   onPressed: isButtonEnabled ? () => _handleLogin(ref) : null,
                   child: Text(
                     '인증번호 요청하기',
-                    style: Fonts.body01Medium(isButtonEnabled
-                            ? palette.onPrimary
-                            : Palette.colorGrey400)
-                        .copyWith(fontWeight: FontWeight.w900),
+                    style: Fonts.body01Medium(
+                      isButtonEnabled
+                          ? palette.onPrimary
+                          : Palette.colorGrey400,
+                    ).copyWith(fontWeight: FontWeight.w900),
                   ),
                 );
               },

@@ -51,6 +51,13 @@ class UserRepository extends BaseRepository {
     }
   }
 
+  // 재심사 요청
+  Future<void> rescreenProfile() => apiService.postJson(
+    '/members/screenings/rescreen',
+    data: null,
+    requiresRefreshCookie: true,
+  );
+
   // 인증코드 발송
   Future<void> sendVerificationCode({required String phoneNumber}) async {
     await apiService.getJson(

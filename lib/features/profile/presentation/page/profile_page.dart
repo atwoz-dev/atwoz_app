@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
@@ -46,10 +47,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   void _listener(ProfileState? prev, ProfileState curr) {
+    final isContactSettingInitialized = ref
+        .read(contactSettingProvider)
+        .isContactSettingInitialized;
+
     if (prev?.matchStatus != curr.matchStatus) {
       _handleStatusChanged(
         curr.matchStatus,
-        isContactInitialized: curr.isInitializedContactMethod,
+        isContactInitialized: isContactSettingInitialized,
       );
     }
 
@@ -86,10 +91,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             context.pop();
 
             if (!isContactInitialized) {
-              final res = await ContactInitializeBottomsheet.open(
-                context,
-                userId: widget.userId,
-              );
+              final res = await ContactInitializeBottomsheet.open(context);
               if (res != true || !mounted) return;
             }
 

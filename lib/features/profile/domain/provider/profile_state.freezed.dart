@@ -66,10 +66,7 @@ class _$ProfileStateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserProfile?,myUserName: null == myUserName ? _self.myUserName : myUserName // ignore: cast_nullable_to_non_nullable
-as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,kakaoId: freezed == kakaoId ? _self.kakaoId : kakaoId // ignore: cast_nullable_to_non_nullable
-as String?,selectedContactMethod: freezed == selectedContactMethod ? _self.selectedContactMethod : selectedContactMethod // ignore: cast_nullable_to_non_nullable
-as ContactMethod?,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
+as String,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
 as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -232,9 +229,6 @@ class _ProfileState extends ProfileState {
 
 @override final  UserProfile? profile;
 @override final  String myUserName;
-@override final  String phoneNumber;
-@override final  String? kakaoId;
-@override final  ContactMethod? selectedContactMethod;
 @override final  int heartPoint;
 @override final  String message;
 @override final  bool isLoaded;
@@ -292,10 +286,7 @@ class __$ProfileStateCopyWithImpl<$Res>
   return _then(_ProfileState(
 profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserProfile?,myUserName: null == myUserName ? _self.myUserName : myUserName // ignore: cast_nullable_to_non_nullable
-as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String,kakaoId: freezed == kakaoId ? _self.kakaoId : kakaoId // ignore: cast_nullable_to_non_nullable
-as String?,selectedContactMethod: freezed == selectedContactMethod ? _self.selectedContactMethod : selectedContactMethod // ignore: cast_nullable_to_non_nullable
-as ContactMethod?,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
+as String,heartPoint: null == heartPoint ? _self.heartPoint : heartPoint // ignore: cast_nullable_to_non_nullable
 as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,isLoaded: null == isLoaded ? _self.isLoaded : isLoaded // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable

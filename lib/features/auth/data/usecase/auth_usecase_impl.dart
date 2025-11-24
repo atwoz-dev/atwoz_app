@@ -89,6 +89,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     }
   }
 
+  @override
+  Future<void> rescreenProfile() async {
+    await _userRepository.rescreenProfile();
+  }
+
   // 프로필 사진 업로드
   @override
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
