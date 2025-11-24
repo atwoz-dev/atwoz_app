@@ -55,7 +55,7 @@ class ReportNotifier extends _$ReportNotifier {
     } catch (e) {
       return const ReportBlockResult(
         isServerProcessed: false,
-        isDeletedCache: true,
+        isDeletedCache: false,
       );
     }
   }
