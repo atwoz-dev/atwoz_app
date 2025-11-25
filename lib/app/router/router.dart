@@ -293,6 +293,21 @@ final allRoutes = [
           return OnboardingCertificationPage(phoneNumber: args.phoneNumber);
         },
       ),
+      NamedGoRoute(
+        name: AppRoute.dormantRelease.name,
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! DormantReleaseArguments) {
+            return const SizedBox.shrink();
+          }
+
+          return DormantReleasePage(phoneNumber: args.phoneNumber);
+        },
+      ),
+      NamedGoRoute(
+        name: AppRoute.temporalForbidden.name,
+        builder: (context, state) => const TemporalForbiddenPage(),
+      ),
     ],
   ),
   // Auth routes
@@ -320,6 +335,14 @@ final allRoutes = [
           NamedGoRoute(
             name: AppRoute.signUpProfileUpdate.name,
             builder: (context, state) => const SignUpProfileUpdatePage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.signUpProfileReview.name,
+            builder: (context, state) => const SignUpProfileReviewPage(),
+          ),
+          NamedGoRoute(
+            name: AppRoute.signUpProfileReject.name,
+            builder: (context, state) => const SignUpProfileRejectPage(),
           ),
         ],
       ),
@@ -370,7 +393,7 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.dormantAccount.name,
-        builder: (_, _) => const DormantAccountPage(),
+        builder: (_, __) => const DormantAccountPage(),
       ),
     ],
   ),
@@ -387,7 +410,7 @@ final allRoutes = [
   NamedGoRoute(
     root: true,
     name: AppRoute.customerCenter.name,
-    builder: (context, state) => const SignUpProfileUpdatePage(),
+    builder: (context, state) => const CustomerCenterPage(), // 수정 완료
   ),
   NamedGoRoute(
     root: true,
@@ -441,14 +464,6 @@ Future<T?> navigate<T>(
   final goRouter = GoRouter.of(context);
 
   return switch (method) {
-    NavigationMethod.push => await goRouter.pushNamed<T>(
-      route.name,
-      extra: extra,
-    ),
-    NavigationMethod.replace => await goRouter.replaceNamed<T>(
-      route.name,
-      extra: extra,
-    ),
     NavigationMethod.push => await goRouter.pushNamed<T>(
       route.name,
       extra: extra,
