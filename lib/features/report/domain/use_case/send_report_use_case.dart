@@ -13,8 +13,15 @@ class SendReportUseCase {
 
   SendReportUseCase(this._ref);
 
-  Future<void> execute(Report report) async {
-    final repository = _ref.read(reportRepositoryProvider);
-    await repository.sendReport(report.toDto());
+  Future<bool> execute(Report report) async {
+    try {
+      final repository = _ref.read(reportRepositoryProvider);
+      await repository.sendReport(report.toDto());
+
+      return true;
+    } catch (e) {
+      Log.e('신고하기 실패: $e');
+      return false;
+    }
   }
 }
