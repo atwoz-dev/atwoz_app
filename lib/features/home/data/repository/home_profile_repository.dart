@@ -10,9 +10,7 @@ class HomeProfileRepository extends BaseRepository {
   HomeProfileRepository(Ref ref) : super(ref, '/member');
 
   Future<HomeProfileResponseDto> getProfile() async {
-    final response = await apiService.getJson(
-      '$path/cache',
-    );
+    final response = await apiService.getJson('$path/cache');
 
     return HomeProfileResponseDto.fromJson(response['data']);
   }

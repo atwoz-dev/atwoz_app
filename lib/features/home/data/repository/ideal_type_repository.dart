@@ -24,10 +24,7 @@ class IdealTypeRepository extends BaseRepository {
 
   Future<bool> updateIdealType(IdealTypeDto idealTypeDto) async {
     try {
-      await apiService.patchJson(
-        path,
-        data: idealTypeDto.toJson(),
-      );
+      await apiService.patchJson(path, data: idealTypeDto.toJson());
 
       return true;
     } on NetworkException catch (e) {

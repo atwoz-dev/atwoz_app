@@ -1,8 +1,10 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,6 +70,7 @@ class _MessageSendBottomSheetState
   @override
   Widget build(BuildContext context) {
     final status = ref.watch(profileProvider(widget.userId));
+    final contactState = ref.watch(contactSettingProvider);
     final messageReceived = status.matchStatus is MatchingReceived;
 
     final (
@@ -105,14 +108,11 @@ class _MessageSendBottomSheetState
                   const Gap(8.0),
                   _MessageSendGuide(
                     sendMessageSubGuide: sendMessageSubGuide,
-                    hasKakaoId: status.kakaoId?.isNotEmpty == true,
-                    contactMethod:
-                        status.selectedContactMethod ?? ContactMethod.phone,
-                    onChangedContactMethod: (method) =>
-                        ref
-                                .read(profileProvider(widget.userId).notifier)
-                                .selectedContactMethod =
-                            method,
+                    hasKakaoId: contactState.kakao?.isNotEmpty == true,
+                    contactMethod: contactState.method ?? ContactMethod.phone,
+                    onChangedContactMethod: (method) => ref
+                        .read(contactSettingProvider.notifier)
+                        .registerContactSetting(method: method),
                   ),
                   const Gap(32.0),
                   _MessageSendForm(
@@ -163,7 +163,7 @@ class _MessageSendBottomSheetState
     await showDialog(
       context: context,
       builder: (context) => _MessageSendConfirm(
-        hasPoint: ref.read(profileProvider(widget.userId)).heartPoint,
+        hasPoint: ref.read(globalProvider).heartBalance.totalHeartBalance,
         needPoint: Dimens.messageSendHeartCount,
         onMessageSend: _messageSendAndDetuctPoint,
       ),

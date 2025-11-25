@@ -89,6 +89,18 @@ flutter:
     - family: MontserratMedium
       fonts:
         - asset: assets/fonts/Montserrat-Medium.ttf
+    - family: PretendardBold
+      fonts:
+        - asset: assets/fonts/Pretendard-Bold.otf
+    - family: PretendardSemiBold
+      fonts:
+        - asset: assets/fonts/Pretendard-SemiBold.otf
+    - family: PretendardMedium
+      fonts:
+        - asset: assets/fonts/Pretendard-Medium.otf
+    - family: PretendardRegular
+      fonts:
+        - asset: assets/fonts/Pretendard-Regular.otf
 
 scripts:
   run:

@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final recommendedProfileRepositoryProvider =
     Provider<RecommendedProfileRepository>(
-  (ref) => RecommendedProfileRepository(ref),
-);
+      (ref) => RecommendedProfileRepository(ref),
+    );
 
 // TODO(jh): 추후 extends BaseRepository 변경
 class RecommendedProfileRepositoryImpl {
@@ -30,7 +30,7 @@ class RecommendedProfileRepositoryImpl {
       'hobbies': [
         "DRAMA_AND_ENTERTAINMENT",
         "PC_AND_MOBILE_GAMES",
-        "ANIMATION"
+        "ANIMATION",
       ],
       'mbti': "INFP",
       'religion': "CHRISTIAN",
@@ -49,15 +49,11 @@ class RecommendedProfileRepositoryImpl {
           "안녕하세요 활발한 성격의 유쾌하고 대화 코드가 맞는 자존감 높으신 분이 좋아요...",
       'likeLevel': "HIGHLY_INTERESTED",
       'isIntroduced': false,
-    }
+    },
   ];
 
   Future<List<IntroducedProfileDto>> getProfiles() async {
-    return _mockData
-        .map(
-          (e) => IntroducedProfileDto.fromJson(e),
-        )
-        .toList();
+    return _mockData.map((e) => IntroducedProfileDto.fromJson(e)).toList();
   }
 }
 
@@ -65,10 +61,7 @@ class RecommendedProfileRepository extends BaseRepository {
   RecommendedProfileRepository(Ref ref) : super(ref, '/member/introduction');
 
   Future<List<IntroducedProfileDto>> getProfiles() async {
-    final res = await apiService.postJson(
-      '$path/today-card',
-      data: {},
-    );
+    final res = await apiService.postJson('$path/today-card', data: {});
 
     if (res is! Map<String, dynamic> || res['data'] is! List) {
       Log.e('data type is not Map<String, dynamic> $res');

@@ -40,9 +40,7 @@ Widget bubbleWidget({
           trianglePosition: trianglePosition,
         ),
         child: Container(
-          decoration: BoxDecoration(
-            color: bubbleColor,
-          ),
+          decoration: BoxDecoration(color: bubbleColor),
           padding: EdgeInsets.only(
             top: trianglePosition == BubblePosition.top ? 8 : 0,
             left: 16,
@@ -52,11 +50,12 @@ Widget bubbleWidget({
           width: width,
           height: height,
           child: Center(
-              child: MixedBoldText(
-            comment: comment,
-            textStyle: textStyle,
-            boldText: boldText,
-          )),
+            child: MixedBoldText(
+              comment: comment,
+              textStyle: textStyle,
+              boldText: boldText,
+            ),
+          ),
         ),
       ),
     ],
@@ -119,16 +118,18 @@ class BubbleClipper extends CustomClipper<Path> {
 
     switch (trianglePosition) {
       case BubblePosition.bottom:
-        path.addRRect(RRect.fromLTRBAndCorners(
-          0,
-          0,
-          size.width,
-          size.height - tailHeight,
-          bottomLeft: Radius.circular(borderRadius),
-          bottomRight: Radius.circular(borderRadius),
-          topLeft: Radius.circular(borderRadius),
-          topRight: Radius.circular(borderRadius),
-        ));
+        path.addRRect(
+          RRect.fromLTRBAndCorners(
+            0,
+            0,
+            size.width,
+            size.height - tailHeight,
+            bottomLeft: Radius.circular(borderRadius),
+            bottomRight: Radius.circular(borderRadius),
+            topLeft: Radius.circular(borderRadius),
+            topRight: Radius.circular(borderRadius),
+          ),
+        );
         final double tailCenterX = size.width / 2;
         path.moveTo(tailCenterX - tailWidth / 2, size.height - tailHeight);
         path.lineTo(tailCenterX + tailWidth / 2, size.height - tailHeight);
@@ -136,16 +137,18 @@ class BubbleClipper extends CustomClipper<Path> {
         break;
 
       case BubblePosition.top:
-        path.addRRect(RRect.fromLTRBAndCorners(
-          0,
-          tailHeight,
-          size.width,
-          size.height,
-          bottomLeft: Radius.circular(borderRadius),
-          bottomRight: Radius.circular(borderRadius),
-          topLeft: Radius.circular(borderRadius),
-          topRight: Radius.circular(borderRadius),
-        ));
+        path.addRRect(
+          RRect.fromLTRBAndCorners(
+            0,
+            tailHeight,
+            size.width,
+            size.height,
+            bottomLeft: Radius.circular(borderRadius),
+            bottomRight: Radius.circular(borderRadius),
+            topLeft: Radius.circular(borderRadius),
+            topRight: Radius.circular(borderRadius),
+          ),
+        );
         final double tailCenterX = size.width / 2;
         path.moveTo(tailCenterX - tailWidth / 2, tailHeight);
         path.lineTo(tailCenterX + tailWidth / 2, tailHeight);

@@ -47,7 +47,9 @@ class FirebaseManager {
 
       _initialized.complete();
 
-      _firebaseMessagingBackgroundHandler(await FirebaseMessaging.instance.getInitialMessage());
+      _firebaseMessagingBackgroundHandler(
+        await FirebaseMessaging.instance.getInitialMessage(),
+      );
     } catch (e, stack) {
       if (!_initialized.isCompleted) {
         _initialized.completeError(e, stack);
@@ -61,8 +63,9 @@ class FirebaseManager {
     bool provisional = true,
   }) async {
     await _initialized.future;
-    return await FirebaseMessaging.instance
-        .requestPermission(provisional: provisional);
+    return await FirebaseMessaging.instance.requestPermission(
+      provisional: provisional,
+    );
   }
 
   Future<AuthorizationStatus> getNotificationPermissionStatus() async {
@@ -73,7 +76,8 @@ class FirebaseManager {
 
   Future<String?> getFcmToken() async {
     final token = await FirebaseMessaging.instance.getToken(
-      vapidKey: 'BHYbT4bWQqQx2MtDVhlbSjLrmz2fowcmt-'
+      vapidKey:
+          'BHYbT4bWQqQx2MtDVhlbSjLrmz2fowcmt-'
           'o6h1igZFwoEzF4iEBrDTPs7DMlIfAajiktoYMPwxvvkUnU8IwaBlc',
     );
     return token;
@@ -81,7 +85,9 @@ class FirebaseManager {
 
   Future<void> _registerFcmHandlers() async {
     FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
-    FirebaseMessaging.onMessageOpenedApp.listen(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      _firebaseMessagingBackgroundHandler,
+    );
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
       // TODO: 서버에 토큰 저장 로직 추가
       debugPrint('FCM Token refreshed: $newToken');
@@ -91,7 +97,7 @@ class FirebaseManager {
   static Future<void> _firebaseMessagingBackgroundHandler(
     RemoteMessage? message,
   ) async {
-    if(message == null) return;
+    if (message == null) return;
     _handleBackgroundNotification(message.data);
   }
 
@@ -125,9 +131,7 @@ class FirebaseManager {
 
       _instance._fcmNotification.value = data;
     } catch (e) {
-      Log.e(
-        'Error handling FCM data: $json, error: $e',
-      );
+      Log.e('Error handling FCM data: $json, error: $e');
     }
   }
 }
@@ -161,12 +165,15 @@ Future<void> _initializeLocalNotifications() async {
 
 // Handler for when a local notification is tapped
 void _onDidReceiveLocalNotificationResponse(
-    NotificationResponse notificationResponse) async {
+  NotificationResponse notificationResponse,
+) async {
   final payload = notificationResponse.payload;
   if (payload != null && payload.isNotEmpty) {
     try {
       final data = jsonDecode(payload);
-      FirebaseManager._handleBackgroundNotification(data); // Reuse FCM handling logic
+      FirebaseManager._handleBackgroundNotification(
+        data,
+      ); // Reuse FCM handling logic
     } catch (e) {
       Log.e('Error handling local notification payload: $payload, error: $e');
     }

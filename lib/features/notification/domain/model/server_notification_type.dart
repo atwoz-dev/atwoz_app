@@ -29,10 +29,10 @@ enum ServerNotificationType {
       _byValue[value?.toUpperCase()] ?? unknown;
 
   bool get isConnectedProfile => [
-        like,
-        matchAccept,
-        matchRequest,
-        profileExchangeAccept,
-        profileExchangeRequest,
-      ].contains(this);
+    like,
+    matchAccept,
+    matchRequest,
+    profileExchangeAccept,
+    profileExchangeRequest,
+  ].contains(this);
 }

@@ -1,11 +1,9 @@
 import 'dart:async';
 
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/store/domain/provider/usecase_providers.dart';
-import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
-import 'package:atwoz_app/features/store/domain/usecase/verify_receipt_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:flutter/material.dart';
 
@@ -55,13 +53,11 @@ class StoreNotifier extends _$StoreNotifier {
 
     if (!isAvailable) return;
 
-    final response =
-        await inAppPurchase.queryProductDetails(_productIds.toSet());
-
-    state = state.copyWith(
-      products: response.productDetails,
-      isLoaded: true,
+    final response = await inAppPurchase.queryProductDetails(
+      _productIds.toSet(),
     );
+
+    state = state.copyWith(products: response.productDetails, isLoaded: true);
   }
 
   // 하트상품 구입
@@ -70,10 +66,7 @@ class StoreNotifier extends _$StoreNotifier {
     final product = state.products.firstWhere((p) => p.id == productId);
     final param = PurchaseParam(productDetails: product);
 
-    inAppPurchase.buyConsumable(
-      purchaseParam: param,
-      autoConsume: true,
-    );
+    inAppPurchase.buyConsumable(purchaseParam: param, autoConsume: true);
 
     state = state.copyWith(isPurchasePending: true);
   }
@@ -93,7 +86,7 @@ class StoreNotifier extends _$StoreNotifier {
               .verifyReceipt(purchase.verificationData.serverVerificationData);
 
           // 보유하트 재조회
-          await ref.read(storeProvider.notifier).fetchHeartBalance();
+          await fetchHeartBalance();
         } catch (e) {
           Log.e('영수증 검증 또는 하트 조회 실패: $e');
         }
@@ -112,10 +105,10 @@ class StoreNotifier extends _$StoreNotifier {
   // 보유하트 조회
   Future<void> _initializeHeartBalanceItem() async {
     try {
-      final heartBalance = await HeartBalanceFetchUseCase(ref).call();
+      final heartBalance = ref.read(globalProvider).heartBalance;
 
       state = state.copyWith(
-        heartBalance: StoreData(heartBalance: heartBalance),
+        heartBalance: heartBalance,
         isLoaded: true,
         error: null,
       );
@@ -128,8 +121,20 @@ class StoreNotifier extends _$StoreNotifier {
     }
   }
 
+  // 보유하트 수 재조회
   Future<void> fetchHeartBalance() async {
-    await _initializeHeartBalanceItem();
+    try {
+      await ref.read(globalProvider.notifier).fetchHeartBalance();
+    } catch (e) {
+      Log.e('보유 하트 수 재조회 실패: $e');
+      return;
+    } finally {
+      state = state.copyWith(
+        heartBalance: ref.watch(globalProvider).heartBalance,
+        isLoaded: true,
+        error: null,
+      );
+    }
   }
 
   Future<void> verifyReceipt(String appReceipt) async {

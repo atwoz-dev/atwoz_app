@@ -83,7 +83,10 @@ class IntroduceDetailPageState
           final gender = introduceDetail.memberBasicInfo.gender;
 
           // 하트 갯수
-          final heartBalance = ref.read(globalProvider).heartBalance;
+          final heartBalance = ref
+              .read(globalProvider)
+              .heartBalance
+              .totalHeartBalance;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

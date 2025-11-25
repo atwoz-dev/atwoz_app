@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({
-    super.key,
-    required this.error,
-    required this.onConfirm,
-  });
+  const ErrorDialog({super.key, required this.error, required this.onConfirm});
 
   final DialogueErrorType error;
   final VoidCallback onConfirm;
@@ -18,9 +14,7 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: Dimens.dialogPadding,
         child: Column(
@@ -57,9 +51,6 @@ class ErrorDialog extends StatelessWidget {
     required VoidCallback onConfirm,
   }) => showDialog<bool>(
     context: context,
-    builder: (context) => ErrorDialog(
-      error: error,
-      onConfirm: onConfirm,
-    ),
+    builder: (context) => ErrorDialog(error: error, onConfirm: onConfirm),
   );
 }

@@ -19,8 +19,9 @@ class LocationNotFoundException extends LocationException {
 }
 
 class LocationServiceDisabledException extends LocationException {
-  const LocationServiceDisabledException(
-      [super.message = '위치 서비스가 비활성화되어 있습니다.']);
+  const LocationServiceDisabledException([
+    super.message = '위치 서비스가 비활성화되어 있습니다.',
+  ]);
 }
 
 class LocationRepository {

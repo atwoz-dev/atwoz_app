@@ -28,14 +28,7 @@ class Log {
     if (_enableLog) {
       final logMessage = _formatMessage(message, name);
       _logger.d(logMessage);
-      _logToDevConsole(
-        logMessage,
-        name,
-        time,
-        null,
-        null,
-        level,
-      );
+      _logToDevConsole(logMessage, name, time, null, null, level);
     }
   }
 
@@ -49,14 +42,7 @@ class Log {
     if (_enableLog) {
       final logMessage = _formatMessage(message, name);
       _logger.i(logMessage);
-      _logToDevConsole(
-        logMessage,
-        name,
-        time,
-        null,
-        null,
-        level,
-      );
+      _logToDevConsole(logMessage, name, time, null, null, level);
     }
   }
 
@@ -70,14 +56,7 @@ class Log {
     if (_enableLog) {
       final logMessage = _formatMessage(message, name);
       _logger.w(logMessage);
-      _logToDevConsole(
-        logMessage,
-        name,
-        time,
-        null,
-        null,
-        level,
-      );
+      _logToDevConsole(logMessage, name, time, null, null, level);
     }
   }
 
@@ -91,23 +70,9 @@ class Log {
     int level = 1000,
   }) {
     if (_enableLog) {
-      final logMessage = _formatMessage(
-        errorMessage,
-        name,
-      );
-      _logger.e(
-        logMessage,
-        error: errorObject,
-        stackTrace: stackTrace,
-      );
-      _logToDevConsole(
-        logMessage,
-        name,
-        time,
-        errorObject,
-        stackTrace,
-        level,
-      );
+      final logMessage = _formatMessage(errorMessage, name);
+      _logger.e(logMessage, error: errorObject, stackTrace: stackTrace);
+      _logToDevConsole(logMessage, name, time, errorObject, stackTrace, level);
     }
   }
 
@@ -140,8 +105,12 @@ class Log {
   }) {
     if (_enableLog) {
       final logMessage = _formatMessage(message, name);
-      _logger.log(Level.debug, logMessage,
-          error: error, stackTrace: stackTrace);
+      _logger.log(
+        Level.debug,
+        logMessage,
+        error: error,
+        stackTrace: stackTrace,
+      );
       _logToDevConsole(
         logMessage,
         name,

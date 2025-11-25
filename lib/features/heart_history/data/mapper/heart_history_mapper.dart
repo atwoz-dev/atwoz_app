@@ -3,9 +3,9 @@ import 'package:atwoz_app/features/heart_history/domain/model/heart_transaction_
 
 extension HeartHistoryItemMapper on HeartHistoryItemResponse {
   HeartTransactionSummary toDomain() => HeartTransactionSummary(
-        id: id,
-        createdAt: createdAt,
-        content: content,
-        heartAmount: heartAmount,
-      );
+    id: id,
+    createdAt: createdAt,
+    content: content,
+    heartAmount: heartAmount,
+  );
 }

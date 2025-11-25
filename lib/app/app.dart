@@ -10,6 +10,7 @@ import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/notification/notification_model.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,6 +71,8 @@ class _AppState extends ConsumerState<App> {
   Future<void> _initialize() async {
     await ref.read(localStorageProvider).initialize();
     await ref.read(globalProvider.notifier).initProfile();
+    await ref.read(contactSettingProvider.notifier).initialize();
+
     _navigateToInitialRoute();
     FlutterNativeSplash.remove();
   }

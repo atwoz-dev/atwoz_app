@@ -66,10 +66,7 @@ class DefaultElevatedButton extends ConsumerWidget {
           side: border ?? BorderSide.none, // 커스텀 윤곽선 사용
         ),
         textStyle: textStyle ?? Fonts.body01Medium(),
-        minimumSize: Size(
-          expandedWidth ? double.infinity : width,
-          height,
-        ),
+        minimumSize: Size(expandedWidth ? double.infinity : width, height),
         alignment: alignment,
       ),
       onPressed: isLoading ? () {} : onPressed,
@@ -83,8 +80,10 @@ class DefaultElevatedButton extends ConsumerWidget {
             ? SizedBox(
                 height: height - padding.vertical,
                 child: FittedBox(
-                    child: DefaultCircularProgressIndicator(
-                        color: foregroundColor)),
+                  child: DefaultCircularProgressIndicator(
+                    color: foregroundColor,
+                  ),
+                ),
               )
             : child,
       ),

@@ -46,12 +46,17 @@ class HeartHistoryCard extends StatelessWidget {
               ),
             ),
             Expanded(
-                flex: 2,
-                child: Text('${heartAmount}',
-                    textAlign: TextAlign.right,
-                    style: Fonts.body01Medium(heartAmount.sign < 0
-                        ? Palette.colorSecondary500
-                        : Palette.colorPrimary500))),
+              flex: 2,
+              child: Text(
+                '${heartAmount}',
+                textAlign: TextAlign.right,
+                style: Fonts.body01Medium(
+                  heartAmount.sign < 0
+                      ? Palette.colorSecondary500
+                      : Palette.colorPrimary500,
+                ),
+              ),
+            ),
           ],
         ),
       ),

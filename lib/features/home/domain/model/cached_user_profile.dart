@@ -17,7 +17,6 @@ abstract class CachedUserProfile with _$CachedUserProfile {
     @HiveField(1) required bool isVip,
     @HiveField(2) required bool isDatingExamSubmitted,
     @HiveField(3) String? primaryContactType, // 회원가입 후 연락수단 NULL
-
     // basicInfo
     @HiveField(4) required String nickname,
     @HiveField(5) required Gender gender,

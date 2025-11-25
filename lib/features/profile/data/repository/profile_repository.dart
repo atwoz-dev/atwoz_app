@@ -92,4 +92,34 @@ class ProfileRepository extends BaseRepository {
       method,
     );
   }
+
+  Future<bool> setKakaoId(String kakaoId) async {
+    final original = await ref
+        .read(localStorageProvider)
+        .getEncrypted(SecureStorageItem.kakaoId);
+
+    if (original == kakaoId) return true;
+
+    try {
+      await apiService.patchJson<Map<String, dynamic>>(
+        '/member/profile/contact/kakao',
+        data: kakaoId,
+      );
+
+      await ref
+          .read(localStorageProvider)
+          .saveEncrypted(SecureStorageItem.kakaoId, kakaoId);
+
+      return true;
+    } catch (e) {
+      Log.e('Failed to set Kakao ID: $e');
+      return false;
+    }
+  }
+
+  void setPhoneNumber(String phoneNumber) {
+    ref
+        .read(localStorageProvider)
+        .saveEncrypted(SecureStorageItem.phoneNumber, phoneNumber);
+  }
 }

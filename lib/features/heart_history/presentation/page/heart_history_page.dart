@@ -39,9 +39,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
     });
 
     try {
-      await ref
-          .read(heartHistoryProvider.notifier)
-          .loadMoreHeartTransactions();
+      await ref.read(heartHistoryProvider.notifier).loadMoreHeartTransactions();
     } catch (e) {
       showToastMessage('표시할 항목이 더 이상 없습니다.');
     } finally {
@@ -64,9 +62,7 @@ class _HeartHistoryPageState extends ConsumerState<HeartHistoryPage> {
     final state = ref.watch(heartHistoryProvider);
 
     if (!state.isLoaded && state.error == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     final transactions = state.history.transactions;

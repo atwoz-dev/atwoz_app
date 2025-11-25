@@ -26,41 +26,42 @@ class DefaultTabBar extends StatelessWidget {
     return Column(
       children: [
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding / 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: tabs.asMap().entries.map((entry) {
-                final int index = entry.key;
-                final String label = entry.value;
+          padding: EdgeInsets.symmetric(horizontal: padding / 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: tabs.asMap().entries.map((entry) {
+              final int index = entry.key;
+              final String label = entry.value;
 
-                return GestureDetector(
-                  onTap: () => onTap(index),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 17.0, horizontal: padding),
-                    child: Text(
-                      label,
-                      style: Fonts.body02Regular(
-                        index == currentIndex
-                            ? context.palette.onSurface
-                            : Palette.colorGrey400,
-                      ).copyWith(
-                        fontWeight: index == currentIndex
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
+              return GestureDetector(
+                onTap: () => onTap(index),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 17.0,
+                    horizontal: padding,
                   ),
-                );
-              }).toList(),
-            )),
+                  child: Text(
+                    label,
+                    style:
+                        Fonts.body02Regular(
+                          index == currentIndex
+                              ? context.palette.onSurface
+                              : Palette.colorGrey400,
+                        ).copyWith(
+                          fontWeight: index == currentIndex
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
         // 하단 경계선
         Stack(
           children: [
-            Container(
-              height: 1,
-              color: Palette.colorGrey100,
-            ),
+            Container(height: 1, color: Palette.colorGrey100),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
               left: currentIndex == 0 ? padding : (padding * 2) + firstTabWidth,

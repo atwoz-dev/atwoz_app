@@ -107,18 +107,17 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
     final isUpdated = await _showUpdateDormantStatus(
       context,
       onDormantChanged: () async {
-        final isSuccess =
-            await ref.read(mySettingProvider.notifier).deactiveAccount();
+        final isSuccess = await ref
+            .read(mySettingProvider.notifier)
+            .deactiveAccount();
         if (!mounted) return;
         if (!isSuccess) {
           ErrorDialog.open(
             context,
             error: DialogueErrorType.unknown,
-            onConfirm:
-                () =>
-                    context
-                      ..pop()
-                      ..pop(),
+            onConfirm: () => context
+              ..pop()
+              ..pop(),
           );
 
           return;
@@ -139,18 +138,17 @@ class _MyAccountSettingPageState extends ConsumerState<MyAccountSettingPage> {
   }
 
   Future<void> _handleSignOut() async {
-    final signOutCompleted =
-        await ref.read(mySettingProvider.notifier).signOut();
+    final signOutCompleted = await ref
+        .read(mySettingProvider.notifier)
+        .signOut();
     if (!mounted) return;
     if (!signOutCompleted) {
       ErrorDialog.open(
         context,
         error: DialogueErrorType.failSignOut,
-        onConfirm:
-            () =>
-                context
-                  ..pop()
-                  ..pop(),
+        onConfirm: () => context
+          ..pop()
+          ..pop(),
       );
     }
   }

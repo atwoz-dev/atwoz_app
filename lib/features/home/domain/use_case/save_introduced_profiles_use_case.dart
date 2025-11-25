@@ -96,20 +96,18 @@ List<IntroducedProfile> convertToIntroducedProfiles(
       (e) => Hobby.parse(e),
     ); // 취미 해시태크 리스트
     final mbtiLabel = profile.mbti; // MBTI 해시태그
-    final religionLabel =
-        profile.religion != null
-            ? Religion.parse(profile.religion)
-            : null; // 종교 해시태그(존재하는 경우에만)
+    final religionLabel = profile.religion != null
+        ? Religion.parse(profile.religion)
+        : null; // 종교 해시태그(존재하는 경우에만)
 
-    final tags =
-        [
-          hobbyLabels,
-          mbtiLabel,
-          religionLabel,
-        ].whereType<String>().toList(); // null 제거
+    final tags = [
+      hobbyLabels,
+      mbtiLabel,
+      religionLabel,
+    ].whereType<String>().toList(); // null 제거
 
-    final sortedTags =
-        tags..sort((a, b) => a.length.compareTo(b.length)); // 텍스트 길이순 오름차순
+    final sortedTags = tags
+      ..sort((a, b) => a.length.compareTo(b.length)); // 텍스트 길이순 오름차순
 
     return profile.toIntroducedProfile(sortedTags); // dto -> 모델 변환
   }).toList();

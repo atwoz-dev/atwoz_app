@@ -75,4 +75,7 @@ class Dimens {
 
   // 프로필 교환하기 하트 수
   static const int profileExchangeHeartCount = 3;
+
+  // 취미 선택 최대 개수
+  static const int maxSelectableHobbiesCount = 3;
 }

@@ -44,7 +44,7 @@ class AppErrorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Placeholder(
-        child:
-            Icon(Icons.bug_report, color: context.colorScheme.error, size: 50));
+      child: Icon(Icons.bug_report, color: context.colorScheme.error, size: 50),
+    );
   }
 }

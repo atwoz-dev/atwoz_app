@@ -50,7 +50,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                       vertical: 16,
                       horizontal: 24.w,
                     ),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BulletText(
@@ -75,7 +75,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                     border: Border.all(width: 1.w, color: Palette.colorGrey100),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +96,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
                     border: Border.all(width: 1.w, color: Palette.colorGrey100),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,6 +116,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
           child: DefaultElevatedButton(
             onPressed: () async {
               await notifier.fetchRequiredQuestions();
+              if (!context.mounted) return;
               navigate(
                 context,
                 route: AppRoute.examQuestion,

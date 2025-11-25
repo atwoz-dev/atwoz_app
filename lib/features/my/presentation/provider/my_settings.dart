@@ -43,21 +43,21 @@ extension NotificationTypeConverter on UserNotificationType {
     return switch (this) {
       UserNotificationType.receivedLike => [ServerNotificationType.like],
       UserNotificationType.newMessage => [
-          ServerNotificationType.matchAccept,
-          ServerNotificationType.matchReject,
-        ],
+        ServerNotificationType.matchAccept,
+        ServerNotificationType.matchReject,
+      ],
       UserNotificationType.profileExchangeRequest => [
-          ServerNotificationType.profileExchangeRequest,
-        ],
+        ServerNotificationType.profileExchangeRequest,
+      ],
       UserNotificationType.profilePhotoChange => [
-          ServerNotificationType.profileImageChangeRequest,
-        ],
+        ServerNotificationType.profileImageChangeRequest,
+      ],
       UserNotificationType.interviewWritingEncouragement => [
-          ServerNotificationType.interviewWriteRequest,
-        ],
+        ServerNotificationType.interviewWriteRequest,
+      ],
       UserNotificationType.longTermInactivityNotice => [
-          ServerNotificationType.inactivityReminder,
-        ],
+        ServerNotificationType.inactivityReminder,
+      ],
     };
   }
 }
@@ -69,8 +69,7 @@ extension ServerNotificationTypeConverter on ServerNotificationType {
     return switch (this) {
       ServerNotificationType.like => UserNotificationType.receivedLike,
       ServerNotificationType.matchAccept ||
-      ServerNotificationType.matchReject =>
-        UserNotificationType.newMessage,
+      ServerNotificationType.matchReject => UserNotificationType.newMessage,
       ServerNotificationType.profileExchangeRequest =>
         UserNotificationType.profileExchangeRequest,
       ServerNotificationType.profileImageChangeRequest =>
