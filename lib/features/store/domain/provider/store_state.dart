@@ -1,17 +1,15 @@
-import 'package:atwoz_app/features/store/data/dto/heart_balance_response.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 part 'store_state.freezed.dart';
 
-enum HeartBalanceErrorType {
-  network,
-}
+enum HeartBalanceErrorType { network }
 
 @freezed
 abstract class StoreState with _$StoreState {
   const factory StoreState({
-    @Default(StoreData()) StoreData heartBalance,
+    required HeartBalance heartBalance,
     @Default([]) List<ProductDetails> products,
     @Default(false) bool isLoaded,
     @Default(false) bool isPurchasePending,
@@ -20,19 +18,7 @@ abstract class StoreState with _$StoreState {
 
   const StoreState._();
 
-  factory StoreState.initial() => const StoreState();
+  factory StoreState.initial() => StoreState(heartBalance: HeartBalance.init());
 
-  int get totalHeartBalance => heartBalance.heartBalance.totalHeartBalance;
-}
-
-@freezed
-abstract class StoreData with _$StoreData {
-  const factory StoreData({
-    @Default(const HeartBalanceItem(
-      purchaseHeartBalance: 0,
-      missionHeartBalance: 0,
-      totalHeartBalance: 0,
-    ))
-    HeartBalanceItem heartBalance,
-  }) = _StoreData;
+  int get totalHeartBalance => heartBalance.totalHeartBalance;
 }

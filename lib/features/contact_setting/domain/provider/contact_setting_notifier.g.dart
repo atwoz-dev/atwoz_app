@@ -42,7 +42,7 @@ final class ContactSettingNotifierProvider
 }
 
 String _$contactSettingNotifierHash() =>
-    r'69039176fd57e24686805c2c89fdecaf9514433f';
+    r'e250e410b51b3fe18dae09b53c5ac46b86ba7c4c';
 
 abstract class _$ContactSettingNotifier extends $Notifier<ContactSettingState> {
   ContactSettingState build();

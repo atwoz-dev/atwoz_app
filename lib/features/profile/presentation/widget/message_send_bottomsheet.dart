@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
@@ -162,7 +163,7 @@ class _MessageSendBottomSheetState
     await showDialog(
       context: context,
       builder: (context) => _MessageSendConfirm(
-        hasPoint: ref.read(profileProvider(widget.userId)).heartPoint,
+        hasPoint: ref.read(globalProvider).heartBalance.totalHeartBalance,
         needPoint: Dimens.messageSendHeartCount,
         onMessageSend: _messageSendAndDetuctPoint,
       ),

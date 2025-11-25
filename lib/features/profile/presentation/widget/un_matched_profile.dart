@@ -56,12 +56,11 @@ class _ProfileHeadInformation extends ConsumerWidget {
           ),
           ProfileAppbar(
             onBackButtonPressed: context.pop,
-            onTapInfo:
-                () => navigate(
-                  context,
-                  route: AppRoute.report,
-                  extra: ReportArguments(name: userInfo.name, userId: userId),
-                ),
+            onTapInfo: () => navigate(
+              context,
+              route: AppRoute.report,
+              extra: ReportArguments(name: userInfo.name, userId: userId),
+            ),
           ),
           Positioned(
             left: 0,
@@ -76,10 +75,9 @@ class _ProfileHeadInformation extends ConsumerWidget {
               hobbies: userInfo.hobbies,
               chatEnabled: chatEnabled,
               favoriteType: userInfo.favoriteType,
-              onFavoriteTypeChanged:
-                  (type) =>
-                      ref.read(profileProvider(userId).notifier).favoriteType =
-                          type,
+              onFavoriteTypeChanged: (type) =>
+                  ref.read(profileProvider(userId).notifier).favoriteType =
+                      type,
             ),
           ),
         ],

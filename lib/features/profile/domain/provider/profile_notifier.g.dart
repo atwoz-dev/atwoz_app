@@ -58,7 +58,7 @@ final class ProfileNotifierProvider
   }
 }
 
-String _$profileNotifierHash() => r'7c4b97cefd503b489080bdc14662df06b2318e1f';
+String _$profileNotifierHash() => r'f01a66430f940b8f41b42928b2649da0bb4e79c5';
 
 final class ProfileNotifierFamily extends $Family
     with

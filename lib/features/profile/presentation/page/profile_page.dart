@@ -1,5 +1,7 @@
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
@@ -45,7 +47,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
-  void _listener(ProfileState? prev, ProfileState curr) {
+  void _listener(ProfileState? prev, ProfileState curr) async {
     final isContactSettingInitialized = ref
         .read(contactSettingProvider)
         .isContactSettingInitialized;
