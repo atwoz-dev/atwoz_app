@@ -6,11 +6,7 @@ class HashtagWrap extends StatelessWidget {
   final List<String> tags;
   final bool isCenter;
 
-  const HashtagWrap({
-    super.key,
-    required this.tags,
-    this.isCenter = false,
-  });
+  const HashtagWrap({super.key, required this.tags, this.isCenter = false});
 
   static const double horizontalPadding =
       8.0; // HashtagWidget 내 좌우 padding (4+4)
@@ -50,9 +46,7 @@ class HashtagWrap extends StatelessWidget {
 
           if (usedWidth + tagWidth <= maxWidth) {
             usedWidth += tagWidth;
-            visibleTags.add(
-              HashtagWidget(tagName: tag),
-            );
+            visibleTags.add(HashtagWidget(tagName: tag));
           } else {
             hiddenCount = tags.length - i;
             break;
@@ -62,12 +56,7 @@ class HashtagWrap extends StatelessWidget {
         // 남은 태그가 있으면 +N 표시
         if (hiddenCount > 0) {
           final plusTag = '+$hiddenCount';
-          visibleTags.add(
-            HashtagWidget(
-              tagName: plusTag,
-              showHash: false,
-            ),
-          );
+          visibleTags.add(HashtagWidget(tagName: plusTag, showHash: false));
         }
 
         return Wrap(

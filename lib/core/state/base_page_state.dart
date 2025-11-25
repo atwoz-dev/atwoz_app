@@ -10,7 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Riverpod 기반 페이지 공통 동작 정의
 /// buildPage 메서드는 페이지 레벨의 위젯에서만 사용하고, 일반 컴포넌트에서는 기본 build 메서드를 사용해야 합니다.
 abstract class AppBaseConsumerStatefulPageState<
-        T extends ConsumerStatefulWidget> extends ConsumerState<T>
+  T extends ConsumerStatefulWidget
+>
+    extends ConsumerState<T>
     with AppThemeConsumerStatefulMixin {
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,8 @@ abstract class AppBaseConsumerStatefulPageState<
 /// 자식 위젯에서 Scaffold를 사용하지 않아도 되는 버전
 /// 일관성을 위해 화면 너비에 디폴트 패딩을 추가하는 버전
 abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
-    extends ConsumerState<T> with AppThemeConsumerStatefulMixin {
+    extends ConsumerState<T>
+    with AppThemeConsumerStatefulMixin {
   // 화면 너비 여백
   final bool isHorizontalMargin;
   final double? horizontalMargin;
@@ -83,15 +86,15 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
               isResizeToAvoidBottomInset, // 키보드로 인한 레이아웃 변경 허용
           appBar: isAppBar
               ? (appBar ??
-                  DefaultAppBar(
-                    key: defaultAppBarKey,
-                    title: defaultAppBarTitle,
-                    actions: defaultAppBarActions,
-                    bottom: defaultAppBarBottom,
-                    isDivider: isDefaultAppBarDivider,
-                    leading: defaultAppBarLeadingIcon,
-                    leadingAction: defaultAppBarLeadingAction,
-                  ))
+                    DefaultAppBar(
+                      key: defaultAppBarKey,
+                      title: defaultAppBarTitle,
+                      actions: defaultAppBarActions,
+                      bottom: defaultAppBarBottom,
+                      isDivider: isDefaultAppBarDivider,
+                      leading: defaultAppBarLeadingIcon,
+                      leadingAction: defaultAppBarLeadingAction,
+                    ))
               : null,
           body: Padding(
             padding: isHorizontalMargin
@@ -113,7 +116,8 @@ abstract class BaseConsumerStatefulPageState<T extends ConsumerStatefulWidget>
 
 /// buildPage 메서드는 페이지 레벨의 위젯에서만 사용하고, 일반 컴포넌트에서는 기본 build 메서드를 사용해야 합니다.
 abstract class AppBaseStatefulPageBase<T extends StatefulWidget>
-    extends State<T> with AppThemeStatefulMixin {
+    extends State<T>
+    with AppThemeStatefulMixin {
   @override
   Widget build(BuildContext context) {
     return buildPage(context);

@@ -66,12 +66,7 @@ extension ExtendedContext on BuildContext {
   bool get isTablet => isSmallTablet || isLargeTablet;
 
   /// 화면 크기에 따라 특정 값을 반환하는 반응형 유틸리티
-  T responsiveValue<T>({
-    required T mobile,
-    T? tablet,
-    T? desktop,
-    T? watch,
-  }) {
+  T responsiveValue<T>({required T mobile, T? tablet, T? desktop, T? watch}) {
     final double deviceWidth = mediaQuerySize.shortestSide;
 
     if (deviceWidth >= 1200 && desktop != null) {
@@ -90,8 +85,6 @@ extension ExtendedContext on BuildContext {
 extension WidgetExtension on Widget {
   SliverToBoxAdapter get toSliverBox => SliverToBoxAdapter(child: this);
 
-  SliverPadding toSliverPadding(EdgeInsetsGeometry padding) => SliverPadding(
-        padding: padding,
-        sliver: toSliverBox,
-      );
+  SliverPadding toSliverPadding(EdgeInsetsGeometry padding) =>
+      SliverPadding(padding: padding, sliver: toSliverBox);
 }

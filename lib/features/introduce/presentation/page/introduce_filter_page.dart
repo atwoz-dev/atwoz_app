@@ -18,56 +18,59 @@ class IntroduceFilterPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ageRange = ref.watch(filterProvider).rangeValues;
     final selectedCityList = ref.watch(filterProvider).selectedCitys;
-    final selectedGenderList =
-        ref.watch(filterProvider).selectedGenders;
+    final selectedGenderList = ref.watch(filterProvider).selectedGenders;
 
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: '필터 설정',
-      ),
-      body: Column(children: [
-        Padding(
+      appBar: const DefaultAppBar(title: '필터 설정'),
+      body: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   '나이',
-                  style: Fonts.body02Regular(Palette.colorBlack)
-                      .copyWith(fontWeight: FontWeight.w600),
+                  style: Fonts.body02Regular(
+                    Palette.colorBlack,
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
-                Text("${ageRange.start.toInt()}세~${ageRange.end.toInt()}세",
-                    style: Fonts.body02Regular(Palette.colorBlack))
+                Text(
+                  "${ageRange.start.toInt()}세~${ageRange.end.toInt()}세",
+                  style: Fonts.body02Regular(Palette.colorBlack),
+                ),
               ],
-            )),
-        AgeRangeSlider(),
-        Gap(12.h),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              RowTextFormField(
-                label: '선호 지역',
-                hintText: '선호 지역을 선택해주세요',
-                initialValue: selectedCityList.isNotEmpty
-                    ? selectedCityList.join(', ')
-                    : null,
-              ),
-              Gap(24.h),
-              buildLabeledRow(
-                context: context,
-                label: '성별',
-                child: SelectionWidget(
-                  options: ["전체 보기", "이성만 보기"],
-                  onChange: (value) {
-                    // TODO: 성별 설정 추가
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        )
-      ]),
+          AgeRangeSlider(),
+          Gap(12.h),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                RowTextFormField(
+                  label: '선호 지역',
+                  hintText: '선호 지역을 선택해주세요',
+                  initialValue: selectedCityList.isNotEmpty
+                      ? selectedCityList.join(', ')
+                      : null,
+                ),
+                Gap(24.h),
+                buildLabeledRow(
+                  context: context,
+                  label: '성별',
+                  child: SelectionWidget(
+                    options: ["전체 보기", "이성만 보기"],
+                    onChange: (value) {
+                      // TODO: 성별 설정 추가
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

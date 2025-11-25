@@ -23,6 +23,7 @@ abstract class UserData with _$UserData {
   const factory UserData({
     @HiveField(0) required String accessToken,
     @HiveField(1) required bool isProfileSettingNeeded,
+    @HiveField(2) required String activityStatus,
   }) = _UserData;
 
   factory UserData.fromJson(Map<String, dynamic> json) =>

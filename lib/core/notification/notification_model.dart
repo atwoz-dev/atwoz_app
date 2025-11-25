@@ -29,7 +29,6 @@ enum FcmSenderType {
   system,
   @JsonValue('MEMBER')
   member,
-
 }
 
 int? _dynamicToInteger(dynamic value) {

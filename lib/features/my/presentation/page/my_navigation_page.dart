@@ -43,10 +43,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.profileManage,
-                  );
+                  navigate(context, route: AppRoute.profileManage);
                 },
                 child: Text(
                   '프로필 관리',
@@ -57,10 +54,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.idealSetting,
-                  );
+                  navigate(context, route: AppRoute.idealSetting);
                 },
                 child: Text(
                   '이상형 설정',
@@ -71,10 +65,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.blockFriend,
-                  );
+                  navigate(context, route: AppRoute.blockFriend);
                 },
                 child: Text(
                   '지인차단',
@@ -85,10 +76,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.store,
-                  );
+                  navigate(context, route: AppRoute.store);
                 },
                 child: Text(
                   '스토어',
@@ -99,10 +87,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.customerCenter,
-                  );
+                  navigate(context, route: AppRoute.customerCenter);
                 },
                 child: Text(
                   '고객센터',
@@ -113,10 +98,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.setting,
-                  );
+                  navigate(context, route: AppRoute.setting);
                 },
                 child: Text(
                   '설정',
@@ -127,10 +109,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.pushNotificationSetting,
-                  );
+                  navigate(context, route: AppRoute.pushNotificationSetting);
                 },
                 child: Text(
                   '푸쉬알림 설정',
@@ -141,10 +120,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.accountSetting,
-                  );
+                  navigate(context, route: AppRoute.accountSetting);
                 },
                 child: Text(
                   '계정 설정',
@@ -155,10 +131,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.serviceWithdraw,
-                  );
+                  navigate(context, route: AppRoute.serviceWithdraw);
                 },
                 child: Text(
                   '서비스 탈퇴',
@@ -169,10 +142,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.withdrawReason,
-                  );
+                  navigate(context, route: AppRoute.withdrawReason);
                 },
                 child: Text(
                   '서비스 탈퇴 이유',
@@ -183,10 +153,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.privacyPolicy,
-                  );
+                  navigate(context, route: AppRoute.privacyPolicy);
                 },
                 child: Text(
                   '개인정보 처리방침',
@@ -197,10 +164,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.termsOfUse,
-                  );
+                  navigate(context, route: AppRoute.termsOfUse);
                 },
                 child: Text(
                   '이용약관',
@@ -211,10 +175,7 @@ class _MyNavigationPageState extends AppBaseStatefulPageBase<MyNavigationPage> {
               DefaultElevatedButton(
                 primary: palette.primary,
                 onPressed: () {
-                  navigate(
-                    context,
-                    route: AppRoute.communityGuide,
-                  );
+                  navigate(context, route: AppRoute.communityGuide);
                 },
                 child: Text(
                   '커뮤니티 가이드',

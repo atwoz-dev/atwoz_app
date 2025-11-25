@@ -11,9 +11,8 @@ final updateIdealTypeUseCaseProvider = Provider<UpdateIdealTypeUseCase>(
 class UpdateIdealTypeUseCase {
   final IdealTypeRepository _idealTypeRepository;
 
-  UpdateIdealTypeUseCase({
-    required IdealTypeRepository idealTypeRepository,
-  }) : _idealTypeRepository = idealTypeRepository;
+  UpdateIdealTypeUseCase({required IdealTypeRepository idealTypeRepository})
+    : _idealTypeRepository = idealTypeRepository;
 
   Future<bool> execute(IdealType idealType) async {
     return await _idealTypeRepository.updateIdealType(

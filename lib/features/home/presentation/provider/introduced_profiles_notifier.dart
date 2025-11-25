@@ -61,12 +61,11 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
 
   /// UI 상태 즉시 갱신
   void _setIntroducedMemberById(int memberId) {
-    final updatedProfiles =
-        state.requireValue.map((profile) {
-          return profile.memberId == memberId
-              ? profile.copyWith(isIntroduced: true)
-              : profile;
-        }).toList();
+    final updatedProfiles = state.requireValue.map((profile) {
+      return profile.memberId == memberId
+          ? profile.copyWith(isIntroduced: true)
+          : profile;
+    }).toList();
 
     state = AsyncData(updatedProfiles);
   }

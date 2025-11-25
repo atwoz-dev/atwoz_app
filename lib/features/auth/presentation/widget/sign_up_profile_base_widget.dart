@@ -3,7 +3,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,10 +38,8 @@ class _SignUpProfileBaseWidgetState
       resizeToAvoidBottomInset: false,
       appBar: DefaultAppBar(
         title: '프로필 정보',
-        leadingAction: (context) => navigate(
-          context,
-          route: AppRoute.signUpProfileUpdate,
-        ),
+        leadingAction: (context) =>
+            navigate(context, route: AppRoute.signUpProfileUpdate),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(
@@ -74,29 +72,26 @@ class _SignUpProfileBaseWidgetState
                 alignment: Alignment.centerLeft,
                 child: Text(
                   widget.question,
-                  style: Fonts.header03(palette.onSurface).copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Fonts.header03(
+                    palette.onSurface,
+                  ).copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               Gap(16.h),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: widget.body,
-                ),
-              ),
+              Expanded(child: SingleChildScrollView(child: widget.body)),
               Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.05),
                 child: DefaultElevatedButton(
                   onPressed:
                       signUpProcess.isButtonEnabled() && !signUpState.isLoading
-                          ? () async {
-                              await signUpProcess.nextStep(context);
-                            }
-                          : null,
+                      ? () async {
+                          await signUpProcess.nextStep(context);
+                        }
+                      : null,
                   child: signUpState.isLoading
                       ? const CircularProgressIndicator(
-                          color: Palette.colorPrimary500)
+                          color: Palette.colorPrimary500,
+                        )
                       : Text(
                           signUpState.unwritten.isEmpty ? '완료' : '다음',
                           style: Fonts.body01Medium(

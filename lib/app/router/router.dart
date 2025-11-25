@@ -6,6 +6,8 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_review_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_reject_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/dormant_release_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
@@ -35,6 +37,7 @@ import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/customer_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
@@ -106,6 +109,8 @@ enum AppRoute {
   signUpProfileChoice('sign-up-profile-choice'),
   signUpProfileUpdate('sign-up-profile-update'),
   signUpProfilePicture('sign-up-profile-picture'),
+  signUpProfileReview('sign-up-profile-review'),
+  signUpProfileReject('sign-up-profile-reject'),
 
   // My
   profileManage('profile-manage'),
@@ -329,13 +334,29 @@ final allRoutes = [
                 name: AppRoute.signUpProfileUpdate.name,
                 builder: (context, state) => const SignUpProfileUpdatePage(),
               ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfileReview.name,
+                builder: (context, state) => const SignUpProfileReviewPage(),
+              ),
+              NamedGoRoute(
+                name: AppRoute.signUpProfileReject.name,
+                builder: (context, state) => const SignUpProfileRejectPage(),
+              ),
             ],
           ),
         ],
       ),
       NamedGoRoute(
         name: AppRoute.profileManage.name,
-        builder: (context, state) => const ProfileManagePage(),
+        builder: (context, state) {
+          final args = state.extra;
+
+          if (args is MyProfileManageArguments) {
+            return ProfileManagePage(isRejectedProfile: args.isRejectedProfile);
+          }
+
+          return const ProfileManagePage(isRejectedProfile: false);
+        },
         routes: [
           NamedGoRoute(
             name: AppRoute.profileUpdate.name,
@@ -390,7 +411,7 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.customerCenter.name,
-        builder: (context, state) => const SignUpProfileUpdatePage(),
+        builder: (context, state) => const CustomerCenterPage(), // 수정 완료
       ),
       NamedGoRoute(
         name: AppRoute.setting.name,
@@ -453,11 +474,10 @@ Future<T?> navigate<T>(
       route.name,
       extra: extra,
     ),
-    NavigationMethod.go =>
-      (() {
-        goRouter.goNamed(route.name, extra: extra);
-        return null;
-      })(),
+    NavigationMethod.go => (() {
+      goRouter.goNamed(route.name, extra: extra);
+      return null;
+    })(),
     NavigationMethod.pushReplacement => await goRouter.pushReplacementNamed<T>(
       route.name,
       extra: extra,

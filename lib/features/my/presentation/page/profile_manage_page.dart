@@ -5,7 +5,9 @@ import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 
 class ProfileManagePage extends ConsumerWidget {
-  const ProfileManagePage({super.key});
+  final bool isRejectedProfile;
+
+  const ProfileManagePage({super.key, required this.isRejectedProfile});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,16 +32,14 @@ class ProfileManagePage extends ConsumerWidget {
               } else {
                 return ProfileManageInfoArea(
                   profile: data.profile,
+                  isRejectedProfile: isRejectedProfile,
                 );
               }
             },
           ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          error: (error, stackTrace) => const Center(
-            child: Text('프로필 관리 페이지 로딩 중 오류 발생'),
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) =>
+              const Center(child: Text('프로필 관리 페이지 로딩 중 오류 발생')),
         ),
       ),
     );

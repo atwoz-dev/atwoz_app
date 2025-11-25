@@ -18,40 +18,48 @@ Future defaultBottomSheet(
     isScrollControlled: false,
     builder: (context) {
       return SafeArea(
-          child: Container(
-              padding: EdgeInsets.symmetric(vertical: 32.w, horizontal: 16.w),
-              child: Wrap(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 32.w, horizontal: 16.w),
+          child: Wrap(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      (mainTitle != null)
-                          ? Text(mainTitle,
-                              style: Fonts.header03(Palette.colorGrey900))
-                          : const SizedBox.shrink(),
-                      SizedBox(height: 15.h),
-                      (subTitle != null)
-                          ? Text(subTitle,
-                              style: Fonts.body01Medium(Palette.colorGrey500))
-                          : const SizedBox.shrink(),
-                    ],
-                  ),
-                  Container(
-                    child: (content != null)
-                        ? Text(content,
-                            style: Fonts.body01Medium(Palette.colorGrey700))
-                        : const SizedBox.shrink(),
-                  ),
-                  DefaultElevatedButton(
-                    primary: Palette.colorPrimary500,
-                    onPressed: () {},
-                    child: Text(
-                      '수락',
-                      style: Fonts.body01Regular(Palette.colorWhite),
-                    ),
-                  ),
+                  (mainTitle != null)
+                      ? Text(
+                          mainTitle,
+                          style: Fonts.header03(Palette.colorGrey900),
+                        )
+                      : const SizedBox.shrink(),
+                  SizedBox(height: 15.h),
+                  (subTitle != null)
+                      ? Text(
+                          subTitle,
+                          style: Fonts.body01Medium(Palette.colorGrey500),
+                        )
+                      : const SizedBox.shrink(),
                 ],
-              )));
+              ),
+              Container(
+                child: (content != null)
+                    ? Text(
+                        content,
+                        style: Fonts.body01Medium(Palette.colorGrey700),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+              DefaultElevatedButton(
+                primary: Palette.colorPrimary500,
+                onPressed: () {},
+                child: Text(
+                  '수락',
+                  style: Fonts.body01Regular(Palette.colorWhite),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
     },
 
     /// 바텀시트 배경 컬러
@@ -68,9 +76,10 @@ Future defaultBottomSheet(
 
     /// 바텀시트의 모양 설정
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-    )),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
   );
 }

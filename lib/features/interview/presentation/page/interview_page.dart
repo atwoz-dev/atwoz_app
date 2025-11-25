@@ -16,11 +16,7 @@ class InterviewPage extends ConsumerStatefulWidget {
 }
 
 class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
-  InterviewPageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-        );
+  InterviewPageState() : super(isAppBar: false, isHorizontalMargin: false);
   bool _isBannerVisible = true;
   int _currentTabIndex = 0;
 
@@ -31,14 +27,13 @@ class InterviewPageState extends BaseConsumerStatefulPageState<InterviewPage> {
   @override
   Widget buildPage(BuildContext context) {
     final double horizontalPadding = screenWidth * 0.05;
-    final EdgeInsets contentPadding =
-        EdgeInsets.symmetric(horizontal: horizontalPadding);
+    final EdgeInsets contentPadding = EdgeInsets.symmetric(
+      horizontal: horizontalPadding,
+    );
     final double tagSpacing = 16;
 
     return Padding(
-      padding: EdgeInsets.only(
-        top: screenHeight * 0.1,
-      ),
+      padding: EdgeInsets.only(top: screenHeight * 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

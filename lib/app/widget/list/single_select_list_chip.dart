@@ -44,8 +44,9 @@ class SingleSelectListChip extends StatelessWidget {
                   ? Palette.colorPrimary100
                   : context.palette.surface,
               border: Border.all(
-                color:
-                    isSelected ? Palette.colorPrimary100 : Palette.colorGrey200,
+                color: isSelected
+                    ? Palette.colorPrimary100
+                    : Palette.colorGrey200,
               ),
               borderRadius: BorderRadius.circular(12.0),
             ),

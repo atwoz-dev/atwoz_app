@@ -41,7 +41,7 @@ final class InterviewNotifierProvider
   }
 }
 
-String _$interviewNotifierHash() => r'af54da022d5409271768201a0b2ffe80fb2d102a';
+String _$interviewNotifierHash() => r'89981da5abec8889afc6b4a0013aaa3cff8ca59e';
 
 abstract class _$InterviewNotifier extends $Notifier<InterviewState> {
   InterviewState build();

@@ -7,8 +7,9 @@ class ExamOptionalFetchUseCase {
   const ExamOptionalFetchUseCase(this.ref);
 
   Future<List<SubjectItem>> call() async {
-    final response =
-        await ref.read(examRepositoryProvider).getOptionalQuestionList();
+    final response = await ref
+        .read(examRepositoryProvider)
+        .getOptionalQuestionList();
 
     return response;
   }

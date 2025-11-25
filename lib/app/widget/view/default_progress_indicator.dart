@@ -7,8 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// * 색상 커스터마이징: 사용자 지정 색상 적용.
 /// * 진행률 표시: 부분적으로 진행 상태를 나타내는 partiallyRevealed 인디케이터 지원
 class DefaultCircularProgressIndicator extends ConsumerWidget {
-  const DefaultCircularProgressIndicator(
-      {super.key, this.color, this.progress});
+  const DefaultCircularProgressIndicator({
+    super.key,
+    this.color,
+    this.progress,
+  });
 
   final Color? color; // 인디케이터 색상
   final double? progress; // 진행률 값 (0.0 ~ 1.0)

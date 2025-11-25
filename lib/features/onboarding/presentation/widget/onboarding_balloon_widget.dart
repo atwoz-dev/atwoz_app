@@ -23,7 +23,8 @@ class OnboardingBalloonWidget extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: textStyle ??
+        style:
+            textStyle ??
             const TextStyle(
               fontWeight: FontWeight.w900,
               color: Colors.black,
