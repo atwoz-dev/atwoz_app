@@ -1,7 +1,9 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -29,22 +31,21 @@ class ProfileNotifier extends _$ProfileNotifier {
   Future<void> _initializeProfileState(int userId) async {
     try {
       final profile = await ProfileFetchUseCase(ref).call(userId);
+
       state = state.copyWith(
         profile: profile,
         myUserName: _myName,
-        registeredContact: true,
         // TODO(Han): 추후 실제 보유 하트 수로 대체
         heartPoint: 30,
         message: '',
         isLoaded: true,
         error: null,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: DialogueErrorType.network,
-      );
+      Log.e(stackTrace);
+
+      state = state.copyWith(isLoaded: true, error: DialogueErrorType.network);
     }
   }
 
@@ -67,24 +68,30 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      await ref.read(favoriteRepositoryProvider).requestFavorite(
-            state.profile!.id,
-            type: type,
-          );
+      final hasProcessedMission = await ref
+          .read(favoriteRepositoryProvider)
+          .requestFavorite(state.profile!.id, type: type);
+
+      if (hasProcessedMission) {
+        showToastMessage("좋아요 보내기 미션 완료! 하트 2개를 받았어요");
+        await ref.read(globalProvider.notifier).fetchHeartBalance();
+      }
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
     }
   }
 
-  Future<void> requestMatch() async {
+  Future<void> requestMatch(ContactMethod method) async {
     if (state.profile == null) return;
 
     try {
-      await ProfileMatchRequestUseCase(ref).call(
-        userId: state.profile!.id,
-        message: state.message,
-      );
+      await ProfileMatchRequestUseCase(
+        ref,
+      ).call(userId: state.profile!.id, message: state.message, method: method);
+
+      // 하트 사용하여 메시지 요청 후 보유 하트 수 갱신
+      await ref.read(globalProvider.notifier).fetchHeartBalance();
 
       state = state.copyWith(
         profile: state.profile?.copyWith(
@@ -104,14 +111,12 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      await ProfileMatchRejectUseCase(ref).call(
-        state.profile!.matchStatus.matchId,
-      );
+      await ProfileMatchRejectUseCase(
+        ref,
+      ).call(state.profile!.matchStatus.matchId);
 
       state = state.copyWith(
-        profile: state.profile?.copyWith(
-          matchStatus: const UnMatched(),
-        ),
+        profile: state.profile?.copyWith(matchStatus: const UnMatched()),
       );
     } catch (e) {
       Log.e(e);
@@ -121,14 +126,12 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   Future<void> resetMatchStatus() async {
     try {
-      await ProfileMatchResetUseCase(ref).call(
-        state.profile!.matchStatus.matchId,
-      );
+      await ProfileMatchResetUseCase(
+        ref,
+      ).call(state.profile!.matchStatus.matchId);
 
       state = state.copyWith(
-        profile: state.profile?.copyWith(
-          matchStatus: const UnMatched(),
-        ),
+        profile: state.profile?.copyWith(matchStatus: const UnMatched()),
       );
     } catch (e) {
       Log.e(e);

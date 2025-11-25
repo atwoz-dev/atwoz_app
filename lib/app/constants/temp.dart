@@ -19,7 +19,7 @@ final jobOptions = [
   '생산/제조',
   '서비스',
   '여행/운송',
-  '기타'
+  '기타',
 ];
 
 final hobbies = [

@@ -8,5 +8,6 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     List<IntroducedProfile>? recommendedProfiles,
     @Default(false) bool isCheckingIntroducedProfiles,
+    required bool hasProcessedMission,
   }) = _HomeState;
 }

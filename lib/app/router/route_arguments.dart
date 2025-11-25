@@ -1,5 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
 sealed class RouteArguments {
@@ -17,49 +17,43 @@ class ProfileDetailArguments extends RouteArguments {
 }
 
 class OnboardCertificationArguments extends RouteArguments {
-  const OnboardCertificationArguments({
-    required this.phoneNumber,
-  });
+  const OnboardCertificationArguments({required this.phoneNumber});
 
   final String phoneNumber;
 }
 
 class UserByCategoryArguments extends RouteArguments {
-  const UserByCategoryArguments({
-    required this.category,
-  });
+  const UserByCategoryArguments({required this.category});
 
   final IntroducedCategory category;
 }
 
+class MyProfileManageArguments extends RouteArguments {
+  const MyProfileManageArguments({this.isRejectedProfile = false});
+
+  final bool isRejectedProfile;
+}
+
 class MyProfileUpdateArguments extends RouteArguments {
-  const MyProfileUpdateArguments({
-    required this.profileType,
-  });
+  const MyProfileUpdateArguments({required this.profileType});
 
   final String profileType;
 }
 
 class MyProfileImageUpdateArguments extends RouteArguments {
-  const MyProfileImageUpdateArguments({
-    required this.profileImages,
-  });
+  const MyProfileImageUpdateArguments({required this.profileImages});
 
-  final List<EditableProfileImage?> profileImages;
+  final List<ProfilePhoto> profileImages;
 }
 
 class ProfilePreviewArguments extends RouteArguments {
-  const ProfilePreviewArguments({
-    required this.profile,
-  });
+  const ProfilePreviewArguments({required this.profile});
 
   final MyProfile profile;
 }
 
 class ExamResultArguments extends RouteArguments {
-  const ExamResultArguments({
-    required this.isFromDirectAccess,
-  });
+  const ExamResultArguments({required this.isFromDirectAccess});
 
   final bool isFromDirectAccess;
 }
@@ -83,19 +77,14 @@ class InterviewRegisterArguments extends RouteArguments {
 }
 
 class ReportArguments extends RouteArguments {
-  const ReportArguments({
-    required this.name,
-    required this.userId,
-  });
+  const ReportArguments({required this.name, required this.userId});
 
   final String name;
   final int userId;
 }
 
 class DormantReleaseArguments extends RouteArguments {
-  const DormantReleaseArguments({
-    required this.phoneNumber,
-  });
+  const DormantReleaseArguments({required this.phoneNumber});
 
   final String phoneNumber;
 }

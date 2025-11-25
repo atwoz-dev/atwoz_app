@@ -17,7 +17,7 @@ final class ProfileImageUpdateNotifierProvider
         $NotifierProvider<ProfileImageUpdateNotifier, ProfileImageUpdateState> {
   const ProfileImageUpdateNotifierProvider._({
     required ProfileImageUpdateNotifierFamily super.from,
-    required List<EditableProfileImage?> super.argument,
+    required List<ProfilePhoto> super.argument,
   }) : super(
          retry: null,
          name: r'profileImageUpdateProvider',
@@ -61,7 +61,7 @@ final class ProfileImageUpdateNotifierProvider
 }
 
 String _$profileImageUpdateNotifierHash() =>
-    r'5b51ef83125440fb313aa2624a704e962c19437c';
+    r'c0fca16e93c8418779a5e3157eee64763b654ac0';
 
 final class ProfileImageUpdateNotifierFamily extends $Family
     with
@@ -70,7 +70,7 @@ final class ProfileImageUpdateNotifierFamily extends $Family
           ProfileImageUpdateState,
           ProfileImageUpdateState,
           ProfileImageUpdateState,
-          List<EditableProfileImage?>
+          List<ProfilePhoto>
         > {
   const ProfileImageUpdateNotifierFamily._()
     : super(
@@ -81,12 +81,8 @@ final class ProfileImageUpdateNotifierFamily extends $Family
         isAutoDispose: false,
       );
 
-  ProfileImageUpdateNotifierProvider call(
-    List<EditableProfileImage?> editableProfileImages,
-  ) => ProfileImageUpdateNotifierProvider._(
-    argument: editableProfileImages,
-    from: this,
-  );
+  ProfileImageUpdateNotifierProvider call(List<ProfilePhoto> profilePhotos) =>
+      ProfileImageUpdateNotifierProvider._(argument: profilePhotos, from: this);
 
   @override
   String toString() => r'profileImageUpdateProvider';
@@ -94,12 +90,10 @@ final class ProfileImageUpdateNotifierFamily extends $Family
 
 abstract class _$ProfileImageUpdateNotifier
     extends $Notifier<ProfileImageUpdateState> {
-  late final _$args = ref.$arg as List<EditableProfileImage?>;
-  List<EditableProfileImage?> get editableProfileImages => _$args;
+  late final _$args = ref.$arg as List<ProfilePhoto>;
+  List<ProfilePhoto> get profilePhotos => _$args;
 
-  ProfileImageUpdateState build(
-    List<EditableProfileImage?> editableProfileImages,
-  );
+  ProfileImageUpdateState build(List<ProfilePhoto> profilePhotos);
   @$mustCallSuper
   @override
   void runBuild() {

@@ -9,7 +9,6 @@ abstract class ProfileState with _$ProfileState {
   const factory ProfileState({
     required UserProfile? profile,
     required String myUserName,
-    required bool registeredContact,
     required int heartPoint,
     required String message,
     required bool isLoaded,
@@ -17,14 +16,13 @@ abstract class ProfileState with _$ProfileState {
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
-        profile: null,
-        myUserName: '',
-        registeredContact: false,
-        heartPoint: 0,
-        message: '',
-        isLoaded: false,
-        error: null,
-      );
+    profile: null,
+    myUserName: '',
+    heartPoint: 0,
+    message: '',
+    isLoaded: false,
+    error: null,
+  );
 
   const ProfileState._();
 

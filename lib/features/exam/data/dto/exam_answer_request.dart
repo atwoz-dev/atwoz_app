@@ -20,9 +20,9 @@ abstract class SubjectAnswerItem with _$SubjectAnswerItem {
   const SubjectAnswerItem._();
 
   SubjectAnswer toDomain() => SubjectAnswer(
-        subjectId: subjectId,
-        answers: answers.map((e) => e.toDomain()).toList(),
-      );
+    subjectId: subjectId,
+    answers: answers.map((e) => e.toDomain()).toList(),
+  );
 
   factory SubjectAnswerItem.fromJson(Map<String, dynamic> json) =>
       _$SubjectAnswerItemFromJson(json);

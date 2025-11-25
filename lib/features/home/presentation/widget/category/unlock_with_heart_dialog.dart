@@ -59,9 +59,7 @@ class UnlockWithHeartDialog extends ConsumerWidget {
                     child: DefaultElevatedButton(
                       onPressed: context.pop,
                       primary: Colors.white,
-                      border: const BorderSide(
-                        color: Color(0xffE1E1E1),
-                      ),
+                      border: const BorderSide(color: Color(0xffE1E1E1)),
                       child: Text(
                         "취소",
                         style: Fonts.body02Medium().copyWith(
@@ -81,10 +79,7 @@ class UnlockWithHeartDialog extends ConsumerWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const DefaultIcon(
-                            IconPath.heart,
-                            size: 20,
-                          ),
+                          const DefaultIcon(IconPath.heart, size: 20),
                           const Gap(4),
                           Text(
                             userProfile.isMale
@@ -98,12 +93,12 @@ class UnlockWithHeartDialog extends ConsumerWidget {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

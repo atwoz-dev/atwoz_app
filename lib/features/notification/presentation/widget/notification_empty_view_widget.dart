@@ -7,8 +7,10 @@ import 'package:gap/gap.dart';
 class NotificationEmptyViewWidget extends StatelessWidget {
   final VoidCallback onSettingsPressed;
 
-  const NotificationEmptyViewWidget(
-      {super.key, required this.onSettingsPressed});
+  const NotificationEmptyViewWidget({
+    super.key,
+    required this.onSettingsPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +18,7 @@ class NotificationEmptyViewWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DefaultIcon(
-            IconPath.frowningFace,
-            size: 48,
-          ),
+          DefaultIcon(IconPath.frowningFace, size: 48),
           Gap(16),
           Text(
             '아직 받은 알람이 없어요\n새로운 알람을 받을 수 있도록 설정하시겠어요?',

@@ -33,18 +33,22 @@ abstract class MemberProfile with _$MemberProfile {
 
 @freezed
 abstract class HeartBalance with _$HeartBalance {
+  const HeartBalance._();
+
   const factory HeartBalance({
     required int purchaseHeartBalance,
     required int missionHeartBalance,
     required int totalHeartBalance,
   }) = _HeartBalance;
 
+  factory HeartBalance.init() => const HeartBalance(
+    purchaseHeartBalance: 0,
+    missionHeartBalance: 0,
+    totalHeartBalance: 0,
+  );
+
   factory HeartBalance.fromJson(Map<String, dynamic> json) =>
       _$HeartBalanceFromJson(json);
 }
 
-enum ActivityStatus {
-  active,
-  permanentStop,
-  inactive,
-}
+enum ActivityStatus { active, permanentStop, inactive }

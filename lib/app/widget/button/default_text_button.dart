@@ -65,10 +65,7 @@ class DefaultTextButton extends ConsumerWidget {
         padding: padding,
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         textStyle: Fonts.body01Medium(),
-        minimumSize: Size(
-          expandedWidth ? double.infinity : width,
-          height,
-        ),
+        minimumSize: Size(expandedWidth ? double.infinity : width, height),
         alignment: alignment,
       ),
       onPressed: isLoading ? () {} : onPressed,
@@ -82,8 +79,10 @@ class DefaultTextButton extends ConsumerWidget {
             ? SizedBox(
                 height: height - padding.vertical,
                 child: FittedBox(
-                    child: DefaultCircularProgressIndicator(
-                        color: foregroundColor)),
+                  child: DefaultCircularProgressIndicator(
+                    color: foregroundColor,
+                  ),
+                ),
               )
             : child,
       ),

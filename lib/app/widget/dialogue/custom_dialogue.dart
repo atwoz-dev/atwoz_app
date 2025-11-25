@@ -76,9 +76,7 @@ class CustomDialogue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
         width: context.screenWidth * 0.9,
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
@@ -89,17 +87,16 @@ class CustomDialogue extends StatelessWidget {
             if (title != null)
               Text(
                 title!,
-                style: titleStyle ??
+                style:
+                    titleStyle ??
                     Fonts.header03().copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             if (title != null) const Gap(12),
             Text(
               content,
-              style: contentStyle ??
-                  Fonts.body01Regular().copyWith(
-                    height: 1.2,
-                  ),
+              style:
+                  contentStyle ?? Fonts.body01Regular().copyWith(height: 1.2),
               textAlign: TextAlign.center,
             ),
             const Gap(24),
@@ -131,7 +128,8 @@ class CustomDialogue extends StatelessWidget {
                       elevatedButtonText!,
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: elevatedButtonTextColor ??
+                        color:
+                            elevatedButtonTextColor ??
                             context.palette.onPrimary,
                       ),
                     ),

@@ -4,8 +4,8 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 typedef ValueBuilder<T> = String Function(T item);
-typedef ItemBuilder<T> = Widget Function(
-    BuildContext context, T item, bool isSelected);
+typedef ItemBuilder<T> =
+    Widget Function(BuildContext context, T item, bool isSelected);
 
 class OutlinedDropdown<T> extends StatefulWidget {
   final List<T> items;
@@ -149,7 +149,8 @@ class OutlinedDropdownState<T> extends AppBaseWidgetState<OutlinedDropdown<T>> {
                                   child: Text(
                                     widget.valueBuilder(item),
                                     style: Fonts.body02Regular(
-                                        Palette.colorGrey800),
+                                      Palette.colorGrey800,
+                                    ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,

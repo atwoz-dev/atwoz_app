@@ -11,6 +11,7 @@ class DateTimeFormatter {
   static final dateTimeConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
   static final dateConvert = DateFormat('yyyy-MM-dd');
+  static final summaryConvert = DateFormat('yy.MM.dd');
 
   // Format
   static final dateTimeFormatSlash = DateFormat('yyyy/MM/dd HH:mm:ss');
@@ -32,7 +33,9 @@ class DateTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     final text = _format(newValue.text, seperator);
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
@@ -45,12 +48,13 @@ class DateTextFormatter extends TextInputFormatter {
         .entries
         .take(8) // 8자리까지만 유지
         .map((entry) {
-      final index = entry.key;
-      final char = entry.value;
-      return (index == 3 || index == 5) && index != cleanValue.length - 1
-          ? '$char$separator'
-          : char;
-    }).join();
+          final index = entry.key;
+          final char = entry.value;
+          return (index == 3 || index == 5) && index != cleanValue.length - 1
+              ? '$char$separator'
+              : char;
+        })
+        .join();
   }
 
   TextSelection updateCursorPosition(String text) {
@@ -64,7 +68,9 @@ class TimeTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     final text = _format(newValue.text, ':');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
@@ -96,7 +102,9 @@ class PhoneNumberTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     final text = _format(newValue.text, '-');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
@@ -109,12 +117,13 @@ class PhoneNumberTextFormatter extends TextInputFormatter {
         .entries
         .take(13) // 최대 13자리까지만 유지
         .map((entry) {
-      final index = entry.key;
-      final char = entry.value;
-      return (index == 2 || index == 6) && index != cleanValue.length - 1
-          ? '$char$separator'
-          : char;
-    }).join();
+          final index = entry.key;
+          final char = entry.value;
+          return (index == 2 || index == 6) && index != cleanValue.length - 1
+              ? '$char$separator'
+              : char;
+        })
+        .join();
   }
 
   TextSelection updateCursorPosition(String text) =>

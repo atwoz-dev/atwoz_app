@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,8 +125,10 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
   @override
   void initState() {
     super.initState();
-    _selectedType =
-        ref.read(profileProvider(widget.userId)).profile?.favoriteType;
+    _selectedType = ref
+        .read(profileProvider(widget.userId))
+        .profile
+        ?.favoriteType;
   }
 
   @override
@@ -137,31 +142,37 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
             .isWaiting ??
         false;
 
+    final contactState = ref.watch(contactSettingProvider);
+
     return Row(
       children: [
         Expanded(
-          child:
-              isWaitingProfileExchange
-                  ? _PrimaryButton(
-                    onTap: _profileExchangeHandler,
-                    label: '프로필 교환 요청 응답하기',
-                  )
-                  : _PrimaryButton(
-                    onTap:
-                        () => MessageSendBottomSheet.open(
-                          context,
-                          userId: widget.userId,
-                          onSubmit:
-                              () =>
-                                  ref
-                                      .read(
-                                        profileProvider(widget.userId).notifier,
-                                      )
-                                      .requestMatch(),
-                        ),
-                    label: '대화 해볼래요',
-                    iconPath: IconPath.letter,
-                  ),
+          child: isWaitingProfileExchange
+              ? _PrimaryButton(
+                  onTap: _profileExchangeHandler,
+                  label: '프로필 교환 요청 응답하기',
+                )
+              : _PrimaryButton(
+                  onTap: () async {
+                    if (!contactState.isContactSettingInitialized) {
+                      final res = await ContactInitializeBottomsheet.open(
+                        context,
+                      );
+                      if (res != true || !context.mounted) return;
+                    }
+                    MessageSendBottomSheet.open(
+                      context,
+                      userId: widget.userId,
+                      onSubmit: () => ref
+                          .read(profileProvider(widget.userId).notifier)
+                          .requestMatch(
+                            contactState.method ?? ContactMethod.phone,
+                          ),
+                    );
+                  },
+                  label: '대화 해볼래요',
+                  iconPath: IconPath.letter,
+                ),
         ),
         const Gap(8.0),
         FavoriteButton(

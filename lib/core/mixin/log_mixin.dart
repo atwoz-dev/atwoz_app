@@ -5,8 +5,8 @@ import '../util/log.dart';
 // mixin을 통해 클래스에 중복 없이 로직을 추가할 수 있다.
 // 상속과 다르게 여러 클래스에 동시에 적용할 수 있다.
 mixin LogMixin on Object {
-// on Object: Object를 상속하는 클래스에서만 LogMixin 믹스인을 사용 가능
-// 사실상 모든 클래스에서 사용 가능함
+  // on Object: Object를 상속하는 클래스에서만 LogMixin 믹스인을 사용 가능
+  // 사실상 모든 클래스에서 사용 가능함
 
   // 디버그 로그 출력 메서드 logE()
   void logD(String message, {DateTime? time}) {

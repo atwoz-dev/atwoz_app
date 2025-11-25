@@ -7,6 +7,7 @@ import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/core/network/api_service_impl.dart';
 import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
@@ -14,11 +15,8 @@ import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
-import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 /// UserRepository 주입을 명확하게 하기 위한 Provider
 final authUsecaseProvider = Provider<AuthUseCase>((ref) {
@@ -34,20 +32,19 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   UserRepository get _userRepository => _ref.read(userRepositoryProvider);
   LocalStorage get _localStorage => _ref.read(localStorageProvider);
   ApiServiceImpl get _apiService => _ref.read(apiServiceProvider);
-  PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
   GlobalNotifier get _globalNotifier => _ref.read(globalProvider.notifier);
-
-  static const String _accessToken = 'AuthProvider.token';
-  static const String _refreshToken = 'AuthProvider.reToken';
 
   @override
   Future<UserData> signIn(UserSignInRequest user) async {
     final userResponse = await _userRepository.signIn(user);
     try {
-      await _localStorage.saveEncrypted(_accessToken, userResponse.accessToken);
+      await _localStorage.saveEncrypted(
+        SecureStorageItem.accessToken,
+        userResponse.accessToken,
+      );
       final success = await _registerDeviceToServer();
       if (!success) {
-        await _localStorage.saveEncrypted(_accessToken, '');
+        await _localStorage.saveEncrypted(SecureStorageItem.accessToken, '');
         throw Exception('device registration failed: clear user token');
       }
       return userResponse;
@@ -88,41 +85,24 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
     }
   }
 
-  // 프로필 사진 업로드
   @override
-  Future<void> uploadProfilePhotos(List<XFile?> photos) async {
-    await _photoRepository.uploadProfilePhotos(photos);
-  }
-
-  // 프로필 사진 삭제
-  @override
-  Future<void> deleteProfilePhoto(int index) async {
-    await _photoRepository.deleteProfilePhoto(index);
-  }
-
-  @override
-  Future<ProfileImageResponse?> fetchProfileImages() async {
-    try {
-      return await _photoRepository.fetchProfileImages();
-    } catch (e) {
-      Log.e("❌ 프로필 사진 조회 실패: $e");
-      rethrow;
-    }
+  Future<void> rescreenProfile() async {
+    await _userRepository.rescreenProfile();
   }
 
   @override
   Future<String?> getAccessToken() async {
-    return _localStorage.getEncrypted(_accessToken);
+    return _localStorage.getEncrypted(SecureStorageItem.accessToken);
   }
 
   @override
   void setAccessToken(String accessToken) {
-    _localStorage.saveEncrypted(_accessToken, accessToken);
+    _localStorage.saveEncrypted(SecureStorageItem.accessToken, accessToken);
   }
 
   @override
   Future<String?> getRefreshToken() async {
-    return _localStorage.getEncrypted(_refreshToken);
+    return _localStorage.getEncrypted(SecureStorageItem.refreshToken);
   }
 
   Future<bool> _registerDeviceToServer() async {

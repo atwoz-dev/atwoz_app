@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/router/router.dart';
+import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
@@ -9,6 +10,7 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/outlined_dropdown.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
+import 'package:atwoz_app/features/report/domain/model/report_block_result.dart';
 import 'package:atwoz_app/features/report/presentation/provider/report_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +22,7 @@ class ReportPage extends ConsumerStatefulWidget {
   final String name;
   final int userId;
 
-  const ReportPage({
-    super.key,
-    required this.name,
-    required this.userId,
-  });
+  const ReportPage({super.key, required this.name, required this.userId});
 
   @override
   ReportPageState createState() => ReportPageState();
@@ -32,17 +30,16 @@ class ReportPage extends ConsumerStatefulWidget {
 
 class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
   ReportPageState()
-      : super(
-          defaultAppBarTitle: '신고하기',
-          isResizeToAvoidBottomInset: false,
-          horizontalMargin: 20,
-        );
+    : super(
+        defaultAppBarTitle: '신고하기',
+        isResizeToAvoidBottomInset: false,
+        horizontalMargin: 20,
+      );
 
   @override
   Widget buildPage(BuildContext context) {
     final reportState = ref.watch(reportProvider(widget.userId));
-    final reportNotifier =
-        ref.read(reportProvider(widget.userId).notifier);
+    final reportNotifier = ref.read(reportProvider(widget.userId).notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 올라와도 화면/버튼 안 밀림
@@ -55,24 +52,28 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
             children: [
               Text(
                 '닉네임',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               Text(
                 widget.name,
-                style: Fonts.header03(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: Fonts.header03(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               const Gap(30),
               Text(
                 '신고유형',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               OutlinedDropdown<ReportReason>(
-                placeholder: '신고 유형을 선택해주세요.', items: ReportReason.values,
+                placeholder: '신고 유형을 선택해주세요.',
+                items: ReportReason.values,
                 selectedItem: reportState.reason, // 단일 소스
                 onItemSelected: (reason) =>
                     reportNotifier.reason = reason.label,
@@ -81,8 +82,9 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               const Gap(30),
               Text(
                 '신고내용',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               DefaultTextFormField(
@@ -120,44 +122,32 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                   ),
                 ],
               ),
-              const Gap(100), // 버튼 영역 확보용 여백
             ],
           ),
         ),
       ),
 
-      bottomNavigationBar: SafeArea(
-        top: false,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             DefaultElevatedButton(
               border: const BorderSide(color: Color(0xffE1E1E1)),
               primary: Colors.white,
-              onPressed: () async {
-                final isBlockSuccess = await reportNotifier.block();
-
-                if (!context.mounted) return;
-                if (!isBlockSuccess) {
-                  ErrorDialog.open(
-                    context,
-                    error: DialogueErrorType.unknown,
-                    onConfirm: context.pop,
-                  );
-                  return;
-                }
-
-                navigate(context, route: AppRoute.mainTab);
-                showToastMessage(
-                  '정상적으로 차단되었습니다.\n상대방의 프로필은 이후에 노출되지 않습니다.',
-                  gravity: ToastGravity.TOP,
-                  toastLength: Toast.LENGTH_LONG,
-                );
-              },
+              onPressed: reportState.reason == null
+                  ? null
+                  : () => _handleAction(
+                      context,
+                      action: reportNotifier.block,
+                      failErrorType: DialogueErrorType.failBlock,
+                      toastMessage: '정상적으로 차단되었습니다\n상대방의 프로필은 이후에 노출되지 않습니다.',
+                    ),
               child: Text(
                 '차단하기',
-                style: Fonts.body01Medium(const Color(0xff7E7E7E))
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Fonts.body01Medium(
+                  const Color(0xff7E7E7E),
+                ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
             const Gap(8),
@@ -165,29 +155,15 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               primary: reportState.reason != null
                   ? palette.primary
                   : Palette.colorGrey200,
-              onPressed: () async {
-                if (reportState.reason == null) return;
-
-                final isReportSuccess = await reportNotifier.report();
-
-                if (!context.mounted) return;
-                if (!isReportSuccess) {
-                  ErrorDialog.open(
-                    context,
-                    error: DialogueErrorType.unknown,
-                    onConfirm: context.pop,
-                  );
-
-                  return;
-                }
-
-                navigate(context, route: AppRoute.mainTab);
-                showToastMessage(
-                  '신고가 정상적으로 접수되었습니다.\n상대방은 차단되어 이후에 노출되지 않습니다.',
-                  gravity: ToastGravity.TOP,
-                  toastLength: Toast.LENGTH_LONG,
-                );
-              },
+              onPressed: reportState.reason == null
+                  ? null
+                  : () => _handleAction(
+                      context,
+                      action: reportNotifier.report,
+                      failErrorType: DialogueErrorType.failReport,
+                      toastMessage:
+                          '신고가 정상적으로 접수되었습니다.\n상대방은 차단되어 이후에 노출되지 않습니다.',
+                    ),
               child: Text(
                 '신고하기',
                 style: Fonts.body01Medium(
@@ -203,8 +179,58 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> _handleAction(
+    BuildContext context, {
+    required Future<ReportBlockResult> Function() action,
+    required DialogueErrorType failErrorType,
+    required String toastMessage,
+  }) async {
+    final result = await action();
+
+    if (!context.mounted) return;
+
+    // 1) 서버 처리 실패
+    if (!result.isServerProcessed) {
+      ErrorDialog.open(context, error: failErrorType, onConfirm: context.pop);
+      return;
+    }
+
+    // 2) 서버 성공했지만 캐시 삭제 실패 → 재시도 Dialog
+    if (!result.isDeletedCache) {
+      await _showRetryCacheDialog(context);
+      if (!context.mounted) return;
+    }
+
+    // 3) 정상 동작 후 메인 화면 & Toast
+    navigate(context, route: AppRoute.mainTab);
+    showToastMessage(
+      toastMessage,
+      gravity: ToastGravity.TOP,
+      toastLength: Toast.LENGTH_LONG,
+    );
+  }
+
+  Future<void> _showRetryCacheDialog(BuildContext context) async {
+    final notifier = ref.read(reportProvider(widget.userId).notifier);
+
+    await context.showPrimaryConfirmDialog(
+      submit: DialogButton(
+        label: '확인',
+        onTap: () async {
+          await notifier.clearCachedProfiles();
+          if (!context.mounted) return;
+          context.pop();
+        },
+      ),
+      child: Text(
+        '처리는 완료되었지만 일부 데이터 정리에 실패했어요. 다시 시도하시겠어요?',
+        style: Fonts.body01Medium().copyWith(
+          color: const Color(0xff7E7E7E),
+          fontWeight: FontWeight.w400,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      buttonVerticalPadding: 12,
+    );
   }
 }

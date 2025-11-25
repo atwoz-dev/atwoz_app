@@ -70,7 +70,10 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required bool isMale,
   }) async {
     if (isBlurred) {
-      final heartBalance = ref.read(globalProvider).heartBalance;
+      final heartBalance = ref
+          .read(globalProvider)
+          .heartBalance
+          .totalHeartBalance;
 
       if (!context.mounted) return;
 

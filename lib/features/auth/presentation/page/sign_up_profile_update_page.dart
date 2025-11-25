@@ -3,7 +3,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +20,11 @@ class SignUpProfileUpdatePage extends ConsumerStatefulWidget {
 class SignUpProfileUpdatePageState
     extends BaseConsumerStatefulPageState<SignUpProfileUpdatePage> {
   SignUpProfileUpdatePageState()
-      : super(
-          defaultAppBarTitle: '프로필 정보',
-          defaultAppBarLeadingAction: (context) =>
-              navigate(context, route: AppRoute.signUp),
-        );
+    : super(
+        defaultAppBarTitle: '프로필 정보',
+        defaultAppBarLeadingAction: (context) =>
+            navigate(context, route: AppRoute.signUp),
+      );
 
   Widget buildDefaultTextFormFieldRow({
     required String label,
@@ -74,23 +74,19 @@ class SignUpProfileUpdatePageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AuthStepIndicatorWidget(
-                  totalSteps: 4,
-                  currentStep: 2,
-                ),
+                const AuthStepIndicatorWidget(totalSteps: 4, currentStep: 2),
                 Gap(16.h),
                 Text(
                   '프로필 정보를 등록해주세요',
-                  style: Fonts.header03().copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Fonts.header03().copyWith(fontWeight: FontWeight.bold),
                 ),
                 Gap(24.h),
                 buildDefaultTextFormFieldRow(
                   label: '나이',
                   hintText: '나이를 선택해주세요.',
-                  initialValue:
-                      signUpState.age != null ? '${signUpState.age}살' : null,
+                  initialValue: signUpState.age != null
+                      ? '${signUpState.age}살'
+                      : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 1,
                 ),
@@ -160,7 +156,7 @@ class SignUpProfileUpdatePageState
                       .join(', '),
                   route: AppRoute.signUpProfileChoice,
                   step: 10,
-                )
+                ),
               ],
             ),
           ),
@@ -170,10 +166,7 @@ class SignUpProfileUpdatePageState
           child: DefaultElevatedButton(
             onPressed: isButtonEnabled
                 ? () {
-                    navigate(
-                      context,
-                      route: AppRoute.signUpProfilePicture,
-                    );
+                    navigate(context, route: AppRoute.signUpProfilePicture);
                   }
                 : null,
             child: Text(

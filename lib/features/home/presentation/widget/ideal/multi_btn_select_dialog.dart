@@ -41,10 +41,7 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
-          padding: const EdgeInsets.only(
-            top: 16,
-            bottom: 24,
-          ),
+          padding: const EdgeInsets.only(top: 16, bottom: 24),
           width: context.screenWidth,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -126,11 +123,11 @@ class _MultiBtnSelectDialogState extends State<MultiBtnSelectDialog> {
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
                   child: const Text("확인"),
-                )
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

@@ -54,9 +54,7 @@ class FavoriteGridItem extends StatelessWidget {
             if (profile.city.isNotEmpty) profile.city,
             if (profile.age > 0) profile.age,
           ].join(', '),
-          style: Fonts.body03Regular(
-            context.colorScheme.secondary,
-          ),
+          style: Fonts.body03Regular(context.colorScheme.secondary),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -66,9 +64,7 @@ class FavoriteGridItem extends StatelessWidget {
 }
 
 class _ProfileImageContainer extends StatelessWidget {
-  const _ProfileImageContainer({
-    required this.profile,
-  });
+  const _ProfileImageContainer({required this.profile});
 
   final FavoriteUserSummary profile;
 
@@ -89,19 +85,13 @@ class _ProfileImageContainer extends StatelessWidget {
           const Positioned(
             right: 8.0,
             top: 8.0,
-            child: Badge(
-              backgroundColor: Color(0xFF6CD4FF),
-              smallSize: 8.0,
-            ),
+            child: Badge(backgroundColor: Color(0xFF6CD4FF), smallSize: 8.0),
           ),
         if (profile.isMutual)
           const Positioned(
             right: 5.0,
             bottom: 5.0,
-            child: DefaultIcon(
-              IconPath.heart,
-              size: 20.0,
-            ),
+            child: DefaultIcon(IconPath.heart, size: 20.0),
           ),
       ],
     );

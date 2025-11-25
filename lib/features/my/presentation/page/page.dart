@@ -10,3 +10,4 @@ export 'push_notification_setting_page.dart';
 export 'service_withdraw_page.dart';
 export 'service_withdraw_reason_page.dart';
 export 'terms_of_use_page.dart';
+export 'customer_center_page.dart';

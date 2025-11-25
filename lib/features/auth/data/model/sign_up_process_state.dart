@@ -38,7 +38,8 @@ abstract class SignUpProcessState with _$SignUpProcessState {
       ? DateTimeUtil.calculateAge(yearOfBirth: selectedYear!)
       : null;
 
-  String? get mbti => selectedFirstMbtiLetter != null &&
+  String? get mbti =>
+      selectedFirstMbtiLetter != null &&
           selectedSecondMbtiLetter != null &&
           selectedThirdMbtiLetter != null &&
           selectedFourthMbtiLetter != null

@@ -18,9 +18,8 @@ abstract class ExamQuestionResponse with _$ExamQuestionResponse {
 
 @freezed
 abstract class ExamQuestionItem with _$ExamQuestionItem {
-  const factory ExamQuestionItem({
-    required List<SubjectItem> subjects,
-  }) = _ExamQuestionItem;
+  const factory ExamQuestionItem({required List<SubjectItem> subjects}) =
+      _ExamQuestionItem;
 
   factory ExamQuestionItem.fromJson(Map<String, dynamic> json) =>
       _$ExamQuestionItemFromJson(json);
@@ -62,10 +61,8 @@ abstract class QuestionItem with _$QuestionItem {
 
 @freezed
 abstract class AnswerItem with _$AnswerItem {
-  const factory AnswerItem({
-    required int id,
-    required String content,
-  }) = _AnswerItem;
+  const factory AnswerItem({required int id, required String content}) =
+      _AnswerItem;
 
   factory AnswerItem.fromJson(Map<String, dynamic> json) =>
       _$AnswerItemFromJson(json);

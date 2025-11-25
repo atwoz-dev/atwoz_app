@@ -26,9 +26,7 @@ class _ServiceWithdrawReasonPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: "서비스 탈퇴",
-      ),
+      appBar: const DefaultAppBar(title: "서비스 탈퇴"),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -40,10 +38,7 @@ class _ServiceWithdrawReasonPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "서비스를 탈퇴 하시는 이유를 알려주세요.",
-                style: Fonts.body01Medium(),
-              ),
+              Text("서비스를 탈퇴 하시는 이유를 알려주세요.", style: Fonts.body01Medium()),
               const Gap(16),
               Text(
                 "서비스 개선에 많은 도움이 됩니다",
@@ -60,45 +55,43 @@ class _ServiceWithdrawReasonPageState
                     (reason) => _ReasonItem(
                       reason: reason,
                       selected: _selectedReason == reason,
-                      onTap: () => setState(
-                        () => _selectedReason = reason,
-                      ),
+                      onTap: () => setState(() => _selectedReason = reason),
                     ),
-                  )
+                  ),
                 ],
               ),
               const Spacer(),
               DefaultElevatedButton(
                 onPressed: _selectedReason != null
                     ? () => context.showConfirmDialog(
-                          submit: DialogButton(
-                            label: '탈퇴',
-                            onTap: () async {
-                              final success = await ref
-                                  .read(mySettingProvider.notifier)
-                                  .withdrawAccount();
-                              if (!context.mounted) return;
-                              if (!success) {
-                                ErrorDialog.open(
-                                  context,
-                                  error: DialogueErrorType.unknown,
-                                  onConfirm: () => context
-                                    ..pop()
-                                    ..pop(),
-                                );
-                                return;
-                              }
-                              navigate(
+                        submit: DialogButton(
+                          label: '탈퇴',
+                          onTap: () async {
+                            final success = await ref
+                                .read(mySettingProvider.notifier)
+                                .withdrawAccount();
+                            if (!context.mounted) return;
+                            if (!success) {
+                              ErrorDialog.open(
                                 context,
-                                route: AppRoute.onboard,
-                                method: NavigationMethod.go,
+                                error: DialogueErrorType.unknown,
+                                onConfirm: () => context
+                                  ..pop()
+                                  ..pop(),
                               );
-                            },
-                          ),
-                          enableCloseButton: true,
-                          child: const _WithdrawConfirmDialogContent(),
-                          buttonVerticalPadding: 8,
-                        )
+                              return;
+                            }
+                            navigate(
+                              context,
+                              route: AppRoute.onboard,
+                              method: NavigationMethod.go,
+                            );
+                          },
+                        ),
+                        enableCloseButton: true,
+                        child: const _WithdrawConfirmDialogContent(),
+                        buttonVerticalPadding: 8,
+                      )
                     : null,
                 primary: _selectedReason != null
                     ? Palette.colorPrimary500
@@ -106,12 +99,13 @@ class _ServiceWithdrawReasonPageState
                 child: Text(
                   "탈퇴하기",
                   style: Fonts.body01Medium().copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: _selectedReason != null
-                          ? Colors.white
-                          : const Color(0xffB3B7C0)),
+                    fontWeight: FontWeight.w600,
+                    color: _selectedReason != null
+                        ? Colors.white
+                        : const Color(0xffB3B7C0),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -136,10 +130,7 @@ class _ReasonItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 19,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
         decoration: BoxDecoration(
           color: selected
               ? Palette.colorPrimary500.withValues(alpha: 0.1)
@@ -175,19 +166,17 @@ class _WithdrawConfirmDialogContent extends StatelessWidget {
         children: [
           Text(
             "서비스 탈퇴",
-            style: Fonts.header02().copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+            style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
           ),
           const Gap(16),
           Text(
-            "탈퇴 후 24시간은 재가입이 불가능합니다.\n정말로 서비스를 탈퇴하시겠습니까?",
+            "탈퇴 후 3개월간 재가입이 불가능합니다.\n정말로 서비스를 탈퇴하시겠습니까?",
             style: Fonts.body02Medium().copyWith(
               fontWeight: FontWeight.w400,
               color: const Color(0xff515151),
             ),
             textAlign: TextAlign.center,
-          )
+          ),
         ],
       ),
     );

@@ -1,5 +1,10 @@
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
+import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,5 +48,63 @@ class ProfileRepository extends BaseRepository {
       Log.e('Failed to reject profile exchange: $e');
       return false;
     }
+  }
+
+  Future<String> getPhoneNumber() async {
+    final phoneNumber = await ref
+        .read(localStorageProvider)
+        .getEncrypted(SecureStorageItem.phoneNumber);
+    return phoneNumber ?? '';
+  }
+
+  Future<String?> getKakaoId() async {
+    final kakaoId = await ref
+        .read(localStorageProvider)
+        .getEncrypted(SecureStorageItem.kakaoId);
+    return kakaoId;
+  }
+
+  ContactMethod? getContactMethod() {
+    final contactMethod = SharedPreferenceManager.getValue(
+      SharedPreferenceKeys.defaultContactMethod,
+    );
+    return contactMethod;
+  }
+
+  void setContactMethod(ContactMethod method) {
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.defaultContactMethod,
+      method,
+    );
+  }
+
+  Future<bool> setKakaoId(String kakaoId) async {
+    final original = await ref
+        .read(localStorageProvider)
+        .getEncrypted(SecureStorageItem.kakaoId);
+
+    if (original == kakaoId) return true;
+
+    try {
+      await apiService.patchJson<Map<String, dynamic>>(
+        '/member/profile/contact/kakao',
+        data: kakaoId,
+      );
+
+      await ref
+          .read(localStorageProvider)
+          .saveEncrypted(SecureStorageItem.kakaoId, kakaoId);
+
+      return true;
+    } catch (e) {
+      Log.e('Failed to set Kakao ID: $e');
+      return false;
+    }
+  }
+
+  void setPhoneNumber(String phoneNumber) {
+    ref
+        .read(localStorageProvider)
+        .saveEncrypted(SecureStorageItem.phoneNumber, phoneNumber);
   }
 }
