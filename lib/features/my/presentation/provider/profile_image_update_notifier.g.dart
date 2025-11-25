@@ -61,7 +61,7 @@ final class ProfileImageUpdateNotifierProvider
 }
 
 String _$profileImageUpdateNotifierHash() =>
-    r'748523fa438a0e762ad617fb358111931b0fa76c';
+    r'c0fca16e93c8418779a5e3157eee64763b654ac0';
 
 final class ProfileImageUpdateNotifierFamily extends $Family
     with
