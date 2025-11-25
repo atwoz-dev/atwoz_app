@@ -1,5 +1,4 @@
 import 'package:atwoz_app/app/widget/button/default_text_button.dart';
-import 'package:atwoz_app/app/widget/dialogue/custom_return_dialogue.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -72,51 +71,51 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
 
     return Scaffold(
       appBar: DefaultAppBar(
-        title: '내 소개 등록하기',
+        title: '내 소개 수정하기',
         actions: [
           DefaultTextButton(
             primary: canSubmit ? Palette.colorBlack : Palette.colorGrey500,
-            child: const Text('수정'),
-            onPressed: () {
-              CustomReturnDialogue.showTwoChoiceDialogue(
-                context: context,
-                content: '수정 버튼을 누르면\n작성된 내용을 저장합니다.',
-                elevatedButtonText: '수정',
-                onElevatedButtonPressed: () async {
-                  try {
-                    await ref
-                        .read(introduceEditProvider.notifier)
-                        .editIntroduce(
-                          id: widget.id,
-                          title: _inputTitleController.text,
-                          content: _inputContentController.text,
-                        );
-                  } catch (e) {
-                    // TODO: content 가 40자 이하면 에러 발생
-                    showToastMessage('내용을 수정하는데 실패했습니다.');
+            onPressed: canSubmit
+                ? () {
+                    CustomDialogue.showTwoChoiceDialogue(
+                      context: context,
+                      content: '수정 버튼을 누르면\n작성된 내용을 저장합니다.',
+                      elevatedButtonText: '수정',
+                      onElevatedButtonPressed: () async {
+                        try {
+                          await ref
+                              .read(introduceEditProvider.notifier)
+                              .editIntroduce(
+                                id: widget.id,
+                                title: _inputTitleController.text,
+                                content: _inputContentController.text,
+                              );
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          }
+                        } catch (e) {
+                          // TODO: content 가 40자 이하면 에러 발생
+                          showToastMessage('내용을 수정하는데 실패했습니다.');
+                        }
+                      },
+                    );
                   }
-                },
-              ).then((pressedConfirm) {
-                if (context.mounted && pressedConfirm == true) {
-                  Navigator.of(context).pop();
-                }
-              });
-            },
+                : null,
+            child: const Text('수정'),
           ),
         ],
-        leadingAction: (context) => {
-          CustomDialogue.showTwoChoiceDialogue(
-            context: context,
-            content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
-            onElevatedButtonPressed: () {
-              navigate(
-                context,
-                route: AppRoute.mainTab,
-                method: NavigationMethod.go,
-              );
-            },
-          ),
-        },
+        leadingAction: (context) => CustomDialogue.showTwoChoiceDialogue(
+          context: context,
+          content: '이 페이지를 벗어나면\n작성된 내용은 저장되지 않습니다.',
+          onElevatedButtonPressed: () {
+            navigate(
+              context,
+              route: AppRoute.mainTab,
+              method: NavigationMethod.go,
+            );
+          },
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

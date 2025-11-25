@@ -20,8 +20,8 @@ abstract class IntroduceListResponse with _$IntroduceListResponse {
 abstract class IntroduceItem with _$IntroduceItem {
   const factory IntroduceItem({
     required int id,
-    int? yearOfBirth,
-    String? nickname,
+    required int yearOfBirth,
+    required String nickname,
     required String profileUrl,
     required String title,
   }) = _IntroduceItem;

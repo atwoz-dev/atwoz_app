@@ -60,6 +60,7 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
     } catch (e) {
       // TODO: 에러 발생 처리 어떻게???
       Log.e("Failed to edit introduce to server: $e");
+      rethrow;
     }
   }
 }

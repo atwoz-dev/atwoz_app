@@ -12,25 +12,29 @@ part 'introduce_detail_notifier.g.dart';
 class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
   @override
   Future<IntroduceDetailState> build({required int introduceId}) async {
-    final introduceDetail = await ref
-        .read(fetchIntroduceDetailUseCaseProvider)
-        .execute(introduceId: introduceId);
+    try {
+      final introduceDetail = await ref
+          .read(fetchIntroduceDetailUseCaseProvider)
+          .execute(introduceId: introduceId);
 
-    // TODO: 상세조회 실패. 에러 처리
-    return IntroduceDetailState(
-      introduceId: introduceId,
-      introduceDetail: introduceDetail,
-      isLoaded: true,
-    );
+      return IntroduceDetailState(
+        introduceId: introduceId,
+        introduceDetail: introduceDetail,
+        isLoaded: true,
+      );
+    } catch (e) {
+      return IntroduceDetailState(
+        introduceId: introduceId,
+        introduceDetail: null,
+        isLoaded: true,
+      );
+    }
   }
 
   Future<bool> getIntroduceDetail() async {
     final introduceDetail = await ref
         .read(fetchIntroduceDetailUseCaseProvider)
         .execute(introduceId: introduceId);
-
-    // TODO: 에러처리
-    if (introduceDetail == null) return false;
 
     state = AsyncValue.data(
       state.requireValue.copyWith(introduceDetail: introduceDetail),
@@ -48,7 +52,7 @@ class IntroduceDetailNotifier extends _$IntroduceDetailNotifier {
           .requestFavorite(memberId, type: type);
     } catch (e, s) {
       Log.e('좋아요 설정 실패: $e');
-      state = AsyncError(e, s);
+      rethrow;
     }
   }
 

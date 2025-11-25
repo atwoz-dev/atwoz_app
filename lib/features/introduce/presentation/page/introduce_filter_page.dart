@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/age_range_slider.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/region_select_dialog.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/row_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -14,8 +15,8 @@ import 'package:gap/gap.dart';
 class IntroduceFilterPage extends ConsumerWidget {
   const IntroduceFilterPage({super.key});
 
-  final String ALL = "전체 보기";
-  final String OPPOSITE = "이성만 보기";
+  static const String ALL = "전체 보기";
+  static const String OPPOSITE = "이성만 보기";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,6 +61,7 @@ class IntroduceFilterPage extends ConsumerWidget {
                       ? selectedCityList.join(', ')
                       : null,
                 ),
+
                 Gap(24.h),
                 buildLabeledRow(
                   context: context,

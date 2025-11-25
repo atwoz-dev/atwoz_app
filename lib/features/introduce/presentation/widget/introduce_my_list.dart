@@ -3,8 +3,9 @@ import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/dialogue/custom_return_dialogue.dart';
+import 'package:atwoz_app/app/widget/dialogue/custom_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +48,14 @@ class _IntroduceMyListState extends ConsumerState<IntroduceMyList> {
     }
 
     _isLoadingMore = true;
-
-    ref.read(introduceProvider.notifier).fetchMyIntroduceMore().then((_) {
+    try {
+      ref.read(introduceProvider.notifier).fetchMyIntroduceMore();
+    } catch (e) {
+      // TODO: 에러 처리
+      Log.e("내 셀프소개 추가 조회 시 오류 발생 : $e");
+    } finally {
       _isLoadingMore = false;
-    });
+    }
   }
 
   @override
@@ -112,11 +117,10 @@ class IntroduceHistoryListItem extends ConsumerWidget {
             route: AppRoute.introduceEdit,
             extra: IntroduceEditArguments(id: item.id),
           );
-          await Future.delayed(const Duration(milliseconds: 500));
           ref.read(introduceProvider.notifier).fetchMyIntroduceList();
         },
         onLongPress: () {
-          CustomReturnDialogue.showTwoChoiceDialogue(
+          CustomDialogue.showTwoChoiceDialogue(
             context: context,
             content: '삭제 버튼을 누르면\n내 셀프소개 글이 삭제됩니다.',
             elevatedButtonText: "삭제",
@@ -125,10 +129,12 @@ class IntroduceHistoryListItem extends ConsumerWidget {
                 await ref
                     .read(introduceProvider.notifier)
                     .deleteIntroduce(item.id);
-                await Future.delayed(const Duration(milliseconds: 500));
                 ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               } catch (e) {
-                // TODO: 에러 처리
+                // TODO: 에러 문구
                 showToastMessage('삭제하는데 실패했습니다.');
               }
             },

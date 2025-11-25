@@ -9,8 +9,8 @@ part 'introduce_info.freezed.dart';
 abstract class IntroduceInfo with _$IntroduceInfo {
   const factory IntroduceInfo({
     required int id,
-    int? yearOfBirth,
-    String? nickname,
+    required int yearOfBirth,
+    required String nickname,
     required String profileUrl,
     required String title,
   }) = _IntroduceInfo;

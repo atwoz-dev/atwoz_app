@@ -38,8 +38,8 @@ class IntroduceAddNotifier extends _$IntroduceAddNotifier {
         ref,
       ).call(title: title.trim(), content: content.trim());
     } catch (e) {
-      // TODO: 에러 발생 처리 어떻게???
       Log.e("Failed to add introduce to server: $e");
+      rethrow;
     }
   }
 }

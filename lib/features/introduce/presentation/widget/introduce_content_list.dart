@@ -7,6 +7,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +26,13 @@ class IntroduceContentList extends ConsumerStatefulWidget {
 
 class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
   final _scrollController = ScrollController();
-  String nickname = "";
+  String get nickname => ref.read(globalProvider).profile.nickname;
   bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
 
-    nickname = ref.read(globalProvider).profile.nickname;
     _scrollController.addListener(_onScrollIntroduce);
   }
 
@@ -52,9 +52,15 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
 
     _isLoadingMore = true;
 
-    ref.read(introduceProvider.notifier).fetchIntroduceMore().then((_) {
+    try {
+      ref.read(introduceProvider.notifier).fetchIntroduceMore().then((_) {
+        _isLoadingMore = false;
+      });
+    } catch (e) {
+      Log.e("셀프소개 추가 조회 시 오류 발생 : $e");
+    } finally {
       _isLoadingMore = false;
-    });
+    }
   }
 
   @override
@@ -114,6 +120,8 @@ class IntroduceListItem extends ConsumerWidget {
       ),
       child: GestureDetector(
         onTap: () async {
+          if (!context.mounted) return;
+
           if (nickname == introduce.nickname) {
             await navigate(
               context,
@@ -121,42 +129,37 @@ class IntroduceListItem extends ConsumerWidget {
               extra: IntroduceEditArguments(id: introduce.id),
             );
 
-            await Future.delayed(const Duration(milliseconds: 500));
             await ref.read(introduceProvider.notifier).fetchIntroduceList();
           } else {
             // 셀프 소개 상세 조회
-            final detail = await ref
-                .read(introduceProvider.notifier)
-                .fetchIntroduceDetail(introduce.id);
+            try {
+              final detail = await ref
+                  .read(introduceProvider.notifier)
+                  .fetchIntroduceDetail(introduce.id);
 
-            if (!context.mounted) return;
-            if (detail == null) {
-              // TODO: 에러 처리 - 메시지?
-              return ErrorDialog.open(
-                context,
-                error: DialogueErrorType.unknown,
-                onConfirm: context.pop,
-              );
-            }
+              final route =
+                  detail.profileExchangeStatus == ProfileExchangeStatus.approve
+                  ? AppRoute.profile
+                  : AppRoute.introduceDetail;
 
-            if (detail.profileExchangeStatus == ProfileExchangeStatus.approve) {
+              final arguements =
+                  detail.profileExchangeStatus == ProfileExchangeStatus.approve
+                  ? ProfileDetailArguments(
+                      userId: detail.memberBasicInfo.memberId,
+                    )
+                  : IntroduceDetailArguments(
+                      introduceId: introduce.id,
+                    );
+
               if (context.mounted) {
-                navigate(
-                  context,
-                  route: AppRoute.profile,
-                  extra: ProfileDetailArguments(
-                    userId: detail.memberBasicInfo.memberId,
-                  ),
-                );
+                navigate(context, route: route, extra: arguements);
               }
-            } else {
+            } catch (e) {
               if (context.mounted) {
-                navigate(
+                return ErrorDialog.open(
                   context,
-                  route: AppRoute.introduceDetail,
-                  extra: IntroduceDetailArguments(
-                    introduceId: introduce.id,
-                  ),
+                  error: DialogueErrorType.failFetchIntroduceList,
+                  onConfirm: context.pop,
                 );
               }
             }
@@ -173,7 +176,7 @@ class IntroduceListItem extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      introduce.nickname ?? "nickname",
+                      introduce.nickname,
                       style: Fonts.body02Medium().copyWith(
                         fontWeight: FontWeight.w700,
                       ),

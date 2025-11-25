@@ -1,15 +1,19 @@
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/exam/domain/provider/exam_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/profile_exchange_dialog.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/favorite_type_select_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,7 +56,8 @@ class IntroduceDetailPageState
       body: stateAsync.when(
         data: (data) {
           if (data.introduceDetail == null) {
-            // TODO: 에러처리
+            // TODO: 에러 처리
+            showToastMessage("상대방 정보를 불러오는데 실패했습니다.");
             return const SizedBox.shrink();
           }
 
@@ -167,10 +172,20 @@ class IntroduceDetailPageState
                                     );
                                 if (favoriteType == null) return;
 
-                                await notifier.setFavoriteType(
-                                  memberId: memberId,
-                                  type: favoriteType,
-                                );
+                                try {
+                                  await notifier.setFavoriteType(
+                                    memberId: memberId,
+                                    type: favoriteType,
+                                  );
+                                } on NetworkException catch (e) {
+                                  if (e.status == 400) {
+                                    // TODO: 에러 문구
+                                    showToastMessage('이미 좋아요가 존재합니다.');
+                                  }
+                                } catch (e) {
+                                  // TODO: 에러 문구
+                                  showToastMessage('에러 발생');
+                                }
 
                                 // memberinfo 업데이트 필요
                                 await notifier.getIntroduceDetail();
@@ -232,8 +247,6 @@ class IntroduceDetailPageState
           );
         },
         error: (error, stackTrace) {
-          // TODO: 에러 처리
-          // - 좋아요가 이미 존재합니다.
           return Center(child: Text('Error: $error'));
         },
         loading: () => const Center(child: CircularProgressIndicator()),

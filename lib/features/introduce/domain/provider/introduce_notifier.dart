@@ -29,7 +29,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
       return IntroduceState(
         introduceList: introduces,
         isLoaded: true,
-        introduceLastId: introduces.last.id,
+        introduceLastId: introduces.isNotEmpty ? introduces.last.id : null,
       );
     } catch (e, s) {
       throw AsyncError(e, s);
@@ -57,7 +57,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
       state = AsyncData(
         prevState.copyWith(
           introduceList: introduces,
-          introduceLastId: introduces.last.id,
+          introduceLastId: introduces.isNotEmpty ? introduces.last.id : null,
         ),
       );
     } catch (e, s) {
@@ -118,7 +118,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
       state = AsyncData(
         prevState.copyWith(
           introduceMyList: introduces,
-          myIntroduceLastId: introduces.last.id,
+          myIntroduceLastId: introduces.isNotEmpty ? introduces.last.id : null,
         ),
       );
     } catch (e, s) {
@@ -159,7 +159,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
   }
 
   /// 셀프 소개 상세 조회
-  Future<IntroduceDetail?> fetchIntroduceDetail(int id) async {
+  Future<IntroduceDetail> fetchIntroduceDetail(int id) async {
     try {
       final introduceDetail = await ref
           .read(fetchIntroduceDetailUseCaseProvider)
@@ -169,7 +169,7 @@ class IntroduceNotifier extends _$IntroduceNotifier {
     } catch (e, s) {
       Log.e('셀프 소개 상세 조회 api 실패 $e');
       state = AsyncError(e, s);
-      return null;
+      rethrow;
     }
   }
 

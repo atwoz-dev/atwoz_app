@@ -13,7 +13,7 @@ class FetchIntroduceDetailUseCase {
 
   FetchIntroduceDetailUseCase(this.ref);
 
-  Future<IntroduceDetail?> execute({required int introduceId}) async {
+  Future<IntroduceDetail> execute({required int introduceId}) async {
     final introduce = await ref
         .read(introduceRepositoryProvider)
         .getIntroduceDetail(id: introduceId);

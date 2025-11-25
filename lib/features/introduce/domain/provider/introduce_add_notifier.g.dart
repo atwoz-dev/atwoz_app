@@ -42,7 +42,7 @@ final class IntroduceAddNotifierProvider
 }
 
 String _$introduceAddNotifierHash() =>
-    r'b83b21966917fe47d5dfd1b82c89d6fc3b877804';
+    r'085463082c6f9cda888a0bc04dceefac79a2d53e';
 
 abstract class _$IntroduceAddNotifier extends $Notifier<IntroduceAddState> {
   IntroduceAddState build();

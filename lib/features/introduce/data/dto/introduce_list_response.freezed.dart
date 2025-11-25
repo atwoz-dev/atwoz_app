@@ -293,7 +293,7 @@ as List<IntroduceItem>,
 /// @nodoc
 mixin _$IntroduceItem {
 
- int get id; int? get yearOfBirth; String? get nickname; String get profileUrl; String get title;
+ int get id; int get yearOfBirth; String get nickname; String get profileUrl; String get title;
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -326,7 +326,7 @@ abstract mixin class $IntroduceItemCopyWith<$Res>  {
   factory $IntroduceItemCopyWith(IntroduceItem value, $Res Function(IntroduceItem) _then) = _$IntroduceItemCopyWithImpl;
 @useResult
 $Res call({
- int id, int? yearOfBirth, String? nickname, String profileUrl, String title
+ int id, int yearOfBirth, String nickname, String profileUrl, String title
 });
 
 
@@ -343,12 +343,12 @@ class _$IntroduceItemCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? yearOfBirth = freezed,Object? nickname = freezed,Object? profileUrl = null,Object? title = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,yearOfBirth: freezed == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
-as int?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
-as String?,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
+as int,yearOfBirth: null == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
+as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -435,7 +435,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceItem() when $default != null:
 return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
@@ -456,7 +456,7 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceItem():
 return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
@@ -476,7 +476,7 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int? yearOfBirth,  String? nickname,  String profileUrl,  String title)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceItem() when $default != null:
 return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title);case _:
@@ -491,12 +491,12 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 @JsonSerializable()
 
 class _IntroduceItem implements IntroduceItem {
-  const _IntroduceItem({required this.id, this.yearOfBirth, this.nickname, required this.profileUrl, required this.title});
+  const _IntroduceItem({required this.id, required this.yearOfBirth, required this.nickname, required this.profileUrl, required this.title});
   factory _IntroduceItem.fromJson(Map<String, dynamic> json) => _$IntroduceItemFromJson(json);
 
 @override final  int id;
-@override final  int? yearOfBirth;
-@override final  String? nickname;
+@override final  int yearOfBirth;
+@override final  String nickname;
 @override final  String profileUrl;
 @override final  String title;
 
@@ -533,7 +533,7 @@ abstract mixin class _$IntroduceItemCopyWith<$Res> implements $IntroduceItemCopy
   factory _$IntroduceItemCopyWith(_IntroduceItem value, $Res Function(_IntroduceItem) _then) = __$IntroduceItemCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int? yearOfBirth, String? nickname, String profileUrl, String title
+ int id, int yearOfBirth, String nickname, String profileUrl, String title
 });
 
 
@@ -550,12 +550,12 @@ class __$IntroduceItemCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? yearOfBirth = freezed,Object? nickname = freezed,Object? profileUrl = null,Object? title = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,}) {
   return _then(_IntroduceItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,yearOfBirth: freezed == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
-as int?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
-as String?,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
+as int,yearOfBirth: null == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
+as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,
   ));

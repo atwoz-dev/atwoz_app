@@ -29,8 +29,8 @@ Map<String, dynamic> _$IntroduceListResponseToJson(
 _IntroduceItem _$IntroduceItemFromJson(Map<String, dynamic> json) =>
     _IntroduceItem(
       id: (json['id'] as num).toInt(),
-      yearOfBirth: (json['yearOfBirth'] as num?)?.toInt(),
-      nickname: json['nickname'] as String?,
+      yearOfBirth: (json['yearOfBirth'] as num).toInt(),
+      nickname: json['nickname'] as String,
       profileUrl: json['profileUrl'] as String,
       title: json['title'] as String,
     );
