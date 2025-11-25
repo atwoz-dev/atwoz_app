@@ -5,7 +5,7 @@ enum DialogueErrorType {
   failDormantChange('휴면회원 전환에 실패했습니다.'),
   failDormantRelease('휴면회원 해제에 실패했습니다.'),
   failReport('신고에 실패했습니다.'),
-  failBlock('차단에 실패했습니다');
+  failBlock('차단에 실패했습니다'),
   failUpdateProfileImages('프로필 이미지 업데이트에 실패했습니다.'),
   failSignUp('회원가입에 실패했습니다.');
 
