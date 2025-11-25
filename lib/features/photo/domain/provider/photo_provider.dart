@@ -59,7 +59,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
       ...List.filled(Dimens.profileImageMaxCount - clampedPhotos.length, null),
     ];
 
-    return await ref.read(uploadPhotosUsecaseProvider).execute(clampedPhotos);
+    return await ref.read(uploadPhotosUsecaseProvider).execute(photos);
   }
 
   // 사진 선택
