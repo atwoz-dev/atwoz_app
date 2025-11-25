@@ -80,11 +80,10 @@ class IdealAgeSlider extends StatelessWidget {
                 ),
                 min: Dimens.minSelectableAge.toDouble(),
                 max: Dimens.maxSelectableAge.toDouble(),
-                onChanged:
-                    onChanged != null
-                        ? (values) =>
-                            onChanged!(values.start.toInt(), values.end.toInt())
-                        : null,
+                onChanged: onChanged != null
+                    ? (values) =>
+                          onChanged!(values.start.toInt(), values.end.toInt())
+                    : null,
                 activeColor: Palette.colorPrimary500,
                 inactiveColor: const Color(0xffEEEEEE),
               ),

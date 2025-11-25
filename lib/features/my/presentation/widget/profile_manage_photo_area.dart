@@ -10,10 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileManagePhotoArea extends ConsumerWidget {
-  const ProfileManagePhotoArea({
-    super.key,
-    required this.profileImages,
-  });
+  const ProfileManagePhotoArea({super.key, required this.profileImages});
 
   final List<MyProfileImage?> profileImages;
 
@@ -64,7 +61,8 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8),
                           color: const Color(0xffEDEEF0),
                         ),
-                        child: index < profileImages.length &&
+                        child:
+                            index < profileImages.length &&
                                 profileImages[index] != null
                             ? DefaultImage(
                                 imageURL: profileImages[index]!.imageUrl,
@@ -108,18 +106,17 @@ class ProfileManagePhotoArea extends ConsumerWidget {
 }
 
 List<EditableProfileImage?> _toEditableProfileImages(
-    List<MyProfileImage?> profileImages) {
-  return profileImages.map(
-    (image) {
-      if (image == null) return null;
-      return EditableProfileImage(
-        id: image.id,
-        imageUrl: image.imageUrl,
-        imageFile: XFile(image.imageUrl),
-        order: profileImages.indexOf(image),
-        isPrimary: profileImages.indexOf(image) == 0,
-        status: ProfileImageStatus.none,
-      );
-    },
-  ).toList();
+  List<MyProfileImage?> profileImages,
+) {
+  return profileImages.map((image) {
+    if (image == null) return null;
+    return EditableProfileImage(
+      id: image.id,
+      imageUrl: image.imageUrl,
+      imageFile: XFile(image.imageUrl),
+      order: profileImages.indexOf(image),
+      isPrimary: profileImages.indexOf(image) == 0,
+      status: ProfileImageStatus.none,
+    );
+  }).toList();
 }

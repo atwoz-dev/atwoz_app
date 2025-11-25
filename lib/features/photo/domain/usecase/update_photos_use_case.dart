@@ -20,9 +20,7 @@ class UpdatePhotosUseCase
         .toList();
 
     final deletedPhotos = validPhotos
-        .where(
-          (photo) => photo.status == ProfileImageStatus.delete,
-        )
+        .where((photo) => photo.status == ProfileImageStatus.delete)
         .toList();
 
     if (addOrUpdatePhotos.isNotEmpty) {

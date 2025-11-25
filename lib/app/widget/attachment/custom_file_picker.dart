@@ -48,18 +48,16 @@ class FilePickerState extends AppBaseWidgetState<CustomFilePicker> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style =
-        TextStyle(color: widget.readOnly ? Colors.grey : palette.onSurface);
+    TextStyle style = TextStyle(
+      color: widget.readOnly ? Colors.grey : palette.onSurface,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(
-              "첨부파일",
-              style: style,
-            ),
+            Text("첨부파일", style: style),
             const Gap(20),
             Expanded(
               child: Container(
@@ -69,7 +67,7 @@ class FilePickerState extends AppBaseWidgetState<CustomFilePicker> {
                     BoxShadow(
                       color: Colors.grey.withAlpha((0.5 * 255).round()),
                       offset: const Offset(0, 2),
-                    )
+                    ),
                   ],
                 ),
                 child: Row(
@@ -125,7 +123,7 @@ class FilePickerState extends AppBaseWidgetState<CustomFilePicker> {
                       color: palette.shadow.withAlpha((0.8 * 255).round()),
                       blurRadius: 3.0,
                       spreadRadius: 1.0,
-                    )
+                    ),
                   ],
                 ),
                 child: ListTile(

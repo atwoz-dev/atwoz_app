@@ -29,29 +29,21 @@ class DefaultHeartCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          DefaultIcon(
-            IconPath.storeHeart,
-            size: 16,
-          ),
+          DefaultIcon(IconPath.storeHeart, size: 16),
           Gap(1),
-          Text(
-            heart,
-            style: Fonts.numeric01Bold(),
-          ),
+          Text(heart, style: Fonts.numeric01Bold()),
           Gap(2),
-          Text(
-            '₩${price.formatThousands}',
-            style: Fonts.numeric01Medium(),
-          ),
+          Text('₩${price.formatThousands}', style: Fonts.numeric01Medium()),
           Gap(2),
           Gap(24),
           DefaultElevatedButton(
             onPressed: () => onCreate(code),
             height: 34.0,
             padding: const EdgeInsets.only(top: 3.0),
-            child: Text('구매하기',
-                style:
-                    Fonts.body03Regular().copyWith(color: Palette.colorWhite)),
+            child: Text(
+              '구매하기',
+              style: Fonts.body03Regular().copyWith(color: Palette.colorWhite),
+            ),
           ),
         ],
       ),

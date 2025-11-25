@@ -19,19 +19,11 @@ class ProfileSubInformation extends ConsumerWidget {
     if (profile == null) return Container();
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 20.0,
-        horizontal: 16.0,
-      ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 16.0),
       decoration: BoxDecoration(
         borderRadius: Dimens.cardRadius,
-        border: Border.all(
-          width: 1.0,
-          color: context.palette.outline,
-        ),
+        border: Border.all(width: 1.0, color: context.palette.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -81,20 +73,14 @@ class _Title extends StatelessWidget {
 }
 
 class SubInfoItem {
-  const SubInfoItem({
-    required this.iconPath,
-    required this.label,
-  });
+  const SubInfoItem({required this.iconPath, required this.label});
 
   final String iconPath;
   final String label;
 }
 
 class SubInformationContainer extends StatelessWidget {
-  const SubInformationContainer({
-    super.key,
-    required this.items,
-  });
+  const SubInformationContainer({super.key, required this.items});
 
   final List<SubInfoItem> items;
 
@@ -128,17 +114,10 @@ class _SubInformationItem extends StatelessWidget {
         DefaultIcon(
           item.iconPath,
           size: 16.0,
-          colorFilter: DefaultIcon.fillColor(
-            context.palette.secondary,
-          ),
+          colorFilter: DefaultIcon.fillColor(context.palette.secondary),
         ),
         const Gap(10.0),
-        Text(
-          item.label,
-          style: Fonts.body02Medium(
-            context.palette.tertiary,
-          ),
-        ),
+        Text(item.label, style: Fonts.body02Medium(context.palette.tertiary)),
       ],
     );
   }

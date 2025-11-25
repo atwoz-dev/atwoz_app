@@ -19,11 +19,7 @@ class ProfileDesignInspection extends StatelessWidget {
             child: Column(
               spacing: 16.0,
               children: [
-                _generateProfileNavigateButton(
-                  context,
-                  null,
-                  '일반',
-                ),
+                _generateProfileNavigateButton(context, null, '일반'),
                 _generateProfileNavigateButton(
                   context,
                   ProfileDesignInspectionType.main,
@@ -67,10 +63,7 @@ class ProfileDesignInspection extends StatelessWidget {
                 DefaultElevatedButton(
                   primary: context.colorScheme.primary,
                   onPressed: () {
-                    navigate(
-                      context,
-                      route: AppRoute.contactSetting,
-                    );
+                    navigate(context, route: AppRoute.contactSetting);
                   },
                   child: Text(
                     '연락처 설정',
@@ -89,22 +82,18 @@ class ProfileDesignInspection extends StatelessWidget {
     BuildContext context,
     ProfileDesignInspectionType? type,
     String title,
-  ) =>
-      DefaultElevatedButton(
-        primary: context.colorScheme.primary,
-        onPressed: () {
-          kDebugPageType = type;
-          navigate(
-            context,
-            route: AppRoute.profile,
-            extra: const ProfileDetailArguments(userId: targetUserId),
-          );
-        },
-        child: Text(
-          title,
-          style: TextStyle(color: context.colorScheme.onPrimary),
-        ),
+  ) => DefaultElevatedButton(
+    primary: context.colorScheme.primary,
+    onPressed: () {
+      kDebugPageType = type;
+      navigate(
+        context,
+        route: AppRoute.profile,
+        extra: const ProfileDetailArguments(userId: targetUserId),
       );
+    },
+    child: Text(title, style: TextStyle(color: context.colorScheme.onPrimary)),
+  );
 }
 
 enum ProfileDesignInspectionType {

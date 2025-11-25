@@ -14,9 +14,7 @@ class MySettingPage extends ConsumerWidget {
     final mySettingAsync = ref.watch(mySettingProvider);
 
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: "설정",
-      ),
+      appBar: const DefaultAppBar(title: "설정"),
       body: Column(
         children: [
           _MySettingListItem(
@@ -29,18 +27,12 @@ class MySettingPage extends ConsumerWidget {
             onTapMove: () => navigate(context, route: AppRoute.accountSetting),
           ),
           mySettingAsync.when(
-            data: (data) => _MySettingListItem(
-              title: '앱 버전',
-              version: data.version,
-            ),
-            loading: () => const _MySettingListItem(
-              title: '앱 버전',
-              version: null,
-            ),
-            error: (error, stackTrace) => const _MySettingListItem(
-              title: '앱 버전',
-              version: null,
-            ),
+            data: (data) =>
+                _MySettingListItem(title: '앱 버전', version: data.version),
+            loading: () =>
+                const _MySettingListItem(title: '앱 버전', version: null),
+            error: (error, stackTrace) =>
+                const _MySettingListItem(title: '앱 버전', version: null),
           ),
           _MySettingListItem(
             title: '연락처 설정',
@@ -69,58 +61,47 @@ class _MySettingListItem extends StatelessWidget {
   final VoidCallback? onTapMove;
   final String? version;
 
-  const _MySettingListItem({
-    required this.title,
-    this.onTapMove,
-    this.version,
-  });
+  const _MySettingListItem({required this.title, this.onTapMove, this.version});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(children: [
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onTapMove,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 14,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Palette.colorBlack,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (version != null)
-                  SizedBox(
-                    height: 24,
-                    child: Text(
-                      "V$version",
-                      style: Fonts.body02Medium(const Color(0xff9E9E9E)),
+      child: Column(
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onTapMove,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: Fonts.body02Medium().copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Palette.colorBlack,
                     ),
-                  )
-                else
-                  const DefaultIcon(
-                    IconPath.chevronRight,
-                    size: 24,
+                    overflow: TextOverflow.ellipsis,
                   ),
-              ],
+                  if (version != null)
+                    SizedBox(
+                      height: 24,
+                      child: Text(
+                        "V$version",
+                        style: Fonts.body02Medium(const Color(0xff9E9E9E)),
+                      ),
+                    )
+                  else
+                    const DefaultIcon(IconPath.chevronRight, size: 24),
+                ],
+              ),
             ),
           ),
-        ),
-        const Divider(
-          height: 1,
-          thickness: 1,
-          color: Palette.colorGrey50,
-        ),
-      ]),
+          const Divider(height: 1, thickness: 1, color: Palette.colorGrey50),
+        ],
+      ),
     );
   }
 }

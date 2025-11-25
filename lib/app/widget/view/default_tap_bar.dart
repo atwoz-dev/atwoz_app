@@ -38,15 +38,16 @@ class DefaultTabBar extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 17.0),
                 child: Text(
                   label,
-                  style: Fonts.body02Regular(
-                    index == currentIndex
-                        ? context.palette.onSurface
-                        : Palette.colorGrey400,
-                  ).copyWith(
-                    fontWeight: index == currentIndex
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                  ),
+                  style:
+                      Fonts.body02Regular(
+                        index == currentIndex
+                            ? context.palette.onSurface
+                            : Palette.colorGrey400,
+                      ).copyWith(
+                        fontWeight: index == currentIndex
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
                 ),
               ),
             );
@@ -55,10 +56,7 @@ class DefaultTabBar extends StatelessWidget {
         // 하단 경계선
         Stack(
           children: [
-            Container(
-              height: 2,
-              color: Palette.colorGrey100,
-            ),
+            Container(height: 2, color: Palette.colorGrey100),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
               left: padding + currentIndex * tabWidth,

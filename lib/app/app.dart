@@ -72,7 +72,7 @@ class _AppState extends ConsumerState<App> {
     await ref.read(localStorageProvider).initialize();
     await ref.read(globalProvider.notifier).initProfile();
     await ref.read(contactSettingProvider.notifier).initialize();
-    
+
     _navigateToInitialRoute();
     FlutterNativeSplash.remove();
   }

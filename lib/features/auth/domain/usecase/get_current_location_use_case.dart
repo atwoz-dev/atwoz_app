@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final getCurrentLocationUseCaseProvider =
     Provider<GetCurrentUserLocationUseCase>((ref) {
-  return GetCurrentUserLocationUseCase(ref);
-});
+      return GetCurrentUserLocationUseCase(ref);
+    });
 
 class GetCurrentUserLocationUseCase {
   final Ref _ref;
@@ -14,8 +14,9 @@ class GetCurrentUserLocationUseCase {
 
   Future<String> execute() async {
     try {
-      final position =
-          await _ref.read(locationRepositoryProvider).getCurrentPosition();
+      final position = await _ref
+          .read(locationRepositoryProvider)
+          .getCurrentPosition();
       return _ref
           .read(locationRepositoryProvider)
           .getAddressFromPosition(position);

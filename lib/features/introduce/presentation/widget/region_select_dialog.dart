@@ -29,9 +29,9 @@ class Regionselectdialog extends ConsumerWidget {
   ];
 
   static Future open(BuildContext context) => showDialog(
-        context: context,
-        builder: (context) => const Regionselectdialog(),
-      );
+    context: context,
+    builder: (context) => const Regionselectdialog(),
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,8 +58,9 @@ class Regionselectdialog extends ConsumerWidget {
                 ),
                 Text(
                   '2개까지 중복 선택이 가능해요',
-                  style: Fonts.body02Regular()
-                      .copyWith(color: Palette.colorGrey500),
+                  style: Fonts.body02Regular().copyWith(
+                    color: Palette.colorGrey500,
+                  ),
                 ),
                 ListChip(
                   options: _cityList,

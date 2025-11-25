@@ -2,12 +2,13 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class TitleText extends StatelessWidget {
-  const TitleText(
-      {super.key,
-      required this.title,
-      this.textStyle,
-      this.textColor,
-      this.fontWeight});
+  const TitleText({
+    super.key,
+    required this.title,
+    this.textStyle,
+    this.textColor,
+    this.fontWeight,
+  });
 
   final String title;
   final TextStyle? textStyle;
@@ -18,7 +19,8 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: textStyle ??
+      style:
+          textStyle ??
           Fonts.header01().copyWith(
             fontWeight: fontWeight ?? FontWeight.w900,
             color: textColor,

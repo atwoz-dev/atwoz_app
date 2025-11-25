@@ -12,9 +12,9 @@ abstract class ProfileImageUpdateState with _$ProfileImageUpdateState {
   }) = _ProfileImageUpdateState;
 
   bool get isSaveEnabled => editableProfileImages.any(
-        (image) =>
-            image?.status == ProfileImageStatus.add ||
-            image?.status == ProfileImageStatus.update ||
-            image?.status == ProfileImageStatus.delete,
-      );
+    (image) =>
+        image?.status == ProfileImageStatus.add ||
+        image?.status == ProfileImageStatus.update ||
+        image?.status == ProfileImageStatus.delete,
+  );
 }

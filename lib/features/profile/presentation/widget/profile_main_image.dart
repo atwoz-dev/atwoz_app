@@ -2,10 +2,7 @@ import 'package:atwoz_app/app/widget/image/default_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileMainImage extends StatelessWidget {
-  const ProfileMainImage({
-    super.key,
-    required this.profileUri,
-  });
+  const ProfileMainImage({super.key, required this.profileUri});
 
   final String profileUri;
 

@@ -53,14 +53,8 @@ class _AppBarAction extends StatelessWidget {
       onPressed: onPressed,
       icon: DefaultIcon(icon, size: 24),
       tooltip: tooltip,
-      visualDensity: const VisualDensity(
-        horizontal: -4,
-        vertical: -4,
-      ),
-      constraints: const BoxConstraints(
-        minWidth: 48,
-        minHeight: 48,
-      ),
+      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
     );
   }
 }

@@ -125,10 +125,7 @@ class _AutoCompleteState<T extends Object> extends State<AutoComplete<T>> {
             itemBuilder: (context, index) {
               final option = _options[index];
               return ListTile(
-                title: Text(
-                  option.toString(),
-                  style: widget.itemStyle,
-                ),
+                title: Text(option.toString(), style: widget.itemStyle),
                 onTap: () {
                   _controller.text = option.toString(); // 선택된 텍스트 입력 필드에 반영
                   widget.onSubmitted(option); // 선택된 옵션 전달

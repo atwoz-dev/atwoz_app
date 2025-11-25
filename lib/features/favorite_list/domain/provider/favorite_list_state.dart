@@ -2,9 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'favorite_list_state.freezed.dart';
 
-enum FavoriteListErrorType {
-  network,
-}
+enum FavoriteListErrorType { network }
 
 @freezed
 abstract class FavoriteListState with _$FavoriteListState {
@@ -21,18 +19,12 @@ abstract class FavoriteListState with _$FavoriteListState {
 }
 
 class FavoriteListData {
-  const FavoriteListData({
-    this.users = const [],
-    this.hasMore = false,
-  });
+  const FavoriteListData({this.users = const [], this.hasMore = false});
 
   final List<FavoriteUserSummary> users;
   final bool hasMore;
 
-  FavoriteListData copyWith({
-    List<FavoriteUserSummary>? users,
-    bool? hasMore,
-  }) {
+  FavoriteListData copyWith({List<FavoriteUserSummary>? users, bool? hasMore}) {
     return FavoriteListData(
       users: users ?? this.users,
       hasMore: hasMore ?? this.hasMore,
@@ -59,22 +51,21 @@ class FavoriteUserSummary {
   final DateTime favoriteAt;
   final bool isMutual;
 
-  bool get isRecent => favoriteAt.isAfter(_today.subtract(const Duration(
-        hours: 12,
-      )));
+  bool get isRecent =>
+      favoriteAt.isAfter(_today.subtract(const Duration(hours: 12)));
 
   static final _today = DateTime.now();
 }
 
 class DummyFavoriteUserSummary extends FavoriteUserSummary {
   DummyFavoriteUserSummary()
-      : super(
-          userId: 0,
-          profileUrl: '',
-          name: '',
-          age: 0,
-          city: '',
-          favoriteAt: DateTime.now(),
-          isMutual: false,
-        );
+    : super(
+        userId: 0,
+        profileUrl: '',
+        name: '',
+        age: 0,
+        city: '',
+        favoriteAt: DateTime.now(),
+        isMutual: false,
+      );
 }

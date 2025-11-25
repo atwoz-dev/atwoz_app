@@ -4,12 +4,10 @@ import 'package:dio/io.dart';
 /// Common service call API support cancel api
 class DioService extends DioForNative {
   DioService([super.baseOptions, Iterable<Interceptor>? interceptors])
-      : _cancelToken = CancelToken() {
+    : _cancelToken = CancelToken() {
     interceptors ??= [];
 
-    interceptors = [
-      ...interceptors,
-    ];
+    interceptors = [...interceptors];
     this.interceptors.addAll(interceptors);
   }
 

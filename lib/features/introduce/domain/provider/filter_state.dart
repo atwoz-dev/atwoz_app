@@ -15,8 +15,8 @@ abstract class FilterState with _$FilterState {
 
   // 초기 상태
   factory FilterState.initial() => const FilterState(
-        rangeValues: RangeValues(27, 32),
-        selectedCitys: [],
-        selectedGenders: ["전체 보기", "이성만 보기"],
-      );
+    rangeValues: RangeValues(27, 32),
+    selectedCitys: [],
+    selectedGenders: ["전체 보기", "이성만 보기"],
+  );
 }

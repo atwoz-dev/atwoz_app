@@ -19,13 +19,11 @@ class IdealSettingArea extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
-        children:
-            items
-                .map(
-                  (item) =>
-                      IdealTypeSettingBox(item: item, idealType: idealType),
-                )
-                .toList(),
+        children: items
+            .map(
+              (item) => IdealTypeSettingBox(item: item, idealType: idealType),
+            )
+            .toList(),
       ),
     );
   }
@@ -36,10 +34,9 @@ class IdealSettingArea extends ConsumerWidget {
     return [
       IdealTypeSettingItem(
         label: '지역',
-        placeholder:
-            idealType?.cities.isNotEmpty == true
-                ? idealType!.cities.map((e) => e.label).join(', ')
-                : '상관없음',
+        placeholder: idealType?.cities.isNotEmpty == true
+            ? idealType!.cities.map((e) => e.label).join(', ')
+            : '상관없음',
         options: addressData.cities.map((e) => e.label).toList(),
         type: IdealTypeDialogType.multi,
         maxSelectableCount: 2,
@@ -47,36 +44,32 @@ class IdealSettingArea extends ConsumerWidget {
       IdealTypeSettingItem(
         label: '흡연',
         placeholder: idealType?.smokingStatus.label ?? '상관없음',
-        options:
-            ExtendedSmokingStatus.fromValue(
-              enumValues: SmokingStatus.values,
-              valueToLabel: (value) => value.label,
-            ).map((e) => e.label).toList(),
+        options: ExtendedSmokingStatus.fromValue(
+          enumValues: SmokingStatus.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '음주',
         placeholder: idealType?.drinkingStatus.label ?? '상관없음',
-        options:
-            ExtendedDrinkingStatus.fromValue(
-              enumValues: DrinkingStatus.values,
-              valueToLabel: (value) => value.label,
-            ).map((e) => e.label).toList(),
+        options: ExtendedDrinkingStatus.fromValue(
+          enumValues: DrinkingStatus.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '종교',
         placeholder: idealType?.religion.label ?? '상관없음',
-        options:
-            ExtendedReligionStatus.fromValue(
-              enumValues: Religion.values,
-              valueToLabel: (value) => value.label,
-            ).map((e) => e.label).toList(),
+        options: ExtendedReligionStatus.fromValue(
+          enumValues: Religion.values,
+          valueToLabel: (value) => value.label,
+        ).map((e) => e.label).toList(),
       ),
       IdealTypeSettingItem(
         label: '취미',
-        placeholder:
-            idealType?.hobbies.isNotEmpty == true
-                ? idealType!.hobbies.map((e) => e.label).join(', ')
-                : '상관없음',
+        placeholder: idealType?.hobbies.isNotEmpty == true
+            ? idealType!.hobbies.map((e) => e.label).join(', ')
+            : '상관없음',
         options: Hobby.values.map((e) => e.label).toList(),
         type: IdealTypeDialogType.multi,
         maxSelectableCount: 3,

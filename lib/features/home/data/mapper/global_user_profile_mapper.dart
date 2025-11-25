@@ -26,8 +26,9 @@ extension CachedUserProfileMapper on HomeProfileResponseDto {
       drinkingStatus: DrinkingStatus.parse(profileInfo.drinkingStatus),
       religion: Religion.parse(profileInfo.religion),
       hobbies: profileInfo.hobbies.map((e) => Hobby.parse(e)).toList(),
-      interviewInfoView:
-          interviewInfoView.map((e) => e.toInterviewInfo()).toList(),
+      interviewInfoView: interviewInfoView
+          .map((e) => e.toInterviewInfo())
+          .toList(),
     );
   }
 }

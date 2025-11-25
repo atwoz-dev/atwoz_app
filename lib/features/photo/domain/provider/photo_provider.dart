@@ -56,7 +56,7 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     await ref.read(uploadPhotosUsecaseProvider).execute(state);
   }
 
-// 사진 단건 업로드
+  // 사진 단건 업로드
   Future<void> uploadSinglePhoto(int index, XFile photo) async {
     state = [...state]..[index] = photo;
 
@@ -79,8 +79,8 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
   // 사진 선택
   Future<XFile?> pickPhoto(ImageSource source) async {
     try {
-      final permissionStatus =
-          await _permissionHandler.checkPhotoPermissionStatus();
+      final permissionStatus = await _permissionHandler
+          .checkPhotoPermissionStatus();
       if (!permissionStatus) {
         Log.i("권한이 허용되지 않았습니다.");
         return null;
@@ -110,9 +110,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     final nonNullPhotos = photos.where((photo) => photo != null).toList();
     final nullCount = photos.length - nonNullPhotos.length;
 
-    return [
-      ...nonNullPhotos,
-      ...List.filled(nullCount, null),
-    ];
+    return [...nonNullPhotos, ...List.filled(nullCount, null)];
   }
 }

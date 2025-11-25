@@ -18,8 +18,9 @@ class TokenInterceptor extends Interceptor with LogMixin {
   ) async {
     if (options.headers.containsKey('requiresAccessToken')) {
       if (options.headers['requiresAccessToken'] == true) {
-        final String? token =
-            await ref.read(authUsecaseProvider).getAccessToken();
+        final String? token = await ref
+            .read(authUsecaseProvider)
+            .getAccessToken();
         options.headers.addAll(<String, Object?>{
           'Authorization': 'Bearer $token',
         });
