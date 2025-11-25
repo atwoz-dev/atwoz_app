@@ -7,12 +7,22 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
 });
 
 class ReportRepository extends BaseRepository {
-  ReportRepository(Ref ref) : super(ref, '/reports');
+  ReportRepository(Ref ref) : super(ref, '');
 
+  // 신고하기
   Future<void> sendReport(ReportRequestDto dto) async {
     await apiService.postJson(
-      path,
+      '/reports',
       data: dto.toJson(),
+      requiresAccessToken: true,
+    );
+  }
+
+  // 차단하기
+  Future<void> sendBlock(int blockedId) async {
+    await apiService.postJson(
+      '/blocks',
+      data: {'blockedId': blockedId},
       requiresAccessToken: true,
     );
   }

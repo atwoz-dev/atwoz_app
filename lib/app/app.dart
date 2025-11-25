@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -9,6 +10,7 @@ import 'package:atwoz_app/core/notification/firebase_manager.dart';
 import 'package:atwoz_app/core/notification/notification_model.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,15 +70,40 @@ class _AppState extends ConsumerState<App> {
 
   Future<void> _initialize() async {
     await ref.read(localStorageProvider).initialize();
-    final router = ref.read(routerProvider);
     await ref.read(globalProvider.notifier).initProfile();
-    if (ref.read(globalProvider).profile.isDefault) {
+    await ref.read(contactSettingProvider.notifier).initialize();
+    
+    _navigateToInitialRoute();
+    FlutterNativeSplash.remove();
+  }
+
+  void _navigateToInitialRoute() {
+    final router = ref.read(routerProvider);
+    final profile = ref.read(globalProvider).profile;
+
+    if (profile.isDefault) {
       router.goNamed(AppRoute.onboard.name);
-    } else {
-      router.goNamed(AppRoute.mainTab.name);
+      return;
     }
 
-    FlutterNativeSplash.remove();
+    final activityStatus = ActivityStatus.parse(profile.activityStatus);
+
+    switch (activityStatus) {
+      case ActivityStatus.waitingScreening:
+        router.goNamed(AppRoute.signUpProfileReview.name);
+        break;
+      case ActivityStatus.rejectedScreening:
+        router.goNamed(AppRoute.signUpProfileReject.name);
+        break;
+      case ActivityStatus.active:
+        router.goNamed(AppRoute.mainTab.name);
+        break;
+      case null:
+        router.goNamed(AppRoute.onboard.name);
+        break;
+      default:
+        router.goNamed(AppRoute.onboard.name);
+    }
   }
 
   void _handleFcmNotification(FcmNotification data) {

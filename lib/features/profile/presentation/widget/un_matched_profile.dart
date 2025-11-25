@@ -23,10 +23,7 @@ class UnMatchedProfile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ProfileHeadInformation(
-            userId: userId,
-            chatEnabled: chatEnabled,
-          ),
+          _ProfileHeadInformation(userId: userId, chatEnabled: chatEnabled),
           ProfileSubInformation(userId),
           const Gap(13.0),
           ProfileSelfIntroduction(userId),
@@ -58,18 +55,11 @@ class _ProfileHeadInformation extends ConsumerWidget {
             child: ProfileMainImage(profileUri: userInfo.profileUri),
           ),
           ProfileAppbar(
-            onBackButtonPressed: () {
-              final profile = ref.read(profileProvider(userId)).profile;
-              if (profile == null) return;
-              context.pop(profile);
-            },
+            onBackButtonPressed: context.pop,
             onTapInfo: () => navigate(
               context,
               route: AppRoute.report,
-              extra: ReportArguments(
-                name: userInfo.name,
-                userId: userId,
-              ),
+              extra: ReportArguments(name: userInfo.name, userId: userId),
             ),
           ),
           Positioned(
@@ -85,9 +75,9 @@ class _ProfileHeadInformation extends ConsumerWidget {
               hobbies: userInfo.hobbies,
               chatEnabled: chatEnabled,
               favoriteType: userInfo.favoriteType,
-              onFavoriteTypeChanged: (type) => ref
-                  .read(profileProvider(userId).notifier)
-                  .favoriteType = type,
+              onFavoriteTypeChanged: (type) =>
+                  ref.read(profileProvider(userId).notifier).favoriteType =
+                      type,
             ),
           ),
         ],

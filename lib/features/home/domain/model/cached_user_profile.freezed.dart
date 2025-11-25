@@ -361,7 +361,7 @@ as int,
 /// @nodoc
 mixin _$InterviewInfo {
 
-@HiveField(0) String get title;@HiveField(1) String get content;
+@HiveField(0) int get questionId;@HiveField(1) String get title;@HiveField(2) String get content;
 /// Create a copy of InterviewInfo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -374,16 +374,16 @@ $InterviewInfoCopyWith<InterviewInfo> get copyWith => _$InterviewInfoCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InterviewInfo&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InterviewInfo&&(identical(other.questionId, questionId) || other.questionId == questionId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content);
+int get hashCode => Object.hash(runtimeType,questionId,title,content);
 
 @override
 String toString() {
-  return 'InterviewInfo(title: $title, content: $content)';
+  return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
 }
 
 
@@ -394,7 +394,7 @@ abstract mixin class $InterviewInfoCopyWith<$Res>  {
   factory $InterviewInfoCopyWith(InterviewInfo value, $Res Function(InterviewInfo) _then) = _$InterviewInfoCopyWithImpl;
 @useResult
 $Res call({
-@HiveField(0) String title,@HiveField(1) String content
+@HiveField(0) int questionId,@HiveField(1) String title,@HiveField(2) String content
 });
 
 
@@ -411,9 +411,10 @@ class _$InterviewInfoCopyWithImpl<$Res>
 
 /// Create a copy of InterviewInfo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? questionId = null,Object? title = null,Object? content = null,}) {
   return _then(_self.copyWith(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+questionId: null == questionId ? _self.questionId : questionId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -500,10 +501,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  String title, @HiveField(1)  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InterviewInfo() when $default != null:
-return $default(_that.title,_that.content);case _:
+return $default(_that.questionId,_that.title,_that.content);case _:
   return orElse();
 
 }
@@ -521,10 +522,10 @@ return $default(_that.title,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  String title, @HiveField(1)  String content)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)  $default,) {final _that = this;
 switch (_that) {
 case _InterviewInfo():
-return $default(_that.title,_that.content);case _:
+return $default(_that.questionId,_that.title,_that.content);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -541,10 +542,10 @@ return $default(_that.title,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  String title, @HiveField(1)  String content)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  int questionId, @HiveField(1)  String title, @HiveField(2)  String content)?  $default,) {final _that = this;
 switch (_that) {
 case _InterviewInfo() when $default != null:
-return $default(_that.title,_that.content);case _:
+return $default(_that.questionId,_that.title,_that.content);case _:
   return null;
 
 }
@@ -556,11 +557,12 @@ return $default(_that.title,_that.content);case _:
 @JsonSerializable()
 
 class _InterviewInfo implements InterviewInfo {
-  const _InterviewInfo({@HiveField(0) required this.title, @HiveField(1) required this.content});
+  const _InterviewInfo({@HiveField(0) required this.questionId, @HiveField(1) required this.title, @HiveField(2) required this.content});
   factory _InterviewInfo.fromJson(Map<String, dynamic> json) => _$InterviewInfoFromJson(json);
 
-@override@HiveField(0) final  String title;
-@override@HiveField(1) final  String content;
+@override@HiveField(0) final  int questionId;
+@override@HiveField(1) final  String title;
+@override@HiveField(2) final  String content;
 
 /// Create a copy of InterviewInfo
 /// with the given fields replaced by the non-null parameter values.
@@ -575,16 +577,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InterviewInfo&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InterviewInfo&&(identical(other.questionId, questionId) || other.questionId == questionId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content);
+int get hashCode => Object.hash(runtimeType,questionId,title,content);
 
 @override
 String toString() {
-  return 'InterviewInfo(title: $title, content: $content)';
+  return 'InterviewInfo(questionId: $questionId, title: $title, content: $content)';
 }
 
 
@@ -595,7 +597,7 @@ abstract mixin class _$InterviewInfoCopyWith<$Res> implements $InterviewInfoCopy
   factory _$InterviewInfoCopyWith(_InterviewInfo value, $Res Function(_InterviewInfo) _then) = __$InterviewInfoCopyWithImpl;
 @override @useResult
 $Res call({
-@HiveField(0) String title,@HiveField(1) String content
+@HiveField(0) int questionId,@HiveField(1) String title,@HiveField(2) String content
 });
 
 
@@ -612,9 +614,10 @@ class __$InterviewInfoCopyWithImpl<$Res>
 
 /// Create a copy of InterviewInfo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? questionId = null,Object? title = null,Object? content = null,}) {
   return _then(_InterviewInfo(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+questionId: null == questionId ? _self.questionId : questionId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,
   ));

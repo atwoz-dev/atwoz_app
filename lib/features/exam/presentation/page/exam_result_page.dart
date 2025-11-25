@@ -17,7 +17,9 @@ import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:gap/gap.dart';
 
 class ExamResultPage extends ConsumerStatefulWidget {
-  const ExamResultPage({super.key});
+  final bool isFromDirectAccess;
+
+  const ExamResultPage({super.key, required this.isFromDirectAccess});
 
   @override
   ExamResultPageState createState() => ExamResultPageState();
@@ -25,11 +27,7 @@ class ExamResultPage extends ConsumerStatefulWidget {
 
 class ExamResultPageState
     extends BaseConsumerStatefulPageState<ExamResultPage> {
-  ExamResultPageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-        );
+  ExamResultPageState() : super(isAppBar: false, isHorizontalMargin: false);
 
   @override
   void initState() {
@@ -37,11 +35,14 @@ class ExamResultPageState
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final examState = ref.read(examProvider);
+      final notifier = ref.read(examProvider.notifier);
 
       if (examState.isSubjectOptional && !examState.isDone) {
-        showToastMessage(
-          '연애 모의고사 참여 완료! 하트 15개를 받았어요',
-        );
+        showToastMessage('연애 모의고사 참여 완료! 하트 15개를 받았어요');
+      }
+
+      if (widget.isFromDirectAccess) {
+        notifier.handleDirectAccessResult();
       }
     });
   }
@@ -74,9 +75,10 @@ class ExamResultPageState
                 userProfile: userProfile,
                 fetchHeartBalance: () => notifier.fetchUserHeartBalance(),
                 onOpenProfile: (memberId) => notifier.openProfile(
-                    memberId: memberId,
-                    isSoulmate:
-                        examState.hasSoulmate && examState.isSubjectOptional),
+                  memberId: memberId,
+                  isSoulmate:
+                      examState.hasSoulmate && examState.isSubjectOptional,
+                ),
                 onTapProfile: (memberId) {
                   navigate(
                     context,
@@ -92,6 +94,7 @@ class ExamResultPageState
               onPressOptionalSubject: () async {
                 await notifier.fetchOptionalQuestionList();
                 notifier.setCurrentSubjectIndex(0);
+                if (!context.mounted) return;
                 navigate(context, route: AppRoute.examQuestion);
               },
               onPressContinueSubject: () {
@@ -113,11 +116,9 @@ class ExamResultPageState
       onElevatedButtonPressed: () {
         notifier.setSubjectOptional(false);
         notifier.resetCurrentSubjectIndex();
-        navigate(
-          context,
-          route: AppRoute.mainTab,
-          method: NavigationMethod.go,
-        );
+
+        Navigator.of(context).pop();
+        navigate(context, route: AppRoute.mainTab);
       },
     );
   }
@@ -141,8 +142,8 @@ class _ResultHeader extends StatelessWidget {
         : "현재 $soulmateCount명이 동일한 답을 선택했어요";
 
     final subtitle = isSubjectOptional
-        ? (hasSoulmate ? "상대방과 모두 같은 답을 선택하셨어요!" : "대체로 같은 답을 선택하신 이성분들이에요!")
-        : "필수과목 30문제를 풀고 모두 동일한 답을 선택하면 상대방과 무료로 매칭을 진행할 수 있어요";
+        ? (hasSoulmate ? "상대방과 모두 같은 답을 선택하셨어요!" : "참여완료에 대한 하트를 지급해드렸어요")
+        : "필수과목 30문제를 풀고 모두 동일한 답을 선택해야 해요";
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -156,13 +157,12 @@ class _ResultHeader extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Gap(6),
+          const Gap(6),
           Text(
             subtitle,
-            style: Fonts.body02Regular().copyWith(
-              color: Palette.colorGrey500,
-            ),
+            style: Fonts.body02Regular().copyWith(color: Palette.colorGrey500),
           ),
+          const Gap(12),
         ],
       ),
     );
@@ -174,7 +174,7 @@ class _ResultList extends StatelessWidget {
   final bool hasSoulmate;
   final List<IntroducedProfile> profiles;
   final CachedUserProfile userProfile;
-  final Future<int> Function() fetchHeartBalance;
+  final int Function() fetchHeartBalance;
   final Future<void> Function(int memberId) onOpenProfile;
   final void Function(int memberId) onTapProfile;
 
@@ -194,7 +194,7 @@ class _ResultList extends StatelessWidget {
 
     return ListView.separated(
       itemCount: profiles.length,
-      separatorBuilder: (_, __) => const Gap(8),
+      separatorBuilder: (_, _) => const Gap(8),
       itemBuilder: (context, index) {
         final profile = profiles[index];
         final isBlurred = !profile.isIntroduced;
@@ -210,14 +210,13 @@ class _ResultList extends StatelessWidget {
                 return;
               }
 
-              final heartBalance = await fetchHeartBalance();
+              final heartBalance = fetchHeartBalance();
 
               if (heartBalance < Dimens.examProfileOpenHeartCount) {
                 showDialog(
                   context: context,
-                  builder: (_) => HeartShortageDialog(
-                    heartBalance: heartBalance,
-                  ),
+                  builder: (_) =>
+                      HeartShortageDialog(heartBalance: heartBalance),
                 );
                 return;
               }
@@ -265,16 +264,16 @@ class _ResultBottomButton extends StatelessWidget {
       padding: EdgeInsets.only(bottom: screenHeight * 0.05),
       child: isSubjectOptional
           ? isDone
-              ? DefaultElevatedButton(
-                  onPressed: () {
-                    navigate(context, route: AppRoute.mainTab);
-                  },
-                  child: const Text('연애 모의고사 종료하기'),
-                )
-              : DefaultElevatedButton(
-                  onPressed: onPressOptionalSubject,
-                  child: const Text('선택과목 풀기'),
-                )
+                ? DefaultElevatedButton(
+                    onPressed: () {
+                      navigate(context, route: AppRoute.mainTab);
+                    },
+                    child: const Text('연애 모의고사 종료하기'),
+                  )
+                : DefaultElevatedButton(
+                    onPressed: onPressOptionalSubject,
+                    child: const Text('선택과목 풀기'),
+                  )
           : DefaultElevatedButton(
               onPressed: onPressContinueSubject,
               child: const Text('다음과목 이어서 풀기'),

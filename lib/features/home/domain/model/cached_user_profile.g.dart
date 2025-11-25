@@ -111,18 +111,21 @@ class InterviewInfoAdapter extends TypeAdapter<InterviewInfo> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return InterviewInfo(
-      title: fields[0] as String,
-      content: fields[1] as String,
+      questionId: (fields[0] as num).toInt(),
+      title: fields[1] as String,
+      content: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, InterviewInfo obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.questionId)
       ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
       ..write(obj.content);
   }
 
@@ -293,9 +296,14 @@ const _$HobbyEnumMap = {
 
 _InterviewInfo _$InterviewInfoFromJson(Map<String, dynamic> json) =>
     _InterviewInfo(
+      questionId: (json['questionId'] as num).toInt(),
       title: json['title'] as String,
       content: json['content'] as String,
     );
 
 Map<String, dynamic> _$InterviewInfoToJson(_InterviewInfo instance) =>
-    <String, dynamic>{'title': instance.title, 'content': instance.content};
+    <String, dynamic>{
+      'questionId': instance.questionId,
+      'title': instance.title,
+      'content': instance.content,
+    };

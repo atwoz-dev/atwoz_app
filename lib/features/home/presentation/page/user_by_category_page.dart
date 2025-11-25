@@ -5,7 +5,6 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/home/home.dart';
 import 'package:atwoz_app/features/home/presentation/widget/category/heart_shortage_dialog.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -21,10 +20,12 @@ class UserByCategoryPage extends ConsumerStatefulWidget {
 class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   @override
   Widget build(BuildContext context) {
-    final introducedProfilesAsync =
-        ref.watch(introducedProfilesProvider(widget.category));
-    final introducedProfilesNotifier =
-        ref.read(introducedProfilesProvider(widget.category).notifier);
+    final introducedProfilesAsync = ref.watch(
+      introducedProfilesProvider(widget.category),
+    );
+    final introducedProfilesNotifier = ref.read(
+      introducedProfilesProvider(widget.category).notifier,
+    );
     final userProfile = ref.watch(globalProvider).profile;
 
     return Scaffold(
@@ -69,8 +70,10 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     required bool isMale,
   }) async {
     if (isBlurred) {
-      final heartBalance =
-          await introducedProfilesNotifier.fetchUserHeartBalance();
+      final heartBalance = ref
+          .read(globalProvider)
+          .heartBalance
+          .totalHeartBalance;
 
       if (!context.mounted) return;
 
@@ -100,8 +103,8 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
       if (pressed != true) return;
 
       await introducedProfilesNotifier.openProfile(
+        index: index,
         memberId: profile.memberId,
-        category: widget.category,
       );
       if (!context.mounted) return;
       _navigateToProfile(context, profile);
@@ -109,18 +112,13 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
     }
 
     // isBlurred == false일 때만 아래 실행
-    final result = await _navigateToProfile(context, profile);
-    if (result is UserProfile) {
-      introducedProfilesNotifier.updateProfile(
-        index: index,
-        detailProfile: result,
-        category: widget.category,
-      );
-    }
+    _navigateToProfile(context, profile);
   }
 
   Future<dynamic> _navigateToProfile(
-      BuildContext context, IntroducedProfile profile) {
+    BuildContext context,
+    IntroducedProfile profile,
+  ) {
     return navigate(
       context,
       route: AppRoute.profile,

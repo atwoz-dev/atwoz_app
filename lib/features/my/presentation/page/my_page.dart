@@ -1,8 +1,8 @@
+import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,7 +13,6 @@ typedef MenuItem = ({
   AppRoute? route,
 });
 
-// Record를 사용한 menuItems 정의
 const List<MenuItem> _menuItems = [
   (
     title: '프로필 관리',
@@ -59,86 +58,92 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '마이페이지',
-          style: Fonts.body01Medium(),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
+    return Padding(
+      padding: EdgeInsets.only(
+        top: screenHeight * 0.1,
       ),
-      body: Column(
-        children: _menuItems
-            .map(
-              (item) => Column(
-                children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      if (item.route != null) {
-                        navigate(context, route: item.route!);
-                      }
-                    },
-                    child: _MyPageListItem(
-                      title: item.title,
-                      iconPath: item.iconPath,
-                    ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 4.0),
+                child: Text(
+                  '마이페이지',
+                  style: Fonts.header03().copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
-                  const Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Palette.colorGrey50,
-                  ),
-                ],
+                ),
               ),
-            )
-            .toList(),
+              DefaultAppBarActionGroup(),
+            ],
+          ),
+          const Gap(16),
+          ..._menuItems.map((item) => _MyPageListItem(item: item)),
+        ],
       ),
     );
   }
 }
 
 class _MyPageListItem extends StatelessWidget {
-  final String title;
-  final String iconPath;
+  final MenuItem item;
 
   const _MyPageListItem({
-    required this.title,
-    required this.iconPath,
+    required this.item,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
-        children: [
-          Expanded(
+    final isLast = item == _menuItems.last;
+
+    return Column(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (item.route != null) {
+              navigate(context, route: item.route!);
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14),
             child: Row(
               children: [
-                DefaultIcon(
-                  iconPath,
-                  size: 24,
-                ),
-                const Gap(8),
-                Text(
-                  title,
-                  style: Fonts.body02Medium().copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Palette.colorBlack,
+                Expanded(
+                  child: Row(
+                    children: [
+                      DefaultIcon(item.iconPath, size: 24),
+                      const Gap(8),
+                      Text(
+                        item.title,
+                        style: Fonts.body02Medium().copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Palette.colorBlack,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  overflow: TextOverflow.ellipsis,
+                ),
+                const DefaultIcon(
+                  IconPath.chevronRight,
+                  size: 24,
                 ),
               ],
             ),
           ),
-          const DefaultIcon(
-            IconPath.chevronRight,
-            size: 24,
+        ),
+        if (!isLast)
+          const Divider(
+            height: 1,
+            thickness: 1,
+            color: Palette.colorGrey50,
           ),
-        ],
-      ),
+      ],
     );
   }
 }

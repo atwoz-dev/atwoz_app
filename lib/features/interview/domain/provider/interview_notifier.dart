@@ -1,8 +1,11 @@
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/interview/data/data.dart';
+import 'package:atwoz_app/features/interview/domain/usecase/delete_interview_to_hive_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_add_usecase.dart';
+import 'package:atwoz_app/features/interview/domain/usecase/interview_remove_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_fetch_usecase.dart';
 import 'package:atwoz_app/features/interview/domain/usecase/interview_update_usecase.dart';
+import 'package:atwoz_app/features/interview/domain/usecase/save_interview_to_hive_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'interview_state.dart';
@@ -18,7 +21,8 @@ class InterviewNotifier extends _$InterviewNotifier {
   }
 
   Future<void> _initializeInterviewQuestionList(
-      InterviewCategory category) async {
+    InterviewCategory category,
+  ) async {
     try {
       final questionList = await InterviewFetchUseCase(ref).call(category);
 
@@ -42,29 +46,73 @@ class InterviewNotifier extends _$InterviewNotifier {
 
   Future<void> addAnswer(
     int questionId,
+    String question,
     String answerContent,
   ) async {
     try {
-      await InterviewAddUseCase(ref).call(
-        questionId: questionId,
-        answerContent: answerContent,
-      );
+      await InterviewAddUseCase(
+        ref,
+      ).call(questionId: questionId, answerContent: answerContent);
     } catch (e) {
-      Log.e(e);
+      Log.e('Failed to add interview to server: $e');
+    }
+
+    await _saveInterviewToHive(questionId, question, answerContent);
+  }
+
+  Future<bool> removeAnswer(int answerId, int questionId) async {
+    try {
+      await InterviewRemoveUseCase(ref).call(answerId: answerId);
+      await _deleteInterviewToHive(questionId);
+      return true;
+    } catch (e) {
+      Log.e('Failed to remove interview to server: $e');
+      return false;
     }
   }
 
   Future<void> updateAnswer(
+    int questionId,
     int answerId,
+    String question,
     String answerContent,
   ) async {
     try {
-      await InterviewUpdateUseCase(ref).call(
-        answerId: answerId,
-        answerContent: answerContent,
-      );
+      await InterviewUpdateUseCase(
+        ref,
+      ).call(answerId: answerId, answerContent: answerContent);
     } catch (e) {
-      Log.e(e);
+      Log.e('Failed to update interview to server: $e');
+    }
+
+    await _saveInterviewToHive(questionId, question, answerContent);
+  }
+
+  Future<void> _saveInterviewToHive(
+    int questionId,
+    String question,
+    String answerContent,
+  ) async {
+    try {
+      await ref
+          .read(saveInterviewToHiveUseCaseProvider)
+          .execute(
+            questionId: questionId,
+            title: question,
+            content: answerContent,
+          );
+    } catch (e) {
+      Log.e('Failed to save interview to local cache: $e');
+    }
+  }
+
+  Future<void> _deleteInterviewToHive(int questionId) async {
+    try {
+      await ref
+          .read(deleteInterviewToHiveUseCaseProvider)
+          .execute(questionId: questionId);
+    } catch (e) {
+      Log.e('Failed to delete interview to local cache: $e');
     }
   }
 }

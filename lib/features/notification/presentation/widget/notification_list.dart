@@ -1,4 +1,3 @@
-
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
@@ -10,42 +9,85 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class NotificationList extends ConsumerWidget {
+class NotificationList extends ConsumerStatefulWidget {
   const NotificationList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(notificationListProvider).when(
+  ConsumerState<NotificationList> createState() => _NotificationListState();
+}
+
+class _NotificationListState extends ConsumerState<NotificationList> {
+  final _scrollController = ScrollController();
+  bool _isLoadingMore = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ref
+        .watch(notificationListProvider)
+        .when(
           data: (state) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const _ReadAllNotifications(),
               Expanded(
                 child: ListView.builder(
+                  controller: _scrollController,
                   padding: const EdgeInsets.symmetric(
                     vertical: 24.0,
                   ).copyWith(top: .0),
                   itemCount: state.notifications.length,
                   itemBuilder: (_, index) {
                     final notification = state.notifications[index];
-                    final isRead =
-                        state.readIds.contains(notification.notificationId);
                     return _NotificationItem(
                       notification: notification,
-                      isRead: isRead,
+                      isRead: notification.isRead,
                     );
                   },
                 ),
               ),
             ],
           ),
-          loading: () => const Center(
-            child: DefaultCircularProgressIndicator(),
-          ),
-          error: (e, stackTrace) => const Center(
-            child: Text('알림을 가져오는 데 실패했습니다.'),
-          ),
+          loading: () =>
+              const Center(child: DefaultCircularProgressIndicator()),
+          error: (e, stackTrace) =>
+              const Center(child: Text('알림을 가져오는 데 실패했습니다.')),
         );
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels <
+            _scrollController.position.maxScrollExtent - 300 ||
+        _isLoadingMore) {
+      return;
+    }
+    _loadMoreNotifications();
+  }
+
+  Future<void> _loadMoreNotifications() async {
+    _isLoadingMore = true;
+
+    final state = ref.read(notificationListProvider);
+    if (!state.hasValue || !state.value!.hasMore) {
+      _isLoadingMore = false;
+      return;
+    }
+
+    await ref.read(notificationListProvider.notifier).loadMoreNotifications();
+    if (!mounted) return;
+
+    setState(() => _isLoadingMore = false);
   }
 }
 
@@ -61,10 +103,7 @@ class _ReadAllNotifications extends ConsumerWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20.0),
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: context.colorScheme.outline,
-              width: 2,
-            ),
+            bottom: BorderSide(color: context.colorScheme.outline, width: 2),
           ),
         ),
         child: Text('전체 읽음', style: Fonts.body02Medium()),
@@ -74,10 +113,7 @@ class _ReadAllNotifications extends ConsumerWidget {
 }
 
 class _NotificationItem extends ConsumerWidget {
-  const _NotificationItem({
-    required this.notification,
-    required this.isRead,
-  });
+  const _NotificationItem({required this.notification, required this.isRead});
 
   final NotificationItem notification;
   final bool isRead;
@@ -97,17 +133,12 @@ class _NotificationItem extends ConsumerWidget {
         navigate(
           context,
           route: AppRoute.profile,
-          extra: ProfileDetailArguments(
-            userId: notification.senderId,
-          ),
+          extra: ProfileDetailArguments(userId: notification.senderId),
         );
       },
       behavior: HitTestBehavior.translucent,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 12.0,
-          horizontal: 20.0,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
         child: Opacity(
           opacity: isRead ? 0.5 : 1.0,
           child: Column(
@@ -123,8 +154,9 @@ class _NotificationItem extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                DateFormat('yyyy.MM.dd')
-                    .format(notification.createdAt.toLocal()),
+                DateFormat(
+                  'yyyy.MM.dd',
+                ).format(notification.createdAt.toLocal()),
                 style: Fonts.body03Regular(context.colorScheme.tertiary),
               ),
             ],

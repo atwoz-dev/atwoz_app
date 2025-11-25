@@ -10,18 +10,16 @@ abstract class ContactSettingState with _$ContactSettingState {
   const factory ContactSettingState({
     required ContactMethod? method,
     required String phone,
-    required String kakao,
+    required String? kakao,
   }) = _ContactSettingState;
 
-  factory ContactSettingState.initial() => const ContactSettingState(
-        method: null,
-        phone: '',
-        kakao: '',
-      );
+  factory ContactSettingState.initial() =>
+      const ContactSettingState(method: null, phone: '', kakao: null);
 
   bool get isValid => switch (method) {
-        ContactMethod.phone => phone.isNotEmpty,
-        ContactMethod.kakao => kakao.isNotEmpty,
-        null => false,
-      };
+    ContactMethod.phone || null => phone.isNotEmpty,
+    ContactMethod.kakao => kakao?.isNotEmpty == true,
+  };
+
+  bool get isContactSettingInitialized => method != null;
 }

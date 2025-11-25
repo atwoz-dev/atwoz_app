@@ -40,6 +40,7 @@ abstract class SubjectItem with _$SubjectItem {
     required int id,
     required ExamType type,
     required String name,
+    required bool isSubmitted,
     required List<QuestionItem> questions,
   }) = _SubjectItem;
 

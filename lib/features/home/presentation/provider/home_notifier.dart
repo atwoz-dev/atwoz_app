@@ -14,43 +14,60 @@ class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
     // 추천 프로필 가져오기
-    final profiles =
-        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+    final profiles = await ref
+        .read(fetchRecommendedProfileUseCaseProvider)
+        .execute();
 
-    // 최종 상태 반환
-    return HomeState(recommendedProfiles: profiles);
+    return HomeState(recommendedProfiles: profiles, hasProcessedMission: false);
   }
 
-  /// 좋아요 설정
-  Future<void> setFavoriteType(int memberId, FavoriteType type) async {
+  // 상태만 변경
+  void updateFavoriteType({
+    required int memberId,
+    required FavoriteType type,
+    bool? hasProcessedMission,
+  }) {
+    final profiles = state.value?.recommendedProfiles;
+    if (profiles == null) return;
+
+    state = AsyncData(
+      state.requireValue.copyWith(
+        recommendedProfiles: profiles
+            .map(
+              (e) =>
+                  e.memberId == memberId ? e.copyWith(favoriteType: type) : e,
+            )
+            .toList(),
+        hasProcessedMission: hasProcessedMission ?? false,
+      ),
+    );
+  }
+
+  /// 서버 요청 + 상태 변경
+  Future<void> setFavoriteType({
+    required int memberId,
+    required FavoriteType type,
+  }) async {
     if (!state.hasValue || state.value!.recommendedProfiles == null) return;
     try {
-      await ref.read(favoriteRepositoryProvider).requestFavorite(
-            memberId,
-            type: type,
-          );
+      final hasProcessedMission = await ref
+          .read(favoriteRepositoryProvider)
+          .requestFavorite(memberId, type: type);
 
-      final currentState = state.value;
-      final profiles = currentState?.recommendedProfiles;
-      if (currentState == null || profiles == null) return;
-
-      state = AsyncData(
-        currentState.copyWith(
-          recommendedProfiles: profiles
-              .map(
-                (e) => e.memberId == memberId
-                    ? e.copyWith(
-                        favoriteType: type,
-                      )
-                    : e,
-              )
-              .toList(),
-        ),
+      updateFavoriteType(
+        memberId: memberId,
+        type: type,
+        hasProcessedMission: hasProcessedMission,
       );
-    } catch (e, stackTrace) {
+    } catch (e) {
       Log.e('좋아요 설정 실패: $e');
-      state = AsyncError(e, stackTrace);
     }
+  }
+
+  void resetHasProcessedMission() {
+    if (!state.hasValue) return;
+
+    state = AsyncData(state.requireValue.copyWith(hasProcessedMission: false));
   }
 
   Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {

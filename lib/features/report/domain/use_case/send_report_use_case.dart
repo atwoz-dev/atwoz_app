@@ -15,11 +15,6 @@ class SendReportUseCase {
 
   Future<void> execute(Report report) async {
     final repository = _ref.read(reportRepositoryProvider);
-    try {
-      await repository.sendReport(report.toDto());
-    } catch (e) {
-      Log.d('Failed to send report: $e');
-      rethrow;
-    }
+    await repository.sendReport(report.toDto());
   }
 }

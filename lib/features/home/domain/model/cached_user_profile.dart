@@ -84,8 +84,9 @@ abstract class CachedUserProfile with _$CachedUserProfile {
 @HiveType(typeId: 4, adapterName: 'InterviewInfoAdapter')
 abstract class InterviewInfo with _$InterviewInfo {
   const factory InterviewInfo({
-    @HiveField(0) required String title,
-    @HiveField(1) required String content,
+    @HiveField(0) required int questionId,
+    @HiveField(1) required String title,
+    @HiveField(2) required String content,
   }) = _InterviewInfo;
 
   factory InterviewInfo.fromJson(Map<String, dynamic> json) =>
