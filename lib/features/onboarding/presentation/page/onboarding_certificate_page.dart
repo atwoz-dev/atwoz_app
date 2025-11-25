@@ -54,7 +54,6 @@ class _OnboardingCertificationPageState
 
   @override
   void dispose() {
-    ref.read(onboardingProvider.notifier).disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -187,7 +186,7 @@ class _OnboardingCertificationPageState
     ref
         .read(contactSettingProvider.notifier)
         .registerContactSetting(phoneNumber: widget.phoneNumber);
-        
+
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
