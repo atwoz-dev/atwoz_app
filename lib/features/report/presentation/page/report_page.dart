@@ -140,7 +140,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                   : () => _handleAction(
                       context,
                       action: reportNotifier.block,
-                      failErrorType: DialogueErrorType.failReport,
+                      failErrorType: DialogueErrorType.failBlock,
                       toastMessage: '정상적으로 차단되었습니다\n상대방의 프로필은 이후에 노출되지 않습니다.',
                     ),
               child: Text(
