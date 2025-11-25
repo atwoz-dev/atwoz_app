@@ -26,7 +26,7 @@ class CustomerCenterPage extends StatefulWidget {
 class _CustomerCenterPageState extends State<CustomerCenterPage> {
   final List<Message> _messages = [];
   String? _selectedCategory;
-  
+
   late final _initialOptions = chatBotData.keys.toList();
   final _scrollController = ScrollController();
 
@@ -36,7 +36,12 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
     const String userName = '고객';
     final greeting = '$userName님, 안녕하세요 딥플입니다.\n궁금한 사항을 선택해 주세요';
     _messages.add(
-      Message(sender: 'bot', text: greeting, isOptions: true, isInitialOptions: true),
+      Message(
+        sender: 'bot',
+        text: greeting,
+        isOptions: true,
+        isInitialOptions: true,
+      ),
     );
   }
 
@@ -72,7 +77,10 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
     return [];
   }
 
-  void _handleOptionSelected(String option, {required bool isInitialSelection}) {
+  void _handleOptionSelected(
+    String option, {
+    required bool isInitialSelection,
+  }) {
     if (!mounted) return;
 
     setState(() => _messages.add(Message(sender: 'user', text: option)));
@@ -97,14 +105,17 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
         }
       });
     } else {
-      final botResponse = chatBotData[_selectedCategory]?[option] ?? '해당 내용이 없습니다.';
+      final botResponse =
+          chatBotData[_selectedCategory]?[option] ?? '해당 내용이 없습니다.';
 
       Future.delayed(_kBotResponseDelay, () {
         if (mounted) {
-          setState(() => _messages.add(Message(sender: 'bot', text: botResponse)));
+          setState(
+            () => _messages.add(Message(sender: 'bot', text: botResponse)),
+          );
           _scrollToBottom();
 
-          _selectedCategory = null; 
+          _selectedCategory = null;
 
           Future.delayed(_kBotResponseDelay, () {
             if (mounted) {
@@ -135,7 +146,10 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 20.0,
+              ),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final message = _messages[index];
@@ -143,15 +157,15 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
                 final messageWidget = message.sender == 'bot'
                     ? BotMessageBubble(
                         message: message,
-                        options: _getCurrentOptions(message), 
+                        options: _getCurrentOptions(message),
                         isInitialOptions: message.isInitialOptions,
                         onOptionSelected: _handleOptionSelected,
                       )
                     : UserMessageBubble(message: message);
 
                 return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: messageWidget,
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: messageWidget,
                 );
               },
             ),

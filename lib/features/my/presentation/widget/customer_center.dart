@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import '../page/customer_center_page.dart' show Message;
 import 'package:gap/gap.dart';
 
-typedef OptionSelectedCallback = void Function(String option, {required bool isInitialSelection});
+typedef OptionSelectedCallback =
+    void Function(String option, {required bool isInitialSelection});
 
 const _userColor = Color(0xFF7A41FF);
 const _botColor = Colors.white;
 const _botBorderColor = Color(0xFFDDDDDD);
 const _bubbleRadius = 6.0;
-const _textColor = Color(0xFF333333); 
-const _buttonBackgroundColor = Color(0xFFF4F4F4); 
+const _textColor = Color(0xFF333333);
+const _buttonBackgroundColor = Color(0xFFF4F4F4);
 const _iconSize = 24.0;
 const _iconContainerSize = 40.0;
 
@@ -28,15 +29,22 @@ class UserMessageBubble extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.6,
+          ),
           decoration: BoxDecoration(
             color: _userColor,
-            borderRadius: BorderRadius.circular(_bubbleRadius)
-                .copyWith(topRight: const Radius.circular(0)),
+            borderRadius: BorderRadius.circular(
+              _bubbleRadius,
+            ).copyWith(topRight: const Radius.circular(0)),
           ),
           child: Text(
             message.text,
-            style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.4),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              height: 1.4,
+            ),
           ),
         ),
       ),
@@ -76,7 +84,7 @@ class BotMessageBubble extends StatelessWidget {
             child: Container(
               width: _iconContainerSize,
               height: _iconContainerSize,
-              padding: const EdgeInsets.all(8.0), 
+              padding: const EdgeInsets.all(8.0),
               child: const DefaultIcon(
                 IconPath.customerCenterLogo,
                 size: _iconSize,
@@ -90,29 +98,37 @@ class BotMessageBubble extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
                   constraints: BoxConstraints(maxWidth: messageWidth),
                   decoration: BoxDecoration(
                     color: _botColor,
                     border: Border.all(color: _botBorderColor),
-                    borderRadius: BorderRadius.circular(_bubbleRadius)
-                        .copyWith(topLeft: const Radius.circular(0)),
+                    borderRadius: BorderRadius.circular(
+                      _bubbleRadius,
+                    ).copyWith(topLeft: const Radius.circular(0)),
                   ),
                   child: Text(
                     message.text,
-                    style: const TextStyle(color: Colors.black, fontSize: 14, height: 1.4),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      height: 1.4,
+                    ),
                   ),
                 ),
-                
+
                 if (options.isNotEmpty) ...[
                   const Gap(8.0),
                   _OptionSelectBubble(
                     options: options,
                     isInitialOptions: isInitialOptions,
                     onOptionSelected: onOptionSelected,
-                    messageWidth: messageWidth, 
+                    messageWidth: messageWidth,
                   ),
-                ]
+                ],
               ],
             ),
           ),
@@ -138,14 +154,11 @@ class _OptionSelectBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: messageWidth, 
+      width: messageWidth,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: _botColor,
-        border: Border.all(
-          color: _botBorderColor,
-          width: 1,
-        ),
+        border: Border.all(color: _botBorderColor, width: 1),
         borderRadius: BorderRadius.circular(_bubbleRadius),
       ),
       child: Column(
@@ -155,7 +168,10 @@ class _OptionSelectBubble extends StatelessWidget {
               (option) => Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: OutlinedButton(
-                  onPressed: () => onOptionSelected(option, isInitialSelection: isInitialOptions),
+                  onPressed: () => onOptionSelected(
+                    option,
+                    isInitialSelection: isInitialOptions,
+                  ),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(0, 44),
                     backgroundColor: _buttonBackgroundColor,

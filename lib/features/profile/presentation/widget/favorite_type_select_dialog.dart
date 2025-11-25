@@ -25,14 +25,11 @@ class FavoriteTypeSelectDialog extends ConsumerStatefulWidget {
     BuildContext context, {
     required int userId,
     required FavoriteType? favoriteType,
-  }) =>
-      showDialog<FavoriteType>(
-        context: context,
-        builder: (context) => FavoriteTypeSelectDialog(
-          userId: userId,
-          favoriteType: favoriteType,
-        ),
-      );
+  }) => showDialog<FavoriteType>(
+    context: context,
+    builder: (context) =>
+        FavoriteTypeSelectDialog(userId: userId, favoriteType: favoriteType),
+  );
 }
 
 class _FavoriteTypeSelectDialogState
@@ -111,15 +108,14 @@ class _FavoriteTypeSelector extends StatelessWidget {
     return Row(
       spacing: 16.0,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FavoriteType.interested,
-        FavoriteType.highlyInterested,
-      ]
-          .map((type) => _FavoriteTypeItem(
-                value: type,
-                onTap: () => onChanged(type),
-                selected: selectedType == type,
-              ))
+      children: [FavoriteType.interested, FavoriteType.highlyInterested]
+          .map(
+            (type) => _FavoriteTypeItem(
+              value: type,
+              onTap: () => onChanged(type),
+              selected: selectedType == type,
+            ),
+          )
           .toList(),
     );
   }
@@ -138,10 +134,12 @@ class _FavoriteTypeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderPrimary =
-        selected ? context.colorScheme.primary : context.colorScheme.outline;
-    final iconPrimary =
-        selected ? context.colorScheme.primary : context.colorScheme.secondary;
+    final borderPrimary = selected
+        ? context.colorScheme.primary
+        : context.colorScheme.outline;
+    final iconPrimary = selected
+        ? context.colorScheme.primary
+        : context.colorScheme.secondary;
 
     return GestureDetector(
       onTap: onTap,
@@ -149,10 +147,7 @@ class _FavoriteTypeItem extends StatelessWidget {
         duration: Params.animationDuration,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(3.2)),
-          border: Border.all(
-            width: 1.0,
-            color: borderPrimary,
-          ),
+          border: Border.all(width: 1.0, color: borderPrimary),
           color: selected
               ? context.colorScheme.primaryContainer.withValues(alpha: .12)
               : context.colorScheme.outlineVariant,

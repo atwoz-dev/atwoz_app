@@ -30,8 +30,9 @@ class _MyProfileImageUpdatePageState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final xfilePhotos =
-          widget.profileImages.map((e) => e?.imageFile).toList();
+      final xfilePhotos = widget.profileImages
+          .map((e) => e?.imageFile)
+          .toList();
 
       final photoProviderNotifier = ref.read(photoProvider.notifier);
 
@@ -43,18 +44,18 @@ class _MyProfileImageUpdatePageState
 
   @override
   Widget build(BuildContext context) {
-    final imageUpdateState =
-        ref.watch(profileImageUpdateProvider(widget.profileImages));
+    final imageUpdateState = ref.watch(
+      profileImageUpdateProvider(widget.profileImages),
+    );
     final imageUpdateNotifier = ref.read(
-        profileImageUpdateProvider(widget.profileImages).notifier);
+      profileImageUpdateProvider(widget.profileImages).notifier,
+    );
     final photos = ref.watch(photoProvider);
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: const DefaultAppBar(
-          title: '프로필 사진',
-        ),
+        appBar: const DefaultAppBar(title: '프로필 사진'),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -66,7 +67,8 @@ class _MyProfileImageUpdatePageState
                     color: Palette.colorWhite, // 흰색 배경
                     child: Padding(
                       padding: EdgeInsets.all(
-                          context.screenWidth * 0.05), // 패딩 동적 설정
+                        context.screenWidth * 0.05,
+                      ), // 패딩 동적 설정
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -74,8 +76,9 @@ class _MyProfileImageUpdatePageState
                             children: [
                               Text(
                                 '프로필 사진을 등록해주세요',
-                                style: Fonts.header03()
-                                    .copyWith(fontWeight: FontWeight.bold),
+                                style: Fonts.header03().copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const Gap(6),
                               ToolTip(
@@ -84,7 +87,7 @@ class _MyProfileImageUpdatePageState
                                 textStyle: Fonts.body03Regular(
                                   Palette.colorWhite,
                                 ).copyWith(height: 1.5),
-                              )
+                              ),
                             ],
                           ),
                           const Gap(24),
@@ -93,10 +96,10 @@ class _MyProfileImageUpdatePageState
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
-                            ),
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 8,
+                                  mainAxisSpacing: 8,
+                                ),
                             itemCount: photos.length,
                             itemBuilder: (context, index) {
                               return ProfileImageWidget(
@@ -116,9 +119,10 @@ class _MyProfileImageUpdatePageState
                                     // EditableProfileImage 업데이트
                                     ref
                                         .read(
-                                            profileImageUpdateProvider(
-                                                    widget.profileImages)
-                                                .notifier)
+                                          profileImageUpdateProvider(
+                                            widget.profileImages,
+                                          ).notifier,
+                                        )
                                         .updateEditableProfileImage(
                                           index: index,
                                           image: pickedPhoto,
@@ -132,9 +136,11 @@ class _MyProfileImageUpdatePageState
                                       .updateState(index, null);
 
                                   ref
-                                      .read(profileImageUpdateProvider(
-                                              widget.profileImages)
-                                          .notifier)
+                                      .read(
+                                        profileImageUpdateProvider(
+                                          widget.profileImages,
+                                        ).notifier,
+                                      )
                                       .deleteEditableProfileImage(index: index);
                                 },
                                 isRepresentative: index == 0,
@@ -167,19 +173,19 @@ class _MyProfileImageUpdatePageState
                             imagePathsWithText: [
                               {
                                 'image': 'assets/images/good_pic1.png',
-                                'text': '자연스럽게 웃는 사진'
+                                'text': '자연스럽게 웃는 사진',
                               },
                               {
                                 'image': 'assets/images/good_pic2.png',
-                                'text': '이목구비가 선명한 사진'
+                                'text': '이목구비가 선명한 사진',
                               },
                               {
                                 'image': 'assets/images/good_pic3.png',
-                                'text': '활동적인 사진'
+                                'text': '활동적인 사진',
                               },
                               {
                                 'image': 'assets/images/good_pic4.png',
-                                'text': '분위기 있는 전신사진'
+                                'text': '분위기 있는 전신사진',
                               },
                             ],
                           ),
@@ -189,27 +195,27 @@ class _MyProfileImageUpdatePageState
                             imagePathsWithText: [
                               {
                                 'image': 'assets/images/bad_pic1.png',
-                                'text': '보정이 과도한 사진'
+                                'text': '보정이 과도한 사진',
                               },
                               {
                                 'image': 'assets/images/bad_pic2.png',
-                                'text': '2인 이상의 단체 사진'
+                                'text': '2인 이상의 단체 사진',
                               },
                               {
                                 'image': 'assets/images/bad_pic3.png',
-                                'text': 'AI 프로필'
+                                'text': 'AI 프로필',
                               },
                               {
                                 'image': 'assets/images/bad_pic4.png',
-                                'text': '얼굴이 가려진 사진'
+                                'text': '얼굴이 가려진 사진',
                               },
                               {
                                 'image': 'assets/images/bad_pic5.png',
-                                'text': '마스크를 착용한 사진'
+                                'text': '마스크를 착용한 사진',
                               },
                               {
                                 'image': 'assets/images/bad_pic6.png',
-                                'text': '사진에 대한 설명'
+                                'text': '사진에 대한 설명',
                               },
                             ],
                           ),

@@ -15,14 +15,20 @@ class DefaultChip extends StatelessWidget {
       children: titleList.map((title) {
         return Container(
           margin: EdgeInsets.only(right: 4.w),
-          padding:
-              EdgeInsets.only(top: 2.h, left: 4.w, bottom: 2.h, right: 4.w),
+          padding: EdgeInsets.only(
+            top: 2.h,
+            left: 4.w,
+            bottom: 2.h,
+            right: 4.w,
+          ),
           decoration: BoxDecoration(
             color: Palette.colorPrimary100,
             borderRadius: BorderRadius.all(Radius.circular(2)),
           ),
-          child:
-              Text(title, style: Fonts.body02Regular(Palette.colorPrimary800)),
+          child: Text(
+            title,
+            style: Fonts.body02Regular(Palette.colorPrimary800),
+          ),
         );
       }).toList(),
     );

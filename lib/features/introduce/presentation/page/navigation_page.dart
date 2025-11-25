@@ -12,101 +12,92 @@ class IntroduceNavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: context.screenWidth * 0.05,
-                vertical: context.screenWidth * 0.2),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
-                    },
-                    child: Text(
-                      '셀프소개 리스트',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.introduceRegister,
-                      );
-                    },
-                    child: Text(
-                      '셀프소개 등록',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.introduceEdit,
-                      );
-                    },
-                    child: Text(
-                      '셀프소개 수정',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.introduceDetail,
-                      );
-                    },
-                    child: Text(
-                      '셀프소개 상세',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.introduceFilter,
-                      );
-                    },
-                    child: Text(
-                      '필터',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  DefaultElevatedButton(
-                    primary: context.palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
-                    },
-                    child: Text(
-                      '프로필교환 요청 수락',
-                      style: Fonts.body01Regular(context.palette.onPrimary),
-                    ),
-                  ),
-                ],
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.screenWidth * 0.05,
+          vertical: context.screenWidth * 0.2,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.mainTab,
+                    method: NavigationMethod.go,
+                  );
+                },
+                child: Text(
+                  '셀프소개 리스트',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
               ),
-            )));
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.introduceRegister);
+                },
+                child: Text(
+                  '셀프소개 등록',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.introduceEdit);
+                },
+                child: Text(
+                  '셀프소개 수정',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.introduceDetail);
+                },
+                child: Text(
+                  '셀프소개 상세',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.introduceFilter);
+                },
+                child: Text(
+                  '필터',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DefaultElevatedButton(
+                primary: context.palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.mainTab,
+                    method: NavigationMethod.go,
+                  );
+                },
+                child: Text(
+                  '프로필교환 요청 수락',
+                  style: Fonts.body01Regular(context.palette.onPrimary),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

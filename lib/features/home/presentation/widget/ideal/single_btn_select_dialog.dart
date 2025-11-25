@@ -48,10 +48,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
-          padding: const EdgeInsets.only(
-            top: 16,
-            bottom: 24,
-          ),
+          padding: const EdgeInsets.only(top: 16, bottom: 24),
           width: context.screenWidth,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -66,9 +63,7 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: const DefaultIcon(
-                        IconPath.close,
-                      ),
+                      child: const DefaultIcon(IconPath.close),
                     ),
                   ],
                 ),
@@ -85,9 +80,8 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   child: ListWheelScrollView(
                     controller: _controller,
                     itemExtent: context.screenHeight * 0.05,
-                    onSelectedItemChanged: (value) => setState(
-                      () => _selectedIndex = value,
-                    ),
+                    onSelectedItemChanged: (value) =>
+                        setState(() => _selectedIndex = value),
                     children: widget.options.map((element) {
                       final isSelected =
                           widget.options[_selectedIndex] == element;
@@ -95,8 +89,9 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                       return Container(
                         width: context.screenWidth,
                         decoration: BoxDecoration(
-                          color:
-                              isSelected ? Palette.colorGrey50 : Colors.white,
+                          color: isSelected
+                              ? Palette.colorGrey50
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Container(
@@ -130,11 +125,11 @@ class _SingleBtnSelectDialogState extends ConsumerState<SingleBtnSelectDialg> {
                   onPrimary: context.palette.onPrimary,
                   primary: context.palette.primary,
                   child: const Text("확인"),
-                )
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

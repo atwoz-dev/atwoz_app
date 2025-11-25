@@ -8,5 +8,6 @@ import 'upload_photos_usecase.dart';
 final fetchPhotoUsecaseProvider = Provider((ref) => FetchPhotoUseCase(ref));
 final deletePhotoUsecaseProvider = Provider((ref) => DeletePhotoUseCase(ref));
 final uploadPhotosUsecaseProvider = Provider((ref) => UploadPhotosUseCase(ref));
-final uploadSinglePhotoUseCaseProvider =
-    Provider((ref) => UploadSinglePhotoUseCase(ref));
+final uploadSinglePhotoUseCaseProvider = Provider(
+  (ref) => UploadSinglePhotoUseCase(ref),
+);

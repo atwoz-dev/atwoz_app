@@ -189,7 +189,7 @@ class _OnboardingCertificationPageState
     ref
         .read(contactSettingProvider.notifier)
         .registerContactSetting(phoneNumber: widget.phoneNumber);
-        
+
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {

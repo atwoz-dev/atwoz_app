@@ -22,10 +22,7 @@ class DormantAccountPage extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 24.0,
-            horizontal: 12.0,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -42,17 +39,12 @@ class DormantAccountPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const DefaultIcon(
-                      IconPath.sadEmotion,
-                      size: 48.0,
-                    ),
+                    const DefaultIcon(IconPath.sadEmotion, size: 48.0),
                     const Gap(8.0),
                     Text(
                       '회원님은 휴면 중으로 상대방에게\n'
                       '프로필이 공개되고 있지 않아요',
-                      style: Fonts.body02Medium().copyWith(
-                        height: 1.2,
-                      ),
+                      style: Fonts.body02Medium().copyWith(height: 1.2),
                       textAlign: TextAlign.center,
                     ),
                   ],

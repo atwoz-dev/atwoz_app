@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 class Palette {
   static Color mixWithWhite({required Color color, required double opacity}) =>
       Color.lerp(
-          Colors.white.withAlpha((opacity * 255).round()), color, opacity)!;
+        Colors.white.withAlpha((opacity * 255).round()),
+        color,
+        opacity,
+      )!;
 
   static Color mixColors({
     required Color baseColor,
     required Color mixColor,
     required double baseOpacity,
-  }) =>
-      Color.lerp(baseColor.withAlpha((baseOpacity * 255).round()), mixColor,
-              1 - baseOpacity)!
-          .withAlpha(128);
+  }) => Color.lerp(
+    baseColor.withAlpha((baseOpacity * 255).round()),
+    mixColor,
+    1 - baseOpacity,
+  )!.withAlpha(128);
 
   // 색상 정의
   static const colorPrimary50 = Color(0xffF7F6FD);
@@ -62,7 +66,7 @@ class Palette {
   // Transparent blacks
   static const Color black50 = Color(0x80000000); // 50% transparent black
 
-// 색상 스키마
+  // 색상 스키마
   static const ColorScheme lightScheme = ColorScheme.light(
     primary: Palette.colorPrimary500,
     onPrimary: Palette.colorWhite,
@@ -97,8 +101,9 @@ class Palette {
 ThemeData createThemeData(ColorScheme colorScheme) {
   TextTheme baseTextTheme =
       Typography.material2018(platform: TargetPlatform.android).black.apply(
-          bodyColor: colorScheme.onSurface,
-          displayColor: colorScheme.onSurface);
+        bodyColor: colorScheme.onSurface,
+        displayColor: colorScheme.onSurface,
+      );
 
   return ThemeData(
     appBarTheme: AppBarTheme(

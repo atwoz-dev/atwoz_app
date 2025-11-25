@@ -72,8 +72,10 @@ class DateTimeUtil {
   }
 
   static DateTime toLocalFromTimestamp({required int utcTimestampMillis}) {
-    return DateTime.fromMillisecondsSinceEpoch(utcTimestampMillis, isUtc: true)
-        .toLocal();
+    return DateTime.fromMillisecondsSinceEpoch(
+      utcTimestampMillis,
+      isUtc: true,
+    ).toLocal();
   }
 
   static DateTime toUtcFromTimestamp(int localTimestampMillis) {
@@ -83,11 +85,7 @@ class DateTimeUtil {
   static DateTime startTimeOfDate() {
     final now = DateTime.now();
 
-    return DateTime(
-      now.year,
-      now.month,
-      now.day,
-    );
+    return DateTime(now.year, now.month, now.day);
   }
 
   static DateTime? toDateTime(String dateTimeString, {bool isUtc = false}) {
@@ -112,8 +110,10 @@ class DateTimeUtil {
     return null;
   }
 
-  static DateTime? toNormalizeDateTime(String dateTimeString,
-      {bool isUtc = false}) {
+  static DateTime? toNormalizeDateTime(
+    String dateTimeString, {
+    bool isUtc = false,
+  }) {
     final dateTime = DateTime.tryParse('-123450101 $dateTimeString');
     if (dateTime != null) {
       if (isUtc) {
@@ -158,8 +158,11 @@ class DateTimeUtil {
   /// [yearOfBirth] : 태어난 년도
   /// [monthOfBirth] : 태어난 월
   /// [dayOfBirth] : 태어난 일
-  static int calculateAge(
-      {required int yearOfBirth, int? monthOfBirth, int? dayOfBirth}) {
+  static int calculateAge({
+    required int yearOfBirth,
+    int? monthOfBirth,
+    int? dayOfBirth,
+  }) {
     final now = DateTime.now();
     int age = now.year - yearOfBirth;
 

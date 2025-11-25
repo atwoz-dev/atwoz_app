@@ -46,42 +46,67 @@ abstract class Config {
       print("⚠️ 환경 변수 파일(.env) 로딩 실패: $e");
     }
 
-    _enableGeneralLog = dotenv.get('ENABLE_GENERAL_LOG',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _enableGeneralLog =
+        dotenv.get(
+          'ENABLE_GENERAL_LOG',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
     _isPrettyJson =
         dotenv.get('IS_PRETTY_JSON', fallback: kDebugMode ? 'true' : 'false') ==
-            'true';
+        'true';
 
     _baseUrl = dotenv.get('BASE_URL', fallback: '');
     _timeout = Duration(
-        seconds: int.tryParse(dotenv.get('TIMEOUT', fallback: '10')) ?? 10);
+      seconds: int.tryParse(dotenv.get('TIMEOUT', fallback: '10')) ?? 10,
+    );
     _maxRetries = int.tryParse(dotenv.get('MAX_RETRIES', fallback: '1')) ?? 1;
 
-    _logOnNotifierError = dotenv.get('LOG_ON_NOTIFIER_ERROR',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _logOnNotifierError =
+        dotenv.get(
+          'LOG_ON_NOTIFIER_ERROR',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
-    _logOnNotifierNotifierEvent = dotenv.get('LOG_ON_NOTIFIER_NOTIFIER_EVENT',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _logOnNotifierNotifierEvent =
+        dotenv.get(
+          'LOG_ON_NOTIFIER_NOTIFIER_EVENT',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
 
-    _enableNavigatorObserverLog = dotenv.get('ENABLE_NAVIGATOR_OBSERVER_LOG',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _enableNavigatorObserverLog =
+        dotenv.get(
+          'ENABLE_NAVIGATOR_OBSERVER_LOG',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
-    _enableErrorPage = dotenv.get('ENABLE_ERROR_PAGE',
-            fallback: kReleaseMode ? 'true' : 'false') ==
+    _enableErrorPage =
+        dotenv.get(
+          'ENABLE_ERROR_PAGE',
+          fallback: kReleaseMode ? 'true' : 'false',
+        ) ==
         'true';
 
-    _enableLogNetworkException = dotenv.get('ENABLE_LOG_NETWORK_EXCEPTION',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _enableLogNetworkException =
+        dotenv.get(
+          'ENABLE_LOG_NETWORK_EXCEPTION',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
-    _enableLogRequestInfo = dotenv.get('ENABLE_LOG_REQUEST_INFO',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _enableLogRequestInfo =
+        dotenv.get(
+          'ENABLE_LOG_REQUEST_INFO',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
 
     _deepLinkUrl = dotenv.get('DEEP_LINK_URL', fallback: '');
-    _enableNotificationLog = dotenv.get('ENABLE_NOTIFICATION_LOG',
-            fallback: kDebugMode ? 'true' : 'false') ==
+    _enableNotificationLog =
+        dotenv.get(
+          'ENABLE_NOTIFICATION_LOG',
+          fallback: kDebugMode ? 'true' : 'false',
+        ) ==
         'true';
 
     _kakaoContactUrl = dotenv.get('KAKAO_CONTACT_URL', fallback: '');

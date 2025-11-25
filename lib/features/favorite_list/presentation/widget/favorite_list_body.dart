@@ -52,29 +52,24 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
             controller: _controller,
             slivers: [
               SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 sliver: SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final profile = data.users[index];
-                      return FavoriteGridItem(
-                        profile: profile,
-                        isBlurred: !(index < _previewProfileCount &&
-                            _unBlurIdList.contains(profile.userId)),
-                        onProfileTab: () => navigate(
-                          context,
-                          route: AppRoute.profile,
-                          extra: ProfileDetailArguments(userId: profile.userId),
-                        ),
-                        onBlurTap: () => setState(
-                          () => _unBlurIdList.add(profile.userId),
-                        ),
-                      );
-                    },
-                    childCount: data.users.length,
-                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final profile = data.users[index];
+                    return FavoriteGridItem(
+                      profile: profile,
+                      isBlurred:
+                          !(index < _previewProfileCount &&
+                              _unBlurIdList.contains(profile.userId)),
+                      onProfileTab: () => navigate(
+                        context,
+                        route: AppRoute.profile,
+                        extra: ProfileDetailArguments(userId: profile.userId),
+                      ),
+                      onBlurTap: () =>
+                          setState(() => _unBlurIdList.add(profile.userId)),
+                    );
+                  }, childCount: data.users.length),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: _gridColumnCount,
                     mainAxisSpacing: 8.0,
@@ -103,9 +98,8 @@ class _FavoriteListBodyState extends ConsumerState<FavoriteListBody> {
 
     final notifier = ref.read(favoriteListProvider.notifier);
 
-    final currentSelectedTab = FavoriteTabType.values[DefaultTabController.of(
-      context,
-    ).index];
+    final currentSelectedTab =
+        FavoriteTabType.values[DefaultTabController.of(context).index];
 
     switch (currentSelectedTab) {
       case FavoriteTabType.sent:

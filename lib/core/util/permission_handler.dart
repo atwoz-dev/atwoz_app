@@ -27,8 +27,9 @@ class PermissionHandler with WidgetsBindingObserver {
 
   Future<bool> checkPhotoPermissionStatus() async {
     try {
-      final permission =
-          Platform.isIOS ? Permission.photos : Permission.storage;
+      final permission = Platform.isIOS
+          ? Permission.photos
+          : Permission.storage;
       final status = await permission.status;
 
       if (status.isGranted) {

@@ -55,8 +55,9 @@ class SignUpProfilePicturePageState
                           children: [
                             Text(
                               '프로필 사진을 등록해주세요',
-                              style: Fonts.header03()
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              style: Fonts.header03().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const Gap(6),
                             ToolTip(
@@ -65,7 +66,7 @@ class SignUpProfilePicturePageState
                               textStyle: Fonts.body03Regular(
                                 Palette.colorWhite,
                               ),
-                            )
+                            ),
                           ],
                         ),
                         const Gap(24),
@@ -74,10 +75,10 @@ class SignUpProfilePicturePageState
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                              ),
                           itemCount: photos.length,
                           itemBuilder: (context, index) {
                             return ProfileImageWidget(
@@ -124,19 +125,19 @@ class SignUpProfilePicturePageState
                         imagePathsWithText: [
                           {
                             'image': 'assets/images/good_pic1.png',
-                            'text': '자연스럽게 웃는 사진'
+                            'text': '자연스럽게 웃는 사진',
                           },
                           {
                             'image': 'assets/images/good_pic2.png',
-                            'text': '이목구비가 선명한 사진'
+                            'text': '이목구비가 선명한 사진',
                           },
                           {
                             'image': 'assets/images/good_pic3.png',
-                            'text': '활동적인 사진'
+                            'text': '활동적인 사진',
                           },
                           {
                             'image': 'assets/images/good_pic4.png',
-                            'text': '분위기 있는 전신사진'
+                            'text': '분위기 있는 전신사진',
                           },
                         ],
                       ),
@@ -146,27 +147,27 @@ class SignUpProfilePicturePageState
                         imagePathsWithText: [
                           {
                             'image': 'assets/images/bad_pic1.png',
-                            'text': '보정이 과도한 사진'
+                            'text': '보정이 과도한 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic2.png',
-                            'text': '2인 이상의 단체 사진'
+                            'text': '2인 이상의 단체 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic3.png',
-                            'text': 'AI 프로필'
+                            'text': 'AI 프로필',
                           },
                           {
                             'image': 'assets/images/bad_pic4.png',
-                            'text': '얼굴이 가려진 사진'
+                            'text': '얼굴이 가려진 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic5.png',
-                            'text': '마스크를 착용한 사진'
+                            'text': '마스크를 착용한 사진',
                           },
                           {
                             'image': 'assets/images/bad_pic6.png',
-                            'text': '사진에 대한 설명'
+                            'text': '사진에 대한 설명',
                           },
                         ],
                       ),

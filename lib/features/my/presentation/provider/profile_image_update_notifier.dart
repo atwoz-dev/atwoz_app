@@ -13,7 +13,8 @@ part 'profile_image_update_notifier.g.dart';
 class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
   @override
   ProfileImageUpdateState build(
-      List<EditableProfileImage?> editableProfileImages) {
+    List<EditableProfileImage?> editableProfileImages,
+  ) {
     return ProfileImageUpdateState(
       editableProfileImages: editableProfileImages,
     );

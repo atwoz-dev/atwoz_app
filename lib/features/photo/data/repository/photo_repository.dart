@@ -55,8 +55,9 @@ class PhotoRepository extends BaseRepository {
   // 프로필 사진 다건 업로드
   Future<void> uploadProfilePhotos(List<XFile?> photos) async {
     final validPhotos = photos.whereType<XFile>().toList(); // null 제거
-    final convertedFiles =
-        await Future.wait(validPhotos.map(_convertToMultipartFile));
+    final convertedFiles = await Future.wait(
+      validPhotos.map(_convertToMultipartFile),
+    );
     final files = convertedFiles.whereType<MultipartFile>().toList(); // null 제거
 
     if (files.isEmpty) {
@@ -71,8 +72,10 @@ class PhotoRepository extends BaseRepository {
     final fields = <String, String>{};
 
     for (var i = 0; i < files.length; i++) {
-      final json =
-          ProfilePhotoUploadRequest(isPrimary: i == 0, order: i).toJson();
+      final json = ProfilePhotoUploadRequest(
+        isPrimary: i == 0,
+        order: i,
+      ).toJson();
 
       json.entries.where((entry) => entry.value != null).forEach((entry) {
         fields["requests[$i].${entry.key}"] = entry.value.toString();
@@ -91,9 +94,7 @@ class PhotoRepository extends BaseRepository {
   // 프로필 사진 삭제
   Future<void> deleteProfilePhoto(int id) async {
     try {
-      await apiService.deleteJson(
-        '$path/$id',
-      );
+      await apiService.deleteJson('$path/$id');
     } catch (e) {
       Log.d("❌ 프로필 이미지 삭제 중 오류 발생: $e");
     }
@@ -123,37 +124,26 @@ class PhotoRepository extends BaseRepository {
       if (photo.imageFile == null) continue; // imageFile이 null이면 건너뜀
 
       final multipartFile = await _convertToMultipartFile(
-          photo.imageFile!); // XFile → MultipartFile 변환
+        photo.imageFile!,
+      ); // XFile → MultipartFile 변환
       if (multipartFile == null) continue; // multipartFile이 null이면 건너뜀
 
       formData.files.add(
-        MapEntry(
-          "requests[$reqIdx].image",
-          multipartFile,
-        ),
+        MapEntry("requests[$reqIdx].image", multipartFile),
       ); // 요청 이미지 추가
 
       formData.fields.add(
-        MapEntry(
-          "requests[$reqIdx].order",
-          photo.order.toString(),
-        ),
+        MapEntry("requests[$reqIdx].order", photo.order.toString()),
       ); // 요청 order 추가
 
       formData.fields.add(
-        MapEntry(
-          "requests[$reqIdx].isPrimary",
-          photo.isPrimary.toString(),
-        ),
+        MapEntry("requests[$reqIdx].isPrimary", photo.isPrimary.toString()),
       ); // 요청 isPrimary 추가
 
       if (photo.id != null) {
         // id가 null이 아니면 이미지 변경
         formData.fields.add(
-          MapEntry(
-            "requests[$reqIdx].id",
-            photo.id.toString(),
-          ),
+          MapEntry("requests[$reqIdx].id", photo.id.toString()),
         ); // 요청 id 추가
       }
 

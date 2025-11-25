@@ -18,8 +18,10 @@ class RouteErrorPage extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(state.error?.toString() ?? state.uri.toString(),
-                textAlign: TextAlign.center),
+            Text(
+              state.error?.toString() ?? state.uri.toString(),
+              textAlign: TextAlign.center,
+            ),
             DefaultTextButton(
               expandedWidth: false,
               onPressed: () => goToHome(context), // goToHome 함수 호출
@@ -33,10 +35,6 @@ class RouteErrorPage extends ConsumerWidget {
 
   /// 홈 화면으로 이동
   void goToHome(BuildContext context) {
-    navigate(
-      context,
-      route: AppRoute.mainTab,
-      method: NavigationMethod.go,
-    );
+    navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
   }
 }

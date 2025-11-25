@@ -7,11 +7,7 @@ class ExamCreateSubmitUsecase {
 
   const ExamCreateSubmitUsecase(this.ref);
 
-  Future<void> call({
-    required SubjectAnswer request,
-  }) async {
-    await ref.read(examRepositoryProvider).submitAnswerList(
-          request: request,
-        );
+  Future<void> call({required SubjectAnswer request}) async {
+    await ref.read(examRepositoryProvider).submitAnswerList(request: request);
   }
 }

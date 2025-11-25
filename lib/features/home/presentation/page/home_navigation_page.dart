@@ -13,18 +13,16 @@ class HomeNavigationPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: context.screenWidth * 0.05,
-            vertical: context.screenWidth * 0.2),
+          horizontal: context.screenWidth * 0.05,
+          vertical: context.screenWidth * 0.2,
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               DefaultElevatedButton(
                 primary: context.palette.primary,
                 onPressed: () async {
-                  navigate(
-                    context,
-                    route: AppRoute.mainTab,
-                  );
+                  navigate(context, route: AppRoute.mainTab);
                 },
                 child: Text(
                   '홈',
@@ -35,10 +33,7 @@ class HomeNavigationPage extends StatelessWidget {
               DefaultElevatedButton(
                 primary: context.palette.primary,
                 onPressed: () async {
-                  navigate(
-                    context,
-                    route: AppRoute.ideal,
-                  );
+                  navigate(context, route: AppRoute.ideal);
                 },
                 child: Text(
                   '이상형 설정',
@@ -49,10 +44,7 @@ class HomeNavigationPage extends StatelessWidget {
               DefaultElevatedButton(
                 primary: context.palette.primary,
                 onPressed: () async {
-                  navigate(
-                    context,
-                    route: AppRoute.userByCategory,
-                  );
+                  navigate(context, route: AppRoute.userByCategory);
                 },
                 child: Text(
                   '소개받고 싶은 이성',

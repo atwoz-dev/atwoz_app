@@ -35,8 +35,9 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
 
   Future<String> setCurrentLocation() async {
     try {
-      final location =
-          await ref.read(getCurrentLocationUseCaseProvider).execute();
+      final location = await ref
+          .read(getCurrentLocationUseCaseProvider)
+          .execute();
 
       if (!state.hasValue) return "";
 
@@ -56,10 +57,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     }
   }
 
-  void updateProfile({
-    required MyProfile profile,
-    required bool isChanged,
-  }) {
+  void updateProfile({required MyProfile profile, required bool isChanged}) {
     if (!state.hasValue) return;
 
     state = AsyncValue.data(
@@ -87,15 +85,12 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
       }
 
       // 프로필 Hive 재저장 및 글로벌 상태 갱신
-      profileNotifier.profile =
-          await profileNotifier.fetchProfileToHiveFromServer();
+      profileNotifier.profile = await profileNotifier
+          .fetchProfileToHiveFromServer();
 
       // 상태 초기화
       state = AsyncData(
-        state.value!.copyWith(
-          updatedProfile: null,
-          isChanged: false,
-        ),
+        state.value!.copyWith(updatedProfile: null, isChanged: false),
       );
       return true;
     } catch (e, stackTrace) {

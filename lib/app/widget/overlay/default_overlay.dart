@@ -22,7 +22,8 @@ class DefaultOverlay extends StatefulWidget {
 }
 
 class DefaultOverlayState<T extends DefaultOverlay>
-    extends AppBaseWidgetState<T> with SingleTickerProviderStateMixin {
+    extends AppBaseWidgetState<T>
+    with SingleTickerProviderStateMixin {
   OverlayEntry? _entry;
   DefaultOverlayController? _overlayController;
   late AnimationController animationController;
@@ -92,8 +93,10 @@ class DefaultOverlayState<T extends DefaultOverlay>
       return;
     }
 
-    final OverlayState overlayState =
-        Overlay.of(context, debugRequiredFor: widget);
+    final OverlayState overlayState = Overlay.of(
+      context,
+      debugRequiredFor: widget,
+    );
 
     final RenderBox box = context.findRenderObject()! as RenderBox;
     final Offset target = box.localToGlobal(
@@ -102,18 +105,19 @@ class DefaultOverlayState<T extends DefaultOverlay>
     );
 
     _entry = OverlayEntry(
-        builder: (BuildContext context) =>
-            buildOverlay(context, target, widget.overlay));
+      builder: (BuildContext context) =>
+          buildOverlay(context, target, widget.overlay),
+    );
     overlayState.insert(_entry!);
 
     animationController.forward();
   }
 
   void _removeEntry() => animationController.reverse().whenComplete(() {
-        _entry?.remove();
-        _entry?.dispose();
-        _entry = null;
-      });
+    _entry?.remove();
+    _entry?.dispose();
+    _entry = null;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +137,7 @@ enum DefaultOverlayStatus {
 
 class DefaultOverlayController extends ValueNotifier<DefaultOverlayStatus> {
   DefaultOverlayController({DefaultOverlayStatus? status})
-      : super(status ?? DefaultOverlayStatus.hidden);
+    : super(status ?? DefaultOverlayStatus.hidden);
 
   DefaultOverlayStatus get status => value;
 
@@ -160,10 +164,7 @@ class DefaultOverlayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget result = FadeTransition(
-      opacity: animation,
-      child: child,
-    );
+    final Widget result = FadeTransition(opacity: animation, child: child);
 
     return Positioned.fill(
       bottom: MediaQuery.maybeViewInsetsOf(context)?.bottom ?? 0.0,
@@ -230,18 +231,21 @@ mixin DefaultOverlayUseFocusNode<T extends DefaultOverlay>
   @override
   Widget build(BuildContext context) {
     return Focus(
-        focusNode: effectiveFocusNode,
-        onFocusChange: (value) {
-          if (value) {
-            ScrollNotificationObserver.maybeOf(context)
-                ?.addListener(handleScrollChanged);
-          } else {
-            overlayController.hidenOverlay();
-            ScrollNotificationObserver.maybeOf(context)
-                ?.removeListener(handleScrollChanged);
-          }
-        },
-        child: super.build(context));
+      focusNode: effectiveFocusNode,
+      onFocusChange: (value) {
+        if (value) {
+          ScrollNotificationObserver.maybeOf(
+            context,
+          )?.addListener(handleScrollChanged);
+        } else {
+          overlayController.hidenOverlay();
+          ScrollNotificationObserver.maybeOf(
+            context,
+          )?.removeListener(handleScrollChanged);
+        }
+      },
+      child: super.build(context),
+    );
   }
 
   @override

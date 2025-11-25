@@ -12,8 +12,9 @@ class FetchPhotoUseCase extends BaseUseCase<List<XFile?>, void> {
 
   @override
   Future<List<XFile?>> execute([void params]) async {
-    final response =
-        await ref.read(photoRepositoryProvider).fetchProfileImages();
+    final response = await ref
+        .read(photoRepositoryProvider)
+        .fetchProfileImages();
     if (response == null) return List.filled(_maxPhotos, null);
 
     // order 순으로 정렬
@@ -21,8 +22,10 @@ class FetchPhotoUseCase extends BaseUseCase<List<XFile?>, void> {
       ..sort((a, b) => a.order.compareTo(b.order));
 
     // 안전하게 리스트 생성
-    final updatedPhotos =
-        List<XFile?>.filled(_maxPhotos, null).mapIndexed((index, _) {
+    final updatedPhotos = List<XFile?>.filled(_maxPhotos, null).mapIndexed((
+      index,
+      _,
+    ) {
       final photo = sortedPhotos.elementAtOrNull(index);
       return photo != null ? XFile(photo.url) : null;
     }).toList();

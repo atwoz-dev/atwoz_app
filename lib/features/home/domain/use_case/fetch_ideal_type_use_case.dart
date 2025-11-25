@@ -13,7 +13,7 @@ class FetchIdealTypeUseCase {
   final IdealTypeRepository _repository;
 
   FetchIdealTypeUseCase({required IdealTypeRepository repository})
-      : _repository = repository;
+    : _repository = repository;
 
   Future<IdealType> execute() async {
     try {
