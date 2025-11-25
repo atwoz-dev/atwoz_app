@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,11 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
+
   final String phoneNumber;
 
   @override
@@ -148,7 +152,7 @@ class _OnboardingCertificationPageState
   }
 
   void _verifyCode(OnboardingNotifier notifier) async {
-    final (userData, status) = await notifier.verifyCode(
+    final (UserData? userData, status) = await notifier.verifyCode(
       widget.phoneNumber,
       _codeController.text,
     );
@@ -180,11 +184,17 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<void> _handleActivateStatus(dynamic userData) async {
+  Future<void> _handleActivateStatus(UserData? userData) async {
+    ref
+        .read(contactSettingProvider.notifier)
+        .registerContactSetting(phoneNumber: widget.phoneNumber);
+
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReject);
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }
@@ -217,7 +227,7 @@ class _OnboardingCertificationPageState
       context,
       onTapVerify: context.pop,
       title: '서비스 가입 제한',
-      content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+      content: '탈퇴일로부터 3개월간 동일 계정으로\n재가입이 제한됩니다.',
     );
   }
 

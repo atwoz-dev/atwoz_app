@@ -15,7 +15,6 @@ import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
 import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
-import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,7 +32,6 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
   UserRepository get _userRepository => _ref.read(userRepositoryProvider);
   LocalStorage get _localStorage => _ref.read(localStorageProvider);
   ApiServiceImpl get _apiService => _ref.read(apiServiceProvider);
-  PhotoRepository get _photoRepository => _ref.read(photoRepositoryProvider);
   GlobalNotifier get _globalNotifier => _ref.read(globalProvider.notifier);
 
   @override
@@ -85,6 +83,11 @@ class AuthUseCaseImpl with LogMixin implements AuthUseCase {
       Log.e("로그아웃 중 예기치 못한 에러 발생: $e");
       return false;
     }
+  }
+
+  @override
+  Future<void> rescreenProfile() async {
+    await _userRepository.rescreenProfile();
   }
 
   @override

@@ -5,7 +5,9 @@ import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 
 class ProfileManagePage extends ConsumerWidget {
-  const ProfileManagePage({super.key});
+  final bool isRejectedProfile;
+
+  const ProfileManagePage({super.key, required this.isRejectedProfile});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +30,10 @@ class ProfileManagePage extends ConsumerWidget {
                   profileImages: data.profile.profileImages,
                 );
               } else {
-                return ProfileManageInfoArea(profile: data.profile);
+                return ProfileManageInfoArea(
+                  profile: data.profile,
+                  isRejectedProfile: isRejectedProfile,
+                );
               }
             },
           ),

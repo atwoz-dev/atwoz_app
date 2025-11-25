@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
@@ -140,9 +142,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
             .isWaiting ??
         false;
 
-    final isContactInitialized = ref
-        .watch(profileProvider(widget.userId))
-        .isInitializedContactMethod;
+    final contactState = ref.watch(contactSettingProvider);
 
     return Row(
       children: [
@@ -154,10 +154,9 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
                 )
               : _PrimaryButton(
                   onTap: () async {
-                    if (!isContactInitialized) {
+                    if (!contactState.isContactSettingInitialized) {
                       final res = await ContactInitializeBottomsheet.open(
                         context,
-                        userId: widget.userId,
                       );
                       if (res != true || !context.mounted) return;
                     }
@@ -166,7 +165,9 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
                       userId: widget.userId,
                       onSubmit: () => ref
                           .read(profileProvider(widget.userId).notifier)
-                          .requestMatch(),
+                          .requestMatch(
+                            contactState.method ?? ContactMethod.phone,
+                          ),
                     );
                   },
                   label: '대화 해볼래요',

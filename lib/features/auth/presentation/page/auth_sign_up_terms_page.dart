@@ -99,11 +99,10 @@ class AuthSignUpTermsPageState
 
                       if (!context.mounted) return;
 
-                      // 홈 화면으로 이동
+                      // 심사대기 화면으로 이동
                       navigate(
                         context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
+                        route: AppRoute.signUpProfileReview,
                       );
                     }
                   : null,

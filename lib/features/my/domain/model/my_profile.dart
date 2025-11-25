@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,5 +23,6 @@ abstract class MyProfile with _$MyProfile {
     required int height,
     required Gender gender, // constants/enum 재사용
     required String phoneNum,
+    required List<InterviewInfo> interviews,
   }) = _MyProfile;
 }

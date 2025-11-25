@@ -19,7 +19,7 @@ mixin _$MyProfile {
  DrinkingStatus get drinkingStatus;// profile/domain/enum 재사용
  Religion get religion;// profile/domain/enum 재사용
  String get mbti; List<Hobby> get hobbies; String get nickname; int get age; int get height; Gender get gender;// constants/enum 재사용
- String get phoneNum;
+ String get phoneNum; List<InterviewInfo> get interviews;
 /// Create a copy of MyProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +30,16 @@ $MyProfileCopyWith<MyProfile> get copyWith => _$MyProfileCopyWithImpl<MyProfile>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyProfile&&const DeepCollectionEquality().equals(other.profileImages, profileImages)&&(identical(other.job, job) || other.job == job)&&(identical(other.region, region) || other.region == region)&&(identical(other.education, education) || other.education == education)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.phoneNum, phoneNum) || other.phoneNum == phoneNum));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyProfile&&const DeepCollectionEquality().equals(other.profileImages, profileImages)&&(identical(other.job, job) || other.job == job)&&(identical(other.region, region) || other.region == region)&&(identical(other.education, education) || other.education == education)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.phoneNum, phoneNum) || other.phoneNum == phoneNum)&&const DeepCollectionEquality().equals(other.interviews, interviews));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(profileImages),job,region,education,smokingStatus,drinkingStatus,religion,mbti,const DeepCollectionEquality().hash(hobbies),nickname,age,height,gender,phoneNum);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(profileImages),job,region,education,smokingStatus,drinkingStatus,religion,mbti,const DeepCollectionEquality().hash(hobbies),nickname,age,height,gender,phoneNum,const DeepCollectionEquality().hash(interviews));
 
 @override
 String toString() {
-  return 'MyProfile(profileImages: $profileImages, job: $job, region: $region, education: $education, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, mbti: $mbti, hobbies: $hobbies, nickname: $nickname, age: $age, height: $height, gender: $gender, phoneNum: $phoneNum)';
+  return 'MyProfile(profileImages: $profileImages, job: $job, region: $region, education: $education, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, mbti: $mbti, hobbies: $hobbies, nickname: $nickname, age: $age, height: $height, gender: $gender, phoneNum: $phoneNum, interviews: $interviews)';
 }
 
 
@@ -50,7 +50,7 @@ abstract mixin class $MyProfileCopyWith<$Res>  {
   factory $MyProfileCopyWith(MyProfile value, $Res Function(MyProfile) _then) = _$MyProfileCopyWithImpl;
 @useResult
 $Res call({
- List<MyProfileImage> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
+ List<MyProfileImage?> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
 });
 
 
@@ -67,7 +67,7 @@ class _$MyProfileCopyWithImpl<$Res>
 
 /// Create a copy of MyProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,Object? interviews = null,}) {
   return _then(_self.copyWith(
 profileImages: null == profileImages ? _self.profileImages : profileImages // ignore: cast_nullable_to_non_nullable
 as List<MyProfileImage>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
@@ -83,7 +83,8 @@ as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nul
 as int,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
 as int,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as Gender,phoneNum: null == phoneNum ? _self.phoneNum : phoneNum // ignore: cast_nullable_to_non_nullable
-as String,
+as String,interviews: null == interviews ? _self.interviews : interviews // ignore: cast_nullable_to_non_nullable
+as List<InterviewInfo>,
   ));
 }
 
@@ -168,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MyProfile() when $default != null:
-return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
+return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum,_that.interviews);case _:
   return orElse();
 
 }
@@ -189,10 +190,10 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)  $default,) {final _that = this;
 switch (_that) {
 case _MyProfile():
-return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
+return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum,_that.interviews);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +210,10 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<MyProfileImage> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<MyProfileImage?> profileImages,  Job job,  String region,  Education education,  SmokingStatus smokingStatus,  DrinkingStatus drinkingStatus,  Religion religion,  String mbti,  List<Hobby> hobbies,  String nickname,  int age,  int height,  Gender gender,  String phoneNum)?  $default,) {final _that = this;
 switch (_that) {
 case _MyProfile() when $default != null:
-return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum);case _:
+return $default(_that.profileImages,_that.job,_that.region,_that.education,_that.smokingStatus,_that.drinkingStatus,_that.religion,_that.mbti,_that.hobbies,_that.nickname,_that.age,_that.height,_that.gender,_that.phoneNum,_that.interviews);case _:
   return null;
 
 }
@@ -224,7 +225,7 @@ return $default(_that.profileImages,_that.job,_that.region,_that.education,_that
 
 
 class _MyProfile implements MyProfile {
-  const _MyProfile({required final  List<MyProfileImage> profileImages, required this.job, required this.region, required this.education, required this.smokingStatus, required this.drinkingStatus, required this.religion, required this.mbti, required final  List<Hobby> hobbies, required this.nickname, required this.age, required this.height, required this.gender, required this.phoneNum}): _profileImages = profileImages,_hobbies = hobbies;
+  const _MyProfile({required final  List<MyProfileImage?> profileImages, required this.job, required this.region, required this.education, required this.smokingStatus, required this.drinkingStatus, required this.religion, required this.mbti, required final  List<Hobby> hobbies, required this.nickname, required this.age, required this.height, required this.gender, required this.phoneNum}): _profileImages = profileImages,_hobbies = hobbies;
   
 
  final  List<MyProfileImage> _profileImages;
@@ -258,6 +259,13 @@ class _MyProfile implements MyProfile {
 @override final  Gender gender;
 // constants/enum 재사용
 @override final  String phoneNum;
+ final  List<InterviewInfo> _interviews;
+@override List<InterviewInfo> get interviews {
+  if (_interviews is EqualUnmodifiableListView) return _interviews;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_interviews);
+}
+
 
 /// Create a copy of MyProfile
 /// with the given fields replaced by the non-null parameter values.
@@ -269,16 +277,16 @@ _$MyProfileCopyWith<_MyProfile> get copyWith => __$MyProfileCopyWithImpl<_MyProf
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyProfile&&const DeepCollectionEquality().equals(other._profileImages, _profileImages)&&(identical(other.job, job) || other.job == job)&&(identical(other.region, region) || other.region == region)&&(identical(other.education, education) || other.education == education)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.phoneNum, phoneNum) || other.phoneNum == phoneNum));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyProfile&&const DeepCollectionEquality().equals(other._profileImages, _profileImages)&&(identical(other.job, job) || other.job == job)&&(identical(other.region, region) || other.region == region)&&(identical(other.education, education) || other.education == education)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.height, height) || other.height == height)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.phoneNum, phoneNum) || other.phoneNum == phoneNum)&&const DeepCollectionEquality().equals(other._interviews, _interviews));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_profileImages),job,region,education,smokingStatus,drinkingStatus,religion,mbti,const DeepCollectionEquality().hash(_hobbies),nickname,age,height,gender,phoneNum);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_profileImages),job,region,education,smokingStatus,drinkingStatus,religion,mbti,const DeepCollectionEquality().hash(_hobbies),nickname,age,height,gender,phoneNum,const DeepCollectionEquality().hash(_interviews));
 
 @override
 String toString() {
-  return 'MyProfile(profileImages: $profileImages, job: $job, region: $region, education: $education, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, mbti: $mbti, hobbies: $hobbies, nickname: $nickname, age: $age, height: $height, gender: $gender, phoneNum: $phoneNum)';
+  return 'MyProfile(profileImages: $profileImages, job: $job, region: $region, education: $education, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, religion: $religion, mbti: $mbti, hobbies: $hobbies, nickname: $nickname, age: $age, height: $height, gender: $gender, phoneNum: $phoneNum, interviews: $interviews)';
 }
 
 
@@ -289,7 +297,7 @@ abstract mixin class _$MyProfileCopyWith<$Res> implements $MyProfileCopyWith<$Re
   factory _$MyProfileCopyWith(_MyProfile value, $Res Function(_MyProfile) _then) = __$MyProfileCopyWithImpl;
 @override @useResult
 $Res call({
- List<MyProfileImage> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
+ List<MyProfileImage?> profileImages, Job job, String region, Education education, SmokingStatus smokingStatus, DrinkingStatus drinkingStatus, Religion religion, String mbti, List<Hobby> hobbies, String nickname, int age, int height, Gender gender, String phoneNum
 });
 
 
@@ -306,7 +314,7 @@ class __$MyProfileCopyWithImpl<$Res>
 
 /// Create a copy of MyProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profileImages = null,Object? job = null,Object? region = null,Object? education = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? religion = null,Object? mbti = null,Object? hobbies = null,Object? nickname = null,Object? age = null,Object? height = null,Object? gender = null,Object? phoneNum = null,Object? interviews = null,}) {
   return _then(_MyProfile(
 profileImages: null == profileImages ? _self._profileImages : profileImages // ignore: cast_nullable_to_non_nullable
 as List<MyProfileImage>,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
@@ -322,7 +330,8 @@ as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nul
 as int,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
 as int,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as Gender,phoneNum: null == phoneNum ? _self.phoneNum : phoneNum // ignore: cast_nullable_to_non_nullable
-as String,
+as String,interviews: null == interviews ? _self._interviews : interviews // ignore: cast_nullable_to_non_nullable
+as List<InterviewInfo>,
   ));
 }
 

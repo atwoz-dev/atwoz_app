@@ -11,6 +11,7 @@ class DateTimeFormatter {
   static final dateTimeConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
   static final dateConvert = DateFormat('yyyy-MM-dd');
+  static final summaryConvert = DateFormat('yy.MM.dd');
 
   // Format
   static final dateTimeFormatSlash = DateFormat('yyyy/MM/dd HH:mm:ss');
