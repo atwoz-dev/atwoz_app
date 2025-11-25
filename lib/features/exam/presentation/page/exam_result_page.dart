@@ -19,10 +19,7 @@ import 'package:gap/gap.dart';
 class ExamResultPage extends ConsumerStatefulWidget {
   final bool isFromDirectAccess;
 
-  const ExamResultPage({
-    super.key,
-    required this.isFromDirectAccess,
-  });
+  const ExamResultPage({super.key, required this.isFromDirectAccess});
 
   @override
   ExamResultPageState createState() => ExamResultPageState();
@@ -30,11 +27,7 @@ class ExamResultPage extends ConsumerStatefulWidget {
 
 class ExamResultPageState
     extends BaseConsumerStatefulPageState<ExamResultPage> {
-  ExamResultPageState()
-      : super(
-          isAppBar: false,
-          isHorizontalMargin: false,
-        );
+  ExamResultPageState() : super(isAppBar: false, isHorizontalMargin: false);
 
   @override
   void initState() {
@@ -45,9 +38,7 @@ class ExamResultPageState
       final notifier = ref.read(examProvider.notifier);
 
       if (examState.isSubjectOptional && !examState.isDone) {
-        showToastMessage(
-          '연애 모의고사 참여 완료! 하트 15개를 받았어요',
-        );
+        showToastMessage('연애 모의고사 참여 완료! 하트 15개를 받았어요');
       }
 
       if (widget.isFromDirectAccess) {
@@ -84,9 +75,10 @@ class ExamResultPageState
                 userProfile: userProfile,
                 fetchHeartBalance: () => notifier.fetchUserHeartBalance(),
                 onOpenProfile: (memberId) => notifier.openProfile(
-                    memberId: memberId,
-                    isSoulmate:
-                        examState.hasSoulmate && examState.isSubjectOptional),
+                  memberId: memberId,
+                  isSoulmate:
+                      examState.hasSoulmate && examState.isSubjectOptional,
+                ),
                 onTapProfile: (memberId) {
                   navigate(
                     context,
@@ -102,6 +94,7 @@ class ExamResultPageState
               onPressOptionalSubject: () async {
                 await notifier.fetchOptionalQuestionList();
                 notifier.setCurrentSubjectIndex(0);
+                if (!context.mounted) return;
                 navigate(context, route: AppRoute.examQuestion);
               },
               onPressContinueSubject: () {
@@ -125,10 +118,7 @@ class ExamResultPageState
         notifier.resetCurrentSubjectIndex();
 
         Navigator.of(context).pop();
-        navigate(
-          context,
-          route: AppRoute.mainTab,
-        );
+        navigate(context, route: AppRoute.mainTab);
       },
     );
   }
@@ -167,14 +157,12 @@ class _ResultHeader extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Gap(6),
+          const Gap(6),
           Text(
             subtitle,
-            style: Fonts.body02Regular().copyWith(
-              color: Palette.colorGrey500,
-            ),
+            style: Fonts.body02Regular().copyWith(color: Palette.colorGrey500),
           ),
-          Gap(12),
+          const Gap(12),
         ],
       ),
     );
@@ -186,7 +174,7 @@ class _ResultList extends StatelessWidget {
   final bool hasSoulmate;
   final List<IntroducedProfile> profiles;
   final CachedUserProfile userProfile;
-  final Future<int> Function() fetchHeartBalance;
+  final int Function() fetchHeartBalance;
   final Future<void> Function(int memberId) onOpenProfile;
   final void Function(int memberId) onTapProfile;
 
@@ -206,7 +194,7 @@ class _ResultList extends StatelessWidget {
 
     return ListView.separated(
       itemCount: profiles.length,
-      separatorBuilder: (_, __) => const Gap(8),
+      separatorBuilder: (_, _) => const Gap(8),
       itemBuilder: (context, index) {
         final profile = profiles[index];
         final isBlurred = !profile.isIntroduced;
@@ -222,14 +210,13 @@ class _ResultList extends StatelessWidget {
                 return;
               }
 
-              final heartBalance = await fetchHeartBalance();
+              final heartBalance = fetchHeartBalance();
 
               if (heartBalance < Dimens.examProfileOpenHeartCount) {
                 showDialog(
                   context: context,
-                  builder: (_) => HeartShortageDialog(
-                    heartBalance: heartBalance,
-                  ),
+                  builder: (_) =>
+                      HeartShortageDialog(heartBalance: heartBalance),
                 );
                 return;
               }
@@ -277,16 +264,16 @@ class _ResultBottomButton extends StatelessWidget {
       padding: EdgeInsets.only(bottom: screenHeight * 0.05),
       child: isSubjectOptional
           ? isDone
-              ? DefaultElevatedButton(
-                  onPressed: () {
-                    navigate(context, route: AppRoute.mainTab);
-                  },
-                  child: const Text('연애 모의고사 종료하기'),
-                )
-              : DefaultElevatedButton(
-                  onPressed: onPressOptionalSubject,
-                  child: const Text('선택과목 풀기'),
-                )
+                ? DefaultElevatedButton(
+                    onPressed: () {
+                      navigate(context, route: AppRoute.mainTab);
+                    },
+                    child: const Text('연애 모의고사 종료하기'),
+                  )
+                : DefaultElevatedButton(
+                    onPressed: onPressOptionalSubject,
+                    child: const Text('선택과목 풀기'),
+                  )
           : DefaultElevatedButton(
               onPressed: onPressContinueSubject,
               child: const Text('다음과목 이어서 풀기'),

@@ -5,7 +5,6 @@ import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecas
 import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
 import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
-import 'package:atwoz_app/features/store/domain/usecase/store_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
 
@@ -32,10 +31,7 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   Future<void> handleDirectAccessResult() async {
-    state = state.copyWith(
-      isSubjectOptional: true,
-      isDone: true,
-    );
+    state = state.copyWith(isSubjectOptional: true, isDone: true);
 
     await fetchSoulmateList();
   }
@@ -53,15 +49,13 @@ class ExamNotifier extends _$ExamNotifier {
             .toList(),
       );
 
-      state = state.copyWith(
-        isLoaded: false,
-      );
+      state = state.copyWith(isLoaded: false);
       await _submitAnswers(payload);
       await fetchSoulmateList();
 
       if (isLastSubject) {
-        profileNotifier.profile =
-            await profileNotifier.fetchProfileToHiveFromServer();
+        profileNotifier.profile = await profileNotifier
+            .fetchProfileToHiveFromServer();
 
         state = state.copyWith(
           isSubjectOptional: true,
@@ -126,9 +120,7 @@ class ExamNotifier extends _$ExamNotifier {
   }
 
   void setSubjectOptional(bool isOptional) {
-    state = state.copyWith(
-      isSubjectOptional: isOptional,
-    );
+    state = state.copyWith(isSubjectOptional: isOptional);
   }
 
   void setExamDone() {
@@ -147,8 +139,10 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state =
-          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
+      state = state.copyWith(
+        isLoaded: true,
+        error: QuestionListErrorType.network,
+      );
     }
   }
 
@@ -167,24 +161,34 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state =
-          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
+      state = state.copyWith(
+        isLoaded: true,
+        error: QuestionListErrorType.network,
+      );
     }
   }
 
-  Future<void> openProfile(
-      {required int memberId, required bool isSoulmate}) async {
+  Future<void> openProfile({
+    required int memberId,
+    required bool isSoulmate,
+  }) async {
     try {
-      final success = await ExamRemoveBlurUsecase(ref)
-          .call(memberId: memberId, isSoulmate: isSoulmate);
+      final success = await ExamRemoveBlurUsecase(
+        ref,
+      ).call(memberId: memberId, isSoulmate: isSoulmate);
 
       if (!success) return;
 
       final updatedList = state.soulmateList.soulmateList
-          .map((profile) => profile.memberId == memberId
-              ? profile.copyWith(isIntroduced: true)
-              : profile)
+          .map(
+            (profile) => profile.memberId == memberId
+                ? profile.copyWith(isIntroduced: true)
+                : profile,
+          )
           .toList();
+
+      // 하트 사용하여 프로필 열람 시 보유 하트 수 갱신
+      await ref.read(globalProvider.notifier).fetchHeartBalance();
 
       state = state.copyWith(
         soulmateList: state.soulmateList.copyWith(soulmateList: updatedList),
@@ -194,14 +198,8 @@ class ExamNotifier extends _$ExamNotifier {
     }
   }
 
-  Future<int> fetchUserHeartBalance() async {
-    try {
-      final heartBalance = await HeartBalanceFetchUseCase(ref).call();
-      return heartBalance.totalHeartBalance;
-    } catch (e) {
-      Log.e('하트 조회 실패: $e');
-      return 0;
-    }
+  int fetchUserHeartBalance() {
+    return ref.watch(globalProvider).heartBalance.totalHeartBalance;
   }
 
   Future<void> _fetchRequiredQuestionList() async {
@@ -220,14 +218,16 @@ class ExamNotifier extends _$ExamNotifier {
       );
     } catch (e) {
       Log.e(e);
-      state =
-          state.copyWith(isLoaded: true, error: QuestionListErrorType.network);
+      state = state.copyWith(
+        isLoaded: true,
+        error: QuestionListErrorType.network,
+      );
     }
   }
 
   Future<void> fetchRequiredQuestions() async {
     state = state.copyWith(isLoaded: false);
-    
+
     await _fetchRequiredQuestionList();
   }
 

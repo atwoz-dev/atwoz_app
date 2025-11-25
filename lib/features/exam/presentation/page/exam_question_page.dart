@@ -97,7 +97,7 @@ class ExamQuestionPageState
                 if (examState.currentPage > 0) {
                   notifier.previousPage();
                   _pageController.previousPage(
-                    duration: Duration(milliseconds: 400),
+                    duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
                 } else {
@@ -111,10 +111,13 @@ class ExamQuestionPageState
                 switch (result) {
                   case ExamSubmitResult.examFinished:
                   case ExamSubmitResult.showResult:
+                    if (!context.mounted) break;
                     navigate(
                       context,
                       route: AppRoute.examResult,
-                      extra: ExamResultArguments(isFromDirectAccess: false),
+                      extra: const ExamResultArguments(
+                        isFromDirectAccess: false,
+                      ),
                     );
                     break;
                   case ExamSubmitResult.nextSubject:
@@ -169,9 +172,9 @@ class _QuestionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Gap(24),
+        const Gap(24),
         StepIndicator(totalStep: totalQuestions, currentStep: currentPage + 1),
-        Gap(24),
+        const Gap(24),
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: 60.h),
           child: Row(
@@ -284,7 +287,7 @@ class _QuestionBottomButton extends StatelessWidget {
               primary: Palette.colorGrey100,
               textColor: Palette.colorGrey500,
               onPressed: onPrevPage,
-              child: Text('이전'),
+              child: const Text('이전'),
             ),
           ),
           Expanded(
