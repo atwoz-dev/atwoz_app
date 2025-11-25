@@ -1,22 +1,25 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
+import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/app/widget/image/profile_image_widget.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
-import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/presentation/provider/profile_image_update_notifier.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyProfileImageUpdatePage extends ConsumerStatefulWidget {
-  final List<EditableProfileImage?> profileImages;
+  final List<ProfilePhoto> profileImages;
   const MyProfileImageUpdatePage({super.key, required this.profileImages});
 
   @override
@@ -30,9 +33,7 @@ class _MyProfileImageUpdatePageState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final xfilePhotos = widget.profileImages
-          .map((e) => e?.imageFile)
-          .toList();
+      final xfilePhotos = widget.profileImages.map((e) => e.imageFile).toList();
 
       final photoProviderNotifier = ref.read(photoProvider.notifier);
 
@@ -116,14 +117,9 @@ class _MyProfileImageUpdatePageState
                                         .read(photoProvider.notifier)
                                         .updateState(index, pickedPhoto);
 
-                                    // EditableProfileImage 업데이트
-                                    ref
-                                        .read(
-                                          profileImageUpdateProvider(
-                                            widget.profileImages,
-                                          ).notifier,
-                                        )
-                                        .updateEditableProfileImage(
+                                    // ProfilePhoto 업데이트
+                                    imageUpdateNotifier
+                                        .updateEditableProfileImages(
                                           index: index,
                                           image: pickedPhoto,
                                         );
@@ -135,13 +131,8 @@ class _MyProfileImageUpdatePageState
                                       .read(photoProvider.notifier)
                                       .updateState(index, null);
 
-                                  ref
-                                      .read(
-                                        profileImageUpdateProvider(
-                                          widget.profileImages,
-                                        ).notifier,
-                                      )
-                                      .deleteEditableProfileImage(index: index);
+                                  imageUpdateNotifier
+                                      .deleteEditableProfileImage(index);
                                 },
                                 isRepresentative: index == 0,
                               );
@@ -231,27 +222,41 @@ class _MyProfileImageUpdatePageState
               left: 20,
               right: 20,
               child: DefaultElevatedButton(
-                primary: imageUpdateState.isSaveEnabled
+                primary: imageUpdateNotifier.isSaveEnabled
                     ? Palette.colorPrimary500
                     : Palette.colorGrey200,
-                onPressed: imageUpdateState.isSaveEnabled
+                onPressed: imageUpdateNotifier.isSaveEnabled
                     ? () async {
-                        if (await imageUpdateNotifier.save() &&
-                            context.mounted) {
-                          pop(context);
+                        final isSuccess = await imageUpdateNotifier.save(
+                          imageUpdateState.profileImages,
+                        );
+
+                        if (!context.mounted) return;
+
+                        if (!isSuccess) {
+                          ErrorDialog.open(
+                            context,
+                            error: DialogueErrorType.failUpdateProfileImages,
+                            onConfirm: context.pop,
+                          );
+                          return;
                         }
+
+                        pop(context);
                       }
                     : null,
                 child: Text(
                   '저장',
                   style: Fonts.body01Medium(
-                    imageUpdateState.isSaveEnabled
+                    imageUpdateNotifier.isSaveEnabled
                         ? context.palette.onPrimary
                         : Palette.colorGrey300,
                   ).copyWith(fontWeight: FontWeight.w900),
                 ),
               ),
             ),
+            if (imageUpdateState.isSaving)
+              const Center(child: CircularProgressIndicator()),
           ],
         ),
       ),

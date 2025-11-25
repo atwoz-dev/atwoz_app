@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileImageUpdateState {
 
- List<EditableProfileImage?> get editableProfileImages;
+ List<ProfilePhoto> get profileImages; bool get hasDeletion; bool get isSaving;
 /// Create a copy of ProfileImageUpdateState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProfileImageUpdateStateCopyWith<ProfileImageUpdateState> get copyWith => _$Prof
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileImageUpdateState&&const DeepCollectionEquality().equals(other.editableProfileImages, editableProfileImages));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileImageUpdateState&&const DeepCollectionEquality().equals(other.profileImages, profileImages)&&(identical(other.hasDeletion, hasDeletion) || other.hasDeletion == hasDeletion)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(editableProfileImages));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(profileImages),hasDeletion,isSaving);
 
 @override
 String toString() {
-  return 'ProfileImageUpdateState(editableProfileImages: $editableProfileImages)';
+  return 'ProfileImageUpdateState(profileImages: $profileImages, hasDeletion: $hasDeletion, isSaving: $isSaving)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProfileImageUpdateStateCopyWith<$Res>  {
   factory $ProfileImageUpdateStateCopyWith(ProfileImageUpdateState value, $Res Function(ProfileImageUpdateState) _then) = _$ProfileImageUpdateStateCopyWithImpl;
 @useResult
 $Res call({
- List<EditableProfileImage?> editableProfileImages
+ List<ProfilePhoto> profileImages, bool hasDeletion, bool isSaving
 });
 
 
@@ -62,10 +62,12 @@ class _$ProfileImageUpdateStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileImageUpdateState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? editableProfileImages = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profileImages = null,Object? hasDeletion = null,Object? isSaving = null,}) {
   return _then(_self.copyWith(
-editableProfileImages: null == editableProfileImages ? _self.editableProfileImages : editableProfileImages // ignore: cast_nullable_to_non_nullable
-as List<EditableProfileImage?>,
+profileImages: null == profileImages ? _self.profileImages : profileImages // ignore: cast_nullable_to_non_nullable
+as List<ProfilePhoto>,hasDeletion: null == hasDeletion ? _self.hasDeletion : hasDeletion // ignore: cast_nullable_to_non_nullable
+as bool,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -150,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<EditableProfileImage?> editableProfileImages)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<ProfilePhoto> profileImages,  bool hasDeletion,  bool isSaving)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileImageUpdateState() when $default != null:
-return $default(_that.editableProfileImages);case _:
+return $default(_that.profileImages,_that.hasDeletion,_that.isSaving);case _:
   return orElse();
 
 }
@@ -171,10 +173,10 @@ return $default(_that.editableProfileImages);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<EditableProfileImage?> editableProfileImages)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<ProfilePhoto> profileImages,  bool hasDeletion,  bool isSaving)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileImageUpdateState():
-return $default(_that.editableProfileImages);case _:
+return $default(_that.profileImages,_that.hasDeletion,_that.isSaving);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +193,10 @@ return $default(_that.editableProfileImages);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<EditableProfileImage?> editableProfileImages)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<ProfilePhoto> profileImages,  bool hasDeletion,  bool isSaving)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileImageUpdateState() when $default != null:
-return $default(_that.editableProfileImages);case _:
+return $default(_that.profileImages,_that.hasDeletion,_that.isSaving);case _:
   return null;
 
 }
@@ -205,17 +207,19 @@ return $default(_that.editableProfileImages);case _:
 /// @nodoc
 
 
-class _ProfileImageUpdateState extends ProfileImageUpdateState {
-  const _ProfileImageUpdateState({required final  List<EditableProfileImage?> editableProfileImages}): _editableProfileImages = editableProfileImages,super._();
+class _ProfileImageUpdateState implements ProfileImageUpdateState {
+  const _ProfileImageUpdateState({required final  List<ProfilePhoto> profileImages, required this.hasDeletion, required this.isSaving}): _profileImages = profileImages;
   
 
- final  List<EditableProfileImage?> _editableProfileImages;
-@override List<EditableProfileImage?> get editableProfileImages {
-  if (_editableProfileImages is EqualUnmodifiableListView) return _editableProfileImages;
+ final  List<ProfilePhoto> _profileImages;
+@override List<ProfilePhoto> get profileImages {
+  if (_profileImages is EqualUnmodifiableListView) return _profileImages;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_editableProfileImages);
+  return EqualUnmodifiableListView(_profileImages);
 }
 
+@override final  bool hasDeletion;
+@override final  bool isSaving;
 
 /// Create a copy of ProfileImageUpdateState
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +231,16 @@ _$ProfileImageUpdateStateCopyWith<_ProfileImageUpdateState> get copyWith => __$P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileImageUpdateState&&const DeepCollectionEquality().equals(other._editableProfileImages, _editableProfileImages));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileImageUpdateState&&const DeepCollectionEquality().equals(other._profileImages, _profileImages)&&(identical(other.hasDeletion, hasDeletion) || other.hasDeletion == hasDeletion)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_editableProfileImages));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_profileImages),hasDeletion,isSaving);
 
 @override
 String toString() {
-  return 'ProfileImageUpdateState(editableProfileImages: $editableProfileImages)';
+  return 'ProfileImageUpdateState(profileImages: $profileImages, hasDeletion: $hasDeletion, isSaving: $isSaving)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$ProfileImageUpdateStateCopyWith<$Res> implements $Profile
   factory _$ProfileImageUpdateStateCopyWith(_ProfileImageUpdateState value, $Res Function(_ProfileImageUpdateState) _then) = __$ProfileImageUpdateStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<EditableProfileImage?> editableProfileImages
+ List<ProfilePhoto> profileImages, bool hasDeletion, bool isSaving
 });
 
 
@@ -264,10 +268,12 @@ class __$ProfileImageUpdateStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileImageUpdateState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? editableProfileImages = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profileImages = null,Object? hasDeletion = null,Object? isSaving = null,}) {
   return _then(_ProfileImageUpdateState(
-editableProfileImages: null == editableProfileImages ? _self._editableProfileImages : editableProfileImages // ignore: cast_nullable_to_non_nullable
-as List<EditableProfileImage?>,
+profileImages: null == profileImages ? _self._profileImages : profileImages // ignore: cast_nullable_to_non_nullable
+as List<ProfilePhoto>,hasDeletion: null == hasDeletion ? _self.hasDeletion : hasDeletion // ignore: cast_nullable_to_non_nullable
+as bool,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

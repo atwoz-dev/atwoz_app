@@ -4,7 +4,6 @@ import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/app/widget/image/profile_image_widget.dart';
 import 'package:atwoz_app/app/widget/overlay/tool_tip.dart';
 import 'package:atwoz_app/app/widget/text/bullet_text.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
@@ -116,11 +115,11 @@ class SignUpProfilePicturePageState
                       ],
                     ),
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Gap(24),
-                      const AuthPhotoGuideWidget(
+                      Gap(24),
+                      AuthPhotoGuideWidget(
                         title: '이성에게 좋은 인상을 주는 사진',
                         imagePathsWithText: [
                           {
@@ -141,8 +140,8 @@ class SignUpProfilePicturePageState
                           },
                         ],
                       ),
-                      const Gap(24),
-                      const AuthPhotoGuideWidget(
+                      Gap(24),
+                      AuthPhotoGuideWidget(
                         title: '이성에게 부정적인 인상을 주는 사진',
                         imagePathsWithText: [
                           {
@@ -185,11 +184,12 @@ class SignUpProfilePicturePageState
                   final bool isPrimaryPhotoSelected =
                       photos.isNotEmpty && photos[0] != null;
                   return DefaultElevatedButton(
-                    onPressed: isPrimaryPhotoSelected
-                        ? () async {
-                            navigate(context, route: AppRoute.signUpTerms);
-                          }
-                        : null,
+                    onPressed:
+                        isPrimaryPhotoSelected
+                            ? () async {
+                              navigate(context, route: AppRoute.signUpTerms);
+                            }
+                            : null,
                     child: Text(
                       '다음',
                       style: Fonts.body01Medium(

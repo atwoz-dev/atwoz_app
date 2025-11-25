@@ -2,7 +2,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/my/domain/model/editable_profile_image.dart';
+import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 class ProfileManagePhotoArea extends ConsumerWidget {
   const ProfileManagePhotoArea({super.key, required this.profileImages});
 
-  final List<MyProfileImage?> profileImages;
+  final List<MyProfileImage> profileImages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,11 +61,9 @@ class ProfileManagePhotoArea extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8),
                           color: const Color(0xffEDEEF0),
                         ),
-                        child:
-                            index < profileImages.length &&
-                                profileImages[index] != null
+                        child: index < profileImages.length
                             ? DefaultImage(
-                                imageURL: profileImages[index]!.imageUrl,
+                                imageURL: profileImages[index].imageUrl,
                                 fit: BoxFit.cover,
                               )
                             : null,
@@ -105,18 +103,14 @@ class ProfileManagePhotoArea extends ConsumerWidget {
   }
 }
 
-List<EditableProfileImage?> _toEditableProfileImages(
-  List<MyProfileImage?> profileImages,
+List<ProfilePhoto> _toEditableProfileImages(
+  List<MyProfileImage> profileImages,
 ) {
   return profileImages.map((image) {
-    if (image == null) return null;
-    return EditableProfileImage(
-      id: image.id,
+    return ProfilePhoto(
       imageUrl: image.imageUrl,
       imageFile: XFile(image.imageUrl),
-      order: profileImages.indexOf(image),
-      isPrimary: profileImages.indexOf(image) == 0,
-      status: ProfileImageStatus.none,
+      isUpdated: false,
     );
   }).toList();
 }
