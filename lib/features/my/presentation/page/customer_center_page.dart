@@ -27,7 +27,7 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
   final List<Message> _messages = [];
   String? _selectedCategory;
   
-  static final _initialOptions = chatBotData.keys.toList();
+  late final _initialOptions = chatBotData.keys.toList();
   final _scrollController = ScrollController();
 
   @override
@@ -46,13 +46,15 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
     super.dispose();
   }
 
+  static const _kBotResponseDelay = Duration(milliseconds: 700);
+  static const _kScrollAnimationDuration = Duration(milliseconds: 700);
   // 대화 스크롤을 맨 아래로 이동시키는 함수
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 700),
+          duration: _kScrollAnimationDuration,
           curve: Curves.easeOut,
         );
       }
@@ -77,10 +79,9 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
     _scrollToBottom();
 
     if (isInitialSelection) {
-      // 1단계 선택: 2단계 메뉴 제시
       _selectedCategory = option;
 
-      Future.delayed(const Duration(milliseconds: 700), () {
+      Future.delayed(_kBotResponseDelay, () {
         if (mounted) {
           setState(() {
             _messages.add(
@@ -98,14 +99,14 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
     } else {
       final botResponse = chatBotData[_selectedCategory]?[option] ?? '해당 내용이 없습니다.';
 
-      Future.delayed(const Duration(milliseconds: 700), () {
+      Future.delayed(_kBotResponseDelay, () {
         if (mounted) {
           setState(() => _messages.add(Message(sender: 'bot', text: botResponse)));
           _scrollToBottom();
 
           _selectedCategory = null; 
 
-          Future.delayed(const Duration(milliseconds: 700), () {
+          Future.delayed(_kBotResponseDelay, () {
             if (mounted) {
               setState(() {
                 _messages.add(
@@ -148,13 +149,9 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
                       )
                     : UserMessageBubble(message: message);
 
-                return AnimatedOpacity(
-                  opacity: 1.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: Padding(
+                return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: messageWidget,
-                  ),
                 );
               },
             ),
