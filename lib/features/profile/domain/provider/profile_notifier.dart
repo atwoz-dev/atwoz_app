@@ -3,6 +3,7 @@ import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
@@ -71,19 +72,13 @@ class ProfileNotifier extends _$ProfileNotifier {
           .read(favoriteRepositoryProvider)
           .requestFavorite(state.profile!.id, type: type);
 
-      state = state.copyWith(hasProcessedMission: hasProcessedMission);
+      if (hasProcessedMission) {
+        showToastMessage("좋아요 보내기 미션 완료! 하트 2개를 받았어요");
+        await ref.read(globalProvider.notifier).fetchHeartBalance();
+      }
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
-    }
-  }
-
-  void resetHasProcessedMission() async {
-    state = state.copyWith(hasProcessedMission: false);
-    try {
-      await ref.read(globalProvider.notifier).fetchHeartBalance();
-    } catch (e) {
-      Log.e('보유 하트 수 갱신 실패: $e');
     }
   }
 

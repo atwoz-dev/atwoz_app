@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/toast.dart';
@@ -46,7 +47,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
-  void _listener(ProfileState? prev, ProfileState curr) {
+  void _listener(ProfileState? prev, ProfileState curr) async {
     final isContactSettingInitialized = ref
         .read(contactSettingProvider)
         .isContactSettingInitialized;
@@ -60,13 +61,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     if (prev?.error != curr.error) {
       _handleErrorChanged(curr.error);
-    }
-
-    if (prev?.profile?.favoriteType != curr.profile?.favoriteType) {
-      showToastMessage("좋아요 보내기 미션 완료! 하트 2개를 받았어요요");
-      ref
-          .read(profileProvider(widget.userId).notifier)
-          .resetHasProcessedMission();
     }
   }
 

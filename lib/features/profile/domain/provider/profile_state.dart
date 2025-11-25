@@ -13,7 +13,6 @@ abstract class ProfileState with _$ProfileState {
     required String message,
     required bool isLoaded,
     required DialogueErrorType? error,
-    required bool hasProcessedMission,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState(
@@ -23,7 +22,6 @@ abstract class ProfileState with _$ProfileState {
     message: '',
     isLoaded: false,
     error: null,
-    hasProcessedMission: false,
   );
 
   const ProfileState._();
