@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../page/customer_center_page.dart' show Message;
 import 'package:gap/gap.dart';
 
-typedef OptionSelectCallback = void Function(String option, {required bool isInitialSelection});
+typedef OptionSelectedCallback = void Function(String option, {required bool isInitialSelection});
 
 const _userColor = Color(0xFF7A41FF);
 const _botColor = Colors.white;
@@ -22,20 +22,22 @@ class UserMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      alignment: Alignment.centerRight,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
-        decoration: BoxDecoration(
-          color: _userColor,
-          borderRadius: BorderRadius.circular(_bubbleRadius)
-              .copyWith(topRight: const Radius.circular(0)),
-        ),
-        child: Text(
-          message.text,
-          style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.4),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
+          decoration: BoxDecoration(
+            color: _userColor,
+            borderRadius: BorderRadius.circular(_bubbleRadius)
+                .copyWith(topRight: const Radius.circular(0)),
+          ),
+          child: Text(
+            message.text,
+            style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.4),
+          ),
         ),
       ),
     );
@@ -46,7 +48,7 @@ class BotMessageBubble extends StatelessWidget {
   final Message message;
   final List<String> options;
   final bool isInitialOptions;
-  final OptionSelectCallback onOptionSelected;
+  final OptionSelectedCallback onOptionSelected;
 
   const BotMessageBubble({
     super.key,
