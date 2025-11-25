@@ -47,6 +47,7 @@ class IconPath {
   static const String mailOutline = '$iconsPath/mail_outline.svg';
   static const String imageDelete = '$iconsPath/image_delete.svg';
   static const String emptyProfileImage = '$iconsPath/empty_profile_image.svg';
+  static const String customerCenterLogo = '$iconsPath/customer_center_logo.svg';
   static const String reviewProfileImage =
       '$iconsPath/review_profile_image.svg';
   static const String gloomyFace = '$iconsPath/gloomy_face.svg';
