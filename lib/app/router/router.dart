@@ -10,15 +10,12 @@ import 'package:atwoz_app/features/contact_setting/presentation/page/contact_set
 import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_result_page.dart';
-import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/main_tab_view.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
-import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_filter_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/navigation_page.dart';
 import 'package:atwoz_app/features/my/presentation/page/community_guide_page.dart';
@@ -31,12 +28,10 @@ import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certi
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
-import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,7 +66,6 @@ enum AppRoute {
 
   // Profile
   profile('profile'),
-  profileDesignInspection('profile-design-inspection'),
   contactSetting('contact-setting'),
 
   // Store
@@ -228,10 +222,6 @@ final allRoutes = [
     },
     routes: [
       NamedGoRoute(
-        name: AppRoute.profileDesignInspection.name,
-        builder: (context, state) => const ProfileDesignInspection(),
-      ),
-      NamedGoRoute(
         name: AppRoute.contactSetting.name,
         builder: (context, state) => const ContactSettingPage(),
       ),
@@ -363,7 +353,7 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.dormantAccount.name,
-        builder: (_, __) => const DormantAccountPage(),
+        builder: (_, _) => const DormantAccountPage(),
       ),
     ],
   ),
