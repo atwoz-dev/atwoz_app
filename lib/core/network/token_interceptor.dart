@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
@@ -44,7 +45,7 @@ class TokenInterceptor extends Interceptor with LogMixin {
       final newToken = await authService.getAccessToken();
 
       authService.setAccessToken('');
-      router.go('/');
+      router.goNamed(AppRoute.onboard.name);
     }
 
     super.onError(err, handler);
