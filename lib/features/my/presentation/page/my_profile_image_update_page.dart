@@ -228,7 +228,7 @@ class _MyProfileImageUpdatePageState
                 onPressed: imageUpdateNotifier.isSaveEnabled
                     ? () async {
                         final isSuccess = await imageUpdateNotifier.save(
-                          imageUpdateState,
+                          imageUpdateState.profileImages,
                         );
 
                         if (!context.mounted) return;
@@ -255,6 +255,8 @@ class _MyProfileImageUpdatePageState
                 ),
               ),
             ),
+            if (imageUpdateState.isSaving)
+              const Center(child: CircularProgressIndicator()),
           ],
         ),
       ),

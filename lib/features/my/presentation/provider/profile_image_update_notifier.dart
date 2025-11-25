@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/my/presentation/provider/profile_image_update_state.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
 import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
@@ -12,12 +13,18 @@ part 'profile_image_update_notifier.g.dart';
 @Riverpod(keepAlive: true)
 class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
   @override
-  List<ProfilePhoto> build(List<ProfilePhoto> profilePhotos) {
+  ProfileImageUpdateState build(List<ProfilePhoto> profilePhotos) {
     Log.d('가져온 프로필 이미지 리스트는 $profilePhotos');
-    return profilePhotos;
+    return ProfileImageUpdateState(
+      profileImages: profilePhotos,
+      hasDeletion: false,
+      isSaving: false,
+    );
   }
 
-  bool get isSaveEnabled => state.any((image) => image.isUpdated == true);
+  bool get isSaveEnabled =>
+      state.hasDeletion ||
+      state.profileImages.any((image) => image.isUpdated == true);
 
   /// 프로필 이미지 업데이트
   Future<void> updateEditableProfileImages({
@@ -28,7 +35,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
 
     try {
       // 현재 state 복사
-      final updatedImages = [...state];
+      final updatedImages = [...state.profileImages];
 
       if (index < 0 || index > Dimens.profileImageMaxCount - 1) {
         throw Exception(
@@ -40,7 +47,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
       if (index >= updatedImages.length) {
         updatedImages.add(ProfilePhoto(imageFile: image, isUpdated: true));
 
-        state = updatedImages;
+        state = state.copyWith(profileImages: updatedImages);
 
         return;
       }
@@ -50,7 +57,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
         isUpdated: true,
       );
 
-      state = updatedImages;
+      state = state.copyWith(profileImages: updatedImages);
     } catch (e) {
       Log.e('이미지 추가/변경 중 오류 발생: $e');
     }
@@ -58,15 +65,15 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
 
   /// 프로필 이미지 삭제
   void deleteEditableProfileImage(int index) {
-    if (index < 0 || index >= state.length) {
+    if (index < 0 || index >= state.profileImages.length) {
       Log.d('인덱스가 리스트 범위에서 벗어났습니다.');
       return;
     }
 
-    final copiedImages = [...state];
+    final copiedImages = [...state.profileImages];
     copiedImages.removeAt(index);
 
-    state = copiedImages;
+    state = state.copyWith(profileImages: copiedImages, hasDeletion: true);
 
     Log.d('삭제 후 state: $state');
   }
@@ -75,6 +82,7 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
   Future<bool> save(List<ProfilePhoto> photos) async {
     try {
       // 서버 업로드
+      state = state.copyWith(isSaving: true);
       final isSuccess = await ref
           .read(uploadPhotosUsecaseProvider)
           .execute(photos);
@@ -83,6 +91,8 @@ class ProfileImageUpdateNotifier extends _$ProfileImageUpdateNotifier {
         // Hive 데이터 삭제
         final box = await Hive.openBox(MyProfileImage.boxName);
         await box.delete('images');
+
+        state = state.copyWith(hasDeletion: false, isSaving: false);
       }
 
       return isSuccess;
