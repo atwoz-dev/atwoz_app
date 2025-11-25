@@ -100,15 +100,14 @@ class ProfileInfoDto {
 
 @JsonSerializable()
 class InterviewInfoDto {
-  // TODO(jh): 필드 모두 required로 변경. 현재 null로 응답 중
-  final int? questionId;
-  final String? title;
-  final String? content;
+  final int questionId;
+  final String title;
+  final String content;
 
   InterviewInfoDto({
-    this.questionId,
-    this.title,
-    this.content,
+    required this.questionId,
+    required this.title,
+    required this.content,
   });
 
   factory InterviewInfoDto.fromJson(Map<String, dynamic> json) =>

@@ -13,10 +13,7 @@ class MyProfileRepository extends BaseRepository {
 
   Future<bool> updateProfile(ProfileUpdateRequestDto profile) async {
     try {
-      await apiService.putJson(
-        '$path/profile',
-        data: profile.toJson(),
-      );
+      await apiService.putJson('$path/profile', data: profile.toJson());
 
       return true;
     } on NetworkException catch (e) {

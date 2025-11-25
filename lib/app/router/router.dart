@@ -6,6 +6,9 @@ import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_choice.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_picture_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_update_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_review_page.dart';
+import 'package:atwoz_app/features/auth/presentation/page/sign_up_profile_reject_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/dormant_release_page.dart';
 import 'package:atwoz_app/features/contact_setting/presentation/page/contact_setting_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_cover_page.dart';
 import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dart';
@@ -27,10 +30,12 @@ import 'package:atwoz_app/features/notification/presentation/page/notification_p
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_certificate_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_page.dart';
 import 'package:atwoz_app/features/onboarding/presentation/page/onboarding_phone_number_page.dart';
+import 'package:atwoz_app/features/onboarding/presentation/page/temporal_forbidden_page.dart';
 import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/customer_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
@@ -88,6 +93,8 @@ enum AppRoute {
   onboard('onboard'),
   onboardPhone('onboard-phone'),
   onboardCertification('onboard-certification'),
+  dormantRelease('dormant-release'),
+  temporalForbidden('temporal-forbidden'),
 
   // Auth
   auth('auth'),
@@ -98,6 +105,8 @@ enum AppRoute {
   signUpProfileChoice('sign-up-profile-choice'),
   signUpProfileUpdate('sign-up-profile-update'),
   signUpProfilePicture('sign-up-profile-picture'),
+  signUpProfileReview('sign-up-profile-review'),
+  signUpProfileReject('sign-up-profile-reject'),
 
   // My
   profileManage('profile-manage'),
@@ -319,7 +328,15 @@ final allRoutes = [
   NamedGoRoute(
     root: true,
     name: AppRoute.profileManage.name,
-    builder: (context, state) => const ProfileManagePage(),
+    builder: (context, state) {
+      final args = state.extra;
+
+      if (args is MyProfileManageArguments) {
+        return ProfileManagePage(isRejectedProfile: args.isRejectedProfile);
+      }
+
+      return const ProfileManagePage(isRejectedProfile: false);
+    },
     routes: [
       NamedGoRoute(
         name: AppRoute.profileUpdate.name,
@@ -424,6 +441,14 @@ Future<T?> navigate<T>(
   final goRouter = GoRouter.of(context);
 
   return switch (method) {
+    NavigationMethod.push => await goRouter.pushNamed<T>(
+      route.name,
+      extra: extra,
+    ),
+    NavigationMethod.replace => await goRouter.replaceNamed<T>(
+      route.name,
+      extra: extra,
+    ),
     NavigationMethod.push => await goRouter.pushNamed<T>(
       route.name,
       extra: extra,

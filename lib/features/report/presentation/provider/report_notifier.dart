@@ -14,15 +14,11 @@ class ReportNotifier extends _$ReportNotifier {
   }
 
   set reason(String reason) {
-    state = state.copyWith(
-      reason: ReportReason.fromLabel(reason),
-    );
+    state = state.copyWith(reason: ReportReason.fromLabel(reason));
   }
 
   set content(String content) {
-    state = state.copyWith(
-      content: content,
-    );
+    state = state.copyWith(content: content);
   }
 
   Future<bool> report() async {

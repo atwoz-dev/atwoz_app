@@ -10,8 +10,9 @@ class DeletePhotoUseCase extends BaseUseCase<void, XFile> {
 
   @override
   Future<void> execute(XFile params) async {
-    final profileData =
-        await ref.read(photoRepositoryProvider).fetchProfileImages();
+    final profileData = await ref
+        .read(photoRepositoryProvider)
+        .fetchProfileImages();
 
     // 원본 데이터에서 S3 URL과 매칭되는 id 찾기
     final profileImage = profileData?.data.firstWhereOrNull(

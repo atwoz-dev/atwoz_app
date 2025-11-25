@@ -50,18 +50,17 @@ class AuthSignUpTermsPageState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                const AuthStepIndicatorWidget(
-                  totalSteps: 4,
-                  currentStep: 4,
-                ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AuthStepIndicatorWidget(totalSteps: 4, currentStep: 4),
                 Gap(16.h),
                 const TitleText(title: '서비스 이용 및 가입을 위해 \n약관에 동의해주세요'),
                 Gap(28.h),
                 ..._renderCheckList(),
-              ])),
+              ],
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
@@ -76,24 +75,19 @@ class AuthSignUpTermsPageState
                       // 프로필 등록
                       final authUseCase = ref.read(authUsecaseProvider);
                       final profileState = ref.read(signUpProcessProvider);
-                      final profileData =
-                          profileState.toProfileUploadRequest(); // DTO 변환
+                      final profileData = profileState
+                          .toProfileUploadRequest(); // DTO 변환
                       await authUseCase.uploadProfile(profileData);
 
-                      // 홈 화면으로 이동
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
+                      // 심사대기 화면으로 이동
+                      navigate(context, route: AppRoute.signUpProfileReview);
                     }
                   : null,
               child: Text(
                 '회원가입 완료',
-                style: Fonts.body01Medium(isButtonEnabled
-                        ? palette.onPrimary
-                        : Palette.colorGrey400)
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Fonts.body01Medium(
+                  isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
           ),
@@ -103,45 +97,52 @@ class AuthSignUpTermsPageState
   }
 
   List<Widget> _renderCheckList() {
-    List<String> labels = [
-      '전체 동의하기',
-      '(필수) 이용약관 동의',
-      '(필수) 개인정보 처리방침 동의',
-    ];
+    List<String> labels = ['전체 동의하기', '(필수) 이용약관 동의', '(필수) 개인정보 처리방침 동의'];
 
     List<Widget> list = [
       renderContainer(_isChecked[0], labels[0], 0, () => _updateCheckState(0)),
     ];
 
-    list.addAll(List.generate(
+    list.addAll(
+      List.generate(
         2,
-        (index) => renderContainer(_isChecked[index + 1], labels[index + 1],
-            index + 1, () => _updateCheckState(index + 1))));
+        (index) => renderContainer(
+          _isChecked[index + 1],
+          labels[index + 1],
+          index + 1,
+          () => _updateCheckState(index + 1),
+        ),
+      ),
+    );
 
     return list;
   }
 
   Widget renderContainer(bool checked, String text, index, VoidCallback onTap) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: GestureDetector(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              color: index != 0
-                  ? Palette.colorWhite
-                  : checked
-                      ? Palette.colorPrimary100
-                      : Palette.colorGrey100,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            padding: const EdgeInsets.only(
-                top: 14.0, bottom: 14.0, left: 16.0, right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    child: Row(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: index != 0
+                ? Palette.colorWhite
+                : checked
+                ? Palette.colorPrimary100
+                : Palette.colorGrey100,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          padding: const EdgeInsets.only(
+            top: 14.0,
+            bottom: 14.0,
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Row(
                   children: [
                     index == 0
                         ? DefaultIcon(
@@ -151,38 +152,48 @@ class AuthSignUpTermsPageState
                         : DefaultIcon(
                             IconPath.check,
                             colorFilter: ColorFilter.mode(
-                                checked
-                                    ? Palette.colorPrimary500.withOpacity(0.6)
-                                    : Palette.colorGrey300.withOpacity(0.6),
-                                BlendMode.srcIn),
+                              checked
+                                  ? Palette.colorPrimary500.withOpacity(0.6)
+                                  : Palette.colorGrey300.withOpacity(0.6),
+                              BlendMode.srcIn,
+                            ),
                             size: 24,
                           ),
                     const SizedBox(width: 8),
-                    Text(text,
-                        style: Fonts.body01Regular(index == 0
+                    Text(
+                      text,
+                      style: Fonts.body01Regular(
+                        index == 0
                             ? Palette.colorGrey900
-                            : Palette.colorGrey700)),
+                            : Palette.colorGrey700,
+                      ),
+                    ),
                   ],
-                )),
-                Container(
-                    child: index != 0
-                        ? GestureDetector(
-                            onTap: () {
-                              // TODO: 이용약관, 개인정보 처리방침 화면 나오면 연결 필요함
-                              navigate(
-                                context,
-                                route: index != 1
-                                    ? AppRoute.privacyPolicy
-                                    : AppRoute.termsOfUse,
-                              );
-                            },
-                            child: Text('보기',
-                                style:
-                                    Fonts.body01Regular(Palette.colorGrey900)))
-                        : null)
-              ],
-            ),
+                ),
+              ),
+              Container(
+                child: index != 0
+                    ? GestureDetector(
+                        onTap: () {
+                          // TODO: 이용약관, 개인정보 처리방침 화면 나오면 연결 필요함
+                          navigate(
+                            context,
+                            route: index != 1
+                                ? AppRoute.privacyPolicy
+                                : AppRoute.termsOfUse,
+                          );
+                        },
+                        child: Text(
+                          '보기',
+                          style: Fonts.body01Regular(Palette.colorGrey900),
+                        ),
+                      )
+                    : null,
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

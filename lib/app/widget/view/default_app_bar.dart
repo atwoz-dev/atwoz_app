@@ -45,10 +45,7 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
             centerTitle: true,
             titleSpacing: 0,
             title: title != null
-                ? Text(
-                    title!,
-                    style: Fonts.body01Medium(),
-                  )
+                ? Text(title!, style: Fonts.body01Medium())
                 : null,
             actions: actions,
             automaticallyImplyLeading: true,

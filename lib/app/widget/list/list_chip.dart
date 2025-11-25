@@ -7,7 +7,7 @@ class ListChip extends StatelessWidget {
   final List<String> options; // 선택 가능한 옵션 리스트
   final List<String> selectedOptions; // 선택된 옵션 리스트
   final void Function(List<String> updatedSelections)
-      onSelectionChanged; // 선택 변경 콜백
+  onSelectionChanged; // 선택 변경 콜백
   final double spacing; // 가로 간격
   final double runSpacing; // 세로 간격
   final WrapAlignment alignment; // 가로 방향 정렬
@@ -37,7 +37,7 @@ class ListChip extends StatelessWidget {
           onTap: () {
             final updatedSelections = [
               ...selectedOptions,
-              if (!isSelected) option
+              if (!isSelected) option,
             ]..removeWhere((e) => isSelected && e == option);
             onSelectionChanged(updatedSelections);
           },
@@ -48,8 +48,9 @@ class ListChip extends StatelessWidget {
                   ? Palette.colorPrimary100
                   : context.palette.surface,
               border: Border.all(
-                color:
-                    isSelected ? Palette.colorPrimary100 : Palette.colorGrey200,
+                color: isSelected
+                    ? Palette.colorPrimary100
+                    : Palette.colorGrey200,
               ),
               borderRadius: BorderRadius.circular(12.0),
             ),

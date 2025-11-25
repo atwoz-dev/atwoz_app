@@ -14,12 +14,14 @@ class LoggingInterceptor extends Interceptor {
 
     if (options.headers.isNotEmpty) {
       _printBody(
-          'Headers:\n${options.headers.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}');
+        'Headers:\n${options.headers.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}',
+      );
     }
 
     if (options.queryParameters.isNotEmpty) {
       _printBody(
-          'QueryParameters:\n${options.queryParameters.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}');
+        'QueryParameters:\n${options.queryParameters.entries.map((e) => '\t${e.key}: ${e.value}').join('\n')}',
+      );
     }
 
     if (options.data is Json) {
@@ -32,7 +34,9 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   void onResponse(
-      Response<dynamic> response, ResponseInterceptorHandler handler) {
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     final RequestOptions options = response.requestOptions;
     final String httpMethod = options.method;
 
@@ -129,17 +133,24 @@ class LoggingInterceptor extends Interceptor {
 
     if (request.contentType?.contains(Headers.formUrlEncodedContentType) ??
         false) {
-      components.addAll((request.data as Json)
-          .entries
-          .map((e) => "--data-urlencode '${e.key}=${e.value}'"));
-    } else if (request.contentType
-            ?.contains(Headers.multipartFormDataContentType) ??
+      components.addAll(
+        (request.data as Json).entries.map(
+          (e) => "--data-urlencode '${e.key}=${e.value}'",
+        ),
+      );
+    } else if (request.contentType?.contains(
+          Headers.multipartFormDataContentType,
+        ) ??
         false) {
       final FormData formData = request.data as FormData;
       components.addAll(
-          formData.fields.map((e) => "--form '${e.key}=\"${e.value}\"'"));
-      components.addAll(formData.files
-          .map((e) => "--form '${e.key}=\"@mock-path/${e.value.filename}\"'"));
+        formData.fields.map((e) => "--form '${e.key}=\"${e.value}\"'"),
+      );
+      components.addAll(
+        formData.files.map(
+          (e) => "--form '${e.key}=\"@mock-path/${e.value.filename}\"'",
+        ),
+      );
     } else if (request.data != null) {
       components.add("--data '${_getBody(request.data)}'");
     }

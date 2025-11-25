@@ -10,9 +10,8 @@ class InterviewUpdateUseCase {
     required int answerId,
     required String answerContent,
   }) async {
-    await ref.read(interviewRepositoryProvider).updateAnswer(
-          answerId: answerId,
-          answerContent: answerContent,
-        );
+    await ref
+        .read(interviewRepositoryProvider)
+        .updateAnswer(answerId: answerId, answerContent: answerContent);
   }
 }

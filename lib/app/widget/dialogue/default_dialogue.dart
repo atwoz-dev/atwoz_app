@@ -34,15 +34,9 @@ class DefaultDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (title != null) ...[
-              title!,
-              const Gap(12),
-            ],
+            if (title != null) ...[title!, const Gap(12)],
             if (content != null) content!,
-            if (action != null) ...[
-              const Gap(16),
-              action!,
-            ],
+            if (action != null) ...[const Gap(16), action!],
           ],
         ),
       ),

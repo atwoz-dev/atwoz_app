@@ -86,10 +86,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AuthStepIndicatorWidget(
-                  totalSteps: 4,
-                  currentStep: 1,
-                ),
+                const AuthStepIndicatorWidget(totalSteps: 4, currentStep: 1),
                 Gap(16.h),
                 const TitleText(title: '닉네임을 입력해주세요'),
                 Gap(5.h),
@@ -133,10 +130,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
             child: DefaultElevatedButton(
               onPressed: isButtonEnabled
                   ? () {
-                      navigate(
-                        context,
-                        route: AppRoute.signUpProfileChoice,
-                      );
+                      navigate(context, route: AppRoute.signUpProfileChoice);
                     }
                   : null,
               child: Text(

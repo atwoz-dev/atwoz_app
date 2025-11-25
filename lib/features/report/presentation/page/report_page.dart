@@ -20,11 +20,7 @@ class ReportPage extends ConsumerStatefulWidget {
   final String name;
   final int userId;
 
-  const ReportPage({
-    super.key,
-    required this.name,
-    required this.userId,
-  });
+  const ReportPage({super.key, required this.name, required this.userId});
 
   @override
   ReportPageState createState() => ReportPageState();
@@ -32,17 +28,16 @@ class ReportPage extends ConsumerStatefulWidget {
 
 class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
   ReportPageState()
-      : super(
-          defaultAppBarTitle: '신고하기',
-          isResizeToAvoidBottomInset: false,
-          horizontalMargin: 20,
-        );
+    : super(
+        defaultAppBarTitle: '신고하기',
+        isResizeToAvoidBottomInset: false,
+        horizontalMargin: 20,
+      );
 
   @override
   Widget buildPage(BuildContext context) {
     final reportState = ref.watch(reportProvider(widget.userId));
-    final reportNotifier =
-        ref.read(reportProvider(widget.userId).notifier);
+    final reportNotifier = ref.read(reportProvider(widget.userId).notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 올라와도 화면/버튼 안 밀림
@@ -55,24 +50,28 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
             children: [
               Text(
                 '닉네임',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               Text(
                 widget.name,
-                style: Fonts.header03(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: Fonts.header03(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               const Gap(30),
               Text(
                 '신고유형',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               OutlinedDropdown<ReportReason>(
-                placeholder: '신고 유형을 선택해주세요.', items: ReportReason.values,
+                placeholder: '신고 유형을 선택해주세요.',
+                items: ReportReason.values,
                 selectedItem: reportState.reason, // 단일 소스
                 onItemSelected: (reason) =>
                     reportNotifier.reason = reason.label,
@@ -81,8 +80,9 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               const Gap(30),
               Text(
                 '신고내용',
-                style: Fonts.body02Regular(palette.onSurface)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: Fonts.body02Regular(
+                  palette.onSurface,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               DefaultTextFormField(
@@ -156,8 +156,9 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
               },
               child: Text(
                 '차단하기',
-                style: Fonts.body01Medium(const Color(0xff7E7E7E))
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Fonts.body01Medium(
+                  const Color(0xff7E7E7E),
+                ).copyWith(fontWeight: FontWeight.w900),
               ),
             ),
             const Gap(8),

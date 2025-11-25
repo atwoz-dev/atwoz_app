@@ -9,9 +9,7 @@ class TermsOfUsePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: "이용약관",
-      ),
+      appBar: const DefaultAppBar(title: "이용약관"),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -49,7 +47,5 @@ List<TextSpan> _parseTermsOfuse(String text) =>
           ),
         );
       }
-      return TextSpan(
-        text: '$lineContent\n',
-      );
+      return TextSpan(text: '$lineContent\n');
     }).toList();

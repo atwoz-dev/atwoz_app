@@ -20,7 +20,7 @@ final class ContactSettingNotifierProvider
         argument: null,
         retry: null,
         name: r'contactSettingProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -42,7 +42,7 @@ final class ContactSettingNotifierProvider
 }
 
 String _$contactSettingNotifierHash() =>
-    r'b3d31c3c40a1aa270dceb3275ade69cc428cc8d3';
+    r'e250e410b51b3fe18dae09b53c5ac46b86ba7c4c';
 
 abstract class _$ContactSettingNotifier extends $Notifier<ContactSettingState> {
   ContactSettingState build();

@@ -83,8 +83,9 @@ class _ListWheelInputState extends State<ListWheelInput> {
                     child: Text(
                       '$value${widget.unit}',
                       style: isHighlighted
-                          ? Fonts.header01(context.palette.onSurface)
-                              .copyWith(fontWeight: FontWeight.bold)
+                          ? Fonts.header01(
+                              context.palette.onSurface,
+                            ).copyWith(fontWeight: FontWeight.bold)
                           : Fonts.header03(Palette.colorGrey600),
                     ),
                   ),
@@ -102,10 +103,7 @@ class _ListWheelInputState extends State<ListWheelInput> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white.withAlpha(0),
-                  ],
+                  colors: [Colors.white, Colors.white.withAlpha(0)],
                 ),
               ),
             ),
@@ -119,10 +117,7 @@ class _ListWheelInputState extends State<ListWheelInput> {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white.withAlpha(0),
-                  ],
+                  colors: [Colors.white, Colors.white.withAlpha(0)],
                 ),
               ),
             ),

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ContactSettingState {
 
- ContactMethod? get method; String get phone; String get kakao;
+ ContactMethod? get method; String get phone; String? get kakao;
 /// Create a copy of ContactSettingState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ContactSettingStateCopyWith<$Res>  {
   factory $ContactSettingStateCopyWith(ContactSettingState value, $Res Function(ContactSettingState) _then) = _$ContactSettingStateCopyWithImpl;
 @useResult
 $Res call({
- ContactMethod? method, String phone, String kakao
+ ContactMethod? method, String phone, String? kakao
 });
 
 
@@ -62,12 +62,12 @@ class _$ContactSettingStateCopyWithImpl<$Res>
 
 /// Create a copy of ContactSettingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? method = freezed,Object? phone = null,Object? kakao = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? method = freezed,Object? phone = null,Object? kakao = freezed,}) {
   return _then(_self.copyWith(
 method: freezed == method ? _self.method : method // ignore: cast_nullable_to_non_nullable
 as ContactMethod?,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
-as String,kakao: null == kakao ? _self.kakao : kakao // ignore: cast_nullable_to_non_nullable
-as String,
+as String,kakao: freezed == kakao ? _self.kakao : kakao // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ContactMethod? method,  String phone,  String kakao)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ContactMethod? method,  String phone,  String? kakao)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ContactSettingState() when $default != null:
 return $default(_that.method,_that.phone,_that.kakao);case _:
@@ -173,7 +173,7 @@ return $default(_that.method,_that.phone,_that.kakao);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ContactMethod? method,  String phone,  String kakao)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ContactMethod? method,  String phone,  String? kakao)  $default,) {final _that = this;
 switch (_that) {
 case _ContactSettingState():
 return $default(_that.method,_that.phone,_that.kakao);case _:
@@ -193,7 +193,7 @@ return $default(_that.method,_that.phone,_that.kakao);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ContactMethod? method,  String phone,  String kakao)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ContactMethod? method,  String phone,  String? kakao)?  $default,) {final _that = this;
 switch (_that) {
 case _ContactSettingState() when $default != null:
 return $default(_that.method,_that.phone,_that.kakao);case _:
@@ -213,7 +213,7 @@ class _ContactSettingState extends ContactSettingState {
 
 @override final  ContactMethod? method;
 @override final  String phone;
-@override final  String kakao;
+@override final  String? kakao;
 
 /// Create a copy of ContactSettingState
 /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +245,7 @@ abstract mixin class _$ContactSettingStateCopyWith<$Res> implements $ContactSett
   factory _$ContactSettingStateCopyWith(_ContactSettingState value, $Res Function(_ContactSettingState) _then) = __$ContactSettingStateCopyWithImpl;
 @override @useResult
 $Res call({
- ContactMethod? method, String phone, String kakao
+ ContactMethod? method, String phone, String? kakao
 });
 
 
@@ -262,12 +262,12 @@ class __$ContactSettingStateCopyWithImpl<$Res>
 
 /// Create a copy of ContactSettingState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? method = freezed,Object? phone = null,Object? kakao = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? method = freezed,Object? phone = null,Object? kakao = freezed,}) {
   return _then(_ContactSettingState(
 method: freezed == method ? _self.method : method // ignore: cast_nullable_to_non_nullable
 as ContactMethod?,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
-as String,kakao: null == kakao ? _self.kakao : kakao // ignore: cast_nullable_to_non_nullable
-as String,
+as String,kakao: freezed == kakao ? _self.kakao : kakao // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

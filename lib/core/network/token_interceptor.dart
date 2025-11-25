@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
@@ -13,13 +14,17 @@ class TokenInterceptor extends Interceptor with LogMixin {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     if (options.headers.containsKey('requiresAccessToken')) {
       if (options.headers['requiresAccessToken'] == true) {
-        final String? token =
-            await ref.read(authUsecaseProvider).getAccessToken();
-        options.headers
-            .addAll(<String, Object?>{'Authorization': 'Bearer $token'});
+        final String? token = await ref
+            .read(authUsecaseProvider)
+            .getAccessToken();
+        options.headers.addAll(<String, Object?>{
+          'Authorization': 'Bearer $token',
+        });
       }
 
       options.headers.remove('requiresAccessToken');
@@ -29,21 +34,18 @@ class TokenInterceptor extends Interceptor with LogMixin {
 
   @override
   Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final AuthUseCase authService = ref.read(authUsecaseProvider);
     final router = ref.read(routerProvider);
-
-    /// TODO: access token / refresh token 인증 갱신 로직 추가 필요
-    if (err.response?.statusCode == 403) {
-      router.go('/'); // 홈 경로로 이동
-    }
 
     if (err.response?.statusCode == 401) {
       final authService = ref.read(authUsecaseProvider);
       final newToken = await authService.getAccessToken();
 
       authService.setAccessToken('');
-      router.go('/');
+      router.goNamed(AppRoute.onboard.name);
     }
 
     super.onError(err, handler);

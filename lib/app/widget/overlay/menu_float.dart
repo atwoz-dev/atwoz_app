@@ -44,17 +44,19 @@ class _MenuFloatState extends DefaultOverlayState<MenuFloat>
       padding: widget.padding,
       margin: widget.margin,
       clipBehavior: widget.clipBehavior,
-      decoration: widget.decoration ??
+      decoration:
+          widget.decoration ??
           BoxDecoration(
-              color: context.palette.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 3),
-                  blurRadius: 20,
-                  color: context.palette.onSurface.withOpacity(0.102),
-                )
-              ]),
+            color: context.palette.surface,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 3),
+                blurRadius: 20,
+                color: context.palette.onSurface.withOpacity(0.102),
+              ),
+            ],
+          ),
       child: widget.menuView,
     );
 
@@ -63,10 +65,7 @@ class _MenuFloatState extends DefaultOverlayState<MenuFloat>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: toggleMenu,
-      child: super.build(context),
-    );
+    return GestureDetector(onTap: toggleMenu, child: super.build(context));
   }
 
   void toggleMenu() {

@@ -85,10 +85,7 @@ Widget buildJobInput({
 class LocationInputWidget extends ConsumerStatefulWidget {
   final String? selectedLocation;
 
-  const LocationInputWidget({
-    super.key,
-    required this.selectedLocation,
-  });
+  const LocationInputWidget({super.key, required this.selectedLocation});
 
   @override
   ConsumerState<LocationInputWidget> createState() =>
@@ -144,15 +141,11 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xffEDEEF0),
-              ),
+              borderSide: const BorderSide(color: Color(0xffEDEEF0)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Palette.colorBlack,
-              ),
+              borderSide: const BorderSide(color: Palette.colorBlack),
             ),
           ),
         ),
@@ -162,14 +155,9 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
             onTap: () async =>
                 _controller.text = await signUpProcessNotifier.updateLocation(),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color(0xffDCDEE3),
-                ),
+                border: Border.all(color: const Color(0xffDCDEE3)),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
@@ -192,8 +180,9 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
                 return GestureDetector(
                   onTap: () {
                     _controller.text = location;
-                    signUpProcessNotifier
-                        .updateSelectedLocation(location); // 선택한 지역으로 설정
+                    signUpProcessNotifier.updateSelectedLocation(
+                      location,
+                    ); // 선택한 지역으로 설정
                     _filteredLocations.clear(); // 검색 후 결과 초기화
                     FocusScope.of(context).unfocus(); // 키보드 내리기
                   },
@@ -247,7 +236,7 @@ Widget buildMbtiInput({
 }) {
   final mbtiOptions = [
     ['E', 'N', 'F', 'P'],
-    ['I', 'S', 'T', 'J']
+    ['I', 'S', 'T', 'J'],
   ];
 
   Widget buildMbtiButton({
@@ -296,7 +285,8 @@ Widget buildMbtiInput({
             final row = index ~/ 4;
             final col = index % 4;
             final letter = mbtiOptions[row][col];
-            final isSelected = (letter == signUpState.selectedFirstMbtiLetter ||
+            final isSelected =
+                (letter == signUpState.selectedFirstMbtiLetter ||
                 letter == signUpState.selectedSecondMbtiLetter ||
                 letter == signUpState.selectedThirdMbtiLetter ||
                 letter == signUpState.selectedFourthMbtiLetter);
@@ -327,32 +317,29 @@ Widget buildMbtiInput({
 Widget buildSmokingInput({
   required SmokingStatus? selectedSmoking,
   required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedSmoking?.label,
-      values: SmokingStatus.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateSmoking,
-    );
+}) => buildSelectInput(
+  selectedValue: selectedSmoking?.label,
+  values: SmokingStatus.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateSmoking,
+);
 
 Widget buildDrinkingInput({
   required DrinkingStatus? selectedDrinking,
   required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedDrinking?.label,
-      values: DrinkingStatus.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateDrinking,
-    );
+}) => buildSelectInput(
+  selectedValue: selectedDrinking?.label,
+  values: DrinkingStatus.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateDrinking,
+);
 
 Widget buildReligionInput({
   required Religion? selectedReligion,
   required SignUpProcess signUpNotifier,
-}) =>
-    buildSelectInput(
-      selectedValue: selectedReligion?.label,
-      values: Religion.values.map((e) => e.label).toList(),
-      onValueChanged: signUpNotifier.updateReligion,
-    );
+}) => buildSelectInput(
+  selectedValue: selectedReligion?.label,
+  values: Religion.values.map((e) => e.label).toList(),
+  onValueChanged: signUpNotifier.updateReligion,
+);
 
 Widget buildHobbiesInput({
   required List<String> selectedHobbies,

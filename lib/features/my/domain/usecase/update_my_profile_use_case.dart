@@ -12,9 +12,8 @@ final updateMyProfileUseCaseProvider = Provider<UpdateMyProfileUseCase>(
 class UpdateMyProfileUseCase {
   final MyProfileRepository _myProfileRepository;
 
-  UpdateMyProfileUseCase({
-    required MyProfileRepository myProfileRepository,
-  }) : _myProfileRepository = myProfileRepository;
+  UpdateMyProfileUseCase({required MyProfileRepository myProfileRepository})
+    : _myProfileRepository = myProfileRepository;
 
   Future<bool> updateProfile(MyProfile profile) async {
     return await _myProfileRepository.updateProfile(

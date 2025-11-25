@@ -11,8 +11,10 @@ class HomeBannerArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDatingExamSubmitted =
-        ref.watch(globalProvider).profile.isDatingExamSubmitted;
+    final isDatingExamSubmitted = ref
+        .watch(globalProvider)
+        .profile
+        .isDatingExamSubmitted;
 
     return GestureDetector(
       onTap: () {

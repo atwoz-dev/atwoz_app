@@ -7,26 +7,19 @@ import 'package:atwoz_app/features/my/my.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-final TextStyle _defaultHintStyle =
-    Fonts.body02Medium().copyWith(color: const Color(0xffB4B8C0));
+final TextStyle _defaultHintStyle = Fonts.body02Medium().copyWith(
+  color: const Color(0xffB4B8C0),
+);
 
-final TextStyle _blackHintStyle =
-    Fonts.body02Medium().copyWith(color: Palette.colorBlack);
+final TextStyle _blackHintStyle = Fonts.body02Medium().copyWith(
+  color: Palette.colorBlack,
+);
 
-final List<String> _labels = [
-  '닉네임',
-  '나이',
-  '키',
-  '성별',
-  '연락처',
-];
+final List<String> _labels = ['닉네임', '나이', '키', '성별', '연락처'];
 
 class ProfileManageBasicInfoArea extends StatelessWidget {
   final MyProfile profile;
-  const ProfileManageBasicInfoArea({
-    super.key,
-    required this.profile,
-  });
+  const ProfileManageBasicInfoArea({super.key, required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +31,7 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
         children: [
           Text(
             "기본 정보",
-            style: Fonts.header03().copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            style: Fonts.header03().copyWith(fontWeight: FontWeight.w600),
           ),
           Column(
             children: _labels.map((label) {
@@ -59,10 +50,13 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         if (label == '닉네임') {
-                          navigate(context,
-                              route: AppRoute.profileUpdate,
-                              extra: const MyProfileUpdateArguments(
-                                  profileType: '닉네임'));
+                          navigate(
+                            context,
+                            route: AppRoute.profileUpdate,
+                            extra: const MyProfileUpdateArguments(
+                              profileType: '닉네임',
+                            ),
+                          );
                         } else if (label == '연락처') {
                           navigate(context, route: AppRoute.contactSetting);
                         }
@@ -78,7 +72,7 @@ class ProfileManageBasicInfoArea extends StatelessWidget {
                     ),
                     context: context,
                   ),
-                  const Gap(24)
+                  const Gap(24),
                 ],
               );
             }).toList(),

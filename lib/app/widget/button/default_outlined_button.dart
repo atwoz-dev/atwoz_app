@@ -63,10 +63,7 @@ class DefaultOutlinedButton extends StatelessWidget {
         ),
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         textStyle: textStyle ?? Fonts.body01Medium(),
-        minimumSize: Size(
-          expandedWidth ? double.infinity : width,
-          height,
-        ),
+        minimumSize: Size(expandedWidth ? double.infinity : width, height),
         alignment: alignment,
       ),
       onPressed: isLoading ? null : onPressed,
@@ -80,8 +77,9 @@ class DefaultOutlinedButton extends StatelessWidget {
             ? SizedBox(
                 height: height - padding.vertical,
                 child: FittedBox(
-                  child:
-                      DefaultCircularProgressIndicator(color: foregroundColor),
+                  child: DefaultCircularProgressIndicator(
+                    color: foregroundColor,
+                  ),
                 ),
               )
             : child,

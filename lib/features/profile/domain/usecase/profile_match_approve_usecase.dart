@@ -6,10 +6,7 @@ class ProfileMatchApproveUseCase {
 
   const ProfileMatchApproveUseCase(this.ref);
 
-  Future<void> call({
-    required int matchId,
-    required String message,
-  }) async {
+  Future<void> call({required int matchId, required String message}) async {
     await ref.read(matchRepositoryProvider).approveMatch(matchId, message);
   }
 }

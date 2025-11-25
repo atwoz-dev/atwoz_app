@@ -15,127 +15,125 @@ class Fonts {
 
   /// Title
   static TextStyle title([Color? color]) => TextStyle(
-        fontFamily: fontPretendardBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 32.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 32.sp,
+    height: 1.h,
+  );
 
   /// Header
   static TextStyle header01([Color? color]) => TextStyle(
-        fontFamily: fontPretendardBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 24.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 24.sp,
+    height: 1.h,
+  );
 
   static TextStyle header02([Color? color]) => TextStyle(
-        fontFamily: fontPretendardSemiBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 20.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardSemiBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 20.sp,
+    height: 1.h,
+  );
 
   static TextStyle header03([Color? color]) => TextStyle(
-        fontFamily: fontPretendardSemiBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 18.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardSemiBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 18.sp,
+    height: 1.h,
+  );
 
   /// Body
   static TextStyle body01Medium([Color? color]) => TextStyle(
-        fontFamily: fontPretendardMedium,
-        color: color ?? Palette.colorBlack,
-        fontSize: 16.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardMedium,
+    color: color ?? Palette.colorBlack,
+    fontSize: 16.sp,
+    height: 1.h,
+  );
 
   static TextStyle body01Regular([Color? color]) => TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 16.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 16.sp,
+    height: 1.h,
+  );
 
   static TextStyle body01Link([
     Color? color,
     Color underLineColor = Palette.colorBlack,
     double underLineThickness = 1.0,
-  ]) =>
-      TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 16.sp,
-        height: 1.h,
-        decoration: TextDecoration.underline,
-        decorationColor: underLineColor,
-        decorationThickness: underLineThickness,
-      );
+  ]) => TextStyle(
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 16.sp,
+    height: 1.h,
+    decoration: TextDecoration.underline,
+    decorationColor: underLineColor,
+    decorationThickness: underLineThickness,
+  );
 
   static TextStyle body02Link([
     Color? color,
     Color underLineColor = Palette.colorBlack,
     double underLineThickness = 1.0,
-  ]) =>
-      TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 14.sp,
-        height: 1.h,
-        decoration: TextDecoration.underline,
-        decorationColor: underLineColor,
-        decorationThickness: underLineThickness,
-      );
+  ]) => TextStyle(
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 14.sp,
+    height: 1.h,
+    decoration: TextDecoration.underline,
+    decorationColor: underLineColor,
+    decorationThickness: underLineThickness,
+  );
 
   static TextStyle body02Medium([Color? color]) => TextStyle(
-        fontFamily: fontPretendardMedium,
-        color: color ?? Palette.colorBlack,
-        fontSize: 14.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardMedium,
+    color: color ?? Palette.colorBlack,
+    fontSize: 14.sp,
+    height: 1.h,
+  );
 
   static TextStyle body02Regular([Color? color]) => TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 14.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 14.sp,
+    height: 1.h,
+  );
 
   static TextStyle body03Regular([Color? color]) => TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 12.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 12.sp,
+    height: 1.h,
+  );
 
   /// Button
   static TextStyle button14([Color? color]) => TextStyle(
-        fontFamily: fontPretendardRegular,
-        color: color ?? Palette.colorBlack,
-        fontSize: 14.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: 14.sp,
+    height: 1.h,
+  );
 
   static TextStyle button16([Color? color]) => TextStyle(
-        fontFamily: fontPretendardBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 16.sp,
-        height: 1.h,
-      );
+    fontFamily: fontPretendardBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 16.sp,
+    height: 1.h,
+  );
 
   // Numeric
   static TextStyle numeric01Bold([Color? color]) => TextStyle(
-        fontFamily: fontMontserratBold,
-        color: color ?? Palette.colorBlack,
-        fontSize: 20.sp,
-        height: 1.h,
-      );
+    fontFamily: fontMontserratBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: 20.sp,
+    height: 1.h,
+  );
 
   static TextStyle numeric01Medium([Color? color]) => TextStyle(
-        fontFamily: fontMontserratMedium,
-        color: color ?? Palette.colorGrey500,
-        fontSize: 14.sp,
-        height: 1.h,
-      );
+    fontFamily: fontMontserratMedium,
+    color: color ?? Palette.colorGrey500,
+    fontSize: 14.sp,
+    height: 1.h,
+  );
 }

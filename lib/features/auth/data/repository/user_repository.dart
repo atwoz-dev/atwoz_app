@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository {
       '$path/login',
       data: {
         "phoneNumber": data.phoneNumber.removePhoneFormat,
-        "code": data.code
+        "code": data.code,
       },
       requiresAccessToken: false,
     );
@@ -36,18 +36,13 @@ class UserRepository extends BaseRepository {
   }
 
   // 로그아웃
-  Future<void> signOut() => apiService.getJson(
-        '$path/logout',
-        requiresRefreshCookie: true,
-      );
+  Future<void> signOut() =>
+      apiService.getJson('$path/logout', requiresRefreshCookie: true);
 
   // 프로필 업데이트
   Future<void> updateProfile(ProfileUploadRequest requestData) async {
     try {
-      await apiService.putJson(
-        '$path/profile',
-        data: requestData.toJson(),
-      );
+      await apiService.putJson('$path/profile', data: requestData.toJson());
 
       Log.d("프로필 업데이트 성공");
     } catch (e, st) {
@@ -56,31 +51,26 @@ class UserRepository extends BaseRepository {
     }
   }
 
+  // 재심사 요청
+  Future<void> rescreenProfile() => apiService.postJson(
+    '/members/screenings/rescreen',
+    data: null,
+    requiresRefreshCookie: true,
+  );
+
   // 인증코드 발송
-  Future<void> sendVerificationCode({
-    required String phoneNumber,
-  }) async {
+  Future<void> sendVerificationCode({required String phoneNumber}) async {
     await apiService.getJson(
       '$path/code?phoneNumber=${phoneNumber.removePhoneFormat}',
       requiresAccessToken: false,
     );
-    //TODO(mh): 테스트 완료 시 변경
-    // await apiService.postJson(
-    //   '$path/code',
-    //   data: {
-    //     'phoneNumber': phoneNumber.removePhoneFormat,
-    //   },
-    //   requiresAccessToken: false,
-    // );
   }
 
   // 휴면 계정 활성화
   Future<void> activateAccount(String phoneNumber) async {
     await apiService.postJson(
-      '/profile/active',
-      data: {
-        'phoneNumber': phoneNumber,
-      },
+      '$path/profile/active',
+      data: {'phoneNumber': phoneNumber.removePhoneFormat},
       requiresAccessToken: false,
     );
   }

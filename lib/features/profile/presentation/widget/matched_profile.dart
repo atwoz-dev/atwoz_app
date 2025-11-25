@@ -28,17 +28,11 @@ class MatchedProfile extends ConsumerWidget {
         onTapInfo: () => navigate(
           context,
           route: AppRoute.report,
-          extra: ReportArguments(
-            name: profile.name,
-            userId: userId,
-          ),
+          extra: ReportArguments(name: profile.name, userId: userId),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          vertical: 24.0,
-          horizontal: 16.0,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 16.0,
@@ -74,15 +68,10 @@ class _GuideMessage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8.0,
       children: [
-        Text(
-          '$otherUserName님과 매칭이 완료되었어요.',
-          style: Fonts.header02(),
-        ),
+        Text('$otherUserName님과 매칭이 완료되었어요.', style: Fonts.header02()),
         Text(
           '호감이 높아질 수 있도록 연락을 해볼까요?',
-          style: Fonts.body02Medium(
-            context.colorScheme.tertiary,
-          ),
+          style: Fonts.body02Medium(context.colorScheme.tertiary),
         ),
       ],
     );
@@ -101,10 +90,7 @@ class _ProfilePageMoveButton extends StatelessWidget {
         context,
         route: AppRoute.profile,
         method: NavigationMethod.pushReplacement,
-        extra: ProfileDetailArguments(
-          userId: userId,
-          fromMatchedProfile: true,
-        ),
+        extra: ProfileDetailArguments(userId: userId, fromMatchedProfile: true),
       ),
       padding: const EdgeInsets.symmetric(vertical: 11.5),
       child: const Text('프로필 보러가기'),
@@ -133,18 +119,9 @@ class _MatchedInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: 24.0,
         children: [
-          _InformationBox(
-            title: contactMethod.label,
-            content: contactInfo,
-          ),
-          _InformationBox(
-            title: '받은 메시지',
-            content: receivedMessage,
-          ),
-          _InformationBox(
-            title: '보낸 메시지',
-            content: sentMessage,
-          ),
+          _InformationBox(title: contactMethod.label, content: contactInfo),
+          _InformationBox(title: '받은 메시지', content: receivedMessage),
+          _InformationBox(title: '보낸 메시지', content: sentMessage),
         ],
       ),
     );
@@ -152,10 +129,7 @@ class _MatchedInformation extends StatelessWidget {
 }
 
 class _InformationBox extends StatelessWidget {
-  const _InformationBox({
-    required this.title,
-    required this.content,
-  });
+  const _InformationBox({required this.title, required this.content});
 
   final String title;
   final String content;

@@ -69,4 +69,7 @@ class Dimens {
 
   // 이상형 설정 최대 나이 수
   static const int maxSelectableAge = 46;
+
+  // 메시지 전송에 필요한 하트 수
+  static const int messageSendHeartCount = 20;
 }

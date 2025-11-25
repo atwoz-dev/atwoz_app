@@ -23,7 +23,7 @@ class MyBlockFriendPage extends StatelessWidget {
                 color: Palette.colorBlack,
               ),
             ),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -31,16 +31,10 @@ class MyBlockFriendPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
               decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(
-                    color: Palette.colorGrey50,
-                    width: 1,
-                  ),
+                  bottom: BorderSide(color: Palette.colorGrey50, width: 1),
                 ),
               ),
               child: Row(
@@ -69,7 +63,7 @@ class MyBlockFriendPage extends StatelessWidget {
                         color: const Color(0xff222529),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -109,14 +103,11 @@ class MyBlockFriendPage extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 color: const Color(0xff9F9F9F),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         const Spacer(),
-                        const DefaultIcon(
-                          IconPath.checkFillGray,
-                          size: 24,
-                        )
+                        const DefaultIcon(IconPath.checkFillGray, size: 24),
                       ],
                     ),
                   );

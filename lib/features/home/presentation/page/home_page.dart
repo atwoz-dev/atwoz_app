@@ -26,14 +26,27 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
 
   @override
   void initState() {
-    ref.read(globalProvider.notifier).initProfile();
     super.initState();
+    ref.read(globalProvider.notifier).initProfile();
+    ref.read(globalProvider.notifier).fetchHeartBalance();
   }
 
   @override
   Widget buildPage(BuildContext context) {
     final homeStateAsync = ref.watch(homeProvider);
     final homeNotifier = ref.read(homeProvider.notifier);
+
+    ref.listen<AsyncValue<HomeState>>(homeProvider, (prev, next) {
+      final previous = prev?.value;
+      final current = next.value;
+
+      if (previous?.hasProcessedMission == false &&
+          current?.hasProcessedMission == true) {
+        showToastMessage('좋아요 보내기 미션 완료! 하트 2개를 받았어요');
+
+        ref.read(homeProvider.notifier).resetHasProcessedMission();
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -51,10 +64,10 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                     HomeCategoryButtonsArea(
                       // 카테고리 버튼 영역
                       onTapButton: (category) async {
-                        final hasProfiles =
-                            await homeNotifier.checkIntroducedProfiles(
-                          IntroducedCategory.parse(category),
-                        );
+                        final hasProfiles = await homeNotifier
+                            .checkIntroducedProfiles(
+                              IntroducedCategory.parse(category),
+                            );
                         if (!hasProfiles) {
                           showToastMessage(
                             '조건에 맞는 이성을 찾지 못했어요',
@@ -74,7 +87,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
                       },
                     ),
                     const Gap(24),
-                    HomeBannerArea()
+                    const HomeBannerArea(),
                   ],
                 ),
               ),
@@ -88,9 +101,7 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
             ],
           ),
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ),
       ),
     );

@@ -10,10 +10,11 @@ abstract class AuthUseCase {
   Future<String?> getAccessToken();
   void setAccessToken(String accessToken);
   Future<String?> getRefreshToken();
+  Future<void> rescreenProfile();
   Future<void> uploadProfilePhotos(List<XFile?> photos);
   Future<void> deleteProfilePhoto(int index);
   Future<void> uploadProfile(ProfileUploadRequest profileData);
   Future<ProfileImageResponse?> fetchProfileImages();
   Future<void> sendSmsVerificationCode(String phoneNumber);
-  Future<bool> activateAccount(String phoneNumber);
+  Future<void> activateAccount(String phoneNumber);
 }

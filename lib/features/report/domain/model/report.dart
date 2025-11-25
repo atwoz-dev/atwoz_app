@@ -13,9 +13,6 @@ abstract class Report with _$Report {
     required String content,
   }) = _Report;
 
-  factory Report.initialize(int userId) => Report(
-        reporteeId: userId,
-        reason: null,
-        content: '',
-      );
+  factory Report.initialize(int userId) =>
+      Report(reporteeId: userId, reason: null, content: '');
 }

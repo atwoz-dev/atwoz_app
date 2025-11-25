@@ -3,9 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'interview_state.freezed.dart';
 
-enum InterviewListErrorType {
-  network,
-}
+enum InterviewListErrorType { network }
 
 @freezed
 abstract class InterviewState with _$InterviewState {

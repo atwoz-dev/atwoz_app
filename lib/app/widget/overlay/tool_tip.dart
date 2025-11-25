@@ -16,13 +16,14 @@ class ToolTip extends DefaultOverlay {
     this.textStyle,
     Widget? child,
   }) : super(
-          child: child ??
-              DefaultIcon(
-                IconPath.help,
-                colorFilter: ColorFilter.mode(fillColor, BlendMode.srcIn),
-                size: 20,
-              ),
-        );
+         child:
+             child ??
+             DefaultIcon(
+               IconPath.help,
+               colorFilter: ColorFilter.mode(fillColor, BlendMode.srcIn),
+               size: 20,
+             ),
+       );
 
   final bool autoClose;
   final String message;
@@ -43,13 +44,14 @@ class _ToolTipState extends DefaultOverlayState<ToolTip>
   @override
   Widget buildOverlay(BuildContext context, Offset target, Widget? overlay) {
     overlay = bubbleWidget(
-        comment: widget.message,
-        boldText: widget.boldText,
-        trianglePosition: BubblePosition.top, // 삼각형이 위로 향하도록 수정
-        textColor: Palette.colorWhite,
-        bubbleColor: Palette.colorBlack.withAlpha(180),
-        isShadow: false,
-        textStyle: widget.textStyle);
+      comment: widget.message,
+      boldText: widget.boldText,
+      trianglePosition: BubblePosition.top, // 삼각형이 위로 향하도록 수정
+      textColor: Palette.colorWhite,
+      bubbleColor: Palette.colorBlack.withAlpha(180),
+      isShadow: false,
+      textStyle: widget.textStyle,
+    );
 
     return super.buildOverlay(context, target, overlay);
   }

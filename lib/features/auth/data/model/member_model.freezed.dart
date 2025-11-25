@@ -799,8 +799,8 @@ return $default(_that.purchaseHeartBalance,_that.missionHeartBalance,_that.total
 /// @nodoc
 @JsonSerializable()
 
-class _HeartBalance implements HeartBalance {
-  const _HeartBalance({required this.purchaseHeartBalance, required this.missionHeartBalance, required this.totalHeartBalance});
+class _HeartBalance extends HeartBalance {
+  const _HeartBalance({required this.purchaseHeartBalance, required this.missionHeartBalance, required this.totalHeartBalance}): super._();
   factory _HeartBalance.fromJson(Map<String, dynamic> json) => _$HeartBalanceFromJson(json);
 
 @override final  int purchaseHeartBalance;

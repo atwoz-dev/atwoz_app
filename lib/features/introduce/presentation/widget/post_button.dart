@@ -12,20 +12,19 @@ class PostButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        bottom: 24.h,
-        right: 20.w,
-        child: GestureDetector(
-          onTap: onTap,
-          child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Palette.colorPrimary500,
-                shape: BoxShape.circle,
-              ),
-              child: DefaultIcon(
-                IconPath.post,
-                size: 24,
-              )),
-        ));
+      bottom: 24.h,
+      right: 20.w,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Palette.colorPrimary500,
+            shape: BoxShape.circle,
+          ),
+          child: DefaultIcon(IconPath.post, size: 24),
+        ),
+      ),
+    );
   }
 }

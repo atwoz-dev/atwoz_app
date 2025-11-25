@@ -18,8 +18,7 @@ class SaveIntroducedProfilesUseCase {
 
   Future<List<IntroducedProfile>> execute(IntroducedCategory category) async {
     try {
-      final Box<Map> box =
-          await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+      final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
 
       final categoryKey = category.name;
 
@@ -51,8 +50,15 @@ class SaveIntroducedProfilesUseCase {
       return null;
     }
 
+    final List<IntroducedProfileDto> profileDtos;
+    try {
+      profileDtos = profiles.cast<IntroducedProfileDto>().toList();
+    } catch (e) {
+      Log.e('Hive 캐시 리스트 요소 타입 불일치: $e');
+      return null;
+    }
+
     if (DateTime.now().isBefore(expiresAt)) {
-      final profileDtos = data['profiles'];
       return convertToIntroducedProfiles(profileDtos);
     }
 
@@ -61,7 +67,8 @@ class SaveIntroducedProfilesUseCase {
 
   /// 서버에서 IntroducedProfileDto 리스트 불러오기
   Future<List<IntroducedProfileDto>> _fetchProfilesFromServer(
-      String key) async {
+    String key,
+  ) async {
     return await _ref
         .read(introducedProfileRepositoryProvider)
         .getProfiles(key);
@@ -69,7 +76,10 @@ class SaveIntroducedProfilesUseCase {
 
   /// IntroducedProfileDto 리스트를 캐시에 저장
   Future<void> _saveProfilesToCache(
-      Box box, String key, List<IntroducedProfileDto> dtos) async {
+    Box box,
+    String key,
+    List<IntroducedProfileDto> dtos,
+  ) async {
     await box.put(key, {
       'profiles': dtos,
       'expiresAt': DateTime.now().add(const Duration(hours: 1)),
@@ -79,26 +89,26 @@ class SaveIntroducedProfilesUseCase {
 
 /// Dto -> 도메인 객체로 변환 + 해시태그 필터/정렬
 List<IntroducedProfile> convertToIntroducedProfiles(
-    List<IntroducedProfileDto> profileDtos) {
-  return profileDtos.map(
-    (profile) {
-      final hobbyLabels =
-          profile.hobbies.map((e) => Hobby.parse(e)); // 취미 해시태크 리스트
-      final mbtiLabel = profile.mbti; // MBTI 해시태그
-      final religionLabel = profile.religion != null
-          ? Religion.parse(profile.religion)
-          : null; // 종교 해시태그(존재하는 경우에만)
+  List<IntroducedProfileDto> profileDtos,
+) {
+  return profileDtos.map((profile) {
+    final hobbyLabels = profile.hobbies.map(
+      (e) => Hobby.parse(e),
+    ); // 취미 해시태크 리스트
+    final mbtiLabel = profile.mbti; // MBTI 해시태그
+    final religionLabel = profile.religion != null
+        ? Religion.parse(profile.religion)
+        : null; // 종교 해시태그(존재하는 경우에만)
 
-      final tags = [hobbyLabels, mbtiLabel, religionLabel]
-          .whereType<String>()
-          .toList(); // null 제거
+    final tags = [
+      hobbyLabels,
+      mbtiLabel,
+      religionLabel,
+    ].whereType<String>().toList(); // null 제거
 
-      final sortedTags = tags
-        ..sort(
-          (a, b) => a.length.compareTo(b.length),
-        ); // 텍스트 길이순 오름차순
+    final sortedTags = tags
+      ..sort((a, b) => a.length.compareTo(b.length)); // 텍스트 길이순 오름차순
 
-      return profile.toIntroducedProfile(sortedTags); // dto -> 모델 변환
-    },
-  ).toList();
+    return profile.toIntroducedProfile(sortedTags); // dto -> 모델 변환
+  }).toList();
 }

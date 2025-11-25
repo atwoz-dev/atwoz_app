@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 
 class InterviewAnswerTagWidget extends StatelessWidget {
-  const InterviewAnswerTagWidget(
-    this.isAnswered, {
-    super.key,
-  });
+  const InterviewAnswerTagWidget(this.isAnswered, {super.key});
   final bool isAnswered;
 
   @override

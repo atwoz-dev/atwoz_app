@@ -23,8 +23,8 @@ class DefaultVerticalDivider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-        height: size,
-        child:
-            VerticalDivider(width: 1, color: color ?? context.palette.shadow));
+      height: size,
+      child: VerticalDivider(width: 1, color: color ?? context.palette.shadow),
+    );
   }
 }

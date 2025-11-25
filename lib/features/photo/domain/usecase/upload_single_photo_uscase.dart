@@ -14,5 +14,6 @@ class UploadSinglePhotoUseCase extends BaseUseCase<void, (int, XFile)> {
   }
 }
 
-final uploadSinglePhotoUsecaseProvider =
-    Provider((ref) => UploadSinglePhotoUseCase(ref));
+final uploadSinglePhotoUsecaseProvider = Provider(
+  (ref) => UploadSinglePhotoUseCase(ref),
+);

@@ -305,7 +305,7 @@ $UserDataCopyWith<$Res> get data {
 /// @nodoc
 mixin _$UserData {
 
-@HiveField(0) String get accessToken;@HiveField(1) bool get isProfileSettingNeeded;
+@HiveField(0) String get accessToken;@HiveField(1) bool get isProfileSettingNeeded;@HiveField(2) String get activityStatus;
 /// Create a copy of UserData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,16 +318,16 @@ $UserDataCopyWith<UserData> get copyWith => _$UserDataCopyWithImpl<UserData>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.isProfileSettingNeeded, isProfileSettingNeeded) || other.isProfileSettingNeeded == isProfileSettingNeeded));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.isProfileSettingNeeded, isProfileSettingNeeded) || other.isProfileSettingNeeded == isProfileSettingNeeded)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accessToken,isProfileSettingNeeded);
+int get hashCode => Object.hash(runtimeType,accessToken,isProfileSettingNeeded,activityStatus);
 
 @override
 String toString() {
-  return 'UserData(accessToken: $accessToken, isProfileSettingNeeded: $isProfileSettingNeeded)';
+  return 'UserData(accessToken: $accessToken, isProfileSettingNeeded: $isProfileSettingNeeded, activityStatus: $activityStatus)';
 }
 
 
@@ -338,7 +338,7 @@ abstract mixin class $UserDataCopyWith<$Res>  {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) _then) = _$UserDataCopyWithImpl;
 @useResult
 $Res call({
-@HiveField(0) String accessToken,@HiveField(1) bool isProfileSettingNeeded
+@HiveField(0) String accessToken,@HiveField(1) bool isProfileSettingNeeded,@HiveField(2) String activityStatus
 });
 
 
@@ -355,11 +355,12 @@ class _$UserDataCopyWithImpl<$Res>
 
 /// Create a copy of UserData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? isProfileSettingNeeded = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? isProfileSettingNeeded = null,Object? activityStatus = null,}) {
   return _then(_self.copyWith(
 accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,isProfileSettingNeeded: null == isProfileSettingNeeded ? _self.isProfileSettingNeeded : isProfileSettingNeeded // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -444,10 +445,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded, @HiveField(2)  String activityStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserData() when $default != null:
-return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
+return $default(_that.accessToken,_that.isProfileSettingNeeded,_that.activityStatus);case _:
   return orElse();
 
 }
@@ -465,10 +466,10 @@ return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded, @HiveField(2)  String activityStatus)  $default,) {final _that = this;
 switch (_that) {
 case _UserData():
-return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
+return $default(_that.accessToken,_that.isProfileSettingNeeded,_that.activityStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -485,10 +486,10 @@ return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@HiveField(0)  String accessToken, @HiveField(1)  bool isProfileSettingNeeded, @HiveField(2)  String activityStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _UserData() when $default != null:
-return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
+return $default(_that.accessToken,_that.isProfileSettingNeeded,_that.activityStatus);case _:
   return null;
 
 }
@@ -500,11 +501,12 @@ return $default(_that.accessToken,_that.isProfileSettingNeeded);case _:
 @JsonSerializable()
 
 class _UserData implements UserData {
-  const _UserData({@HiveField(0) required this.accessToken, @HiveField(1) required this.isProfileSettingNeeded});
+  const _UserData({@HiveField(0) required this.accessToken, @HiveField(1) required this.isProfileSettingNeeded, @HiveField(2) required this.activityStatus});
   factory _UserData.fromJson(Map<String, dynamic> json) => _$UserDataFromJson(json);
 
 @override@HiveField(0) final  String accessToken;
 @override@HiveField(1) final  bool isProfileSettingNeeded;
+@override@HiveField(2) final  String activityStatus;
 
 /// Create a copy of UserData
 /// with the given fields replaced by the non-null parameter values.
@@ -519,16 +521,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.isProfileSettingNeeded, isProfileSettingNeeded) || other.isProfileSettingNeeded == isProfileSettingNeeded));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.isProfileSettingNeeded, isProfileSettingNeeded) || other.isProfileSettingNeeded == isProfileSettingNeeded)&&(identical(other.activityStatus, activityStatus) || other.activityStatus == activityStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accessToken,isProfileSettingNeeded);
+int get hashCode => Object.hash(runtimeType,accessToken,isProfileSettingNeeded,activityStatus);
 
 @override
 String toString() {
-  return 'UserData(accessToken: $accessToken, isProfileSettingNeeded: $isProfileSettingNeeded)';
+  return 'UserData(accessToken: $accessToken, isProfileSettingNeeded: $isProfileSettingNeeded, activityStatus: $activityStatus)';
 }
 
 
@@ -539,7 +541,7 @@ abstract mixin class _$UserDataCopyWith<$Res> implements $UserDataCopyWith<$Res>
   factory _$UserDataCopyWith(_UserData value, $Res Function(_UserData) _then) = __$UserDataCopyWithImpl;
 @override @useResult
 $Res call({
-@HiveField(0) String accessToken,@HiveField(1) bool isProfileSettingNeeded
+@HiveField(0) String accessToken,@HiveField(1) bool isProfileSettingNeeded,@HiveField(2) String activityStatus
 });
 
 
@@ -556,11 +558,12 @@ class __$UserDataCopyWithImpl<$Res>
 
 /// Create a copy of UserData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? isProfileSettingNeeded = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? isProfileSettingNeeded = null,Object? activityStatus = null,}) {
   return _then(_UserData(
 accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,isProfileSettingNeeded: null == isProfileSettingNeeded ? _self.isProfileSettingNeeded : isProfileSettingNeeded // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,activityStatus: null == activityStatus ? _self.activityStatus : activityStatus // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
