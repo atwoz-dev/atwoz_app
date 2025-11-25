@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../page/customer_center_page.dart' show Message;
 import 'package:gap/gap.dart';
 
+typedef OptionSelectCallback = void Function(String option, {required bool isInitialSelection});
 
 const _userColor = Color(0xFF7A41FF);
 const _botColor = Colors.white;
@@ -45,7 +46,7 @@ class BotMessageBubble extends StatelessWidget {
   final Message message;
   final List<String> options;
   final bool isInitialOptions;
-  final Function(String, {required bool isInitialSelection}) onOptionSelected;
+  final OptionSelectCallback onOptionSelected;
 
   const BotMessageBubble({
     super.key,
@@ -122,7 +123,7 @@ class BotMessageBubble extends StatelessWidget {
 class _OptionSelectBubble extends StatelessWidget {
   final List<String> options;
   final bool isInitialOptions;
-  final Function(String, {required bool isInitialSelection}) onOptionSelected;
+  final OptionSelectedCallback onOptionSelected;
   final double messageWidth;
 
   const _OptionSelectBubble({
