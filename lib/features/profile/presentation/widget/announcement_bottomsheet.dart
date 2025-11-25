@@ -34,10 +34,7 @@ class AnnouncementBottomSheet extends StatelessWidget {
       type: MaterialType.canvas,
       color: context.colorScheme.surface,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 32.0,
-          horizontal: 16.0,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,20 +75,19 @@ class AnnouncementBottomSheet extends StatelessWidget {
     required String content,
     required String submitLabel,
     required VoidCallback onSubmit,
-  }) =>
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        builder: (context) => AnnouncementBottomSheet(
-          title: title,
-          subTitle: subTitle,
-          content: content,
-          submitLabel: submitLabel,
-          onSubmit: onSubmit,
-        ),
-      );
+  }) => showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    useSafeArea: true,
+    builder: (context) => AnnouncementBottomSheet(
+      title: title,
+      subTitle: subTitle,
+      content: content,
+      submitLabel: submitLabel,
+      onSubmit: onSubmit,
+    ),
+  );
 
   static Future<void> open(
     BuildContext context, {
@@ -102,22 +98,21 @@ class AnnouncementBottomSheet extends StatelessWidget {
     required VoidCallback onSubmit,
     required String cancelLabel,
     required VoidCallback onCancel,
-  }) =>
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        builder: (context) => AnnouncementBottomSheet(
-          title: title,
-          subTitle: subTitle,
-          content: content,
-          submitLabel: submitLabel,
-          onSubmit: onSubmit,
-          cancelLabel: cancelLabel,
-          onCancel: onCancel,
-        ),
-      );
+  }) => showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    useSafeArea: true,
+    builder: (context) => AnnouncementBottomSheet(
+      title: title,
+      subTitle: subTitle,
+      content: content,
+      submitLabel: submitLabel,
+      onSubmit: onSubmit,
+      cancelLabel: cancelLabel,
+      onCancel: onCancel,
+    ),
+  );
 }
 
 class _BottomSheetHeader extends StatelessWidget {

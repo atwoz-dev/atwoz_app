@@ -3,5 +3,5 @@ enum AuthStatus {
   dormant, // 휴면
   forbidden, // 영구정지
   temporarilyForbidden, // 일시정지
-  deletedUser // 삭제된 회원
+  deletedUser, // 삭제된 회원
 }

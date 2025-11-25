@@ -37,6 +37,7 @@ import 'package:atwoz_app/features/profile/profile_design_inspection.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
+import 'package:atwoz_app/features/my/presentation/page/customer_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
@@ -410,7 +411,7 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.customerCenter.name,
-        builder: (context, state) => const SignUpProfileUpdatePage(),
+        builder: (context, state) => const CustomerCenterPage(), // 수정 완료
       ),
       NamedGoRoute(
         name: AppRoute.setting.name,

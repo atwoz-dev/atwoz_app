@@ -22,8 +22,8 @@ class SignUpProfileUpdatePageState
   SignUpProfileUpdatePageState()
     : super(
         defaultAppBarTitle: '프로필 정보',
-        defaultAppBarLeadingAction:
-            (context) => navigate(context, route: AppRoute.signUp),
+        defaultAppBarLeadingAction: (context) =>
+            navigate(context, route: AppRoute.signUp),
       );
 
   Widget buildDefaultTextFormFieldRow({
@@ -84,18 +84,18 @@ class SignUpProfileUpdatePageState
                 buildDefaultTextFormFieldRow(
                   label: '나이',
                   hintText: '나이를 선택해주세요.',
-                  initialValue:
-                      signUpState.age != null ? '${signUpState.age}살' : null,
+                  initialValue: signUpState.age != null
+                      ? '${signUpState.age}살'
+                      : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 1,
                 ),
                 buildDefaultTextFormFieldRow(
                   label: '키',
                   hintText: '키를 선택해주세요.',
-                  initialValue:
-                      signUpState.selectedHeight != null
-                          ? '${signUpState.selectedHeight}cm'
-                          : null,
+                  initialValue: signUpState.selectedHeight != null
+                      ? '${signUpState.selectedHeight}cm'
+                      : null,
                   route: AppRoute.signUpProfileChoice,
                   step: 2,
                 ),
@@ -164,12 +164,11 @@ class SignUpProfileUpdatePageState
         Padding(
           padding: EdgeInsets.only(bottom: screenHeight * 0.05),
           child: DefaultElevatedButton(
-            onPressed:
-                isButtonEnabled
-                    ? () {
-                      navigate(context, route: AppRoute.signUpProfilePicture);
-                    }
-                    : null,
+            onPressed: isButtonEnabled
+                ? () {
+                    navigate(context, route: AppRoute.signUpProfilePicture);
+                  }
+                : null,
             child: Text(
               isButtonEnabled ? '완료' : '다음',
               style: Fonts.body01Medium(

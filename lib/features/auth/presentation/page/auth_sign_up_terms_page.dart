@@ -100,10 +100,7 @@ class AuthSignUpTermsPageState
                       if (!context.mounted) return;
 
                       // 심사대기 화면으로 이동
-                      navigate(
-                        context,
-                        route: AppRoute.signUpProfileReview,
-                      );
+                      navigate(context, route: AppRoute.signUpProfileReview);
                     }
                   : null,
               child: Text(

@@ -38,8 +38,8 @@ class _SignUpProfileBaseWidgetState
       resizeToAvoidBottomInset: false,
       appBar: DefaultAppBar(
         title: '프로필 정보',
-        leadingAction:
-            (context) => navigate(context, route: AppRoute.signUpProfileUpdate),
+        leadingAction: (context) =>
+            navigate(context, route: AppRoute.signUpProfileUpdate),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.h), // Progress bar의 높이를 지정
           child: TweenAnimationBuilder<double>(
@@ -84,23 +84,22 @@ class _SignUpProfileBaseWidgetState
                 child: DefaultElevatedButton(
                   onPressed:
                       signUpProcess.isButtonEnabled() && !signUpState.isLoading
-                          ? () async {
-                            await signUpProcess.nextStep(context);
-                          }
-                          : null,
-                  child:
-                      signUpState.isLoading
-                          ? const CircularProgressIndicator(
-                            color: Palette.colorPrimary500,
-                          )
-                          : Text(
-                            signUpState.unwritten.isEmpty ? '완료' : '다음',
-                            style: Fonts.body01Medium(
-                              signUpProcess.isButtonEnabled()
-                                  ? palette.onPrimary
-                                  : Palette.colorGrey400,
-                            ).copyWith(fontWeight: FontWeight.bold),
-                          ),
+                      ? () async {
+                          await signUpProcess.nextStep(context);
+                        }
+                      : null,
+                  child: signUpState.isLoading
+                      ? const CircularProgressIndicator(
+                          color: Palette.colorPrimary500,
+                        )
+                      : Text(
+                          signUpState.unwritten.isEmpty ? '완료' : '다음',
+                          style: Fonts.body01Medium(
+                            signUpProcess.isButtonEnabled()
+                                ? palette.onPrimary
+                                : Palette.colorGrey400,
+                          ).copyWith(fontWeight: FontWeight.bold),
+                        ),
                 ),
               ),
             ],

@@ -83,11 +83,11 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
     final updatedPhotos = [...state];
     updatedPhotos[index] = photo;
 
-    state = _compactPhotos(updatedPhotos);
+    state = compactPhotos(updatedPhotos);
   }
 
   // 빈 공간을 뒤 로 밀어내기
-  List<XFile?> _compactPhotos(List<XFile?> photos) {
+  List<XFile?> compactPhotos(List<XFile?> photos) {
     final nonNullPhotos = photos.where((photo) => photo != null).toList();
     final nullCount = photos.length - nonNullPhotos.length;
 

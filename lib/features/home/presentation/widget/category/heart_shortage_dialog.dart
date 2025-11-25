@@ -7,10 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class HeartShortageDialog extends StatelessWidget {
-  const HeartShortageDialog({
-    super.key,
-    required this.heartBalance,
-  });
+  const HeartShortageDialog({super.key, required this.heartBalance});
 
   final int heartBalance;
 
@@ -32,9 +29,7 @@ class HeartShortageDialog extends StatelessWidget {
             children: [
               Text(
                 "하트가 부족해요!",
-                style: Fonts.header02().copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Fonts.header02().copyWith(fontWeight: FontWeight.w700),
               ),
               const Gap(12),
               Text(
@@ -86,7 +81,7 @@ class HeartShortageDialog extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

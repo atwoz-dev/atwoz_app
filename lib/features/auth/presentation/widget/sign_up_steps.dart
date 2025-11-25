@@ -24,81 +24,70 @@ final locationFocusNode = FocusNode();
 final List<SignUpProfileChoices> signUpSteps = [
   SignUpProfileChoices(
     question: '나이가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildBirthInput(
-          selectedYear: signUpState.selectedYear,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildBirthInput(
+      selectedYear: signUpState.selectedYear,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '키가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildHeightInput(
-          selectedHeight: signUpState.selectedHeight,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildHeightInput(
+      selectedHeight: signUpState.selectedHeight,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '직업이 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildJobInput(
-          selectedJob: signUpState.selectedJob?.label,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildJobInput(
+      selectedJob: signUpState.selectedJob?.label,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '지역이 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) =>
-            LocationInputWidget(selectedLocation: signUpState.selectedLocation),
+    buildWidget: (signUpNotifier, signUpState) =>
+        LocationInputWidget(selectedLocation: signUpState.selectedLocation),
   ),
   SignUpProfileChoices(
     question: '학력이 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildEducationInput(
-          selectedEducation: signUpState.selectedEducation,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildEducationInput(
+      selectedEducation: signUpState.selectedEducation,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: 'MBTI가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildMbtiInput(
-          signUpState: signUpState,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildMbtiInput(
+      signUpState: signUpState,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '흡연 여부가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildSmokingInput(
-          selectedSmoking: signUpState.selectedSmoking,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildSmokingInput(
+      selectedSmoking: signUpState.selectedSmoking,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '음주 여부가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildDrinkingInput(
-          selectedDrinking: signUpState.selectedDrinking,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildDrinkingInput(
+      selectedDrinking: signUpState.selectedDrinking,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '종교가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildReligionInput(
-          selectedReligion: signUpState.selectedReligion,
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildReligionInput(
+      selectedReligion: signUpState.selectedReligion,
+      signUpNotifier: signUpNotifier,
+    ),
   ),
   SignUpProfileChoices(
     question: '취미가 어떻게 되세요?',
-    buildWidget:
-        (signUpNotifier, signUpState) => buildHobbiesInput(
-          selectedHobbies:
-              signUpState.selectedHobbies.map((e) => e.label).toList(),
-          signUpNotifier: signUpNotifier,
-        ),
+    buildWidget: (signUpNotifier, signUpState) => buildHobbiesInput(
+      selectedHobbies: signUpState.selectedHobbies.map((e) => e.label).toList(),
+      signUpNotifier: signUpNotifier,
+    ),
   ),
 ];

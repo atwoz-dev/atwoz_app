@@ -23,15 +23,15 @@ abstract class FavoriteListItemResponse with _$FavoriteListItemResponse {
   const FavoriteListItemResponse._();
 
   FavoriteUserSummary toModel() => FavoriteUserSummary(
-        userId: opponentId,
-        // TODO(Han): server 데이터 정합성 확보 후 non-nullable 하도록 수정
-        profileUrl: profileImageUrl ?? '',
-        name: nickname ?? '',
-        city: city ?? '',
-        age: age,
-        favoriteAt: createdAt,
-        isMutual: isMutualLike,
-      );
+    userId: opponentId,
+    // TODO(Han): server 데이터 정합성 확보 후 non-nullable 하도록 수정
+    profileUrl: profileImageUrl ?? '',
+    name: nickname ?? '',
+    city: city ?? '',
+    age: age,
+    favoriteAt: createdAt,
+    isMutual: isMutualLike,
+  );
 }
 
 @freezed

@@ -24,21 +24,18 @@ class MessageListPage extends StatelessWidget {
                   height: 1.2,
                 ),
               ),
-              actions: [
-                const DefaultAppBarActionGroup(),
-              ],
+              actions: [const DefaultAppBarActionGroup()],
               automaticallyImplyLeading: false,
               pinned: false,
               bottom: TabBar(
                 indicatorColor: Colors.black,
                 dividerColor: context.colorScheme.outline,
-                labelStyle: Fonts.body02Regular(Palette.colorGrey400).copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-                unselectedLabelStyle:
-                    Fonts.body02Regular(Palette.colorGrey400).copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
+                labelStyle: Fonts.body02Regular(
+                  Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.w600),
+                unselectedLabelStyle: Fonts.body02Regular(
+                  Palette.colorGrey400,
+                ).copyWith(fontWeight: FontWeight.w400),
                 unselectedLabelColor: context.colorScheme.secondary,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelColor: context.colorScheme.onSurface,
@@ -46,11 +43,11 @@ class MessageListPage extends StatelessWidget {
                     .map((value) => Tab(child: Text(value.label)))
                     .toList(),
               ),
-            )
+            ),
           ],
           body: const MessageListBody(),
         ),
-      ), 
+      ),
     );
   }
 }

@@ -10,8 +10,8 @@ class ReportRequestDto {
   });
 
   Map<String, dynamic> toJson() => {
-        'reporteeId': reporteeId,
-        'reason': reason,
-        'content': content,
-      };
+    'reporteeId': reporteeId,
+    'reason': reason,
+    'content': content,
+  };
 }

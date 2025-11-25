@@ -44,15 +44,10 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  Future<void> submitAnswerList({
-    required SubjectAnswer request,
-  }) async {
+  Future<void> submitAnswerList({required SubjectAnswer request}) async {
     final dto = SubjectAnswerItem.fromDomain(request);
 
-    await apiService.postJson(
-      '$path/submit',
-      data: dto.toJson(),
-    );
+    await apiService.postJson('$path/submit', data: dto.toJson());
   }
 
   Future<List<IntroducedProfileDto>> getSoulmateList() async {
@@ -74,18 +69,14 @@ class ExamRepository extends BaseRepository {
     }
   }
 
-  Future<void> removeSoulmateProfileBlur({
-    required int memberId,
-  }) async {
+  Future<void> removeSoulmateProfileBlur({required int memberId}) async {
     await apiService.postJson(
       '/member/introduction/soulmate',
       data: {'introducedMemberId': memberId},
     );
   }
 
-  Future<void> removeSameAnswerProfileBlur({
-    required int memberId,
-  }) async {
+  Future<void> removeSameAnswerProfileBlur({required int memberId}) async {
     await apiService.postJson(
       '/member/introduction/same-answer',
       data: {'introducedMemberId': memberId},

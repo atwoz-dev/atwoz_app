@@ -25,7 +25,11 @@ class RoundedImage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (imageURL == null || !StringUtil.isURL(imageURL!)) {
       return ErrorImage(
-          width: size, height: size, isRounded: true, image: errorImage);
+        width: size,
+        height: size,
+        isRounded: true,
+        image: errorImage,
+      );
     }
 
     return CachedNetworkImage(
@@ -35,18 +39,13 @@ class RoundedImage extends ConsumerWidget {
       fit: BoxFit.cover,
       imageBuilder:
           (BuildContext context, ImageProvider<Object> imageProvider) {
-        return Container(
-          decoration: BoxDecoration(
-            border: border,
-            shape: BoxShape.circle,
-          ),
-          child: CircleAvatar(backgroundImage: imageProvider),
-        );
-      },
+            return Container(
+              decoration: BoxDecoration(border: border, shape: BoxShape.circle),
+              child: CircleAvatar(backgroundImage: imageProvider),
+            );
+          },
       progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
-          DefaultCircularProgressIndicator(
-        progress: progress.progress,
-      ),
+          DefaultCircularProgressIndicator(progress: progress.progress),
       errorWidget: (_, __, ___) =>
           ErrorImage(width: size, height: size, isRounded: true),
     );

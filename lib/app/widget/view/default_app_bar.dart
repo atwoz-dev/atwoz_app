@@ -38,8 +38,9 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
           toolbarHeight: 80 - 1,
           centerTitle: true,
           titleSpacing: 0,
-          title:
-              title != null ? Text(title!, style: Fonts.body01Medium()) : null,
+          title: title != null
+              ? Text(title!, style: Fonts.body01Medium())
+              : null,
           actions: actions,
           automaticallyImplyLeading: true,
         ),

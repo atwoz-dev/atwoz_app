@@ -68,14 +68,11 @@ class _HomeProfileCardAreaState extends ConsumerState<HomeProfileCardArea> {
                   final profile = profiles[index];
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap:
-                        () => navigate(
-                          context,
-                          route: AppRoute.profile,
-                          extra: ProfileDetailArguments(
-                            userId: profile.memberId,
-                          ),
-                        ),
+                    onTap: () => navigate(
+                      context,
+                      route: AppRoute.profile,
+                      extra: ProfileDetailArguments(userId: profile.memberId),
+                    ),
                     child: _ProfileCardWidget(
                       profile: profile,
                       onTapFavorite: () async {
@@ -258,10 +255,9 @@ class _PageCardIndicator extends StatelessWidget {
           width: 6,
           height: 6,
           decoration: BoxDecoration(
-            color:
-                currentPage == index
-                    ? Palette.colorPrimary500
-                    : Palette.colorGrey100,
+            color: currentPage == index
+                ? Palette.colorPrimary500
+                : Palette.colorGrey100,
             borderRadius: BorderRadius.circular(8),
           ),
         );

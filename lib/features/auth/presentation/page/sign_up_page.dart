@@ -1,4 +1,3 @@
-import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
@@ -107,10 +106,8 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                     hintText: '10글자 이내로 입력해주세요.',
                     fillColor: Palette.colorGrey100,
                     errorText: signUpState.error, // 상태 기반 에러 메시지
-                    onFieldSubmitted:
-                        (value) => signUpProcess.updateNickname(
-                          value,
-                        ), // 엔터를 눌렀을 때 유효성 검사
+                    onFieldSubmitted: (value) =>
+                        signUpProcess.updateNickname(value), // 엔터를 눌렀을 때 유효성 검사
                   ),
                 ),
                 Gap(24.h),
@@ -130,12 +127,11 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  isButtonEnabled
-                      ? () {
-                        navigate(context, route: AppRoute.signUpProfileChoice);
-                      }
-                      : null,
+              onPressed: isButtonEnabled
+                  ? () {
+                      navigate(context, route: AppRoute.signUpProfileChoice);
+                    }
+                  : null,
               child: Text(
                 '다음',
                 style: Fonts.body01Medium(

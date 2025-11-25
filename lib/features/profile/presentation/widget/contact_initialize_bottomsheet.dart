@@ -18,25 +18,20 @@ class ContactInitializeBottomsheet extends StatelessWidget {
     return const Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ScrollHandler(),
-        Gap(4.0),
-        _ContactSettingBody(),
-      ],
+      children: [ScrollHandler(), Gap(4.0), _ContactSettingBody()],
     );
   }
 
-  static Future<bool?> open(BuildContext context) =>
-      showModalBottomSheet<bool>(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        builder: (context) => Padding(
-          padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
-          child: const ContactInitializeBottomsheet(),
-        ),
-      );
+  static Future<bool?> open(BuildContext context) => showModalBottomSheet<bool>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    useSafeArea: true,
+    builder: (context) => Padding(
+      padding: EdgeInsets.only(bottom: context.mediaQueryViewInsets.bottom),
+      child: const ContactInitializeBottomsheet(),
+    ),
+  );
 }
 
 class _ContactSettingBody extends ConsumerStatefulWidget {
@@ -120,9 +115,11 @@ class _ContactSettingBodyState extends ConsumerState<_ContactSettingBody> {
                 await ref
                     .read(contactSettingProvider.notifier)
                     .registerContactSetting(
-                  method: _selected,
-                  kakaoId: _selected == ContactMethod.kakao ? _kakaoId : null,
-                );
+                      method: _selected,
+                      kakaoId: _selected == ContactMethod.kakao
+                          ? _kakaoId
+                          : null,
+                    );
                 if (!context.mounted) return;
                 context.pop<bool>(true);
               },

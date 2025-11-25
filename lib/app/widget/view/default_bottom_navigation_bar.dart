@@ -18,8 +18,9 @@ class DefaultBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTextStyle =
-        Fonts.body03Regular(Palette.colorGrey400).copyWith(fontSize: 11.sp);
+    final defaultTextStyle = Fonts.body03Regular(
+      Palette.colorGrey400,
+    ).copyWith(fontSize: 11.sp);
 
     return DecoratedBox(
       decoration: const BoxDecoration(

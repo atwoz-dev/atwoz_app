@@ -3,9 +3,7 @@ import 'package:atwoz_app/features/heart_history/domain/model/heart_history_data
 
 part 'heart_history_state.freezed.dart';
 
-enum HeartHistoryErrorType {
-  network,
-}
+enum HeartHistoryErrorType { network }
 
 @freezed
 abstract class HeartHistoryState with _$HeartHistoryState {

@@ -5,10 +5,7 @@ import 'package:atwoz_app/app/constants/fonts.dart';
 class BulletText extends StatelessWidget {
   final String text;
 
-  const BulletText({
-    super.key,
-    required this.text,
-  });
+  const BulletText({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +14,9 @@ class BulletText extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "• ",
-            style: Fonts.body03Regular(Palette.colorGrey800),
-          ),
+          Text("• ", style: Fonts.body03Regular(Palette.colorGrey800)),
           Expanded(
-            child: Text(
-              text,
-              style: Fonts.body03Regular(Palette.colorGrey800),
-            ),
+            child: Text(text, style: Fonts.body03Regular(Palette.colorGrey800)),
           ),
         ],
       ),

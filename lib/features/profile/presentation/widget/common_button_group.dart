@@ -13,15 +13,14 @@ class CommonButtonGroup extends StatelessWidget {
     required String submitLabel,
     bool enabledSubmit = true,
     List<int> weights = const [1, 1],
-  }) =>
-      CommonButtonGroup.custom(
-        onCancel: onCancel,
-        onSubmit: onSubmit,
-        cancel: Text(cancelLabel),
-        submit: Text(submitLabel),
-        enabledSubmit: enabledSubmit,
-        weights: weights,
-      );
+  }) => CommonButtonGroup.custom(
+    onCancel: onCancel,
+    onSubmit: onSubmit,
+    cancel: Text(cancelLabel),
+    submit: Text(submitLabel),
+    enabledSubmit: enabledSubmit,
+    weights: weights,
+  );
 
   const CommonButtonGroup.custom({
     super.key,
@@ -48,10 +47,7 @@ class CommonButtonGroup extends StatelessWidget {
         children: [
           Expanded(
             flex: weights.first,
-            child: CommonSecondaryButton(
-              onCancel: onCancel,
-              cancel: cancel,
-            ),
+            child: CommonSecondaryButton(onCancel: onCancel, cancel: cancel),
           ),
           const Gap(8.0),
           Expanded(
@@ -61,7 +57,7 @@ class CommonButtonGroup extends StatelessWidget {
               enabled: enabledSubmit,
               submit: submit,
             ),
-          )
+          ),
         ],
       ),
     );

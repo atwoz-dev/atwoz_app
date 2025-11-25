@@ -23,16 +23,15 @@ extension ConfirmDialogueX on BuildContext {
   }) async => showDialog(
     useSafeArea: false,
     context: this,
-    builder:
-        (_) => _ConfirmDialog(
-          submit: submit,
-          cancel: cancel ?? DialogButton(label: '취소', onTap: pop),
-          enabled: enabled,
-          visibleClose: enableCloseButton,
-          buttonVerticalPadding: buttonVerticalPadding,
+    builder: (_) => _ConfirmDialog(
+      submit: submit,
+      cancel: cancel ?? DialogButton(label: '취소', onTap: pop),
+      enabled: enabled,
+      visibleClose: enableCloseButton,
+      buttonVerticalPadding: buttonVerticalPadding,
 
-          child: child,
-        ),
+      child: child,
+    ),
   );
 
   Future<T?> showPrimaryConfirmDialog<T>({
@@ -43,13 +42,12 @@ extension ConfirmDialogueX on BuildContext {
   }) async => showDialog(
     useSafeArea: false,
     context: this,
-    builder:
-        (_) => _ConfirmDialog(
-          submit: submit,
-          enabled: enabled,
-          buttonVerticalPadding: buttonVerticalPadding,
-          child: child,
-        ),
+    builder: (_) => _ConfirmDialog(
+      submit: submit,
+      enabled: enabled,
+      buttonVerticalPadding: buttonVerticalPadding,
+      child: child,
+    ),
   );
 }
 

@@ -15,200 +15,168 @@ class _NavigationPageState extends AppBaseStatefulPageBase<NavigationPage> {
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.05, vertical: screenWidth * 0.2),
-            child: SingleChildScrollView(
-              child: Column(
-                spacing: 16.0,
-                children: [
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.onboard,
-                      );
-                    },
-                    child: Text(
-                      '온보딩',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.authNavigation,
-                      );
-                    },
-                    child: Text(
-                      '회원가입',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.homeNavigation,
-                      );
-                    },
-                    child: Text(
-                      '메인(홈화면)',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.introduceNavigation,
-                      );
-                    },
-                    child: Text(
-                      '셀프소개',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
-                    },
-                    child: Text(
-                      '인터뷰',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.report,
-                      );
-                    },
-                    child: Text(
-                      '신고하기',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.exam,
-                      );
-                    },
-                    child: Text(
-                      '연애 모의고사',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.notification,
-                      );
-                    },
-                    child: Text(
-                      '알림',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.onboard,
-                      );
-                    },
-                    child: Text(
-                      '좋아요 목록/보내기',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.storeNavigation,
-                      );
-                    },
-                    child: Text(
-                      '스토어',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.profileDesignInspection,
-                      );
-                    },
-                    child: Text(
-                      '프로필 상세',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.myNavigation,
-                      );
-                    },
-                    child: Text(
-                      '마이페이지',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.mainTab,
-                        method: NavigationMethod.go,
-                      );
-                    },
-                    child: Text(
-                      '좋아요 목록',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                  DefaultElevatedButton(
-                    primary: palette.primary,
-                    onPressed: () async {
-                      navigate(
-                        context,
-                        route: AppRoute.dormantAccount,
-                      );
-                    },
-                    child: Text(
-                      '휴면 회원',
-                      style: Fonts.body01Regular(palette.onPrimary),
-                    ),
-                  ),
-                ],
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.05,
+          vertical: screenWidth * 0.2,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 16.0,
+            children: [
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.onboard);
+                },
+                child: Text(
+                  '온보딩',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
               ),
-            )));
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.authNavigation);
+                },
+                child: Text(
+                  '회원가입',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.homeNavigation);
+                },
+                child: Text(
+                  '메인(홈화면)',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.introduceNavigation);
+                },
+                child: Text(
+                  '셀프소개',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.mainTab,
+                    method: NavigationMethod.go,
+                  );
+                },
+                child: Text(
+                  '인터뷰',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.report);
+                },
+                child: Text(
+                  '신고하기',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.exam);
+                },
+                child: Text(
+                  '연애 모의고사',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.notification);
+                },
+                child: Text(
+                  '알림',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.onboard);
+                },
+                child: Text(
+                  '좋아요 목록/보내기',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.storeNavigation);
+                },
+                child: Text(
+                  '스토어',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.profileDesignInspection);
+                },
+                child: Text(
+                  '프로필 상세',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.myNavigation);
+                },
+                child: Text(
+                  '마이페이지',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(
+                    context,
+                    route: AppRoute.mainTab,
+                    method: NavigationMethod.go,
+                  );
+                },
+                child: Text(
+                  '좋아요 목록',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+              DefaultElevatedButton(
+                primary: palette.primary,
+                onPressed: () async {
+                  navigate(context, route: AppRoute.dormantAccount);
+                },
+                child: Text(
+                  '휴면 회원',
+                  style: Fonts.body01Regular(palette.onPrimary),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

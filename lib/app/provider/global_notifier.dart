@@ -48,6 +48,11 @@ class GlobalNotifier extends _$GlobalNotifier {
 
   Future<void> fetchHeartBalance() async {
     try {
+      final accessToken = await ref.read(authUsecaseProvider).getAccessToken();
+      if (accessToken?.isEmpty ?? true) {
+        return;
+      }
+
       final heartBalance = await ref
           .read(fetchUserHeartBalanceUseCaseProvider)
           .execute();

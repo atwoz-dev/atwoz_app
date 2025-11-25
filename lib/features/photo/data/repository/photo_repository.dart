@@ -1,14 +1,8 @@
 import 'dart:io';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/photo/data/dto/presigned_url_response_dto.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mime/mime.dart';
-import 'package:path/path.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
 

@@ -7,8 +7,9 @@ class ExamRequiredFetchUseCase {
   const ExamRequiredFetchUseCase(this.ref);
 
   Future<List<SubjectItem>> call() async {
-    final response =
-        await ref.read(examRepositoryProvider).getRequiredQuestionList();
+    final response = await ref
+        .read(examRepositoryProvider)
+        .getRequiredQuestionList();
 
     return response;
   }

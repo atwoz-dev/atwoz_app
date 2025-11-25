@@ -7,10 +7,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 class InterviewBannerWidget extends StatelessWidget {
   final VoidCallback onClose;
 
-  const InterviewBannerWidget({
-    super.key,
-    required this.onClose,
-  });
+  const InterviewBannerWidget({super.key, required this.onClose});
 
   @override
   Widget build(BuildContext context) {

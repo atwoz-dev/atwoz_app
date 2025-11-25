@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final mockIntroducedProfileRepositoryProvider =
     Provider<MockIntroducedProfileRepository>((ref) {
-  return MockIntroducedProfileRepository();
-});
+      return MockIntroducedProfileRepository();
+    });
 
 /// 서버 응답 데이터가 적어 Mock 데이터로 구현해 놓은 repository입니다.
 /// 추후 삭제될 에정입니다

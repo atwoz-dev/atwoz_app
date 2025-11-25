@@ -18,8 +18,8 @@ class FetchUserHeartBalanceUseCase {
           .read(introducedProfileRepositoryProvider)
           .getHeartBalance();
       return heartBalance;
-    } catch (e) {
-      Log.e('소개 프로필 블러 제거 실패: $e');
+    } catch (e, stactrace) {
+      Log.e('[FetchUserHeartBalanceUseCase] heart fetch failure $e $stactrace');
       return HeartBalance.init();
     }
   }

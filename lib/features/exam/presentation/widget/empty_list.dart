@@ -5,9 +5,7 @@ import '../../../../app/constants/icon_path.dart';
 import '../../../../app/widget/icon/default_icon.dart';
 
 class EmptyList extends StatelessWidget {
-  const EmptyList({
-    super.key,
-  });
+  const EmptyList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +13,7 @@ class EmptyList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const DefaultIcon(
-          IconPath.sadEmotion,
-          size: 48.0,
-        ),
+        const DefaultIcon(IconPath.sadEmotion, size: 48.0),
         const Gap(8.0),
         Text(
           '참여자가 늘어나서 같은 답안을\n선택한 이성이 나온다면 알려드릴께요',

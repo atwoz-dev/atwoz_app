@@ -56,7 +56,6 @@ class _OnboardingCertificationPageState
 
   @override
   void dispose() {
-    _notifier.disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
     super.dispose();

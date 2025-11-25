@@ -2,9 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'message_list_state.freezed.dart';
 
-enum MessageListErrorType {
-  network,
-}
+enum MessageListErrorType { network }
 
 @freezed
 abstract class MessageListState with _$MessageListState {
@@ -21,18 +19,12 @@ abstract class MessageListState with _$MessageListState {
 }
 
 class MessageListData {
-  const MessageListData({
-    this.messages = const [],
-    this.hasMore = false,
-  });
+  const MessageListData({this.messages = const [], this.hasMore = false});
 
   final List<MessageSummary> messages;
   final bool hasMore;
 
-  MessageListData copyWith({
-    List<MessageSummary>? messages,
-    bool? hasMore,
-  }) {
+  MessageListData copyWith({List<MessageSummary>? messages, bool? hasMore}) {
     return MessageListData(
       messages: messages ?? this.messages,
       hasMore: hasMore ?? this.hasMore,
@@ -60,12 +52,12 @@ class MessageSummary {
 
 class DummyMessageSummaryInfo extends MessageSummary {
   DummyMessageSummaryInfo()
-      : super(
-          matchId: 0,
-          opponentId: 0,
-          name: '',
-          profileUrl: '',
-          content: '',
-          createdAt: DateTime.now(),
-        );
+    : super(
+        matchId: 0,
+        opponentId: 0,
+        name: '',
+        profileUrl: '',
+        content: '',
+        createdAt: DateTime.now(),
+      );
 }

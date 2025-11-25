@@ -29,8 +29,8 @@ class DefaultImage extends ConsumerWidget {
     this.fit = BoxFit.cover,
     this.borderRadius = Dimens.imageRadius,
     this.color,
-  })  : width = size,
-        height = size;
+  }) : width = size,
+       height = size;
 
   final String? imageURL;
   final double? width;
@@ -59,9 +59,7 @@ class DefaultImage extends ConsumerWidget {
           height: height,
           fit: fit,
           progressIndicatorBuilder: (_, __, DownloadProgress progress) =>
-              DefaultCircularProgressIndicator(
-            progress: progress.progress,
-          ),
+              DefaultCircularProgressIndicator(progress: progress.progress),
           errorWidget: (_, __, ___) => ErrorImage(
             width: width,
             height: height,
