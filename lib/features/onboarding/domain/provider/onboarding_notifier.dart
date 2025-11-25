@@ -17,6 +17,7 @@ class OnboardingNotifier extends _$OnboardingNotifier {
 
   @override
   OnboardingState build() {
+    ref.onDispose(_dispose);
     return OnboardingState.initial();
   }
 
@@ -130,7 +131,7 @@ class OnboardingNotifier extends _$OnboardingNotifier {
     }
   }
 
-  void disposeTimer() {
+  void _dispose() {
     _resendTimer?.cancel();
     _resendTimer = null;
   }

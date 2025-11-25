@@ -22,6 +22,7 @@ extension MyProfileMapper on CachedUserProfile {
       height: height,
       gender: gender,
       phoneNum: const PhoneNumberTextFormatter().formatPhoneNumber(phoneNumber),
+      interviews: interviewInfoView,
     );
   }
 }

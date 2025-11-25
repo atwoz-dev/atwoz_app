@@ -10,9 +10,8 @@ class InterviewAddUseCase {
     required int questionId,
     required String answerContent,
   }) async {
-    await ref.read(interviewRepositoryProvider).addAnswer(
-          questionId: questionId,
-          answerContent: answerContent,
-        );
+    await ref
+        .read(interviewRepositoryProvider)
+        .addAnswer(questionId: questionId, answerContent: answerContent);
   }
 }

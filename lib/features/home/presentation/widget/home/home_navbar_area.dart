@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeNavbarArea extends ConsumerWidget {
-  const HomeNavbarArea({
-    super.key,
-  });
+  const HomeNavbarArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +23,7 @@ class HomeNavbarArea extends ConsumerWidget {
             height: 1.2,
           ),
         ),
-        DefaultAppBarActionGroup(
+        const DefaultAppBarActionGroup(
           showFilter: true,
           filterRoute: AppRoute.ideal,
         ),

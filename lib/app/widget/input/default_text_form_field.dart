@@ -19,9 +19,11 @@ Widget buildLabeledRow({
       SizedBox(
         child: Text(
           label,
-          style: textStyle ??
-              Fonts.body02Regular(context.palette.onSurface)
-                  .copyWith(fontWeight: FontWeight.w600),
+          style:
+              textStyle ??
+              Fonts.body02Regular(
+                context.palette.onSurface,
+              ).copyWith(fontWeight: FontWeight.w600),
         ),
       ),
       const Gap(8), // 레이블과 필드 사이 간격 추가
@@ -156,8 +158,9 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
     return Stack(
       children: [
         GestureDetector(
-          onTap:
-              widget.readOnly && widget.enabled == true ? widget.onTap : null,
+          onTap: widget.readOnly && widget.enabled == true
+              ? widget.onTap
+              : null,
           // onTap: () {
           //   if (widget.readOnly) {
           //     FocusScope.of(context).unfocus();
@@ -250,8 +253,9 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
       contentPadding: widget.contentPadding ?? defaultContentPadding,
       counterText: '', // 기본 counter 숨기기
       prefix: Padding(
-          padding: const EdgeInsets.only(left: defaultPadding),
-          child: widget.prefix),
+        padding: const EdgeInsets.only(left: defaultPadding),
+        child: widget.prefix,
+      ),
       prefixIcon: widget.prefixIcon,
       prefixIconConstraints: widget.prefixIconConstraints,
       suffix: Padding(
@@ -264,34 +268,38 @@ class DefaultTextFormFieldState extends AppBaseWidgetState<DefaultTextFormField>
       isDense: widget.isDense,
       fillColor: widget.fillColor ?? palette.surface,
       border: widget.border ?? roundedBorder,
-      enabledBorder: widget.border ??
+      enabledBorder:
+          widget.border ??
           widget.enabledBorder ??
           roundedBorder, // 활성 상태 둥근 테두리
-      disabledBorder: widget.border ??
+      disabledBorder:
+          widget.border ??
           widget.disabledBorder ??
           roundedBorder, // 비활성 상태 둥근 테두리
       errorBorder: widget.errorBorder ?? errorBorder, // 에러 상태 테두리
-      focusedBorder: widget.readOnly // readOnly일 때 포커스 상태 테두리 변경
+      focusedBorder:
+          widget
+              .readOnly // readOnly일 때 포커스 상태 테두리 변경
           ? widget.border ??
-              roundedBorder.copyWith(
-                borderSide: BorderSide.none, // 테두리 없음
-              )
-          : widget.errorText == null // 일반 포커스 상태 테두리
-              ? widget.border ??
-                  roundedBorder.copyWith(
-                    borderSide: BorderSide(
-                      color: palette.primary,
-                      width: 2.0,
-                    ),
-                  )
-              : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
+                roundedBorder.copyWith(
+                  borderSide: BorderSide.none, // 테두리 없음
+                )
+          : widget.errorText ==
+                null // 일반 포커스 상태 테두리
+          ? widget.border ??
+                roundedBorder.copyWith(
+                  borderSide: BorderSide(color: palette.primary, width: 2.0),
+                )
+          : errorBorder, // 에러 메시지가 있을 때는 에러 테두리 유지
       hintText: widget.hintText,
       alignLabelWithHint: true, // 레이블과 에러 위치 일치
       hintStyle: widget.hintStyle ?? Fonts.body02Medium(Palette.colorGrey500),
-      errorText: widget.errorText ??
+      errorText:
+          widget.errorText ??
           widget.validator?.call(controller.text), // 유효성 검증 결과
-      errorStyle:
-          Fonts.body03Regular(palette.error).copyWith(height: 1.5), // 유효성 검증 결과
+      errorStyle: Fonts.body03Regular(
+        palette.error,
+      ).copyWith(height: 1.5), // 유효성 검증 결과
       label: widget.label,
     );
   }

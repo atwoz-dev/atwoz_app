@@ -6,10 +6,7 @@ import 'package:atwoz_app/app/constants/constants.dart';
 class BalloonAnimationWidget extends StatefulWidget {
   final List<Map<String, dynamic>> balloons;
 
-  const BalloonAnimationWidget({
-    super.key,
-    required this.balloons,
-  });
+  const BalloonAnimationWidget({super.key, required this.balloons});
 
   @override
   State<BalloonAnimationWidget> createState() => _BalloonAnimationWidgetState();
@@ -33,18 +30,16 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
     final totalHeight = totalRows * _rowHeight;
 
     _controller = AnimationController(
-      duration:
-          Duration(milliseconds: (totalHeight * _animationSpeedFactor).toInt()),
+      duration: Duration(
+        milliseconds: (totalHeight * _animationSpeedFactor).toInt(),
+      ),
       vsync: this,
     )..repeat();
 
     _animation = Tween<double>(
       begin: 0.0,
       end: totalHeight,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.linear,
-    ));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
     randomRowStartX = List.generate(
       totalRows,
@@ -70,14 +65,15 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
             ...List.generate(
               ((widget.balloons.length / _balloonsPerRow).ceil()) * 2,
               (rowIndex) {
-                final int startBalloonIndex = (rowIndex %
+                final int startBalloonIndex =
+                    (rowIndex %
                         (widget.balloons.length / _balloonsPerRow).ceil()) *
                     _balloonsPerRow;
 
                 final double yOffset =
                     (_animation.value - rowIndex * _rowHeight) %
-                        ((widget.balloons.length / _balloonsPerRow).ceil() *
-                            _rowHeight);
+                    ((widget.balloons.length / _balloonsPerRow).ceil() *
+                        _rowHeight);
 
                 return Positioned(
                   top: screenHeight - yOffset,
@@ -85,14 +81,16 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: List.generate(_balloonsPerRow, (colIndex) {
-                      final int balloonIndex = (startBalloonIndex + colIndex) %
+                      final int balloonIndex =
+                          (startBalloonIndex + colIndex) %
                           widget.balloons.length;
 
                       return OnboardingBalloonWidget(
                         text: widget.balloons[balloonIndex]['text'],
                         color: widget.balloons[balloonIndex]['color'],
-                        textStyle: Fonts.header02()
-                            .copyWith(fontWeight: FontWeight.w900),
+                        textStyle: Fonts.header02().copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
                       );
                     }),
                   ),

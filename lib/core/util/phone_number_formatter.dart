@@ -17,9 +17,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
     };
     return TextEditingValue(
       text: formatted,
-      selection: TextSelection.collapsed(
-        offset: formatted.length,
-      ),
+      selection: TextSelection.collapsed(offset: formatted.length),
     );
   }
 }

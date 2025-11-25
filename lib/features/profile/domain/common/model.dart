@@ -69,12 +69,12 @@ class Matched extends MatchStatus {
 
   @override
   List<Object> get props => [
-        matchId,
-        sentMessage,
-        receivedMessage,
-        contactMethod,
-        contactInfo,
-      ];
+    matchId,
+    sentMessage,
+    receivedMessage,
+    contactMethod,
+    contactInfo,
+  ];
 }
 
 class UnMatched extends MatchStatus {
@@ -82,10 +82,7 @@ class UnMatched extends MatchStatus {
 }
 
 abstract class Matching extends MatchStatus {
-  const Matching({
-    required super.matchId,
-    required this.isExpired,
-  });
+  const Matching({required super.matchId, required this.isExpired});
 
   final bool isExpired;
 
@@ -103,18 +100,12 @@ class MatchingRequested extends Matching {
   final String sentMessage;
 
   @override
-  List<Object> get props => [
-        matchId,
-        sentMessage,
-        isExpired,
-      ];
+  List<Object> get props => [matchId, sentMessage, isExpired];
 }
 
 class MatchRejected extends MatchingRequested {
-  const MatchRejected({
-    required super.matchId,
-    required super.sentMessage,
-  }) : super(isExpired: true);
+  const MatchRejected({required super.matchId, required super.sentMessage})
+    : super(isExpired: true);
 }
 
 class MatchingReceived extends Matching {
@@ -127,9 +118,5 @@ class MatchingReceived extends Matching {
   final String receivedMessage;
 
   @override
-  List<Object> get props => [
-        matchId,
-        receivedMessage,
-        isExpired,
-      ];
+  List<Object> get props => [matchId, receivedMessage, isExpired];
 }

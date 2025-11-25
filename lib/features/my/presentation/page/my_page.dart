@@ -7,11 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-typedef MenuItem = ({
-  String title,
-  String iconPath,
-  AppRoute? route,
-});
+typedef MenuItem = ({String title, String iconPath, AppRoute? route});
 
 const List<MenuItem> _menuItems = [
   (
@@ -29,21 +25,13 @@ const List<MenuItem> _menuItems = [
     iconPath: IconPath.blockFriend,
     route: AppRoute.blockFriend,
   ),
-  (
-    title: '스토어',
-    iconPath: IconPath.store,
-    route: AppRoute.store,
-  ),
+  (title: '스토어', iconPath: IconPath.store, route: AppRoute.store),
   (
     title: '고객센터',
     iconPath: IconPath.customerCenter,
-    route: null,
+    route: AppRoute.customerCenter,
   ),
-  (
-    title: '설정',
-    iconPath: IconPath.setting,
-    route: AppRoute.setting,
-  ),
+  (title: '설정', iconPath: IconPath.setting, route: AppRoute.setting),
 ];
 
 class MyPage extends ConsumerStatefulWidget {
@@ -59,9 +47,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
   @override
   Widget buildPage(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: screenHeight * 0.1,
-      ),
+      padding: EdgeInsets.only(top: screenHeight * 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,9 +59,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
                 padding: EdgeInsets.only(top: 4.0),
                 child: Text(
                   '마이페이지',
-                  style: Fonts.header03().copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Fonts.header03().copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
               DefaultAppBarActionGroup(),
@@ -92,9 +76,7 @@ class MyPageState extends BaseConsumerStatefulPageState<MyPage> {
 class _MyPageListItem extends StatelessWidget {
   final MenuItem item;
 
-  const _MyPageListItem({
-    required this.item,
-  });
+  const _MyPageListItem({required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -129,20 +111,13 @@ class _MyPageListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const DefaultIcon(
-                  IconPath.chevronRight,
-                  size: 24,
-                ),
+                const DefaultIcon(IconPath.chevronRight, size: 24),
               ],
             ),
           ),
         ),
         if (!isLast)
-          const Divider(
-            height: 1,
-            thickness: 1,
-            color: Palette.colorGrey50,
-          ),
+          const Divider(height: 1, thickness: 1, color: Palette.colorGrey50),
       ],
     );
   }

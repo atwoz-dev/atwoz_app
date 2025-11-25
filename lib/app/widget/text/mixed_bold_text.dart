@@ -17,8 +17,9 @@ class MixedBoldText extends StatelessWidget {
   Widget build(BuildContext context) {
     // 텍스트 스타일 기본값
     final TextStyle defaultStyle = textStyle ?? Fonts.body03Regular();
-    final TextStyle boldStyle =
-        defaultStyle.copyWith(fontWeight: FontWeight.bold);
+    final TextStyle boldStyle = defaultStyle.copyWith(
+      fontWeight: FontWeight.bold,
+    );
 
     if (boldText != null && comment.contains(boldText!)) {
       final parts = comment.split(boldText!);

@@ -15,16 +15,17 @@ class DefaultToggleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterSwitch(
-        width: 42.0,
-        height: 24.0,
-        valueFontSize: 0,
-        toggleSize: 20.0,
-        value: controller,
-        borderRadius: 50.0,
-        padding: 2.0,
-        activeColor: Palette.colorPrimary500,
-        inactiveColor: Palette.colorGrey500,
-        showOnOff: true,
-        onToggle: onChanged);
+      width: 42.0,
+      height: 24.0,
+      valueFontSize: 0,
+      toggleSize: 20.0,
+      value: controller,
+      borderRadius: 50.0,
+      padding: 2.0,
+      activeColor: Palette.colorPrimary500,
+      inactiveColor: Palette.colorGrey500,
+      showOnOff: true,
+      onToggle: onChanged,
+    );
   }
 }

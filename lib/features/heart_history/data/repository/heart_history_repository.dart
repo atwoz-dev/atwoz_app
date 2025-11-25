@@ -12,9 +12,7 @@ final heartHistoryRepositoryProvider = Provider<HeartHistoryRepository>((ref) {
 class HeartHistoryRepository extends BaseRepository {
   HeartHistoryRepository(Ref ref) : super(ref, '/heart-transactions');
 
-  Future<HeartHistoryData> getHeartTransactionList([
-    int? lastId,
-  ]) async {
+  Future<HeartHistoryData> getHeartTransactionList([int? lastId]) async {
     final res = await apiService.getJson(
       path,
       queryParameters: lastId != null ? {'lastId': lastId} : null,
@@ -25,7 +23,8 @@ class HeartHistoryRepository extends BaseRepository {
   HeartHistoryData _parseHeartHistory(dynamic res) {
     if (res is! Map<String, dynamic> || res['data'] is! Map<String, dynamic>) {
       Log.e(
-          'Invalid response format: expected Map<String, dynamic> with data key, got $res');
+        'Invalid response format: expected Map<String, dynamic> with data key, got $res',
+      );
       throw Exception('Invalid heart transaction response format');
     }
 

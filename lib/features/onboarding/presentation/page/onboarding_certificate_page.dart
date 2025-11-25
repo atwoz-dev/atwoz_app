@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/auth/data/data.dart';
+import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,11 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:go_router/go_router.dart';
+import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
 
 class OnboardingCertificationPage extends ConsumerStatefulWidget {
   const OnboardingCertificationPage({super.key, required this.phoneNumber});
+
   final String phoneNumber;
 
   @override
@@ -30,10 +34,12 @@ class _OnboardingCertificationPageState
     extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
+  late final OnboardingNotifier _notifier;
 
   @override
   void initState() {
     super.initState();
+    _notifier = ref.read(onboardingProvider.notifier);
     Future.microtask(() async {
       final notifier = ref.read(onboardingProvider.notifier);
       final isCodeSended = await notifier.sendVerificationCode(
@@ -44,13 +50,12 @@ class _OnboardingCertificationPageState
     });
 
     _codeController.addListener(() {
-      ref.read(onboardingProvider.notifier).validateInput(_codeController.text);
+      _notifier.validateInput(_codeController.text);
     });
   }
 
   @override
   void dispose() {
-    ref.read(onboardingProvider.notifier).disposeTimer();
     _codeController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -59,7 +64,6 @@ class _OnboardingCertificationPageState
   @override
   Widget buildPage(BuildContext context) {
     final state = ref.watch(onboardingProvider);
-    final notifier = ref.read(onboardingProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -101,12 +105,10 @@ class _OnboardingCertificationPageState
                             child: DefaultOutlinedButton(
                               primary: Palette.colorGrey100,
                               textColor: palette.onSurface,
-                              onPressed:
-                                  state.leftSeconds == 0
-                                      ? () => notifier.resendCode(
-                                        widget.phoneNumber,
-                                      )
-                                      : null,
+                              onPressed: state.leftSeconds == 0
+                                  ? () =>
+                                        _notifier.resendCode(widget.phoneNumber)
+                                  : null,
                               child: Text(
                                 state.leftSeconds == 0
                                     ? '재발송'
@@ -130,10 +132,9 @@ class _OnboardingCertificationPageState
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
-              onPressed:
-                  state.isButtonEnabled && !state.isLoading
-                      ? () => _verifyCode(notifier)
-                      : null,
+              onPressed: state.isButtonEnabled && !state.isLoading
+                  ? () => _verifyCode(_notifier)
+                  : null,
               child: Text(
                 '인증하기',
                 style: Fonts.body01Medium(
@@ -150,7 +151,7 @@ class _OnboardingCertificationPageState
   }
 
   void _verifyCode(OnboardingNotifier notifier) async {
-    final (userData, status) = await notifier.verifyCode(
+    final (UserData? userData, status) = await notifier.verifyCode(
       widget.phoneNumber,
       _codeController.text,
     );
@@ -182,11 +183,17 @@ class _OnboardingCertificationPageState
     }
   }
 
-  Future<void> _handleActivateStatus(dynamic userData) async {
+  Future<void> _handleActivateStatus(UserData? userData) async {
+    ref
+        .read(contactSettingProvider.notifier)
+        .registerContactSetting(phoneNumber: widget.phoneNumber);
+
     if (!context.mounted) return;
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReject);
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }
@@ -219,7 +226,7 @@ class _OnboardingCertificationPageState
       context,
       onTapVerify: context.pop,
       title: '서비스 가입 제한',
-      content: '탈퇴일로부터 3개월간 동일 계정으로 재가입이 제한됩니다.',
+      content: '탈퇴일로부터 3개월간 동일 계정으로\n재가입이 제한됩니다.',
     );
   }
 

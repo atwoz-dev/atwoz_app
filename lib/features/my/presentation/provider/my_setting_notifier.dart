@@ -22,10 +22,12 @@ class MySettingNotifier extends _$MySettingNotifier {
     final enabledServerTypes = await ref
         .read(notificationRepositoryProvider)
         .loadEnableNotificationTypes();
-    final enabledNotifications =
-        _convertToUserNotificationTypes(enabledServerTypes);
-    final notificationEnabled =
-        await ref.read(notificationRepositoryProvider).notificationEnabled;
+    final enabledNotifications = _convertToUserNotificationTypes(
+      enabledServerTypes,
+    );
+    final notificationEnabled = await ref
+        .read(notificationRepositoryProvider)
+        .notificationEnabled;
 
     return MySettings(
       version: appVersion,
@@ -78,8 +80,9 @@ class MySettingNotifier extends _$MySettingNotifier {
       ..toggle(type);
 
     // UserNotificationType을 ServerNotificationType으로 변환
-    final enabledServerTypes =
-        _convertToServerNotificationTypes(nextEnabledNotifications);
+    final enabledServerTypes = _convertToServerNotificationTypes(
+      nextEnabledNotifications,
+    );
 
     // 서버에 저장
     try {
@@ -88,9 +91,9 @@ class MySettingNotifier extends _$MySettingNotifier {
           .saveEnableNotificationTypes(enabledServerTypes);
 
       // 상태 업데이트
-      state = AsyncValue.data(value.copyWith(
-        enabledNotifications: nextEnabledNotifications,
-      ));
+      state = AsyncValue.data(
+        value.copyWith(enabledNotifications: nextEnabledNotifications),
+      );
     } catch (e) {
       showToastMessage('알림 설정에 실패하였습니다.');
     }
@@ -106,14 +109,8 @@ class MySettingNotifier extends _$MySettingNotifier {
 
     if (!success) {
       Log.e('알림 허용 상태 변경 실패');
-      showToastMessage(
-        '앱 설정에서 푸시 알림을 허용해주세요.',
-        gravity: ToastGravity.BOTTOM,
-      );
-      await Future.delayed(
-        const Duration(milliseconds: 1000),
-        openAppSettings,
-      );
+      showToastMessage('앱 설정에서 푸시 알림을 허용해주세요.', gravity: ToastGravity.BOTTOM);
+      await Future.delayed(const Duration(milliseconds: 1000), openAppSettings);
       return;
     }
 

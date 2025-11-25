@@ -14,28 +14,31 @@ class HomeNotifier extends _$HomeNotifier {
   @override
   Future<HomeState> build() async {
     // 추천 프로필 가져오기
-    final profiles =
-        await ref.read(fetchRecommendedProfileUseCaseProvider).execute();
+    final profiles = await ref
+        .read(fetchRecommendedProfileUseCaseProvider)
+        .execute();
 
-    return HomeState(recommendedProfiles: profiles);
+    return HomeState(recommendedProfiles: profiles, hasProcessedMission: false);
   }
 
   // 상태만 변경
-  void updateFavoriteType({required int memberId, required FavoriteType type}) {
+  void updateFavoriteType({
+    required int memberId,
+    required FavoriteType type,
+    bool? hasProcessedMission,
+  }) {
     final profiles = state.value?.recommendedProfiles;
     if (profiles == null) return;
 
     state = AsyncData(
       state.requireValue.copyWith(
-        recommendedProfiles:
-            profiles
-                .map(
-                  (e) =>
-                      e.memberId == memberId
-                          ? e.copyWith(favoriteType: type)
-                          : e,
-                )
-                .toList(),
+        recommendedProfiles: profiles
+            .map(
+              (e) =>
+                  e.memberId == memberId ? e.copyWith(favoriteType: type) : e,
+            )
+            .toList(),
+        hasProcessedMission: hasProcessedMission ?? false,
       ),
     );
   }
@@ -47,15 +50,24 @@ class HomeNotifier extends _$HomeNotifier {
   }) async {
     if (!state.hasValue || state.value!.recommendedProfiles == null) return;
     try {
-      await ref
+      final hasProcessedMission = await ref
           .read(favoriteRepositoryProvider)
           .requestFavorite(memberId, type: type);
 
-      updateFavoriteType(memberId: memberId, type: type);
-    } catch (e, stackTrace) {
+      updateFavoriteType(
+        memberId: memberId,
+        type: type,
+        hasProcessedMission: hasProcessedMission,
+      );
+    } catch (e) {
       Log.e('좋아요 설정 실패: $e');
-      state = AsyncError(e, stackTrace);
     }
+  }
+
+  void resetHasProcessedMission() {
+    if (!state.hasValue) return;
+
+    state = AsyncData(state.requireValue.copyWith(hasProcessedMission: false));
   }
 
   Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {

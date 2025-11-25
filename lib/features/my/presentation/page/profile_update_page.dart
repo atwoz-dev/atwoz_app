@@ -14,16 +14,12 @@ import 'package:atwoz_app/app/widget/view/view.dart';
 class ProfileUpdatePage extends ConsumerWidget {
   final String profileType;
 
-  const ProfileUpdatePage({
-    super.key,
-    required this.profileType,
-  });
+  const ProfileUpdatePage({super.key, required this.profileType});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileManageState = ref.watch(profileManageProvider);
-    final profileManageNotifier =
-        ref.read(profileManageProvider.notifier);
+    final profileManageNotifier = ref.read(profileManageProvider.notifier);
 
     return profileManageState.when(
       data: (state) {
@@ -66,7 +62,8 @@ class ProfileUpdatePage extends ConsumerWidget {
                           profile: state.profile,
                           onProfileUpdated: (selectedValue, isChanged) {
                             Log.d(
-                                'Selected Value: $selectedValue, isChanged: $isChanged');
+                              'Selected Value: $selectedValue, isChanged: $isChanged',
+                            );
                             profileManageNotifier.updateProfile(
                               profile: selectedValue,
                               isChanged: isChanged,
@@ -82,8 +79,8 @@ class ProfileUpdatePage extends ConsumerWidget {
                       onPressed: () async {
                         if (!state.isChanged) return;
 
-                        final isSaved =
-                            await profileManageNotifier.saveProfile();
+                        final isSaved = await profileManageNotifier
+                            .saveProfile();
 
                         if (!isSaved) return;
 
@@ -106,12 +103,8 @@ class ProfileUpdatePage extends ConsumerWidget {
           ),
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (error, stackTrace) => Center(
-        child: Text(error.toString()),
-      ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => Center(child: Text(error.toString())),
     );
   }
 }

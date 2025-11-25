@@ -15,11 +15,8 @@ class ProfileSelfIntroduction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selfIntroductionItems = ref
-            .watch(profileProvider(userId))
-            .profile
-            ?.selfIntroductionItems ??
-        [];
+    final selfIntroductionItems =
+        ref.watch(profileProvider(userId)).profile?.selfIntroductionItems ?? [];
 
     return ColoredBox(
       color: context.palette.outline,
@@ -31,22 +28,21 @@ class ProfileSelfIntroduction extends ConsumerWidget {
           mainAxisSpacing: 16.0,
           mainAxisExtent: 99 + 16.0,
         ),
-        padding: const EdgeInsets.symmetric(
-          vertical: 12.0,
-          horizontal: 16.0,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         physics: const NeverScrollableScrollPhysics(),
         children: selfIntroductionItems
-            .map((introduction) => GestureDetector(
-                  onTap: () => _SelfIntroducitonDetailBottomSheet._open(
-                    context,
-                    introduction: introduction,
-                  ),
-                  child: _SelfIntroductionItem(
-                    about: introduction.about,
-                    introduction: introduction.title,
-                  ),
-                ))
+            .map(
+              (introduction) => GestureDetector(
+                onTap: () => _SelfIntroducitonDetailBottomSheet._open(
+                  context,
+                  introduction: introduction,
+                ),
+                child: _SelfIntroductionItem(
+                  about: introduction.about,
+                  introduction: introduction.title,
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -73,12 +69,7 @@ class _SelfIntroductionItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            about,
-            style: Fonts.body03Regular(
-              context.palette.tertiary,
-            ),
-          ),
+          Text(about, style: Fonts.body03Regular(context.palette.tertiary)),
           const Gap(8.0),
           Text(
             introduction,
@@ -100,11 +91,10 @@ class _SelfIntroducitonDetailBottomSheet extends StatelessWidget {
   static Future _open(
     BuildContext context, {
     required SelfIntroductionData introduction,
-  }) =>
-      showDialog(
-        context: context,
-        builder: (_) => _SelfIntroducitonDetailBottomSheet._(introduction),
-      );
+  }) => showDialog(
+    context: context,
+    builder: (_) => _SelfIntroducitonDetailBottomSheet._(introduction),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +118,7 @@ class _SelfIntroducitonDetailBottomSheet extends StatelessWidget {
                 Text('인터뷰 답변', style: Fonts.body01Medium()),
                 Text(
                   introduction.title,
-                  style: Fonts.header03().copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Fonts.header03().copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ],

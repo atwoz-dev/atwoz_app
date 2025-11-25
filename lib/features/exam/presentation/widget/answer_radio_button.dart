@@ -21,52 +21,52 @@ class AnswerRadioButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => onTap(id),
-      style: ElevatedButton.styleFrom(
-              backgroundColor: selectedId == id
-                  ? Palette.colorPrimary100
-                  : Palette.colorWhite,
-              foregroundColor: Palette.colorBlack,
-              side: BorderSide(
-                color: Palette.colorGrey100,
-                width: 1.0,
-              ),
-              elevation: 0,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              textStyle: Fonts.body01Medium(),
-              minimumSize: Size(double.infinity, 0),
-              alignment: Alignment.centerLeft)
-          .copyWith(
-        overlayColor: WidgetStateProperty.all(Colors.transparent),
-        shadowColor: WidgetStateProperty.all(Colors.transparent),
-        splashFactory: NoSplash.splashFactory,
-        elevation: WidgetStateProperty.all(0),
-      ),
+      style:
+          ElevatedButton.styleFrom(
+            backgroundColor: selectedId == id
+                ? Palette.colorPrimary100
+                : Palette.colorWhite,
+            foregroundColor: Palette.colorBlack,
+            side: BorderSide(color: Palette.colorGrey100, width: 1.0),
+            elevation: 0,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            textStyle: Fonts.body01Medium(),
+            minimumSize: Size(double.infinity, 0),
+            alignment: Alignment.centerLeft,
+          ).copyWith(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            shadowColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory,
+            elevation: WidgetStateProperty.all(0),
+          ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: selectedId == id
-                    ? Border.all(color: Palette.colorPrimary500, width: 4.5)
-                    : Border.all(color: Palette.colorGrey200, width: 1.5),
-              )),
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: selectedId == id
+                  ? Border.all(color: Palette.colorPrimary500, width: 4.5)
+                  : Border.all(color: Palette.colorGrey200, width: 1.5),
+            ),
+          ),
           Gap(8),
           Flexible(
-              child: Text(
-            content,
-            softWrap: true,
-            overflow: TextOverflow.visible,
-            maxLines: null,
-            textAlign: TextAlign.start,
-            style: Fonts.body02Regular(Palette.colorBlack),
-          )),
+            child: Text(
+              content,
+              softWrap: true,
+              overflow: TextOverflow.visible,
+              maxLines: null,
+              textAlign: TextAlign.start,
+              style: Fonts.body02Regular(Palette.colorBlack),
+            ),
+          ),
         ],
       ),
     );

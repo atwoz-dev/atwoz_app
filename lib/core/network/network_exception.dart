@@ -32,8 +32,11 @@ abstract class NetworkException with _$NetworkException implements Exception {
   const factory NetworkException.maintenanceException() = _MaintenanceException;
 
   // apiException: API 응답에 대한 예외 상태를 처리하며, HTTP 상태 코드와 에러 메시지를 인자로 받는다.
-  const factory NetworkException.apiException(
-      {int? status, String? code, String? message}) = _ApiException;
+  const factory NetworkException.apiException({
+    int? status,
+    String? code,
+    String? message,
+  }) = _ApiException;
 
   // 다양한 예외 상황에 맞는 NetworkException 객체를 반환하는 메서드
   static NetworkException getException(Object error) {
@@ -42,8 +45,12 @@ abstract class NetworkException with _$NetworkException implements Exception {
       if (error is Error) {
         stackTrace = error.stackTrace;
       }
-      Log.e('Error type: ${error.runtimeType}',
-          name: 'NetworkException', errorObject: error, stackTrace: stackTrace);
+      Log.e(
+        'Error type: ${error.runtimeType}',
+        name: 'NetworkException',
+        errorObject: error,
+        stackTrace: stackTrace,
+      );
     }
 
     /// 예외 타입에 따른 분기 처리
@@ -85,7 +92,10 @@ abstract class NetworkException with _$NetworkException implements Exception {
           }
 
           return NetworkException.apiException(
-              status: status, code: code, message: message);
+            status: status,
+            code: code,
+            message: message,
+          );
 
         case DioExceptionType.badCertificate:
         case DioExceptionType.cancel:
@@ -111,9 +121,9 @@ abstract class NetworkException with _$NetworkException implements Exception {
 
   // 에러 메시지 가져오는 getter
   String? get message => maybeWhen<String?>(
-        apiException: (status, code, message) => message,
-        formatException: () => 'Function이 변경되었습니다. 새로운 버전으로 업그레이드 해주세요!',
-        connectionException: () => '네트워크 연결이 불안정합니다. 다시 시도해 주세요!',
-        orElse: () => '죄송합니다. 에러 발생으로 인해 나중에 다시 시도해 주세요.',
-      );
+    apiException: (status, code, message) => message,
+    formatException: () => 'Function이 변경되었습니다. 새로운 버전으로 업그레이드 해주세요!',
+    connectionException: () => '네트워크 연결이 불안정합니다. 다시 시도해 주세요!',
+    orElse: () => '죄송합니다. 에러 발생으로 인해 나중에 다시 시도해 주세요.',
+  );
 }

@@ -44,11 +44,7 @@ class ProfileImageWidget extends StatelessWidget {
           ),
         ),
         if (isRepresentative)
-          const Positioned(
-            top: 8,
-            left: 8,
-            child: _RepresentativeBadge(),
-          ),
+          const Positioned(top: 8, left: 8, child: _RepresentativeBadge()),
         Positioned(
           bottom: 8,
           right: 8,
@@ -89,20 +85,11 @@ class _ProfileImageContent extends StatelessWidget {
 
     switch (imageFile!.sourceType) {
       case ImageSourceType.network:
-        return DefaultImage(
-          imageURL: imageFile!.path,
-          fit: BoxFit.cover,
-        );
+        return DefaultImage(imageURL: imageFile!.path, fit: BoxFit.cover);
       case ImageSourceType.file:
-        return Image.file(
-          File(imageFile!.path),
-          fit: BoxFit.cover,
-        );
+        return Image.file(File(imageFile!.path), fit: BoxFit.cover);
       case ImageSourceType.memory:
-        return Image.memory(
-          base64Decode(imageFile!.path),
-          fit: BoxFit.cover,
-        );
+        return Image.memory(base64Decode(imageFile!.path), fit: BoxFit.cover);
       default:
         return isRepresentative
             ? const DefaultIcon(
@@ -128,10 +115,7 @@ class _RepresentativeBadge extends StatelessWidget {
         color: context.palette.primary,
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(
-        '대표',
-        style: Fonts.body03Regular(context.palette.onPrimary),
-      ),
+      child: Text('대표', style: Fonts.body03Regular(context.palette.onPrimary)),
     );
   }
 }
@@ -153,10 +137,7 @@ class _ProfileImageActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageFile == null) {
-      return _CircleIconButton(
-        iconPath: IconPath.add,
-        onTap: onPickImage,
-      );
+      return _CircleIconButton(iconPath: IconPath.add, onTap: onPickImage);
     }
 
     if (!isRepresentative) {
@@ -175,10 +156,7 @@ class _CircleIconButton extends StatelessWidget {
   final String iconPath;
   final VoidCallback onTap;
 
-  const _CircleIconButton({
-    required this.iconPath,
-    required this.onTap,
-  });
+  const _CircleIconButton({required this.iconPath, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -190,16 +168,11 @@ class _CircleIconButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Palette.colorWhite,
           shape: BoxShape.circle,
-          border: Border.all(
-            color: Palette.colorGrey400,
-            width: 1.5,
-          ),
+          border: Border.all(color: Palette.colorGrey400, width: 1.5),
         ),
         child: DefaultIcon(
           iconPath,
-          colorFilter: DefaultIcon.fillColor(
-            Palette.colorGrey400,
-          ),
+          colorFilter: DefaultIcon.fillColor(Palette.colorGrey400),
         ),
       ),
     );

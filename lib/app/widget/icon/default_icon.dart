@@ -42,7 +42,9 @@ class DefaultIcon extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (icon?.isEmpty ?? true) {
       return SizedBox.square(
-          dimension: size, child: const DefaultCircularProgressIndicator());
+        dimension: size,
+        child: const DefaultCircularProgressIndicator(),
+      );
     }
 
     Widget? result;
@@ -69,10 +71,11 @@ class DefaultIcon extends ConsumerWidget {
 
     if (onPressed != null) {
       result = IconButton(
-          alignment: alignment,
-          padding: padding,
-          onPressed: onPressed,
-          icon: result);
+        alignment: alignment,
+        padding: padding,
+        onPressed: onPressed,
+        icon: result,
+      );
     } else {
       result = Padding(padding: padding, child: result);
     }

@@ -33,7 +33,7 @@ final class HomeNotifierProvider
   HomeNotifier create() => HomeNotifier();
 }
 
-String _$homeNotifierHash() => r'c8d43e57de756d112af2f83124df1715dff8ec6f';
+String _$homeNotifierHash() => r'08ad7d9a53eb54b55300fab8a6d072a024582c94';
 
 abstract class _$HomeNotifier extends $AsyncNotifier<HomeState> {
   FutureOr<HomeState> build();
