@@ -1,6 +1,9 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/core/storage/local_storage.dart';
+import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
@@ -29,22 +32,30 @@ class ProfileNotifier extends _$ProfileNotifier {
   Future<void> _initializeProfileState(int userId) async {
     try {
       final profile = await ProfileFetchUseCase(ref).call(userId);
+
+      final contactMethod = _repository.getContactMethod();
+      final (phoneNumber, kakaoId) = await (
+        _repository.getPhoneNumber(),
+        _repository.getKakaoId(),
+      ).wait;
+
       state = state.copyWith(
         profile: profile,
         myUserName: _myName,
-        registeredContact: true,
+        phoneNumber: phoneNumber,
+        kakaoId: kakaoId,
+        selectedContactMethod: contactMethod,
         // TODO(Han): 추후 실제 보유 하트 수로 대체
         heartPoint: 30,
         message: '',
         isLoaded: true,
         error: null,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       Log.e(e);
-      state = state.copyWith(
-        isLoaded: true,
-        error: DialogueErrorType.network,
-      );
+      Log.e(stackTrace);
+
+      state = state.copyWith(isLoaded: true, error: DialogueErrorType.network);
     }
   }
 
@@ -67,10 +78,9 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      await ref.read(favoriteRepositoryProvider).requestFavorite(
-            state.profile!.id,
-            type: type,
-          );
+      await ref
+          .read(favoriteRepositoryProvider)
+          .requestFavorite(state.profile!.id, type: type);
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
@@ -84,6 +94,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       await ProfileMatchRequestUseCase(ref).call(
         userId: state.profile!.id,
         message: state.message,
+        method: state.selectedContactMethod ?? ContactMethod.phone,
       );
 
       state = state.copyWith(
@@ -104,14 +115,12 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      await ProfileMatchRejectUseCase(ref).call(
-        state.profile!.matchStatus.matchId,
-      );
+      await ProfileMatchRejectUseCase(
+        ref,
+      ).call(state.profile!.matchStatus.matchId);
 
       state = state.copyWith(
-        profile: state.profile?.copyWith(
-          matchStatus: const UnMatched(),
-        ),
+        profile: state.profile?.copyWith(matchStatus: const UnMatched()),
       );
     } catch (e) {
       Log.e(e);
@@ -121,14 +130,12 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   Future<void> resetMatchStatus() async {
     try {
-      await ProfileMatchResetUseCase(ref).call(
-        state.profile!.matchStatus.matchId,
-      );
+      await ProfileMatchResetUseCase(
+        ref,
+      ).call(state.profile!.matchStatus.matchId);
 
       state = state.copyWith(
-        profile: state.profile?.copyWith(
-          matchStatus: const UnMatched(),
-        ),
+        profile: state.profile?.copyWith(matchStatus: const UnMatched()),
       );
     } catch (e) {
       Log.e(e);
@@ -197,6 +204,22 @@ class ProfileNotifier extends _$ProfileNotifier {
     );
 
     return true;
+  }
+
+  set selectedContactMethod(ContactMethod method) {
+    _repository.setContactMethod(method);
+    state = state.copyWith(selectedContactMethod: method);
+  }
+
+  void setContactInitialSetting({
+    required ContactMethod method,
+    required String kakaoId,
+  }) {
+    selectedContactMethod = method;
+    ref
+        .read(localStorageProvider)
+        .saveEncrypted(SecureStorageItem.kakaoId, kakaoId);
+    state = state.copyWith(kakaoId: kakaoId, selectedContactMethod: method);
   }
 
   void resetError() {

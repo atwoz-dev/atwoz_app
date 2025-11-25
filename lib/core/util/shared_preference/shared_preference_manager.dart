@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceManager {
@@ -28,32 +27,40 @@ class SharedPreferenceManager {
 
   static T? getValue<T>(_SharedPreferenceKey<T> key) {
     assert(_instance != null, 'SharedPreferences is not initialized');
-    switch (key) {
-      case SharedPreferenceKey<T>():
-        final jsonString = _instance?.getString(key.key);
-        if (jsonString == null) {
-          return key.defaultValue;
-        }
-        return key.fromJson(json.decode(jsonString));
-      case SharedPreferencePrimitiveKey<int>():
-        return _instance?.getInt(key.key) as T? ?? key.defaultValue;
-      case SharedPreferencePrimitiveKey<double>():
-        return _instance?.getDouble(key.key) as T? ?? key.defaultValue;
-      case SharedPreferencePrimitiveKey<bool>():
-        return _instance?.getBool(key.key) as T? ?? key.defaultValue;
-      case SharedPreferencePrimitiveKey<String>():
-        return _instance?.getString(key.key) as T? ?? key.defaultValue;
-      default:
-        throw UnimplementedError();
+    try {
+      switch (key) {
+        case SharedPreferenceKey<T>():
+          final jsonString = _instance?.getString(key.key);
+          if (jsonString == null) {
+            return key.defaultValue;
+          }
+
+          try {
+            return key.fromJson(json.decode(jsonString));
+          } on FormatException {
+            return key.fromJson(jsonString);
+          } on TypeError {
+            return key.defaultValue;
+          }
+        case SharedPreferencePrimitiveKey<int>():
+          return _instance?.getInt(key.key) as T? ?? key.defaultValue;
+        case SharedPreferencePrimitiveKey<double>():
+          return _instance?.getDouble(key.key) as T? ?? key.defaultValue;
+        case SharedPreferencePrimitiveKey<bool>():
+          return _instance?.getBool(key.key) as T? ?? key.defaultValue;
+        case SharedPreferencePrimitiveKey<String>():
+          return _instance?.getString(key.key) as T? ?? key.defaultValue;
+        default:
+          throw UnimplementedError();
+      }
+    } on FormatException {
+      return key.defaultValue;
     }
   }
 }
 
 sealed class _SharedPreferenceKey<T> {
-  const _SharedPreferenceKey(
-    this.key, {
-    this.defaultValue,
-  });
+  const _SharedPreferenceKey(this.key, {this.defaultValue});
 
   final String key;
   final T? defaultValue;
