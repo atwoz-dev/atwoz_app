@@ -19,9 +19,7 @@ class TokenInterceptor extends Interceptor with LogMixin {
   ) async {
     if (options.headers.containsKey('requiresAccessToken')) {
       if (options.headers['requiresAccessToken'] == true) {
-        final String? token = await ref
-            .read(authUsecaseProvider)
-            .getAccessToken();
+        final token = await ref.read(authUsecaseProvider).getAccessToken();
         options.headers.addAll(<String, Object?>{
           'Authorization': 'Bearer $token',
         });
@@ -37,14 +35,15 @@ class TokenInterceptor extends Interceptor with LogMixin {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    final AuthUseCase authService = ref.read(authUsecaseProvider);
+    final authService = ref.read(authUsecaseProvider);
     final router = ref.read(routerProvider);
 
     if (err.response?.statusCode == 401) {
       final authService = ref.read(authUsecaseProvider);
-      final newToken = await authService.getAccessToken();
+      // TODO(helljh): token 갱신 시나리오
+      // final newToken = await authService.getAccessToken();
 
-      authService.setAccessToken('');
+      authService.signOut();
       router.goNamed(AppRoute.onboard.name);
     }
 

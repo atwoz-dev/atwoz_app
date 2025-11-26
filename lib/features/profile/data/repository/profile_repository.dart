@@ -17,6 +17,7 @@ class ProfileRepository extends BaseRepository {
 
   Future<ProfileDetailResponse> getProfileDetail(int id) async {
     final res = await apiService.getJson<Map<String, dynamic>>('/member/$id');
+
     if (res['data'] is! Map<String, Object?>) {
       throw Exception('data type is not Map<String, dynamic> $res');
     }

@@ -12,6 +12,7 @@ abstract class ProfileState with _$ProfileState {
     required int heartPoint,
     required String message,
     required bool isLoaded,
+    required bool needToExit,
     required DialogueErrorType? error,
   }) = _ProfileState;
 
@@ -21,6 +22,7 @@ abstract class ProfileState with _$ProfileState {
     heartPoint: 0,
     message: '',
     isLoaded: false,
+    needToExit: false,
     error: null,
   );
 

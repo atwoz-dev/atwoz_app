@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
 import 'package:atwoz_app/core/util/toast.dart';
@@ -47,7 +48,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
-  void _listener(ProfileState? prev, ProfileState curr) async {
+  void _listener(ProfileState? prev, ProfileState curr) {
     final isContactSettingInitialized = ref
         .read(contactSettingProvider)
         .isContactSettingInitialized;
@@ -60,7 +61,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
 
     if (prev?.error != curr.error) {
-      _handleErrorChanged(curr.error);
+      _handleErrorChanged(curr.error, curr.needToExit);
     }
   }
 
@@ -68,9 +69,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     MatchStatus? status, {
     required bool isContactInitialized,
   }) {
-    if (status == null) return;
-
-    if (!mounted) return;
+    if (status == null || !mounted) return;
     final profileNotifier = ref.read(profileProvider(widget.userId).notifier);
 
     switch (status) {
@@ -133,17 +132,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
   }
 
-  void _handleErrorChanged(DialogueErrorType? error) {
+  void _handleErrorChanged(DialogueErrorType? error, bool needToExit) {
     if (error == null) return;
 
     ErrorDialog.open(
       context,
       error: error,
       onConfirm: () {
+        context.pop();
+
+        if (needToExit) {
+          context.popUntil(AppRoute.mainTab);
+          return;
+        }
         ref.read(profileProvider(widget.userId).notifier).resetError();
-        Navigator.of(context)
-          ..pop()
-          ..pop();
       },
     );
   }
