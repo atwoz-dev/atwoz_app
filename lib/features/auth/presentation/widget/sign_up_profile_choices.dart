@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/dimens.dart';
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
@@ -7,7 +8,7 @@ import 'package:atwoz_app/app/widget/list/list_chip.dart';
 import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_provider.dart';
+import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
 import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ Widget buildSelectInput({
 
 Widget buildBirthInput({
   required int? selectedYear,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   const defaultYear = 1997;
   // selectedYear가 없으면 초기 세팅
@@ -50,7 +51,7 @@ Widget buildBirthInput({
 
 Widget buildHeightInput({
   required int? selectedHeight,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   const defaultHeight = 170;
 
@@ -73,7 +74,7 @@ Widget buildHeightInput({
 
 Widget buildJobInput({
   required String? selectedJob,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   return SingleSelectListChip(
     options: Job.values.map((e) => e.label).toList(),
@@ -217,7 +218,7 @@ class _LocationInputWidgetState extends ConsumerState<LocationInputWidget> {
 
 Widget buildEducationInput({
   required Education? selectedEducation,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   final options = [...Education.values.map((e) => e.label)];
 
@@ -232,7 +233,7 @@ Widget buildEducationInput({
 
 Widget buildMbtiInput({
   required SignUpProcessState signUpState,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   final mbtiOptions = [
     ['E', 'N', 'F', 'P'],
@@ -316,7 +317,7 @@ Widget buildMbtiInput({
 
 Widget buildSmokingInput({
   required SmokingStatus? selectedSmoking,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) => buildSelectInput(
   selectedValue: selectedSmoking?.label,
   values: SmokingStatus.values.map((e) => e.label).toList(),
@@ -325,7 +326,7 @@ Widget buildSmokingInput({
 
 Widget buildDrinkingInput({
   required DrinkingStatus? selectedDrinking,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) => buildSelectInput(
   selectedValue: selectedDrinking?.label,
   values: DrinkingStatus.values.map((e) => e.label).toList(),
@@ -334,7 +335,7 @@ Widget buildDrinkingInput({
 
 Widget buildReligionInput({
   required Religion? selectedReligion,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) => buildSelectInput(
   selectedValue: selectedReligion?.label,
   values: Religion.values.map((e) => e.label).toList(),
@@ -343,11 +344,12 @@ Widget buildReligionInput({
 
 Widget buildHobbiesInput({
   required List<String> selectedHobbies,
-  required SignUpProcess signUpNotifier,
+  required SignUpProcessNotifier signUpNotifier,
 }) {
   return ListChip(
     options: hobbies,
     selectedOptions: selectedHobbies,
     onSelectionChanged: signUpNotifier.updateHobbies,
+    maxSelectionCount: Dimens.maxSelectableHobbiesCount,
   );
 }

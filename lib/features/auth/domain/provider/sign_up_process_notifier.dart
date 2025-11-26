@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/core/util/util.dart';
+import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
 import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,10 +8,10 @@ import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-part 'sign_up_process_provider.g.dart';
+part 'sign_up_process_notifier.g.dart';
 
 @Riverpod(keepAlive: false)
-class SignUpProcess extends _$SignUpProcess {
+class SignUpProcessNotifier extends _$SignUpProcessNotifier {
   @override
   SignUpProcessState build() => const SignUpProcessState();
 
@@ -169,5 +170,18 @@ class SignUpProcess extends _$SignUpProcess {
     state = state.copyWith(selectedLocation: location);
 
     return location;
+  }
+
+  Future<bool> uploadProfile() async {
+    try {
+      await ref
+          .read(authUsecaseProvider)
+          .uploadProfile(state.toProfileUploadRequest());
+
+      return true;
+    } catch (e) {
+      Log.e('프로필 업로드 실패: $e');
+      return false;
+    }
   }
 }

@@ -1,7 +1,11 @@
+import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
 import 'package:atwoz_app/features/report/domain/model/report.dart';
+import 'package:atwoz_app/features/report/domain/model/report_block_result.dart';
 import 'package:atwoz_app/features/report/domain/use_case/block_user_use_case.dart';
 import 'package:atwoz_app/features/report/domain/use_case/send_report_use_case.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'report_notifier.g.dart';
@@ -21,18 +25,85 @@ class ReportNotifier extends _$ReportNotifier {
     state = state.copyWith(content: content);
   }
 
-  Future<bool> report() async {
+  Future<ReportBlockResult> report() async {
     try {
-      await ref.read(sendReportUseCaseProvider).execute(state);
-      return true;
+      final isReportSuccess = await ref
+          .read(sendReportUseCaseProvider)
+          .execute(state);
+
+      if (isReportSuccess) {
+        try {
+          await _deleteCachedIntroducedProfiles();
+
+          return const ReportBlockResult(
+            isServerProcessed: true,
+            isDeletedCache: true,
+          );
+        } catch (e) {
+          Log.e('캐시 삭제 실패: $e');
+          return const ReportBlockResult(
+            isServerProcessed: true,
+            isDeletedCache: false,
+          );
+        }
+      }
+
+      return const ReportBlockResult(
+        isServerProcessed: false,
+        isDeletedCache: false,
+      );
     } catch (e) {
-      return false;
+      return const ReportBlockResult(
+        isServerProcessed: false,
+        isDeletedCache: false,
+      );
     }
   }
 
-  Future<bool> block() async {
+  Future<ReportBlockResult> block() async {
     try {
-      await ref.read(blockUserUseCaseProvider).execute(state.reporteeId);
+      final isBlockSuccess = await ref
+          .read(blockUserUseCaseProvider)
+          .execute(state.reporteeId);
+
+      if (isBlockSuccess) {
+        try {
+          await _deleteCachedIntroducedProfiles();
+          return const ReportBlockResult(
+            isServerProcessed: true,
+            isDeletedCache: true,
+          );
+        } catch (e) {
+          Log.e('캐시 삭제 실패: $e');
+          return const ReportBlockResult(
+            isServerProcessed: true,
+            isDeletedCache: false,
+          );
+        }
+      }
+
+      return const ReportBlockResult(
+        isServerProcessed: false,
+        isDeletedCache: false,
+      );
+    } catch (e) {
+      return const ReportBlockResult(
+        isServerProcessed: false,
+        isDeletedCache: false,
+      );
+    }
+  }
+
+  Future<void> _deleteCachedIntroducedProfiles() async {
+    final box = await Hive.openBox<Map>(IntroducedProfileDto.boxName);
+
+    await box.clear();
+    await box.close();
+  }
+
+  Future<bool> clearCachedProfiles() async {
+    try {
+      await _deleteCachedIntroducedProfiles();
       return true;
     } catch (e) {
       return false;

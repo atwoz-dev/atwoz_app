@@ -8,6 +8,7 @@ import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
+import 'package:atwoz_app/features/my/my.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,6 +77,7 @@ class GlobalNotifier extends _$GlobalNotifier {
   }
 
   Future<void> clearLocalData() async {
+    Log.d('clearLocalData 진입함');
     // CachedUserProfile 박스 열기 또는 참조
     final profileBox = await Hive.openBox<CachedUserProfile>(
       CachedUserProfile.boxName,
@@ -86,6 +88,9 @@ class GlobalNotifier extends _$GlobalNotifier {
       IntroducedProfileDto.boxName,
     );
 
+    // MyProfileImage 박스 열기 또는 참조
+    final myProfileImagesBox = await Hive.openBox(MyProfileImage.boxName);
+
     state = state.copyWith(profile: CachedUserProfile.init());
 
     try {
@@ -93,6 +98,8 @@ class GlobalNotifier extends _$GlobalNotifier {
       await profileBox.close();
       await introducedProfilesBox.clear();
       await introducedProfilesBox.close();
+      await myProfileImagesBox.clear();
+      await myProfileImagesBox.close();
     } catch (e) {
       Log.d('Hive 데이터 삭제 시 오류 발생: $e');
     }

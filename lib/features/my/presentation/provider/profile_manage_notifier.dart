@@ -99,7 +99,7 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     }
   }
 
-  Future<List<MyProfileImage?>> _fetchProfileImages() async {
+  Future<List<MyProfileImage>> _fetchProfileImages() async {
     return ref.watch(fetchProfileImagesUseCaseProvider).fetchProfileImages();
   }
 }

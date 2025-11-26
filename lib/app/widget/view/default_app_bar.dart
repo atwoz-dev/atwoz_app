@@ -1,5 +1,4 @@
 import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/auth/domain/provider/auth_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,36 +29,21 @@ class DefaultAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateProvider);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (authState.isLoading)
-          const LinearProgressIndicator()
-        else
-          AppBar(
-            leading: _buildLeadingAppBar(context),
-            leadingWidth: 60.0,
-            toolbarHeight: 80 - 1,
-            centerTitle: true,
-            titleSpacing: 0,
-            title: title != null
-                ? Text(title!, style: Fonts.body01Medium())
-                : null,
-            actions: actions,
-            automaticallyImplyLeading: true,
-          ),
-        if (authState.error != null)
-          Container(
-            color: context.palette.error,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Error: ${authState.error}',
-              style: Fonts.body01Medium(),
-              textScaler: TextScaler.noScaling,
-            ),
-          ),
+        AppBar(
+          leading: _buildLeadingAppBar(context),
+          leadingWidth: 60.0,
+          toolbarHeight: 80 - 1,
+          centerTitle: true,
+          titleSpacing: 0,
+          title: title != null
+              ? Text(title!, style: Fonts.body01Medium())
+              : null,
+          actions: actions,
+          automaticallyImplyLeading: true,
+        ),
         if (isDivider) const DefaultDivider(),
         if (bottom != null) bottom!,
       ],

@@ -34,10 +34,12 @@ class _OnboardingCertificationPageState
     extends BaseConsumerStatefulPageState<OnboardingCertificationPage> {
   final _codeController = TextEditingController();
   final _focusNode = FocusNode();
+  late final OnboardingNotifier _notifier;
 
   @override
   void initState() {
     super.initState();
+    _notifier = ref.read(onboardingProvider.notifier);
     Future.microtask(() async {
       final notifier = ref.read(onboardingProvider.notifier);
       final isCodeSended = await notifier.sendVerificationCode(
@@ -48,7 +50,7 @@ class _OnboardingCertificationPageState
     });
 
     _codeController.addListener(() {
-      ref.read(onboardingProvider.notifier).validateInput(_codeController.text);
+      _notifier.validateInput(_codeController.text);
     });
   }
 
@@ -62,7 +64,6 @@ class _OnboardingCertificationPageState
   @override
   Widget buildPage(BuildContext context) {
     final state = ref.watch(onboardingProvider);
-    final notifier = ref.read(onboardingProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -106,7 +107,7 @@ class _OnboardingCertificationPageState
                               textColor: palette.onSurface,
                               onPressed: state.leftSeconds == 0
                                   ? () =>
-                                        notifier.resendCode(widget.phoneNumber)
+                                        _notifier.resendCode(widget.phoneNumber)
                                   : null,
                               child: Text(
                                 state.leftSeconds == 0
@@ -132,7 +133,7 @@ class _OnboardingCertificationPageState
             padding: EdgeInsets.only(bottom: screenHeight * 0.05),
             child: DefaultElevatedButton(
               onPressed: state.isButtonEnabled && !state.isLoading
-                  ? () => _verifyCode(notifier)
+                  ? () => _verifyCode(_notifier)
                   : null,
               child: Text(
                 '인증하기',
