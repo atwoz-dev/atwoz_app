@@ -28,7 +28,7 @@ class DefaultIcon extends ConsumerWidget {
   });
 
   final String? icon;
-  final double? size;
+  final double size;
   final BoxFit fit;
   final ColorFilter? colorFilter;
   final AlignmentGeometry alignment;
@@ -80,13 +80,11 @@ class DefaultIcon extends ConsumerWidget {
       result = Padding(padding: padding, child: result);
     }
 
-    if (size != null) {
-      result = SizedBox(
-        width: size! + padding.horizontal,
-        height: size! + padding.vertical,
-        child: result,
-      );
-    }
+    result = SizedBox(
+      width: size + padding.horizontal,
+      height: size + padding.vertical,
+      child: result,
+    );
 
     return result;
   }

@@ -20,15 +20,14 @@ class IntroduceTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double padding = horizontalPadding ?? context.screenWidth * 0.05;
-    final double firstTabWidth = 44.w;
-    final double secondTabWidth = 76.w;
+    final double tabWidth = context.screenWidth * 0.9 / 2;
 
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding / 2),
+          padding: EdgeInsets.symmetric(horizontal: padding),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: tabs.asMap().entries.map((entry) {
               final int index = entry.key;
               final String label = entry.value;
@@ -41,18 +40,19 @@ class IntroduceTabBar extends StatelessWidget {
                       vertical: 17.0,
                       horizontal: padding,
                     ),
-                    child: Text(
-                      label,
-                      style:
-                          Fonts.body02Regular(
-                            index == currentIndex
-                                ? context.palette.onSurface
-                                : Palette.colorGrey400,
-                          ).copyWith(
-                            fontWeight: index == currentIndex
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                          ),
+                    child: Center(
+                      child: Text(
+                        label,
+                        style: index == currentIndex
+                            ? Fonts.medium(
+                                fontSize: 14,
+                                color: Palette.colorBlack,
+                              )
+                            : Fonts.regular(
+                                fontSize: 14,
+                                color: Palette.colorGrey500,
+                              ),
+                      ),
                     ),
                   ),
                 ),
@@ -66,9 +66,9 @@ class IntroduceTabBar extends StatelessWidget {
             Container(height: 1, color: Palette.colorGrey100),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
-              left: currentIndex == 0 ? padding : (padding * 2) + firstTabWidth,
+              left: currentIndex == 0 ? padding : (padding) + tabWidth,
               child: Container(
-                width: currentIndex == 0 ? firstTabWidth : secondTabWidth,
+                width: currentIndex == 0 ? tabWidth : tabWidth,
                 height: 2,
                 color: Palette.colorBlack,
               ),

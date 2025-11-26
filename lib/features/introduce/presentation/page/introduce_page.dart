@@ -1,5 +1,4 @@
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/introduce/introduce.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/introduce_content_list.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 enum IntroduceTabType {
@@ -43,37 +43,96 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       horizontal: horizontalPadding,
     );
 
-    return Stack(
-      children: [
-        Scaffold(
-          body: Padding(
-            padding: EdgeInsets.only(top: screenHeight * 0.1), // 상단 여백 설정
+    return Scaffold(
+      body: Stack(
+        children: [
+          SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: contentPadding,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: 16.0.w,
+                  ),
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          '셀프소개',
-                          style: Fonts.header03().copyWith(
-                            fontWeight: FontWeight.w700,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '셀프소개',
+                                style: Fonts.bold(
+                                  fontSize: 20,
+                                  color: const Color(0xFF1F1E23),
+                                  lineHeight: 1,
+                                ),
+                              ),
+                              if (_currentTabIndex == 0)
+                                Column(
+                                  children: [
+                                    const Gap(8),
+                                    Text(
+                                      '이성에게 나를 먼저 어필해 볼까요?\n프로필 교환을 통해 메시지를 주고받을 수 있어요!',
+                                      style: Fonts.regular(
+                                        fontSize: 14,
+                                        color: Palette.colorGrey600,
+                                        lineHeight: 1.6,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
                           ),
-                        ),
-                      ),
-                      const DefaultAppBarActionGroup(
-                        showFilter: true,
-                        filterRoute: AppRoute.introduceFilter,
+                          const Spacer(),
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: IconButton(
+                                  onPressed: () => navigate(
+                                    context,
+                                    route: AppRoute.notification,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  icon: const DefaultIcon(
+                                    IconPath.notification,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                              if (_currentTabIndex == 0)
+                                Row(
+                                  children: [
+                                    const Gap(8),
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: IconButton(
+                                        onPressed: () => navigate(
+                                          context,
+                                          route: AppRoute.ideal,
+                                        ),
+                                        padding: EdgeInsets.zero,
+                                        icon: const DefaultIcon(
+                                          IconPath.filter,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                const Gap(16),
                 IntroduceTabBar(
                   tabs: ['소개', '내가 쓴 글'],
                   currentIndex: _currentTabIndex,
@@ -91,17 +150,17 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
               ],
             ),
           ),
-        ),
-        PostButton(
-          onTap: () async {
-            await navigate(context, route: AppRoute.introduceRegister);
+          PostButton(
+            onTap: () async {
+              await navigate(context, route: AppRoute.introduceRegister);
 
-            // 등록한 셀프소개가 적용되는 딜레이 필요
-            await Future.delayed(const Duration(milliseconds: 500));
-            _refreshIntroduceList();
-          },
-        ),
-      ],
+              // 등록한 셀프소개가 적용되는 딜레이 필요
+              await Future.delayed(const Duration(milliseconds: 500));
+              _refreshIntroduceList();
+            },
+          ),
+        ],
+      ),
     );
   }
 

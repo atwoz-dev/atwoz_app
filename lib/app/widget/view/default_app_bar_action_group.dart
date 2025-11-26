@@ -9,11 +9,17 @@ class DefaultAppBarActionGroup extends StatelessWidget {
     this.showNotification = true,
     this.showFilter = false,
     this.filterRoute = AppRoute.ideal,
+    this.iconSize = Dimens.iconSize,
+    this.visualDensity = -4.0,
+    this.boxConstraints = 48.0,
   });
 
   final bool showNotification;
   final bool showFilter;
   final AppRoute filterRoute;
+  final double iconSize;
+  final double visualDensity;
+  final double boxConstraints;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +30,18 @@ class DefaultAppBarActionGroup extends StatelessWidget {
             onPressed: () => navigate(context, route: AppRoute.notification),
             icon: IconPath.notification,
             tooltip: '알림',
+            iconSize: iconSize,
+            visualDensity: visualDensity,
+            boxConstraints: boxConstraints,
           ),
         if (showFilter)
           _AppBarAction(
             onPressed: () => navigate(context, route: filterRoute),
             icon: IconPath.filter,
             tooltip: '필터',
+            iconSize: iconSize,
+            visualDensity: visualDensity,
+            boxConstraints: boxConstraints,
           ),
       ],
     );
@@ -41,20 +53,32 @@ class _AppBarAction extends StatelessWidget {
     required this.onPressed,
     required this.icon,
     required this.tooltip,
+    required this.iconSize,
+    required this.visualDensity,
+    required this.boxConstraints,
   });
 
   final VoidCallback onPressed;
   final String icon;
   final String tooltip;
+  final double iconSize;
+  final double visualDensity;
+  final double boxConstraints;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: onPressed,
-      icon: DefaultIcon(icon, size: 24),
+      icon: DefaultIcon(icon, size: iconSize),
       tooltip: tooltip,
-      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+      visualDensity: VisualDensity(
+        horizontal: visualDensity,
+        vertical: visualDensity,
+      ),
+      constraints: BoxConstraints(
+        minWidth: boxConstraints,
+        minHeight: boxConstraints,
+      ),
     );
   }
 }
