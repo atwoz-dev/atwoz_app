@@ -3,13 +3,13 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DefaultTabBar extends StatelessWidget {
+class IntroduceTabBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
   final double? horizontalPadding;
   final List<String> tabs;
 
-  const DefaultTabBar({
+  const IntroduceTabBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
@@ -33,25 +33,27 @@ class DefaultTabBar extends StatelessWidget {
               final int index = entry.key;
               final String label = entry.value;
 
-              return GestureDetector(
-                onTap: () => onTap(index),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 17.0,
-                    horizontal: padding,
-                  ),
-                  child: Text(
-                    label,
-                    style:
-                        Fonts.body02Regular(
-                          index == currentIndex
-                              ? context.palette.onSurface
-                              : Palette.colorGrey400,
-                        ).copyWith(
-                          fontWeight: index == currentIndex
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => onTap(index),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 17.0,
+                      horizontal: padding,
+                    ),
+                    child: Text(
+                      label,
+                      style:
+                          Fonts.body02Regular(
+                            index == currentIndex
+                                ? context.palette.onSurface
+                                : Palette.colorGrey400,
+                          ).copyWith(
+                            fontWeight: index == currentIndex
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                    ),
                   ),
                 ),
               );

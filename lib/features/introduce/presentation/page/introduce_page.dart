@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/introduce/introduce.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/introduce_content_list.dart';
@@ -8,6 +9,15 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+
+enum IntroduceTabType {
+  all('소개'),
+  my('내가 쓴 글');
+
+  final String label;
+
+  const IntroduceTabType(this.label);
+}
 
 class IntroducePage extends ConsumerStatefulWidget {
   const IntroducePage({super.key});
@@ -64,7 +74,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   ),
                 ),
                 const Gap(16),
-                DefaultTabBar(
+                IntroduceTabBar(
                   tabs: ['소개', '내가 쓴 글'],
                   currentIndex: _currentTabIndex,
                   horizontalPadding: horizontalPadding,
@@ -108,3 +118,5 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
     }
   }
 }
+
+/// DefaultIcon(IconPath.frowningFace, size: 48),
