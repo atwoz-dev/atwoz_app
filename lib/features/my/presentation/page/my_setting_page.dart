@@ -46,10 +46,6 @@ class MySettingPage extends ConsumerWidget {
             title: '이용약관',
             onTapMove: () => navigate(context, route: AppRoute.termsOfUse),
           ),
-          _MySettingListItem(
-            title: 'FAQ',
-            onTapMove: () {}, // TODO: 추후 FAQ 화면 생성 시 navigate 추가
-          ),
         ],
       ),
     );

@@ -77,10 +77,9 @@ class SignUpProfileReviewPage extends ConsumerWidget {
               ),
               const Gap(24.0),
               DefaultElevatedButton(
-                child: const Text('기다리시는 동안 인터뷰를 작성해보세요'),
+                child: const Text('인터뷰 작성하고 하트 받아 가세요!'),
                 onPressed: () async {
-                  //TODO(mh): 인터뷰 화면으로 이동되어야 함
-                  navigate(context, route: AppRoute.mainTab);
+                  navigate(context, route: AppRoute.interview);
                 },
               ),
             ],
