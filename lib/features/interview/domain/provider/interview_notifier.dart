@@ -12,6 +12,16 @@ import 'interview_state.dart';
 
 part 'interview_notifier.g.dart';
 
+class AnswerSubmitResult {
+  final bool isSuccess;
+  final bool hasProcessedMission;
+
+  AnswerSubmitResult({
+    required this.isSuccess,
+    required this.hasProcessedMission,
+  });
+}
+
 @riverpod
 class InterviewNotifier extends _$InterviewNotifier {
   @override
@@ -44,20 +54,25 @@ class InterviewNotifier extends _$InterviewNotifier {
     await _initializeInterviewQuestionList(category);
   }
 
-  Future<void> addAnswer(
+  Future<AnswerSubmitResult> addAnswer(
     int questionId,
     String question,
     String answerContent,
   ) async {
     try {
-      await InterviewAddUseCase(
+      final response = await InterviewAddUseCase(
         ref,
       ).call(questionId: questionId, answerContent: answerContent);
+      await _saveInterviewToHive(questionId, question, answerContent);
+
+      return AnswerSubmitResult(
+        isSuccess: response.code == "200",
+        hasProcessedMission: response.data.hasProcessedMission,
+      );
     } catch (e) {
       Log.e('Failed to add interview to server: $e');
+      return AnswerSubmitResult(isSuccess: false, hasProcessedMission: false);
     }
-
-    await _saveInterviewToHive(questionId, question, answerContent);
   }
 
   Future<bool> removeAnswer(int answerId, int questionId) async {

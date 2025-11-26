@@ -1,4 +1,5 @@
 import 'package:atwoz_app/features/interview/data/data.dart';
+import 'package:atwoz_app/features/interview/data/dto/interview_answer_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InterviewAddUseCase {
@@ -6,11 +7,11 @@ class InterviewAddUseCase {
 
   const InterviewAddUseCase(this.ref);
 
-  Future<void> call({
+  Future<InterviewAnswerResponse> call({
     required int questionId,
     required String answerContent,
   }) async {
-    await ref
+    return await ref
         .read(interviewRepositoryProvider)
         .addAnswer(questionId: questionId, answerContent: answerContent);
   }
