@@ -63,10 +63,14 @@ class InterviewNotifier extends _$InterviewNotifier {
       final response = await InterviewAddUseCase(
         ref,
       ).call(questionId: questionId, answerContent: answerContent);
-      await _saveInterviewToHive(questionId, question, answerContent);
+
+      final isSuccess = response.code == "200";
+      if (isSuccess) {
+        await _saveInterviewToHive(questionId, question, answerContent);
+      }
 
       return AnswerSubmitResult(
-        isSuccess: response.code == "200",
+        isSuccess: isSuccess,
         hasProcessedMission: response.data.hasProcessedMission,
       );
     } catch (e) {
