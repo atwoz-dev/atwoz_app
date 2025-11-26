@@ -1,8 +1,6 @@
-import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
@@ -139,13 +137,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       context,
       error: error,
       onConfirm: () {
+        ref.read(profileProvider(widget.userId).notifier).resetError();
         context.pop();
 
-        if (needToExit) {
-          context.popUntil(AppRoute.mainTab);
-          return;
-        }
-        ref.read(profileProvider(widget.userId).notifier).resetError();
+        if (needToExit) context.popUntil(AppRoute.mainTab);
       },
     );
   }
