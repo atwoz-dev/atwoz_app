@@ -96,7 +96,6 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      // TODO(Han): heart point 갱신
       await ProfileMatchRequestUseCase(
         ref,
       ).call(userId: state.profile!.id, message: state.message, method: method);
@@ -154,7 +153,6 @@ class ProfileNotifier extends _$ProfileNotifier {
     if (state.profile == null) return;
 
     try {
-      // TODO(Han): heart point 갱신
       await ProfileMatchApproveUseCase(ref).call(
         matchId: state.profile!.matchStatus.matchId,
         message: state.message,

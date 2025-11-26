@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/core/mixin/log_mixin.dart';
+import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:atwoz_app/app/router/routing.dart';
@@ -37,6 +38,8 @@ class TokenInterceptor extends Interceptor with LogMixin {
   ) async {
     final authService = ref.read(authUsecaseProvider);
     final router = ref.read(routerProvider);
+
+    Log.e('[${err.requestOptions.method} ${err.requestOptions.path}] Api request failure: ${err.response}');
 
     if (err.response?.statusCode == 401) {
       final authService = ref.read(authUsecaseProvider);
