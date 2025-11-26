@@ -15,6 +15,7 @@ import 'package:atwoz_app/features/exam/presentation/page/exam_question_page.dar
 import 'package:atwoz_app/features/exam/presentation/page/exam_result_page.dart';
 import 'package:atwoz_app/features/home/presentation/page/main_tab_view.dart';
 import 'package:atwoz_app/features/home/presentation/page/page.dart';
+import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
 import 'package:atwoz_app/features/interview/presentation/page/interview_register_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_detail_page.dart';
 import 'package:atwoz_app/features/introduce/presentation/page/introduce_edit_page.dart';
@@ -87,6 +88,7 @@ enum AppRoute {
   notification('notification'),
 
   // Interview
+  interview('interview'),
   interviewRegister('interview-register'),
 
   // Onboard
@@ -199,6 +201,11 @@ final allRoutes = [
     root: true,
     name: AppRoute.introduceNavigation.name,
     builder: (context, state) => const IntroduceNavigationPage(),
+  ),
+  NamedGoRoute(
+    root: true,
+    name: AppRoute.interview.name,
+    builder: (context, state) => const InterviewPage(),
   ),
   NamedGoRoute(
     root: true,
