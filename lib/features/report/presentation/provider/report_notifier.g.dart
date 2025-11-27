@@ -58,7 +58,7 @@ final class ReportNotifierProvider
   }
 }
 
-String _$reportNotifierHash() => r'8ad3f24996794f08ae97c44309f59801da309192';
+String _$reportNotifierHash() => r'2925daa2a160f6bdfed1b37821182eec171955b0';
 
 final class ReportNotifierFamily extends $Family
     with $ClassFamilyOverride<ReportNotifier, Report, Report, Report, int> {

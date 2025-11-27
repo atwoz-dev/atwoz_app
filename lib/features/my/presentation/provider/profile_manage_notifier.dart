@@ -1,6 +1,9 @@
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
+import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
 import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
 import 'package:atwoz_app/features/my/domain/usecase/fetch_profile_images_use_case.dart';
 import 'package:atwoz_app/features/my/domain/usecase/update_my_profile_use_case.dart';
@@ -13,8 +16,23 @@ part 'profile_manage_notifier.g.dart';
 class ProfileManageNotifier extends _$ProfileManageNotifier {
   @override
   Future<ProfileManageState> build() async {
-    final profile = ref.watch(globalProvider).profile;
+    final state = await _initializeProfile();
+    return state;
+  }
+
+  Future<ProfileManageState> _initializeProfile() async {
+    CachedUserProfile profile = ref.read(globalProvider).profile;
+
+    Log.e('1단계 프로필 확인: $profile');
+
+    if (profile == CachedUserProfile.init()) {
+      await ref.read(saveProfileToHiveUseCaseProvider).execute();
+      profile = await ref.read(getProfileFromHiveUseCaseProvider).execute();
+    }
+
+    Log.e('2단계 프로필 확인: $profile');
     final profileImages = await _fetchProfileImages();
+
     return ProfileManageState(
       profile: profile.toMyProfile().copyWith(profileImages: profileImages),
     );
