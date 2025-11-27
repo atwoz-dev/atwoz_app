@@ -10,7 +10,6 @@ import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,8 +78,8 @@ class AuthSignUpTermsPageState
                           .toList();
 
                       final profileImageUploaded = await ref
-                          .read(uploadPhotosUsecaseProvider)
-                          .execute(profilePhotos);
+                          .read(photoProvider.notifier)
+                          .uploadPhotos(profilePhotos);
 
                       if (!context.mounted) return;
 
