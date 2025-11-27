@@ -143,7 +143,7 @@ class SignUpProfilePicturePageState
                     isPrimaryPhotoSelected
                         ? context.palette.onPrimary
                         : Palette.colorGrey400,
-                  ).copyWith(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
             ),

@@ -98,7 +98,7 @@ class _SignUpProfileBaseWidgetState
                             signUpProcess.isButtonEnabled()
                                 ? palette.onPrimary
                                 : Palette.colorGrey400,
-                          ).copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                 ),
               ),

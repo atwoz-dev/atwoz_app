@@ -145,9 +145,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                     ),
               child: Text(
                 '차단하기',
-                style: Fonts.body01Medium(
-                  const Color(0xff7E7E7E),
-                ).copyWith(fontWeight: FontWeight.w700),
+                style: Fonts.body01Medium(const Color(0xff7E7E7E)),
               ),
             ),
             const Gap(8),
@@ -170,7 +168,7 @@ class ReportPageState extends BaseConsumerStatefulPageState<ReportPage> {
                   reportState.reason != null
                       ? palette.onPrimary
                       : Palette.colorGrey300,
-                ).copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],

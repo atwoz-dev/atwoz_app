@@ -38,10 +38,7 @@ class ServiceWithdrawPage extends ConsumerWidget {
               DefaultElevatedButton(
                 child: Text(
                   "휴면 전환하기",
-                  style: Fonts.body02Medium().copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Fonts.body02Medium().copyWith(color: Colors.white),
                 ),
                 onPressed: () {
                   _handleDormantChange(context, ref);
@@ -57,7 +54,6 @@ class ServiceWithdrawPage extends ConsumerWidget {
                   "서비스 탈퇴하기",
                   style: Fonts.body02Medium().copyWith(
                     color: Palette.colorPrimary500,
-                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),

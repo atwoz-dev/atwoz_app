@@ -137,7 +137,7 @@ class SignUpPageState extends BaseConsumerStatefulPageState<SignUpPage> {
                 style: Fonts.body01Medium(
                   // signUpProcess.isButtonEnabled()
                   isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
-                ).copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),

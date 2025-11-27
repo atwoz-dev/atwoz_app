@@ -141,7 +141,7 @@ class _OnboardingCertificationPageState
                   state.isButtonEnabled
                       ? palette.onPrimary
                       : Palette.colorGrey400,
-                ).copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
