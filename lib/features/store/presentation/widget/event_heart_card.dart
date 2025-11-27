@@ -94,7 +94,7 @@ class EventHeartCard extends StatelessWidget {
                   color: Palette.colorPrimary500,
                 ),
                 child: Text(
-                  '첫 구매 EVENT🎉',
+                  'EVENT🎉',
                   style: Fonts.body03Regular().copyWith(
                     fontWeight: FontWeight.w700,
                     color: Palette.colorWhite,
