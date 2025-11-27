@@ -8,11 +8,13 @@ import 'package:atwoz_app/core/extension/extended_context.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_photo_guide_widget.dart';
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
+import 'package:atwoz_app/features/auth/presentation/widget/photo_guide_bottomsheet.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpProfilePicturePage extends ConsumerStatefulWidget {
@@ -30,12 +32,14 @@ class SignUpProfilePicturePageState
   @override
   Widget buildPage(BuildContext context) {
     final List<XFile?> photos = ref.watch(photoProvider);
+    final bool isPrimaryPhotoSelected = photos?.firstOrNull != null;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: Stack(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SingleChildScrollView(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,15 +87,22 @@ class SignUpProfilePicturePageState
                             return ProfileImageWidget(
                               imageFile: photos[index],
                               onPickImage: () async {
-                                final pickedPhoto = await ref
-                                    .read(photoProvider.notifier)
-                                    .pickPhoto(ImageSource.gallery);
+                                PhotoGuideBottomSheet.open(
+                                  context,
+                                  onSubmit: () async {
+                                    context.pop();
 
-                                if (pickedPhoto != null) {
-                                  ref
-                                      .read(photoProvider.notifier)
-                                      .updateState(index, pickedPhoto);
-                                }
+                                    final pickedPhoto = await ref
+                                        .read(photoProvider.notifier)
+                                        .pickPhoto(ImageSource.gallery);
+
+                                    if (pickedPhoto != null) {
+                                      ref
+                                          .read(photoProvider.notifier)
+                                          .updateState(index, pickedPhoto);
+                                    }
+                                  },
+                                );
                               },
                               // 사진 삭제
                               onRemoveImage: () {
@@ -115,90 +126,25 @@ class SignUpProfilePicturePageState
                       ],
                     ),
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Gap(24),
-                      AuthPhotoGuideWidget(
-                        title: '이성에게 좋은 인상을 주는 사진',
-                        imagePathsWithText: [
-                          {
-                            'image': 'assets/images/good_pic1.png',
-                            'text': '자연스럽게 웃는 사진',
-                          },
-                          {
-                            'image': 'assets/images/good_pic2.png',
-                            'text': '이목구비가 선명한 사진',
-                          },
-                          {
-                            'image': 'assets/images/good_pic3.png',
-                            'text': '활동적인 사진',
-                          },
-                          {
-                            'image': 'assets/images/good_pic4.png',
-                            'text': '분위기 있는 전신사진',
-                          },
-                        ],
-                      ),
-                      Gap(24),
-                      AuthPhotoGuideWidget(
-                        title: '이성에게 부정적인 인상을 주는 사진',
-                        imagePathsWithText: [
-                          {
-                            'image': 'assets/images/bad_pic1.png',
-                            'text': '보정이 과도한 사진',
-                          },
-                          {
-                            'image': 'assets/images/bad_pic2.png',
-                            'text': '2인 이상의 단체 사진',
-                          },
-                          {
-                            'image': 'assets/images/bad_pic3.png',
-                            'text': 'AI 프로필',
-                          },
-                          {
-                            'image': 'assets/images/bad_pic4.png',
-                            'text': '얼굴이 가려진 사진',
-                          },
-                          {
-                            'image': 'assets/images/bad_pic5.png',
-                            'text': '마스크를 착용한 사진',
-                          },
-                          {
-                            'image': 'assets/images/bad_pic6.png',
-                            'text': '사진에 대한 설명',
-                          },
-                        ],
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
-            Positioned(
-              bottom: screenHeight * 0.05,
-              left: 0,
-              right: 0,
-              child: Builder(
-                builder: (context) {
-                  final bool isPrimaryPhotoSelected =
-                      photos.isNotEmpty && photos[0] != null;
-                  return DefaultElevatedButton(
-                    onPressed: isPrimaryPhotoSelected
-                        ? () async {
-                            navigate(context, route: AppRoute.signUpTerms);
-                          }
-                        : null,
-                    child: Text(
-                      '다음',
-                      style: Fonts.body01Medium(
-                        isPrimaryPhotoSelected
-                            ? context.palette.onPrimary
-                            : Palette.colorGrey400,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  );
-                },
+            Padding(
+              padding: EdgeInsets.only(bottom: screenHeight * 0.05),
+              child: DefaultElevatedButton(
+                onPressed: isPrimaryPhotoSelected
+                    ? () async {
+                        navigate(context, route: AppRoute.signUpTerms);
+                      }
+                    : null,
+                child: Text(
+                  '다음',
+                  style: Fonts.body01Medium(
+                    isPrimaryPhotoSelected
+                        ? context.palette.onPrimary
+                        : Palette.colorGrey400,
+                  ).copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],
