@@ -32,7 +32,7 @@ class SignUpProfilePicturePageState
   @override
   Widget buildPage(BuildContext context) {
     final List<XFile?> photos = ref.watch(photoProvider);
-    final bool isPrimaryPhotoSelected = photos?.firstOrNull != null;
+    final bool isPrimaryPhotoSelected = photos.firstOrNull != null;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
