@@ -1,8 +1,6 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/permission_handler.dart';
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -48,18 +46,6 @@ class Photo extends _$Photo with ChangeNotifier, WidgetsBindingObserver {
       // 앱이 비활성 상태로 전환되었 때 (예를 들어 설정 같은 다른 앱에 갔을 때)
       _isReturningFromSettings = true;
     }
-  }
-
-  // 사진 업로드
-  Future<bool> uploadPhotos(List<ProfilePhoto> photos) async {
-    final clampedPhotos = photos.take(Dimens.profileImageMaxCount).toList();
-
-    state = [
-      ...clampedPhotos.map((e) => e.imageFile),
-      ...List.filled(Dimens.profileImageMaxCount - clampedPhotos.length, null),
-    ];
-
-    return await ref.read(uploadPhotosUsecaseProvider).execute(photos);
   }
 
   // 사진 선택

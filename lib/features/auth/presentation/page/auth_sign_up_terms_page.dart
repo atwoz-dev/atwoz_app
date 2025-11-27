@@ -10,6 +10,7 @@ import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier
 import 'package:atwoz_app/features/auth/presentation/widget/auth_step_indicator_widget.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/photo/domain/provider/photo_provider.dart';
+import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,15 +70,17 @@ class AuthSignUpTermsPageState
                   ? () async {
                       // 프로필 이미지 등록
                       final List<XFile?> photos = ref.read(photoProvider);
+
                       final profilePhotos = photos
+                          .whereType<XFile>()
                           .map(
                             (e) => ProfilePhoto(imageFile: e, isUpdated: true),
                           )
                           .toList();
 
                       final profileImageUploaded = await ref
-                          .read(photoProvider.notifier)
-                          .uploadPhotos(profilePhotos);
+                          .read(uploadPhotosUsecaseProvider)
+                          .execute(profilePhotos);
 
                       if (!context.mounted) return;
 
