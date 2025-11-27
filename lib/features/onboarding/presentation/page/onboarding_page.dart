@@ -44,66 +44,50 @@ class _OnBoardPageState extends AppBaseStatefulPageBase<OnBoardPage> {
   Widget buildPage(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        alignment: Alignment.center,
+      body: Column(
         children: [
-          Column(
-            children: [
-              Expanded(
-                flex: 7,
-                child: BalloonAnimationWidget(balloons: balloons),
-              ),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.05),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: bubbleWidget(
-                          comment: '회원가입하고 포인트 선물받기',
-                          boldText: '포인트 선물',
-                          width: screenWidth * 0.5,
-                          textStyle: Fonts.body03Regular(),
-                          shadowColor: Palette.colorGrey200,
-                        ),
-                      ),
-                      DefaultElevatedButton(
-                        primary: palette.primary,
-                        onPressed: () async {
-                          navigate(context, route: AppRoute.onboardPhone);
-                        },
-                        child: Text(
-                          '전화번호로 시작하기',
-                          style: Fonts.body01Regular(palette.onPrimary),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        '만 18세 이상만 이용 가능하며 회원가입 시\n'
-                        '이용약관, 개인정보처리방침에 동의하게 됩니다.',
-                        textAlign: TextAlign.center,
-                        style: Fonts.body03Regular().copyWith(
-                          color: Palette.colorGrey400,
-                          height: 1.3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          Expanded(
+            flex: 7,
+            child: BalloonAnimationWidget(balloons: balloons),
           ),
-          DefaultElevatedButton(
-            expandedWidth: false,
-            primary: palette.primary,
-            onPressed: () async {
-              navigate(context, route: AppRoute.navigation);
-            },
-            child: Text(
-              '전체 네비게이션 보기 (삭제 예정)',
-              style: Fonts.body01Regular(palette.onPrimary),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: EdgeInsets.all(screenWidth * 0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: bubbleWidget(
+                      comment: '회원가입하고 포인트 선물받기',
+                      boldText: '포인트 선물',
+                      width: screenWidth * 0.5,
+                      textStyle: Fonts.body03Regular(),
+                      shadowColor: Palette.colorGrey200,
+                    ),
+                  ),
+                  DefaultElevatedButton(
+                    primary: palette.primary,
+                    onPressed: () async {
+                      navigate(context, route: AppRoute.onboardPhone);
+                    },
+                    child: Text(
+                      '전화번호로 시작하기',
+                      style: Fonts.body01Regular(palette.onPrimary),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    '만 18세 이상만 이용 가능하며 회원가입 시\n'
+                    '이용약관, 개인정보처리방침에 동의하게 됩니다.',
+                    textAlign: TextAlign.center,
+                    style: Fonts.body03Regular().copyWith(
+                      color: Palette.colorGrey400,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
