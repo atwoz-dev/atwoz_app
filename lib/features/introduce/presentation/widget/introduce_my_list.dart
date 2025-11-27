@@ -8,6 +8,7 @@ import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/empty_my_introduce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,6 +67,11 @@ class _IntroduceMyListState extends ConsumerState<IntroduceMyList> {
       data: (data) {
         final introduces = data.introduceMyList;
         final introducesCount = introduces.length;
+
+        if (introducesCount == 0) {
+          return const EmptyMyIntroduce();
+        }
+
         return ListView.builder(
           padding: EdgeInsets.zero,
           controller: _scrollController,

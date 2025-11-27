@@ -1,15 +1,19 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/empty_introduce.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/empty_my_introduce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,6 +75,10 @@ class _IntroduceContentListState extends ConsumerState<IntroduceContentList> {
       data: (data) {
         final introduces = data.introduceList;
         final introducesCount = introduces.length;
+
+        if (introducesCount == 0) {
+          return const EmptyIntroduce();
+        }
 
         return ListView.builder(
           padding: EdgeInsets.zero,

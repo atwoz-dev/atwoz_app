@@ -155,7 +155,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
               await navigate(context, route: AppRoute.introduceRegister);
 
               // 등록한 셀프소개가 적용되는 딜레이 필요
-              await Future.delayed(const Duration(milliseconds: 500));
+              // await Future.delayed(const Duration(milliseconds: 500));
               _refreshIntroduceList();
             },
           ),
