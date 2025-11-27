@@ -14,12 +14,15 @@ part 'onboarding_notifier.g.dart';
 @riverpod
 class OnboardingNotifier extends _$OnboardingNotifier {
   Timer? _resendTimer;
+  DateTime? _suspensionExpireAt;
 
   @override
   OnboardingState build() {
     ref.onDispose(_dispose);
     return OnboardingState.initial();
   }
+
+  DateTime? get suspensioinExpireAt => _suspensionExpireAt;
 
   // 인증번호 발송
   Future<bool> sendVerificationCode(String phoneNumber) async {
@@ -111,6 +114,14 @@ class OnboardingNotifier extends _$OnboardingNotifier {
         _ => null,
       };
       if (newStatus != null) state = state.copyWith(status: newStatus);
+
+      if (state.status == AuthStatus.temporarilyForbidden) {
+        final data = e.data;
+        if (data != null) {
+          _suspensionExpireAt = DateTime.tryParse(data['suspensionExpireAt']);
+        }
+      }
+
       return (null, newStatus);
     } catch (e) {
       Log.e('인증 실패: $e', errorObject: e);

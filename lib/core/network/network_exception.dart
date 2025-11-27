@@ -119,10 +119,12 @@ abstract class NetworkException with _$NetworkException implements Exception {
   }
 
   // HTTP 상태 코드 가져오는 getter
-  int? get status =>
-      whenOrNull(apiException: (status, code, data, _) => status);
+  int? get status => whenOrNull(apiException: (status, _, _, _) => status);
 
-  String? get code => whenOrNull(apiException: (status, code, data, _) => code);
+  String? get code => whenOrNull(apiException: (_, code, _, _) => code);
+
+  Map<String, dynamic>? get data =>
+      whenOrNull(apiException: (_, _, _, data) => data);
 
   // 에러 메시지 가져오는 getter
   String? get message => maybeWhen<String?>(
