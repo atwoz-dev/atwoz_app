@@ -39,9 +39,7 @@ class _TemporalForbiddenPageState extends State<TemporalForbiddenPage> {
 
   @override
   Widget build(BuildContext context) {
-    final remainingDuration = getRemainingDuration(
-      DateTime(2025, 11, 27, 17, 39),
-    );
+    final remainingDuration = getRemainingDuration(widget.suspensionExpireAt);
     final isReleased =
         remainingDuration != null &&
         formatRemainingTime(remainingDuration) == '00시간 00분';
