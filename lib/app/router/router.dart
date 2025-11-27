@@ -315,7 +315,6 @@ final allRoutes = [
         name: AppRoute.temporalForbidden.name,
         builder: (context, state) {
           final args = state.extra;
-          Log.e('arg는 $args');
           if (args is! TemporalForbiddenArguments) {
             return const SizedBox.shrink();
           }

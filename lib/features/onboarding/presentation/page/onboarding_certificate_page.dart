@@ -172,8 +172,6 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.temporarilyForbidden:
-        Log.e('일시 정지 남은 시간은  ${notifier.suspensioinExpireAt}');
-
         navigate(
           context,
           route: AppRoute.temporalForbidden,

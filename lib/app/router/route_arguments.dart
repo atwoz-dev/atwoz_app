@@ -90,7 +90,7 @@ class DormantReleaseArguments extends RouteArguments {
 }
 
 class TemporalForbiddenArguments extends RouteArguments {
-  const TemporalForbiddenArguments({required this.time});
+  const TemporalForbiddenArguments({this.time});
 
   final DateTime? time;
 }

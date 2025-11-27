@@ -85,7 +85,9 @@ class _TemporalForbiddenPageState extends State<TemporalForbiddenPage> {
                       }
                     : null,
                 child: Text(
-                  formatRemainingTime(remainingDuration!) == '0시간 00분'
+                  remainingDuration == null
+                      ? '가이드라인 확인 후 시작하기'
+                      : formatRemainingTime(remainingDuration) == '0시간 00분'
                       ? '가이드라인 확인 후 시작하기'
                       : '남은 시간 : ${formatRemainingTime(remainingDuration)}',
                   style: Fonts.body01Medium().copyWith(
