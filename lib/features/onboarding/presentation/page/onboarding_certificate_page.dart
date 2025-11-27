@@ -192,6 +192,8 @@ class _OnboardingCertificationPageState
 
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
+    } else if (userData?.activityStatus == 'WAITING_SCREENING') {
+      navigate(context, route: AppRoute.signUpProfileReview);
     } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
       navigate(context, route: AppRoute.signUpProfileReject);
     } else {
