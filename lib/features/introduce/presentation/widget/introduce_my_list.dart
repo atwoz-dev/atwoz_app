@@ -4,6 +4,7 @@ import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/custom_dialogue.dart';
+import 'package:atwoz_app/core/extension/extension.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
@@ -156,17 +157,31 @@ class IntroduceHistoryListItem extends ConsumerWidget {
                   children: [
                     Text(
                       item.title,
-                      style: Fonts.body02Medium().copyWith(
-                        fontWeight: FontWeight.w700,
+                      style: Fonts.semibold(
+                        fontSize: 16,
+                        color: const Color(0xFF1F1E23),
+                        lineHeight: 1.4,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const Gap(4),
-                    // TODO: 날짜???
                     Text(
-                      '2025.02.28',
-                      style: Fonts.body03Regular(Palette.colorGrey500),
+                      item.title,
+                      style: Fonts.regular(
+                        fontSize: 14,
+                        color: Palette.colorGrey600,
+                        lineHeight: 1.4,
+                      ),
+                    ),
+                    const Gap(4),
+                    Text(
+                      item.createdAt.toDateString,
+                      style: Fonts.regular(
+                        fontSize: 12,
+                        color: Palette.colorGrey300,
+                        lineHeight: 1.4,
+                      ),
                     ),
                   ],
                 ),

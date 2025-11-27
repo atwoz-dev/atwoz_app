@@ -13,6 +13,7 @@ extension IntroduceMapper on IntroduceItem {
       title: title,
       yearOfBirth: yearOfBirth,
       nickname: nickname,
+      createdAt: DateTime.parse(createdAt),
     );
   }
 }
