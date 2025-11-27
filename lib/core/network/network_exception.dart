@@ -36,6 +36,7 @@ abstract class NetworkException with _$NetworkException implements Exception {
     int? status,
     String? code,
     String? message,
+    Map<String, dynamic>? data,
   }) = _ApiException;
 
   // 다양한 예외 상황에 맞는 NetworkException 객체를 반환하는 메서드
@@ -76,6 +77,7 @@ abstract class NetworkException with _$NetworkException implements Exception {
         case DioExceptionType.badResponse:
           String? code;
           String? message;
+          Map<String, dynamic>? data;
           final status = error.response?.statusCode;
 
           try {
@@ -83,6 +85,7 @@ abstract class NetworkException with _$NetworkException implements Exception {
             message ??= json['Message'] as String?;
             message ??= json['message'] as String?;
             code ??= json['code'] as String?;
+            data ??= json['data'] as Map<String, dynamic>?;
           } catch (_) {}
 
           message ??= error.message;
@@ -95,6 +98,7 @@ abstract class NetworkException with _$NetworkException implements Exception {
             status: status,
             code: code,
             message: message,
+            data: data,
           );
 
         case DioExceptionType.badCertificate:
@@ -115,13 +119,14 @@ abstract class NetworkException with _$NetworkException implements Exception {
   }
 
   // HTTP 상태 코드 가져오는 getter
-  int? get status => whenOrNull(apiException: (status, code, _) => status);
+  int? get status =>
+      whenOrNull(apiException: (status, code, data, _) => status);
 
-  String? get code => whenOrNull(apiException: (status, code, _) => code);
+  String? get code => whenOrNull(apiException: (status, code, data, _) => code);
 
   // 에러 메시지 가져오는 getter
   String? get message => maybeWhen<String?>(
-    apiException: (status, code, message) => message,
+    apiException: (status, code, message, data) => message,
     formatException: () => 'Function이 변경되었습니다. 새로운 버전으로 업그레이드 해주세요!',
     connectionException: () => '네트워크 연결이 불안정합니다. 다시 시도해 주세요!',
     orElse: () => '죄송합니다. 에러 발생으로 인해 나중에 다시 시도해 주세요.',
