@@ -318,7 +318,7 @@ final allRoutes = [
           if (args is! TemporalForbiddenArguments) {
             return const SizedBox.shrink();
           }
-          return TemporalForbiddenPage(suspensionExpirAt: args.time);
+          return TemporalForbiddenPage(suspensionExpireAt: args.time);
         },
       ),
       NamedGoRoute(

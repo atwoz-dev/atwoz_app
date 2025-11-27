@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class TemporalForbiddenPage extends StatefulWidget {
-  const TemporalForbiddenPage({super.key, this.suspensionExpirAt});
+  const TemporalForbiddenPage({super.key, this.suspensionExpireAt});
 
-  final DateTime? suspensionExpirAt;
+  final DateTime? suspensionExpireAt;
 
   @override
   State<TemporalForbiddenPage> createState() => _TemporalForbiddenPageState();
@@ -39,8 +39,12 @@ class _TemporalForbiddenPageState extends State<TemporalForbiddenPage> {
 
   @override
   Widget build(BuildContext context) {
-    final remainingDuration = getRemainingDuration(widget.suspensionExpirAt);
-    final isReleased = remainingDuration == Duration.zero;
+    final remainingDuration = getRemainingDuration(
+      DateTime(2025, 11, 27, 17, 39),
+    );
+    final isReleased =
+        remainingDuration != null &&
+        formatRemainingTime(remainingDuration) == '00시간 00분';
 
     return Scaffold(
       body: SafeArea(
@@ -75,6 +79,9 @@ class _TemporalForbiddenPageState extends State<TemporalForbiddenPage> {
               ),
               const Spacer(),
               DefaultElevatedButton(
+                primary: isReleased
+                    ? Palette.colorPrimary500
+                    : Palette.colorGrey200,
                 onPressed: isReleased
                     ? () {
                         navigate(
@@ -87,7 +94,7 @@ class _TemporalForbiddenPageState extends State<TemporalForbiddenPage> {
                 child: Text(
                   remainingDuration == null
                       ? '가이드라인 확인 후 시작하기'
-                      : formatRemainingTime(remainingDuration) == '0시간 00분'
+                      : formatRemainingTime(remainingDuration) == '00시간 00분'
                       ? '가이드라인 확인 후 시작하기'
                       : '남은 시간 : ${formatRemainingTime(remainingDuration)}',
                   style: Fonts.body01Medium().copyWith(
