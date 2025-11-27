@@ -126,7 +126,7 @@ class ExamCoverPageState extends BaseConsumerStatefulPageState<ExamCoverPage> {
             child: Text(
               '연애 모의고사 시작하기',
               style: Fonts.body01Medium().copyWith(
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
                 color: Palette.colorWhite,
               ),
             ),

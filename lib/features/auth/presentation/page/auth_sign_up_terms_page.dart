@@ -107,7 +107,7 @@ class AuthSignUpTermsPageState
                 '회원가입 완료',
                 style: Fonts.body01Medium(
                   isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
-                ).copyWith(fontWeight: FontWeight.w900),
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
             ),
           ),

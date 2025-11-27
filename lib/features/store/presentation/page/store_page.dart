@@ -62,7 +62,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                         Text(
                           '보유한 하트',
                           style: Fonts.header03().copyWith(
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const Gap(8),

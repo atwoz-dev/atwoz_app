@@ -173,7 +173,7 @@ class SignUpProfileUpdatePageState
               isButtonEnabled ? '완료' : '다음',
               style: Fonts.body01Medium(
                 isButtonEnabled ? palette.onPrimary : Palette.colorGrey400,
-              ).copyWith(fontWeight: FontWeight.w900),
+              ).copyWith(fontWeight: FontWeight.w700),
             ),
           ),
         ),

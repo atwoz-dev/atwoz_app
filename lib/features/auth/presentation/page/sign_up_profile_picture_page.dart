@@ -184,19 +184,18 @@ class SignUpProfilePicturePageState
                   final bool isPrimaryPhotoSelected =
                       photos.isNotEmpty && photos[0] != null;
                   return DefaultElevatedButton(
-                    onPressed:
-                        isPrimaryPhotoSelected
-                            ? () async {
-                              navigate(context, route: AppRoute.signUpTerms);
-                            }
-                            : null,
+                    onPressed: isPrimaryPhotoSelected
+                        ? () async {
+                            navigate(context, route: AppRoute.signUpTerms);
+                          }
+                        : null,
                     child: Text(
                       '다음',
                       style: Fonts.body01Medium(
                         isPrimaryPhotoSelected
                             ? context.palette.onPrimary
                             : Palette.colorGrey400,
-                      ).copyWith(fontWeight: FontWeight.w900),
+                      ).copyWith(fontWeight: FontWeight.w700),
                     ),
                   );
                 },

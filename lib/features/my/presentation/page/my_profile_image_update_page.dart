@@ -251,7 +251,7 @@ class _MyProfileImageUpdatePageState
                     imageUpdateNotifier.isSaveEnabled
                         ? context.palette.onPrimary
                         : Palette.colorGrey300,
-                  ).copyWith(fontWeight: FontWeight.w900),
+                  ).copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
             ),
