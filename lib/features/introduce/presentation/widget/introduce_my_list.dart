@@ -108,44 +108,44 @@ class IntroduceHistoryListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      decoration: BoxDecoration(
-        border: isLastItem
-            ? null
-            : Border(
-                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
-              ),
-      ),
-      child: GestureDetector(
-        onTap: () async {
-          await navigate(
-            context,
-            route: AppRoute.introduceEdit,
-            extra: IntroduceEditArguments(id: item.id),
-          );
-          ref.read(introduceProvider.notifier).fetchMyIntroduceList();
-        },
-        onLongPress: () {
-          CustomDialogue.showTwoChoiceDialogue(
-            context: context,
-            content: '삭제 버튼을 누르면\n내 셀프소개 글이 삭제됩니다.',
-            elevatedButtonText: "삭제",
-            onElevatedButtonPressed: () async {
-              try {
-                await ref
-                    .read(introduceProvider.notifier)
-                    .deleteIntroduce(item.id);
-                ref.read(introduceProvider.notifier).fetchMyIntroduceList();
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              } catch (e) {
-                // TODO: 에러 문구
-                showToastMessage('삭제하는데 실패했습니다.');
+    return GestureDetector(
+      onTap: () async {
+        await navigate(
+          context,
+          route: AppRoute.introduceEdit,
+          extra: IntroduceEditArguments(id: item.id),
+        );
+        ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+      },
+      onLongPress: () {
+        CustomDialogue.showTwoChoiceDialogue(
+          context: context,
+          content: '삭제 버튼을 누르면\n내 셀프소개 글이 삭제됩니다.',
+          elevatedButtonText: "삭제",
+          onElevatedButtonPressed: () async {
+            try {
+              await ref
+                  .read(introduceProvider.notifier)
+                  .deleteIntroduce(item.id);
+              ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+              if (context.mounted) {
+                Navigator.of(context).pop();
               }
-            },
-          );
-        },
+            } catch (e) {
+              // TODO: 에러 문구
+              showToastMessage('삭제하는데 실패했습니다.');
+            }
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: isLastItem
+              ? null
+              : Border(
+                  bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+                ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Row(

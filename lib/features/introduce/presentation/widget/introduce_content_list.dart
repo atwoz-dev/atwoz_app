@@ -1,19 +1,16 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/icon_path.dart';
 import 'package:atwoz_app/app/constants/palette.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/image/rounded_image.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/empty_introduce.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/empty_my_introduce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -117,82 +114,91 @@ class IntroduceListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final double thumbSize = 64.w;
-    final double gapWidth = 16.w;
-    return Container(
-      decoration: BoxDecoration(
-        border: isLastItem
-            ? null
-            : Border(
-                bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
-              ),
-      ),
-      child: GestureDetector(
-        onTap: () async {
-          if (!context.mounted) return;
 
-          if (nickname == introduce.nickname) {
-            await navigate(
-              context,
-              route: AppRoute.introduceEdit,
-              extra: IntroduceEditArguments(id: introduce.id),
-            );
+    return GestureDetector(
+      onTap: () async {
+        if (!context.mounted) return;
 
-            await ref.read(introduceProvider.notifier).fetchIntroduceList();
-          } else {
-            // 셀프 소개 상세 조회
-            try {
-              final detail = await ref
-                  .read(introduceProvider.notifier)
-                  .fetchIntroduceDetail(introduce.id);
+        if (nickname == introduce.nickname) {
+          await navigate(
+            context,
+            route: AppRoute.introduceEdit,
+            extra: IntroduceEditArguments(id: introduce.id),
+          );
 
-              final route =
-                  detail.profileExchangeStatus == ProfileExchangeStatus.approve
-                  ? AppRoute.profile
-                  : AppRoute.introduceDetail;
+          await ref.read(introduceProvider.notifier).fetchIntroduceList();
+        } else {
+          // 셀프 소개 상세 조회
+          try {
+            final detail = await ref
+                .read(introduceProvider.notifier)
+                .fetchIntroduceDetail(introduce.id);
 
-              final arguements =
-                  detail.profileExchangeStatus == ProfileExchangeStatus.approve
-                  ? ProfileDetailArguments(
-                      userId: detail.memberBasicInfo.memberId,
-                    )
-                  : IntroduceDetailArguments(
-                      introduceId: introduce.id,
-                    );
+            final route =
+                detail.profileExchangeStatus == ProfileExchangeStatus.approve
+                ? AppRoute.profile
+                : AppRoute.introduceDetail;
 
-              if (context.mounted) {
-                navigate(context, route: route, extra: arguements);
-              }
-            } catch (e) {
-              if (context.mounted) {
-                return ErrorDialog.open(
-                  context,
-                  error: DialogueErrorType.failFetchIntroduceList,
-                  onConfirm: context.pop,
-                );
-              }
+            final arguements =
+                detail.profileExchangeStatus == ProfileExchangeStatus.approve
+                ? ProfileDetailArguments(
+                    userId: detail.memberBasicInfo.memberId,
+                  )
+                : IntroduceDetailArguments(
+                    introduceId: introduce.id,
+                  );
+
+            if (context.mounted) {
+              navigate(context, route: route, extra: arguements);
+            }
+          } catch (e) {
+            if (context.mounted) {
+              return ErrorDialog.open(
+                context,
+                error: DialogueErrorType.failFetchIntroduceList,
+                onConfirm: context.pop,
+              );
             }
           }
-        },
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: isLastItem
+              ? null
+              : Border(
+                  bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
+                ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RoundedImage(size: thumbSize, imageURL: introduce.profileUrl),
-              SizedBox(width: gapWidth),
+              RoundedImage(
+                size: thumbSize,
+                imageURL: introduce.profileUrl,
+              ),
+              const Gap(16.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       introduce.nickname,
-                      style: Fonts.body02Medium().copyWith(
-                        fontWeight: FontWeight.w700,
+                      style: Fonts.semibold(
+                        fontSize: 16,
+                        color: const Color(0xFF1F1E23),
                       ),
                     ),
                     const Gap(4),
                     Text(
                       introduce.title,
-                      style: Fonts.body03Regular(Palette.colorGrey500),
+                      style: Fonts.regular(
+                        fontSize: 14,
+                        color: Palette.colorGrey600,
+                        lineHeight: 1.4,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
