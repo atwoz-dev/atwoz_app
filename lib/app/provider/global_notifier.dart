@@ -8,6 +8,7 @@ import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_user_heart_balance_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/get_profile_from_hive_use_case.dart';
 import 'package:atwoz_app/features/home/domain/use_case/save_profile_to_hive_use_case.dart';
+import 'package:atwoz_app/features/my/domain/usecase/save_profile_images_to_hive_use_case.dart';
 import 'package:atwoz_app/features/my/my.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -68,6 +69,9 @@ class GlobalNotifier extends _$GlobalNotifier {
   // 서버에서 프로필 가져오고 Hive에 저장
   Future<CachedUserProfile> fetchProfileToHiveFromServer() async {
     await ref.read(saveProfileToHiveUseCaseProvider).execute();
+    await ref
+        .read(saveProfileImagesToHiveUseCaseProvider)
+        .execute(); // 프로필 이미지 가져와 저장
 
     return await _getProfileFromHive();
   }

@@ -137,7 +137,7 @@ return apiException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthorizedException,TResult Function()?  invalidUserException,TResult Function( Type type)?  otherException,TResult Function()?  formatException,TResult Function()?  connectionException,TResult Function()?  maintenanceException,TResult Function( int? status,  String? code,  String? message)?  apiException,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthorizedException,TResult Function()?  invalidUserException,TResult Function( Type type)?  otherException,TResult Function()?  formatException,TResult Function()?  connectionException,TResult Function()?  maintenanceException,TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case UnauthorizedException() when unauthorizedException != null:
 return unauthorizedException();case InvalidUserException() when invalidUserException != null:
@@ -146,7 +146,7 @@ return otherException(_that.type);case FormatException() when formatException !=
 return formatException();case ConnectionException() when connectionException != null:
 return connectionException();case MaintenanceException() when maintenanceException != null:
 return maintenanceException();case _ApiException() when apiException != null:
-return apiException(_that.status,_that.code,_that.message);case _:
+return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   return orElse();
 
 }
@@ -164,7 +164,7 @@ return apiException(_that.status,_that.code,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthorizedException,required TResult Function()  invalidUserException,required TResult Function( Type type)  otherException,required TResult Function()  formatException,required TResult Function()  connectionException,required TResult Function()  maintenanceException,required TResult Function( int? status,  String? code,  String? message)  apiException,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthorizedException,required TResult Function()  invalidUserException,required TResult Function( Type type)  otherException,required TResult Function()  formatException,required TResult Function()  connectionException,required TResult Function()  maintenanceException,required TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)  apiException,}) {final _that = this;
 switch (_that) {
 case UnauthorizedException():
 return unauthorizedException();case InvalidUserException():
@@ -173,7 +173,7 @@ return otherException(_that.type);case FormatException():
 return formatException();case ConnectionException():
 return connectionException();case MaintenanceException():
 return maintenanceException();case _ApiException():
-return apiException(_that.status,_that.code,_that.message);case _:
+return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -190,7 +190,7 @@ return apiException(_that.status,_that.code,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthorizedException,TResult? Function()?  invalidUserException,TResult? Function( Type type)?  otherException,TResult? Function()?  formatException,TResult? Function()?  connectionException,TResult? Function()?  maintenanceException,TResult? Function( int? status,  String? code,  String? message)?  apiException,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthorizedException,TResult? Function()?  invalidUserException,TResult? Function( Type type)?  otherException,TResult? Function()?  formatException,TResult? Function()?  connectionException,TResult? Function()?  maintenanceException,TResult? Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,}) {final _that = this;
 switch (_that) {
 case UnauthorizedException() when unauthorizedException != null:
 return unauthorizedException();case InvalidUserException() when invalidUserException != null:
@@ -199,7 +199,7 @@ return otherException(_that.type);case FormatException() when formatException !=
 return formatException();case ConnectionException() when connectionException != null:
 return connectionException();case MaintenanceException() when maintenanceException != null:
 return maintenanceException();case _ApiException() when apiException != null:
-return apiException(_that.status,_that.code,_that.message);case _:
+return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   return null;
 
 }
@@ -437,12 +437,21 @@ String toString() {
 
 
 class _ApiException extends NetworkException {
-  const _ApiException({this.status, this.code, this.message}): super._();
+  const _ApiException({this.status, this.code, this.message, final  Map<String, dynamic>? data}): _data = data,super._();
   
 
  final  int? status;
  final  String? code;
  final  String? message;
+ final  Map<String, dynamic>? _data;
+ Map<String, dynamic>? get data {
+  final value = _data;
+  if (value == null) return null;
+  if (_data is EqualUnmodifiableMapView) return _data;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of NetworkException
 /// with the given fields replaced by the non-null parameter values.
@@ -454,16 +463,16 @@ _$ApiExceptionCopyWith<_ApiException> get copyWith => __$ApiExceptionCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiException&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiException&&(identical(other.status, status) || other.status == status)&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._data, _data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,code,message);
+int get hashCode => Object.hash(runtimeType,status,code,message,const DeepCollectionEquality().hash(_data));
 
 @override
 String toString() {
-  return 'NetworkException.apiException(status: $status, code: $code, message: $message)';
+  return 'NetworkException.apiException(status: $status, code: $code, message: $message, data: $data)';
 }
 
 
@@ -474,7 +483,7 @@ abstract mixin class _$ApiExceptionCopyWith<$Res> implements $NetworkExceptionCo
   factory _$ApiExceptionCopyWith(_ApiException value, $Res Function(_ApiException) _then) = __$ApiExceptionCopyWithImpl;
 @useResult
 $Res call({
- int? status, String? code, String? message
+ int? status, String? code, String? message, Map<String, dynamic>? data
 });
 
 
@@ -491,12 +500,13 @@ class __$ApiExceptionCopyWithImpl<$Res>
 
 /// Create a copy of NetworkException
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? code = freezed,Object? message = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? code = freezed,Object? message = freezed,Object? data = freezed,}) {
   return _then(_ApiException(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as int?,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,data: freezed == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,
   ));
 }
 
