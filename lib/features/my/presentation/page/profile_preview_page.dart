@@ -1,6 +1,9 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/my/my.dart';
+import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:atwoz_app/features/profile/presentation/widget/profile_self_introduction.dart';
 import 'package:atwoz_app/features/profile/presentation/widget/profile_sub_information.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -202,7 +205,7 @@ class _BackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 20,
+      top: kToolbarHeight,
       left: 8,
       child: IconButton(
         icon: const Icon(Icons.arrow_back_ios),
@@ -261,7 +264,7 @@ class _ProfileInfoCard extends StatelessWidget {
 
 /// 인터뷰 섹션
 class _InterviewsSection extends StatelessWidget {
-  final List<dynamic> interviews;
+  final List<InterviewInfo> interviews;
 
   const _InterviewsSection({required this.interviews});
 
@@ -283,10 +286,19 @@ class _InterviewsSection extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          childAspectRatio: 156 / 96,
+          childAspectRatio: 156 / 70,
         ),
-        itemBuilder: (context, index) =>
-            _InterviewCard(interview: interviews[index]),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => SelfIntroducitonDetailBottomSheet.open(
+            context,
+            introduction: SelfIntroductionData(
+              about: '',
+              title: interviews[index].title,
+              content: interviews[index].content,
+            ),
+          ),
+          child: _InterviewCard(interview: interviews[index]),
+        ),
       ),
     );
   }
@@ -331,7 +343,7 @@ class _ProfileOverlay extends StatelessWidget {
 
 /// 취미 뱃지 리스트
 class _HobbyBadgeList extends StatelessWidget {
-  final List<dynamic> hobbies;
+  final List<Hobby> hobbies;
 
   const _HobbyBadgeList({required this.hobbies});
 
@@ -384,7 +396,7 @@ class _ProfileImage extends StatelessWidget {
 
 /// 인터뷰 카드 위젯
 class _InterviewCard extends StatelessWidget {
-  final dynamic interview;
+  final InterviewInfo interview;
 
   const _InterviewCard({required this.interview});
 
@@ -401,16 +413,7 @@ class _InterviewCard extends StatelessWidget {
         spacing: 8,
         children: [
           Text(
-            '', // TODO: 추후 제목 파트 디자인 나오면 수정
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Fonts.body03Regular().copyWith(
-              color: Palette.colorGrey300,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          Text(
-            interview.content,
+            interview.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Fonts.body02Medium().copyWith(
