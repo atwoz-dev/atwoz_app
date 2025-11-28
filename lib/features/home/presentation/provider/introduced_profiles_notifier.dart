@@ -1,6 +1,8 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
@@ -18,6 +20,8 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
           .watch(fetchIntroducedProfilesUseCase)
           .execute(category);
 
+      Log.d(profiles.map((e) => e.memberId).toList());
+
       return profiles;
     } catch (e) {
       Log.e('소개 프로필 조회 실패: $e');
@@ -26,8 +30,8 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
   }
 
   /// 프로필 소개받기
-  Future<void> openProfile({required int index, required int memberId}) async {
-    if (!state.hasValue) return;
+  Future<bool> openProfile({required int index, required int memberId}) async {
+    if (!state.hasValue) return false;
 
     try {
       await _removeBlurFromProfile(memberId);
@@ -37,9 +41,14 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
       await _updateCachedProfiles(index);
 
       _setIntroducedMemberById(memberId);
-    } catch (e, stackTrace) {
+
+      return true;
+    } on InvalidUserException {
+      showToastMessage('비활성화 회원이에요');
+      return false;
+    } catch (e) {
       Log.e('소개 프로필 블러 제거 실패: $e');
-      state = AsyncError(e, stackTrace);
+      return false;
     }
   }
 

@@ -42,8 +42,8 @@ class _OnboardingCertificationPageState
     super.initState();
     _notifier = ref.read(onboardingProvider.notifier);
     Future.microtask(() async {
-      final notifier = ref.read(onboardingProvider.notifier);
-      final isCodeSended = await notifier.sendVerificationCode(
+      _notifier = ref.read(onboardingProvider.notifier);
+      final isCodeSended = await _notifier.sendVerificationCode(
         widget.phoneNumber,
       );
 

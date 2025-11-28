@@ -36,18 +36,6 @@ class HomePageState extends BaseConsumerStatefulPageState<HomePage> {
     final homeStateAsync = ref.watch(homeProvider);
     final homeNotifier = ref.read(homeProvider.notifier);
 
-    ref.listen<AsyncValue<HomeState>>(homeProvider, (prev, next) {
-      final previous = prev?.value;
-      final current = next.value;
-
-      if (previous?.hasProcessedMission == false &&
-          current?.hasProcessedMission == true) {
-        showToastMessage('좋아요 보내기 미션 완료! 하트 2개를 받았어요');
-
-        ref.read(homeProvider.notifier).resetHasProcessedMission();
-      }
-    });
-
     return Scaffold(
       body: SafeArea(
         child: homeStateAsync.when(

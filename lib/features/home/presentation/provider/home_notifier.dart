@@ -1,4 +1,7 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/provider/provider.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
@@ -54,20 +57,22 @@ class HomeNotifier extends _$HomeNotifier {
           .read(favoriteRepositoryProvider)
           .requestFavorite(memberId, type: type);
 
+      if (hasProcessedMission) {
+        showToastMessage('좋아요 보내기 미션 완료! 하트 2개를 받았어요');
+
+        await ref.read(globalProvider.notifier).fetchHeartBalance();
+      }
+
       updateFavoriteType(
         memberId: memberId,
         type: type,
         hasProcessedMission: hasProcessedMission,
       );
+    } on InvalidUserException {
+      showToastMessage('비활성화 회원이에요');
     } catch (e) {
       Log.e('좋아요 설정 실패: $e');
     }
-  }
-
-  void resetHasProcessedMission() {
-    if (!state.hasValue) return;
-
-    state = AsyncData(state.requireValue.copyWith(hasProcessedMission: false));
   }
 
   Future<bool> checkIntroducedProfiles(IntroducedCategory category) async {

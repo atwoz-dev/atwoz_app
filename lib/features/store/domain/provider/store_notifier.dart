@@ -105,7 +105,7 @@ class StoreNotifier extends _$StoreNotifier {
   // 보유하트 조회
   Future<void> _initializeHeartBalanceItem() async {
     try {
-      final heartBalance = ref.read(globalProvider).heartBalance;
+      final heartBalance = ref.watch(globalProvider).heartBalance;
 
       state = state.copyWith(
         heartBalance: heartBalance,
