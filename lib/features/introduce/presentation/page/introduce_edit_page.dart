@@ -133,6 +133,7 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
             },
             keyboardType: TextInputType.text,
             hintText: '제목을 입력해주세요',
+            style: Fonts.medium(fontSize: 16, color: Palette.colorBlack),
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -152,6 +153,11 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               textAlignVertical: TextAlignVertical.top,
+              style: Fonts.regular(
+                fontSize: 14,
+                color: Palette.colorBlack,
+                lineHeight: 1.6,
+              ),
               maxLines: null,
               expands: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
