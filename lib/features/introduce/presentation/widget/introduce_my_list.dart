@@ -167,12 +167,14 @@ class IntroduceHistoryListItem extends ConsumerWidget {
                     ),
                     const Gap(4),
                     Text(
-                      item.title,
+                      item.content,
                       style: Fonts.regular(
                         fontSize: 14,
                         color: Palette.colorGrey600,
                         lineHeight: 1.4,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const Gap(4),
                     Text(
