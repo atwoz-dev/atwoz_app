@@ -133,14 +133,10 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final profile = ref.watch(profileProvider(widget.userId)).profile;
+
     final isWaitingProfileExchange =
-        ref
-            .watch(profileProvider(widget.userId))
-            .profile
-            ?.profileExchangeInfo
-            ?.profileExchangeStatus
-            .isWaiting ??
-        false;
+        profile?.profileExchangeInfo?.profileExchangeStatus.isWaiting ?? false;
 
     final contactState = ref.watch(contactSettingProvider);
 
@@ -172,6 +168,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
                   },
                   label: '대화 해볼래요',
                   iconPath: IconPath.letter,
+                  enabled: profile?.matchStatus.canRequest ?? true,
                 ),
         ),
         const Gap(8.0),
@@ -243,17 +240,19 @@ class _PrimaryButton extends StatelessWidget {
     required this.onTap,
     required this.label,
     this.iconPath,
+    this.enabled = true,
   });
 
   final VoidCallback onTap;
   final String label;
   final String? iconPath;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return DefaultElevatedButton(
       height: 40.0,
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

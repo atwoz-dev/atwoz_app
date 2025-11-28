@@ -12,24 +12,26 @@ part 'network_exception.freezed.dart';
 // @freezed: Freezed 어노테이션을 사용해 불변 객체와 다양한 상태를 자동으로 생성
 @freezed
 abstract class NetworkException with _$NetworkException implements Exception {
-  // const NetworkException._(): 프라이빗 생성자. 내부 생성 용도로만 사용되며, 외부에서 직접 인스턴스화하지 못하게 함
   const NetworkException._() : super();
 
   // unauthorizedException: 인증되지 않은 사용자
   const factory NetworkException.unauthorizedException() =
-      _UnauthorizedException;
+      UnauthorizedException;
+
+  // unauthorizedException: 유효하지 않은 사용자
+  const factory NetworkException.invalidUserException() = InvalidUserException;
 
   // otherException: 기타 예외 상태를 처리하기 위해 예외의 타입을 인자로 받는다.
-  const factory NetworkException.otherException(Type type) = _OtherException;
+  const factory NetworkException.otherException(Type type) = OtherException;
 
   // formatException: 데이터 형식 오류 발생 시 사용
-  const factory NetworkException.formatException() = _FormatException;
+  const factory NetworkException.formatException() = FormatException;
 
   // connectionException: 네트워크 연결 오류가 발생했을 때 사용
-  const factory NetworkException.connectionException() = _ConnectionException;
+  const factory NetworkException.connectionException() = ConnectionException;
 
   // maintenanceException: 서버 점검과 같은 예외를 처리
-  const factory NetworkException.maintenanceException() = _MaintenanceException;
+  const factory NetworkException.maintenanceException() = MaintenanceException;
 
   // apiException: API 응답에 대한 예외 상태를 처리하며, HTTP 상태 코드와 에러 메시지를 인자로 받는다.
   const factory NetworkException.apiException({
@@ -87,15 +89,15 @@ abstract class NetworkException with _$NetworkException implements Exception {
 
           message ??= error.message;
 
-          if (status == 401) {
-            return const NetworkException.unauthorizedException();
-          }
-
-          return NetworkException.apiException(
-            status: status,
-            code: code,
-            message: message,
-          );
+          return switch (status) {
+            401 => const NetworkException.unauthorizedException(),
+            403 => const NetworkException.invalidUserException(),
+            _ => NetworkException.apiException(
+              status: status,
+              code: code,
+              message: message,
+            ),
+          };
 
         case DioExceptionType.badCertificate:
         case DioExceptionType.cancel:

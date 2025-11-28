@@ -490,43 +490,15 @@ Future<T?> navigate<T>(
   };
 }
 
-/* < navigate() 메서드 용례 >
-
-// 1. 일반적인 push 동작
-navigate(
-  context,
-  route: AppRoute.home
-);
-
-//  2. replace 동작
-navigate(
-  context,
-  route: AppRoute.auth,
-  method: NavigationMethod.replace
-);
-
-// 3. go 동작
-navigate(
-  context,
-  route: AppRoute.onboard,
-  method: NavigationMethod.go
-);
-
-// 4. pop 동작
-pop(context);
-
-// 5. pushReplacement 동작
-navigate(
-  context,
-  route: AppRoute.report,
-    method: NavigationMethod.pushReplacement,
-);
-
-// 6. 결과와 콜백 처리
-navigate(
-  context,
-  route: AppRoute.onboardCertification,
-  extra: {'exampleKey': 'exampleValue'},
-  callback: () => print('Navigation completed!'),
-);
- */
+extension ContextExtension on BuildContext {
+  void popUntil(AppRoute route) {
+    final delegate = GoRouter.of(this).routerDelegate;
+    var config = delegate.currentConfiguration;
+    var routes = config.routes.whereType<GoRoute>();
+    while (routes.length > 1 && config.last.route.name != route.name) {
+      config = config.remove(config.last);
+      routes = config.routes.whereType<GoRoute>();
+    }
+    delegate.setNewRoutePath(config);
+  }
+}

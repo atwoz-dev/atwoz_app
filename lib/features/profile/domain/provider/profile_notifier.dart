@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
@@ -41,11 +42,20 @@ class ProfileNotifier extends _$ProfileNotifier {
         isLoaded: true,
         error: null,
       );
+    } on InvalidUserException {
+      Log.e('user id($userId) is invalid user');
+      state = state.copyWith(
+        error: DialogueErrorType.invalidUser,
+        needToExit: true,
+      );
     } catch (e, stackTrace) {
-      Log.e(e);
-      Log.e(stackTrace);
-
-      state = state.copyWith(isLoaded: true, error: DialogueErrorType.network);
+      Log.e(stackTrace, errorObject: e);
+      state = state.copyWith(
+        error: DialogueErrorType.unknown,
+        needToExit: true,
+      );
+    } finally {
+      state = state.copyWith(isLoaded: true);
     }
   }
 
