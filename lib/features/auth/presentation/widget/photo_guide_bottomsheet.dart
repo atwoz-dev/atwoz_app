@@ -21,7 +21,7 @@ class PhotoGuideBottomSheet extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
-              height: 400,
+              height: 400.h,
               child: SingleChildScrollView(
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
