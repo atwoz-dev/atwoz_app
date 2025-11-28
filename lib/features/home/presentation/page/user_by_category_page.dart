@@ -71,7 +71,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   }) async {
     if (isBlurred) {
       final heartBalance = ref
-          .read(globalProvider)
+          .watch(globalProvider)
           .heartBalance
           .totalHeartBalance;
 
@@ -102,11 +102,15 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
 
       if (pressed != true) return;
 
-      await introducedProfilesNotifier.openProfile(
+      final profileOpenCompleted = await introducedProfilesNotifier.openProfile(
         index: index,
         memberId: profile.memberId,
       );
+
       if (!context.mounted) return;
+
+      if (!profileOpenCompleted) return;
+
       _navigateToProfile(context, profile);
       return;
     }

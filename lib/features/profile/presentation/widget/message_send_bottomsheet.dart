@@ -1,6 +1,5 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
@@ -55,7 +54,8 @@ class _MessageSendBottomSheetState
     final message = ref.read(profileProvider(widget.userId)).message;
 
     _controller = TextEditingController(text: message)
-      ..addListener(() {
+      ..addListener(() async {
+        await Future.delayed(Duration.zero);
         ref.read(profileProvider(widget.userId).notifier).message =
             _controller.text;
       });
@@ -156,24 +156,25 @@ class _MessageSendBottomSheetState
   }
 
   Future<void> _onSubmit({required bool messageReceived}) async {
+    final hasPoint = ref.read(profileProvider(widget.userId)).heartPoint;
+
+    context.pop();
+
     if (messageReceived) {
-      return _messageSendAndDetuctPoint(0);
+      return _messageSendAndDetuctPoint();
     }
 
     await showDialog(
       context: context,
       builder: (context) => _MessageSendConfirm(
-        hasPoint: ref.read(globalProvider).heartBalance.totalHeartBalance,
+        hasPoint: hasPoint,
         needPoint: Dimens.messageSendHeartCount,
         onMessageSend: _messageSendAndDetuctPoint,
       ),
     );
-
-    if (!mounted) return;
-    context.pop();
   }
 
-  Future<void> _messageSendAndDetuctPoint(int point) async {
+  Future<void> _messageSendAndDetuctPoint() async {
     await widget.onSubmit();
 
     if (!mounted) return;
@@ -388,7 +389,7 @@ class _MessageSendConfirm extends StatelessWidget {
 
   final int hasPoint;
   final int needPoint;
-  final ValueChanged<int> onMessageSend;
+  final VoidCallback onMessageSend;
 
   @override
   Widget build(BuildContext context) {
@@ -418,8 +419,8 @@ class _MessageSendConfirm extends StatelessWidget {
               onCancel: context.pop,
               enabledSubmit: hasPoint >= needPoint,
               onSubmit: () async {
-                onMessageSend(needPoint);
                 context.pop();
+                onMessageSend();
               },
               cancel: const Text('취소'),
               submit: Text.rich(

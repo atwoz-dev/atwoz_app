@@ -111,8 +111,7 @@ class ProfileManageInfoArea extends ConsumerWidget {
             child: Text("인터뷰 수정하기"),
             expandedWidth: true,
             onPressed: () {
-              //TODO(mh): 인터뷰 화면으로 이동
-              //navigate(context, route: AppRoute.interview);
+              navigate(context, route: AppRoute.interview);
             },
           ),
           ProfileManageBasicInfoArea(profile: profile),

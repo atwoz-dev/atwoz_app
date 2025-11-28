@@ -1,5 +1,6 @@
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/core/network/base_repository.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/storage/local_storage.dart';
 import 'package:atwoz_app/core/storage/local_storage_item.dart';
 import 'package:atwoz_app/core/util/log.dart';
@@ -17,8 +18,9 @@ class ProfileRepository extends BaseRepository {
 
   Future<ProfileDetailResponse> getProfileDetail(int id) async {
     final res = await apiService.getJson<Map<String, dynamic>>('/member/$id');
+
     if (res['data'] is! Map<String, Object?>) {
-      throw Exception('data type is not Map<String, dynamic> $res');
+      throw const NetworkException.formatException();
     }
 
     return ProfileDetailResponse.fromJson(res['data']);

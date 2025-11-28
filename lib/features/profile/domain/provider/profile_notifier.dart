@@ -2,6 +2,7 @@ import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
 import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/log.dart';
 import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
@@ -31,21 +32,33 @@ class ProfileNotifier extends _$ProfileNotifier {
   Future<void> _initializeProfileState(int userId) async {
     try {
       final profile = await ProfileFetchUseCase(ref).call(userId);
+      final heartPoint = ref
+          .watch(globalProvider)
+          .heartBalance
+          .totalHeartBalance;
 
       state = state.copyWith(
         profile: profile,
         myUserName: _myName,
-        // TODO(Han): 추후 실제 보유 하트 수로 대체
-        heartPoint: 30,
+        heartPoint: heartPoint,
         message: '',
         isLoaded: true,
         error: null,
       );
+    } on InvalidUserException {
+      Log.e('user id($userId) is invalid user');
+      state = state.copyWith(
+        error: DialogueErrorType.invalidUser,
+        needToExit: true,
+      );
     } catch (e, stackTrace) {
-      Log.e(e);
-      Log.e(stackTrace);
-
-      state = state.copyWith(isLoaded: true, error: DialogueErrorType.network);
+      Log.e(stackTrace, errorObject: e);
+      state = state.copyWith(
+        error: DialogueErrorType.unknown,
+        needToExit: true,
+      );
+    } finally {
+      state = state.copyWith(isLoaded: true);
     }
   }
 
@@ -57,16 +70,7 @@ class ProfileNotifier extends _$ProfileNotifier {
     state = state.copyWith(message: message);
   }
 
-  set favoriteType(FavoriteType type) {
-    state = state.copyWith(
-      profile: state.profile?.copyWith(favoriteType: type),
-    );
-    _updateFavoriteType(type);
-  }
-
-  Future<void> _updateFavoriteType(FavoriteType type) async {
-    if (state.profile == null) return;
-
+  Future<void> setFavoriteType(FavoriteType type) async {
     try {
       final hasProcessedMission = await ref
           .read(favoriteRepositoryProvider)
@@ -76,6 +80,12 @@ class ProfileNotifier extends _$ProfileNotifier {
         showToastMessage("좋아요 보내기 미션 완료! 하트 2개를 받았어요");
         await ref.read(globalProvider.notifier).fetchHeartBalance();
       }
+
+      state = state.copyWith(
+        profile: state.profile?.copyWith(favoriteType: type),
+      );
+    } on InvalidUserException {
+      showToastMessage('비활성화 회원이에요');
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);
@@ -101,6 +111,9 @@ class ProfileNotifier extends _$ProfileNotifier {
           ),
         ),
       );
+    } on InvalidUserException {
+      await showToastMessage('비활성화 회원이에요');
+      return;
     } catch (e) {
       Log.e(e);
       state = state.copyWith(error: DialogueErrorType.network);

@@ -40,7 +40,7 @@ final class PhotoProvider extends $NotifierProvider<Photo, List<XFile?>> {
   }
 }
 
-String _$photoHash() => r'911f42b941404020609a4e207a04c3efd7b76129';
+String _$photoHash() => r'8555dd9af213ac02526b8f23514a2cea2f9e048c';
 
 abstract class _$Photo extends $Notifier<List<XFile?>> {
   List<XFile?> build();

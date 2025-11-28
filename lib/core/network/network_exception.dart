@@ -12,30 +12,33 @@ part 'network_exception.freezed.dart';
 // @freezed: Freezed 어노테이션을 사용해 불변 객체와 다양한 상태를 자동으로 생성
 @freezed
 abstract class NetworkException with _$NetworkException implements Exception {
-  // const NetworkException._(): 프라이빗 생성자. 내부 생성 용도로만 사용되며, 외부에서 직접 인스턴스화하지 못하게 함
   const NetworkException._() : super();
 
   // unauthorizedException: 인증되지 않은 사용자
   const factory NetworkException.unauthorizedException() =
-      _UnauthorizedException;
+      UnauthorizedException;
+
+  // unauthorizedException: 유효하지 않은 사용자
+  const factory NetworkException.invalidUserException() = InvalidUserException;
 
   // otherException: 기타 예외 상태를 처리하기 위해 예외의 타입을 인자로 받는다.
-  const factory NetworkException.otherException(Type type) = _OtherException;
+  const factory NetworkException.otherException(Type type) = OtherException;
 
   // formatException: 데이터 형식 오류 발생 시 사용
-  const factory NetworkException.formatException() = _FormatException;
+  const factory NetworkException.formatException() = FormatException;
 
   // connectionException: 네트워크 연결 오류가 발생했을 때 사용
-  const factory NetworkException.connectionException() = _ConnectionException;
+  const factory NetworkException.connectionException() = ConnectionException;
 
   // maintenanceException: 서버 점검과 같은 예외를 처리
-  const factory NetworkException.maintenanceException() = _MaintenanceException;
+  const factory NetworkException.maintenanceException() = MaintenanceException;
 
   // apiException: API 응답에 대한 예외 상태를 처리하며, HTTP 상태 코드와 에러 메시지를 인자로 받는다.
   const factory NetworkException.apiException({
     int? status,
     String? code,
     String? message,
+    Map<String, dynamic>? data,
   }) = _ApiException;
 
   // 다양한 예외 상황에 맞는 NetworkException 객체를 반환하는 메서드
@@ -76,6 +79,7 @@ abstract class NetworkException with _$NetworkException implements Exception {
         case DioExceptionType.badResponse:
           String? code;
           String? message;
+          Map<String, dynamic>? data;
           final status = error.response?.statusCode;
 
           try {
@@ -83,19 +87,21 @@ abstract class NetworkException with _$NetworkException implements Exception {
             message ??= json['Message'] as String?;
             message ??= json['message'] as String?;
             code ??= json['code'] as String?;
+            data ??= json['data'] as Map<String, dynamic>?;
           } catch (_) {}
 
           message ??= error.message;
 
-          if (status == 401) {
-            return const NetworkException.unauthorizedException();
-          }
-
-          return NetworkException.apiException(
-            status: status,
-            code: code,
-            message: message,
-          );
+          return switch (status) {
+            401 => const NetworkException.unauthorizedException(),
+            403 => const NetworkException.invalidUserException(),
+            _ => NetworkException.apiException(
+              status: status,
+              code: code,
+              message: message,
+              data: data,
+            ),
+          };
 
         case DioExceptionType.badCertificate:
         case DioExceptionType.cancel:
@@ -115,13 +121,16 @@ abstract class NetworkException with _$NetworkException implements Exception {
   }
 
   // HTTP 상태 코드 가져오는 getter
-  int? get status => whenOrNull(apiException: (status, code, _) => status);
+  int? get status => whenOrNull(apiException: (status, _, _, _) => status);
 
-  String? get code => whenOrNull(apiException: (status, code, _) => code);
+  String? get code => whenOrNull(apiException: (_, code, _, _) => code);
+
+  Map<String, dynamic>? get data =>
+      whenOrNull(apiException: (_, _, _, data) => data);
 
   // 에러 메시지 가져오는 getter
   String? get message => maybeWhen<String?>(
-    apiException: (status, code, message) => message,
+    apiException: (status, code, message, data) => message,
     formatException: () => 'Function이 변경되었습니다. 새로운 버전으로 업그레이드 해주세요!',
     connectionException: () => '네트워크 연결이 불안정합니다. 다시 시도해 주세요!',
     orElse: () => '죄송합니다. 에러 발생으로 인해 나중에 다시 시도해 주세요.',

@@ -34,7 +34,7 @@ final class ProfileManageNotifierProvider
 }
 
 String _$profileManageNotifierHash() =>
-    r'cc5d7d45e9c78674c3059b34e3beae89ddc034c9';
+    r'b3d8260389be1dde93f13b4d665028190a5498a9';
 
 abstract class _$ProfileManageNotifier
     extends $AsyncNotifier<ProfileManageState> {

@@ -100,3 +100,9 @@ class IntroduceDetailArguments extends RouteArguments {
 
   final int introduceId;
 }
+
+class TemporalForbiddenArguments extends RouteArguments {
+  const TemporalForbiddenArguments({this.time});
+
+  final DateTime? time;
+}
