@@ -55,14 +55,15 @@ extension NetworkExceptionPatterns on NetworkException {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _UnauthorizedException value)?  unauthorizedException,TResult Function( _OtherException value)?  otherException,TResult Function( _FormatException value)?  formatException,TResult Function( _ConnectionException value)?  connectionException,TResult Function( _MaintenanceException value)?  maintenanceException,TResult Function( _ApiException value)?  apiException,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( UnauthorizedException value)?  unauthorizedException,TResult Function( InvalidUserException value)?  invalidUserException,TResult Function( OtherException value)?  otherException,TResult Function( FormatException value)?  formatException,TResult Function( ConnectionException value)?  connectionException,TResult Function( MaintenanceException value)?  maintenanceException,TResult Function( _ApiException value)?  apiException,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _UnauthorizedException() when unauthorizedException != null:
-return unauthorizedException(_that);case _OtherException() when otherException != null:
-return otherException(_that);case _FormatException() when formatException != null:
-return formatException(_that);case _ConnectionException() when connectionException != null:
-return connectionException(_that);case _MaintenanceException() when maintenanceException != null:
+case UnauthorizedException() when unauthorizedException != null:
+return unauthorizedException(_that);case InvalidUserException() when invalidUserException != null:
+return invalidUserException(_that);case OtherException() when otherException != null:
+return otherException(_that);case FormatException() when formatException != null:
+return formatException(_that);case ConnectionException() when connectionException != null:
+return connectionException(_that);case MaintenanceException() when maintenanceException != null:
 return maintenanceException(_that);case _ApiException() when apiException != null:
 return apiException(_that);case _:
   return orElse();
@@ -82,14 +83,15 @@ return apiException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _UnauthorizedException value)  unauthorizedException,required TResult Function( _OtherException value)  otherException,required TResult Function( _FormatException value)  formatException,required TResult Function( _ConnectionException value)  connectionException,required TResult Function( _MaintenanceException value)  maintenanceException,required TResult Function( _ApiException value)  apiException,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( UnauthorizedException value)  unauthorizedException,required TResult Function( InvalidUserException value)  invalidUserException,required TResult Function( OtherException value)  otherException,required TResult Function( FormatException value)  formatException,required TResult Function( ConnectionException value)  connectionException,required TResult Function( MaintenanceException value)  maintenanceException,required TResult Function( _ApiException value)  apiException,}){
 final _that = this;
 switch (_that) {
-case _UnauthorizedException():
-return unauthorizedException(_that);case _OtherException():
-return otherException(_that);case _FormatException():
-return formatException(_that);case _ConnectionException():
-return connectionException(_that);case _MaintenanceException():
+case UnauthorizedException():
+return unauthorizedException(_that);case InvalidUserException():
+return invalidUserException(_that);case OtherException():
+return otherException(_that);case FormatException():
+return formatException(_that);case ConnectionException():
+return connectionException(_that);case MaintenanceException():
 return maintenanceException(_that);case _ApiException():
 return apiException(_that);case _:
   throw StateError('Unexpected subclass');
@@ -108,14 +110,15 @@ return apiException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _UnauthorizedException value)?  unauthorizedException,TResult? Function( _OtherException value)?  otherException,TResult? Function( _FormatException value)?  formatException,TResult? Function( _ConnectionException value)?  connectionException,TResult? Function( _MaintenanceException value)?  maintenanceException,TResult? Function( _ApiException value)?  apiException,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( UnauthorizedException value)?  unauthorizedException,TResult? Function( InvalidUserException value)?  invalidUserException,TResult? Function( OtherException value)?  otherException,TResult? Function( FormatException value)?  formatException,TResult? Function( ConnectionException value)?  connectionException,TResult? Function( MaintenanceException value)?  maintenanceException,TResult? Function( _ApiException value)?  apiException,}){
 final _that = this;
 switch (_that) {
-case _UnauthorizedException() when unauthorizedException != null:
-return unauthorizedException(_that);case _OtherException() when otherException != null:
-return otherException(_that);case _FormatException() when formatException != null:
-return formatException(_that);case _ConnectionException() when connectionException != null:
-return connectionException(_that);case _MaintenanceException() when maintenanceException != null:
+case UnauthorizedException() when unauthorizedException != null:
+return unauthorizedException(_that);case InvalidUserException() when invalidUserException != null:
+return invalidUserException(_that);case OtherException() when otherException != null:
+return otherException(_that);case FormatException() when formatException != null:
+return formatException(_that);case ConnectionException() when connectionException != null:
+return connectionException(_that);case MaintenanceException() when maintenanceException != null:
 return maintenanceException(_that);case _ApiException() when apiException != null:
 return apiException(_that);case _:
   return null;
@@ -134,13 +137,14 @@ return apiException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthorizedException,TResult Function( Type type)?  otherException,TResult Function()?  formatException,TResult Function()?  connectionException,TResult Function()?  maintenanceException,TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthorizedException,TResult Function()?  invalidUserException,TResult Function( Type type)?  otherException,TResult Function()?  formatException,TResult Function()?  connectionException,TResult Function()?  maintenanceException,TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _UnauthorizedException() when unauthorizedException != null:
-return unauthorizedException();case _OtherException() when otherException != null:
-return otherException(_that.type);case _FormatException() when formatException != null:
-return formatException();case _ConnectionException() when connectionException != null:
-return connectionException();case _MaintenanceException() when maintenanceException != null:
+case UnauthorizedException() when unauthorizedException != null:
+return unauthorizedException();case InvalidUserException() when invalidUserException != null:
+return invalidUserException();case OtherException() when otherException != null:
+return otherException(_that.type);case FormatException() when formatException != null:
+return formatException();case ConnectionException() when connectionException != null:
+return connectionException();case MaintenanceException() when maintenanceException != null:
 return maintenanceException();case _ApiException() when apiException != null:
 return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   return orElse();
@@ -160,13 +164,14 @@ return apiException(_that.status,_that.code,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthorizedException,required TResult Function( Type type)  otherException,required TResult Function()  formatException,required TResult Function()  connectionException,required TResult Function()  maintenanceException,required TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)  apiException,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthorizedException,required TResult Function()  invalidUserException,required TResult Function( Type type)  otherException,required TResult Function()  formatException,required TResult Function()  connectionException,required TResult Function()  maintenanceException,required TResult Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)  apiException,}) {final _that = this;
 switch (_that) {
-case _UnauthorizedException():
-return unauthorizedException();case _OtherException():
-return otherException(_that.type);case _FormatException():
-return formatException();case _ConnectionException():
-return connectionException();case _MaintenanceException():
+case UnauthorizedException():
+return unauthorizedException();case InvalidUserException():
+return invalidUserException();case OtherException():
+return otherException(_that.type);case FormatException():
+return formatException();case ConnectionException():
+return connectionException();case MaintenanceException():
 return maintenanceException();case _ApiException():
 return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   throw StateError('Unexpected subclass');
@@ -185,13 +190,14 @@ return apiException(_that.status,_that.code,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthorizedException,TResult? Function( Type type)?  otherException,TResult? Function()?  formatException,TResult? Function()?  connectionException,TResult? Function()?  maintenanceException,TResult? Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthorizedException,TResult? Function()?  invalidUserException,TResult? Function( Type type)?  otherException,TResult? Function()?  formatException,TResult? Function()?  connectionException,TResult? Function()?  maintenanceException,TResult? Function( int? status,  String? code,  String? message,  Map<String, dynamic>? data)?  apiException,}) {final _that = this;
 switch (_that) {
-case _UnauthorizedException() when unauthorizedException != null:
-return unauthorizedException();case _OtherException() when otherException != null:
-return otherException(_that.type);case _FormatException() when formatException != null:
-return formatException();case _ConnectionException() when connectionException != null:
-return connectionException();case _MaintenanceException() when maintenanceException != null:
+case UnauthorizedException() when unauthorizedException != null:
+return unauthorizedException();case InvalidUserException() when invalidUserException != null:
+return invalidUserException();case OtherException() when otherException != null:
+return otherException(_that.type);case FormatException() when formatException != null:
+return formatException();case ConnectionException() when connectionException != null:
+return connectionException();case MaintenanceException() when maintenanceException != null:
 return maintenanceException();case _ApiException() when apiException != null:
 return apiException(_that.status,_that.code,_that.message,_that.data);case _:
   return null;
@@ -204,8 +210,8 @@ return apiException(_that.status,_that.code,_that.message,_that.data);case _:
 /// @nodoc
 
 
-class _UnauthorizedException extends NetworkException {
-  const _UnauthorizedException(): super._();
+class UnauthorizedException extends NetworkException {
+  const UnauthorizedException(): super._();
   
 
 
@@ -215,7 +221,7 @@ class _UnauthorizedException extends NetworkException {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnauthorizedException);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnauthorizedException);
 }
 
 
@@ -236,8 +242,40 @@ String toString() {
 /// @nodoc
 
 
-class _OtherException extends NetworkException {
-  const _OtherException(this.type): super._();
+class InvalidUserException extends NetworkException {
+  const InvalidUserException(): super._();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvalidUserException);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'NetworkException.invalidUserException()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class OtherException extends NetworkException {
+  const OtherException(this.type): super._();
   
 
  final  Type type;
@@ -246,13 +284,13 @@ class _OtherException extends NetworkException {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$OtherExceptionCopyWith<_OtherException> get copyWith => __$OtherExceptionCopyWithImpl<_OtherException>(this, _$identity);
+$OtherExceptionCopyWith<OtherException> get copyWith => _$OtherExceptionCopyWithImpl<OtherException>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OtherException&&(identical(other.type, type) || other.type == type));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OtherException&&(identical(other.type, type) || other.type == type));
 }
 
 
@@ -268,8 +306,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$OtherExceptionCopyWith<$Res> implements $NetworkExceptionCopyWith<$Res> {
-  factory _$OtherExceptionCopyWith(_OtherException value, $Res Function(_OtherException) _then) = __$OtherExceptionCopyWithImpl;
+abstract mixin class $OtherExceptionCopyWith<$Res> implements $NetworkExceptionCopyWith<$Res> {
+  factory $OtherExceptionCopyWith(OtherException value, $Res Function(OtherException) _then) = _$OtherExceptionCopyWithImpl;
 @useResult
 $Res call({
  Type type
@@ -280,17 +318,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$OtherExceptionCopyWithImpl<$Res>
-    implements _$OtherExceptionCopyWith<$Res> {
-  __$OtherExceptionCopyWithImpl(this._self, this._then);
+class _$OtherExceptionCopyWithImpl<$Res>
+    implements $OtherExceptionCopyWith<$Res> {
+  _$OtherExceptionCopyWithImpl(this._self, this._then);
 
-  final _OtherException _self;
-  final $Res Function(_OtherException) _then;
+  final OtherException _self;
+  final $Res Function(OtherException) _then;
 
 /// Create a copy of NetworkException
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? type = null,}) {
-  return _then(_OtherException(
+  return _then(OtherException(
 null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as Type,
   ));
@@ -302,8 +340,8 @@ as Type,
 /// @nodoc
 
 
-class _FormatException extends NetworkException {
-  const _FormatException(): super._();
+class FormatException extends NetworkException {
+  const FormatException(): super._();
   
 
 
@@ -313,7 +351,7 @@ class _FormatException extends NetworkException {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FormatException);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FormatException);
 }
 
 
@@ -334,8 +372,8 @@ String toString() {
 /// @nodoc
 
 
-class _ConnectionException extends NetworkException {
-  const _ConnectionException(): super._();
+class ConnectionException extends NetworkException {
+  const ConnectionException(): super._();
   
 
 
@@ -345,7 +383,7 @@ class _ConnectionException extends NetworkException {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConnectionException);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConnectionException);
 }
 
 
@@ -366,8 +404,8 @@ String toString() {
 /// @nodoc
 
 
-class _MaintenanceException extends NetworkException {
-  const _MaintenanceException(): super._();
+class MaintenanceException extends NetworkException {
+  const MaintenanceException(): super._();
   
 
 
@@ -377,7 +415,7 @@ class _MaintenanceException extends NetworkException {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MaintenanceException);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MaintenanceException);
 }
 
 

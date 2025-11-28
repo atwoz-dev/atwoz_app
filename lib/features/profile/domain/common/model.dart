@@ -49,6 +49,8 @@ sealed class MatchStatus extends Equatable {
 
   final int matchId;
 
+  bool get canRequest => this is UnMatched || this is MatchRejected;
+
   @override
   List<Object> get props => [matchId];
 }
