@@ -33,7 +33,7 @@ class ProfileSelfIntroduction extends ConsumerWidget {
         children: selfIntroductionItems
             .map(
               (introduction) => GestureDetector(
-                onTap: () => _SelfIntroducitonDetailBottomSheet._open(
+                onTap: () => SelfIntroducitonDetailBottomSheet.open(
                   context,
                   introduction: introduction,
                 ),
@@ -73,7 +73,7 @@ class _SelfIntroductionItem extends StatelessWidget {
           const Gap(8.0),
           Text(
             introduction,
-            style: Fonts.body01Medium(),
+            style: Fonts.body02Medium(),
             maxLines: 3,
             overflow: TextOverflow.fade,
           ),
@@ -83,17 +83,17 @@ class _SelfIntroductionItem extends StatelessWidget {
   }
 }
 
-class _SelfIntroducitonDetailBottomSheet extends StatelessWidget {
-  const _SelfIntroducitonDetailBottomSheet._(this.introduction);
+class SelfIntroducitonDetailBottomSheet extends StatelessWidget {
+  const SelfIntroducitonDetailBottomSheet._(this.introduction);
 
   final SelfIntroductionData introduction;
 
-  static Future _open(
+  static Future open(
     BuildContext context, {
     required SelfIntroductionData introduction,
   }) => showDialog(
     context: context,
-    builder: (_) => _SelfIntroducitonDetailBottomSheet._(introduction),
+    builder: (_) => SelfIntroducitonDetailBottomSheet._(introduction),
   );
 
   @override
