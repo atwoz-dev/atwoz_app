@@ -75,9 +75,9 @@ class _ProfileHeadInformation extends ConsumerWidget {
               hobbies: userInfo.hobbies,
               chatEnabled: chatEnabled,
               favoriteType: userInfo.favoriteType,
-              onFavoriteTypeChanged: (type) =>
-                  ref.read(profileProvider(userId).notifier).favoriteType =
-                      type,
+              onFavoriteTypeChanged: (type) => ref
+                  .read(profileProvider(userId).notifier)
+                  .setFavoriteType(type),
             ),
           ),
         ],

@@ -1,6 +1,8 @@
 import 'package:atwoz_app/app/constants/enum.dart';
 import 'package:atwoz_app/app/provider/global_notifier.dart';
+import 'package:atwoz_app/core/network/network_exception.dart';
 import 'package:atwoz_app/core/util/log.dart';
+import 'package:atwoz_app/core/util/toast.dart';
 import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
 import 'package:atwoz_app/features/home/domain/domain.dart';
 import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
@@ -41,6 +43,9 @@ class IntroducedProfilesNotifier extends _$IntroducedProfilesNotifier {
       _setIntroducedMemberById(memberId);
 
       return true;
+    } on InvalidUserException {
+      showToastMessage('비활성화 회원이에요');
+      return false;
     } catch (e) {
       Log.e('소개 프로필 블러 제거 실패: $e');
       return false;

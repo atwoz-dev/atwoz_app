@@ -71,7 +71,7 @@ class _UserByCategoryPageState extends ConsumerState<UserByCategoryPage> {
   }) async {
     if (isBlurred) {
       final heartBalance = ref
-          .read(globalProvider)
+          .watch(globalProvider)
           .heartBalance
           .totalHeartBalance;
 

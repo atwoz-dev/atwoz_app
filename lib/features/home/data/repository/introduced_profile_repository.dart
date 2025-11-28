@@ -30,7 +30,7 @@ class IntroducedProfileRepository extends BaseRepository {
   }) async {
     await apiService.postJson(
       '$path/introduction/$category',
-      data: {'introducedMemberId': 370},
+      data: {'introducedMemberId': memberId},
     );
   }
 
