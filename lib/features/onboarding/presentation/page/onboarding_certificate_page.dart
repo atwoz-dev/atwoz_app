@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:atwoz_app/app/router/route_arguments.dart';
 import 'package:atwoz_app/app/widget/dialogue/confirm_dialogue.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/data/data.dart';
 import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
@@ -171,7 +172,11 @@ class _OnboardingCertificationPageState
         break;
 
       case AuthStatus.temporarilyForbidden:
-        navigate(context, route: AppRoute.temporalForbidden);
+        navigate(
+          context,
+          route: AppRoute.temporalForbidden,
+          extra: TemporalForbiddenArguments(time: notifier.suspensioinExpireAt),
+        );
         break;
 
       case AuthStatus.deletedUser:
@@ -193,9 +198,17 @@ class _OnboardingCertificationPageState
     if (userData?.isProfileSettingNeeded ?? false) {
       navigate(context, route: AppRoute.signUp);
     } else if (userData?.activityStatus == 'WAITING_SCREENING') {
-      navigate(context, route: AppRoute.signUpProfileReview);
+      navigate(
+        context,
+        route: AppRoute.signUpProfileReview,
+        method: NavigationMethod.go,
+      );
     } else if (userData?.activityStatus == 'REJECTED_SCREENING') {
-      navigate(context, route: AppRoute.signUpProfileReject);
+      navigate(
+        context,
+        route: AppRoute.signUpProfileReject,
+        method: NavigationMethod.go,
+      );
     } else {
       navigate(context, route: AppRoute.mainTab, method: NavigationMethod.go);
     }

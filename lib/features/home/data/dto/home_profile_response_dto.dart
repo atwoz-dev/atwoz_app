@@ -16,8 +16,27 @@ class HomeProfileResponseDto {
     required this.interviewInfoView,
   });
 
-  factory HomeProfileResponseDto.fromJson(Map<String, dynamic> json) =>
-      _$HomeProfileResponseDtoFromJson(json);
+  factory HomeProfileResponseDto.fromJson(Map<String, dynamic> json) {
+    final rawInterviewList = json['interviewInfoView'] as List<dynamic>;
+
+    final filteredList = rawInterviewList
+        .where(
+          (e) =>
+              e is Map<String, dynamic> &&
+              e.isNotEmpty &&
+              e['questionId'] != null,
+        )
+        .toList();
+
+    return HomeProfileResponseDto(
+      statusInfo: StatusInfoDto.fromJson(json['statusInfo']),
+      basicInfo: BasicInfoDto.fromJson(json['basicInfo']),
+      profileInfo: ProfileInfoDto.fromJson(json['profileInfo']),
+      interviewInfoView: filteredList
+          .map((e) => InterviewInfoDto.fromJson(e))
+          .toList(),
+    );
+  }
 
   Map<String, dynamic> toJson() => _$HomeProfileResponseDtoToJson(this);
 }

@@ -46,10 +46,7 @@ class _OnBoardPageState extends AppBaseStatefulPageBase<OnBoardPage> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Expanded(
-            flex: 7,
-            child: BalloonAnimationWidget(balloons: balloons),
-          ),
+          Expanded(flex: 7, child: BalloonAnimationWidget(balloons: balloons)),
           Expanded(
             flex: 3,
             child: Padding(

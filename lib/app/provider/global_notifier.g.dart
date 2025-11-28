@@ -41,7 +41,7 @@ final class GlobalNotifierProvider
   }
 }
 
-String _$globalNotifierHash() => r'd8c2510d73e1450f5218a02512c1c2a7b48bd54d';
+String _$globalNotifierHash() => r'd8681a0e73bdace3c76cd0e0c3fb5a59589888c6';
 
 abstract class _$GlobalNotifier extends $Notifier<AppGlobalState> {
   AppGlobalState build();
