@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IntroduceInfo {
 
- int get id; int get yearOfBirth; String get nickname; String get profileUrl; String get title; DateTime get createdAt;
+ int get id; int get yearOfBirth; String get nickname; String get profileUrl; String get title; String get content; DateTime get createdAt;
 /// Create a copy of IntroduceInfo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $IntroduceInfoCopyWith<IntroduceInfo> get copyWith => _$IntroduceInfoCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IntroduceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title,createdAt);
+int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title,content,createdAt);
 
 @override
 String toString() {
-  return 'IntroduceInfo(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title, createdAt: $createdAt)';
+  return 'IntroduceInfo(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title, content: $content, createdAt: $createdAt)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $IntroduceInfoCopyWith<$Res>  {
   factory $IntroduceInfoCopyWith(IntroduceInfo value, $Res Function(IntroduceInfo) _then) = _$IntroduceInfoCopyWithImpl;
 @useResult
 $Res call({
- int id, int yearOfBirth, String nickname, String profileUrl, String title, DateTime createdAt
+ int id, int yearOfBirth, String nickname, String profileUrl, String title, String content, DateTime createdAt
 });
 
 
@@ -62,13 +62,14 @@ class _$IntroduceInfoCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceInfo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,Object? content = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,yearOfBirth: null == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
 as String,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  String content,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IntroduceInfo() when $default != null:
-return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.createdAt);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.content,_that.createdAt);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  String content,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceInfo():
-return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.createdAt);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.content,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int yearOfBirth,  String nickname,  String profileUrl,  String title,  String content,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _IntroduceInfo() when $default != null:
-return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.createdAt);case _:
+return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that.title,_that.content,_that.createdAt);case _:
   return null;
 
 }
@@ -211,7 +212,7 @@ return $default(_that.id,_that.yearOfBirth,_that.nickname,_that.profileUrl,_that
 
 
 class _IntroduceInfo implements IntroduceInfo {
-  const _IntroduceInfo({required this.id, required this.yearOfBirth, required this.nickname, required this.profileUrl, required this.title, required this.createdAt});
+  const _IntroduceInfo({required this.id, required this.yearOfBirth, required this.nickname, required this.profileUrl, required this.title, required this.content, required this.createdAt});
   
 
 @override final  int id;
@@ -219,6 +220,7 @@ class _IntroduceInfo implements IntroduceInfo {
 @override final  String nickname;
 @override final  String profileUrl;
 @override final  String title;
+@override final  String content;
 @override final  DateTime createdAt;
 
 /// Create a copy of IntroduceInfo
@@ -231,16 +233,16 @@ _$IntroduceInfoCopyWith<_IntroduceInfo> get copyWith => __$IntroduceInfoCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IntroduceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.yearOfBirth, yearOfBirth) || other.yearOfBirth == yearOfBirth)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title,createdAt);
+int get hashCode => Object.hash(runtimeType,id,yearOfBirth,nickname,profileUrl,title,content,createdAt);
 
 @override
 String toString() {
-  return 'IntroduceInfo(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title, createdAt: $createdAt)';
+  return 'IntroduceInfo(id: $id, yearOfBirth: $yearOfBirth, nickname: $nickname, profileUrl: $profileUrl, title: $title, content: $content, createdAt: $createdAt)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$IntroduceInfoCopyWith<$Res> implements $IntroduceInfoCopy
   factory _$IntroduceInfoCopyWith(_IntroduceInfo value, $Res Function(_IntroduceInfo) _then) = __$IntroduceInfoCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int yearOfBirth, String nickname, String profileUrl, String title, DateTime createdAt
+ int id, int yearOfBirth, String nickname, String profileUrl, String title, String content, DateTime createdAt
 });
 
 
@@ -268,13 +270,14 @@ class __$IntroduceInfoCopyWithImpl<$Res>
 
 /// Create a copy of IntroduceInfo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? yearOfBirth = null,Object? nickname = null,Object? profileUrl = null,Object? title = null,Object? content = null,Object? createdAt = null,}) {
   return _then(_IntroduceInfo(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,yearOfBirth: null == yearOfBirth ? _self.yearOfBirth : yearOfBirth // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
 as String,profileUrl: null == profileUrl ? _self.profileUrl : profileUrl // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

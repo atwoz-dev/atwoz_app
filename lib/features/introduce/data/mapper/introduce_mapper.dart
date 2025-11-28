@@ -11,6 +11,7 @@ extension IntroduceMapper on IntroduceItem {
       id: id,
       profileUrl: profileUrl,
       title: title,
+      content: content,
       yearOfBirth: yearOfBirth,
       nickname: nickname,
       createdAt: DateTime.parse(createdAt),

@@ -33,6 +33,7 @@ _IntroduceItem _$IntroduceItemFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'] as String,
       profileUrl: json['profileUrl'] as String,
       title: json['title'] as String,
+      content: json['content'] as String,
       createdAt: json['createdAt'] as String,
     );
 
@@ -43,5 +44,6 @@ Map<String, dynamic> _$IntroduceItemToJson(_IntroduceItem instance) =>
       'nickname': instance.nickname,
       'profileUrl': instance.profileUrl,
       'title': instance.title,
+      'content': instance.content,
       'createdAt': instance.createdAt,
     };

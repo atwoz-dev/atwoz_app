@@ -13,6 +13,7 @@ abstract class IntroduceInfo with _$IntroduceInfo {
     required String nickname,
     required String profileUrl,
     required String title,
+    required String content,
     required DateTime createdAt,
   }) = _IntroduceInfo;
 }

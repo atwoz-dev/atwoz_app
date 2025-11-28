@@ -24,6 +24,7 @@ abstract class IntroduceItem with _$IntroduceItem {
     required String nickname,
     required String profileUrl,
     required String title,
+    required String content,
     required String createdAt,
   }) = _IntroduceItem;
 
