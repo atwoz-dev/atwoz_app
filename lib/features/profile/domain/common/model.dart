@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/enum/enum.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:equatable/equatable.dart';
@@ -17,14 +18,13 @@ abstract class UserProfile with _$UserProfile {
     required int age,
     required String mbti,
     required String address,
-    required List<String> hobbies,
+    required List<Hobby> hobbies,
     required List<SelfIntroductionData> selfIntroductionItems,
     required SmokingStatus smokingStatus,
     required DrinkingStatus drinkingStatus,
     required EducationLevel educationLevel,
     required Religion religion,
-    required Region region,
-    required double height,
+    required int height,
     required Job job,
     required MatchStatus matchStatus,
     required ProfileExchangeInfo? profileExchangeInfo,
@@ -39,7 +39,7 @@ class SelfIntroductionData {
     required this.content,
   });
 
-  final String about;
+  final InterviewCategory about;
   final String title;
   final String content;
 }

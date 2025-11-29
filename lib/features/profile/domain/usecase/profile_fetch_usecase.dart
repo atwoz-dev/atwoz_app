@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/app/enum/contact_method.dart';
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
@@ -31,8 +32,8 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       profileUri: basic.profileImageUrl,
       age: basic.age ?? 0,
       mbti: basic.mbti,
-      address: basic.region ?? '',
-      hobbies: basic.hobbies,
+      address: addressData.getLocationString(basic.city, basic.district),
+      hobbies: basic.hobbies.map((hobby) => Hobby.parse(hobby)).toList(),
       selfIntroductionItems: interviews
           .map((intro) => intro.toModel())
           .toList(),
@@ -40,8 +41,7 @@ extension ProfileDetailResponseX on ProfileDetailResponse {
       drinkingStatus: DrinkingStatus.parse(basic.drinkingStatus),
       educationLevel: EducationLevel.parse(basic.highestEducation),
       religion: Religion.parse(basic.religion),
-      region: Region.parse(basic.region),
-      height: basic.height.toDouble(),
+      height: basic.height,
       job: Job.parse(basic.job),
       matchStatus: matchInfo?.toModel(myUserId) ?? const UnMatched(),
       profileExchangeInfo: profileExchangeInfo,
@@ -79,6 +79,9 @@ extension MatchInformationX on MatchInformation {
 }
 
 extension SelfIntroductionDataX on ProfileInterview {
-  SelfIntroductionData toModel() =>
-      SelfIntroductionData(about: category, title: content, content: answer);
+  SelfIntroductionData toModel() => SelfIntroductionData(
+    about: InterviewCategory.parse(category),
+    title: content,
+    content: answer,
+  );
 }
