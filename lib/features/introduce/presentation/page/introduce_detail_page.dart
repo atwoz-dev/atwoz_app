@@ -98,10 +98,8 @@ class IntroduceDetailPageState
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-
                       children: [
                         RoundedImage(imageURL: imageUrl, size: 100),
-
                         SizedBox(width: 16.w),
                         Expanded(
                           child: Column(
@@ -110,14 +108,14 @@ class IntroduceDetailPageState
                               Text(
                                 "$nickname, $age",
                                 style: Fonts.header02(
-                                  Palette.colorGrey900,
-                                ).copyWith(fontWeight: FontWeight.w700),
+                                  const Color(0xFF1F1E23),
+                                ),
                               ),
                               const Gap(6),
                               Text(
                                 '$mbti · $location',
-                                style: Fonts.body03Regular(
-                                  Palette.colorGrey500,
+                                style: Fonts.body02Regular(
+                                  Palette.colorGrey600,
                                 ),
                               ),
                               const Gap(6),
@@ -230,12 +228,20 @@ class IntroduceDetailPageState
                             children: [
                               Text(
                                 title,
-                                style: Fonts.header03(
-                                  Palette.colorGrey900,
-                                ).copyWith(fontWeight: FontWeight.w700),
+                                style: Fonts.semibold(
+                                  color: Palette.colorBlack,
+                                  fontSize: 16,
+                                ),
                               ),
                               const Gap(12),
-                              Text(content),
+                              Text(
+                                content,
+                                style: Fonts.regular(
+                                  color: Palette.colorGrey600,
+                                  fontSize: 14,
+                                  lineHeight: 1.5,
+                                ),
+                              ),
                             ],
                           ),
                         ),

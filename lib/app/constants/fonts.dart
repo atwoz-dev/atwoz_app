@@ -183,7 +183,7 @@ class Fonts {
     Color? color,
     double lineHeight = 1,
   }) => TextStyle(
-    fontFamily: fontMontserratMedium,
+    fontFamily: fontPretendardMedium,
     color: color ?? Palette.colorBlack,
     fontSize: fontSize.sp,
     height: lineHeight.h,
