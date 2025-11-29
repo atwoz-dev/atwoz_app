@@ -17,9 +17,10 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
   }
 
   void setTitle(String t) {
-    final title = t.trim();
+    final newTitle = t.trim();
+    if (newTitle == title) return;
     state = state.copyWith(
-      title: title,
+      title: newTitle,
       canSubmit:
           title.isNotEmpty &&
           (state.content != null && state.content!.isNotEmpty),
@@ -27,9 +28,10 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
   }
 
   void setContent(String t) {
-    final content = t.trim();
+    final newContent = t.trim();
+    if (newContent == content) return;
     state = state.copyWith(
-      content: content,
+      content: newContent,
       canSubmit:
           content.isNotEmpty &&
           (state.title != null && state.title!.isNotEmpty),

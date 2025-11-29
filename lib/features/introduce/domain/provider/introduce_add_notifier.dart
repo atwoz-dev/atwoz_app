@@ -9,7 +9,7 @@ part 'introduce_add_notifier.g.dart';
 class IntroduceAddNotifier extends _$IntroduceAddNotifier {
   @override
   IntroduceAddState build() {
-    return const IntroduceAddState();
+    return const IntroduceAddState(canSubmit: false);
   }
 
   void setTitle(String t) {
