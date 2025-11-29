@@ -7,12 +7,14 @@ class RowTextFormField extends StatefulWidget {
   final String label;
   final String hintText;
   final String? initialValue;
+  final TextStyle? textStyle;
 
   const RowTextFormField({
     super.key,
     required this.label,
     required this.hintText,
     this.initialValue,
+    this.textStyle,
   });
 
   @override
@@ -37,6 +39,7 @@ class _RowTextFormFieldState extends State<RowTextFormField> {
   Widget build(BuildContext context) {
     controller.text = widget.initialValue ?? "";
     return buildLabeledRow(
+      textStyle: widget.textStyle,
       context: context,
       label: widget.label,
       child: DefaultTextFormField(

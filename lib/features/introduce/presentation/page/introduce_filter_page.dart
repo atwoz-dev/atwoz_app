@@ -1,7 +1,6 @@
 import 'package:atwoz_app/app/provider/global_notifier.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
 import 'package:atwoz_app/app/widget/input/selection.dart';
+import 'package:atwoz_app/app/widget/widget.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/age_range_slider.dart';
 import 'package:atwoz_app/features/introduce/presentation/widget/row_text_form_field.dart';
@@ -24,21 +23,20 @@ class IntroduceFilterPage extends ConsumerWidget {
     final ageRange = ref.watch(filterProvider).rangeValues;
     final selectedCityList = ref.watch(filterProvider).selectedCitys;
     final selectedGender = ref.watch(filterProvider).selectedGender;
+    final hasChanged = ref.watch(filterProvider).hasChanged;
 
     return Scaffold(
       appBar: const DefaultAppBar(title: '필터 설정'),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   '나이',
-                  style: Fonts.body02Regular(
-                    Palette.colorBlack,
-                  ).copyWith(fontWeight: FontWeight.w600),
+                  style: Fonts.body02Medium(),
                 ),
                 Text(
                   "${ageRange.start.toInt()}세~${ageRange.end.toInt()}세",
@@ -55,6 +53,7 @@ class IntroduceFilterPage extends ConsumerWidget {
               children: [
                 RowTextFormField(
                   label: '선호 지역',
+                  textStyle: Fonts.body02Medium(),
                   hintText: '선호 지역을 선택해주세요',
                   initialValue: selectedCityList.isNotEmpty
                       ? selectedCityList.join(', ')
@@ -65,6 +64,7 @@ class IntroduceFilterPage extends ConsumerWidget {
                 buildLabeledRow(
                   context: context,
                   label: '성별',
+                  textStyle: Fonts.body02Medium(),
                   child: SelectionWidget(
                     options: [ALL, OPPOSITE],
                     initialOptions: selectedGender == null ? ALL : OPPOSITE,
@@ -81,6 +81,19 @@ class IntroduceFilterPage extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: DefaultElevatedButton(
+              onPressed: hasChanged
+                  ? () {
+                      filterNotifer.saveFilter();
+                      Navigator.of(context).pop();
+                    }
+                  : null,
+              child: const Text("필터 적용하기"),
             ),
           ),
         ],

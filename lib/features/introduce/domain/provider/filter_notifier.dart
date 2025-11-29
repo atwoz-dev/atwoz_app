@@ -53,37 +53,42 @@ class FilterNotifier extends _$FilterNotifier {
 
   void updateRange(RangeValues values) {
     state = state.copyWith(rangeValues: values, hasChanged: true);
-    SharedPreferenceManager.setValue(
-      SharedPreferenceKeys.preferredAgeStart,
-      values.start.toInt(),
-    );
-    SharedPreferenceManager.setValue(
-      SharedPreferenceKeys.preferredAgeEnd,
-      values.end.toInt(),
-    );
   }
 
   void updateCitys(List<String> citys) {
     state = state.copyWith(selectedCitys: citys, hasChanged: true);
-    SharedPreferenceManager.setValue(
-      SharedPreferenceKeys.preferredCities,
-      citys,
-    );
   }
 
   void updateGender(Gender? gender) {
     state = state.copyWith(selectedGender: gender, hasChanged: true);
-    SharedPreferenceManager.setValue(
-      SharedPreferenceKeys.showAllGender,
-      gender == Gender.male
-          ? 1
-          : gender == Gender.female
-          ? 2
-          : 0,
-    );
   }
 
   void updateChanged(bool hasChanged) {
     state = state.copyWith(hasChanged: hasChanged);
+  }
+
+  void saveFilter() {
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.preferredAgeStart,
+      state.rangeValues.start.toInt(),
+    );
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.preferredAgeEnd,
+      state.rangeValues.end.toInt(),
+    );
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.preferredCities,
+      state.selectedCitys,
+    );
+    SharedPreferenceManager.setValue(
+      SharedPreferenceKeys.showAllGender,
+      state.selectedGender == Gender.male
+          ? 1
+          : state.selectedGender == Gender.female
+          ? 2
+          : 0,
+    );
+
+    state = state.copyWith(hasChanged: false);
   }
 }
