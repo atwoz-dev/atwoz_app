@@ -115,7 +115,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                                       child: IconButton(
                                         onPressed: () => navigate(
                                           context,
-                                          route: AppRoute.ideal,
+                                          route: AppRoute.introduceFilter,
                                         ),
                                         padding: EdgeInsets.zero,
                                         icon: const DefaultIcon(

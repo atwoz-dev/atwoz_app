@@ -10,23 +10,30 @@ part of 'introduce_edit_notifier.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(IntroduceEditNotifier)
-const introduceEditProvider = IntroduceEditNotifierProvider._();
+const introduceEditProvider = IntroduceEditNotifierFamily._();
 
 final class IntroduceEditNotifierProvider
     extends $NotifierProvider<IntroduceEditNotifier, IntroduceEditState> {
-  const IntroduceEditNotifierProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'introduceEditProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  const IntroduceEditNotifierProvider._({
+    required IntroduceEditNotifierFamily super.from,
+    required ({String title, String content}) super.argument,
+  }) : super(
+         retry: null,
+         name: r'introduceEditProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$introduceEditNotifierHash();
+
+  @override
+  String toString() {
+    return r'introduceEditProvider'
+        ''
+        '$argument';
+  }
 
   @$internal
   @override
@@ -39,17 +46,61 @@ final class IntroduceEditNotifierProvider
       providerOverride: $SyncValueProvider<IntroduceEditState>(value),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is IntroduceEditNotifierProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$introduceEditNotifierHash() =>
-    r'a584c4c3ac54aa1f139b4914d2ed790981b98486';
+    r'3e23d055895befbcdd22e323cc685c95f658fd3c';
+
+final class IntroduceEditNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          IntroduceEditNotifier,
+          IntroduceEditState,
+          IntroduceEditState,
+          IntroduceEditState,
+          ({String title, String content})
+        > {
+  const IntroduceEditNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'introduceEditProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  IntroduceEditNotifierProvider call({
+    required String title,
+    required String content,
+  }) => IntroduceEditNotifierProvider._(
+    argument: (title: title, content: content),
+    from: this,
+  );
+
+  @override
+  String toString() => r'introduceEditProvider';
+}
 
 abstract class _$IntroduceEditNotifier extends $Notifier<IntroduceEditState> {
-  IntroduceEditState build();
+  late final _$args = ref.$arg as ({String title, String content});
+  String get title => _$args.title;
+  String get content => _$args.content;
+
+  IntroduceEditState build({required String title, required String content});
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
+    final created = build(title: _$args.title, content: _$args.content);
     final ref = this.ref as $Ref<IntroduceEditState, IntroduceEditState>;
     final element =
         ref.element

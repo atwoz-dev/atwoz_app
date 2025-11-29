@@ -123,7 +123,10 @@ class IntroduceListItem extends ConsumerWidget {
           await navigate(
             context,
             route: AppRoute.introduceEdit,
-            extra: IntroduceEditArguments(id: introduce.id),
+            extra: IntroduceEditArguments(
+              id: introduce.id,
+              introduce: introduce,
+            ),
           );
 
           await ref.read(introduceProvider.notifier).fetchIntroduceList();

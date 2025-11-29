@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
@@ -90,9 +91,10 @@ class DormantReleaseArguments extends RouteArguments {
 }
 
 class IntroduceEditArguments extends RouteArguments {
-  const IntroduceEditArguments({required this.id});
+  const IntroduceEditArguments({required this.id, required this.introduce});
 
   final int id;
+  final IntroduceInfo introduce;
 }
 
 class IntroduceDetailArguments extends RouteArguments {

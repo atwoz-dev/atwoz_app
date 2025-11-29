@@ -5,6 +5,7 @@ import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
 import 'package:atwoz_app/app/widget/view/default_divider.dart';
 import 'package:atwoz_app/core/util/toast.dart';
+import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/introduce/domain/provider/introduce_edit_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,23 +14,28 @@ import 'package:gap/gap.dart';
 
 class IntroduceEditPage extends ConsumerStatefulWidget {
   final int id;
-  const IntroduceEditPage({super.key, required this.id});
+  final IntroduceInfo introduce;
+  const IntroduceEditPage({
+    super.key,
+    required this.id,
+    required this.introduce,
+  });
 
   @override
   IntroduceEditPageState createState() => IntroduceEditPageState();
 }
 
 class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
-  final TextEditingController _inputTitleController = TextEditingController();
-  final TextEditingController _inputContentController = TextEditingController();
+  late TextEditingController _inputTitleController;
+  late TextEditingController _inputContentController;
 
   @override
   void initState() {
     super.initState();
-
-    ref
-        .read(introduceEditProvider.notifier)
-        .fetchIntroduceDetail(id: widget.id);
+    _inputTitleController = TextEditingController(text: widget.introduce.title);
+    _inputContentController = TextEditingController(
+      text: widget.introduce.content,
+    );
   }
 
   @override
@@ -39,43 +45,31 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
     super.dispose();
   }
 
-  bool canRegister = false;
-
-  String? initialTitle;
-  String? initialContent;
-
-  bool titleGet = false;
-  bool contentGet = false;
-
   @override
   Widget build(BuildContext context) {
-    bool canSubmit = ref.watch(
-      introduceEditProvider.select((value) => value.canSubmit),
+    final notifier = ref.read(
+      introduceEditProvider(
+        title: widget.introduce.title,
+        content: widget.introduce.content,
+      ).notifier,
     );
 
-    final title = ref.watch(
-      introduceEditProvider.select((value) => value.title),
+    final editState = ref.watch(
+      introduceEditProvider(
+        title: widget.introduce.title,
+        content: widget.introduce.content,
+      ),
     );
-
-    if (title != null) {
-      _inputTitleController.text = title;
-    }
-
-    final content = ref.watch(
-      introduceEditProvider.select((value) => value.content),
-    );
-
-    if (content != null) {
-      _inputContentController.text = content;
-    }
 
     return Scaffold(
       appBar: DefaultAppBar(
         title: '내 소개 수정하기',
         actions: [
           DefaultTextButton(
-            primary: canSubmit ? Palette.colorBlack : Palette.colorGrey500,
-            onPressed: canSubmit
+            primary: editState.canSubmit
+                ? Palette.colorBlack
+                : Palette.colorGrey500,
+            onPressed: editState.canSubmit
                 ? () {
                     CustomDialogue.showTwoChoiceDialogue(
                       context: context,
@@ -83,13 +77,11 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
                       elevatedButtonText: '수정',
                       onElevatedButtonPressed: () async {
                         try {
-                          await ref
-                              .read(introduceEditProvider.notifier)
-                              .editIntroduce(
-                                id: widget.id,
-                                title: _inputTitleController.text,
-                                content: _inputContentController.text,
-                              );
+                          await notifier.editIntroduce(
+                            id: widget.id,
+                            title: _inputTitleController.text,
+                            content: _inputContentController.text,
+                          );
                           if (context.mounted) {
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
@@ -123,13 +115,10 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
           const Gap(24),
           DefaultTextFormField(
             autofocus: false,
+            initialValue: widget.introduce.title,
             controller: _inputTitleController,
             onChanged: (text) {
-              if (titleGet == false) {
-                titleGet = true;
-                return;
-              }
-              ref.read(introduceEditProvider.notifier).setTitle(text);
+              notifier.setTitle(text);
             },
             keyboardType: TextInputType.text,
             hintText: '제목을 입력해주세요',
@@ -142,13 +131,10 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
           Expanded(
             child: DefaultTextFormField(
               autofocus: false,
+              initialValue: widget.introduce.content,
               controller: _inputContentController,
               onChanged: (text) {
-                if (contentGet == false) {
-                  contentGet = true;
-                  return;
-                }
-                ref.read(introduceEditProvider.notifier).setContent(text);
+                notifier.setContent(text);
               },
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,

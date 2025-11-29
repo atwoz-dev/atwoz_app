@@ -9,8 +9,12 @@ part 'introduce_edit_notifier.g.dart';
 @Riverpod(keepAlive: false)
 class IntroduceEditNotifier extends _$IntroduceEditNotifier {
   @override
-  IntroduceEditState build() {
-    return const IntroduceEditState();
+  IntroduceEditState build({required String title, required String content}) {
+    return IntroduceEditState(
+      title: title,
+      content: content,
+      canSubmit: false,
+    );
   }
 
   void setTitle(String t) {
@@ -31,20 +35,6 @@ class IntroduceEditNotifier extends _$IntroduceEditNotifier {
           content.isNotEmpty &&
           (state.title != null && state.title!.isNotEmpty),
     );
-  }
-
-  /// 셀프 소개 상세 조회
-  Future<void> fetchIntroduceDetail({required int id}) async {
-    try {
-      final detail = await IntroduceFetchIntroduceDetailUseCase(
-        ref,
-      ).call(id: id);
-
-      state = state.copyWith(title: detail.title, content: detail.content);
-    } catch (e) {
-      // TODO: 에러 발생 처리 어떻게???
-      Log.e("Failed to fetch introduce detail from server: $e");
-    }
   }
 
   /// 셀프 소개 수정

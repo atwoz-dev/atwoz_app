@@ -190,7 +190,10 @@ final allRoutes = [
       if (args is! IntroduceEditArguments) {
         return const SizedBox.shrink();
       }
-      return IntroduceEditPage(id: args.id);
+      return IntroduceEditPage(
+        id: args.id,
+        introduce: args.introduce,
+      );
     },
   ),
   NamedGoRoute(
