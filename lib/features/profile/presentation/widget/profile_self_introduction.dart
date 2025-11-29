@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _SelfIntroductionItem extends StatelessWidget {
     required this.introduction,
   });
 
-  final String about;
+  final InterviewCategory about;
   final String introduction;
 
   @override
@@ -69,7 +70,10 @@ class _SelfIntroductionItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(about, style: Fonts.body03Regular(context.palette.tertiary)),
+          Text(
+            about.label,
+            style: Fonts.body03Regular(context.palette.tertiary),
+          ),
           const Gap(8.0),
           Text(
             introduction,
