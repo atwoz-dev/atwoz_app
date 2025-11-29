@@ -1,3 +1,4 @@
+import 'package:atwoz_app/app/constants/region_data.dart';
 import 'package:atwoz_app/features/favorite_list/domain/provider/favorite_list_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -27,7 +28,7 @@ abstract class FavoriteListItemResponse with _$FavoriteListItemResponse {
     // TODO(Han): server 데이터 정합성 확보 후 non-nullable 하도록 수정
     profileUrl: profileImageUrl ?? '',
     name: nickname ?? '',
-    city: city ?? '',
+    city: addressData.getLocationString(city ?? 'SEOUL', null),
     age: age,
     favoriteAt: createdAt,
     isMutual: isMutualLike,
