@@ -39,7 +39,7 @@ class ProfileMainInformation extends StatelessWidget {
   final int age;
   final String mbti;
   final String address;
-  final List<String> hobbies;
+  final List<Hobby> hobbies;
   final bool chatEnabled;
   final FavoriteType? favoriteType;
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
@@ -74,7 +74,9 @@ class ProfileMainInformation extends StatelessWidget {
           const Gap(6.0),
           Wrap(
             spacing: 6.0,
-            children: hobbies.map(_MainHobbyBadge.new).toList(),
+            children: hobbies
+                .map((hobby) => _MainHobbyBadge(hobby.label))
+                .toList(),
           ),
           const Gap(12.0),
           if (chatEnabled)
@@ -96,9 +98,14 @@ class _MainHobbyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      margin: const EdgeInsets.only(right: 6.0),
       padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
-      child: Text(name, style: Fonts.body03Regular(context.palette.primary)),
+      decoration: BoxDecoration(
+        color: Palette.colorPrimary100,
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      child: Text(name, style: Fonts.body03Regular(Palette.colorPrimary600)),
     );
   }
 }
