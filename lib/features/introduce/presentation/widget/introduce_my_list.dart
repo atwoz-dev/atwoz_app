@@ -114,7 +114,7 @@ class IntroduceHistoryListItem extends ConsumerWidget {
         await navigate(
           context,
           route: AppRoute.introduceEdit,
-          extra: IntroduceEditArguments(id: item.id, introduce: item),
+          extra: IntroduceEditArguments(introduce: item),
         );
         ref.read(introduceProvider.notifier).fetchMyIntroduceList();
       },

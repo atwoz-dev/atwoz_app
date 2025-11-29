@@ -124,7 +124,6 @@ class IntroduceListItem extends ConsumerWidget {
             context,
             route: AppRoute.introduceEdit,
             extra: IntroduceEditArguments(
-              id: introduce.id,
               introduce: introduce,
             ),
           );

@@ -91,9 +91,8 @@ class DormantReleaseArguments extends RouteArguments {
 }
 
 class IntroduceEditArguments extends RouteArguments {
-  const IntroduceEditArguments({required this.id, required this.introduce});
+  const IntroduceEditArguments({required this.introduce});
 
-  final int id;
   final IntroduceInfo introduce;
 }
 

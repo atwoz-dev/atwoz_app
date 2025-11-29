@@ -13,11 +13,9 @@ import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:gap/gap.dart';
 
 class IntroduceEditPage extends ConsumerStatefulWidget {
-  final int id;
   final IntroduceInfo introduce;
   const IntroduceEditPage({
     super.key,
-    required this.id,
     required this.introduce,
   });
 
@@ -78,7 +76,7 @@ class IntroduceEditPageState extends ConsumerState<IntroduceEditPage> {
                       onElevatedButtonPressed: () async {
                         try {
                           await notifier.editIntroduce(
-                            id: widget.id,
+                            id: widget.introduce.id,
                             title: _inputTitleController.text,
                             content: _inputContentController.text,
                           );
