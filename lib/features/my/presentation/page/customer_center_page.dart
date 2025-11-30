@@ -53,7 +53,6 @@ class _CustomerCenterPageState extends State<CustomerCenterPage> {
 
   static const _kBotResponseDelay = Duration(milliseconds: 700);
   static const _kScrollAnimationDuration = Duration(milliseconds: 700);
-  // 대화 스크롤을 맨 아래로 이동시키는 함수
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
