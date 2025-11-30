@@ -69,7 +69,9 @@ class AuthSignUpTermsPageState
                   ? () async {
                       // 프로필 이미지 등록
                       final List<XFile?> photos = ref.read(photoProvider);
+
                       final profilePhotos = photos
+                          .whereType<XFile>()
                           .map(
                             (e) => ProfilePhoto(imageFile: e, isUpdated: true),
                           )

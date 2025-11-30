@@ -1,6 +1,7 @@
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
 import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:atwoz_app/features/profile/domain/common/enum.dart';
 import 'package:atwoz_app/features/profile/domain/common/model.dart';
 import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class ProfileSelfIntroduction extends ConsumerWidget {
         children: selfIntroductionItems
             .map(
               (introduction) => GestureDetector(
-                onTap: () => _SelfIntroducitonDetailBottomSheet._open(
+                onTap: () => SelfIntroducitonDetailBottomSheet.open(
                   context,
                   introduction: introduction,
                 ),
@@ -55,7 +56,7 @@ class _SelfIntroductionItem extends StatelessWidget {
     required this.introduction,
   });
 
-  final String about;
+  final InterviewCategory about;
   final String introduction;
 
   @override
@@ -69,11 +70,14 @@ class _SelfIntroductionItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(about, style: Fonts.body03Regular(context.palette.tertiary)),
+          Text(
+            about.label,
+            style: Fonts.body03Regular(context.palette.tertiary),
+          ),
           const Gap(8.0),
           Text(
             introduction,
-            style: Fonts.body01Medium(),
+            style: Fonts.body02Medium(),
             maxLines: 3,
             overflow: TextOverflow.fade,
           ),
@@ -83,17 +87,17 @@ class _SelfIntroductionItem extends StatelessWidget {
   }
 }
 
-class _SelfIntroducitonDetailBottomSheet extends StatelessWidget {
-  const _SelfIntroducitonDetailBottomSheet._(this.introduction);
+class SelfIntroducitonDetailBottomSheet extends StatelessWidget {
+  const SelfIntroducitonDetailBottomSheet._(this.introduction);
 
   final SelfIntroductionData introduction;
 
-  static Future _open(
+  static Future open(
     BuildContext context, {
     required SelfIntroductionData introduction,
   }) => showDialog(
     context: context,
-    builder: (_) => _SelfIntroducitonDetailBottomSheet._(introduction),
+    builder: (_) => SelfIntroducitonDetailBottomSheet._(introduction),
   );
 
   @override

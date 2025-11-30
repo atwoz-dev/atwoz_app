@@ -39,7 +39,7 @@ class ProfileMainInformation extends StatelessWidget {
   final int age;
   final String mbti;
   final String address;
-  final List<String> hobbies;
+  final List<Hobby> hobbies;
   final bool chatEnabled;
   final FavoriteType? favoriteType;
   final ValueChanged<FavoriteType> onFavoriteTypeChanged;
@@ -74,7 +74,9 @@ class ProfileMainInformation extends StatelessWidget {
           const Gap(6.0),
           Wrap(
             spacing: 6.0,
-            children: hobbies.map(_MainHobbyBadge.new).toList(),
+            children: hobbies
+                .map((hobby) => _MainHobbyBadge(hobby.label))
+                .toList(),
           ),
           const Gap(12.0),
           if (chatEnabled)
@@ -96,9 +98,14 @@ class _MainHobbyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      margin: const EdgeInsets.only(right: 6.0),
       padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
-      child: Text(name, style: Fonts.body03Regular(context.palette.primary)),
+      decoration: BoxDecoration(
+        color: Palette.colorPrimary100,
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      child: Text(name, style: Fonts.body03Regular(Palette.colorPrimary600)),
     );
   }
 }
@@ -133,14 +140,10 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final profile = ref.watch(profileProvider(widget.userId)).profile;
+
     final isWaitingProfileExchange =
-        ref
-            .watch(profileProvider(widget.userId))
-            .profile
-            ?.profileExchangeInfo
-            ?.profileExchangeStatus
-            .isWaiting ??
-        false;
+        profile?.profileExchangeInfo?.profileExchangeStatus.isWaiting ?? false;
 
     final contactState = ref.watch(contactSettingProvider);
 
@@ -172,6 +175,7 @@ class _InteractionButtonsState extends ConsumerState<_InteractionButtons> {
                   },
                   label: '대화 해볼래요',
                   iconPath: IconPath.letter,
+                  enabled: profile?.matchStatus.canRequest ?? true,
                 ),
         ),
         const Gap(8.0),
@@ -243,17 +247,19 @@ class _PrimaryButton extends StatelessWidget {
     required this.onTap,
     required this.label,
     this.iconPath,
+    this.enabled = true,
   });
 
   final VoidCallback onTap;
   final String label;
   final String? iconPath;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return DefaultElevatedButton(
       height: 40.0,
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

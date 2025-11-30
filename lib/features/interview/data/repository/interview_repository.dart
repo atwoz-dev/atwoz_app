@@ -1,6 +1,7 @@
 import 'package:atwoz_app/core/network/base_repository.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_answer_request.dart';
+import 'package:atwoz_app/features/interview/data/dto/interview_answer_response.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_answer_update_request.dart';
 import 'package:atwoz_app/features/interview/data/dto/interview_question_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class InterviewRepository extends BaseRepository {
   }
 
   /// 인터뷰 답변 등록 API
-  Future<void> addAnswer({
+  Future<InterviewAnswerResponse> addAnswer({
     required int questionId,
     required String answerContent,
   }) async {
@@ -41,7 +42,12 @@ class InterviewRepository extends BaseRepository {
       answerContent: answerContent,
     );
 
-    await apiService.postJson('$path/answer', data: request.toJson());
+    final res = await apiService.postJson(
+      '$path/answer',
+      data: request.toJson(),
+    );
+
+    return InterviewAnswerResponse.fromJson(res);
   }
 
   /// 인터뷰 답변 삭제 API

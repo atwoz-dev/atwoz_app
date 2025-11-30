@@ -77,22 +77,27 @@ class InterviewRegisterPageState extends ConsumerState<InterviewRegisterPage> {
                             _inputContentController.text.trim(),
                           );
                     } else {
-                      await ref
+                      final result = await ref
                           .read(interviewProvider.notifier)
                           .addAnswer(
                             widget.questionId!,
                             widget.question,
                             _inputContentController.text.trim(),
                           );
+
+                      if (!result.isSuccess) {
+                        showToastMessage('내용을 저장하는데 실패했습니다.');
+                        return;
+                      }
+
+                      if (result.hasProcessedMission) {
+                        showToastMessage('인터뷰 첫 등록 미션 완료! 하트 30개를 받았어요');
+                      }
                     }
 
                     if (!context.mounted) return;
 
-                    navigate(
-                      context,
-                      route: AppRoute.mainTab,
-                      method: NavigationMethod.go,
-                    );
+                    navigate(context, route: AppRoute.interview);
                   } catch (e) {
                     showToastMessage('내용을 저장하는데 실패했습니다.');
                   }

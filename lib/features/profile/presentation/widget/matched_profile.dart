@@ -70,7 +70,7 @@ class _GuideMessage extends StatelessWidget {
       children: [
         Text('$otherUserName님과 매칭이 완료되었어요.', style: Fonts.header02()),
         Text(
-          '호감이 높아질 수 있도록 연락을 해볼까요?',
+          '지금 바로 연락하면 좋은 흐름을 이어갈 수 있어요',
           style: Fonts.body02Medium(context.colorScheme.tertiary),
         ),
       ],

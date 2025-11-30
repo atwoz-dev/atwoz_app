@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_navigation_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/auth_sign_up_terms_page.dart';
 import 'package:atwoz_app/features/auth/presentation/page/sign_up_page.dart';
@@ -36,7 +37,6 @@ import 'package:atwoz_app/features/profile/presentation/page/profile_page.dart';
 import 'package:atwoz_app/features/report/presentation/page/report_page.dart';
 import 'package:atwoz_app/features/heart_history/presentation/page/heart_history_page.dart';
 import 'package:atwoz_app/features/store/presentation/page/store_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/customer_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
@@ -313,7 +313,21 @@ final allRoutes = [
       ),
       NamedGoRoute(
         name: AppRoute.temporalForbidden.name,
-        builder: (context, state) => const TemporalForbiddenPage(),
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! TemporalForbiddenArguments) {
+            return const SizedBox.shrink();
+          }
+          return TemporalForbiddenPage(suspensionExpireAt: args.time);
+        },
+      ),
+      NamedGoRoute(
+        name: AppRoute.signUpProfileReview.name,
+        builder: (context, state) => const SignUpProfileReviewPage(),
+      ),
+      NamedGoRoute(
+        name: AppRoute.signUpProfileReject.name,
+        builder: (context, state) => const SignUpProfileRejectPage(),
       ),
     ],
   ),
@@ -343,18 +357,11 @@ final allRoutes = [
             name: AppRoute.signUpProfileUpdate.name,
             builder: (context, state) => const SignUpProfileUpdatePage(),
           ),
-          NamedGoRoute(
-            name: AppRoute.signUpProfileReview.name,
-            builder: (context, state) => const SignUpProfileReviewPage(),
-          ),
-          NamedGoRoute(
-            name: AppRoute.signUpProfileReject.name,
-            builder: (context, state) => const SignUpProfileRejectPage(),
-          ),
         ],
       ),
     ],
   ),
+
   NamedGoRoute(
     root: true,
     name: AppRoute.profileManage.name,
@@ -490,43 +497,15 @@ Future<T?> navigate<T>(
   };
 }
 
-/* < navigate() 메서드 용례 >
-
-// 1. 일반적인 push 동작
-navigate(
-  context,
-  route: AppRoute.home
-);
-
-//  2. replace 동작
-navigate(
-  context,
-  route: AppRoute.auth,
-  method: NavigationMethod.replace
-);
-
-// 3. go 동작
-navigate(
-  context,
-  route: AppRoute.onboard,
-  method: NavigationMethod.go
-);
-
-// 4. pop 동작
-pop(context);
-
-// 5. pushReplacement 동작
-navigate(
-  context,
-  route: AppRoute.report,
-    method: NavigationMethod.pushReplacement,
-);
-
-// 6. 결과와 콜백 처리
-navigate(
-  context,
-  route: AppRoute.onboardCertification,
-  extra: {'exampleKey': 'exampleValue'},
-  callback: () => print('Navigation completed!'),
-);
- */
+extension ContextExtension on BuildContext {
+  void popUntil(AppRoute route) {
+    final delegate = GoRouter.of(this).routerDelegate;
+    var config = delegate.currentConfiguration;
+    var routes = config.routes.whereType<GoRoute>();
+    while (routes.length > 1 && config.last.route.name != route.name) {
+      config = config.remove(config.last);
+      routes = config.routes.whereType<GoRoute>();
+    }
+    delegate.setNewRoutePath(config);
+  }
+}

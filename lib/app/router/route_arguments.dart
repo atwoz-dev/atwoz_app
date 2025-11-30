@@ -88,3 +88,9 @@ class DormantReleaseArguments extends RouteArguments {
 
   final String phoneNumber;
 }
+
+class TemporalForbiddenArguments extends RouteArguments {
+  const TemporalForbiddenArguments({this.time});
+
+  final DateTime? time;
+}

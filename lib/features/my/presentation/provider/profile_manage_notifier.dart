@@ -1,6 +1,9 @@
 import 'package:atwoz_app/app/provider/provider.dart';
 import 'package:atwoz_app/core/util/util.dart';
 import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
+import 'package:atwoz_app/features/home/data/mapper/global_user_profile_mapper.dart';
+import 'package:atwoz_app/features/home/data/repository/home_profile_repository.dart';
+import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
 import 'package:atwoz_app/features/my/domain/usecase/fetch_profile_images_use_case.dart';
 import 'package:atwoz_app/features/my/domain/usecase/update_my_profile_use_case.dart';
@@ -13,8 +16,22 @@ part 'profile_manage_notifier.g.dart';
 class ProfileManageNotifier extends _$ProfileManageNotifier {
   @override
   Future<ProfileManageState> build() async {
-    final profile = ref.watch(globalProvider).profile;
+    final state = await _initializeProfile();
+    return state;
+  }
+
+  Future<ProfileManageState> _initializeProfile() async {
+    CachedUserProfile profile = ref.read(globalProvider).profile;
+
+    if (profile == CachedUserProfile.init()) {
+      final profileData = await ref
+          .read(homeProfileRepositoryProvider)
+          .getProfile();
+      profile = profileData.toCachedUserProfile();
+    }
+
     final profileImages = await _fetchProfileImages();
+
     return ProfileManageState(
       profile: profile.toMyProfile().copyWith(profileImages: profileImages),
     );
@@ -74,7 +91,6 @@ class ProfileManageNotifier extends _$ProfileManageNotifier {
     if (state.value?.updatedProfile == null) return false;
 
     try {
-      Log.d('프로필 저장 시작: ${state.value!.updatedProfile}');
       // 서버에 프로필 업데이트 요청
       final success = await ref
           .read(updateMyProfileUseCaseProvider)
