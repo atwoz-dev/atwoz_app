@@ -126,21 +126,6 @@ enum Religion {
       _byLabel[label?.toUpperCase()] ?? Religion.none;
 }
 
-enum Region {
-  seoul("서울"),
-  daejeon("대전");
-
-  final String label;
-  const Region(this.label);
-
-  static final Map<String, Region> _byValue = {
-    for (final region in Region.values) region.name.toUpperCase(): region,
-  };
-
-  static Region parse(String? value) =>
-      _byValue[value?.toUpperCase()] ?? Region.seoul;
-}
-
 enum FavoriteType {
   interested(IconPath.generalFavorite, '관심있어요'),
 
@@ -158,4 +143,21 @@ enum FavoriteType {
   static FavoriteType? tryParse(String? value) {
     return _byValue[value?.toUpperCase()];
   }
+}
+
+enum InterviewCategory {
+  personal("나"),
+  romantic("연인"),
+  social("관계");
+
+  final String label;
+  const InterviewCategory(this.label);
+
+  static final Map<String, InterviewCategory> _byValue = {
+    for (final category in InterviewCategory.values)
+      category.name.toUpperCase(): category,
+  };
+
+  static InterviewCategory parse(String? value) =>
+      _byValue[value?.toUpperCase()] ?? InterviewCategory.personal;
 }

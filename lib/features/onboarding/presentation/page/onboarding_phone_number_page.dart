@@ -148,7 +148,7 @@ class OnboardingPhoneInputPageState
                       isButtonEnabled
                           ? palette.onPrimary
                           : Palette.colorGrey400,
-                    ).copyWith(fontWeight: FontWeight.w900),
+                    ),
                   ),
                 );
               },

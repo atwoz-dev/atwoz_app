@@ -361,7 +361,7 @@ mixin _$BasicMemberInformation {
 
  int get id; String get nickname; String get profileImageUrl;// TODO(Han): server non-nullable requirement check
  int? get age; String get gender; int get height; String? get job; List<String> get hobbies; String get mbti;// TODO(Han): server non-nullable requirement check
- String? get region; String get smokingStatus; String get drinkingStatus; String get highestEducation; String? get religion; String? get likeLevel;
+ String get city; String get district; String get smokingStatus; String get drinkingStatus; String get highestEducation; String? get religion; String? get likeLevel;
 /// Create a copy of BasicMemberInformation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -374,16 +374,16 @@ $BasicMemberInformationCopyWith<BasicMemberInformation> get copyWith => _$BasicM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasicMemberInformation&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.age, age) || other.age == age)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.height, height) || other.height == height)&&(identical(other.job, job) || other.job == job)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.region, region) || other.region == region)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.highestEducation, highestEducation) || other.highestEducation == highestEducation)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.likeLevel, likeLevel) || other.likeLevel == likeLevel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasicMemberInformation&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.age, age) || other.age == age)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.height, height) || other.height == height)&&(identical(other.job, job) || other.job == job)&&const DeepCollectionEquality().equals(other.hobbies, hobbies)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.highestEducation, highestEducation) || other.highestEducation == highestEducation)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.likeLevel, likeLevel) || other.likeLevel == likeLevel));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,nickname,profileImageUrl,age,gender,height,job,const DeepCollectionEquality().hash(hobbies),mbti,region,smokingStatus,drinkingStatus,highestEducation,religion,likeLevel);
+int get hashCode => Object.hash(runtimeType,id,nickname,profileImageUrl,age,gender,height,job,const DeepCollectionEquality().hash(hobbies),mbti,city,district,smokingStatus,drinkingStatus,highestEducation,religion,likeLevel);
 
 @override
 String toString() {
-  return 'BasicMemberInformation(id: $id, nickname: $nickname, profileImageUrl: $profileImageUrl, age: $age, gender: $gender, height: $height, job: $job, hobbies: $hobbies, mbti: $mbti, region: $region, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, highestEducation: $highestEducation, religion: $religion, likeLevel: $likeLevel)';
+  return 'BasicMemberInformation(id: $id, nickname: $nickname, profileImageUrl: $profileImageUrl, age: $age, gender: $gender, height: $height, job: $job, hobbies: $hobbies, mbti: $mbti, city: $city, district: $district, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, highestEducation: $highestEducation, religion: $religion, likeLevel: $likeLevel)';
 }
 
 
@@ -394,7 +394,7 @@ abstract mixin class $BasicMemberInformationCopyWith<$Res>  {
   factory $BasicMemberInformationCopyWith(BasicMemberInformation value, $Res Function(BasicMemberInformation) _then) = _$BasicMemberInformationCopyWithImpl;
 @useResult
 $Res call({
- int id, String nickname, String profileImageUrl, int? age, String gender, int height, String? job, List<String> hobbies, String mbti, String? region, String smokingStatus, String drinkingStatus, String highestEducation, String? religion, String? likeLevel
+ int id, String nickname, String profileImageUrl, int? age, String gender, int height, String? job, List<String> hobbies, String mbti, String city, String district, String smokingStatus, String drinkingStatus, String highestEducation, String? religion, String? likeLevel
 });
 
 
@@ -411,7 +411,7 @@ class _$BasicMemberInformationCopyWithImpl<$Res>
 
 /// Create a copy of BasicMemberInformation
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? nickname = null,Object? profileImageUrl = null,Object? age = freezed,Object? gender = null,Object? height = null,Object? job = freezed,Object? hobbies = null,Object? mbti = null,Object? region = freezed,Object? smokingStatus = null,Object? drinkingStatus = null,Object? highestEducation = null,Object? religion = freezed,Object? likeLevel = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? nickname = null,Object? profileImageUrl = null,Object? age = freezed,Object? gender = null,Object? height = null,Object? job = freezed,Object? hobbies = null,Object? mbti = null,Object? city = null,Object? district = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? highestEducation = null,Object? religion = freezed,Object? likeLevel = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
@@ -422,8 +422,9 @@ as String,height: null == height ? _self.height : height // ignore: cast_nullabl
 as int,job: freezed == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as String?,hobbies: null == hobbies ? _self.hobbies : hobbies // ignore: cast_nullable_to_non_nullable
 as List<String>,mbti: null == mbti ? _self.mbti : mbti // ignore: cast_nullable_to_non_nullable
-as String,region: freezed == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
-as String?,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,district: null == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
+as String,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable
 as String,drinkingStatus: null == drinkingStatus ? _self.drinkingStatus : drinkingStatus // ignore: cast_nullable_to_non_nullable
 as String,highestEducation: null == highestEducation ? _self.highestEducation : highestEducation // ignore: cast_nullable_to_non_nullable
 as String,religion: freezed == religion ? _self.religion : religion // ignore: cast_nullable_to_non_nullable
@@ -513,10 +514,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String? region,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String city,  String district,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BasicMemberInformation() when $default != null:
-return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.region,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
+return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.city,_that.district,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
   return orElse();
 
 }
@@ -534,10 +535,10 @@ return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.ge
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String? region,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String city,  String district,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)  $default,) {final _that = this;
 switch (_that) {
 case _BasicMemberInformation():
-return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.region,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
+return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.city,_that.district,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -554,10 +555,10 @@ return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.ge
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String? region,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String nickname,  String profileImageUrl,  int? age,  String gender,  int height,  String? job,  List<String> hobbies,  String mbti,  String city,  String district,  String smokingStatus,  String drinkingStatus,  String highestEducation,  String? religion,  String? likeLevel)?  $default,) {final _that = this;
 switch (_that) {
 case _BasicMemberInformation() when $default != null:
-return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.region,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
+return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.gender,_that.height,_that.job,_that.hobbies,_that.mbti,_that.city,_that.district,_that.smokingStatus,_that.drinkingStatus,_that.highestEducation,_that.religion,_that.likeLevel);case _:
   return null;
 
 }
@@ -569,7 +570,7 @@ return $default(_that.id,_that.nickname,_that.profileImageUrl,_that.age,_that.ge
 @JsonSerializable()
 
 class _BasicMemberInformation implements BasicMemberInformation {
-  const _BasicMemberInformation({required this.id, required this.nickname, required this.profileImageUrl, required this.age, required this.gender, required this.height, required this.job, required final  List<String> hobbies, required this.mbti, required this.region, required this.smokingStatus, required this.drinkingStatus, required this.highestEducation, required this.religion, required this.likeLevel}): _hobbies = hobbies;
+  const _BasicMemberInformation({required this.id, required this.nickname, required this.profileImageUrl, required this.age, required this.gender, required this.height, required this.job, required final  List<String> hobbies, required this.mbti, required this.city, required this.district, required this.smokingStatus, required this.drinkingStatus, required this.highestEducation, required this.religion, required this.likeLevel}): _hobbies = hobbies;
   factory _BasicMemberInformation.fromJson(Map<String, dynamic> json) => _$BasicMemberInformationFromJson(json);
 
 @override final  int id;
@@ -589,7 +590,8 @@ class _BasicMemberInformation implements BasicMemberInformation {
 
 @override final  String mbti;
 // TODO(Han): server non-nullable requirement check
-@override final  String? region;
+@override final  String city;
+@override final  String district;
 @override final  String smokingStatus;
 @override final  String drinkingStatus;
 @override final  String highestEducation;
@@ -609,16 +611,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BasicMemberInformation&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.age, age) || other.age == age)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.height, height) || other.height == height)&&(identical(other.job, job) || other.job == job)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.region, region) || other.region == region)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.highestEducation, highestEducation) || other.highestEducation == highestEducation)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.likeLevel, likeLevel) || other.likeLevel == likeLevel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BasicMemberInformation&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.age, age) || other.age == age)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.height, height) || other.height == height)&&(identical(other.job, job) || other.job == job)&&const DeepCollectionEquality().equals(other._hobbies, _hobbies)&&(identical(other.mbti, mbti) || other.mbti == mbti)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.smokingStatus, smokingStatus) || other.smokingStatus == smokingStatus)&&(identical(other.drinkingStatus, drinkingStatus) || other.drinkingStatus == drinkingStatus)&&(identical(other.highestEducation, highestEducation) || other.highestEducation == highestEducation)&&(identical(other.religion, religion) || other.religion == religion)&&(identical(other.likeLevel, likeLevel) || other.likeLevel == likeLevel));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,nickname,profileImageUrl,age,gender,height,job,const DeepCollectionEquality().hash(_hobbies),mbti,region,smokingStatus,drinkingStatus,highestEducation,religion,likeLevel);
+int get hashCode => Object.hash(runtimeType,id,nickname,profileImageUrl,age,gender,height,job,const DeepCollectionEquality().hash(_hobbies),mbti,city,district,smokingStatus,drinkingStatus,highestEducation,religion,likeLevel);
 
 @override
 String toString() {
-  return 'BasicMemberInformation(id: $id, nickname: $nickname, profileImageUrl: $profileImageUrl, age: $age, gender: $gender, height: $height, job: $job, hobbies: $hobbies, mbti: $mbti, region: $region, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, highestEducation: $highestEducation, religion: $religion, likeLevel: $likeLevel)';
+  return 'BasicMemberInformation(id: $id, nickname: $nickname, profileImageUrl: $profileImageUrl, age: $age, gender: $gender, height: $height, job: $job, hobbies: $hobbies, mbti: $mbti, city: $city, district: $district, smokingStatus: $smokingStatus, drinkingStatus: $drinkingStatus, highestEducation: $highestEducation, religion: $religion, likeLevel: $likeLevel)';
 }
 
 
@@ -629,7 +631,7 @@ abstract mixin class _$BasicMemberInformationCopyWith<$Res> implements $BasicMem
   factory _$BasicMemberInformationCopyWith(_BasicMemberInformation value, $Res Function(_BasicMemberInformation) _then) = __$BasicMemberInformationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String nickname, String profileImageUrl, int? age, String gender, int height, String? job, List<String> hobbies, String mbti, String? region, String smokingStatus, String drinkingStatus, String highestEducation, String? religion, String? likeLevel
+ int id, String nickname, String profileImageUrl, int? age, String gender, int height, String? job, List<String> hobbies, String mbti, String city, String district, String smokingStatus, String drinkingStatus, String highestEducation, String? religion, String? likeLevel
 });
 
 
@@ -646,7 +648,7 @@ class __$BasicMemberInformationCopyWithImpl<$Res>
 
 /// Create a copy of BasicMemberInformation
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? nickname = null,Object? profileImageUrl = null,Object? age = freezed,Object? gender = null,Object? height = null,Object? job = freezed,Object? hobbies = null,Object? mbti = null,Object? region = freezed,Object? smokingStatus = null,Object? drinkingStatus = null,Object? highestEducation = null,Object? religion = freezed,Object? likeLevel = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? nickname = null,Object? profileImageUrl = null,Object? age = freezed,Object? gender = null,Object? height = null,Object? job = freezed,Object? hobbies = null,Object? mbti = null,Object? city = null,Object? district = null,Object? smokingStatus = null,Object? drinkingStatus = null,Object? highestEducation = null,Object? religion = freezed,Object? likeLevel = freezed,}) {
   return _then(_BasicMemberInformation(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,nickname: null == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
@@ -657,8 +659,9 @@ as String,height: null == height ? _self.height : height // ignore: cast_nullabl
 as int,job: freezed == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as String?,hobbies: null == hobbies ? _self._hobbies : hobbies // ignore: cast_nullable_to_non_nullable
 as List<String>,mbti: null == mbti ? _self.mbti : mbti // ignore: cast_nullable_to_non_nullable
-as String,region: freezed == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
-as String?,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,district: null == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
+as String,smokingStatus: null == smokingStatus ? _self.smokingStatus : smokingStatus // ignore: cast_nullable_to_non_nullable
 as String,drinkingStatus: null == drinkingStatus ? _self.drinkingStatus : drinkingStatus // ignore: cast_nullable_to_non_nullable
 as String,highestEducation: null == highestEducation ? _self.highestEducation : highestEducation // ignore: cast_nullable_to_non_nullable
 as String,religion: freezed == religion ? _self.religion : religion // ignore: cast_nullable_to_non_nullable

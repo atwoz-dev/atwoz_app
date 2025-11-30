@@ -23,7 +23,7 @@ class BulletText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: texts.map((text) {
         return Padding(
-          padding: EdgeInsets.only(bottom: text != texts.last ? 8.0 : 0),
+          padding: EdgeInsets.only(bottom: text != texts.last ? 4.0 : 0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

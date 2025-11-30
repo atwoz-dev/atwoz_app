@@ -89,7 +89,7 @@ class _BalloonAnimationWidgetState extends State<BalloonAnimationWidget>
                         text: widget.balloons[balloonIndex]['text'],
                         color: widget.balloons[balloonIndex]['color'],
                         textStyle: Fonts.header02().copyWith(
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w700,
                         ),
                       );
                     }),

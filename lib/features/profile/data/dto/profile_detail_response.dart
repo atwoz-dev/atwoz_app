@@ -32,7 +32,8 @@ abstract class BasicMemberInformation with _$BasicMemberInformation {
     required List<String> hobbies,
     required String mbti,
     // TODO(Han): server non-nullable requirement check
-    required String? region,
+    required String city,
+    required String district,
     required String smokingStatus,
     required String drinkingStatus,
     required String highestEducation,
