@@ -56,12 +56,12 @@ class PhotoGuideBottomSheet extends ConsumerWidget {
                           'text': '보정이 과도한 사진',
                         },
                         {
-                          'image': 'assets/images/bad_pic2.png',
-                          'text': '2인 이상의 단체 사진',
-                        },
-                        {
                           'image': 'assets/images/bad_pic3.png',
                           'text': 'AI 프로필',
+                        },
+                        {
+                          'image': 'assets/images/bad_pic2.png',
+                          'text': '2인 이상의 단체 사진',
                         },
                         {
                           'image': 'assets/images/bad_pic4.png',
@@ -73,7 +73,7 @@ class PhotoGuideBottomSheet extends ConsumerWidget {
                         },
                         {
                           'image': 'assets/images/bad_pic6.png',
-                          'text': '사진에 대한 설명',
+                          'text': '무표정 사진',
                         },
                       ],
                     ),
