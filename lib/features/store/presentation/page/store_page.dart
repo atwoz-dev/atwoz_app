@@ -62,7 +62,7 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                         Text(
                           '보유한 하트',
                           style: Fonts.header03().copyWith(
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const Gap(8),
@@ -165,7 +165,9 @@ class StorePageState extends AppBaseConsumerStatefulPageState<StorePage> {
                       padding: contentPadding,
                       child: BulletText(
                         texts: [
-                          '운영정책 위반으로 계정정지 시 환불이 불가합니다',
+                          '청약철회는 구매일로부터 7일 이내 가능합니다',
+                          'iOS 회원의 경우 청약철회는 Apple 고객센터로 문의해주세요.',
+                          '미션으로 받은 하트는 환불이 불가합니다',
                           '미션으로 받은 하트의 유효기간은 90일간 유효합니다.',
                         ],
                         textStyle: Fonts.body03Regular(
