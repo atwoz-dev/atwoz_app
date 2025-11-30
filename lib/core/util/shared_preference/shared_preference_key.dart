@@ -20,9 +20,38 @@ class SharedPreferenceKeys {
     defaultValue: false,
   );
 
+  /// 셀프소개 필터 - 나이
+  static const preferredAgeStart = SharedPreferencePrimitiveKey<int>(
+    "preferredAgeStart",
+    defaultValue: 27,
+  );
+
+  static const preferredAgeEnd = SharedPreferencePrimitiveKey<int>(
+    "preferredAgeEnd",
+    defaultValue: 32,
+  );
+
+  /// 셀프소개 필터 - 선호 지역(한글)
+  static const preferredCities = SharedPreferencePrimitiveKey<List<String>>(
+    "preferredCities",
+    defaultValue: [],
+  );
+
   static const defaultContactMethod = SharedPreferenceKey<ContactMethod?>(
     'defaultContactMethod',
     fromJson: _contactMethodFromJson,
     toJson: _contactMethodToJson,
+  );
+
+  /// 셀프소개 필터 - 성별
+  ///
+  /// 0 - null
+  ///
+  /// 1 - male
+  ///
+  /// 2 - female
+  static const showAllGender = SharedPreferencePrimitiveKey<int>(
+    "showAllGender",
+    defaultValue: 0,
   );
 }

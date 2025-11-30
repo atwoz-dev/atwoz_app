@@ -20,6 +20,8 @@ class SharedPreferenceManager {
         _instance?.setBool(key.key, value as bool);
       case SharedPreferenceKey<T>():
         _instance?.setString(key.key, key.toJson(value));
+      case SharedPreferencePrimitiveKey<List<String>>():
+        _instance?.setStringList(key.key, value as List<String>);
       default:
         _instance?.setString(key.key, value.toString());
     }
@@ -27,6 +29,7 @@ class SharedPreferenceManager {
 
   static T? getValue<T>(_SharedPreferenceKey<T> key) {
     assert(_instance != null, 'SharedPreferences is not initialized');
+
     try {
       switch (key) {
         case SharedPreferenceKey<T>():
@@ -50,6 +53,8 @@ class SharedPreferenceManager {
           return _instance?.getBool(key.key) as T? ?? key.defaultValue;
         case SharedPreferencePrimitiveKey<String>():
           return _instance?.getString(key.key) as T? ?? key.defaultValue;
+        case SharedPreferencePrimitiveKey<List<String>>():
+          return _instance?.getStringList(key.key) as T? ?? key.defaultValue;
         default:
           throw UnimplementedError();
       }

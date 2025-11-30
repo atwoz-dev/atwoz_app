@@ -43,6 +43,14 @@ class Fonts {
     height: 1.h,
   );
 
+  static TextStyle header04([Color? color]) => TextStyle(
+    fontFamily: fontPretendardSemiBold,
+    fontWeight: FontWeight.w700,
+    color: color ?? Palette.colorBlack,
+    fontSize: 18.sp,
+    height: 1.4.h,
+  );
+
   /// Body
   static TextStyle body01Medium([Color? color]) => TextStyle(
     fontFamily: fontPretendardMedium,
@@ -108,11 +116,11 @@ class Fonts {
   );
 
   /// Button
-  static TextStyle button14([Color? color]) => TextStyle(
+  static TextStyle button14([Color? color, double? lineHeight]) => TextStyle(
     fontFamily: fontPretendardRegular,
     color: color ?? Palette.colorBlack,
     fontSize: 14.sp,
-    height: 1.h,
+    height: lineHeight ?? 1.h,
   );
 
   static TextStyle button16([Color? color]) => TextStyle(
@@ -135,5 +143,49 @@ class Fonts {
     color: color ?? Palette.colorGrey500,
     fontSize: 14.sp,
     height: 1.h,
+  );
+
+  static TextStyle bold({
+    double fontSize = 32,
+    Color? color,
+    double lineHeight = 1,
+  }) => TextStyle(
+    fontFamily: fontPretendardBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: fontSize.sp,
+    height: lineHeight.h,
+  );
+
+  static TextStyle semibold({
+    double fontSize = 32,
+    Color? color,
+    double lineHeight = 1,
+  }) => TextStyle(
+    fontFamily: fontPretendardSemiBold,
+    color: color ?? Palette.colorBlack,
+    fontSize: fontSize.sp,
+    height: lineHeight.h,
+  );
+
+  static TextStyle regular({
+    double fontSize = 32,
+    Color? color,
+    double lineHeight = 1,
+  }) => TextStyle(
+    fontFamily: fontPretendardRegular,
+    color: color ?? Palette.colorBlack,
+    fontSize: fontSize.sp,
+    height: lineHeight.h,
+  );
+
+  static TextStyle medium({
+    double fontSize = 32,
+    Color? color,
+    double lineHeight = 1,
+  }) => TextStyle(
+    fontFamily: fontPretendardMedium,
+    color: color ?? Palette.colorBlack,
+    fontSize: fontSize.sp,
+    height: lineHeight.h,
   );
 }

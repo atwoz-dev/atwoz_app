@@ -52,6 +52,21 @@ class ProfileRepository extends BaseRepository {
     }
   }
 
+  Future<bool> requestProfileExchange(int responderId) async {
+    try {
+      final response = await apiService.postJson(
+        '/profile-exchange/request/$responderId',
+        data: null,
+      );
+
+      final int statusCode = response['status'] ?? 500;
+      return statusCode >= 200 && statusCode < 300;
+    } catch (e) {
+      Log.e('Failed to request profile exchange: $e');
+      return false;
+    }
+  }
+
   Future<String> getPhoneNumber() async {
     final phoneNumber = await ref
         .read(localStorageProvider)

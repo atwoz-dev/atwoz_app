@@ -1,13 +1,23 @@
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:atwoz_app/app/widget/icon/default_icon.dart';
 import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/post_button.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/tab_bar.dart';
+import 'package:atwoz_app/features/introduce/introduce.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/introduce_content_list.dart';
+import 'package:atwoz_app/features/introduce/presentation/widget/introduce_my_list.dart';
 import 'package:flutter/material.dart';
 import 'package:atwoz_app/app/router/router.dart';
 import 'package:atwoz_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
+enum IntroduceTabType {
+  all('소개'),
+  my('내가 쓴 글');
+
+  final String label;
+
+  const IntroduceTabType(this.label);
+}
 
 class IntroducePage extends ConsumerStatefulWidget {
   const IntroducePage({super.key});
@@ -18,9 +28,13 @@ class IntroducePage extends ConsumerStatefulWidget {
 
 class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
   IntroducePageState() : super(isAppBar: false, isHorizontalMargin: false);
+
   int _currentTabIndex = 0;
 
-  void _onTabTapped(int index) => safeSetState(() => _currentTabIndex = index);
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget buildPage(BuildContext context) {
@@ -29,38 +43,97 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
       horizontal: horizontalPadding,
     );
 
-    return Stack(
-      children: [
-        Scaffold(
-          body: Padding(
-            padding: EdgeInsets.only(top: screenHeight * 0.1), // 상단 여백 설정
+    return Scaffold(
+      body: Stack(
+        children: [
+          SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: contentPadding,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: 16.0.w,
+                  ),
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          '셀프소개',
-                          style: Fonts.header03().copyWith(
-                            fontWeight: FontWeight.w700,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '셀프소개',
+                                style: Fonts.bold(
+                                  fontSize: 20,
+                                  color: const Color(0xFF1F1E23),
+                                  lineHeight: 1,
+                                ),
+                              ),
+                              if (_currentTabIndex == 0)
+                                Column(
+                                  children: [
+                                    const Gap(8),
+                                    Text(
+                                      '이성에게 나를 먼저 어필해 볼까요?\n프로필 교환을 통해 메시지를 주고받을 수 있어요!',
+                                      style: Fonts.regular(
+                                        fontSize: 14,
+                                        color: Palette.colorGrey600,
+                                        lineHeight: 1.6,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
                           ),
-                        ),
-                      ),
-                      DefaultAppBarActionGroup(
-                        showFilter: true,
-                        filterRoute: AppRoute.introduceFilter,
+                          const Spacer(),
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: IconButton(
+                                  onPressed: () => navigate(
+                                    context,
+                                    route: AppRoute.notification,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  icon: const DefaultIcon(
+                                    IconPath.notification,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                              if (_currentTabIndex == 0)
+                                Row(
+                                  children: [
+                                    const Gap(8),
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: IconButton(
+                                        onPressed: () => navigate(
+                                          context,
+                                          route: AppRoute.introduceFilter,
+                                        ),
+                                        padding: EdgeInsets.zero,
+                                        icon: const DefaultIcon(
+                                          IconPath.filter,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                const Gap(16),
-                DefaultTabBar(
+                IntroduceTabBar(
                   tabs: ['소개', '내가 쓴 글'],
                   currentIndex: _currentTabIndex,
                   horizontalPadding: horizontalPadding,
@@ -70,138 +143,39 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                   child: Padding(
                     padding: contentPadding,
                     child: _currentTabIndex == 0
-                        ? _buildIntroduceContent(context)
-                        : _buildIntroduceHistory(context),
+                        ? const IntroduceContentList()
+                        : const IntroduceMyList(),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        PostButton(
-          onTap: () {
-            navigate(context, route: AppRoute.introduceRegister);
-          },
-        ),
-      ],
+          PostButton(
+            onTap: () async {
+              await navigate(context, route: AppRoute.introduceRegister);
+
+              // 등록한 셀프소개가 적용되는 딜레이 필요
+              // await Future.delayed(const Duration(milliseconds: 500));
+              _refreshIntroduceList();
+            },
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildIntroduceContent(BuildContext context) {
-    final int itemCount = 10;
-    final double thumbWidth = 64.w;
-    final double thumbHeight = 64.h;
-    final double gapWidth = 16.w;
+  void _onTabTapped(int index) => safeSetState(() {
+    _currentTabIndex = index;
+    _refreshIntroduceList();
+  });
 
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        bool isLastItem = index == itemCount - 1;
-
-        return Container(
-          decoration: BoxDecoration(
-            border: isLastItem
-                ? null
-                : Border(
-                    bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
-                  ),
-          ),
-          child: GestureDetector(
-            onTap: () async {
-              //AutoRouter.of(context).push(const IntroduceDetailScreen());
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: Row(
-                children: [
-                  ClipOval(
-                    child: SizedBox(
-                      width: thumbWidth,
-                      height: thumbHeight,
-                      child: Image.asset(
-                        ImagePath.selfThumb,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: gapWidth),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '송리버 (서울 / 27 / 186)',
-                          style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Gap(4),
-                        Text(
-                          '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
-                          style: Fonts.body03Regular(Palette.colorGrey500),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildIntroduceHistory(BuildContext context) {
-    final int itemCount = 4;
-
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1.w, color: Palette.colorGrey50),
-            ),
-          ),
-          child: GestureDetector(
-            onTap: () async {
-              //AutoRouter.of(context).push(const IntroduceDetailScreen());
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요? 다들 좋은 아침 보내셨나요?다들 좋은 아침 보내셨나요?',
-                          style: Fonts.body02Medium().copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Gap(4),
-                        Text(
-                          '2025.02.28',
-                          style: Fonts.body03Regular(Palette.colorGrey500),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+  Future<void> _refreshIntroduceList() async {
+    if (_currentTabIndex == 0) {
+      ref.read(introduceProvider.notifier).fetchIntroduceList();
+    } else if (_currentTabIndex == 1) {
+      ref.read(introduceProvider.notifier).fetchMyIntroduceList();
+    }
   }
 }
+
+/// DefaultIcon(IconPath.frowningFace, size: 48),

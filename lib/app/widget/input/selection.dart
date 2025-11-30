@@ -8,6 +8,7 @@ class SelectionWidget extends StatefulWidget {
   final List<String> options;
   final Color? activeColor;
   final Color? inactiveColor;
+  final String? initialOptions;
   final ValueChanged<String>? onChange;
 
   const SelectionWidget({
@@ -15,6 +16,7 @@ class SelectionWidget extends StatefulWidget {
     required this.options,
     this.activeColor,
     this.inactiveColor,
+    this.initialOptions,
     this.onChange,
   });
 
@@ -29,7 +31,11 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
   void initState() {
     super.initState();
 
-    _selectedValue = widget.options.firstOrNull;
+    if (widget.initialOptions != null) {
+      _selectedValue = widget.initialOptions;
+    } else {
+      _selectedValue = widget.options.firstOrNull;
+    }
   }
 
   @override
@@ -37,7 +43,7 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
     final activeColor = widget.activeColor ?? palette.primary;
     final inactiveColor = widget.inactiveColor ?? Palette.colorGrey100;
     final textColorSelected = palette.onPrimary;
-    final textColorUnselected = Palette.colorGrey500;
+    const textColorUnselected = Palette.colorGrey500;
 
     return Container(
       height: 50,
@@ -71,16 +77,16 @@ class SelectionWidgetState extends AppBaseWidgetState<SelectionWidget> {
                   color: isSelected ? activeColor : inactiveColor,
                   borderRadius: BorderRadius.only(
                     topLeft: index == 0
-                        ? Radius.circular(Dimens.buttonRadiusValue)
+                        ? const Radius.circular(Dimens.buttonRadiusValue)
                         : Radius.zero,
                     bottomLeft: index == 0
-                        ? Radius.circular(Dimens.buttonRadiusValue)
+                        ? const Radius.circular(Dimens.buttonRadiusValue)
                         : Radius.zero,
                     topRight: index == widget.options.length - 1
-                        ? Radius.circular(Dimens.buttonRadiusValue)
+                        ? const Radius.circular(Dimens.buttonRadiusValue)
                         : Radius.zero,
                     bottomRight: index == widget.options.length - 1
-                        ? Radius.circular(Dimens.buttonRadiusValue)
+                        ? const Radius.circular(Dimens.buttonRadiusValue)
                         : Radius.zero,
                   ),
                 ),

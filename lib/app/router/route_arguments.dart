@@ -1,4 +1,5 @@
 import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
 import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
 import 'package:atwoz_app/features/my/my.dart';
 
@@ -87,6 +88,18 @@ class DormantReleaseArguments extends RouteArguments {
   const DormantReleaseArguments({required this.phoneNumber});
 
   final String phoneNumber;
+}
+
+class IntroduceEditArguments extends RouteArguments {
+  const IntroduceEditArguments({required this.introduce});
+
+  final IntroduceInfo introduce;
+}
+
+class IntroduceDetailArguments extends RouteArguments {
+  const IntroduceDetailArguments({required this.introduceId});
+
+  final int introduceId;
 }
 
 class TemporalForbiddenArguments extends RouteArguments {
