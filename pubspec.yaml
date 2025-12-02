@@ -113,7 +113,7 @@ scripts:
 flutter_native_splash:
   image: "assets/images/splash.png"
   color: "#FFFFFF"
-  android: true
+  android: false
   ios: true
 
 flutter_launcher_icons:
