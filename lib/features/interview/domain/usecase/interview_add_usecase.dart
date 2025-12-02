@@ -1,5 +1,5 @@
-import 'package:atwoz_app/features/interview/data/data.dart';
-import 'package:atwoz_app/features/interview/data/dto/interview_answer_response.dart';
+import 'package:deepple_app/features/interview/data/data.dart';
+import 'package:deepple_app/features/interview/data/dto/interview_answer_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InterviewAddUseCase {

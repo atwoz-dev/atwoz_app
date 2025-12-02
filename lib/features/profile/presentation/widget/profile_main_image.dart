@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/widget/image/default_image.dart';
+import 'package:deepple_app/app/widget/image/default_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileMainImage extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:atwoz_app/features/photo/data/dto/presigned_url_response_dto.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_photo_upload_request.dart';
+import 'package:deepple_app/features/photo/data/dto/presigned_url_response_dto.dart';
+import 'package:deepple_app/features/photo/data/dto/profile_photo_upload_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/photo/data/dto/profile_image_response.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/features/photo/data/dto/profile_image_response.dart';
 
 final photoRepositoryProvider = Provider<PhotoRepository>((ref) {
   return PhotoRepository(ref);

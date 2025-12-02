@@ -1,5 +1,5 @@
-import 'package:atwoz_app/features/auth/data/data.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/features/auth/data/data.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'global_state.freezed.dart';

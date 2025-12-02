@@ -1,8 +1,8 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/core/util/date_time_util.dart';
-import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/core/util/date_time_util.dart';
+import 'package:deepple_app/features/auth/data/dto/profile_upload_request.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sign_up_process_state.freezed.dart';

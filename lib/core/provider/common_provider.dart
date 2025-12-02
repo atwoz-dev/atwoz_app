@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/state/common_state.dart';
+import 'package:deepple_app/core/state/common_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'common_provider.g.dart';

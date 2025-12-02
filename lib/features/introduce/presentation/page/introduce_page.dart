@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/introduce/introduce.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/introduce_content_list.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/introduce_my_list.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
+import 'package:deepple_app/features/introduce/introduce.dart';
+import 'package:deepple_app/features/introduce/presentation/widget/introduce_content_list.dart';
+import 'package:deepple_app/features/introduce/presentation/widget/introduce_my_list.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -60,39 +60,18 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '셀프소개',
-                                style: Fonts.bold(
-                                  fontSize: 20,
-                                  color: const Color(0xFF1F1E23),
-                                  lineHeight: 1,
-                                ),
-                              ),
-                              if (_currentTabIndex == 0)
-                                Column(
-                                  children: [
-                                    const Gap(8),
-                                    Text(
-                                      '이성에게 나를 먼저 어필해 볼까요?\n프로필 교환을 통해 메시지를 주고받을 수 있어요!',
-                                      style: Fonts.regular(
-                                        fontSize: 14,
-                                        color: Palette.colorGrey600,
-                                        lineHeight: 1.6,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                            ],
+                          Text(
+                            '셀프소개',
+                            style: Fonts.header03().copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           const Spacer(),
                           Row(
                             children: [
                               SizedBox(
-                                height: 20,
-                                width: 20,
+                                height: Dimens.iconSize,
+                                width: Dimens.iconSize,
                                 child: IconButton(
                                   onPressed: () => navigate(
                                     context,
@@ -101,7 +80,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                                   padding: EdgeInsets.zero,
                                   icon: const DefaultIcon(
                                     IconPath.notification,
-                                    size: 20,
+                                    size: Dimens.iconSize,
                                   ),
                                 ),
                               ),
@@ -110,8 +89,8 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                                   children: [
                                     const Gap(8),
                                     SizedBox(
-                                      height: 20,
-                                      width: 20,
+                                      height: Dimens.iconSize,
+                                      width: Dimens.iconSize,
                                       child: IconButton(
                                         onPressed: () => navigate(
                                           context,
@@ -120,7 +99,7 @@ class IntroducePageState extends BaseConsumerStatefulPageState<IntroducePage> {
                                         padding: EdgeInsets.zero,
                                         icon: const DefaultIcon(
                                           IconPath.filter,
-                                          size: 20,
+                                          size: Dimens.iconSize,
                                         ),
                                       ),
                                     ),

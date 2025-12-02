@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

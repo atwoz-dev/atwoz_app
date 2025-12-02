@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
+import 'package:deepple_app/features/exam/domain/model/subject_answer.dart';
 
 part 'exam_answer_request.freezed.dart';
 part 'exam_answer_request.g.dart';

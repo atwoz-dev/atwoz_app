@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/auth/data/data.dart';
-import 'package:atwoz_app/features/exam/data/data.dart';
-import 'package:atwoz_app/features/home/domain/model/introduced_profile.dart';
+import 'package:deepple_app/features/auth/data/data.dart';
+import 'package:deepple_app/features/exam/data/data.dart';
+import 'package:deepple_app/features/home/domain/model/introduced_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'exam_state.freezed.dart';

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:atwoz_app/core/notification/notification_model.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
+import 'package:deepple_app/core/notification/notification_model.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/shared_preference/shared_preference_key.dart';
+import 'package:deepple_app/core/util/shared_preference/shared_preference_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -180,4 +180,4 @@ void _onDidReceiveLocalNotificationResponse(
   }
 }
 
-const _defaultChannelId = 'com.atwoz_app.urgent';
+const _defaultChannelId = 'com.deepple_app.urgent';

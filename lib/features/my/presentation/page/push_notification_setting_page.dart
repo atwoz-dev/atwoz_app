@@ -1,6 +1,6 @@
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/my/presentation/provider/my_settings.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/my/presentation/provider/my_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

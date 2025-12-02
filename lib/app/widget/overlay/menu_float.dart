@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 
 import 'default_overlay.dart';

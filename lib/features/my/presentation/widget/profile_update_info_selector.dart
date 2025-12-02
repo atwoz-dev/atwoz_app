@@ -1,17 +1,17 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/core/util/log.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/temp.dart';
-import 'package:atwoz_app/app/widget/list/single_select_list_chip.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/my/my.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/temp.dart';
+import 'package:deepple_app/app/widget/list/single_select_list_chip.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/my/my.dart';
 
 class ProfileUpdateInfoSelector extends ConsumerStatefulWidget {
   final String profileType;

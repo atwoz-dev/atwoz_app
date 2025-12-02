@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 

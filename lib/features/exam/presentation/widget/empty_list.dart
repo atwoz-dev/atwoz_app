@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 import '../../../../app/constants/icon_path.dart';
 import '../../../../app/widget/icon/default_icon.dart';
 

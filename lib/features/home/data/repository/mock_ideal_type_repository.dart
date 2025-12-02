@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/home/data/dto/ideal_type_dto.dart';
+import 'package:deepple_app/features/home/data/dto/ideal_type_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final idealTypeRepository = Provider<MockIdealTypeRepository>((ref) {

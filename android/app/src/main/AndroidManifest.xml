@@ -6,7 +6,7 @@
     <!-- Android 10(API 29) 이상에서는 WRITE_EXTERNAL_STORAGE가 더 이상 필요하지 않다고 함 -->
 
     <application
-        android:label="atwoz_app"
+        android:label="deepple_app"
         android:name="${applicationName}"
         android:icon="@drawable/ic_app">
         

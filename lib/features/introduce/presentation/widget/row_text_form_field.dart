@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/features/introduce/presentation/widget/region_select_dialog.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/input/default_text_form_field.dart';
+import 'package:deepple_app/features/introduce/presentation/widget/region_select_dialog.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 
 class RowTextFormField extends StatefulWidget {
   final String label;

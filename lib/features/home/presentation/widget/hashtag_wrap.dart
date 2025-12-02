@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 // 변경된 해시태그 영역 위젯

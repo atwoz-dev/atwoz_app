@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/features/profile/domain/common/model.dart';
+import 'package:deepple_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

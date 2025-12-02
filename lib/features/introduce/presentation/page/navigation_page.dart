@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/app/router/router.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
 
 // TODO: 셀프소개 전체화면 나온 뒤 삭제 필요
 class IntroduceNavigationPage extends StatelessWidget {

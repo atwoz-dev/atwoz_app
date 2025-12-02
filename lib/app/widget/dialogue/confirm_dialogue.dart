@@ -1,6 +1,6 @@
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';

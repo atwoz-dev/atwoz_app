@@ -1,10 +1,10 @@
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:atwoz_app/features/my/data/repository/my_profile_repository.dart';
-import 'package:atwoz_app/features/notification/data/repository/notification_repository.dart';
-import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
+import 'package:deepple_app/app/provider/provider.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/features/my/data/repository/my_profile_repository.dart';
+import 'package:deepple_app/features/notification/data/repository/notification_repository.dart';
+import 'package:deepple_app/features/notification/domain/model/server_notification_type.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';

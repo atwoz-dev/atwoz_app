@@ -1,10 +1,10 @@
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/auth/data/dto/profile_upload_request.dart';
+import 'package:deepple_app/features/auth/data/dto/user_response.dart';
+import 'package:deepple_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userRepositoryProvider = Provider<UserRepository>((ref) {

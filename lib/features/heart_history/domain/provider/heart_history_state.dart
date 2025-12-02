@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:atwoz_app/features/heart_history/domain/model/heart_history_data.dart';
+import 'package:deepple_app/features/heart_history/domain/model/heart_history_data.dart';
 
 part 'heart_history_state.freezed.dart';
 

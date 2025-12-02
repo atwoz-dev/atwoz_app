@@ -1,20 +1,20 @@
 import 'dart:io';
 
 import 'package:android_id/android_id.dart';
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/core/config/config.dart';
-import 'package:atwoz_app/core/mixin/log_mixin.dart';
-import 'package:atwoz_app/core/network/api_service_impl.dart';
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
-import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/core/storage/local_storage_item.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/auth/data/dto/profile_upload_request.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_sign_in_request.dart';
-import 'package:atwoz_app/features/auth/data/repository/user_repository.dart';
-import 'package:atwoz_app/features/auth/domain/usecase/auth_usecase.dart';
+import 'package:deepple_app/app/provider/provider.dart';
+import 'package:deepple_app/core/config/config.dart';
+import 'package:deepple_app/core/mixin/log_mixin.dart';
+import 'package:deepple_app/core/network/api_service_impl.dart';
+import 'package:deepple_app/core/notification/firebase_manager.dart';
+import 'package:deepple_app/core/storage/local_storage.dart';
+import 'package:deepple_app/core/storage/local_storage_item.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/features/auth/data/dto/profile_upload_request.dart';
+import 'package:deepple_app/features/auth/data/dto/user_response.dart';
+import 'package:deepple_app/features/auth/data/dto/user_sign_in_request.dart';
+import 'package:deepple_app/features/auth/data/repository/user_repository.dart';
+import 'package:deepple_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

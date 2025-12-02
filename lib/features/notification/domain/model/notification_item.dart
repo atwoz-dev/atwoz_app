@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
+import 'package:deepple_app/features/notification/domain/model/server_notification_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notification_item.g.dart';

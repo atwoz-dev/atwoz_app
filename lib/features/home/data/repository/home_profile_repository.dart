@@ -1,5 +1,5 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/home/data/dto/home_profile_response_dto.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/features/home/data/dto/home_profile_response_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final homeProfileRepositoryProvider = Provider<HomeProfileRepository>((ref) {

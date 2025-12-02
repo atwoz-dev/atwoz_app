@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
+import 'package:deepple_app/features/profile/data/repository/profile_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:deepple_app/app/enum/enum.dart';
 
 import '../../../../core/util/log.dart';
 import 'contact_setting_state.dart';

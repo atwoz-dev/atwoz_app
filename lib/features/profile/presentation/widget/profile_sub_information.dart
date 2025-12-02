@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/icon_path.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/app/constants/dimens.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/icon_path.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/app/constants/dimens.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

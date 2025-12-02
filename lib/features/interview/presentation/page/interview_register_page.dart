@@ -1,14 +1,14 @@
-import 'package:atwoz_app/app/widget/button/default_text_button.dart';
-import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/app/widget/view/default_divider.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/interview/interview.dart';
+import 'package:deepple_app/app/widget/button/default_text_button.dart';
+import 'package:deepple_app/app/widget/dialogue/dialogue.dart';
+import 'package:deepple_app/app/widget/input/default_text_form_field.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar.dart';
+import 'package:deepple_app/app/widget/view/default_divider.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/features/interview/interview.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/router/router.dart';
+import 'package:deepple_app/app/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 
 class InterviewRegisterPage extends ConsumerStatefulWidget {
   final String question;

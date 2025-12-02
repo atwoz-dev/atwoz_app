@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/string_extension.dart';
-import 'package:atwoz_app/features/favorite_list/data/dto/favorite_list_response.dart';
-import 'package:atwoz_app/features/favorite_list/domain/provider/favorite_list_state.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/string_extension.dart';
+import 'package:deepple_app/features/favorite_list/data/dto/favorite_list_response.dart';
+import 'package:deepple_app/features/favorite_list/domain/provider/favorite_list_state.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final favoriteRepositoryProvider = Provider<FavoriteRepository>((ref) {

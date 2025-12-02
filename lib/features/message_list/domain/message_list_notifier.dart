@@ -1,5 +1,5 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/message_list/data/repository/message_repository.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/message_list/data/repository/message_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'message_list_state.dart';

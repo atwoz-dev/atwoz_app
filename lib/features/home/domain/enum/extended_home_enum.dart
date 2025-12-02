@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 
 typedef ExtendedSmokingStatus = ExtendedHomeEnum<SmokingStatus>;
 typedef ExtendedDrinkingStatus = ExtendedHomeEnum<DrinkingStatus>;

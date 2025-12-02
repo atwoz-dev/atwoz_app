@@ -1,8 +1,8 @@
-import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:deepple_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
 
 class DefaultHeartCard extends StatelessWidget {

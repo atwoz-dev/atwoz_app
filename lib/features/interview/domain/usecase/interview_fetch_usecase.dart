@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/interview/data/data.dart';
+import 'package:deepple_app/features/interview/data/data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InterviewFetchUseCase {

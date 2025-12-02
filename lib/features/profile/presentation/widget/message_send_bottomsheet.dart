@@ -1,10 +1,10 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/widget/input/default_text_form_field.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:deepple_app/features/profile/domain/provider/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

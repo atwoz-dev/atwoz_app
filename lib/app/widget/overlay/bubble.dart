@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/widget/text/mixed_bold_text.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/widget/text/mixed_bold_text.dart';
 import 'package:flutter/material.dart';
 
 enum BubblePosition { top, bottom }

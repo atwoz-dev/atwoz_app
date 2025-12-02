@@ -3,12 +3,12 @@
 // Check in to version control
 
 import 'package:hive_ce/hive.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/features/my/domain/model/my_profile_image.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/features/auth/data/dto/user_response.dart';
+import 'package:deepple_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/features/my/domain/model/my_profile_image.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
+import 'package:deepple_app/features/notification/domain/model/server_notification_type.dart';
 
 part 'my_settings.freezed.dart';
 

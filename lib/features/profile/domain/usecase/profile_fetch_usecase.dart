@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
-import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/app/provider/provider.dart';
+import 'package:deepple_app/features/profile/data/dto/profile_detail_response.dart';
+import 'package:deepple_app/features/profile/data/repository/profile_repository.dart';
+import 'package:deepple_app/features/profile/domain/common/model.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileFetchUseCase {

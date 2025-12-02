@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_base_widget.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/sign_up_steps.dart';
+import 'package:deepple_app/features/auth/domain/provider/sign_up_process_notifier.dart';
+import 'package:deepple_app/features/auth/presentation/widget/sign_up_profile_base_widget.dart';
+import 'package:deepple_app/features/auth/presentation/widget/sign_up_steps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
+import 'package:deepple_app/features/report/domain/enum/report_reason.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'report.freezed.dart';

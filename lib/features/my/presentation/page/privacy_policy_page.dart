@@ -1,6 +1,6 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/privacy_policy.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/privacy_policy.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {

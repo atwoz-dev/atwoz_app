@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/features/home/data/dto/home_profile_response_dto.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/features/home/data/dto/home_profile_response_dto.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 
 extension CachedUserProfileMapper on HomeProfileResponseDto {
   CachedUserProfile toCachedUserProfile() {

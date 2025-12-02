@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:deepple_app/app/enum/enum.dart';
 
 part 'contact_setting_state.freezed.dart';
 

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 
 class DefaultAppBarActionGroup extends StatelessWidget {
   const DefaultAppBarActionGroup({

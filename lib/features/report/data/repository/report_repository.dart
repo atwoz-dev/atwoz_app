@@ -1,5 +1,5 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/report/data/dto/report_request_dto.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/features/report/data/dto/report_request_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {

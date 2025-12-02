@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_detail_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
-import 'package:atwoz_app/features/profile/data/repository/profile_repository.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/favorite_list/data/repository/favorite_repository.dart';
+import 'package:deepple_app/features/introduce/domain/provider/introduce_detail_state.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
+import 'package:deepple_app/features/profile/data/repository/profile_repository.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduce_detail_notifier.g.dart';

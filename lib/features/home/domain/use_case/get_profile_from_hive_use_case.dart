@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/core/storage/local_storage_item.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/core/util/util.dart';
+import 'package:deepple_app/core/storage/local_storage.dart';
+import 'package:deepple_app/core/storage/local_storage_item.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/core/util/util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce/hive.dart';
 

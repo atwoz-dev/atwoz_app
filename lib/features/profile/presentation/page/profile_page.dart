@@ -1,10 +1,10 @@
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
-import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_notifier.dart';
-import 'package:atwoz_app/features/profile/domain/provider/profile_state.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/dialogue/error_dialog.dart';
+import 'package:deepple_app/app/widget/error/dialogue_error.dart';
+import 'package:deepple_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:deepple_app/features/profile/domain/provider/profile_notifier.dart';
+import 'package:deepple_app/features/profile/domain/provider/profile_state.dart';
+import 'package:deepple_app/features/profile/presentation/widget/contact_initialize_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

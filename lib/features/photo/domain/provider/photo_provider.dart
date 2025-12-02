@@ -1,8 +1,8 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/permission_handler.dart';
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
-import 'package:atwoz_app/features/photo/domain/usecase/upload_photos_use_case.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/permission_handler.dart';
+import 'package:deepple_app/features/photo/domain/model/profile_photo.dart';
+import 'package:deepple_app/features/photo/domain/usecase/upload_photos_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

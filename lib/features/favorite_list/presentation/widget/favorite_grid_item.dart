@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/app/widget/image/default_image.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/favorite_list/domain/provider/domain.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/widget/image/default_image.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/features/favorite_list/domain/provider/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

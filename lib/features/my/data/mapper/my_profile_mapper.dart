@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/my/data/dto/profile_update_request_dto.dart';
-import 'package:atwoz_app/features/my/domain/domain.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/my/data/dto/profile_update_request_dto.dart';
+import 'package:deepple_app/features/my/domain/domain.dart';
 
 extension MyProfileMapper on CachedUserProfile {
   MyProfile toMyProfile() {

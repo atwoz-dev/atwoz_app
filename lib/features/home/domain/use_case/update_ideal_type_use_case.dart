@@ -1,5 +1,5 @@
-import 'package:atwoz_app/features/home/data/mapper/ideal_type_mapper.dart';
-import 'package:atwoz_app/features/home/home.dart';
+import 'package:deepple_app/features/home/data/mapper/ideal_type_mapper.dart';
+import 'package:deepple_app/features/home/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final updateIdealTypeUseCaseProvider = Provider<UpdateIdealTypeUseCase>(

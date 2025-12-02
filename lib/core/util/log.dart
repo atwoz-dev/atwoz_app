@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'package:logger/logger.dart';
-import 'package:atwoz_app/core/config/config.dart';
+import 'package:deepple_app/core/config/config.dart';
 
 class Log {
   static final Logger _logger = Logger(

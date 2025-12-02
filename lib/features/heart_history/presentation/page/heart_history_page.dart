@@ -1,8 +1,8 @@
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/heart_history/presentation/widget/heart_history_card.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/features/heart_history/presentation/widget/heart_history_card.dart';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/features/heart_history/domain/provider/domain.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
+import 'package:deepple_app/features/heart_history/domain/provider/domain.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HeartHistoryPage extends ConsumerStatefulWidget {

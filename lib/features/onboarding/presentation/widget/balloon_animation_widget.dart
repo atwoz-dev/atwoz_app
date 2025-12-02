@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/features/onboarding/presentation/widget/onboarding_balloon_widget.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/features/onboarding/presentation/widget/onboarding_balloon_widget.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 
 class BalloonAnimationWidget extends StatefulWidget {
   final List<Map<String, dynamic>> balloons;

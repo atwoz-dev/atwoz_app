@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:atwoz_app/core/network/network_exception.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/auth/data/data.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:atwoz_app/features/onboarding/domain/enum/auth_error.dart';
-import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
-import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_state.dart';
+import 'package:deepple_app/core/network/network_exception.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/auth/data/data.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/features/onboarding/domain/enum/auth_error.dart';
+import 'package:deepple_app/features/onboarding/domain/enum/auth_status.dart';
+import 'package:deepple_app/features/onboarding/domain/provider/onboarding_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'onboarding_notifier.g.dart';

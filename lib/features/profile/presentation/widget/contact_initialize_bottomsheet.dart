@@ -1,10 +1,10 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
-import 'package:atwoz_app/features/contact_setting/presentation/widget/contact_setting_body.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/common_button_group.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/message_send_bottomsheet.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:deepple_app/features/contact_setting/presentation/widget/contact_setting_body.dart';
+import 'package:deepple_app/features/profile/presentation/widget/common_button_group.dart';
+import 'package:deepple_app/features/profile/presentation/widget/message_send_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';

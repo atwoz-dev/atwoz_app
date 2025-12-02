@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 

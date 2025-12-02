@@ -1,11 +1,11 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/interview/data/data.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/delete_interview_to_hive_usecase.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/interview_add_usecase.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/interview_remove_usecase.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/interview_fetch_usecase.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/interview_update_usecase.dart';
-import 'package:atwoz_app/features/interview/domain/usecase/save_interview_to_hive_usecase.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/interview/data/data.dart';
+import 'package:deepple_app/features/interview/domain/usecase/delete_interview_to_hive_usecase.dart';
+import 'package:deepple_app/features/interview/domain/usecase/interview_add_usecase.dart';
+import 'package:deepple_app/features/interview/domain/usecase/interview_remove_usecase.dart';
+import 'package:deepple_app/features/interview/domain/usecase/interview_fetch_usecase.dart';
+import 'package:deepple_app/features/interview/domain/usecase/interview_update_usecase.dart';
+import 'package:deepple_app/features/interview/domain/usecase/save_interview_to_hive_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'interview_state.dart';

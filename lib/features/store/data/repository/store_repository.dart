@@ -1,5 +1,5 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/features/store/data/dto/verify_receipt_request.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/features/store/data/dto/verify_receipt_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final storeRepositoryProvider = Provider<StoreRepository>((ref) {

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/features/home/home.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

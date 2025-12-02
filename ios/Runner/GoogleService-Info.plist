@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCtXCmlKUzCliCIxjFTLJ_EekCNSFvVbHs</string>
+	<string>AIzaSyAJFmbSt72-JHUJLqUdcBydjx80FcN1z2s</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1049288044004</string>
+	<string>48221978358</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.goodmeet.atwoz</string>
+	<string>com.goodmeet.deepple</string>
 	<key>PROJECT_ID</key>
-	<string>atwoz-d63ef</string>
+	<string>deepple-c5416</string>
 	<key>STORAGE_BUCKET</key>
-	<string>atwoz-d63ef.firebasestorage.app</string>
+	<string>deepple-c5416.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1049288044004:ios:4abae1a3562a001dac2bf1</string>
+	<string>1:48221978358:ios:d6451dc8c5aa0eb438b6d7</string>
 </dict>
 </plist>

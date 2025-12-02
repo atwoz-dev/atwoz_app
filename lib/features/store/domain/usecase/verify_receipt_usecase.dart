@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/store/data/repository/store_repository.dart';
+import 'package:deepple_app/features/store/data/repository/store_repository.dart';
 
 class VerifyReceiptUseCase {
   final StoreRepository _repository;

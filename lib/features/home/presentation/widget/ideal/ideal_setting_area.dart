@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
-import 'package:atwoz_app/features/home/presentation/widget/ideal/ideal_widget.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/features/home/domain/domain.dart';
+import 'package:deepple_app/features/home/domain/enum/extended_home_enum.dart';
+import 'package:deepple_app/features/home/presentation/widget/ideal/ideal_widget.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

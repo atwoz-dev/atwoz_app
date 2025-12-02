@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/auth/data/data.dart';
+import 'package:deepple_app/features/auth/data/data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 

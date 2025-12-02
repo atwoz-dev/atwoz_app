@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/introduce/domain/model/introduce_detail.dart';
+import 'package:deepple_app/features/introduce/domain/model/introduce_detail.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'introduce_detail_state.freezed.dart';

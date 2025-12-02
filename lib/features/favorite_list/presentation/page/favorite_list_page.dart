@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/favorite_list/presentation/widget/favorite_list_body.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/features/favorite_list/presentation/widget/favorite_list_body.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteListPage extends StatelessWidget {

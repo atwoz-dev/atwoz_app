@@ -1,10 +1,10 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
-import 'package:atwoz_app/features/report/domain/enum/report_reason.dart';
-import 'package:atwoz_app/features/report/domain/model/report.dart';
-import 'package:atwoz_app/features/report/domain/model/report_block_result.dart';
-import 'package:atwoz_app/features/report/domain/use_case/block_user_use_case.dart';
-import 'package:atwoz_app/features/report/domain/use_case/send_report_use_case.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:deepple_app/features/report/domain/enum/report_reason.dart';
+import 'package:deepple_app/features/report/domain/model/report.dart';
+import 'package:deepple_app/features/report/domain/model/report_block_result.dart';
+import 'package:deepple_app/features/report/domain/use_case/block_user_use_case.dart';
+import 'package:deepple_app/features/report/domain/use_case/send_report_use_case.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

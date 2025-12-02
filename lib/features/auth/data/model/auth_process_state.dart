@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/auth/data/dto/user_response.dart';
+import 'package:deepple_app/features/auth/data/dto/user_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_process_state.freezed.dart';

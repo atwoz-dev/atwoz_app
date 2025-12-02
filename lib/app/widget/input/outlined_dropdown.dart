@@ -1,6 +1,6 @@
-import 'package:atwoz_app/core/state/base_widget_state.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:deepple_app/core/state/base_widget_state.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 typedef ValueBuilder<T> = String Function(T item);

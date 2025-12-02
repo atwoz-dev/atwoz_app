@@ -1,16 +1,16 @@
 import 'dart:ui';
 
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/global_notifier.dart';
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/router/routing.dart';
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
-import 'package:atwoz_app/core/notification/notification_model.dart';
-import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/provider/global_notifier.dart';
+import 'package:deepple_app/app/router/route_arguments.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/router/routing.dart';
+import 'package:deepple_app/core/notification/firebase_manager.dart';
+import 'package:deepple_app/core/notification/notification_model.dart';
+import 'package:deepple_app/core/storage/local_storage.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

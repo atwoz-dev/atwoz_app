@@ -1,6 +1,6 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/home/home.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/home/home.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

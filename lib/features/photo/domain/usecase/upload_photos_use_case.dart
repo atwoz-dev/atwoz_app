@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/photo/domain/model/profile_photo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/features/photo/data/repository/photo_repository.dart';
+import 'package:deepple_app/features/photo/data/repository/photo_repository.dart';
 
 class UploadPhotosUseCase {
   final Ref ref;

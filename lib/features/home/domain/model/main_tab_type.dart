@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/constants/icon_path.dart';
-import 'package:atwoz_app/app/widget/view/default_bottom_navigation_bar.dart';
-import 'package:atwoz_app/features/favorite_list/presentation/page/favorite_list_page.dart';
-import 'package:atwoz_app/features/home/presentation/page/home_page.dart';
-import 'package:atwoz_app/features/interview/presentation/page/interview_page.dart';
-import 'package:atwoz_app/features/introduce/presentation/page/introduce_page.dart';
-import 'package:atwoz_app/features/message_list/presentation/page/message_list_page.dart';
-import 'package:atwoz_app/features/my/presentation/page/my_page.dart';
+import 'package:deepple_app/app/constants/icon_path.dart';
+import 'package:deepple_app/app/widget/view/default_bottom_navigation_bar.dart';
+import 'package:deepple_app/features/favorite_list/presentation/page/favorite_list_page.dart';
+import 'package:deepple_app/features/home/presentation/page/home_page.dart';
+import 'package:deepple_app/features/interview/presentation/page/interview_page.dart';
+import 'package:deepple_app/features/introduce/presentation/page/introduce_page.dart';
+import 'package:deepple_app/features/message_list/presentation/page/message_list_page.dart';
+import 'package:deepple_app/features/my/presentation/page/my_page.dart';
 
 enum MainTabType {
   home('홈'),
