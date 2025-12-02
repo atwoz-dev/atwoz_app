@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/util/log.dart';
+import 'package:deepple_app/core/util/log.dart';
 
 import 'api_service.dart';
 import 'api_service_impl.dart';

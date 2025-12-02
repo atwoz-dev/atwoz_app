@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/features/favorite_list/domain/provider/favorite_list_state.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/features/favorite_list/domain/provider/favorite_list_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'favorite_list_response.freezed.dart';

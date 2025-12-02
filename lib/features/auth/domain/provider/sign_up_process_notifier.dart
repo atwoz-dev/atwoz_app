@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
-import 'package:atwoz_app/features/auth/domain/usecase/get_current_location_use_case.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/features/auth/domain/usecase/get_current_location_use_case.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
-import 'package:atwoz_app/app/router/router.dart';
+import 'package:deepple_app/features/auth/data/model/sign_up_process_state.dart';
+import 'package:deepple_app/app/router/router.dart';
 import 'package:flutter/material.dart';
 
 part 'sign_up_process_notifier.g.dart';

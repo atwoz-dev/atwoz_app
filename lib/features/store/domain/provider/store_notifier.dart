@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:atwoz_app/app/provider/global_notifier.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/store/domain/provider/usecase_providers.dart';
+import 'package:deepple_app/app/provider/global_notifier.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/store/domain/provider/usecase_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:flutter/material.dart';

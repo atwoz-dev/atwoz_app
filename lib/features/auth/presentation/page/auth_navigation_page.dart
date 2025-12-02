@@ -1,8 +1,8 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

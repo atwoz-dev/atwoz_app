@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:atwoz_app/core/config/config.dart';
-import 'package:atwoz_app/core/network/logging_interceptor.dart';
-import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/core/storage/local_storage_item.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/core/config/config.dart';
+import 'package:deepple_app/core/network/logging_interceptor.dart';
+import 'package:deepple_app/core/storage/local_storage.dart';
+import 'package:deepple_app/core/storage/local_storage_item.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/message_list/domain/domain.dart';
-import 'package:atwoz_app/features/message_list/presentation/page/message_list_page.dart';
+import 'package:deepple_app/app/router/route_arguments.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/features/message_list/domain/domain.dart';
+import 'package:deepple_app/features/message_list/presentation/page/message_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

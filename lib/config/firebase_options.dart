@@ -39,19 +39,19 @@ class DefaultFirebaseOptions {
   }
 
   static const android = FirebaseOptions(
-    apiKey: 'AIzaSyASM-SDzJunJX0AIDz3oMDspAvYRaPuzA8',
-    appId: '1:1049288044004:android:f8bef7c1295f7fa0ac2bf1',
-    messagingSenderId: '1049288044004',
-    projectId: 'atwoz-d63ef',
-    storageBucket: 'atwoz-d63ef.firebasestorage.app',
+    apiKey: 'AIzaSyAKtihuSxVxk4e-scA80aPobiJXrn3wIDY',
+    appId: '1:48221978358:ios:d6451dc8c5aa0eb438b6d7',
+    messagingSenderId: '48221978358',
+    projectId: 'deepple-c5416',
+    storageBucket: 'deepple-c5416.firebasestorage.app',
   );
 
   static const ios = FirebaseOptions(
-    apiKey: 'AIzaSyCtXCmlKUzCliCIxjFTLJ_EekCNSFvVbHs',
-    appId: '1:1049288044004:ios:c0b0f3f24e4fd48eac2bf1',
-    messagingSenderId: '1049288044004',
-    projectId: 'atwoz-d63ef',
-    storageBucket: 'atwoz-d63ef.firebasestorage.app',
-    iosBundleId: 'com.goodmeet.atwoz',
+    apiKey: 'AIzaSyAJFmbSt72-JHUJLqUdcBydjx80FcN1z2s',
+    appId: '1:48221978358:ios:d6451dc8c5aa0eb438b6d7',
+    messagingSenderId: '48221978358',
+    projectId: 'deepple-c5416',
+    storageBucket: 'deepple-c5416.firebasestorage.app',
+    iosBundleId: 'com.goodmeet.deepple',
   );
 }

@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/my/data/mapper/my_profile_mapper.dart';
-import 'package:atwoz_app/features/my/data/repository/my_profile_repository.dart';
-import 'package:atwoz_app/features/my/my.dart';
+import 'package:deepple_app/features/my/data/mapper/my_profile_mapper.dart';
+import 'package:deepple_app/features/my/data/repository/my_profile_repository.dart';
+import 'package:deepple_app/features/my/my.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final updateMyProfileUseCaseProvider = Provider<UpdateMyProfileUseCase>(

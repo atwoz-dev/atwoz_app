@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/network/api_service_impl.dart';
+import 'package:deepple_app/core/network/api_service_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

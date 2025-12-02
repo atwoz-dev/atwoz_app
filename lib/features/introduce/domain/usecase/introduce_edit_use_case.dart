@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/introduce/data/repository/introduce_repository.dart';
+import 'package:deepple_app/features/introduce/data/repository/introduce_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IntroduceEditUseCase {

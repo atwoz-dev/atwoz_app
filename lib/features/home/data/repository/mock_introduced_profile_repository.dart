@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:deepple_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final mockIntroducedProfileRepositoryProvider =

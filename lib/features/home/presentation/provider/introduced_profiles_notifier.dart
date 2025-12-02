@@ -1,12 +1,12 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/global_notifier.dart';
-import 'package:atwoz_app/core/network/network_exception.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/home/data/repository/introduced_profile_repository.dart';
-import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
-import 'package:atwoz_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/provider/global_notifier.dart';
+import 'package:deepple_app/core/network/network_exception.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/features/home/data/repository/introduced_profile_repository.dart';
+import 'package:deepple_app/features/home/domain/domain.dart';
+import 'package:deepple_app/features/home/domain/use_case/fetch_introduced_profiles_use_case.dart';
+import 'package:deepple_app/features/home/domain/use_case/update_introduced_profile_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduced_profiles_notifier.g.dart';

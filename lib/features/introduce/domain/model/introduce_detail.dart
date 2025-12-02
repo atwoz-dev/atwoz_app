@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'introduce_detail.freezed.dart';

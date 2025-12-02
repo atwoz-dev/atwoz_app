@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
-import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/app/widget/view/default_tap_bar.dart';
-import 'package:atwoz_app/features/interview/presentation/widget/question_card.dart';
-import 'package:atwoz_app/features/interview/presentation/widget/interview_banner_widget.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
+import 'package:deepple_app/app/widget/view/default_tap_bar.dart';
+import 'package:deepple_app/features/interview/presentation/widget/question_card.dart';
+import 'package:deepple_app/features/interview/presentation/widget/interview_banner_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 import 'package:gap/gap.dart';
 
 class InterviewPage extends ConsumerStatefulWidget {

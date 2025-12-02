@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/widget/list/list_chip.dart';
+import 'package:deepple_app/app/widget/list/list_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/features/introduce/domain/provider/filter_notifier.dart';
 
 class Regionselectdialog extends ConsumerWidget {
   const Regionselectdialog({super.key});

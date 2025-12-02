@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/network/network_exception.dart';
-import 'package:atwoz_app/features/auth/data/data.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/network/network_exception.dart';
+import 'package:deepple_app/features/auth/data/data.dart';
+import 'package:deepple_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final introducedProfileRepositoryProvider =

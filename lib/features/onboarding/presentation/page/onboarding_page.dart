@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/app/widget/overlay/bubble.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/features/onboarding/presentation/widget/onboarding_balloon_widget.dart';
-import 'package:atwoz_app/features/onboarding/presentation/widget/balloon_animation_widget.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
+import 'package:deepple_app/app/widget/overlay/bubble.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/features/onboarding/presentation/widget/onboarding_balloon_widget.dart';
+import 'package:deepple_app/features/onboarding/presentation/widget/balloon_animation_widget.dart';
 
 class OnBoardPage extends StatefulWidget {
   const OnBoardPage({super.key});

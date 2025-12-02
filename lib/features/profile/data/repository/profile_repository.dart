@@ -1,12 +1,12 @@
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/network/network_exception.dart';
-import 'package:atwoz_app/core/storage/local_storage.dart';
-import 'package:atwoz_app/core/storage/local_storage_item.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_key.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
-import 'package:atwoz_app/features/profile/data/dto/profile_detail_response.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/network/network_exception.dart';
+import 'package:deepple_app/core/storage/local_storage.dart';
+import 'package:deepple_app/core/storage/local_storage_item.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/core/util/shared_preference/shared_preference_key.dart';
+import 'package:deepple_app/core/util/shared_preference/shared_preference_manager.dart';
+import 'package:deepple_app/features/profile/data/dto/profile_detail_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {

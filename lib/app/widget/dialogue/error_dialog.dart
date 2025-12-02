@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/dimens.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:deepple_app/app/constants/dimens.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/app/widget/error/dialogue_error.dart';
+import 'package:deepple_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

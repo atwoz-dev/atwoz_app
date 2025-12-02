@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
 
 /// 일반 컴포넌트를 위한 기본 State 클래스
 abstract class AppBaseWidgetState<T extends StatefulWidget> extends State<T> {

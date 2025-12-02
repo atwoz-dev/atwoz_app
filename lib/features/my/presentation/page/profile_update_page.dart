@@ -1,15 +1,15 @@
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/my/my.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/my/my.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/view/view.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/app/widget/view/view.dart';
 
 class ProfileUpdatePage extends ConsumerWidget {
   final String profileType;

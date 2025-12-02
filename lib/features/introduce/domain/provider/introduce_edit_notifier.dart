@@ -1,6 +1,6 @@
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_edit_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/introduce_edit_use_case.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/introduce/domain/provider/introduce_edit_state.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/introduce_edit_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduce_edit_notifier.g.dart';

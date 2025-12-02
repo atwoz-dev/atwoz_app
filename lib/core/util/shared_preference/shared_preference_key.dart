@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/core/util/shared_preference/shared_preference_manager.dart';
-import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/core/util/shared_preference/shared_preference_manager.dart';
+import 'package:deepple_app/features/notification/domain/model/server_notification_type.dart';
 
 part 'parser.dart';
 

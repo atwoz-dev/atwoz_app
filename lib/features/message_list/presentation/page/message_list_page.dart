@@ -1,8 +1,8 @@
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/features/message_list/presentation/widget/widget.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/features/message_list/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 class MessageListPage extends StatelessWidget {

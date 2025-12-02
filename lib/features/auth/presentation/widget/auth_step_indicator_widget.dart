@@ -1,6 +1,6 @@
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class AuthStepIndicatorWidget extends StatelessWidget {

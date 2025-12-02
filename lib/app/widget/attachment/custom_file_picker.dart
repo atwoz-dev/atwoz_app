@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/state/base_widget_state.dart';
+import 'package:deepple_app/core/state/base_widget_state.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

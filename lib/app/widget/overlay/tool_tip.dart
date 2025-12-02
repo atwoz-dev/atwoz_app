@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
-import 'package:atwoz_app/app/widget/overlay/bubble.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/widget/overlay/bubble.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/constants.dart';

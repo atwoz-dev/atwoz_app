@@ -1,13 +1,13 @@
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/dialogue/dialogue.dart';
-import 'package:atwoz_app/core/state/base_widget_state.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/features/interview/interview.dart';
+import 'package:deepple_app/app/router/route_arguments.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/dialogue/dialogue.dart';
+import 'package:deepple_app/core/state/base_widget_state.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/features/interview/interview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/constants.dart';
 
 class QuestionCard extends ConsumerStatefulWidget {
   final double tagSpacing;

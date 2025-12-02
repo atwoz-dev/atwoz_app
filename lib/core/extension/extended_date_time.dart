@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/util/date_time_util.dart';
+import 'package:deepple_app/core/util/date_time_util.dart';
 import 'package:intl/intl.dart';
 
 extension ExtendedDateTime on DateTime {

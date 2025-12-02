@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/enum/contact_method.dart';
-import 'package:atwoz_app/features/profile/data/repository/match_repository.dart';
+import 'package:deepple_app/app/enum/contact_method.dart';
+import 'package:deepple_app/features/profile/data/repository/match_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileMatchRequestUseCase {

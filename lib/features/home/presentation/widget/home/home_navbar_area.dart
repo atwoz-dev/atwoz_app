@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/view/default_app_bar_action_group.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/provider/provider.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar_action_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

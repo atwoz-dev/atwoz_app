@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/util/converter.dart';
+import 'package:deepple_app/core/util/converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_sign_up_request.freezed.dart';

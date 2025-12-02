@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:atwoz_app/core/util/log.dart';
+import 'package:deepple_app/core/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 

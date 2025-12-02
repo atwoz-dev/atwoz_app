@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/default_text_button.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/button/default_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

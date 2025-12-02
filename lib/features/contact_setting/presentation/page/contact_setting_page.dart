@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/widget/view/default_app_bar.dart';
-import 'package:atwoz_app/features/contact_setting/presentation/widget/contact_setting_body.dart';
+import 'package:deepple_app/app/widget/view/default_app_bar.dart';
+import 'package:deepple_app/features/contact_setting/presentation/widget/contact_setting_body.dart';
 import 'package:flutter/material.dart';
 
 class ContactSettingPage extends StatelessWidget {

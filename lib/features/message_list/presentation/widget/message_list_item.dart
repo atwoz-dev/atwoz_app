@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/extension/extension.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/message_list/domain/domain.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/core/extension/extension.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/message_list/domain/domain.dart';
 import 'package:flutter/material.dart';
 
 class MessageListItem extends StatelessWidget {

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/core/state/base_page_state.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

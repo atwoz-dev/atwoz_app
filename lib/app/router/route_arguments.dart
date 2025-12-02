@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
-import 'package:atwoz_app/features/my/my.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/features/introduce/domain/model/introduce_info.dart';
+import 'package:deepple_app/features/photo/domain/model/profile_photo.dart';
+import 'package:deepple_app/features/my/my.dart';
 
 sealed class RouteArguments {
   const RouteArguments();

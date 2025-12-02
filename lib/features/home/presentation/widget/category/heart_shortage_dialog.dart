@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/widget.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';

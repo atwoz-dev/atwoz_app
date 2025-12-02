@@ -1,15 +1,15 @@
 import 'dart:math';
 
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/core/state/base_page_state.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/util/phone_number_formatter.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
-import 'package:atwoz_app/app/widget/text/title_text.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/features/auth/data/usecase/auth_usecase_impl.dart';
+import 'package:deepple_app/app/router/route_arguments.dart';
+import 'package:deepple_app/core/state/base_page_state.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/core/util/phone_number_formatter.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/app/widget/input/default_text_form_field.dart';
+import 'package:deepple_app/app/widget/text/title_text.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/features/auth/data/usecase/auth_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

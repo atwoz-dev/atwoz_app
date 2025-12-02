@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/notification/data/repository/notification_repository.dart';
-import 'package:atwoz_app/features/notification/presentation/provider/notification_list_state.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/notification/data/repository/notification_repository.dart';
+import 'package:deepple_app/features/notification/presentation/provider/notification_list_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification_list_notifier.g.dart';

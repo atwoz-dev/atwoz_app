@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/palette.dart';
 
 class DefaultToggleButton extends StatelessWidget {
   final bool controller;

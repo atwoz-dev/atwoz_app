@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/util/string_util.dart';
+import 'package:deepple_app/core/util/string_util.dart';
 
 /// 숫자 확장 함수
 extension ExtendedNum on num {

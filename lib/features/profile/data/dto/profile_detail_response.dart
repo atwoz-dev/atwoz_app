@@ -1,4 +1,4 @@
-import 'package:atwoz_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile_detail_response.freezed.dart';

@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/features/introduce/data/dto/introduce_detail_response.dart';
-import 'package:atwoz_app/features/introduce/data/dto/introduce_list_response.dart';
-import 'package:atwoz_app/features/introduce/domain/model/introduce_detail.dart';
-import 'package:atwoz_app/features/introduce/domain/model/introduce_info.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/features/introduce/data/dto/introduce_detail_response.dart';
+import 'package:deepple_app/features/introduce/data/dto/introduce_list_response.dart';
+import 'package:deepple_app/features/introduce/domain/model/introduce_detail.dart';
+import 'package:deepple_app/features/introduce/domain/model/introduce_info.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 
 extension IntroduceMapper on IntroduceItem {
   IntroduceInfo toDomain() {

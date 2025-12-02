@@ -1,4 +1,4 @@
-package com.goodmeet.atwoz
+package com.goodmeet.deepple
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:atwoz_app/features/onboarding/domain/enum/auth_status.dart';
+import 'package:deepple_app/features/onboarding/domain/enum/auth_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'onboarding_state.freezed.dart';

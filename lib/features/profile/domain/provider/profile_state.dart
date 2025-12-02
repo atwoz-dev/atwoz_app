@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
+import 'package:deepple_app/app/widget/error/dialogue_error.dart';
+import 'package:deepple_app/features/profile/domain/common/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile_state.freezed.dart';

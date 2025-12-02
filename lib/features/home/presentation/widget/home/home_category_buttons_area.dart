@@ -1,6 +1,6 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

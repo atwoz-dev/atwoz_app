@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/features/home/data/dto/introduced_profile_dto.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/features/home/data/dto/introduced_profile_dto.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,7 +1,7 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/introduce/data/data.dart';
-import 'package:atwoz_app/features/introduce/data/dto/introduce_detail_response.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/introduce/data/data.dart';
+import 'package:deepple_app/features/introduce/data/dto/introduce_detail_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final introduceRepositoryProvider = Provider<IntroduceRepository>((ref) {

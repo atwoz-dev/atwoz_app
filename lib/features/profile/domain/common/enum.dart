@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/icon_path.dart';
-import 'package:atwoz_app/core/util/string_extension.dart';
+import 'package:deepple_app/app/constants/icon_path.dart';
+import 'package:deepple_app/core/util/string_extension.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 part 'enum.g.dart';

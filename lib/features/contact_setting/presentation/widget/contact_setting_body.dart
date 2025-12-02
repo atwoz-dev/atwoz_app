@@ -1,12 +1,12 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/features/contact_setting/domain/provider/contact_setting_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:atwoz_app/app/enum/enum.dart';
+import 'package:deepple_app/app/enum/enum.dart';
 
 class ContactSettingBody extends ConsumerStatefulWidget {
   const ContactSettingBody({super.key});

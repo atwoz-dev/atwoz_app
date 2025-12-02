@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/interview/data/data.dart';
+import 'package:deepple_app/features/interview/data/data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'interview_state.freezed.dart';

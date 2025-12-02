@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

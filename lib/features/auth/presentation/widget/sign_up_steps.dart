@@ -1,6 +1,6 @@
-import 'package:atwoz_app/features/auth/data/model/sign_up_process_state.dart';
-import 'package:atwoz_app/features/auth/domain/provider/sign_up_process_notifier.dart';
-import 'package:atwoz_app/features/auth/presentation/widget/sign_up_profile_choices.dart';
+import 'package:deepple_app/features/auth/data/model/sign_up_process_state.dart';
+import 'package:deepple_app/features/auth/domain/provider/sign_up_process_notifier.dart';
+import 'package:deepple_app/features/auth/presentation/widget/sign_up_profile_choices.dart';
 import 'package:flutter/material.dart';
 
 class SignUpProfileChoices {

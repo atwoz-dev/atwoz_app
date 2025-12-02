@@ -1,10 +1,11 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
-import 'package:atwoz_app/features/home/domain/model/cached_user_profile.dart';
-import 'package:atwoz_app/features/my/my.dart';
-import 'package:atwoz_app/features/profile/domain/common/model.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/profile_self_introduction.dart';
-import 'package:atwoz_app/features/profile/presentation/widget/profile_sub_information.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
+import 'package:deepple_app/features/home/domain/model/cached_user_profile.dart';
+import 'package:deepple_app/features/my/my.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/features/profile/domain/common/model.dart';
+import 'package:deepple_app/features/profile/presentation/widget/profile_self_introduction.dart';
+import 'package:deepple_app/features/profile/presentation/widget/profile_sub_information.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -292,7 +293,7 @@ class _InterviewsSection extends StatelessWidget {
           onTap: () => SelfIntroducitonDetailBottomSheet.open(
             context,
             introduction: SelfIntroductionData(
-              about: '',
+              about: InterviewCategory.personal,
               title: interviews[index].title,
               content: interviews[index].content,
             ),

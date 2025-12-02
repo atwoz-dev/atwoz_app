@@ -1,13 +1,13 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/provider/provider.dart';
-import 'package:atwoz_app/core/network/network_exception.dart';
-import 'package:atwoz_app/core/util/toast.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/favorite_list/data/repository/favorite_repository.dart';
-import 'package:atwoz_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
-import 'package:atwoz_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
-import 'package:atwoz_app/features/home/presentation/provider/provider.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/provider/provider.dart';
+import 'package:deepple_app/core/network/network_exception.dart';
+import 'package:deepple_app/core/util/toast.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/favorite_list/data/repository/favorite_repository.dart';
+import 'package:deepple_app/features/home/domain/use_case/fetch_recommended_profile_use_case.dart';
+import 'package:deepple_app/features/home/domain/use_case/save_introduced_profiles_use_case.dart';
+import 'package:deepple_app/features/home/presentation/provider/provider.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_notifier.g.dart'; // 코드 생성을 위한 부분

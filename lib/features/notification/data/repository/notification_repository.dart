@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/notification/firebase_manager.dart';
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/notification/data/dto/notification_preferences_dto.dart';
-import 'package:atwoz_app/features/notification/domain/model/notification_item.dart';
-import 'package:atwoz_app/features/notification/domain/model/server_notification_type.dart';
+import 'package:deepple_app/core/notification/firebase_manager.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/notification/data/dto/notification_preferences_dto.dart';
+import 'package:deepple_app/features/notification/domain/model/notification_item.dart';
+import 'package:deepple_app/features/notification/domain/model/server_notification_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/util/shared_preference/shared_preference.dart';

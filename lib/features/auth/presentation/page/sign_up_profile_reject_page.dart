@@ -1,13 +1,13 @@
-import 'package:atwoz_app/app/router/route_arguments.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/app/widget/text/bullet_text.dart';
+import 'package:deepple_app/app/router/route_arguments.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/app/widget/text/bullet_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/widget/button/default_elevated_button.dart';
-import 'package:atwoz_app/app/widget/icon/default_icon.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/widget/button/default_elevated_button.dart';
+import 'package:deepple_app/app/widget/icon/default_icon.dart';
 import 'package:gap/gap.dart';
-import 'package:atwoz_app/app/router/router.dart';
+import 'package:deepple_app/app/router/router.dart';
 
 class SignUpProfileRejectPage extends ConsumerWidget {
   const SignUpProfileRejectPage({super.key});

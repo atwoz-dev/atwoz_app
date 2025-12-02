@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/button/button.dart';
-import 'package:atwoz_app/features/home/domain/model/main_tab_type.dart';
-import 'package:atwoz_app/features/home/presentation/page/main_tab_view.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/button/button.dart';
+import 'package:deepple_app/features/home/domain/model/main_tab_type.dart';
+import 'package:deepple_app/features/home/presentation/page/main_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

@@ -1,5 +1,5 @@
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/app/widget/input/default_text_form_field.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/app/widget/input/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class AutoComplete<T extends Object> extends StatefulWidget {

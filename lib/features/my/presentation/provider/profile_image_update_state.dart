@@ -1,4 +1,4 @@
-import 'package:atwoz_app/features/photo/domain/model/profile_photo.dart';
+import 'package:deepple_app/features/photo/domain/model/profile_photo.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile_image_update_state.freezed.dart';

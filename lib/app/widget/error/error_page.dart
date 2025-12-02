@@ -1,4 +1,4 @@
-import 'package:atwoz_app/core/extension/extension.dart';
+import 'package:deepple_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

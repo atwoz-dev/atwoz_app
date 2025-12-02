@@ -222,7 +222,7 @@ String privacyPolicyText = '''
 
 부 서 : 운영팀
 
-메 일 : help@atwoz.kr
+메 일 : help@deepple.co.kr
 
 개인정보 보호담당자
 

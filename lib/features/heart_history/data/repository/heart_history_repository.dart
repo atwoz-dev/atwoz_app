@@ -1,8 +1,8 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/heart_history/data/dto/heart_history_response.dart';
-import 'package:atwoz_app/features/heart_history/domain/model/heart_history_data.dart';
-import 'package:atwoz_app/features/heart_history/data/mapper/heart_history_mapper.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/heart_history/data/dto/heart_history_response.dart';
+import 'package:deepple_app/features/heart_history/domain/model/heart_history_data.dart';
+import 'package:deepple_app/features/heart_history/data/mapper/heart_history_mapper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final heartHistoryRepositoryProvider = Provider<HeartHistoryRepository>((ref) {

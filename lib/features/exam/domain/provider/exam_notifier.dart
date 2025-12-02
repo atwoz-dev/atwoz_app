@@ -1,12 +1,12 @@
-import 'package:atwoz_app/app/provider/global_notifier.dart';
-import 'package:atwoz_app/core/util/log.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
-import 'package:atwoz_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
+import 'package:deepple_app/app/provider/global_notifier.dart';
+import 'package:deepple_app/core/util/log.dart';
+import 'package:deepple_app/features/exam/domain/usecase/exam_optional_fetch_usecase.dart';
+import 'package:deepple_app/features/exam/domain/usecase/exam_create_submit_usecase.dart';
+import 'package:deepple_app/features/exam/domain/usecase/exam_remove_blur_usecase.dart';
+import 'package:deepple_app/features/exam/domain/usecase/exam_required_fetch_usecase.dart';
+import 'package:deepple_app/features/exam/domain/usecase/exam_soulmate_fetch_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:atwoz_app/features/exam/domain/model/subject_answer.dart';
+import 'package:deepple_app/features/exam/domain/model/subject_answer.dart';
 
 import 'exam_state.dart';
 

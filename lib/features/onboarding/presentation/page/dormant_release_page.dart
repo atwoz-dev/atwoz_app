@@ -1,9 +1,9 @@
-import 'package:atwoz_app/app/constants/constants.dart';
-import 'package:atwoz_app/app/router/router.dart';
-import 'package:atwoz_app/app/widget/dialogue/error_dialog.dart';
-import 'package:atwoz_app/app/widget/error/dialogue_error.dart';
-import 'package:atwoz_app/app/widget/widget.dart';
-import 'package:atwoz_app/features/onboarding/domain/provider/onboarding_notifier.dart';
+import 'package:deepple_app/app/constants/constants.dart';
+import 'package:deepple_app/app/router/router.dart';
+import 'package:deepple_app/app/widget/dialogue/error_dialog.dart';
+import 'package:deepple_app/app/widget/error/dialogue_error.dart';
+import 'package:deepple_app/app/widget/widget.dart';
+import 'package:deepple_app/features/onboarding/domain/provider/onboarding_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

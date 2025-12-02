@@ -1,9 +1,9 @@
-import 'package:atwoz_app/core/network/base_repository.dart';
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/interview/data/dto/interview_answer_request.dart';
-import 'package:atwoz_app/features/interview/data/dto/interview_answer_response.dart';
-import 'package:atwoz_app/features/interview/data/dto/interview_answer_update_request.dart';
-import 'package:atwoz_app/features/interview/data/dto/interview_question_response.dart';
+import 'package:deepple_app/core/network/base_repository.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/interview/data/dto/interview_answer_request.dart';
+import 'package:deepple_app/features/interview/data/dto/interview_answer_response.dart';
+import 'package:deepple_app/features/interview/data/dto/interview_answer_update_request.dart';
+import 'package:deepple_app/features/interview/data/dto/interview_question_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final interviewRepositoryProvider = Provider<InterviewRepository>((ref) {

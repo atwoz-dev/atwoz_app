@@ -1,11 +1,11 @@
-import 'package:atwoz_app/app/constants/enum.dart';
-import 'package:atwoz_app/app/constants/region_data.dart';
-import 'package:atwoz_app/features/home/domain/domain.dart';
-import 'package:atwoz_app/features/home/domain/enum/extended_home_enum.dart';
-import 'package:atwoz_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';
-import 'package:atwoz_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
-import 'package:atwoz_app/features/home/presentation/provider/ideal_type_state.dart';
-import 'package:atwoz_app/features/profile/domain/common/enum.dart';
+import 'package:deepple_app/app/constants/enum.dart';
+import 'package:deepple_app/app/constants/region_data.dart';
+import 'package:deepple_app/features/home/domain/domain.dart';
+import 'package:deepple_app/features/home/domain/enum/extended_home_enum.dart';
+import 'package:deepple_app/features/home/domain/use_case/fetch_ideal_type_use_case.dart';
+import 'package:deepple_app/features/home/domain/use_case/update_ideal_type_use_case.dart';
+import 'package:deepple_app/features/home/presentation/provider/ideal_type_state.dart';
+import 'package:deepple_app/features/profile/domain/common/enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

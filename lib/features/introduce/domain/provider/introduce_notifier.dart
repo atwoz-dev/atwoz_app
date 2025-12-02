@@ -1,11 +1,11 @@
-import 'package:atwoz_app/core/util/util.dart';
-import 'package:atwoz_app/features/introduce/domain/model/introduce_detail.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/filter_notifier.dart';
-import 'package:atwoz_app/features/introduce/domain/provider/introduce_state.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/delete_introduce_use_case.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
-import 'package:atwoz_app/features/introduce/domain/usecase/fetch_introduce_my_list_use_case.dart';
+import 'package:deepple_app/core/util/util.dart';
+import 'package:deepple_app/features/introduce/domain/model/introduce_detail.dart';
+import 'package:deepple_app/features/introduce/domain/provider/filter_notifier.dart';
+import 'package:deepple_app/features/introduce/domain/provider/introduce_state.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/delete_introduce_use_case.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/fetch_introduce_detail_use_case.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/fetch_introduce_list_use_case.dart';
+import 'package:deepple_app/features/introduce/domain/usecase/fetch_introduce_my_list_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'introduce_notifier.g.dart';

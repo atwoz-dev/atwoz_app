@@ -1,7 +1,7 @@
-import 'package:atwoz_app/app/constants/dimens.dart';
-import 'package:atwoz_app/app/constants/fonts.dart';
-import 'package:atwoz_app/app/constants/palette.dart';
-import 'package:atwoz_app/core/extension/extended_context.dart';
+import 'package:deepple_app/app/constants/dimens.dart';
+import 'package:deepple_app/app/constants/fonts.dart';
+import 'package:deepple_app/app/constants/palette.dart';
+import 'package:deepple_app/core/extension/extended_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
