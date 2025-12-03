@@ -84,9 +84,14 @@ class TokenInterceptor extends Interceptor with LogMixin {
       }
     }
 
+    /// 응답 데이터가 비었는지 확인
+    final hasEmptyBody =
+        response.data == null ||
+        (response.data is Map && (response.data as Map).isEmpty);
+
     /// "토큰만 내려온 200 응답"이면 재요청
     final isTokenOnlyResponse =
-        newAccessToken != null && newRefreshToken != null;
+        newAccessToken != null && newRefreshToken != null && hasEmptyBody;
 
     final alreadyRetried = requestOptions.extra['retry'] == true;
 
@@ -105,9 +110,13 @@ class TokenInterceptor extends Interceptor with LogMixin {
         newOptions.headers['Authorization'] = 'Bearer $latestToken';
       }
 
-      final retryResponse = await _dio.fetch(newOptions);
-
-      return handler.resolve(retryResponse); // 원래 API 응답으로 덮어쓰기
+      try {
+        final retryResponse = await _dio.fetch(newOptions);
+        return handler.resolve(retryResponse);
+      } catch (e) {
+        Log.e('Retry request failed: $e');
+        return handler.next(response);
+      } // 원래 API 응답으로 덮어쓰기
     }
 
     return handler.next(response);
@@ -134,7 +143,7 @@ class TokenInterceptor extends Interceptor with LogMixin {
     /// 진짜 만료(서버 거부)일 때만 로그아웃
     if (err.response?.statusCode == 401) {
       Log.d('401에러 발생함');
-      _ref.read(globalProvider.notifier).clearLocalData();
+      await _ref.read(globalProvider.notifier).clearLocalData();
       router.goNamed(AppRoute.onboard.name);
     }
 
